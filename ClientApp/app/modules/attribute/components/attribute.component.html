@@ -1,0 +1,126 @@
+﻿<div class="container-fluid">
+
+    <h2>Attributes</h2>
+    <div class="global-search">
+        <i class="fa fa-search"></i>
+        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
+    </div>
+    <p>List of attributes: {{totalRecords}}</p>
+    <hr />
+  
+    <p *ngIf="!attributes"><em>Loading...</em></p>
+
+    <p-dataTable [style]="{'width': '100%'}" [value]="attributes" 
+        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)" 
+        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
+        <p-column field="attributeId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+        <p-column field="attributeName" header="Name" [sortable]="true"></p-column>
+        <p-column [style]="{'width':'50px'}">
+            <template pTemplate="header">
+                <button type="button" pButton (click)="addClick()" icon="fa-plus-circle"></button>
+            </template>
+            <template let-data="rowData" pTemplate="body">
+                <button type="button" pButton (click)="editClick(data)" icon="fa-edit"></button>
+            </template>
+        </p-column>
+   </p-dataTable>
+
+    <p-dialog header="Attribute" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <form [formGroup]="dataform">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="id">Id</label></div>
+                <div class="ui-grid-col-8">{{selected.attributeId}}</div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="name" [(ngModel)]="selected.attributeName"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                        <i class="fa fa-close"></i> Name is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    <button *ngIf="!isNew" type="button" pButton icon="fa-trash" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+                </div>
+                <div class="ui-grid-col-4"></div>
+                <div class="ui-grid-col-4">
+                    <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    </p-dialog>
+    
+</div>
+
+<div class="container-fluid">
+
+    <div>
+        <h3>Attribute Values</h3>
+        <p>List of attribute values: {{totalValues}}</p>
+    </div>
+    
+    <p-dataTable [style]="{'width': '100%'}" [value]="values" selectionMode="none"
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
+        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
+        <p-column field="attributeValueId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+        <p-column field="attributeValueCode" header="Code" [sortable]="true"></p-column>
+        <p-column field="attributeValueName" header="Name" [sortable]="true"></p-column>
+        <p-column [style]="{'width':'50px'}">
+            <template pTemplate="header">
+                <button type="button" pButton (click)="addValueClick()" icon="fa-plus-circle"></button>
+            </template>
+            <template let-data="rowData" pTemplate="body">
+                <button type="button" pButton (click)="editValueClick(data)" icon="fa-edit"></button>
+            </template>
+        </p-column>
+    </p-dataTable>
+
+    <p-dialog header="Attribute Value" [(visible)]="displayDialogValue" [responsive]="true" showEffect="fade" [modal]="true">
+    <form [formGroup]="dataformValue">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selectedValue">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="id">Id</label></div>
+                <div class="ui-grid-col-8">{{selectedValue.attributeValueId}}</div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="id">Attribute</label></div>
+                <div class="ui-grid-col-8">{{selected.attributeName}}</div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="code">Code</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="code" [(ngModel)]="selectedValue.attributeValueCode"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataformValue.controls['code'].valid&&dataformValue.controls['code'].dirty">
+                        <i class="fa fa-close"></i>
+                        <span *ngIf="dataformValue.controls['code'].errors['required']">Code is required</span>
+                        <span *ngIf="dataformValue.controls['code'].errors['maxlength']">Must be shorter than 6 characters</span>
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="name" [(ngModel)]="selectedValue.attributeValueName"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataformValue.controls['name'].valid&&dataformValue.controls['name'].dirty">
+                        <i class="fa fa-close"></i> Name is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    <button *ngIf="!isNewValue" type="button" pButton icon="fa-trash" class="ui-button-danger" (click)="deleteValueClick()" label="Delete"></button>
+                </div>
+                <div class="ui-grid-col-4"></div>
+                <div class="ui-grid-col-4">
+                    <button type="button" pButton icon="fa-save" (click)="saveValueClick()" label="Save" [disabled]="!dataformValue.valid"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    </p-dialog>
+
+</div>

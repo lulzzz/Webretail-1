@@ -1,0 +1,33 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" [routerLink]="['/home']"><em>Webretail</em></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a [routerLink]="['/home']"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                <li><a [routerLink]="['/product']"><i class="glyphicon glyphicon-th"></i> Product</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-cog"></i> Setting <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a [routerLink]="['/account']"><i class="glyphicon glyphicon-user"></i> Account</a></li>
+                        <li><a [routerLink]="['/brand']"><i class="glyphicon glyphicon-th-list"></i> Brand</a></li>
+                        <li><a [routerLink]="['/category']"><i class="glyphicon glyphicon-th-list"></i> Category</a></li>
+                        <li><a [routerLink]="['/attribute']"><i class="glyphicon glyphicon-th-list"></i> Attribute</a></li>
+                    </ul>
+                </li>
+                <li role="presentation"><a href="javascript:;" onclick="var f=document.createElement('form');f.method='POST';f.action='/logout';f.submit();"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

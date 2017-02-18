@@ -1,0 +1,39 @@
+<p-growl [value]="msgs"></p-growl>
+
+<div class="container-fluid">
+    <h2>Product</h2>
+    <div class="global-search">
+        <p-splitButton label="Edit" icon="fa-check" (onClick)="editClick()" [model]="buttons"></p-splitButton>
+    </div>
+    <p>Code: {{product?.productCode}}</p>
+    <hr />
+    <p *ngIf="!productInfo"><em>Loading...</em></p>
+    <p-tree [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode"></p-tree>
+    <div style="margin-top:8px">Selected Node => {{selectedNode ? selectedNode.type + ' : ' + selectedNode.data : 'none'}}</div>
+</div>
+
+<div class="container-fluid">
+    <h3>Articles ({{totalRecords}})</h3>   
+    <p *ngIf="!articles"><em>Loading...</em></p>
+    <table *ngIf="articles" class="table" cellpadding="2" cellspacing="2">    
+        <tr> 
+            <td *ngFor="let h of header" align="center">{{h}}</td> 
+        </tr> 
+        <tbody *ngFor="let item of articles"> 
+            <tr> 
+                <td *ngFor="let col of item" align="center"> 
+                    <span>{{col}}</span> 
+                </td> 
+            </tr> 
+        </tbody>
+    </table>
+</div>
+
+<p-dialog header="Edit node" [modal]=true showEffect="fade" [(visible)]="display">
+    <p-pickList [source]="list1" [target]="list2" [responsive]="true" 
+    (onMoveToTarget)="addNodes($event)" (onMoveToSource)="removeNodes($event)">
+        <template let-attr pTemplate="item">
+            <span>{{attr.data}}</span> | <span>{{attr.label}}</span>
+        </template>
+    </p-pickList>
+</p-dialog>

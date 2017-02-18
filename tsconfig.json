@@ -1,0 +1,34 @@
+﻿{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  "files": [
+    "ClientApp/app/app.module.ts",
+    "ClientApp/app/modules/account/account.module.ts",
+    "ClientApp/app/modules/brand/brand.module.ts",
+    "ClientApp/app/modules/category/category.module.ts",
+    "ClientApp/app/modules/attribute/attribute.module.ts",
+    "ClientApp/app/modules/product/product.module.ts",
+    "ClientApp/main.ts"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "useWebpackText": true
+  },
+  "compileOnSave": false,
+  "buildOnSave": false
+}

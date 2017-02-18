@@ -1,0 +1,131 @@
+﻿<div class="container-fluid">
+
+    <h2>Products</h2>
+    <div class="global-search">
+        <i class="fa fa-search"></i>
+        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
+    </div>
+    <p>List of products: {{totalRecords}}</p>
+    <hr />
+
+    <p *ngIf="!products"><em>Loading...</em></p>
+
+    <p-dataTable [style]="{'width': '100%'}" [value]="products | priceFilter:sliderValue" 
+        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)" 
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
+        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
+        <p-column field="productId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="productCode" header="Code" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="productName" header="Name" [sortable]="true" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}">
+            <template pTemplate="filter" let-col>
+                <p-multiSelect [options]="names" defaultLabel="All" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-multiSelect>
+            </template>
+        </p-column>
+        <p-column field="brand.brandName" header="Brand" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="in">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="brands" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </template>
+        </p-column>
+        
+        <p-column field="category" header="Categories" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="contains">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="categories" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </template>
+            <template let-col let-data="rowData" pTemplate="body">
+                <li *ngFor="let item of data.categories"> {{ item.category.categoryName }} </li>
+            </template>
+        </p-column>
+        <p-column field="productPrice" header="Price ({{sliderValue||'No Filter'}})" [style]="{'text-align':'right'}" [sortable]="true" [filter]="true" filterMatchMode="equals">
+            <template pTemplate="filter" let-col>
+                <i class="fa fa-close" (click)="sliderValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000"></p-slider>
+            </template>
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.productPrice | currency: 'EUR' : true}}
+            </template>
+        </p-column>
+        <p-column [style]="{'width':'50px'}">
+            <template pTemplate="header">
+                <button type="button" pButton (click)="addClick()" icon="fa-plus-circle"></button>
+            </template>
+            <template let-data="rowData" pTemplate="body">
+                <button type="button" pButton (click)="editClick(data)" icon="fa-edit"></button>
+            </template>
+        </p-column>
+    </p-dataTable>
+
+    <p-dialog header="Product" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <form [formGroup]="dataform">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="id">Id</label></div>
+                <div class="ui-grid-col-8">{{selected.productId}}</div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="code">Code</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
+                        <i class="fa fa-close"></i>
+                        <span *ngIf="dataform.controls['code'].errors['required']">Code is required</span>
+                        <span *ngIf="dataform.controls['code'].errors['minlength']">Must be equals than 5 characters</span>
+                        <span *ngIf="dataform.controls['code'].errors['maxlength']">Must be equals than 5 characters</span>
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="name" [(ngModel)]="selected.productName"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                        <i class="fa fa-close"></i> Name is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="brand">Brand</label></div>
+                <div class="ui-grid-col-8">
+                    <p-dropdown [options]="allbrands" formControlName="brand" [(ngModel)]="selected.brand" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['brand'].valid&&dataform.controls['brand'].dirty">
+                        <i class="fa fa-close"></i>
+                        <span *ngIf="dataform.controls['brand'].errors['required']">Brand is required</span>
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="um">Unit of Measure</label></div>
+                <div class="ui-grid-col-8">
+                    <p-dropdown [options]="ums" formControlName="um" [(ngModel)]="selected.productUm" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['um'].valid&&dataform.controls['um'].dirty">
+                        <i class="fa fa-close"></i>
+                        <span *ngIf="dataform.controls['um'].errors['required']">Unit of Measure is required</span>
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="name">Price &euro;</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="price" [(ngModel)]="selected.productPrice"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['price'].valid&&dataform.controls['price'].dirty">
+                        <i class="fa fa-close"></i> Price is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="updated">Updated</label></div>
+                <div class="ui-grid-col-8">{{selected.updated | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    <button *ngIf="!isNew" type="button" pButton icon="fa-trash" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+                </div>
+                <div class="ui-grid-col-4"></div>
+                <div class="ui-grid-col-4">
+                    <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    </p-dialog>
+
+</div>

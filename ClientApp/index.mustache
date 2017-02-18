@@ -1,0 +1,13 @@
+﻿{{>header}}
+
+{{^authenticated}}
+<h1>Hi! Sign up today!</h1>
+{{>footer}}
+{{/authenticated}}
+
+{{#authenticated}}
+<body>
+<my-app>Loading...</my-app>
+</body>
+</html>
+{{/authenticated}}
