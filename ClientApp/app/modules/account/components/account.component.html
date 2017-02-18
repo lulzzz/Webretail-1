@@ -13,15 +13,11 @@
     <p-dataTable [style]="{'width': '100%'}" [value]="accounts" selectionMode="none"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
         [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
-        <p-column field="accountId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
-        <p-column field="accountName" header="Name" [sortable]="true"></p-column>
-        <p-column field="accountLastname" header="Lastname" [sortable]="true"></p-column>
-        <p-column field="accountEmail" header="Email" [sortable]="true"></p-column>
-        <p-column field="updated" header="Updated" [style]="{'width':'160px'}" [sortable]="true">
-            <template let-col let-data="rowData" pTemplate="body">
-                {{data.updated | date:'yyyy-MM-dd HH:mm:ss'}}
-            </template>        
-        </p-column>
+        <p-column field="uniqueID" header="Id" [sortable]="true"></p-column>
+        <p-column field="username" header="Username" [sortable]="true"></p-column>
+        <p-column field="firstname" header="Name" [sortable]="true"></p-column>
+        <p-column field="lastname" header="Lastname" [sortable]="true"></p-column>
+        <p-column field="email" header="Email" [sortable]="true"></p-column>
         <p-column [style]="{'width':'50px'}">
             <template pTemplate="header">
                 <button type="button" pButton (click)="addClick()" icon="fa-plus-circle"></button>
@@ -37,13 +33,13 @@
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="id">Id</label></div>
-                <div class="ui-grid-col-8">{{selected.accountId}}</div>
+                <div class="ui-grid-col-8">{{selected.uniqueID}}</div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                <div class="ui-grid-col-4"><label for="firstname">Firstname</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="name" [(ngModel)]="selected.accountName"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                    <input pInputText formControlName="firstname" [(ngModel)]="selected.firstname"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['firstname'].valid&&dataform.controls['firstname'].dirty">
                         <i class="fa fa-close"></i> Name is required
                     </div>
                 </div>
@@ -51,7 +47,7 @@
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="lastname">Lastname</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="lastname" [(ngModel)]="selected.accountLastname"/>
+                    <input pInputText formControlName="lastname" [(ngModel)]="selected.lastname"/>
                     <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['lastname'].valid&&dataform.controls['lastname'].dirty">
                         <i class="fa fa-close"></i> Lastname is required
                     </div>
@@ -60,30 +56,31 @@
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="email">Email</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="email" [(ngModel)]="selected.accountEmail" type="email"/>
+                    <input pInputText formControlName="email" [(ngModel)]="selected.email" type="email"/>
                     <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
                         <i class="fa fa-close"></i> Email is required
                     </div>
                 </div>
             </div>
             <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="username">Username</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="username" [(ngModel)]="selected.username"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['username'].valid&&dataform.controls['username'].dirty">
+                        <i class="fa fa-close"></i> Username is required
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="password">Password</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="password" [(ngModel)]="selected.accountPassword" type="password"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['password'].valid&&dataform.controls['name'].dirty">
+                    <input pInputText formControlName="password" [(ngModel)]="selected.password" type="password"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['password'].valid&&dataform.controls['password'].dirty">
                         <i class="fa fa-close"></i>
                         <span *ngIf="dataform.controls['password'].errors['required']">Password is required</span>
                         <span *ngIf="dataform.controls['password'].errors['minlength']">Must be longer than 6 characters</span>
                     </div>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="isAdmin">Administrator</label></div>
-                <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="isAdmin" [(ngModel)]="selected.isAdmin"></p-inputSwitch></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="updated">Updated</label></div>
-                <div class="ui-grid-col-8">{{selected.updated | date:'yyyy-MM-dd HH:mm:ss'}}</div>
             </div>
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4">

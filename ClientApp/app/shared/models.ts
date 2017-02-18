@@ -1,27 +1,20 @@
 // Classes
 
-export class Login {
-  constructor(
-    public username: string,
-    public password: string) { }
-}
-
 export class Account {
-  public accountId: number;
-  public accountName: string;
-  public accountLastname: string;
-  public accountEmail: string;
-  public accountPassword: string;
-  public isAdmin: boolean;
-  public updated: Date;
+  public uniqueID: string;
+  public firstname: string;
+  public lastname: string;
+  public email: string;
+  public username: string;
+  public password: string;
 
   constructor() {
-    this.accountId = 0;
-    this.accountName = '';
-    this.accountLastname = '';
-    this.accountEmail = '';
-    this.accountPassword = '';
-    this.updated = new Date();
+    this.uniqueID = '';
+    this.firstname = '';
+    this.lastname = '';
+    this.email = '';
+    this.username = '';
+    this.password = '';
   }
 }
 

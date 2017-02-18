@@ -22,11 +22,6 @@ export class Helpers {
     static getHeaders() : Headers {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-
-        let tokenModel = <Token>JSON.parse(localStorage.getItem('token'));
-        if (tokenModel) {
-            headers.append('token', tokenModel.token);
-        }
         return headers;
     }
 

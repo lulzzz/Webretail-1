@@ -10,7 +10,9 @@ import TurnstileCrypto
 
 class AccountRepository : AccountProtocol {
     
-    func getAll() throws -> [Account] {
+   public var random: Random = URandom()
+   
+   func getAll() throws -> [Account] {
         let items = Account()
         try items.findAll()
         
@@ -25,10 +27,9 @@ class AccountRepository : AccountProtocol {
     }
     
     func add(item: Account) throws {
+        item.uniqueID = String(random.secureToken)
         item.password = BCrypt.hash(password: item.password)
-        try item.save {
-            id in item.uniqueID = id as! String
-        }
+        try item.make()
     }
     
     func update(id: String, item: Account) throws {

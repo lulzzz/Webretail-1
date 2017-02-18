@@ -21,11 +21,12 @@ export class AccountComponent implements OnInit {
 
 	ngOnInit() {
         this.dataform = this.fb.group({
-            'name': new FormControl('', Validators.required),
+            'uniqueID': new FormControl('', Validators.required),
+            'firstname': new FormControl('', Validators.required),
             'lastname': new FormControl('', Validators.required),
             'email': new FormControl('', Validators.required),
-            'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
-            'isAdmin': new FormControl('', Validators.required)
+            'username': new FormControl('', Validators.required),
+            'password': new FormControl('', [Validators.required, Validators.minLength(6)])
         });
 
         this.accountService.getAll().subscribe(result => {
@@ -34,7 +35,7 @@ export class AccountComponent implements OnInit {
         }, onerror => alert('ERROR\r\n' + onerror));
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.accountId == 0; }
+    get isNew() : boolean { return this.selected == null || this.selected.uniqueID == ''; }
 
     get selectedIndex(): number { return this.accounts.indexOf(this.selected); }
 
@@ -57,7 +58,7 @@ export class AccountComponent implements OnInit {
                 });
         } else {
             this.accountService
-                .update(this.selected.accountId, this.selected)
+                .update(this.selected.uniqueID, this.selected)
                 .subscribe(result => {
                     this.accounts[this.selectedIndex] = this.selected;
                 });
@@ -68,7 +69,7 @@ export class AccountComponent implements OnInit {
 
     deleteClick() {
         this.accountService
-            .delete(this.selected.accountId)
+            .delete(this.selected.uniqueID)
             .subscribe(result => {
                 this.accounts.splice(this.selectedIndex, 1);
             });

@@ -1,0 +1,15 @@
+{{>header}}
+
+{{^authenticated}}
+<h1>Hi! Sign up today!</h1>
+{{>footer}}
+{{/authenticated}}
+
+{{#authenticated}}
+<body>
+    <my-app>Loading...</my-app>
+    <script type="text/javascript" src="/dist/polyfills.bundle.js"></script>
+    <script type="text/javascript" src="/dist/app.bundle.js"></script>
+</body>
+</html>
+{{/authenticated}}
