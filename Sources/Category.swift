@@ -38,6 +38,12 @@ class Category: PostgresStORM, JSONConvertible {
         return rows
     }
     
+    public func setJSONValues(_ values:[String:Any]) {
+        self.categoryId = Helper.getJSONValue(named: "categoryId", from: values, defaultValue: 0)
+        self.categoryName = Helper.getJSONValue(named: "categoryName", from: values, defaultValue: "")
+        self.isPrimary = Helper.getJSONValue(named: "isPrimary", from: values, defaultValue: false)
+    }
+
     func jsonEncodedString() throws -> String {
         return try self.getJSONValues().jsonEncodedString()
     }

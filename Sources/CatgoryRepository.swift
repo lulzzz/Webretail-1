@@ -6,6 +6,8 @@
 //
 //
 
+import StORM
+
 class CategoryRepository : CategoryProtocol {
     
     func getAll() throws -> [Category] {
@@ -23,14 +25,23 @@ class CategoryRepository : CategoryProtocol {
     }
     
     func add(item: Category) throws {
+        item.created = Helper.now()
+        item.updated = Helper.now()
         try item.save {
             id in item.categoryId = id as! Int
         }
     }
     
     func update(id: Int, item: Category) throws {
-        item.updated = Helper.now()
-        try item.update(data: item.asData(), idValue: id)
+        
+        guard let current = try get(id: id) else {
+            throw StORMError.noRecordFound
+        }
+        
+        current.categoryName = item.categoryName
+        current.isPrimary = item.isPrimary
+        current.updated = Helper.now()
+        try current.save()
     }
     
     func delete(id: Int) throws {

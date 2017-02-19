@@ -17,4 +17,8 @@ protocol ArticleProtocol {
     func update(id: Int, item: Article) throws
     
     func delete(id: Int) throws
+
+    func addAttributeValue(item: ArticleAttributeValue) throws
+    
+    func removeAttributeValue(id: Int) throws
 }

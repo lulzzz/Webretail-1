@@ -62,14 +62,29 @@ class AttributeController {
             response.completed()
         })
         
+        routes.add(method: .get, uri: "/api/attribute/{id}/value", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let id = request.urlVariables["id"]?.toInt()
+                let item = try self.repository.getValues(id: id!)
+                try response.setBody(json: item)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+
         routes.add(method: .post, uri: "/api/attribute", handler: {
             request, response in
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Attribute
-                try self.repository.add(item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Attribute()
+                item.setJSONValues(json!)
+                try self.repository.add(item: item)
                 try response.setBody(json: item)
             } catch {
                 print(error)
@@ -83,9 +98,11 @@ class AttributeController {
             
             do {
                 let id = request.urlVariables["id"]?.toInt()
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Attribute
-                try self.repository.update(id: id!, item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Attribute()
+                item.setJSONValues(json!)
+                try self.repository.update(id: id!, item: item)
+                try response.setBody(json: id)
             } catch {
                 print(error)
             }
@@ -99,6 +116,7 @@ class AttributeController {
             do {
                 let id = request.urlVariables["id"]?.toInt()
                 try self.repository.delete(id: id!)
+                try response.setBody(json: id)
             } catch {
                 print(error)
             }

@@ -12,6 +12,8 @@ protocol AttributeProtocol {
     
     func get(id: Int) throws -> Attribute?
     
+    func getValues(id: Int) throws -> [AttributeValue]
+
     func add(item: Attribute) throws
     
     func update(id: Int, item: Attribute) throws

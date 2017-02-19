@@ -58,6 +58,15 @@ class Account : PostgresStORM, JSONConvertible {
         return rows
     }
 
+    public func setJSONValues(_ values:[String:Any]) {
+        self.uniqueID = Helper.getJSONValue(named: "uniqueID", from: values, defaultValue: "")
+        self.username = Helper.getJSONValue(named: "username", from: values, defaultValue: "")
+        self.password = Helper.getJSONValue(named: "password", from: values, defaultValue: "")
+        self.firstname = Helper.getJSONValue(named: "firstname", from: values, defaultValue: "")
+        self.lastname = Helper.getJSONValue(named: "lastname", from: values, defaultValue: "")
+        self.email = Helper.getJSONValue(named: "email", from: values, defaultValue: "")
+    }
+    
     func jsonEncodedString() throws -> String {
         return try self.getJSONValues().jsonEncodedString()
     }

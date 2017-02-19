@@ -69,9 +69,10 @@ class CategoryController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Category
-                try self.repository.add(item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Category()
+                item.setJSONValues(json!)
+                try self.repository.add(item: item)
                 try response.setBody(json: item)
             } catch {
                 print(error)
@@ -85,9 +86,11 @@ class CategoryController {
             
             do {
                 let id = request.urlVariables["id"]?.toInt()
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Category
-                try self.repository.update(id: id!, item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Category()
+                item.setJSONValues(json!)
+                try self.repository.update(id: id!, item: item)
+                try response.setBody(json: id)
             } catch {
                 print(error)
             }
@@ -101,6 +104,7 @@ class CategoryController {
             do {
                 let id = request.urlVariables["id"]?.toInt()
                 try self.repository.delete(id: id!)
+                try response.setBody(json: id)
             } catch {
                 print(error)
             }

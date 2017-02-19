@@ -1,6 +1,5 @@
 import { Headers } from '@angular/http';
 import { SelectItem, TreeNode } from 'primeng/primeng';
-import { Token } from '../shared/models';
 
 export class Helpers {
 
@@ -40,7 +39,7 @@ export class Helpers {
 
     static getUnitOfMeasure() : SelectItem[] {
         return <SelectItem[]>[
-            Helpers.newSelectItem('QT', 'Quatity'),
+            Helpers.newSelectItem('QT', 'Quantity'),
             Helpers.newSelectItem('MT', 'Meter'),
             Helpers.newSelectItem('KG', 'Kilogram')
         ];

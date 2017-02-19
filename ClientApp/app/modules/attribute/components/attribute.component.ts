@@ -73,7 +73,7 @@ export class AttributeComponent implements OnInit {
             });
         } else {
             this.attributeService.update(this.selected.attributeId, this.selected).subscribe(result => {
-                this.attributes[this.selectedIndex] = this.selected;
+                //this.attributes[this.selectedIndex] = this.selected;
             });
         }
         this.displayDialog = false;

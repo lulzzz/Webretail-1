@@ -36,10 +36,15 @@ class Brand: PostgresStORM, JSONConvertible {
         return rows
     }
     
+    public func setJSONValues(_ values:[String:Any]) {
+        self.brandId = Helper.getJSONValue(named: "brandId", from: values, defaultValue: 0)
+        self.brandName = Helper.getJSONValue(named: "brandName", from: values, defaultValue: "")
+    }
+    
     func jsonEncodedString() throws -> String {
         return try self.getJSONValues().jsonEncodedString()
     }
-    
+
     func getJSONValues() -> [String : Any] {
         return [
             "brandId": brandId,

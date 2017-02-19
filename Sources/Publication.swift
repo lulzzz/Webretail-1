@@ -38,6 +38,14 @@ class Publication: PostgresStORM, JSONConvertible {
         return rows
     }
     
+    public func setJSONValues(_ values:[String:Any]) {
+        self.publicationId = Helper.getJSONValue(named: "publicationId", from: values, defaultValue: 0)
+        self.productId = Helper.getJSONValue(named: "productId", from: values, defaultValue: 0)
+        self.featured = Helper.getJSONValue(named: "featured", from: values, defaultValue: false)
+        self.startAt = Helper.getJSONValue(named: "startAt", from: values, defaultValue: 0)
+        self.finishAt = Helper.getJSONValue(named: "finishAt", from: values, defaultValue: 0)
+    }
+    
     func jsonEncodedString() throws -> String {
         return try self.getJSONValues().jsonEncodedString()
     }

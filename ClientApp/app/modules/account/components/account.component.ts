@@ -21,7 +21,6 @@ export class AccountComponent implements OnInit {
 
 	ngOnInit() {
         this.dataform = this.fb.group({
-            'uniqueID': new FormControl('', Validators.required),
             'firstname': new FormControl('', Validators.required),
             'lastname': new FormControl('', Validators.required),
             'email': new FormControl('', Validators.required),

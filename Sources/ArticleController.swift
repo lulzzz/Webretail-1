@@ -19,6 +19,9 @@ class ArticleController {
         let article = Article()
         try? article.setup()
         
+        let articleAttributeValue = ArticleAttributeValue()
+        try? articleAttributeValue.setup()
+
 //        do {
 //            let item1 = Article()
 //            item1.productId = 1
@@ -69,9 +72,10 @@ class ArticleController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Article
-                try self.repository.add(item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Article()
+                item.setJSONValues(json!)
+                try self.repository.add(item: item)
                 try response.setBody(json: item)
             } catch {
                 print(error)
@@ -85,9 +89,11 @@ class ArticleController {
             
             do {
                 let id = request.urlVariables["id"]?.toInt()
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Article
-                try self.repository.update(id: id!, item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Article()
+                item.setJSONValues(json!)
+                try self.repository.update(id: id!, item: item)
+                try response.setBody(json: id)
             } catch {
                 print(error)
             }
@@ -101,12 +107,42 @@ class ArticleController {
             do {
                 let id = request.urlVariables["id"]?.toInt()
                 try self.repository.delete(id: id!)
+                try response.setBody(json: id)
             } catch {
                 print(error)
             }
             response.completed()
         })
         
+        routes.add(method: .post, uri: "/api/articleattributevalue", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = ArticleAttributeValue()
+                item.setJSONValues(json!)
+                try self.repository.addAttributeValue(item: item)
+                try response.setBody(json: item)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+        
+        routes.add(method: .delete, uri: "/api/articleattributevalue/{id}", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let id = request.urlVariables["id"]?.toInt()
+                try self.repository.removeAttributeValue(id: id!)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+
         return routes
     }
 }

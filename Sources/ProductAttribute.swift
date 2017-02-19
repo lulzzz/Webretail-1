@@ -16,6 +16,10 @@ class ProductAttribute: PostgresStORM, JSONConvertible {
     public var productId            : Int = 0
     public var attributeId          : Int = 0
     
+    public var internal_attribute: Attribute = Attribute()
+    public var internal_attributeValues: [ProductAttributeValue] = [ProductAttributeValue]()
+
+    
     open override func table() -> String { return "productattributes" }
     
     open override func to(_ this: StORMRow) {
@@ -24,14 +28,31 @@ class ProductAttribute: PostgresStORM, JSONConvertible {
         attributeId         = this.data["attributeid"] as? Int          ?? 0
     }
     
-    func rows() -> [ProductAttribute] {
+    func rows() throws -> [ProductAttribute] {
         var rows = [ProductAttribute]()
         for i in 0..<self.results.rows.count {
             let row = ProductAttribute()
             row.to(self.results.rows[i])
+
+            // get attribute
+            let attribute = Attribute()
+            try attribute.get(row.attributeId)
+            row.internal_attribute = attribute
+
+            // get attributeValues
+            let attributeValue = ProductAttributeValue()
+            try attributeValue.find([("productAttributeId",row.productAttributeId)])
+            row.internal_attributeValues = try attributeValue.rows()
+            
             rows.append(row)
         }
         return rows
+    }
+    
+    public func setJSONValues(_ values:[String:Any]) {
+        self.productAttributeId = Helper.getJSONValue(named: "productAttributeId", from: values, defaultValue: 0)
+        self.productId = Helper.getJSONValue(named: "productId", from: values, defaultValue: 0)
+        self.attributeId = Helper.getJSONValue(named: "attributeId", from: values["attribute"] as! [String : Any], defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {
@@ -41,8 +62,10 @@ class ProductAttribute: PostgresStORM, JSONConvertible {
     func getJSONValues() -> [String : Any] {
         return [
             "productAttributeId": productAttributeId,
-            "productId": productId,
-            "attributeId": attributeId
+            //"productId": productId,
+            //"attributeId": attributeId,
+            "attribute": internal_attribute,
+            "attributeValues": internal_attributeValues
         ]
     }
 }

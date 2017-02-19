@@ -6,6 +6,8 @@
 //
 //
 
+import StORM
+
 class PublicationRepository : PublicationProtocol {
     
     func getAll() throws -> [Publication] {
@@ -29,7 +31,15 @@ class PublicationRepository : PublicationProtocol {
     }
     
     func update(id: Int, item: Publication) throws {
-        try item.update(data: item.asData(), idValue: id)
+
+        guard let current = try get(id: id) else {
+            throw StORMError.noRecordFound
+        }
+        
+        current.featured = item.featured
+        current.startAt = item.startAt
+        current.finishAt = item.finishAt
+        try current.save()
     }
     
     func delete(id: Int) throws {

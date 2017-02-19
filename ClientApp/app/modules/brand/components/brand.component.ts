@@ -51,7 +51,7 @@ export class BrandComponent implements OnInit {
             });
         } else {
             this.brandService.update(this.selected.brandId, this.selected).subscribe(result => {
-                this.brands[this.selectedIndex] = this.selected;
+                //this.brands[this.selectedIndex] = this.selected;
             });
         }
         this.selected = null;

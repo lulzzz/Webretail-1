@@ -17,4 +17,16 @@ protocol ProductProtocol {
     func update(id: Int, item: Product) throws
     
     func delete(id: Int) throws
+
+    func addCategory(item: ProductCategory) throws
+
+    func removeCategory(item: ProductCategory) throws
+
+    func addAttribute(item: ProductAttribute) throws
+    
+    func removeAttribute(item: ProductAttribute) throws
+
+    func addAttributeValue(item: ProductAttributeValue) throws
+    
+    func removeAttributeValue(item: ProductAttributeValue) throws
 }

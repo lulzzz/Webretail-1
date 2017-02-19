@@ -6,6 +6,8 @@
 //
 //
 
+import StORM
+
 class AttributeValueRepository : AttributeValueProtocol {
     
     func getAll() throws -> [AttributeValue] {
@@ -23,14 +25,23 @@ class AttributeValueRepository : AttributeValueProtocol {
     }
     
     func add(item: AttributeValue) throws {
+        item.created = Helper.now()
+        item.updated = Helper.now()
         try item.save {
             id in item.attributeValueId = id as! Int
         }
     }
     
     func update(id: Int, item: AttributeValue) throws {
-        item.updated = Helper.now()
-        try item.update(data: item.asData(), idValue: id)
+
+        guard let current = try get(id: id) else {
+            throw StORMError.noRecordFound
+        }
+        
+        current.attributeValueCode = item.attributeValueCode
+        current.attributeValueName = item.attributeValueName
+        current.updated = Helper.now()
+        try current.save()
     }
     
     func delete(id: Int) throws {

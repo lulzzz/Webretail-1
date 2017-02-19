@@ -38,6 +38,12 @@ class Article: PostgresStORM, JSONConvertible {
         return rows
     }
     
+    public func setJSONValues(_ values:[String:Any]) {
+        self.articleId = Helper.getJSONValue(named: "articleId", from: values, defaultValue: 0)
+        self.productId = Helper.getJSONValue(named: "productId", from: values, defaultValue: 0)
+        self.barcode = Helper.getJSONValue(named: "barcode", from: values, defaultValue: "")
+    }
+    
     func jsonEncodedString() throws -> String {
         return try self.getJSONValues().jsonEncodedString()
     }
@@ -45,7 +51,7 @@ class Article: PostgresStORM, JSONConvertible {
     func getJSONValues() -> [String : Any] {
         return [
             "articleId": articleId,
-            "productId": productId,
+            //"productId": productId,
             "barcode": barcode
             //,"created": Helper.formatDate(unixdate: created)
             //,"updated": Helper.formatDate(unixdate: updated)

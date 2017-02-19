@@ -68,9 +68,10 @@ class PublicationController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Publication
-                try self.repository.add(item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Publication()
+                item.setJSONValues(json!)
+                try self.repository.add(item: item)
                 try response.setBody(json: item)
             } catch {
                 print(error)
@@ -84,9 +85,10 @@ class PublicationController {
             
             do {
                 let id = request.urlVariables["id"]?.toInt()
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Publication
-                try self.repository.update(id: id!, item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Publication()
+                item.setJSONValues(json!)
+                try self.repository.update(id: id!, item: item)
             } catch {
                 print(error)
             }

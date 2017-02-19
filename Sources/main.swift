@@ -84,20 +84,8 @@ server.addRoutes(attributeValueController.getRoutes())
 let productController = ProductController(repository: ProductRepository())
 server.addRoutes(productController.getRoutes())
 
-let productCategoryController = ProductCategoryController(repository: ProductCategoryRepository())
-server.addRoutes(productCategoryController.getRoutes())
-
-let productAttributeController = ProductAttributeController(repository: ProductAttributeRepository())
-server.addRoutes(productAttributeController.getRoutes())
-
-let productAttributeValueController = ProductAttributeValueController(repository: ProductAttributeValueRepository())
-server.addRoutes(productAttributeValueController.getRoutes())
-
 let articleController = ArticleController(repository: ArticleRepository())
 server.addRoutes(articleController.getRoutes())
-
-let articleAttributeValueController = ArticleAttributeValueController(repository: ArticleAttributeValueRepository())
-server.addRoutes(articleAttributeValueController.getRoutes())
 
 let publicationController = PublicationController(repository: PublicationRepository())
 server.addRoutes(publicationController.getRoutes())
@@ -108,9 +96,9 @@ let myLogger = RequestLogger()
 
 // add routes to be checked for auth
 var authenticationConfig = AuthenticationConfig()
-//authenticationConfig.exclude("/api/login")
-//authenticationConfig.exclude("/api/register")
-//authenticationConfig.include("/api/*}")
+authenticationConfig.exclude("/api/login")
+authenticationConfig.exclude("/api/register")
+authenticationConfig.include("/api/*}")
 
 
 let authFilter = AuthFilter(authenticationConfig)

@@ -18,7 +18,16 @@ class ProductController {
         
         let product = Product()
         try? product.setup()
-        
+
+        let productCategory = ProductCategory()
+        try? productCategory.setup()
+
+        let productAttribute = ProductAttribute()
+        try? productAttribute.setup()
+
+        let productAttributeValue = ProductAttributeValue()
+        try? productAttributeValue.setup()
+
 //        do {
 //            let item = Product()
 //            item.brandId = 1
@@ -67,9 +76,10 @@ class ProductController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Product
-                try self.repository.add(item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Product()
+                item.setJSONValues(json!)
+                try self.repository.add(item: item)
                 try response.setBody(json: item)
             } catch {
                 print(error)
@@ -83,9 +93,11 @@ class ProductController {
             
             do {
                 let id = request.urlVariables["id"]?.toInt()
-                let json = request.postBodyString
-                let item = try json?.jsonDecode() as? Product
-                try self.repository.update(id: id!, item: item!)
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = Product()
+                item.setJSONValues(json!)
+                try self.repository.update(id: id!, item: item)
+                try response.setBody(json: id)
             } catch {
                 print(error)
             }
@@ -99,12 +111,109 @@ class ProductController {
             do {
                 let id = request.urlVariables["id"]?.toInt()
                 try self.repository.delete(id: id!)
+                try response.setBody(json: id)
             } catch {
                 print(error)
             }
             response.completed()
         })
         
+        routes.add(method: .post, uri: "/api/productcategory", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = ProductCategory()
+                item.setJSONValues(json!)
+                try self.repository.addCategory(item: item)
+                try response.setBody(json: item)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+
+        routes.add(method: .put, uri: "/api/productcategory", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = ProductCategory()
+                item.setJSONValues(json!)
+                try self.repository.removeCategory(item: item)
+                try response.setBody(json: item)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+
+        routes.add(method: .post, uri: "/api/productattribute", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = ProductAttribute()
+                item.setJSONValues(json!)
+                try self.repository.addAttribute(item: item)
+                try response.setBody(json: item)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+        
+        routes.add(method: .put, uri: "/api/productattribute", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = ProductAttribute()
+                item.setJSONValues(json!)
+                try self.repository.removeAttribute(item: item)
+                try response.setBody(json: item)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+
+        routes.add(method: .post, uri: "/api/productattributevalue", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = ProductAttributeValue()
+                item.setJSONValues(json!)
+                try self.repository.addAttributeValue(item: item)
+                try response.setBody(json: item)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+        
+        routes.add(method: .put, uri: "/api/productattributevalue", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                let item = ProductAttributeValue()
+                item.setJSONValues(json!)
+                try self.repository.removeAttributeValue(item: item)
+                try response.setBody(json: item)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+
         return routes
     }
 }

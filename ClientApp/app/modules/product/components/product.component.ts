@@ -112,7 +112,7 @@ export class ProductComponent implements OnInit {
             .groupBy(
                 function (x) {
                     return x.attributeValues
-                        .map(p => p.attributeValue.attributeValueName)
+                        .map(p => p.productAttributeValue.attributeValue.attributeValueName)
                         .slice(0, x.attributeValues.length - 2)
                         .join('#');
                 },
@@ -128,8 +128,8 @@ export class ProductComponent implements OnInit {
                 let qta = 1;
                 if (isFirst) {
                     e.attributeValues.forEach(ex => {
-                        console.log('Obs: ' + ex.attributeValue.attributeValueName);
-                        row.push(ex.attributeValue.attributeValueName);
+                        console.log('Obs: ' + ex.productAttributeValue.attributeValue.attributeValueName);
+                        row.push(ex.productAttributeValue.attributeValue.attributeValueName);
                     });
                     isFirst = false;
                     row[row.length - 1] = qta;
@@ -215,7 +215,6 @@ export class ProductComponent implements OnInit {
                 case 'attribute':
                     let productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
-                        productAttributeId: 0,
                         attribute: new Attribute(p.data, p.label)
                     };
                     this.productService
@@ -263,7 +262,6 @@ export class ProductComponent implements OnInit {
                 case 'attribute':
                     let productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
-                        productAttributeId: this.selectedNode.data,
                         attribute: new Attribute(p.data, p.label)
                     };
                     this.productService
@@ -277,7 +275,7 @@ export class ProductComponent implements OnInit {
                 case 'attributeValue':
                     let productAttributeValue = <ProductAttributeValue>{
                         productAttributeId: this.selectedNode.data,
-                        attributeValue: new AttributeValue(0, p.data, p.data, p.label)
+                        attributeValue: new AttributeValue(0, p.data, '', p.label)
                     };
                     this.productService
                         .removeAttributeValue(productAttributeValue)

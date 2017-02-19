@@ -16,6 +16,9 @@ class ProductAttributeValue: PostgresStORM, JSONConvertible {
     public var productAttributeId       : Int = 0
     public var attributeValueId         : Int = 0
     
+    public var internal_attributeValue: AttributeValue = AttributeValue()
+
+    
     open override func table() -> String { return "productattributevalues" }
     
     open override func to(_ this: StORMRow) {
@@ -24,16 +27,28 @@ class ProductAttributeValue: PostgresStORM, JSONConvertible {
         attributeValueId        = this.data["attributevalueid"] as? Int          ?? 0
     }
     
-    func rows() -> [ProductAttributeValue] {
+    func rows() throws -> [ProductAttributeValue] {
         var rows = [ProductAttributeValue]()
         for i in 0..<self.results.rows.count {
             let row = ProductAttributeValue()
             row.to(self.results.rows[i])
+
+            // get attributeValue
+            let attributeValue = AttributeValue()
+            try attributeValue.get(row.attributeValueId)
+            row.internal_attributeValue = attributeValue
+
             rows.append(row)
         }
         return rows
     }
     
+    public func setJSONValues(_ values:[String:Any]) {
+        self.productAttributeValueId = Helper.getJSONValue(named: "productAttributeValueId", from: values, defaultValue: 0)
+        self.productAttributeId = Helper.getJSONValue(named: "productAttributeId", from: values, defaultValue: 0)
+        self.attributeValueId = Helper.getJSONValue(named: "attributeValueId", from: values["attributeValue"] as! [String : Any], defaultValue: 0)
+    }
+
     func jsonEncodedString() throws -> String {
         return try self.getJSONValues().jsonEncodedString()
     }
@@ -42,7 +57,8 @@ class ProductAttributeValue: PostgresStORM, JSONConvertible {
         return [
             "productAttributeValueId": productAttributeValueId,
             "productAttributeId": productAttributeId,
-            "attributeValueId": attributeValueId
+            //"attributeValueId": attributeValueId,
+            "attributeValue": internal_attributeValue
         ]
     }
 }

@@ -6,6 +6,8 @@
 //
 //
 
+import StORM
+
 class BrandRepository : BrandProtocol {
     
     func getAll() throws -> [Brand] {
@@ -23,14 +25,22 @@ class BrandRepository : BrandProtocol {
     }
     
     func add(item: Brand) throws {
+        item.created = Helper.now()
+        item.updated = Helper.now()
         try item.save {
             id in item.brandId = id as! Int
         }
     }
     
     func update(id: Int, item: Brand) throws {
-        item.updated = Helper.now()
-        try item.update(data: item.asData(), idValue: id)
+        
+        guard let current = try get(id: id) else {
+            throw StORMError.noRecordFound
+        }
+        
+        current.brandName = item.brandName
+        current.updated = Helper.now()
+        try current.save()
     }
     
     func delete(id: Int) throws {

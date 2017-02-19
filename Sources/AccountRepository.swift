@@ -6,6 +6,7 @@
 //
 //
 
+import StORM
 import TurnstileCrypto
 
 class AccountRepository : AccountProtocol {
@@ -29,14 +30,24 @@ class AccountRepository : AccountProtocol {
     func add(item: Account) throws {
         item.uniqueID = String(random.secureToken)
         item.password = BCrypt.hash(password: item.password)
-        try item.make()
+        try item.create()
     }
     
     func update(id: String, item: Account) throws {
-        if (item.password.length < 20) {
-            item.password = BCrypt.hash(password: item.password)
+        
+        guard let current = try get(id: id) else {
+            throw StORMError.noRecordFound
         }
-        try item.update(data: item.asData(), idValue: id)
+        
+        current.firstname = item.firstname
+        current.lastname = item.lastname
+        current.username = item.username
+        if (item.password.length < 20) {
+            current.password = BCrypt.hash(password: item.password)
+        }
+        current.email = item.email
+        
+        try current.save()
     }
     
     func delete(id: String) throws {

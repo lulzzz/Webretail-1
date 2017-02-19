@@ -51,6 +51,7 @@ export class Product {
   public categories: ProductCategory[];
   public attributes: ProductAttribute[];
   public articles: Article[];
+  public created: Date;
   public updated: Date;
 
   constructor() {
@@ -58,12 +59,13 @@ export class Product {
     this.productCode = '';
     this.productName = '';
     this.productUm = '';
-    this.productPrice = 0.0;
+    this.productPrice = 0;
     this.brand = new Brand();
     this.category = '';
     this.categories = [];
     this.attributes = [];
     this.articles = [];
+    this.created = new Date();
     this.updated = new Date();
   }
 }
@@ -72,13 +74,11 @@ export class Article {
   public articleId: number;
   public barcode: string;
   public attributeValues: ArticleAttributeValue[];
-  public updated: Date;
 
   constructor() {
     this.articleId = 0;
     this.barcode = '';
     this.attributeValues = [];
-    this.updated = new Date();
   }
 }
 
@@ -99,19 +99,12 @@ export class AttributeValue {
 
 // Interfaces
 
-export interface Token {
-    token: string;
-    role: number;
-    expiry: Date;
-}
-
 export interface ProductCategory {
   productId: number;
   category: Category;
 }
 
 export interface ProductAttribute {
-  productAttributeId: number;
   productId: number;
   attribute: Attribute;
   attributeValues: ProductAttributeValue[];
@@ -123,6 +116,6 @@ export interface ProductAttributeValue {
 }
 
 export interface ArticleAttributeValue {
-  articleId: number;
-  attributeValue: AttributeValue;
+  articleAttributeValueId: number;
+  productAttributeValue: ProductAttributeValue;
 }

@@ -103,7 +103,7 @@
                </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="name">Price &euro;</label></div>
+                <div class="ui-grid-col-4"><label for="price">Price</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="price" [(ngModel)]="selected.productPrice"/>
                     <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['price'].valid&&dataform.controls['price'].dirty">
