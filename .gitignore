@@ -69,3 +69,4 @@ fastlane/test_output
 StORMlog.txt
 requests.log
 wwwroot/favicon.ico
+wwwroot/views/index.mustache
