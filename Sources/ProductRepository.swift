@@ -58,6 +58,7 @@ class ProductRepository : ProductProtocol {
         current.productUm = item.productUm
         current.productPrice = item.productPrice
         current.productCode = item.productCode
+        current.brandId = item.brandId
         current.updated = Helper.now()
         try current.save()
     }

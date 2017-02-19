@@ -91,15 +91,17 @@ export class ProductsComponent implements OnInit {
         if (this.isNew) {
             this.productService.create(this.selected)
                 .subscribe(result => {
+                    result.brand = this.selected.brand;
                     this.products.push(result);
+                    this.selected = null;
                 });
         } else {
             this.productService.update(this.selected.productId, this.selected)
                 .subscribe(result => {
                     //this.products[this.selectedIndex] = this.selected;
+                    this.selected = null;
                 });
         }
-        this.selected = null;
         this.displayDialog = false;
     }
 
