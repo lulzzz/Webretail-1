@@ -1,0 +1,708 @@
+[INFO] [fcafd20f-e652-44f4-88bd-2524304a9ab6] [2017-02-18 10:16:03 GMT+01:00] Running setup: users
+[INFO] [90ef5066-a15d-48ce-a39c-fe93f4ef7fb4] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS users (uniqueid text NOT NULL, username text, password text, facebookid text, googleid text, firstname text, lastname text, email text, CONSTRAINT users_key PRIMARY KEY (uniqueID) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [fdf50ba0-6a5c-42ac-9866-153b40632a2b] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [60619924-bc2d-4323-acda-49af9e6e02a0] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [368b826f-d7b0-4284-b4f9-67235434f07c] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS users (uniqueid text NOT NULL, username text, password text, facebookid text, googleid text, firstname text, lastname text, email text, CONSTRAINT users_key PRIMARY KEY (uniqueID) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [7eaf9c36-3c56-4a01-b96c-c122c9e682c5] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [35ed8a26-295c-4e7d-ba72-f9d606b0052f] [2017-02-18 10:16:03 GMT+01:00] Running setup: tokens
+[INFO] [7954c882-43b6-43bc-bc45-be9a909e0ad8] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS tokens (token text NOT NULL, userid text, created int8, updated int8, idle int8, CONSTRAINT tokens_key PRIMARY KEY (token) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [0b3c0f89-5425-4ce9-8164-6be2c295b707] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [e4d8bc33-1cb8-467e-afa0-dbbe2c8758f1] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [27fd607f-4476-4cae-abcd-46362ef12fc9] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS tokens (token text NOT NULL, userid text, created int8, updated int8, idle int8, CONSTRAINT tokens_key PRIMARY KEY (token) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [08776592-4568-4200-9615-3e3a499d3b1e] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [bb9813ca-e32b-4d84-9759-16ecd52db747] [2017-02-18 10:16:03 GMT+01:00] Running setup: brands
+[INFO] [c6a3988f-6684-4f7f-8460-ed8b0c342b20] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS brands (brandid serial NOT NULL, brandname text, created int8, updated int8, CONSTRAINT brands_key PRIMARY KEY (brandId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [25d2c0c4-4027-4f34-999a-ef39b34cf6f4] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [9dbd3f04-4cea-403b-ac9f-b2c10ccfd7ba] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [71096248-e76f-47ea-90c4-63e119cd138b] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS brands (brandid serial NOT NULL, brandname text, created int8, updated int8, CONSTRAINT brands_key PRIMARY KEY (brandId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [b774ffc8-5f57-4a96-b903-11431bb15ae1] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [c78889d5-03e8-4904-857c-44d4de049b03] [2017-02-18 10:16:03 GMT+01:00] Running setup: categories
+[INFO] [ba451ad9-b67a-413b-9f3e-fa008976184d] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS categories (categoryid serial NOT NULL, categoryname text, isprimary bool, created int8, updated int8, CONSTRAINT categories_key PRIMARY KEY (categoryId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [d374fa82-05ae-4920-92df-7892e476db1e] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [0c194958-3d54-4610-88b7-1d956c7955fb] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [cea93ba9-e19c-4ad3-9394-7b4a981525c9] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS categories (categoryid serial NOT NULL, categoryname text, isprimary bool, created int8, updated int8, CONSTRAINT categories_key PRIMARY KEY (categoryId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [61a734b0-0f34-4cc1-b9c8-3664b5b6ba09] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [20fce26d-c6f3-45cf-8f94-5826583a1717] [2017-02-18 10:16:03 GMT+01:00] Running setup: attributes
+[INFO] [3d238924-b780-42dd-8170-de73bd35d688] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS attributes (attributeid serial NOT NULL, attributename text, created int8, updated int8, CONSTRAINT attributes_key PRIMARY KEY (attributeId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [6b8b8350-2373-4f1b-8e6e-021af1ebba8b] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [35fb8584-067d-4b2c-9cb1-2dac5e527045] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [0d2492dd-c37f-4aea-8388-c0d192ff5a1c] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS attributes (attributeid serial NOT NULL, attributename text, created int8, updated int8, CONSTRAINT attributes_key PRIMARY KEY (attributeId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [2337c16d-c470-4941-8b54-74d85fa6c469] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [2045ab74-4468-40de-8160-69cf704b199d] [2017-02-18 10:16:03 GMT+01:00] Running setup: attributevalues
+[INFO] [2416a735-54b1-49ae-8642-122aa3daf307] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS attributevalues (attributevalueid serial NOT NULL, attributevaluecode text, attributevaluename text, attributeid int8, created int8, updated int8, CONSTRAINT attributevalues_key PRIMARY KEY (attributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [95981f4c-3b2d-4e56-8511-62082c21de98] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [0e76e0ec-07e8-4111-add3-ce5f31e07366] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [e97a6be9-86c3-4451-a0db-2bffc0e07536] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS attributevalues (attributevalueid serial NOT NULL, attributevaluecode text, attributevaluename text, attributeid int8, created int8, updated int8, CONSTRAINT attributevalues_key PRIMARY KEY (attributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [43ed14e6-8037-4437-9670-ff4ac87062de] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [208ce329-fdbd-432f-9c50-8b732ac85d05] [2017-02-18 10:16:03 GMT+01:00] Running setup: products
+[INFO] [b24ad366-63fe-452c-a9c9-23a8cad39891] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS products (productid serial NOT NULL, brandid int8, productcode text, productname text, productum text, productprice float8, created int8, updated int8, CONSTRAINT products_key PRIMARY KEY (productId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [a1bbe8ff-366b-443f-b72a-be5fffeee4d3] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [1a36e0ba-07fa-46c2-8d1b-4f397c36f0e2] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [93582b45-edce-4d37-ac65-2389f9d657ce] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS products (productid serial NOT NULL, brandid int8, productcode text, productname text, productum text, productprice float8, created int8, updated int8, CONSTRAINT products_key PRIMARY KEY (productId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [b3d48261-4a22-49c6-bb49-0c6750b4a237] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [ce04c5f6-ebd5-462e-9e42-90dde57193f5] [2017-02-18 10:16:03 GMT+01:00] Running setup: productcategories
+[INFO] [70339f84-7e71-4eca-a7d6-2cbb918058b9] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS productcategories (productcategoryid serial NOT NULL, productid int8, categoryid int8, CONSTRAINT productcategories_key PRIMARY KEY (productCategoryId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [305fe8e2-9b27-496b-8d3c-13a14d7aa425] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [9c601f70-483f-41d5-97f8-f6974c23db56] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [2ce508ea-3cfd-48fb-8b60-b670a97f0002] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS productcategories (productcategoryid serial NOT NULL, productid int8, categoryid int8, CONSTRAINT productcategories_key PRIMARY KEY (productCategoryId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [623792dc-e159-4c74-8bcb-191c0377e2d8] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [bf57f36a-e6da-418d-913a-006bafa16e64] [2017-02-18 10:16:03 GMT+01:00] Running setup: productattributes
+[INFO] [1b62a774-c558-47a7-b4da-d2fb8bed7521] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS productattributes (productattributeid serial NOT NULL, productid int8, attributeid int8, CONSTRAINT productattributes_key PRIMARY KEY (productAttributeId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [90957e37-1ede-4ac7-9536-a462417e9fd8] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [58ea0b0f-e602-49ef-a884-9ada8087567f] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [bd6e957f-9f53-4962-9f9e-7f3a4bbccb46] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS productattributes (productattributeid serial NOT NULL, productid int8, attributeid int8, CONSTRAINT productattributes_key PRIMARY KEY (productAttributeId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [caf93806-ddfe-4eed-8028-640ea91a0336] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [ce54b828-048a-4cf5-aded-8a5ebbe37b9a] [2017-02-18 10:16:03 GMT+01:00] Running setup: productattributevalues
+[INFO] [b32a7f84-669b-4bfd-8bf4-144bb0d9b8ec] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS productattributevalues (productattributevalueid serial NOT NULL, productattributeid int8, attributevalueid int8, CONSTRAINT productattributevalues_key PRIMARY KEY (productAttributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [ff89d4fa-919f-4b09-8acb-fa417cc4210b] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [be341627-1a5c-45f9-9364-e0f15e5f9c97] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [0f7cc3a9-871b-49b3-869e-265cc196d6ae] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS productattributevalues (productattributevalueid serial NOT NULL, productattributeid int8, attributevalueid int8, CONSTRAINT productattributevalues_key PRIMARY KEY (productAttributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [ab67e1f2-e8f7-4108-ad9b-aabb8d6d7b53] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [6bc98b70-be30-41d5-8d79-911fbe682e01] [2017-02-18 10:16:03 GMT+01:00] Running setup: articles
+[INFO] [1dec9969-43e5-408c-a2f7-776b7970fbfb] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS articles (articleid serial NOT NULL, productid int8, barcode text, created int8, updated int8, CONSTRAINT articles_key PRIMARY KEY (articleId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [84dffbae-1332-454f-ac75-b1aeef035b57] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [61df0f40-213f-4cc2-98de-e97fc31ac957] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [9686ee11-7c21-4846-946e-f44f8c917ed4] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS articles (articleid serial NOT NULL, productid int8, barcode text, created int8, updated int8, CONSTRAINT articles_key PRIMARY KEY (articleId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [6e04fde7-2168-4bcc-81bf-53b7752c6a42] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [7c897252-a62f-45f5-afd8-5a6dd77290d4] [2017-02-18 10:16:03 GMT+01:00] Running setup: articleattributevalues
+[INFO] [466cc1e6-1b30-4e6c-9226-5404d340467a] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS articleattributevalues (articleattributevalueid serial NOT NULL, articleid int8, productattributevalueid int8, CONSTRAINT articleattributevalues_key PRIMARY KEY (articleAttributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [b251ac4a-ae35-4092-8a88-cbb687b83a50] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [e620feda-b125-4c89-a1a8-91c80b17aa35] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [684fb05f-3127-415b-ba0e-0c4d296068e5] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS articleattributevalues (articleattributevalueid serial NOT NULL, articleid int8, productattributevalueid int8, CONSTRAINT articleattributevalues_key PRIMARY KEY (articleAttributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [259dde9a-4163-46a5-8576-359b87938950] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [959612ab-a965-4cfd-9cae-eff21bcbd429] [2017-02-18 10:16:03 GMT+01:00] Running setup: publications
+[INFO] [e20948cf-69f0-4984-9f51-60db77ab0845] [2017-02-18 10:16:03 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS publications (publicationid serial NOT NULL, productid int8, featured bool, startat int8, finishat int8, CONSTRAINT publications_key PRIMARY KEY (publicationId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [34a6330b-4f9b-4198-b996-3e7f6c9801fe] [2017-02-18 10:16:03 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [532b7055-4e90-4b8d-ac31-c8feb84c81e0] [2017-02-18 10:16:03 GMT+01:00] Postgres conn state: ok
+[DEBUG] [772950e5-cd8e-4712-976b-6fe4599c34e2] [2017-02-18 10:16:03 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS publications (publicationid serial NOT NULL, productid int8, featured bool, startat int8, finishat int8, CONSTRAINT publications_key PRIMARY KEY (publicationId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [53a9df12-62c4-4c6b-9e98-3a9c45aac1a3] [2017-02-18 10:16:03 GMT+01:00] Error msg: 
+[INFO] [98c71298-66b6-4e23-bdd8-9ff56770e75e] [2017-02-18 10:16:16 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [e4511c69-eb6b-494e-b404-0b5e1c07756a] [2017-02-18 10:16:16 GMT+01:00] Postgres conn state: ok
+[DEBUG] [e5caa930-fade-40aa-af61-c0400e343a44] [2017-02-18 10:16:16 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [c3e1a91a-1dfb-42ef-9f77-32aec986ef77] [2017-02-18 10:16:16 GMT+01:00] Error msg: 
+[INFO] [52be7bfb-a687-48ea-b3c0-01dafa97b54d] [2017-02-18 10:16:16 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [2df65b73-6e83-419e-99b2-f4d9cd7e07a5] [2017-02-18 10:16:16 GMT+01:00] Postgres conn state: ok
+[DEBUG] [8cd50bc6-2a99-442b-a7c3-2ff0bd04de26] [2017-02-18 10:16:16 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [71d9502c-4099-4e0e-99b5-9c55e9d91900] [2017-02-18 10:16:16 GMT+01:00] Error msg: 
+[INFO] [d1c091e0-5cd2-4e5c-a0aa-e9db559a0d1a] [2017-02-18 10:16:16 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [e894c375-e06d-4138-9018-e7ba97987fb8] [2017-02-18 10:16:16 GMT+01:00] Postgres conn state: ok
+[DEBUG] [2731c5b4-91a4-429f-b34e-6577f44bda94] [2017-02-18 10:16:16 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102176, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [718d0ba7-1bb2-4602-a675-d3d705ee534f] [2017-02-18 10:16:16 GMT+01:00] Error msg: 
+[INFO] [6e4d6e31-ec3c-4b00-abfc-8ba5f9ae1522] [2017-02-18 10:16:16 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [c5bfcaa9-fe75-4a10-b09e-4c83fb95da82] [2017-02-18 10:16:16 GMT+01:00] Postgres conn state: ok
+[DEBUG] [2e33523a-5700-45ca-b21f-8b401c3e66da] [2017-02-18 10:16:16 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [79481931-6ab2-4b13-815c-16878523466b] [2017-02-18 10:16:16 GMT+01:00] Error msg: 
+[INFO] [168c768e-6e32-47c5-9801-39ae42941716] [2017-02-18 10:16:16 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [f10ee46a-0a4b-4afa-b775-e569f5855f68] [2017-02-18 10:16:16 GMT+01:00] Postgres conn state: ok
+[DEBUG] [31105da1-3b8a-450e-ac6a-f887e35ff84e] [2017-02-18 10:16:16 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [22fc69c6-06e9-40c6-a877-21e35778c0b8] [2017-02-18 10:16:16 GMT+01:00] Error msg: 
+[INFO] [ab5e648b-fe82-40e7-842e-e0c6bc583dd9] [2017-02-18 10:16:16 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [b3ac987e-66ba-4a2a-88b2-3e25f34e1912] [2017-02-18 10:16:16 GMT+01:00] Postgres conn state: ok
+[INFO] [ea51b1c9-2a53-4cb1-ad79-6bd224fa8898] [2017-02-18 10:16:16 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[DEBUG] [81228829-ccec-4118-b702-ff614aa3754c] [2017-02-18 10:16:16 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102176, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [781bd8c2-2ffe-42ef-856a-196ec531d24a] [2017-02-18 10:16:16 GMT+01:00] Error msg: 
+[INFO] [72b10a39-3df1-4964-bef4-bd5192658c9c] [2017-02-18 10:16:16 GMT+01:00] Postgres conn state: ok
+[DEBUG] [9472d3ec-4261-4597-ba4f-7c5ad4764074] [2017-02-18 10:16:16 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [506a3b56-7121-4d26-a9e7-98a3db60127a] [2017-02-18 10:16:16 GMT+01:00] Error msg: 
+[INFO] [33915eb0-87df-47ce-8ba0-ed624ea9b370] [2017-02-18 10:16:16 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [17bb1611-7c43-4e35-bbc7-134b6fe714ce] [2017-02-18 10:16:16 GMT+01:00] Postgres conn state: ok
+[DEBUG] [95273720-ffe9-479b-a91a-472a7021af73] [2017-02-18 10:16:16 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [02878681-2972-4703-a33c-6afaac397880] [2017-02-18 10:16:16 GMT+01:00] Error msg: 
+[INFO] [a4e3a948-05a8-48e4-8c84-a996f3ff4e8d] [2017-02-18 10:16:16 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [cf20e0b6-78c4-4cce-8284-eabaace503e8] [2017-02-18 10:16:16 GMT+01:00] Postgres conn state: ok
+[DEBUG] [2f21b4c8-82a2-445f-87d6-01b0575e3756] [2017-02-18 10:16:16 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102176, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [52866dc6-97dc-4fd2-9a09-7ce8b737244d] [2017-02-18 10:16:16 GMT+01:00] Error msg: 
+[INFO] [679bf298-81ee-44c0-80cc-5cb0685dd0ae] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [74b08369-86c0-41e9-ad7f-4ac1bd73b9d5] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [2c7c4160-f2dc-4cd8-b230-79b4b2749266] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[INFO] [eb563c35-e6be-47e9-8440-0a4c1c2d1e94] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [7dcbe8ed-4ac6-44f0-b8d0-5bd1a591fda9] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[DEBUG] [38b29570-40aa-4457-8da8-0529a32c4a23] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [949067b0-5746-4a48-98e4-601b1d0004c5] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [bd2047ed-09b4-479a-b5b7-deb3fc7d01cc] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [bb9259da-cae0-4bd7-af9f-c2782b27e8cf] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [895fa1c5-4ff5-4a03-9e1c-44e6da77a2ce] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [697d7d47-dc0b-4dc8-8abf-c8b2a977974e] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[INFO] [6bb969f3-0099-49b3-a17e-a07807c22e05] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [c8414d83-9302-4b3b-be27-7d78f8e6fde4] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[DEBUG] [f152abfd-1fa2-4130-8516-13819ef28998] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [da4a4010-6216-4518-8ded-e3250ec56461] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [e55eb8e0-53ff-4db1-b43d-5e5ba59fbd86] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [8fa70e6b-3e6d-45a7-89f0-fdc1893a2f7c] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [16236028-ca9a-47bd-b18e-51e8c48b0e85] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [f1679431-6d44-4612-a1e4-a208ef0c1523] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[INFO] [fc6156af-b2db-411e-bf44-939e94d06c7f] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [29b90f88-5abc-4f83-b571-9f49b77ebfc5] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102305, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[DEBUG] [3d182035-58cb-4093-9d06-af2b6d7c6087] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102305, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [41d18efe-af49-4f92-81f8-082c042cacfd] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [889d567d-8f06-47d1-b7eb-80a77a2df388] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [63941770-3bdc-45a9-958f-581d20e57846] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [26fe25c7-b773-4f0f-833d-9392a4372d20] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [bdcc4cca-31cf-4722-a8f6-25c5ef49c0ac] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[INFO] [35d1288e-968f-4baa-94a0-79df903af0a8] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [6a8bee47-7737-47fe-a476-6d7627babf45] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM brands  WHERE true : 
+[DEBUG] [deb4df41-644e-49be-b8dc-87670629bea2] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM products  WHERE true : 
+[INFO] [bd9e3b34-501f-47f7-ab54-57e1e4856757] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [4b653cbd-be1e-462f-b87a-79b201ac3973] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [20fd7f4e-8e10-4734-af9c-320ccf49a02f] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [2d596cd2-3e3e-43a9-90bb-87bc76e5a615] [2017-02-18 10:18:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [621b61da-60a4-4827-a32f-4ee9d0dc585b] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[INFO] [3bc79200-a317-4c77-9cda-24368da36187] [2017-02-18 10:18:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [719b4c48-c82a-43fa-b199-82d5693a22a7] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: SELECT "productid","brandid","productcode","productname","productum","productprice","created","updated" FROM products  WHERE true  LIMIT 9999999 : 
+[DEBUG] [4a41c6ed-c5d5-4aaa-8b26-c88d5c69c291] [2017-02-18 10:18:25 GMT+01:00] StORM Debug: SELECT "brandid","brandname","created","updated" FROM brands  WHERE true  LIMIT 9999999 : 
+[INFO] [7ef2a9e0-216c-415c-9d1a-0e41c5c8690e] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [81dc0a80-2bfe-4bd4-8dbb-534381590cc7] [2017-02-18 10:18:25 GMT+01:00] Error msg: 
+[INFO] [84655388-eff2-4823-8e4b-149162d8a364] [2017-02-18 10:18:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [c12e355c-e504-4045-ab60-294e3210a2a0] [2017-02-18 10:18:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [bc71e869-96f2-408d-b89f-51165fa71f65] [2017-02-18 10:18:27 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [bffb53b5-27cd-4c6f-9256-3113fddcef4f] [2017-02-18 10:18:27 GMT+01:00] Error msg: 
+[INFO] [da7be596-6c87-4ac3-b2af-617bc17e56ab] [2017-02-18 10:18:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [8b602d3c-f427-4960-a7cd-cf6fa1e8c68e] [2017-02-18 10:18:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [80a3298f-7d93-4202-8c6a-29477ffe18f2] [2017-02-18 10:18:27 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [8ad3ee82-0f19-4e66-ad97-e4a18d8c131b] [2017-02-18 10:18:27 GMT+01:00] Error msg: 
+[INFO] [db48897a-6cb5-4577-9355-5869ed202a34] [2017-02-18 10:18:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [917ea082-5b63-4814-a6d5-5966c17b0912] [2017-02-18 10:18:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [e336dff3-9b9a-4474-9617-5997c5c660d8] [2017-02-18 10:18:27 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102307, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [498dcda3-4533-4604-b40f-af375c5f2971] [2017-02-18 10:18:27 GMT+01:00] Error msg: 
+[INFO] [2697dd6b-d92d-4f34-845a-3f9c0c92bb3b] [2017-02-18 10:18:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [fc2e7bb0-a63a-490d-b1f2-b6f3eaad6747] [2017-02-18 10:18:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [697e173f-11ad-4366-80f7-3c9e33276798] [2017-02-18 10:18:27 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM products  WHERE "productid" = $1 : 1
+[INFO] [274e8295-045f-4fd5-9cb0-6cb7518ff260] [2017-02-18 10:18:27 GMT+01:00] Error msg: 
+[INFO] [04e4d953-aaf2-4788-84a8-c2cf90bc5389] [2017-02-18 10:18:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [bcc8a3b9-2706-47c5-99e1-746c7e61cef9] [2017-02-18 10:18:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [902af65d-eddb-4b39-b5aa-fa55d39ea78b] [2017-02-18 10:18:27 GMT+01:00] StORM Debug: SELECT "productid","brandid","productcode","productname","productum","productprice","created","updated" FROM products  WHERE "productid" = $1  LIMIT 50 : 1
+[INFO] [4d9105e0-63b9-4f47-b452-912320427867] [2017-02-18 10:18:27 GMT+01:00] Error msg: 
+[INFO] [c7c02c13-4ad4-4a22-bfa2-aa8a3ca1fd44] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [176a0d1c-8997-49df-a7f1-91958796fb76] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [aab53230-b969-4fc7-b056-f03a4e7473dc] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[INFO] [01b7d83a-e34c-4580-be87-862ad4c05010] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[DEBUG] [150b7d4b-5b72-4359-8db3-e7f835cd2d63] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[DEBUG] [37123e1c-4cfc-4b57-bc5b-2e602bd36c7a] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [7c497c1f-388c-4097-b8bd-513dc2e12568] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [ba810cea-c0f4-4a3e-a643-1ed83dcb108e] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [3ba0fc0b-329d-4db8-82e3-c446ed101b22] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [bc76629f-1dc7-4513-8a07-ff0d5a8a7245] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [780c6623-14fb-437f-a4fe-526bbf77cb23] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[INFO] [508db9b6-8f9a-4367-9d0a-2c5166f12ada] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[DEBUG] [6841582e-0f4c-467c-9f23-a6f635a14cb2] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[DEBUG] [d390bea8-87e8-40e2-a03a-ca8d15be30ff] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [daae4603-c75c-4ffa-93ba-9421326d8437] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [fabc87e0-5291-48aa-84c3-f948edffaecb] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [8e7aa28a-0c70-49d1-9618-693028cc4904] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [9a289cad-61aa-4742-beff-4e2a89b96283] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [eafd10de-9084-446e-a035-66029a8dc6a0] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[INFO] [3946c090-5256-44e8-97ba-54044294eaff] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[DEBUG] [74381e44-eac2-4637-90bb-cc68e5598cfb] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102312, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[DEBUG] [3be20e72-a651-4f3c-8c9f-15892569dd72] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102312, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [7e9098bf-5ac1-4ff5-9d6d-3f6c5243f43f] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [d0bd39c5-fa9f-48ce-b9bc-4be295a8fa16] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [3addcd31-e3e2-4d7b-9134-882364be2917] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [a972a595-527a-4c44-9655-95fcf242694a] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [41d6a212-ad42-4447-9923-e5f46f84acfc] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[INFO] [8e083edb-3a0d-427d-8fa0-69443fa6ff77] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[DEBUG] [0d1d92d8-fded-4088-8a24-f747439e7ed5] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM brands  WHERE true : 
+[DEBUG] [f20d0fcc-9bc3-4387-a390-8c809a2cf0d0] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM products  WHERE true : 
+[INFO] [0d275be8-a8a7-4f79-ac67-b31b3dbafc30] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [c0da05ed-169d-4652-993a-744470952d29] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [6d1b85cd-edf2-485e-bb6a-fba282686c98] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [e7ce8ded-1549-4111-bf43-29a436ee4013] [2017-02-18 10:18:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [a7fa9435-d425-400f-b193-9f0db812e7a5] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[DEBUG] [5a53165a-2f98-43f4-bdab-1ad61ee8cb48] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: SELECT "productid","brandid","productcode","productname","productum","productprice","created","updated" FROM products  WHERE true  LIMIT 9999999 : 
+[INFO] [5a4a631e-caf2-4439-b3ee-85f4c984658b] [2017-02-18 10:18:32 GMT+01:00] Postgres conn state: ok
+[DEBUG] [accbcee7-c2b2-49e7-b28d-07d161f2ed75] [2017-02-18 10:18:32 GMT+01:00] StORM Debug: SELECT "brandid","brandname","created","updated" FROM brands  WHERE true  LIMIT 9999999 : 
+[INFO] [34a3743d-1209-4f2d-afb5-c16ff7e7979f] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [2b8be8d5-0824-4a5e-a33c-ec3d8fa35e01] [2017-02-18 10:18:32 GMT+01:00] Error msg: 
+[INFO] [b8a21224-36ad-42b6-a500-c0b5d63d9761] [2017-02-18 10:18:48 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [2665502e-fad6-46a8-a724-eded376ec6ae] [2017-02-18 10:18:48 GMT+01:00] Postgres conn state: ok
+[DEBUG] [2cf5491a-d066-4bfe-8001-5307effef631] [2017-02-18 10:18:48 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [8a113864-206d-40a7-aa4f-76f135be15f7] [2017-02-18 10:18:48 GMT+01:00] Error msg: 
+[INFO] [fdeac1d9-75f5-4f31-b932-ee08936e5277] [2017-02-18 10:18:48 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [bcc647a3-94d9-4917-a056-b239b26918cd] [2017-02-18 10:18:48 GMT+01:00] Postgres conn state: ok
+[DEBUG] [1c6eee6c-5f57-42f6-a7b5-fe5e59c05c9e] [2017-02-18 10:18:48 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [3129b7e8-8667-4725-b06e-9d7afc7b3c6f] [2017-02-18 10:18:48 GMT+01:00] Error msg: 
+[INFO] [2a7f98ad-f52c-48cf-a74e-49d61266129d] [2017-02-18 10:18:48 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [e65c862e-08a7-4ba2-a757-f3bfc402076d] [2017-02-18 10:18:48 GMT+01:00] Postgres conn state: ok
+[DEBUG] [9baf56fb-6f6b-4f33-96e1-65fc18dccb17] [2017-02-18 10:18:48 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102328, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [69514152-0563-47b9-99bc-8f6530caaf78] [2017-02-18 10:18:48 GMT+01:00] Error msg: 
+[INFO] [2411bf97-59c2-4fcb-9de6-6dd9d6d44d6b] [2017-02-18 10:18:48 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [3fddf96c-a258-41a7-8cfc-51329c57f711] [2017-02-18 10:18:48 GMT+01:00] Postgres conn state: ok
+[DEBUG] [3f4d88d5-c411-4c85-ae32-f6205a90e52a] [2017-02-18 10:18:48 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM users  WHERE true : 
+[INFO] [74393b66-b578-4a04-91a3-d6394db204b5] [2017-02-18 10:18:48 GMT+01:00] Error msg: 
+[INFO] [f96f2de4-78f5-4634-b2ac-b176ce670c1e] [2017-02-18 10:18:48 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [281d7a82-c991-4e5e-a5b6-f4e9c3ba3825] [2017-02-18 10:18:48 GMT+01:00] Postgres conn state: ok
+[DEBUG] [19297738-2229-4d2d-bb12-6a531a9e04c3] [2017-02-18 10:18:48 GMT+01:00] StORM Debug: SELECT "uniqueid","username","password","firstname","lastname","email" FROM users  WHERE true  LIMIT 9999999 : 
+[INFO] [e895cdc7-46a8-497d-a2f2-f26e8f2fe744] [2017-02-18 10:18:48 GMT+01:00] Error msg: 
+[INFO] [917dc608-ddf6-4b17-9ead-ffcd44e8eeb8] [2017-02-18 10:20:40 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [67db08d9-3613-417a-9a8e-987ff3d0a19a] [2017-02-18 10:20:40 GMT+01:00] Postgres conn state: ok
+[DEBUG] [686f9e95-3bb9-479f-8ed0-bf347ab26c8f] [2017-02-18 10:20:40 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [db4277c3-8439-46bf-a9de-a732f4f28aad] [2017-02-18 10:20:40 GMT+01:00] Error msg: 
+[INFO] [6ed15097-5d44-47f6-98fd-c5f4dd1e0387] [2017-02-18 10:20:40 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [abac150e-e2ab-4e7f-9457-f12db503388b] [2017-02-18 10:20:40 GMT+01:00] Postgres conn state: ok
+[DEBUG] [e19dc4ed-f987-45de-a70b-21b1a372d7ea] [2017-02-18 10:20:40 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [53b591d0-c3fd-44bd-b655-2dab815f6929] [2017-02-18 10:20:40 GMT+01:00] Error msg: 
+[INFO] [f8c82817-e4ed-4f77-a2de-11326e52aded] [2017-02-18 10:20:40 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [1ea0a1fb-4225-48f8-8ecf-488df605721c] [2017-02-18 10:20:40 GMT+01:00] Postgres conn state: ok
+[DEBUG] [4dd374ae-d80f-44f4-8505-543d5e3fd709] [2017-02-18 10:20:40 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102440, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [433e9251-47bf-42a2-9198-02023a9a1a16] [2017-02-18 10:20:40 GMT+01:00] Error msg: 
+[INFO] [b8fe73c1-a7e5-42b3-b9a7-f2348d9cf6e9] [2017-02-18 10:20:40 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [860ba2c4-8b2e-4c5a-bc2f-7bc83a7e199b] [2017-02-18 10:20:40 GMT+01:00] Postgres conn state: ok
+[DEBUG] [5343cd4a-d7ce-43be-9a4c-7c9d9c1d9e26] [2017-02-18 10:20:40 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM users  WHERE true : 
+[INFO] [19a12641-6022-4703-948b-5923a1fd3ef6] [2017-02-18 10:20:40 GMT+01:00] Error msg: 
+[INFO] [aac67e17-8d1e-46ce-9a2e-d157ff8733eb] [2017-02-18 10:20:40 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [43e533b1-8496-41e9-91ba-46f7ccbb5a51] [2017-02-18 10:20:40 GMT+01:00] Postgres conn state: ok
+[DEBUG] [4c8b269e-4369-4893-997a-54a0ffb87799] [2017-02-18 10:20:40 GMT+01:00] StORM Debug: SELECT "uniqueid","username","password","firstname","lastname","email" FROM users  WHERE true  LIMIT 9999999 : 
+[INFO] [3f93cf5c-c3f5-4dfa-9bf9-497a903a4644] [2017-02-18 10:20:40 GMT+01:00] Error msg: 
+[INFO] [01a56b11-32e4-4341-bce8-8725386c24b3] [2017-02-18 10:23:09 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [45fdf262-26c8-4fd5-be9e-a4a2dd5c726d] [2017-02-18 10:23:09 GMT+01:00] Postgres conn state: ok
+[DEBUG] [ce3cdcc9-e37b-40f2-b99e-460770713394] [2017-02-18 10:23:09 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [09801d64-c0fc-448e-a7e9-e4f4feec1a1d] [2017-02-18 10:23:09 GMT+01:00] Error msg: 
+[INFO] [fc12dc86-9a90-41a5-b9a2-4a9b2126877e] [2017-02-18 10:23:09 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [3d5d4b18-d63c-440f-87d3-882306ab6878] [2017-02-18 10:23:09 GMT+01:00] Postgres conn state: ok
+[DEBUG] [4cf14fb0-718d-47bc-81e6-1579ffb74be3] [2017-02-18 10:23:09 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [fa694652-236b-41cd-a0b6-19e3a2e05465] [2017-02-18 10:23:09 GMT+01:00] Error msg: 
+[INFO] [5048326e-a641-4c4e-bbdf-43d39d961e72] [2017-02-18 10:23:09 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [1598620a-84cb-46b1-842e-fa7aa4ecd19f] [2017-02-18 10:23:09 GMT+01:00] Postgres conn state: ok
+[DEBUG] [7fefc802-47e4-4420-b52e-790b43e8fc0b] [2017-02-18 10:23:09 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102589, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [add20808-90a3-4688-af69-e6dee0e35f42] [2017-02-18 10:23:09 GMT+01:00] Error msg: 
+[INFO] [3d800898-5fa8-41f6-97eb-174b958d389d] [2017-02-18 10:23:09 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [2e2889ae-a550-4755-9135-b5c3605903f7] [2017-02-18 10:23:09 GMT+01:00] Postgres conn state: ok
+[DEBUG] [628a2352-4288-4b57-82eb-b81c8b03c75a] [2017-02-18 10:23:09 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM users  WHERE true : 
+[INFO] [61b6341f-3ec9-44d8-953b-afc7f5cedc30] [2017-02-18 10:23:09 GMT+01:00] Error msg: 
+[INFO] [1d7ea4d9-b90a-4112-83ea-d50f35082f2d] [2017-02-18 10:23:09 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [8fbddd76-058b-44ab-8d9c-6bc4788171b2] [2017-02-18 10:23:09 GMT+01:00] Postgres conn state: ok
+[DEBUG] [fe4db8e0-f249-4b70-a051-69677f753ce2] [2017-02-18 10:23:09 GMT+01:00] StORM Debug: SELECT "uniqueid","username","password","firstname","lastname","email" FROM users  WHERE true  LIMIT 9999999 : 
+[INFO] [7b12d3aa-826c-492c-8855-a4080dbc9027] [2017-02-18 10:23:09 GMT+01:00] Error msg: 
+[INFO] [d75b4045-33ed-465f-ad0a-5101b81427f7] [2017-02-18 10:23:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [90689989-bc50-4c7b-b648-8e8f698ea6c2] [2017-02-18 10:23:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [3845f120-c4b6-4979-a306-78bce0bdf6e7] [2017-02-18 10:23:25 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [90775d83-bb11-4240-b7d2-fc8c2b51c303] [2017-02-18 10:23:25 GMT+01:00] Error msg: 
+[INFO] [9b0678d0-88ff-4470-981b-9d1122a902d2] [2017-02-18 10:23:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [d2a4fcff-d453-471d-bfdc-933260e0e374] [2017-02-18 10:23:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [a1c2227f-8dad-482e-a8ae-98685a2015a3] [2017-02-18 10:23:25 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [bff9b6fc-5503-4eb7-ab05-95bddc0de270] [2017-02-18 10:23:25 GMT+01:00] Error msg: 
+[INFO] [0dd9df69-9ae9-42f0-9a5f-0617ad9b62f3] [2017-02-18 10:23:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [a7585e7e-27bf-43a4-9038-e245b3ca027e] [2017-02-18 10:23:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [31f04331-a089-428a-8cf1-844d5c2e845c] [2017-02-18 10:23:25 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102605, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [5abefb6a-a1e3-433d-b5b9-6db843a67a95] [2017-02-18 10:23:25 GMT+01:00] Error msg: 
+[INFO] [747299c2-e963-4688-b40a-61e14b87a60a] [2017-02-18 10:23:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [892c1699-3c53-4b8c-afca-865c8651a244] [2017-02-18 10:23:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [cc7f26c0-dc7d-4357-ba0f-5f3aa623d800] [2017-02-18 10:23:25 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM brands  WHERE true : 
+[INFO] [0902ab9c-5668-49e5-895d-f7c3a552d21b] [2017-02-18 10:23:25 GMT+01:00] Error msg: 
+[INFO] [fed529e6-61f5-49f8-bdee-3f0e0751f259] [2017-02-18 10:23:25 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [fe39d595-5b2f-4dbb-8029-69c8097f021d] [2017-02-18 10:23:25 GMT+01:00] Postgres conn state: ok
+[DEBUG] [a866a89f-3a77-41ce-af8a-46d58a86f1ef] [2017-02-18 10:23:25 GMT+01:00] StORM Debug: SELECT "brandid","brandname","created","updated" FROM brands  WHERE true  LIMIT 9999999 : 
+[INFO] [45986744-63cc-41b9-bfcc-f28150065ae2] [2017-02-18 10:23:25 GMT+01:00] Error msg: 
+[INFO] [5005f04f-4004-4814-8ac2-5038d3011cfb] [2017-02-18 10:24:42 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [c1da50fc-18e5-4fd5-a2bd-863ca05537c6] [2017-02-18 10:24:42 GMT+01:00] Postgres conn state: ok
+[DEBUG] [f36e4933-2f9b-445a-b35a-c9d81d097bcb] [2017-02-18 10:24:42 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [af7c1a01-d7ca-404d-bf1b-b44b09af8b74] [2017-02-18 10:24:42 GMT+01:00] Error msg: 
+[INFO] [f043cb9d-7bd5-455f-86bb-8e70898bd847] [2017-02-18 10:24:42 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [405b8e5a-b01c-4b43-9208-34cb398aadb1] [2017-02-18 10:24:42 GMT+01:00] Postgres conn state: ok
+[DEBUG] [a9149f1c-f836-4417-bebf-a6af9cfe3f2f] [2017-02-18 10:24:42 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [b406dd54-0cd0-4f3a-b58a-a0ea96d4388d] [2017-02-18 10:24:42 GMT+01:00] Error msg: 
+[INFO] [f61deaad-a53e-4129-aa2a-025aa4fb78d0] [2017-02-18 10:24:42 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [7c3188b5-c2a8-4388-975d-c7ee5a82c3b0] [2017-02-18 10:24:42 GMT+01:00] Postgres conn state: ok
+[DEBUG] [e2bf07a4-3273-4462-b3ce-e6ff13758ced] [2017-02-18 10:24:42 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102682, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [4bcf9de9-a6a3-4827-b8b4-5da4c5cc57fb] [2017-02-18 10:24:42 GMT+01:00] Error msg: 
+[INFO] [eddb9be6-9a89-48c2-a3f9-24deaad813af] [2017-02-18 10:24:42 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [73642229-1c66-4898-85fd-ff0cc64e068e] [2017-02-18 10:24:42 GMT+01:00] Postgres conn state: ok
+[DEBUG] [feef22a7-0456-4517-af60-f17f8704255d] [2017-02-18 10:24:42 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM brands  WHERE true : 
+[INFO] [70d3b6db-bbbe-4fcd-9d28-2b5a93a331b5] [2017-02-18 10:24:42 GMT+01:00] Error msg: 
+[INFO] [bb07d21c-cfb3-49d3-a275-ac7068abfa71] [2017-02-18 10:24:42 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [690b753a-d649-4d4d-bb10-766ff0e76344] [2017-02-18 10:24:42 GMT+01:00] Postgres conn state: ok
+[DEBUG] [78771d1f-c710-42c2-ab5f-1c6c2e8a0508] [2017-02-18 10:24:42 GMT+01:00] StORM Debug: SELECT "brandid","brandname","created","updated" FROM brands  WHERE true  LIMIT 9999999 : 
+[INFO] [5ef3b3f9-998d-4293-9275-f14ce44c45de] [2017-02-18 10:24:42 GMT+01:00] Error msg: 
+[INFO] [708dc009-1a91-4db9-b56c-3b37a39e1e37] [2017-02-18 10:24:45 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [dce05fff-f7f7-41c9-ac82-ffc587947c0d] [2017-02-18 10:24:45 GMT+01:00] Postgres conn state: ok
+[DEBUG] [961698e6-2c98-481c-b9ec-1765489fb5db] [2017-02-18 10:24:45 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [27890115-047a-46c3-939f-110de26d42d0] [2017-02-18 10:24:45 GMT+01:00] Error msg: 
+[INFO] [9bd02387-77bc-4019-84f0-355e73e1d71d] [2017-02-18 10:24:45 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [1e8654aa-fb5b-4a06-9f8e-132db3399c73] [2017-02-18 10:24:45 GMT+01:00] Postgres conn state: ok
+[DEBUG] [121f0fae-d14a-4c55-9ab9-b9761d6b1cb3] [2017-02-18 10:24:45 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [7eb7b9a7-718a-4841-afd8-017159428568] [2017-02-18 10:24:45 GMT+01:00] Error msg: 
+[INFO] [13aea062-bc7b-402d-9b04-03b000054af4] [2017-02-18 10:24:45 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [1aa0f3c5-a6ce-41fa-b48c-f0b5a3cff1d0] [2017-02-18 10:24:45 GMT+01:00] Postgres conn state: ok
+[DEBUG] [279950f6-8afb-405d-b09a-f403510e582d] [2017-02-18 10:24:45 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102685, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [8424b6a4-eedc-4c1c-86d1-cd866ab06910] [2017-02-18 10:24:45 GMT+01:00] Error msg: 
+[INFO] [92467cdf-a064-4da7-80b7-bec5de64202e] [2017-02-18 10:24:45 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [16aa5f9c-4e24-458b-b545-7d03eae7014a] [2017-02-18 10:24:45 GMT+01:00] Postgres conn state: ok
+[DEBUG] [aa37e953-5f5c-4af6-8391-dbe801cb41b8] [2017-02-18 10:24:45 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM users  WHERE true : 
+[INFO] [ef51bc7d-426c-4568-bb7c-cdc73b3c2020] [2017-02-18 10:24:45 GMT+01:00] Error msg: 
+[INFO] [bec1718f-542f-4729-bb7e-4e760984f808] [2017-02-18 10:24:45 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [7f2f7191-6765-4f15-8def-375d8b8cee89] [2017-02-18 10:24:45 GMT+01:00] Postgres conn state: ok
+[DEBUG] [75433761-c6ec-474e-b340-bbe2273c70d8] [2017-02-18 10:24:45 GMT+01:00] StORM Debug: SELECT "uniqueid","username","password","firstname","lastname","email" FROM users  WHERE true  LIMIT 9999999 : 
+[INFO] [03944641-bd4e-4ab8-bc68-9eec33cc89eb] [2017-02-18 10:24:45 GMT+01:00] Error msg: 
+[INFO] [b75eda81-8451-45a0-ab51-3330115550f1] [2017-02-18 10:24:59 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [28f5844b-c6b1-4858-91e6-1aa0ce9f3f54] [2017-02-18 10:24:59 GMT+01:00] Postgres conn state: ok
+[DEBUG] [0987cf56-1c89-4e03-850d-ed2b6fc1e2a0] [2017-02-18 10:24:59 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [ba9bd289-e8bd-4d90-85cb-24b357e32cd0] [2017-02-18 10:24:59 GMT+01:00] Error msg: 
+[INFO] [1073c9cb-a683-4f57-bfc0-f40f55b8a224] [2017-02-18 10:24:59 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [8085add6-9e25-4595-9cbe-7e571038dede] [2017-02-18 10:24:59 GMT+01:00] Postgres conn state: ok
+[DEBUG] [0a5eab7c-7dcc-4769-b567-e009fe0b116f] [2017-02-18 10:24:59 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [911ac700-ab13-417e-9395-1f56c552e3f3] [2017-02-18 10:24:59 GMT+01:00] Error msg: 
+[INFO] [4640a9e9-c3f9-4584-8410-b8c470d09e49] [2017-02-18 10:24:59 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [47d89924-ef8b-4d05-9e20-e627744713f1] [2017-02-18 10:24:59 GMT+01:00] Postgres conn state: ok
+[DEBUG] [598cf368-71e5-4faf-8330-f9fedf825510] [2017-02-18 10:24:59 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509102699, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [bbb9d38e-a545-4812-8b9b-a333f5315da9] [2017-02-18 10:24:59 GMT+01:00] Error msg: 
+[INFO] [147cd2e0-c32e-4a89-a146-90011e69b4c7] [2017-02-18 10:30:02 GMT+01:00] Running setup: users
+[INFO] [c3d47424-e428-432e-8a04-6da4924c1249] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS users (uniqueid text NOT NULL, username text, password text, facebookid text, googleid text, firstname text, lastname text, email text, CONSTRAINT users_key PRIMARY KEY (uniqueID) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [57f41c94-30c5-48fb-9d1c-91951e25ac94] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [f7c743bc-f36e-4729-8248-b54f462d0cd0] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [849b992c-555f-4fb2-83c7-73105fbbd89a] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS users (uniqueid text NOT NULL, username text, password text, facebookid text, googleid text, firstname text, lastname text, email text, CONSTRAINT users_key PRIMARY KEY (uniqueID) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [1224faee-0692-4341-8b0d-4c0af470cf04] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [6cf99e92-2334-4592-80fd-e1e2c7b3aa1f] [2017-02-18 10:30:02 GMT+01:00] Running setup: tokens
+[INFO] [b08af049-d67d-47e4-b6e6-c59b719edc4d] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS tokens (token text NOT NULL, userid text, created int8, updated int8, idle int8, CONSTRAINT tokens_key PRIMARY KEY (token) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [5aea22db-90ab-4cd6-b6b7-a85f1f7d5544] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [807ec07b-f127-41f5-ae28-2df766953940] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [8d7cbed6-282b-4763-ae6c-0ded0101d3fb] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS tokens (token text NOT NULL, userid text, created int8, updated int8, idle int8, CONSTRAINT tokens_key PRIMARY KEY (token) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [452457f8-3f6e-4dde-bb0f-0b05b13f936c] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [80a4a722-b3d0-4f84-bb51-349d79682c97] [2017-02-18 10:30:02 GMT+01:00] Running setup: brands
+[INFO] [af9d0a70-69c9-4922-b87a-6171c74bb1e5] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS brands (brandid serial NOT NULL, brandname text, created int8, updated int8, CONSTRAINT brands_key PRIMARY KEY (brandId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [a9283c17-1153-467a-8605-07384f4622fb] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [8106ec8d-7100-419f-b678-2f1c521b8ceb] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [04ebb691-59f1-4184-9495-2cfd8e51afa5] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS brands (brandid serial NOT NULL, brandname text, created int8, updated int8, CONSTRAINT brands_key PRIMARY KEY (brandId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [ced08e13-87f6-46c5-a357-95c51a78e244] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [e5b9b915-db42-4f95-96df-9db070c0d231] [2017-02-18 10:30:02 GMT+01:00] Running setup: categories
+[INFO] [09ad68ab-f57c-45ef-9c1c-b991db868831] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS categories (categoryid serial NOT NULL, categoryname text, isprimary bool, created int8, updated int8, CONSTRAINT categories_key PRIMARY KEY (categoryId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [b5e6005b-53ad-4c80-a575-80f95a42b660] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [4d80a3e7-463b-482c-b668-fc50be5dbffd] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [0afe342c-b184-445c-a35b-7c29a28ab1ee] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS categories (categoryid serial NOT NULL, categoryname text, isprimary bool, created int8, updated int8, CONSTRAINT categories_key PRIMARY KEY (categoryId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [758b04dc-c9d3-4fff-b117-dabf547f0c93] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [64d67e2e-3641-4987-a279-a2707db69f22] [2017-02-18 10:30:02 GMT+01:00] Running setup: attributes
+[INFO] [fe951065-080a-4cee-b64b-aae44c59a1da] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS attributes (attributeid serial NOT NULL, attributename text, created int8, updated int8, CONSTRAINT attributes_key PRIMARY KEY (attributeId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [b74ffff2-0270-422f-be3c-a1339fa68d2e] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [af0aeee4-4a2b-43cc-893c-0e987c43ef60] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [611c373c-025c-445f-9ad2-9a9e669dc508] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS attributes (attributeid serial NOT NULL, attributename text, created int8, updated int8, CONSTRAINT attributes_key PRIMARY KEY (attributeId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [f91af2eb-3939-4ee8-a4f5-17e5f1cd91af] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [aa0a36f4-3858-45f6-a3b0-c11c32065e66] [2017-02-18 10:30:02 GMT+01:00] Running setup: attributevalues
+[INFO] [b1920e95-dd40-4605-b162-0f056b835b40] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS attributevalues (attributevalueid serial NOT NULL, attributevaluecode text, attributevaluename text, attributeid int8, created int8, updated int8, CONSTRAINT attributevalues_key PRIMARY KEY (attributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [2c82b318-5474-478c-90e2-227efe514a71] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [d94eda94-53b6-451f-8c13-bf0f1504e12f] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [4e2fa314-39c5-46f0-a8f8-d98295720098] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS attributevalues (attributevalueid serial NOT NULL, attributevaluecode text, attributevaluename text, attributeid int8, created int8, updated int8, CONSTRAINT attributevalues_key PRIMARY KEY (attributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [37f74b17-6987-4031-83bf-3dce52db9f19] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [0f307515-4f86-43e0-b721-26efeffd0162] [2017-02-18 10:30:02 GMT+01:00] Running setup: products
+[INFO] [7e249527-b91a-4087-be4b-c0fb355dedba] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS products (productid serial NOT NULL, brandid int8, productcode text, productname text, productum text, productprice float8, created int8, updated int8, CONSTRAINT products_key PRIMARY KEY (productId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [eb703c8f-247c-4ae0-9be4-2d556135ce15] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [5db1ead4-feea-43ad-93e5-cf09063a54f1] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [05ef2687-0ac8-440e-9516-5f6badec527a] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS products (productid serial NOT NULL, brandid int8, productcode text, productname text, productum text, productprice float8, created int8, updated int8, CONSTRAINT products_key PRIMARY KEY (productId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [0e97a6f5-4396-4161-9e1e-1bd3665343ae] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [b3e30d3c-6b9c-475b-92af-36d26ef5b70f] [2017-02-18 10:30:02 GMT+01:00] Running setup: productcategories
+[INFO] [e48cc715-4768-435f-9039-9bd03ff26c6c] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS productcategories (productcategoryid serial NOT NULL, productid int8, categoryid int8, CONSTRAINT productcategories_key PRIMARY KEY (productCategoryId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [fd1e1b08-04d6-4ddd-bc73-e754c46f829e] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [a3ae5f65-1c37-46d2-a19b-20bc1b3ecd05] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [cc65c80e-b93e-47ef-ac1b-032272f83552] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS productcategories (productcategoryid serial NOT NULL, productid int8, categoryid int8, CONSTRAINT productcategories_key PRIMARY KEY (productCategoryId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [28676481-b303-48af-b576-7b71131ea629] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [40689109-a569-48a3-afdc-14e94c7c46db] [2017-02-18 10:30:02 GMT+01:00] Running setup: productattributes
+[INFO] [95a9f58e-f941-4268-8fcf-987cec0e6c4f] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS productattributes (productattributeid serial NOT NULL, productid int8, attributeid int8, CONSTRAINT productattributes_key PRIMARY KEY (productAttributeId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [686c04d4-d0cb-44b8-971e-9c410db5c4d2] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [3b0844e1-ab31-4465-bf60-74c35a8481d7] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [761676f3-c88c-424f-a82a-8261fc0587ee] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS productattributes (productattributeid serial NOT NULL, productid int8, attributeid int8, CONSTRAINT productattributes_key PRIMARY KEY (productAttributeId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [ed805b59-aeee-48fa-89f1-8bc620d21bb9] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [ecd61ed1-bfe5-4201-b44d-77222aef92df] [2017-02-18 10:30:02 GMT+01:00] Running setup: productattributevalues
+[INFO] [8445a3c3-ee9f-4502-bc3b-eb08d3ec9b5b] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS productattributevalues (productattributevalueid serial NOT NULL, productattributeid int8, attributevalueid int8, CONSTRAINT productattributevalues_key PRIMARY KEY (productAttributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [752b0fe4-7e1d-4b52-8af7-59b1199c3473] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [83e9df90-f20d-4471-8986-23809387f24d] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [cd0c07a7-d39f-42e1-b7fe-8dce5553edd0] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS productattributevalues (productattributevalueid serial NOT NULL, productattributeid int8, attributevalueid int8, CONSTRAINT productattributevalues_key PRIMARY KEY (productAttributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [38f6b49a-ab61-46ff-b19b-8f3c01de62f7] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [5be87038-7056-439f-ba49-65fd0d40d0e3] [2017-02-18 10:30:02 GMT+01:00] Running setup: articles
+[INFO] [60710ad5-5c78-4479-be73-b9519fc4e294] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS articles (articleid serial NOT NULL, productid int8, barcode text, created int8, updated int8, CONSTRAINT articles_key PRIMARY KEY (articleId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [1d34fd02-2393-4af2-8af9-9776edeb3984] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [0a8b16b3-ea6c-4071-86f2-0fc4981afbc3] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [688b73b8-857f-401f-bdae-138b37b9b962] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS articles (articleid serial NOT NULL, productid int8, barcode text, created int8, updated int8, CONSTRAINT articles_key PRIMARY KEY (articleId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [08230d03-0fa2-4f51-aa05-da289d2ce53a] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [286aa878-568d-4767-8b8f-3158e8d379af] [2017-02-18 10:30:02 GMT+01:00] Running setup: articleattributevalues
+[INFO] [bed04e31-e9d8-4c97-9005-a77a8c9a51ae] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS articleattributevalues (articleattributevalueid serial NOT NULL, articleid int8, productattributevalueid int8, CONSTRAINT articleattributevalues_key PRIMARY KEY (articleAttributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [2947fde7-8b5f-4cd9-8b40-5e16b3a70ac0] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [1510a559-3304-4cc8-b112-588e30809207] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [e1046013-e6a5-45d4-9b80-422c7440e76c] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS articleattributevalues (articleattributevalueid serial NOT NULL, articleid int8, productattributevalueid int8, CONSTRAINT articleattributevalues_key PRIMARY KEY (articleAttributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [5eba2d09-94db-40e3-a472-b0b7beb27c4c] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [b024d2a8-9550-4b9f-995e-f4cdce2ce67d] [2017-02-18 10:30:02 GMT+01:00] Running setup: publications
+[INFO] [d399aec3-35fd-4ac0-89fa-33470c61e04e] [2017-02-18 10:30:02 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS publications (publicationid serial NOT NULL, productid int8, featured bool, startat int8, finishat int8, CONSTRAINT publications_key PRIMARY KEY (publicationId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [b8d38d7f-dbba-4099-8cd4-263f83ca74f8] [2017-02-18 10:30:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [5cb042ca-c4a1-41a0-b587-97a426287bd5] [2017-02-18 10:30:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [be9a7233-13e7-48f1-961c-e86aa352c7b0] [2017-02-18 10:30:02 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS publications (publicationid serial NOT NULL, productid int8, featured bool, startat int8, finishat int8, CONSTRAINT publications_key PRIMARY KEY (publicationId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [8379bc25-e3e9-44ac-b50f-d5168887fb54] [2017-02-18 10:30:02 GMT+01:00] Error msg: 
+[INFO] [1d5cccb4-3af6-40ca-a148-923f1cc7cfd9] [2017-02-18 10:30:24 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [a98a2aab-3157-4d81-a2dd-4b068a9d4c25] [2017-02-18 10:30:24 GMT+01:00] Postgres conn state: ok
+[DEBUG] [c011a3fa-d045-4f35-8b54-926fab543c1a] [2017-02-18 10:30:24 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [667b897f-167c-4e9a-a484-5f84ecd2c770] [2017-02-18 10:30:24 GMT+01:00] Error msg: 
+[INFO] [965f3605-dba2-45fa-9105-075387acf45a] [2017-02-18 10:30:24 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [598cbebe-ff0e-4121-a367-3a7e10074f6e] [2017-02-18 10:30:24 GMT+01:00] Postgres conn state: ok
+[DEBUG] [6521885e-fa70-465c-aeb6-b0a4005483cc] [2017-02-18 10:30:24 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [b8d1e00f-66fd-4043-ba57-94a2c8d56593] [2017-02-18 10:30:24 GMT+01:00] Error msg: 
+[INFO] [3b0ca99c-7d4e-4f7b-ab6b-d23f4c039df9] [2017-02-18 10:30:24 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [ac58def6-13c5-4adb-8871-c06ae2a56cdf] [2017-02-18 10:30:24 GMT+01:00] Postgres conn state: ok
+[DEBUG] [b23a162b-c8c1-4201-a81c-6833bda54b46] [2017-02-18 10:30:24 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509103024, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [47494990-af6f-465d-a9b0-e5d23973e982] [2017-02-18 10:30:24 GMT+01:00] Error msg: 
+[INFO] [85901169-d1d2-4a48-ac1b-de03bb9dd7fe] [2017-02-18 10:30:24 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [9f9938b4-4b5c-43e2-9f04-8a130fdf4f4d] [2017-02-18 10:30:24 GMT+01:00] Postgres conn state: ok
+[DEBUG] [89151c1f-443e-4d25-ae0b-67f56d24217d] [2017-02-18 10:30:24 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM brands  WHERE true : 
+[INFO] [726a897c-c95a-48fb-91b8-cf0823d824fa] [2017-02-18 10:30:24 GMT+01:00] Error msg: 
+[INFO] [0fa389b6-a410-4572-9d37-234ad4ef143c] [2017-02-18 10:30:24 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [8d8a3733-b625-479a-883e-b36b2b3b68fa] [2017-02-18 10:30:24 GMT+01:00] Postgres conn state: ok
+[DEBUG] [7fb33649-b77a-4c66-a01a-5a1fa6137ff7] [2017-02-18 10:30:24 GMT+01:00] StORM Debug: SELECT "brandid","brandname","created","updated" FROM brands  WHERE true  LIMIT 9999999 : 
+[INFO] [904911ab-e36d-4af3-8b46-d081754c9fe8] [2017-02-18 10:30:24 GMT+01:00] Error msg: 
+[INFO] [227904b5-d2e2-4722-bc53-998c796210c9] [2017-02-18 10:30:29 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [c5d08c2f-eb5b-4dda-ba39-53989aa0bf23] [2017-02-18 10:30:29 GMT+01:00] Postgres conn state: ok
+[DEBUG] [f0641286-05cb-4de3-ac42-da5e677d9ee1] [2017-02-18 10:30:29 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [3c99038d-6c88-4d01-8d03-1590ef7e94c2] [2017-02-18 10:30:29 GMT+01:00] Error msg: 
+[INFO] [ff1eff8c-8934-4f78-9ce6-df2d9b97f015] [2017-02-18 10:30:29 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [a425171e-2fd3-4707-8f6f-e71a630d3dca] [2017-02-18 10:30:29 GMT+01:00] Postgres conn state: ok
+[DEBUG] [0fe7cd56-21e0-4f4e-ab0d-c003e5e21f7a] [2017-02-18 10:30:29 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [e38bfde4-2840-4913-82e4-3f0606d6b4d5] [2017-02-18 10:30:29 GMT+01:00] Error msg: 
+[INFO] [5cfc15f1-fffb-40a6-b66b-fa2056922fd6] [2017-02-18 10:30:29 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [29aa31bf-31c2-48ac-a820-9780aeec8530] [2017-02-18 10:30:29 GMT+01:00] Postgres conn state: ok
+[DEBUG] [90f191fa-cb1c-4709-8518-a70b544d0fbd] [2017-02-18 10:30:29 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : fRMZI7cIpfDjHEI5uZ9bZg, 509072370, 509103029, 86400, Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [5ff2df45-a407-43c6-a521-ae1cb44054f8] [2017-02-18 10:30:29 GMT+01:00] Error msg: 
+[INFO] [50b94bd9-1fd2-4261-b238-42df8fc4eb73] [2017-02-18 21:39:27 GMT+01:00] Running setup: users
+[INFO] [6df10fdf-acb0-423d-b009-f6fb72ab3cf2] [2017-02-18 21:39:27 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS users (uniqueid text NOT NULL, username text, password text, facebookid text, googleid text, firstname text, lastname text, email text, CONSTRAINT users_key PRIMARY KEY (uniqueID) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [8167708c-13f9-485d-a2bc-c08bf3182dfe] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [c04a08cf-4b26-4ccb-88ea-de9f9fb215d3] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [71abe57f-df18-4860-9f48-909b0ff49a12] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS users (uniqueid text NOT NULL, username text, password text, facebookid text, googleid text, firstname text, lastname text, email text, CONSTRAINT users_key PRIMARY KEY (uniqueID) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [15b8cfe0-c3fe-479f-b1b4-c941c5efc7b8] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [04c15ec9-266a-42f1-bddf-56b4a1239b89] [2017-02-18 21:39:27 GMT+01:00] Running setup: tokens
+[INFO] [1135811b-f066-4e3c-b30b-5f00a786914b] [2017-02-18 21:39:27 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS tokens (token text NOT NULL, userid text, created int8, updated int8, idle int8, CONSTRAINT tokens_key PRIMARY KEY (token) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [f9780ff4-63da-4aef-ba00-0a4698b4ff90] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [030c70f0-cb49-489e-9e19-35915db1f1f5] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [f9bbd820-2d72-46a4-b9bf-fcd7461d855d] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS tokens (token text NOT NULL, userid text, created int8, updated int8, idle int8, CONSTRAINT tokens_key PRIMARY KEY (token) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [b5431e24-0d84-48a6-a141-cb2debc8df23] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [c4d9d82f-5195-4fe5-8637-4601da7c200f] [2017-02-18 21:39:27 GMT+01:00] Running setup: brands
+[INFO] [624534b5-f39e-4058-82be-a5656f49ebff] [2017-02-18 21:39:27 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS brands (brandid serial NOT NULL, brandname text, created int8, updated int8, CONSTRAINT brands_key PRIMARY KEY (brandId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [ea741883-b74d-4050-a00d-9829c2cd1ba4] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [007457b4-715d-4a27-9d38-2346a9f87ced] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [993487f5-ebd0-4d84-b53e-5e9720f0fa2f] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS brands (brandid serial NOT NULL, brandname text, created int8, updated int8, CONSTRAINT brands_key PRIMARY KEY (brandId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [03a85047-7bb6-4fb4-97bd-79a071bde7ad] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [cfc5d894-90c1-4b98-a574-986914455648] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [0f00736b-1d98-44db-afb6-1d4b76e08e97] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [f46c2523-42c2-424e-a8ec-32a07d665f17] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: INSERT INTO brands ("brandname","created","updated") VALUES($1,$2,$3) RETURNING "brandid" : Armani, 509143167, 509143167
+[INFO] [317bb689-f8f0-4392-a597-9908eef25c93] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [f3910b5b-f0f6-4311-ac9a-4d3becce68e9] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [70c65d52-a8a8-4e60-b6b1-9475ead5c15d] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [66d9906b-188f-4e6a-8a36-b3dc7d8508dc] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: INSERT INTO brands ("brandname","created","updated") VALUES($1,$2,$3) RETURNING "brandid" : Gabbana, 509143167, 509143167
+[INFO] [e06db872-eda3-4e76-a885-97bc346d8c46] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [3066e999-b62d-498a-8441-d4fd7f070682] [2017-02-18 21:39:27 GMT+01:00] Running setup: categories
+[INFO] [7fa250e2-3969-412c-b737-155be3ba9608] [2017-02-18 21:39:27 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS categories (categoryid serial NOT NULL, categoryname text, isprimary bool, created int8, updated int8, CONSTRAINT categories_key PRIMARY KEY (categoryId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [9ee9fb55-fa66-4fed-851c-0277682518d7] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [6ea8f64d-6f01-422f-a64e-4068dab0b7b6] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [be031222-9041-4265-884c-96e4cebd540b] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS categories (categoryid serial NOT NULL, categoryname text, isprimary bool, created int8, updated int8, CONSTRAINT categories_key PRIMARY KEY (categoryId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [58e29178-e1a9-45e9-8dfe-565c860c6e39] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [91a0153f-2b1a-4207-abb3-c228c19dae3a] [2017-02-18 21:39:27 GMT+01:00] Running setup: attributes
+[INFO] [03a765c6-8748-45e8-be3a-3c47fbc9cb29] [2017-02-18 21:39:27 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS attributes (attributeid serial NOT NULL, attributename text, created int8, updated int8, CONSTRAINT attributes_key PRIMARY KEY (attributeId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [a2d99fcd-6be1-4be2-8ccf-bbb9ccf81cf2] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [0ebf1664-8037-48e5-9e63-7b2a5aa633fd] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [3675acc2-6071-4e3b-9043-bee343c30172] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS attributes (attributeid serial NOT NULL, attributename text, created int8, updated int8, CONSTRAINT attributes_key PRIMARY KEY (attributeId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [afe12640-d06b-44a6-8f45-bf84a3c21d2a] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [ed7f408f-a147-4724-9af6-f5ff30c1e8f1] [2017-02-18 21:39:27 GMT+01:00] Running setup: attributevalues
+[INFO] [a05e581a-d77a-4289-9bdb-ca9fcc5db173] [2017-02-18 21:39:27 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS attributevalues (attributevalueid serial NOT NULL, attributevaluecode text, attributevaluename text, attributeid int8, created int8, updated int8, CONSTRAINT attributevalues_key PRIMARY KEY (attributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [459ea6dd-7a5a-46ef-8748-c7ba99147d7c] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [04e987b5-7336-4c29-99d3-ba53413313da] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [7b421ce9-04e9-4c94-842d-3e5d8a1e71b5] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS attributevalues (attributevalueid serial NOT NULL, attributevaluecode text, attributevaluename text, attributeid int8, created int8, updated int8, CONSTRAINT attributevalues_key PRIMARY KEY (attributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [e82469e8-fbf5-48aa-a792-8c9232cd5e37] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [05f29c81-7210-432a-93d4-917c5159d064] [2017-02-18 21:39:27 GMT+01:00] Running setup: products
+[INFO] [fe53a72a-b102-4329-9d75-43337e5d1793] [2017-02-18 21:39:27 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS products (productid serial NOT NULL, brandid int8, productcode text, productname text, productum text, productprice float8, created int8, updated int8, CONSTRAINT products_key PRIMARY KEY (productId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [e1d24010-41fe-43d2-bdb9-a6a9e9246f55] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [17674976-6b37-436b-886f-8146be2ab3fd] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [9ddf1c64-c2ef-470e-a6e7-913460069f80] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS products (productid serial NOT NULL, brandid int8, productcode text, productname text, productum text, productprice float8, created int8, updated int8, CONSTRAINT products_key PRIMARY KEY (productId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [3f94c1a7-67f9-4ed4-8f5f-4f3fd1b12952] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [e11e734d-5807-4468-87e9-c35104bb5c95] [2017-02-18 21:39:27 GMT+01:00] Running setup: articles
+[INFO] [11e61a79-ef8c-4dd8-b942-b0d2ea9e5413] [2017-02-18 21:39:27 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS articles (articleid serial NOT NULL, productid int8, barcode text, created int8, updated int8, CONSTRAINT articles_key PRIMARY KEY (articleId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [7cd38347-f489-4bc8-aec5-da0ea200f999] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [936711d9-fc0d-463c-98f0-017d4d8b9503] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [b2102b2f-3591-4dd4-936e-d577d97c44f6] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS articles (articleid serial NOT NULL, productid int8, barcode text, created int8, updated int8, CONSTRAINT articles_key PRIMARY KEY (articleId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [25546557-78c1-424e-b0b5-5398fab23289] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [00af3cfb-d4e4-47f9-9118-ed30fc2d1768] [2017-02-18 21:39:27 GMT+01:00] Running setup: publications
+[INFO] [5a524d10-c5e0-4fdc-beb8-4ebf03c12ce0] [2017-02-18 21:39:27 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS publications (publicationid serial NOT NULL, productid int8, featured bool, startat int8, finishat int8, CONSTRAINT publications_key PRIMARY KEY (publicationId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [783406c9-8669-4f5f-abeb-4175f43304ea] [2017-02-18 21:39:27 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [bbaa1495-4363-4c6d-94bc-112777276a7f] [2017-02-18 21:39:27 GMT+01:00] Postgres conn state: ok
+[DEBUG] [8c9f61f9-1a68-441b-82c6-109ccf10f2d0] [2017-02-18 21:39:27 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS publications (publicationid serial NOT NULL, productid int8, featured bool, startat int8, finishat int8, CONSTRAINT publications_key PRIMARY KEY (publicationId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [c5d53598-4e0c-4a5d-bdde-dd30a247ae93] [2017-02-18 21:39:27 GMT+01:00] Error msg: 
+[INFO] [e473be48-c313-465f-9897-a7e04f268128] [2017-02-18 21:39:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [268bb289-56d3-4d7e-83ed-7e562942920a] [2017-02-18 21:39:32 GMT+01:00] Postgres conn state: ok
+[DEBUG] [c4d4e7c4-57b9-4029-84b0-79688c5663e6] [2017-02-18 21:39:32 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [cf4f99fe-ae5c-477e-8862-66d764271511] [2017-02-18 21:39:32 GMT+01:00] Error msg: 
+[INFO] [76abcdf3-35aa-4cf2-8fa1-f0ae8507e8dc] [2017-02-18 21:39:32 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [3f70e70d-2186-4f32-9e2c-cfc0f8649b5a] [2017-02-18 21:39:32 GMT+01:00] Postgres conn state: ok
+[DEBUG] [42b9f026-96b6-4f3b-8914-d3e360b7914b] [2017-02-18 21:39:32 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [917b74b4-7589-4f47-a4a0-a2d1dc58813d] [2017-02-18 21:39:32 GMT+01:00] Error msg: 
+[INFO] [6a624009-128e-4d34-8397-9b865d694f9a] [2017-02-18 21:39:33 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [2f950d79-e30f-4102-9cb6-126842ddf6f8] [2017-02-18 21:39:33 GMT+01:00] Postgres conn state: ok
+[DEBUG] [e0b4c22e-68e6-4312-8a47-54d40412a584] [2017-02-18 21:39:33 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [a565be29-d201-4876-baf0-382d00d4de8f] [2017-02-18 21:39:33 GMT+01:00] Error msg: 
+[INFO] [24eba0ec-744a-4d17-a97b-4129f48f0f8c] [2017-02-18 21:39:33 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [730664c8-1426-4508-b156-5c17266e9b78] [2017-02-18 21:39:33 GMT+01:00] Postgres conn state: ok
+[DEBUG] [126d305f-2d04-42ca-84f3-89d5d74bf1f2] [2017-02-18 21:39:33 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [c25906b0-7990-4e42-8f2b-92eccdf18b86] [2017-02-18 21:39:33 GMT+01:00] Error msg: 
+[INFO] [be08ec44-9a00-40ad-b385-31671d13acf4] [2017-02-18 21:39:38 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [04c27d14-0d94-49d3-ae74-8e524b566275] [2017-02-18 21:39:38 GMT+01:00] Postgres conn state: ok
+[DEBUG] [2f8799ac-51f9-4705-ad89-15b953facdd6] [2017-02-18 21:39:38 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [200bf9d3-9f83-4a94-a33c-84857b37544b] [2017-02-18 21:39:38 GMT+01:00] Error msg: 
+[INFO] [e7b3cd8b-cbae-4ceb-8b26-e35256cde181] [2017-02-18 21:39:38 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [c4f8abba-1134-46da-8574-7a1006e33ebb] [2017-02-18 21:39:38 GMT+01:00] Postgres conn state: ok
+[DEBUG] [a6dc0892-2fb3-496b-85a9-00ec5841e1a9] [2017-02-18 21:39:38 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM users  WHERE username = $1 : gerardo
+[INFO] [abe30228-da44-47c4-8979-9ae67508f7b6] [2017-02-18 21:39:38 GMT+01:00] Error msg: 
+[INFO] [584ff15a-8227-4a64-a278-f3a972cd9328] [2017-02-18 21:39:38 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [dc2172dd-9b96-496b-95f1-2ab5d33e6e38] [2017-02-18 21:39:38 GMT+01:00] Postgres conn state: ok
+[DEBUG] [1dcb5593-fb47-4fe3-9da5-290f6920f914] [2017-02-18 21:39:38 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [798eae46-0ee4-47c2-8fa8-9b8e3c6ec8d5] [2017-02-18 21:39:38 GMT+01:00] Error msg: 
+[INFO] [14bf0bff-aea4-4560-bf2e-fd95da05a659] [2017-02-18 21:39:54 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [79d49e71-30aa-451e-b02c-9c9aaaa45a40] [2017-02-18 21:39:54 GMT+01:00] Postgres conn state: ok
+[DEBUG] [a3338d4b-7d54-40b3-933c-8750383ba0a5] [2017-02-18 21:39:54 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [ae39645b-e1d3-4c87-a910-f0aa0d02ff83] [2017-02-18 21:39:54 GMT+01:00] Error msg: 
+[INFO] [5bbf7550-ca19-459e-8458-dcb0598d01c5] [2017-02-18 21:39:54 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [0c398566-7f9c-4a46-a171-0c37545a00a4] [2017-02-18 21:39:54 GMT+01:00] Postgres conn state: ok
+[DEBUG] [a07cf5cb-de01-4c51-8fbb-c15150c3ecb9] [2017-02-18 21:39:54 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM users  WHERE username = $1 : gerardo
+[INFO] [507b0f7c-2b2f-4d0c-b9de-3e869fe800a5] [2017-02-18 21:39:54 GMT+01:00] Error msg: 
+[INFO] [70372db9-14d0-4eb5-b02a-0f409d3dfa56] [2017-02-18 21:39:54 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [afaddbe5-59ab-47b0-bde6-f67403ae881a] [2017-02-18 21:39:54 GMT+01:00] Postgres conn state: ok
+[DEBUG] [361f7d9e-227f-4eae-9cfd-ee8bc1b0cee9] [2017-02-18 21:39:54 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [091ae23a-b009-4405-9550-c701d532e9a7] [2017-02-18 21:39:54 GMT+01:00] Error msg: 
+[INFO] [d1a1a30c-7535-47b8-91cb-2f4e48d20c0c] [2017-02-18 21:40:44 GMT+01:00] Running setup: users
+[INFO] [2a64b527-0494-4c9a-995a-c8cdfc894d37] [2017-02-18 21:40:44 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS users (uniqueid text NOT NULL, username text, password text, facebookid text, googleid text, firstname text, lastname text, email text, CONSTRAINT users_key PRIMARY KEY (uniqueID) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [8aa8204f-f781-491f-8a16-ed92c23ba18c] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [cf0e1339-9f5d-4666-b80c-04d2421274d8] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [13c64652-9163-4e57-84c9-d69fa122c8dd] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS users (uniqueid text NOT NULL, username text, password text, facebookid text, googleid text, firstname text, lastname text, email text, CONSTRAINT users_key PRIMARY KEY (uniqueID) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [71fe4443-b047-4ea7-b260-cefe8daeb780] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [adf3e7c7-9906-4adc-941d-246fc5e227bf] [2017-02-18 21:40:44 GMT+01:00] Running setup: tokens
+[INFO] [8fa3a920-922c-4e51-9820-2dd6c611798d] [2017-02-18 21:40:44 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS tokens (token text NOT NULL, userid text, created int8, updated int8, idle int8, CONSTRAINT tokens_key PRIMARY KEY (token) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [4488c4f7-7992-4512-9bc5-816113387f92] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [6435d9ba-70ec-4e02-807f-57ce3ed00e98] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [c7b3ca7c-73d9-4e49-9bf3-153b285b4738] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS tokens (token text NOT NULL, userid text, created int8, updated int8, idle int8, CONSTRAINT tokens_key PRIMARY KEY (token) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [0be9d0d7-86c0-4e77-9c34-22450d27e1b0] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [b1bda524-7fe4-4f6b-bc97-c1b6d43ceb82] [2017-02-18 21:40:44 GMT+01:00] Running setup: brands
+[INFO] [25585776-6b88-4ef8-8b24-a5264db75e97] [2017-02-18 21:40:44 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS brands (brandid serial NOT NULL, brandname text, created int8, updated int8, CONSTRAINT brands_key PRIMARY KEY (brandId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [621ec94c-1d2b-47f9-96de-5ecb95663004] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [f0c6c957-142b-4e2d-8de7-05bea1e46411] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [b77a3eb0-dfe9-4ab6-b576-b5cbba776b6d] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS brands (brandid serial NOT NULL, brandname text, created int8, updated int8, CONSTRAINT brands_key PRIMARY KEY (brandId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [8441b7fa-0aba-4f2b-b532-967f9e1244c0] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [43246c15-7dd1-44f8-902e-6aaba1daf758] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [9b839a9d-6e78-420c-8ca6-6c2befdfaba8] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [13d1f2f0-5548-4521-9359-a50a46a2f4cc] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: INSERT INTO brands ("brandname","created","updated") VALUES($1,$2,$3) RETURNING "brandid" : Armani, 509143244, 509143244
+[INFO] [f3f49726-4e54-4598-8e84-eb4e3de4e7ab] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [f1111b42-c165-4692-8d96-b0a4349ec1dc] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [950d6c66-0251-40c7-9e9b-c6464edf8a37] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [80e4c9b2-ce06-494a-8fa3-47d3e91ab843] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: INSERT INTO brands ("brandname","created","updated") VALUES($1,$2,$3) RETURNING "brandid" : Gabbana, 509143244, 509143244
+[INFO] [abc7a1fb-4b81-4cef-9d71-6ea64434ba8e] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [d36f44cc-37b7-48aa-82e2-09d71b2f3695] [2017-02-18 21:40:44 GMT+01:00] Running setup: categories
+[INFO] [15eeadad-5fa6-49cc-a399-d741f4d7c2ba] [2017-02-18 21:40:44 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS categories (categoryid serial NOT NULL, categoryname text, isprimary bool, created int8, updated int8, CONSTRAINT categories_key PRIMARY KEY (categoryId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [11dd066e-428d-479c-89c9-5430aa2a56f6] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [b25930bd-919e-4c04-8b98-37212b2e5777] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [f54fb58c-1b13-43b2-a263-cf55ea52a307] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS categories (categoryid serial NOT NULL, categoryname text, isprimary bool, created int8, updated int8, CONSTRAINT categories_key PRIMARY KEY (categoryId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [d2fa60ad-c1c8-41d4-88ae-fc3688d014e7] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [c67ed377-ebe1-436b-8ff7-3b980d65f1dc] [2017-02-18 21:40:44 GMT+01:00] Running setup: attributes
+[INFO] [e93746a7-66a7-4b8a-8b2d-ddd6023c747e] [2017-02-18 21:40:44 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS attributes (attributeid serial NOT NULL, attributename text, created int8, updated int8, CONSTRAINT attributes_key PRIMARY KEY (attributeId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [681badb4-1384-4c4d-befb-a6cd34f266e4] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [2b966cf4-ea78-4a97-8543-981dd81d91f5] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [3b849ec4-0c4d-47e7-8338-1773c655cea7] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS attributes (attributeid serial NOT NULL, attributename text, created int8, updated int8, CONSTRAINT attributes_key PRIMARY KEY (attributeId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [e622fb95-56d5-4b46-bfca-bcb5ae0a4a4d] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [8921bacd-028c-4b08-a31c-ac36fff3f32f] [2017-02-18 21:40:44 GMT+01:00] Running setup: attributevalues
+[INFO] [a2240f35-ed71-4c3d-ad78-59a78fe705ca] [2017-02-18 21:40:44 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS attributevalues (attributevalueid serial NOT NULL, attributevaluecode text, attributevaluename text, attributeid int8, created int8, updated int8, CONSTRAINT attributevalues_key PRIMARY KEY (attributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [bfd75d06-0a99-46a2-8d84-51659d3bdad5] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [cdafd2fc-f83f-49f5-a7fc-1bcbf9c16e90] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [26f93b1d-a599-4b84-9d71-db2f9a56f59d] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS attributevalues (attributevalueid serial NOT NULL, attributevaluecode text, attributevaluename text, attributeid int8, created int8, updated int8, CONSTRAINT attributevalues_key PRIMARY KEY (attributeValueId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [f99e26e5-0b6c-4bd8-9681-ca4efc389805] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [2bb2a20f-4e50-4d0a-bd6c-dbfebc72e89f] [2017-02-18 21:40:44 GMT+01:00] Running setup: products
+[INFO] [53b931bf-8cdb-483c-9163-8ef803320486] [2017-02-18 21:40:44 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS products (productid serial NOT NULL, brandid int8, productcode text, productname text, productum text, productprice float8, created int8, updated int8, CONSTRAINT products_key PRIMARY KEY (productId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [7b830ce2-8648-4f05-8307-f9d6f5d361a9] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [71ed07af-342d-4d60-8bb8-0a9ba52dbdca] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [6d18d589-1a42-4a75-984b-59eaaa1ea2d7] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS products (productid serial NOT NULL, brandid int8, productcode text, productname text, productum text, productprice float8, created int8, updated int8, CONSTRAINT products_key PRIMARY KEY (productId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [ee5f537b-8077-492e-8279-cdc1e864b8f6] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [329b12c2-ac33-4673-a048-13ffbdafb9f7] [2017-02-18 21:40:44 GMT+01:00] Running setup: articles
+[INFO] [b63fb748-7ce1-40f7-ab3d-67eb91cac703] [2017-02-18 21:40:44 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS articles (articleid serial NOT NULL, productid int8, barcode text, created int8, updated int8, CONSTRAINT articles_key PRIMARY KEY (articleId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [a3b9541a-fb5f-42ee-892f-e25ee7115f4c] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [ed8f336d-9060-441e-85b8-7e764daacd5d] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [dde0d038-c558-45f3-9c8b-e5747f5658d4] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS articles (articleid serial NOT NULL, productid int8, barcode text, created int8, updated int8, CONSTRAINT articles_key PRIMARY KEY (articleId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [e6bd5101-d6d3-469e-a054-a1bb6a4148ec] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [d6ace17d-2d24-4994-9d1b-4d980f717624] [2017-02-18 21:40:44 GMT+01:00] Running setup: publications
+[INFO] [e23556b0-05bd-4e0a-9258-9afeb447ba58] [2017-02-18 21:40:44 GMT+01:00] createStatement: CREATE TABLE IF NOT EXISTS publications (publicationid serial NOT NULL, productid int8, featured bool, startat int8, finishat int8, CONSTRAINT publications_key PRIMARY KEY (publicationId) NOT DEFERRABLE INITIALLY IMMEDIATE);
+[INFO] [06a36a66-26ba-4140-a8c6-f9e30131617b] [2017-02-18 21:40:44 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [84adf40d-e5cc-418e-97f0-e0ee4724fd55] [2017-02-18 21:40:44 GMT+01:00] Postgres conn state: ok
+[DEBUG] [aae2876a-4d5f-4889-9a27-205c49f6470b] [2017-02-18 21:40:44 GMT+01:00] StORM Debug: CREATE TABLE IF NOT EXISTS publications (publicationid serial NOT NULL, productid int8, featured bool, startat int8, finishat int8, CONSTRAINT publications_key PRIMARY KEY (publicationId) NOT DEFERRABLE INITIALLY IMMEDIATE); : 
+[INFO] [6bcf8c6b-88ab-4198-9626-43134c715ab6] [2017-02-18 21:40:44 GMT+01:00] Error msg: 
+[INFO] [afa23925-6a33-41cb-8c15-e2d8716e21a2] [2017-02-18 21:40:49 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [686d0183-2d23-4855-b663-8cd798347703] [2017-02-18 21:40:49 GMT+01:00] Postgres conn state: ok
+[DEBUG] [4b764090-6522-47f4-a9c7-d2509218afe2] [2017-02-18 21:40:49 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [9c27422a-0942-4f6e-816f-44a58cb59132] [2017-02-18 21:40:49 GMT+01:00] Error msg: 
+[INFO] [7585e9c0-07a2-432f-ab88-ddbfec7a11d0] [2017-02-18 21:40:49 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [02950f53-bc75-4ac9-982c-964be9727101] [2017-02-18 21:40:49 GMT+01:00] Postgres conn state: ok
+[DEBUG] [0ccc4f01-5ec7-437d-b116-22de0b2f115d] [2017-02-18 21:40:49 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [3786491b-a839-4a4d-9cac-87577eca6eee] [2017-02-18 21:40:49 GMT+01:00] Error msg: 
+[INFO] [0b9bced5-0f9e-48cf-bfbb-dfa788dea7e0] [2017-02-18 21:40:54 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [cc6b4dbe-cc22-4223-9099-c1503eba83fe] [2017-02-18 21:40:54 GMT+01:00] Postgres conn state: ok
+[DEBUG] [a14cdd05-68c6-45a2-80ce-f5ef33e09bc4] [2017-02-18 21:40:54 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [cfe5e34f-4cda-4c55-b773-930ff74aeb9e] [2017-02-18 21:40:54 GMT+01:00] Error msg: 
+[INFO] [0bcbe92f-8dca-46b5-84b6-6c9017044633] [2017-02-18 21:40:54 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [ce0d3bd1-9a8a-4e08-ab1b-98646e7445a8] [2017-02-18 21:40:54 GMT+01:00] Postgres conn state: ok
+[DEBUG] [4c6a3c58-b4b9-412d-8be4-dcc0f6786f50] [2017-02-18 21:40:54 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM users  WHERE username = $1 : gerardo
+[INFO] [953689b4-4592-460d-a922-73ecbbaf1b33] [2017-02-18 21:40:54 GMT+01:00] Error msg: 
+[INFO] [5b53d883-fbac-4eb9-99d7-fac37e437fdd] [2017-02-18 21:40:54 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [d8c25c05-8e15-45f7-86d9-19b77f0a4e67] [2017-02-18 21:40:54 GMT+01:00] Postgres conn state: ok
+[DEBUG] [07836aa2-3c39-4e73-bb64-79f38fb1c629] [2017-02-18 21:40:54 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [77d16d88-e06a-4256-9966-1e0b51b2881c] [2017-02-18 21:40:54 GMT+01:00] Error msg: 
+[INFO] [169da0fa-32a4-4232-a648-c6cccdd47a4d] [2017-02-18 21:41:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [0623f072-fabe-470f-a975-239684b4bd4a] [2017-02-18 21:41:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [07eec9db-2345-4a7c-a9d1-dfe4656a41af] [2017-02-18 21:41:02 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [12bf714e-7e32-42ae-9853-7dff032403af] [2017-02-18 21:41:02 GMT+01:00] Error msg: 
+[INFO] [e1db5c3c-d6ce-4c5a-b72a-34000a30be0d] [2017-02-18 21:41:02 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [7612c06c-5186-4a00-a883-759fbd70fc4c] [2017-02-18 21:41:02 GMT+01:00] Postgres conn state: ok
+[DEBUG] [998471e0-d7a7-4f40-98a9-6a797d3cd554] [2017-02-18 21:41:02 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [850682fe-edb9-441d-a4b6-d085b4ca17c3] [2017-02-18 21:41:02 GMT+01:00] Error msg: 
+[INFO] [d3751683-208d-47b6-8f1c-b95bb8726642] [2017-02-18 21:41:06 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [1f9eef8c-c176-4d25-b755-bfda4daf4770] [2017-02-18 21:41:06 GMT+01:00] Postgres conn state: ok
+[DEBUG] [4547530e-d4c6-429a-8c64-b9c75415c0bb] [2017-02-18 21:41:06 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : Q5BfOD1a9WuWgcXfC0sGsQ
+[INFO] [31406974-87c7-4fa7-877e-c74588d933d8] [2017-02-18 21:41:06 GMT+01:00] Error msg: 
+[INFO] [bb1290c1-50cd-464c-b7c7-b558e26beaf6] [2017-02-18 21:41:06 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [50c65750-2d8e-4b34-82e6-3278c749af11] [2017-02-18 21:41:06 GMT+01:00] Postgres conn state: ok
+[DEBUG] [bc07cc7a-63a6-48c6-8c2d-b08bf123d76e] [2017-02-18 21:41:06 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM users  WHERE username = $1 : gerardo
+[INFO] [06aedfe2-63a1-45e1-8f03-bb6e0ce2a429] [2017-02-18 21:41:06 GMT+01:00] Error msg: 
+[INFO] [10ded158-67f2-4e88-888a-0e1a35d7cc25] [2017-02-18 21:41:07 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [bad69d96-e546-407f-8497-ae2c1f52c690] [2017-02-18 21:41:07 GMT+01:00] Postgres conn state: ok
+[DEBUG] [3a4e865f-bc43-4dc2-bc6c-3515452e3862] [2017-02-18 21:41:07 GMT+01:00] StORM Debug: INSERT INTO users ("uniqueid","username","password","facebookid","googleid","firstname","lastname","email") VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING "uniqueid" : _hFTR6VZxkOVuKYsKptSbw, gerardo, $2a$10$iVsRbIT0ZVgVKKOdErk7w.sox3WMwrYvoQwO5Rm3k3oXaLedEJ146, , , , , 
+[INFO] [8a381858-7ade-4d61-aaa9-2c13eadce1ba] [2017-02-18 21:41:07 GMT+01:00] Error msg: 
+[INFO] [96b4fb08-f7c6-4b49-94f6-cd9fb4eacf27] [2017-02-18 21:41:07 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [c4cd3297-6f54-46f9-9fc8-bb6fa9c86d6d] [2017-02-18 21:41:07 GMT+01:00] Postgres conn state: ok
+[DEBUG] [c5264212-822f-4f0b-9a45-d9cb804edd2b] [2017-02-18 21:41:07 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM users  WHERE username = $1 : gerardo
+[INFO] [0a189682-f16b-4f04-91bf-4639c95c4065] [2017-02-18 21:41:07 GMT+01:00] Error msg: 
+[INFO] [506b925a-b215-4559-bc16-f6fe88010dab] [2017-02-18 21:41:07 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [0209457a-8bed-4068-b5a7-c261873091a3] [2017-02-18 21:41:07 GMT+01:00] Postgres conn state: ok
+[DEBUG] [66c0bd5a-8942-4d8c-baf5-c77dc7b09bbe] [2017-02-18 21:41:07 GMT+01:00] StORM Debug: SELECT "uniqueid","username","password","facebookid","googleid","firstname","lastname","email" FROM users  WHERE username = $1  LIMIT 1 : gerardo
+[INFO] [ee030556-3807-425b-a92a-4e79772f2c59] [2017-02-18 21:41:07 GMT+01:00] Error msg: 
+[INFO] [93860132-e06c-424e-8f29-9e3926433d38] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [cc256e01-70c6-46a1-8e98-3eed85a2119f] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[DEBUG] [5c4e14e5-8e25-4a7f-b941-408a72c58a2a] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: INSERT INTO tokens ("token","userid","created","updated","idle") VALUES($1,$2,$3,$4,$5) RETURNING "token" : dBe12Wqn7qlip0DQYAjdoQ, _hFTR6VZxkOVuKYsKptSbw, 509143268, 509143268, 86400
+[INFO] [0753b780-183b-4fad-8d5c-177c3302618b] [2017-02-18 21:41:08 GMT+01:00] Error msg: 
+[INFO] [108a3542-4062-46b3-b2a2-6b938b0c7e1a] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [9868db8c-e6d5-4b60-a7e6-c58abdea09f1] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[DEBUG] [cdeb5178-0049-4982-9826-682473076fea] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : dBe12Wqn7qlip0DQYAjdoQ
+[INFO] [ef1bdb1a-5ec7-47ea-9b2e-3d276d35f79a] [2017-02-18 21:41:08 GMT+01:00] Error msg: 
+[INFO] [5fa3ba1e-275d-4040-b7a2-a693239aaf40] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [8236f126-e121-43bc-ad06-9cfc96410b24] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[DEBUG] [ad88a5a7-76b1-495b-b186-725402d939e2] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : dBe12Wqn7qlip0DQYAjdoQ
+[INFO] [9508fca1-2668-44e9-acc2-aa9c2fa97bd5] [2017-02-18 21:41:08 GMT+01:00] Error msg: 
+[INFO] [3d6f359c-e4a3-41af-92e3-4753ad410e66] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [0e5571c7-7377-4b13-bd18-860d35f2840e] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[DEBUG] [5c33a6b7-7802-44bb-980d-1c984ed45709] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : _hFTR6VZxkOVuKYsKptSbw, 509143268, 509143268, 86400, dBe12Wqn7qlip0DQYAjdoQ
+[INFO] [7ba5ef9a-a1e5-4ded-bfa5-45680a16d76b] [2017-02-18 21:41:08 GMT+01:00] Error msg: 
+[INFO] [29db8e76-7ee6-4a98-a6bd-3e92801aabb1] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [2c712e11-d7da-4d29-bd96-338d46be0889] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [4e1e73ea-3e56-4496-9ad0-d601d330d547] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[DEBUG] [2f1c58f0-5c8e-4588-a20b-3b2d7b23ac58] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : dBe12Wqn7qlip0DQYAjdoQ
+[INFO] [8dc9e8fc-b3b1-49fd-b069-b7f30ad7e5a0] [2017-02-18 21:41:08 GMT+01:00] Error msg: 
+[INFO] [1e7babc0-3393-461c-86a0-7db237b7791c] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[INFO] [8a06be52-9b55-432f-9e57-244efadabe0d] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[DEBUG] [205c7a06-5e7b-4735-b359-cdbbddb49854] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: SELECT COUNT(*) AS counter FROM tokens  WHERE "token" = $1 : dBe12Wqn7qlip0DQYAjdoQ
+[INFO] [592e348f-adda-4ba8-9e7b-4920f5321f5a] [2017-02-18 21:41:08 GMT+01:00] Error msg: 
+[INFO] [041fcbc5-ef7b-4b33-b12c-2a95488d2363] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [cad632e8-a0b2-4c71-a833-5ad6d1f9651f] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[DEBUG] [87502be5-5f86-4843-a19b-d530e0841b14] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : dBe12Wqn7qlip0DQYAjdoQ
+[INFO] [522a6060-377e-4d53-8bdf-b7b70a9b4b67] [2017-02-18 21:41:08 GMT+01:00] Error msg: 
+[INFO] [aab91013-add0-4132-978e-caf70c8c2ee8] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[INFO] [2e21fec7-d21a-4769-8259-8d47dafdc26c] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[DEBUG] [01c79e16-f40e-4c9b-9e55-622e5696659e] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: SELECT "token","userid","created","updated","idle" FROM tokens  WHERE "token" = $1  LIMIT 50 : dBe12Wqn7qlip0DQYAjdoQ
+[INFO] [bd3936f9-4f98-49cc-b150-f2dc3768b86a] [2017-02-18 21:41:08 GMT+01:00] Error msg: 
+[INFO] [2874c1df-4648-420c-8427-82f38ffc7fc4] [2017-02-18 21:41:08 GMT+01:00] Postgres conn: postgresql://:@localhost:5432/webretail
+[INFO] [e7b03165-4699-4eba-b439-fd461ddd328d] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[DEBUG] [5a702b40-092d-4222-8008-1f1176e4e9f1] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : _hFTR6VZxkOVuKYsKptSbw, 509143268, 509143268, 86400, dBe12Wqn7qlip0DQYAjdoQ
+[INFO] [00c082b6-23bf-4a58-ac49-658ff1e12228] [2017-02-18 21:41:08 GMT+01:00] Postgres conn state: ok
+[INFO] [4c1355a0-0da9-4131-a850-6e9b2187f246] [2017-02-18 21:41:08 GMT+01:00] Error msg: 
+[DEBUG] [a345d1ee-389a-41bb-8d25-dd3db8655520] [2017-02-18 21:41:08 GMT+01:00] StORM Debug: UPDATE tokens SET "userid" = $1, "created" = $2, "updated" = $3, "idle" = $4 WHERE "token" = $5 : _hFTR6VZxkOVuKYsKptSbw, 509143268, 509143268, 86400, dBe12Wqn7qlip0DQYAjdoQ
+[INFO] [49348f98-4947-426b-b926-3d5c7401fa5a] [2017-02-18 21:41:08 GMT+01:00] Error msg: 

@@ -52,7 +52,7 @@ export class CategoryComponent implements OnInit {
             });
         } else {
             this.categoryService.update(this.selected.categoryId, this.selected).subscribe(result => {
-                this.categories[this.selectedIndex] = this.selected;
+                //this.categories[this.selectedIndex] = this.selected;
             });
         }
         this.selected = null;

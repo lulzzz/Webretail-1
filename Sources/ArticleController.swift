@@ -93,7 +93,7 @@ class ArticleController {
                 let item = Article()
                 item.setJSONValues(json!)
                 try self.repository.update(id: id!, item: item)
-                try response.setBody(json: id)
+                try response.setBody(json: item)
             } catch {
                 print(error)
             }

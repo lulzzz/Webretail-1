@@ -111,7 +111,7 @@ export class AttributeComponent implements OnInit {
         } else {
             this.attributeService.updateValue(this.selectedValue.attributeValueId, this.selectedValue)
                 .subscribe(result => {
-                    this.values[this.selectedValueIndex] = this.selectedValue;
+                    //this.values[this.selectedValueIndex] = this.selectedValue;
                 });
         }
         this.displayDialogValue = false;

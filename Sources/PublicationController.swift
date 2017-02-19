@@ -89,6 +89,7 @@ class PublicationController {
                 let item = Publication()
                 item.setJSONValues(json!)
                 try self.repository.update(id: id!, item: item)
+                try response.setBody(json: item)
             } catch {
                 print(error)
             }
@@ -102,6 +103,7 @@ class PublicationController {
             do {
                 let id = request.urlVariables["id"]?.toInt()
                 try self.repository.delete(id: id!)
+                try response.setBody(json: id)
             } catch {
                 print(error)
             }
