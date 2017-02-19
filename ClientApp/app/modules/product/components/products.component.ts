@@ -89,23 +89,25 @@ export class ProductsComponent implements OnInit {
 
     saveClick() {
         if (this.isNew) {
-            this.productService.create(this.selected).subscribe(result => {
-                this.products.push(result);
-            });
+            this.productService.create(this.selected)
+                .subscribe(result => {
+                    this.products.push(result);
+                });
         } else {
-            this.selected.brandId 
-            this.productService.update(this.selected.productId, this.selected).subscribe(result => {
-                //this.products[this.selectedIndex] = this.selected;
-            });
+            this.productService.update(this.selected.productId, this.selected)
+                .subscribe(result => {
+                    //this.products[this.selectedIndex] = this.selected;
+                });
         }
         this.selected = null;
         this.displayDialog = false;
     }
 
     deleteClick() {
-        this.productService.delete(this.selected.productId).subscribe(result => {
-            this.products.splice(this.selectedIndex, 1);
-        });
+        this.productService.delete(this.selected.productId)
+            .subscribe(result => {
+                this.products.splice(this.selectedIndex, 1);
+            });
         this.selected = null;
         this.displayDialog = false;
     }

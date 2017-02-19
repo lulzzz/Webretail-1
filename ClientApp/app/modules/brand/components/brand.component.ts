@@ -46,22 +46,25 @@ export class BrandComponent implements OnInit {
 
     saveClick() {
         if (this.isNew) {
-            this.brandService.create(this.selected).subscribe(result => {
-                this.brands.push(result);
-            });
+            this.brandService.create(this.selected)
+                .subscribe(result => {
+                    this.brands.push(result);
+                });
         } else {
-            this.brandService.update(this.selected.brandId, this.selected).subscribe(result => {
-                //this.brands[this.selectedIndex] = this.selected;
-            });
+            this.brandService.update(this.selected.brandId, this.selected)
+                .subscribe(result => {
+                    //this.brands[this.selectedIndex] = this.selected;
+                });
         }
         this.selected = null;
         this.displayDialog = false;
     }
 
     deleteClick() {
-        this.brandService.delete(this.selected.brandId).subscribe(result => {
-            this.brands.splice(this.selectedIndex, 1);
-        });
+        this.brandService.delete(this.selected.brandId)
+            .subscribe(result => {
+                this.brands.splice(this.selectedIndex, 1);
+            });
         this.selected = null;
         this.displayDialog = false;
     }

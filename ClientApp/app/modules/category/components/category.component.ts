@@ -47,22 +47,25 @@ export class CategoryComponent implements OnInit {
 
     saveClick() {
         if (this.isNew) {
-            this.categoryService.create(this.selected).subscribe(result => {
-                this.categories.push(result);
-            });
+            this.categoryService.create(this.selected)
+                .subscribe(result => {
+                    this.categories.push(result);
+                });
         } else {
-            this.categoryService.update(this.selected.categoryId, this.selected).subscribe(result => {
-                //this.categories[this.selectedIndex] = this.selected;
-            });
+            this.categoryService.update(this.selected.categoryId, this.selected)
+                .subscribe(result => {
+                    //this.categories[this.selectedIndex] = this.selected;
+                });
         }
         this.selected = null;
         this.displayDialog = false;
     }
 
     deleteClick() {
-        this.categoryService.delete(this.selected.categoryId).subscribe(result => {
-            this.categories.splice(this.selectedIndex, 1);
-        });
+        this.categoryService.delete(this.selected.categoryId)
+            .subscribe(result => {
+                this.categories.splice(this.selectedIndex, 1);
+            });
         this.selected = null;
         this.displayDialog = false;
     }
