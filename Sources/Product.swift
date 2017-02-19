@@ -53,7 +53,7 @@ class Product: PostgresStORM, JSONConvertible {
 
             // get categories
             let productCategory = ProductCategory()
-            try productCategory.find([("productId", productId)])
+            try productCategory.find([("productId", row.productId)])
             row.internal_categories = try productCategory.rows()
             
             rows.append(row)
