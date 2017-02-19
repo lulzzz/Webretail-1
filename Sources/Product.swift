@@ -77,11 +77,11 @@ class Product: PostgresStORM, JSONConvertible {
     func getJSONValues() throws -> [String : Any] {
         return [
             "productId": productId,
-            "brandId": brandId,
             "productCode": productCode,
             "productName": productName,
             "productUm": productUm,
             "productPrice": Helper.roundCurrency(value: productPrice),
+            //"brandId": brandId,
             "brand": internal_brand,
             "categories": internal_categories,
             "attributes": internal_attributes,

@@ -93,7 +93,7 @@ export class ProductsComponent implements OnInit {
                 this.products.push(result);
             });
         } else {
-            alert(JSON.stringify(this.selected));
+            this.selected.brandId 
             this.productService.update(this.selected.productId, this.selected).subscribe(result => {
                 //this.products[this.selectedIndex] = this.selected;
             });

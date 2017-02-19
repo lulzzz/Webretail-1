@@ -12,22 +12,27 @@ export class BrandService {
     }
 
     getAll(): Observable<Brand[]> {
-        return this.http.get('/api/brand', { headers: Helpers.getHeaders() }).map(result => <Brand[]>result.json());
+        return this.http.get('/api/brand', { headers: Helpers.getHeaders() })
+            .map(result => <Brand[]>result.json());
     }
 
     getById(id: number) : Observable<Brand> {
-        return this.http.get('/api/brand/' + id, { headers: Helpers.getHeaders() }).map(result => <Brand>result.json());
+        return this.http.get('/api/brand/' + id, { headers: Helpers.getHeaders() })
+            .map(result => <Brand>result.json());
     }
 
     create(model: Brand) : Observable<Brand> {
-        return this.http.post('/api/brand', model, { headers: Helpers.getHeaders() }).map(result => <Brand>result.json());
+        return this.http.post('/api/brand', model, { headers: Helpers.getHeaders() })
+            .map(result => <Brand>result.json());
     }
 
-    update(id: number, model: Brand) : Observable<any> {
-        return this.http.put('/api/brand/' + id, model, { headers: Helpers.getHeaders() }).map(result => result.json());
+    update(id: number, model: Brand) : Observable<Brand> {
+        return this.http.put('/api/brand/' + id, model, { headers: Helpers.getHeaders() })
+            .map(result => <Brand>result.json());
     }
 
     delete(id: number) : Observable<any> {
-        return this.http.delete('/api/brand/' + id, { headers: Helpers.getHeaders() }).map(result => result.json());
+        return this.http.delete('/api/brand/' + id, { headers: Helpers.getHeaders() })
+            .map(result => result.json());
     }
 }

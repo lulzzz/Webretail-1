@@ -25,9 +25,9 @@ export class AttributeService {
             .map(result => <Attribute>result.json());
     }
 
-    update(id: number, model: Attribute) : Observable<any> {
+    update(id: number, model: Attribute) : Observable<Attribute> {
         return this.http.put('/api/attribute/' + id, model, { headers: Helpers.getHeaders() })
-            .map(result => result.json());
+            .map(result => <Attribute>result.json());
     }
 
     delete(id: number) : Observable<any> {
@@ -55,9 +55,9 @@ export class AttributeService {
             .map(result => <AttributeValue>result.json());
     }
 
-    updateValue(id: number, model: AttributeValue) : Observable<any> {
+    updateValue(id: number, model: AttributeValue) : Observable<AttributeValue> {
         return this.http.put('/api/attributevalue/' + id, model, { headers: Helpers.getHeaders() })
-            .map(result => result.json());
+            .map(result => <AttributeValue>result.json());
     }
 
     deleteValue(id: number) : Observable<any> {

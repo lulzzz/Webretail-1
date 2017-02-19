@@ -26,7 +26,8 @@ export class ProductService {
             .map(result => <Product>result.json());
     }
 
-    update(id: number, model: Product) : Observable<any> {
+    update(id: number, model: Product) : Observable<Product> {
+        alert(JSON.stringify(model));
         return this.http.put('/api/product/' + id, model, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
