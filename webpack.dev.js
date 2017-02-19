@@ -1,14 +1,14 @@
 var path = require('path');
-
 var webpack = require('webpack');
-
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var helpers = require('./webpack.helpers');
 
-console.log('@@@@@@@@@ USING DEVELOPMENT @@@@@@@@@@@@@@@');
+const isDevServer = process.argv.find(v => v.includes('webpack-dev-server'));
+//var isDevBuild = process.argv.indexOf('--env.prod') < 0;
 
+console.log('@@@@@@@@@ USING DEVELOPMENT @@@@@@@@@@@@@@@');
 module.exports = {
 
     devtool: 'source-map',
@@ -106,28 +106,21 @@ module.exports = {
             [
                 './wwwroot/dist',
                 './wwwroot/assets',
-                './wwwroot/views/admin.mustache',
-                './wwwroot/index.html'
+                './wwwroot/views/admin.mustache'
             ]
         ),
-
-        // web-server deploy
-        new HtmlWebpackPlugin({
-            filename: 'views/admin.mustache',
-            inject: 'body',
-            template: 'ClientApp/index.html'
-        }),
-        // webpack-dev-server deploy
+    ].concat(isDevServer ? [
         new HtmlWebpackPlugin({
             filename: 'index.html',
             inject: 'body',
             template: 'ClientApp/index.html'
-        }),
-
-        // new CopyWebpackPlugin([
-        //     { from: './ClientApp/images/*.*', to: 'assets/', flatten: true }
-        // ])
-    ]
-
+        })
+    ] : [
+        new HtmlWebpackPlugin({
+            filename: 'views/admin.mustache',
+            inject: 'body',
+            template: 'ClientApp/index.html'
+        })
+    ])
 };
 

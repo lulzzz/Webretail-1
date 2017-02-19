@@ -3,6 +3,7 @@
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
 ## Build generated
+.build/
 build/
 DerivedData/
 
@@ -20,6 +21,7 @@ xcuserdata/
 ## Other
 *.moved-aside
 *.xcuserstate
+.DS_Store
 
 ## Obj-C/Swift specific
 *.hmap
@@ -35,9 +37,6 @@ playground.xcworkspace
 #
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
 Packages/
-node_modules/
-.build/
-
 
 # CocoaPods
 #
@@ -68,5 +67,8 @@ fastlane/test_output
 
 StORMlog.txt
 requests.log
+node_modules/
 wwwroot/favicon.ico
-wwwroot/views/index.mustache
+wwwroot/views/admin.mustache
+wwwroot/assets/
+wwwroot/dist/

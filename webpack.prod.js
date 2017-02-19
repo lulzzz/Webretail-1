@@ -1,7 +1,5 @@
 var path = require('path');
-
 var webpack = require('webpack');
-
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
