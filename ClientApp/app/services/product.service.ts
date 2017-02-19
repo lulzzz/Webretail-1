@@ -38,32 +38,32 @@ export class ProductService {
     }
 
     addCategory(model: ProductCategory) : Observable<ProductCategory> {
-        return this.http.post('/api/product/category', model, { headers: Helpers.getHeaders() })
+        return this.http.post('/api/productcategory', model, { headers: Helpers.getHeaders() })
             .map(result => <ProductCategory>result.json());
     }
 
     removeCategory(model: ProductCategory) : Observable<any> {
-        return this.http.put('/api/product/category', model, { headers: Helpers.getHeaders() })
+        return this.http.put('/api/productcategory', model, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
 
     addAttribute(model: ProductAttribute) : Observable<ProductAttribute> {
-        return this.http.post('/api/product/attribute', model, { headers: Helpers.getHeaders() })
+        return this.http.post('/api/productattribute', model, { headers: Helpers.getHeaders() })
             .map(result => <ProductAttribute>result.json());
     }
 
     removeAttribute(model: ProductAttribute) : Observable<any> {
-        return this.http.put('/api/product/attribute', model, { headers: Helpers.getHeaders() })
+        return this.http.put('/api/productattribute', model, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
 
     addAttributeValue(model: ProductAttributeValue) : Observable<ProductAttributeValue> {
-        return this.http.post('/api/product/attributevalue', model, { headers: Helpers.getHeaders() })
+        return this.http.post('/api/productattributevalue', model, { headers: Helpers.getHeaders() })
             .map(result => <ProductAttributeValue>result.json());
     }
 
     removeAttributeValue(model: ProductAttributeValue) : Observable<any> {
-        return this.http.put('/api/product/attributevalue', model, { headers: Helpers.getHeaders() })
+        return this.http.put('/api/productattributevalue', model, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
 }

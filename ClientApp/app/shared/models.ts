@@ -100,22 +100,26 @@ export class AttributeValue {
 // Interfaces
 
 export interface ProductCategory {
+  //productCategoryId: number;
   productId: number;
   category: Category;
 }
 
 export interface ProductAttribute {
+  productAttributeId: number;
   productId: number;
   attribute: Attribute;
   attributeValues: ProductAttributeValue[];
 }
 
 export interface ProductAttributeValue {
+  //productAttributeValueId: number;
   productAttributeId: number;
   attributeValue: AttributeValue;
 }
 
 export interface ArticleAttributeValue {
-  articleAttributeValueId: number;
+  //articleAttributeValueId: number;
+  articleId: number;
   productAttributeValue: ProductAttributeValue;
 }

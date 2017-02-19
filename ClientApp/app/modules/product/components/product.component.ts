@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TreeNode, Message, MenuItem } from 'primeng/primeng';
 import { Observable } from 'rxjs/Rx';
@@ -15,7 +15,7 @@ import { AttributeService } from './../../../services/attribute.service';
     providers: [ CategoryService, AttributeService ]
 })
 
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
 
     private sub: any;
     msgs: Message[] = [];
@@ -27,8 +27,8 @@ export class ProductComponent implements OnInit {
     selected: any;
     productInfo: TreeNode[];
     selectedNode: TreeNode;
-    list1: TreeNode[];
-    list2: TreeNode[];
+    nodesSource: TreeNode[];
+    nodesTarget: TreeNode[];
     display: boolean;
 
 	constructor(private activatedRoute: ActivatedRoute,
@@ -78,7 +78,7 @@ export class ProductComponent implements OnInit {
         let attributesNode = Helpers.newNode('Attributes', '[]', 'attributes');
         attributesNode.expanded = true;
         this.product.attributes.forEach(elem => {
-            let node = Helpers.newNode(elem.attribute.attributeName, elem.attribute.attributeId.toString(), 'attribute');
+            let node = Helpers.newNode(elem.attribute.attributeName, elem.attribute.attributeId.toString(), `attribute:${elem.productAttributeId}`);
             elem.attributeValues.forEach(e =>
                 node.children.push(Helpers.newNode(e.attributeValue.attributeValueName, e.attributeValue.attributeValueId.toString(), 'attributeValue'))
             );
@@ -149,40 +149,41 @@ export class ProductComponent implements OnInit {
             return;
         }
 
-        this.list1 = [];
+        this.nodesSource = [];
 
-        switch (this.selectedNode.type) {
+        let type = this.selectedNode.type;
+        switch (type) {
             case 'categories':
-                this.list2 = this.productInfo[0].children.find(p => p.type == 'categories').children;
+                this.nodesTarget = this.productInfo[0].children.find(p => p.type == 'categories').children;
                 this.categoryService.getAll()
                     .subscribe(result => {
                         result.forEach(p => {
-                            if (this.list2.findIndex(e => e.data == p.categoryId) < 0) {
-                                this.list1.push(Helpers.newNode(p.categoryName, p.categoryId.toString(), 'category'));
+                            if (this.nodesTarget.findIndex(e => e.data == p.categoryId) < 0) {
+                                this.nodesSource.push(Helpers.newNode(p.categoryName, p.categoryId.toString(), 'category'));
                             }
                         });
                     });
                 break;
             case 'attributes':
-                this.list2 = this.productInfo[0].children.find(p => p.type == 'attributes').children;
+                this.nodesTarget = this.productInfo[0].children.find(p => p.type == 'attributes').children;
                 this.attributeService.getAll()
                     .subscribe(result => {
                         result.forEach(p => {
-                            if (this.list2.findIndex(e => e.data == p.attributeId) < 0) {
-                                this.list1.push(Helpers.newNode(p.attributeName, p.attributeId.toString(), 'attribute'));
+                            if (this.nodesTarget.findIndex(e => e.data == p.attributeId) < 0) {
+                                this.nodesSource.push(Helpers.newNode(p.attributeName, p.attributeId.toString(), 'attribute:0'));
                             }
                         });
                     });
                 break;
-            case 'attribute':
-                this.list2 = this.productInfo[0].children.find(p => p.type == 'attributes')
+            case (type.startsWith('attribute:') ? type : undefined):
+                this.nodesTarget = this.productInfo[0].children.find(p => p.type == 'attributes')
                                                 .children.find(p => p.data == this.selectedNode.data)
                                                 .children;
                 this.attributeService.getValueByAttributeId(this.selectedNode.data)
                     .subscribe(result => {
                         result.forEach(p => {
-                            if (this.list2.findIndex(e => e.data == p.attributeValueId) < 0) {
-                                this.list1.push(Helpers.newNode(p.attributeValueName, p.attributeValueId.toString(), 'attributeValue'));
+                            if (this.nodesTarget.findIndex(e => e.data == p.attributeValueId) < 0) {
+                                this.nodesSource.push(Helpers.newNode(p.attributeValueName, p.attributeValueId.toString(), 'attributeValue'));
                             }
                         });
                     });
@@ -212,23 +213,26 @@ export class ProductComponent implements OnInit {
                                 detail: 'Added category ' + p.label
                             }));
                     break;
-                case 'attribute':
+                case (p.type.startsWith('attribute:') ? p.type : undefined):
                     let productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
                         attribute: new Attribute(p.data, p.label)
                     };
                     this.productService
                         .addAttribute(productAttribute)
-                        .subscribe(result => this.msgs.push({
+                        .subscribe(result => {
+                            p.type = `attribute:${result.productAttributeId}`;
+                            this.msgs.push({
                                 severity: 'success',
                                 summary: 'Success',
                                 detail: 'Added attribute ' + p.label
-                            }));
+                            });
+                        });
                     break;
                 case 'attributeValue':
                     let productAttributeValue = <ProductAttributeValue>{
-                        productAttributeId: this.selectedNode.data,
-                        attributeValue: new AttributeValue(0, p.data, p.data, p.label)
+                        productAttributeId: Number(this.selectedNode.type.split(':')[1]),
+                        attributeValue: new AttributeValue(0, p.data, '', p.label)
                     };
                     this.productService
                         .addAttributeValue(productAttributeValue)
@@ -274,7 +278,7 @@ export class ProductComponent implements OnInit {
                     break;
                 case 'attributeValue':
                     let productAttributeValue = <ProductAttributeValue>{
-                        productAttributeId: this.selectedNode.data,
+                        productAttributeId: Number(this.selectedNode.type.split(':')[1]),
                         attributeValue: new AttributeValue(0, p.data, '', p.label)
                     };
                     this.productService

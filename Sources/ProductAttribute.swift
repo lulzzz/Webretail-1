@@ -50,7 +50,7 @@ class ProductAttribute: PostgresStORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.productAttributeId = Helper.getJSONValue(named: "productAttributeId", from: values, defaultValue: 0)
+        //self.productAttributeId = Helper.getJSONValue(named: "productAttributeId", from: values, defaultValue: 0)
         self.productId = Helper.getJSONValue(named: "productId", from: values, defaultValue: 0)
         self.attributeId = Helper.getJSONValue(named: "attributeId", from: values["attribute"] as! [String : Any], defaultValue: 0)
     }

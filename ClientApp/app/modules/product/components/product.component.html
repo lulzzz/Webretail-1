@@ -30,7 +30,7 @@
 </div>
 
 <p-dialog header="Edit node" [modal]=true showEffect="fade" [(visible)]="display">
-    <p-pickList [source]="list1" [target]="list2" [responsive]="true" 
+    <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" 
     (onMoveToTarget)="addNodes($event)" (onMoveToSource)="removeNodes($event)">
         <template let-attr pTemplate="item">
             <span>{{attr.data}}</span> | <span>{{attr.label}}</span>

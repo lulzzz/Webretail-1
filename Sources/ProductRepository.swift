@@ -77,7 +77,7 @@ class ProductRepository : ProductProtocol {
     func removeCategory(item: ProductCategory) throws {
         try item.find([
             ("productId", item.productId),
-            ("categoryId", item.internal_category.categoryId)
+            ("categoryId", item.categoryId)
         ])
         try item.delete()
     }
@@ -91,7 +91,7 @@ class ProductRepository : ProductProtocol {
     func removeAttribute(item: ProductAttribute) throws {
         try item.find([
             ("productId", item.productId),
-            ("attributeId", item.internal_attribute.attributeId)
+            ("attributeId", item.attributeId)
         ])
         try item.delete()
     }
@@ -105,7 +105,7 @@ class ProductRepository : ProductProtocol {
     func removeAttributeValue(item: ProductAttributeValue) throws {
         try item.find([
             ("productAttributeId", item.productAttributeId),
-            ("attributeValueId", item.internal_attributeValue.attributeValueId)
+            ("attributeValueId", item.attributeValueId)
         ])
         try item.delete()
     }
