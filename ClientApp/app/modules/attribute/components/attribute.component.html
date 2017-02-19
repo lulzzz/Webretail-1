@@ -15,7 +15,7 @@
         [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
         <p-column field="attributeId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="attributeName" header="Name" [sortable]="true"></p-column>
-        <p-column [style]="{'width':'50px'}">
+        <p-column [style]="{'width':'60px'}">
             <template pTemplate="header">
                 <button type="button" pButton (click)="addClick()" icon="fa-plus-circle"></button>
             </template>
@@ -69,7 +69,7 @@
         <p-column field="attributeValueId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="attributeValueCode" header="Code" [sortable]="true"></p-column>
         <p-column field="attributeValueName" header="Name" [sortable]="true"></p-column>
-        <p-column [style]="{'width':'50px'}">
+        <p-column [style]="{'width':'60px'}">
             <template pTemplate="header">
                 <button type="button" pButton (click)="addValueClick()" icon="fa-plus-circle"></button>
             </template>

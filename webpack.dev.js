@@ -109,6 +109,13 @@ module.exports = {
             ]
         ),
 
+        // web-server deploy
+        new HtmlWebpackPlugin({
+            filename: 'views/index.mustache',
+            inject: 'body',
+            template: 'ClientApp/index.mustache'
+        }),
+        // webpack-dev-server deploy
         new HtmlWebpackPlugin({
             filename: 'index.html',
             inject: 'body',
