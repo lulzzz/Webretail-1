@@ -105,15 +105,17 @@ module.exports = {
         new CleanWebpackPlugin(
             [
                 './wwwroot/dist',
-                './wwwroot/assets'
+                './wwwroot/assets',
+                './wwwroot/views/admin.mustache',
+                './wwwroot/index.html'
             ]
         ),
 
         // web-server deploy
         new HtmlWebpackPlugin({
-            filename: 'views/index.mustache',
+            filename: 'views/admin.mustache',
             inject: 'body',
-            template: 'ClientApp/index.mustache'
+            template: 'ClientApp/index.html'
         }),
         // webpack-dev-server deploy
         new HtmlWebpackPlugin({

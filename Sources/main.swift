@@ -57,15 +57,31 @@ try? tokenStore?.setup()
 // Create HTTP server.
 let server = HTTPServer()
 
-// Register routes and handlers
+// Register auth routes and handlers
 let authWebRoutes = makeWebAuthRoutes()
 let authJSONRoutes = makeJSONAuthRoutes("/api")
-
-// Add the routes to the server
 server.addRoutes(authWebRoutes)
 server.addRoutes(authJSONRoutes)
 
-// Add the routes to the Api
+// Register web routes and handlers
+var appRoutes = Routes()
+appRoutes.add(method: .get, uri: "/home", handler: {
+    request, response in
+    
+    if (request.user.authenticated) {
+        let context: [String : Any] = [
+            "accountID": request.user.authDetails?.account.uniqueID ?? ""
+        ]
+        response.render(template: "admin", context: context)
+    }
+    else {
+        response.render(template: "login")
+    }
+})
+
+server.addRoutes(appRoutes)
+
+// Register api routes and handlers
 let accountController = AccountController(repository: AccountRepository())
 server.addRoutes(accountController.getRoutes())
 

@@ -73,7 +73,7 @@ module.exports = {
             [
                 './wwwroot/dist',
                 './wwwroot/assets',
-                './wwwroot/views/index.mustache'
+                './wwwroot/views/admin.mustache'
             ]
         ),
         new webpack.NoEmitOnErrorsPlugin(),
@@ -92,9 +92,9 @@ module.exports = {
             }),
 
         new HtmlWebpackPlugin({
-            filename: 'views/index.mustache',
+            filename: 'views/admin.mustache',
             inject: 'body',
-            template: 'ClientApp/index.mustache'
+            template: 'ClientApp/index.html'
         }),
 
         // new CopyWebpackPlugin([
