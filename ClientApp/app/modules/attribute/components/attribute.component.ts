@@ -89,7 +89,7 @@ export class AttributeComponent implements OnInit {
     }
 
     addValueClick() {
-        if (this.selected) {
+        if (this.selected && this.selected.attributeId > 0) {
             this.selectedValue = new AttributeValue(this.selected.attributeId, 0, '', '');
             this.displayDialogValue = true;
         } else {
