@@ -2,7 +2,7 @@
 
 <img src="https://github.com/gerardogrisolini/Webretail/blob/master/wwwroot/images/logo.jpg?raw=true" alt="Webretail - RMS" />
 
-Retail Management System developed with Swift, Angular2 and PostgreSQL
+Retail Management System developed with Swift, Angular2 and PostgreSQL.
 
 
 Ensure you have installed Xcode 8.0 or later.
