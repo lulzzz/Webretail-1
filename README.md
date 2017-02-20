@@ -1,8 +1,6 @@
 # Webretail - Retail Management System
 
-<p align="center">
-    <img src="https://github.com/gerardogrisolini/Webretail/blob/master/wwwroot/images/logo.jpg?raw=true" alt="Webretail - RMS" />
-</p>
+<img src="https://github.com/gerardogrisolini/Webretail/blob/master/wwwroot/images/logo.jpg?raw=true" alt="Webretail - RMS" />
 
 Retail Management System developed with Swift, Angular2 and PostgreSQL
 
@@ -97,5 +95,4 @@ http://localhost:8181/login
 http://localhost:8181/register
 ```
 
-These routes are using Mustache files in the wwwroot directory.
-For client application using Angular2.
+These routes are using Mustache files in the wwwroot directory, for client application using Angular2.
