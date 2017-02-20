@@ -1,4 +1,4 @@
-# Webretail - Retail Management System
+# Webretail - RMS
 
 <img src="https://github.com/gerardogrisolini/Webretail/blob/master/wwwroot/images/logo.jpg?raw=true" alt="Webretail - RMS" />
 
