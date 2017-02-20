@@ -95,4 +95,17 @@ http://localhost:8181/login
 http://localhost:8181/register
 ```
 
-These routes are using Mustache files in the wwwroot directory, for client application using Angular2.
+These routes are using Mustache files in the wwwroot directory.
+
+
+## Angular2
+
+Steps for the development UI:
+
+```
+npm install
+npm start
+
+go to http://localhost:8888/webpack-dev-server/
+
+```
