@@ -18,6 +18,9 @@ class Article: PostgresStORM, JSONConvertible {
     public var created          : Int = Helper.now()
     public var updated          : Int = Helper.now()
     
+    public var internal_attributeValues: [ArticleAttributeValue] = [ArticleAttributeValue]()
+
+    
     open override func table() -> String { return "articles" }
     
     open override func to(_ this: StORMRow) {
@@ -28,11 +31,17 @@ class Article: PostgresStORM, JSONConvertible {
         updated         = this.data["updated"] as? Int      ?? 0
     }
     
-    func rows() -> [Article] {
+    func rows() throws -> [Article] {
         var rows = [Article]()
         for i in 0..<self.results.rows.count {
             let row = Article()
             row.to(self.results.rows[i])
+
+            // get attributeValues
+            let attributeValue = ArticleAttributeValue()
+            try attributeValue.find([("articleId", row.articleId)])
+            row.internal_attributeValues = try attributeValue.rows()
+
             rows.append(row)
         }
         return rows

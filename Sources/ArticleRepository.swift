@@ -10,13 +10,30 @@ import StORM
 
 class ArticleRepository : ArticleProtocol {
     
+    func build(productId: Int) throws {
+        
+        //TODO: complete this func
+        
+        let item1 = Article()
+        item1.productId = productId
+        item1.barcode = "11111111111"
+        try add(item: item1)
+    }
+    
     func getAll() throws -> [Article] {
         let items = Article()
         try items.findAll()
         
-        return items.rows()
+        return try items.rows()
     }
     
+    func get(productId: Int) throws -> [Article] {
+        let items = Article()
+        try items.find([("productId", productId)])
+        
+        return try items.rows()
+    }
+
     func get(id: Int) throws -> Article? {
         let item = Article()
         try item.get(id)

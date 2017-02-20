@@ -8,7 +8,11 @@
 
 protocol ArticleProtocol {
     
+    func build(productId: Int) throws
+
     func getAll() throws -> [Article]
+    
+    func get(productId: Int) throws -> [Article]
     
     func get(id: Int) throws -> Article?
     

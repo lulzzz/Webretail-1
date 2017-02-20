@@ -36,6 +36,11 @@ class ProductRepository : ProductProtocol {
         try productAttribute.find([("productId", item.productId)])
         item.internal_attributes = try productAttribute.rows()
         
+        // get articles
+        let article = Article()
+        try article.find([("productId", item.productId)])
+        item.internal_articles = try article.rows()
+
         return item
     }
     

@@ -21,25 +21,25 @@ class ArticleController {
         
         let articleAttributeValue = ArticleAttributeValue()
         try? articleAttributeValue.setup()
-
-//        do {
-//            let item1 = Article()
-//            item1.productId = 1
-//            item1.barcode = "11111111111"
-//            try self.repository.add(item: item1)
-//            
-//            let item2 = Article()
-//            item2.productId = 1
-//            item2.barcode = "22222222222"
-//            try self.repository.add(item: item2)
-//        } catch {
-//            print(error)
-//        }
     }
     
     func getRoutes() -> Routes {
         var routes = Routes()
         
+        routes.add(method: .get, uri: "/api/product/{id}/build", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let id = request.urlVariables["id"]?.toInt()
+                try self.repository.build(productId: id!)
+                try response.setBody(json: id)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+
         routes.add(method: .get, uri: "/api/article", handler: {
             _, response in
             response.setHeader(.contentType, value: "application/json")
@@ -53,6 +53,20 @@ class ArticleController {
             response.completed()
         })
         
+        routes.add(method: .get, uri: "/api/product/{id}/article", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            
+            do {
+                let id = request.urlVariables["id"]?.toInt()
+                let item = try self.repository.get(productId: id!)
+                try response.setBody(json: item)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
+
         routes.add(method: .get, uri: "/api/article/{id}", handler: {
             request, response in
             response.setHeader(.contentType, value: "application/json")
