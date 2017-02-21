@@ -16,7 +16,6 @@ struct Helper {
     }
     
     public static func formatDate(unixdate: Int) -> String {
-        
         if unixdate == 0 { return "" }
         let date = Date(timeIntervalSinceReferenceDate: TimeInterval(unixdate))
         let formatter = DateFormatter()
@@ -32,6 +31,7 @@ struct Helper {
         formatter.maximumFractionDigits = 2;
         formatter.locale = Locale.current
         let result = formatter.string(from: value as NSNumber);
+        
         return result!
     }
     
@@ -50,15 +50,7 @@ struct Helper {
         else if defaultValue is Double, let d = f as? String {
             return Double(d) as! T
         }
+    
         return defaultValue
-        
-//        switch defaultValue {
-//        case is Int:
-//            return (Int(f as! String)) as! T
-//        case is Double:
-//            return (Double(f as! String)) as! T
-//        default:
-//            return defaultValue
-//        }
     }
 }

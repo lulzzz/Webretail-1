@@ -294,6 +294,15 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     buildClick() {
-        this.msgs.push({severity: 'success', summary: 'Success', detail: 'Data builded'});
+        this.productService.build(this.product.productId)
+                           .subscribe(result => this.msgs.push({
+                                severity: 'success', 
+                                summary: 'Success', 
+                                detail: 'Data builded'
+                           }), onerror => this.msgs.push({
+                                severity: 'error', 
+                                summary: 'Data build', 
+                                detail: onerror
+                           }));
     }
 }

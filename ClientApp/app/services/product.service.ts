@@ -65,4 +65,9 @@ export class ProductService {
         return this.http.put('/api/productattributevalue', model, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
+
+    build(id: number) : Observable<any> {
+        return this.http.get('/api/product/' + id + '/build', { headers: Helpers.getHeaders() })
+            .map(result => result.json());
+    }
 }
