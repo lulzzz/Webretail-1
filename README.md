@@ -1,12 +1,14 @@
-#### Under active development. Please do not use.
-```
-```
-
 # Webretail - RMS
 
 <img src="https://github.com/gerardogrisolini/Webretail/blob/master/wwwroot/images/logo.jpg?raw=true" width="80" alt="Webretail - RMS" />
 
 Retail Management System developed with Swift, Angular2 and PostgreSQL.
+
+```
+```
+#### Under active development. Please do not use.
+```
+```
 
 ## Build Notes
 
