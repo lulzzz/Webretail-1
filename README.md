@@ -4,11 +4,10 @@
 
 Retail Management System developed with Swift, Angular2 and PostgreSQL.
 
-
 #### Under active development. Please do not use.
 
-
-
+```
+```
 
 ## Build Notes
 
