@@ -4,13 +4,11 @@
 
 Retail Management System developed with Swift, Angular2 and PostgreSQL.
 
-
-Ensure you have installed Xcode 8.0 or later.
-
-
 ### Under active development. Please do not use.
 
 ## Build Notes
+
+Ensure you have installed Xcode 8.0 or later.
 
 ### macOS
 
