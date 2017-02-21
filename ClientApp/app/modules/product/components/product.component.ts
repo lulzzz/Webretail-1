@@ -95,11 +95,13 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.totalRecords = this.product.articles.length;
         this.header = [];
         this.articles = [];
+        let productAttributeValues: ProductAttributeValue[] = [];
 
         let lenght = this.product.attributes.length - 1;
         if (lenght > 0) {
             this.product.attributes.forEach(elem => {
                 this.header.push(elem.attribute.attributeName);
+                productAttributeValues = productAttributeValues.concat(elem.attributeValues);
             });
             this.header.pop();
 
@@ -112,8 +114,8 @@ export class ProductComponent implements OnInit, OnDestroy {
             .groupBy(
                 function (x) {
                     return x.attributeValues
-                        .map(p => p.productAttributeValue.attributeValue.attributeValueName)
-                        .slice(0, x.attributeValues.length - 2)
+                        .map(p => p.productAttributeValueId)
+                        .slice(0, x.attributeValues.length - 1)
                         .join('#');
                 },
                 function (x) { return x; }
@@ -121,26 +123,29 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         source.subscribe(obs => {
             let row: any[] = [];
-            console.log('Key: ' + obs.key);
+            //console.log('Key: ' + obs.key);
             let isFirst = true;
             obs.forEach(e => {
+
                 //TODO: get stock for this barcode
-                let qta = 1;
+                let qta = 0;
+
                 if (isFirst) {
                     e.attributeValues.forEach(ex => {
-                        console.log('Obs: ' + ex.productAttributeValue.attributeValue.attributeValueName);
-                        row.push(ex.productAttributeValue.attributeValue.attributeValueName);
+                        let productAttributeValue = productAttributeValues.find(
+                            p => p.productAttributeValueId === ex.productAttributeValueId
+                        );
+                        row.push(productAttributeValue.attributeValue.attributeValueName);
                     });
                     isFirst = false;
                     row[row.length - 1] = qta;
                 } else {
                     row.push(qta);
-                    //row.push(e.attributeValues[e.attributeValues.length - 1].attributeValue.attributeValueName);
                 }
             }).then(p => {
                 this.articles.push(row);
             });
-        }, err => console.log('Error: ' + err));
+        }, err => this.msgs.push({severity: 'error', summary: 'Error', detail: err}));
     }
 
     editClick() {
@@ -296,12 +301,12 @@ export class ProductComponent implements OnInit, OnDestroy {
     buildClick() {
         this.productService.build(this.product.productId)
                            .subscribe(result => this.msgs.push({
-                                severity: 'success', 
-                                summary: 'Success', 
+                                severity: 'success',
+                                summary: 'Success',
                                 detail: 'Data builded'
                            }), onerror => this.msgs.push({
-                                severity: 'error', 
-                                summary: 'Data build', 
+                                severity: 'error',
+                                summary: 'Data build',
                                 detail: onerror
                            }));
     }

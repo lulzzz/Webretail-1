@@ -32,10 +32,10 @@ class ArticleAttributeValue: PostgresStORM, JSONConvertible {
             let row = ArticleAttributeValue()
             row.to(self.results.rows[i])
             
-            // get productAttributeValue
-            let productAttributeValue = ProductAttributeValue()
-            try productAttributeValue.get(row.productAttributeValueId)
-            row.internal_productAttributeValue = productAttributeValue
+//            // get productAttributeValue
+//            let productAttributeValue = ProductAttributeValue()
+//            try productAttributeValue.get(row.productAttributeValueId)
+//            row.internal_productAttributeValue = productAttributeValue
             
             rows.append(row)
         }
@@ -56,8 +56,8 @@ class ArticleAttributeValue: PostgresStORM, JSONConvertible {
         return [
             //"articleAttributeValueId": articleAttributeValueId,
             //"articleId": articleId,
-            //"productAttributeValueId": productAttributeValueId,
-            "productAttributeValue": internal_productAttributeValue
+            "productAttributeValueId": productAttributeValueId,
+            //"productAttributeValue": internal_productAttributeValue
         ]
     }
 }

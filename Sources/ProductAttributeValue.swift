@@ -55,7 +55,7 @@ class ProductAttributeValue: PostgresStORM, JSONConvertible {
     
     func getJSONValues() -> [String : Any] {
         return [
-            //"productAttributeValueId": productAttributeValueId,
+            "productAttributeValueId": productAttributeValueId,
             //"productAttributeId": productAttributeId,
             //"attributeValueId": attributeValueId,
             "attributeValue": internal_attributeValue

@@ -21,12 +21,14 @@ class ArticleRepository : ArticleProtocol {
         //var indexes = Array(repeating: Array(repeating: 0, count: 2), count: productAttributes.count)
         var indexes = [[Int]]()
         for attribute in productAttributes {
-            indexes.append([0, attribute.internal_attributeValues.count])
+            indexes.append([0, attribute.internal_attributeValues.count - 1])
         }
         let lastIndex = indexes.count - 1
+        var index = 0
         
-        while indexes[0].reduce(0, +) >= 0 {
+        while index >= 0 { //indexes[0].reduce(0, +) <= indexes[1].reduce(0, +) {
             let article = Article()
+            article.productId = productId
             article.barcode = "010101"
             try add(item: article)
             
@@ -34,18 +36,20 @@ class ArticleRepository : ArticleProtocol {
                 let articleAttributeValue = ArticleAttributeValue()
                 articleAttributeValue.articleId = article.articleId
                 articleAttributeValue.productAttributeValueId =
-                    productAttributes[i].internal_attributeValues[indexes[0][i]].productAttributeValueId
+                    productAttributes[i].internal_attributeValues[indexes[i][0]].productAttributeValueId
                 try addAttributeValue(item: articleAttributeValue)
             }
             
-            var index = lastIndex
+            index = lastIndex
             while index >= 0 {
-                indexes[0][index] += 1
-                if indexes[0][index] <= indexes[1][index] {
+                if indexes[index][0] < indexes[index][1] {
+                    indexes[index][0] += 1
                     break
                 }
-                indexes[0][index] = 0
                 index -= 1
+                if index > -1 && indexes[index][0] < indexes[index][1] {
+                    indexes[index + 1][0] = 0
+                }
             }
         }
     }

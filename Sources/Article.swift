@@ -61,7 +61,8 @@ class Article: PostgresStORM, JSONConvertible {
         return [
             "articleId": articleId,
             //"productId": productId,
-            "barcode": barcode
+            "barcode": barcode,
+            "attributeValues": internal_attributeValues
             //,"created": Helper.formatDate(unixdate: created)
             //,"updated": Helper.formatDate(unixdate: updated)
         ]

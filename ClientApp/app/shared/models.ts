@@ -113,13 +113,14 @@ export interface ProductAttribute {
 }
 
 export interface ProductAttributeValue {
-  //productAttributeValueId: number;
+  productAttributeValueId: number;
   productAttributeId: number;
   attributeValue: AttributeValue;
 }
 
 export interface ArticleAttributeValue {
   //articleAttributeValueId: number;
-  articleId: number;
-  productAttributeValue: ProductAttributeValue;
+  //articleId: number;
+  productAttributeValueId: number;
+  //productAttributeValue: ProductAttributeValue;
 }
