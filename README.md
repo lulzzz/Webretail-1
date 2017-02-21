@@ -68,7 +68,7 @@ To run this project from Xcode, edit the Scheme, Under "Options" for "run", chec
 * Check out or download the project;
 * In terminal, navigate to the directory 
 * Execute `swift build`
-* Once the project has compiled, execute `./.build/debug/PerfectTurnstilePostgreSQLDemo`
+* Once the project has compiled, execute `./.build/debug/Webretail`
 
 ```
 [INFO] Starting HTTP server on 0.0.0.0:8181 with document root ./wwwroot
