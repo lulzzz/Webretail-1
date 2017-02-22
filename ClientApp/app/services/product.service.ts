@@ -36,33 +36,33 @@ export class ProductService {
             .map(result => result.json());
     }
 
-    addCategory(model: ProductCategory) : Observable<ProductCategory> {
-        return this.http.post('/api/productcategory', model, { headers: Helpers.getHeaders() })
-            .map(result => <ProductCategory>result.json());
+    addCategories(models: ProductCategory[]) : Observable<ProductCategory[]> {
+        return this.http.post('/api/productcategory', models, { headers: Helpers.getHeaders() })
+            .map(result => <ProductCategory[]>result.json());
     }
 
-    removeCategory(model: ProductCategory) : Observable<any> {
-        return this.http.put('/api/productcategory', model, { headers: Helpers.getHeaders() })
+    removeCategories(models: ProductCategory[]) : Observable<any> {
+        return this.http.put('/api/productcategory', models, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
 
-    addAttribute(model: ProductAttribute) : Observable<ProductAttribute> {
-        return this.http.post('/api/productattribute', model, { headers: Helpers.getHeaders() })
-            .map(result => <ProductAttribute>result.json());
+    addAttributes(models: ProductAttribute[]) : Observable<ProductAttribute[]> {
+        return this.http.post('/api/productattribute', models, { headers: Helpers.getHeaders() })
+            .map(result => <ProductAttribute[]>result.json());
     }
 
-    removeAttribute(model: ProductAttribute) : Observable<any> {
-        return this.http.put('/api/productattribute', model, { headers: Helpers.getHeaders() })
+    removeAttributes(models: ProductAttribute[]) : Observable<any> {
+        return this.http.put('/api/productattribute', models, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
 
-    addAttributeValue(model: ProductAttributeValue) : Observable<ProductAttributeValue> {
-        return this.http.post('/api/productattributevalue', model, { headers: Helpers.getHeaders() })
-            .map(result => <ProductAttributeValue>result.json());
+    addAttributeValues(models: ProductAttributeValue[]) : Observable<ProductAttributeValue[]> {
+        return this.http.post('/api/productattributevalue', models, { headers: Helpers.getHeaders() })
+            .map(result => <ProductAttributeValue[]>result.json());
     }
 
-    removeAttributeValue(model: ProductAttributeValue) : Observable<any> {
-        return this.http.put('/api/productattributevalue', model, { headers: Helpers.getHeaders() })
+    removeAttributeValues(models: ProductAttributeValue[]) : Observable<any> {
+        return this.http.put('/api/productattributevalue', models, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
 

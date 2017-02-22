@@ -6,40 +6,100 @@
 //n
 //
 
+import Foundation
 import StORM
+import TurnstileCrypto
 
 class ArticleRepository : ArticleProtocol {
     
-    func build(productId: Int) throws {
+    func build(productId: Int) throws -> Int {
+        
+        var countInserted: Int = 0
         
         //TODO: complete this func
+        let product = Product()
+        try product.get(productId)
+        var barcode: Int = 1000000000001
         
+        // Get product attributes
         let productAttribute = ProductAttribute()
-        try productAttribute.find([("productId", productId)])
+        try productAttribute.select(
+            whereclause: "productId = $1",
+            params: [productId],
+            orderby: ["attributeId"]
+        )
         let productAttributes = try productAttribute.rows()
         
+        // Create matrix indexes
         //var indexes = Array(repeating: Array(repeating: 0, count: 2), count: productAttributes.count)
         var indexes = [[Int]]()
         for attribute in productAttributes {
-            indexes.append([0, attribute.internal_attributeValues.count - 1])
+            let count = attribute._attributeValues.count - 1
+            if count == -1 {
+                throw StORMError.error("Not values found for attributeId: \(attribute.attributeId)")
+            }
+            indexes.append([0, count])
         }
         let lastIndex = indexes.count - 1
-        var index = 0
         
-        while index >= 0 { //indexes[0].reduce(0, +) <= indexes[1].reduce(0, +) {
-            let article = Article()
-            article.productId = productId
-            article.barcode = "010101"
-            try add(item: article)
+        // Invalidate product and articles
+        product.isValid = false
+        product.updated = Helper.now()
+        try product.save()
+
+        let article = Article()
+        try article.update(
+            cols: ["isValid"],
+            params: [false],
+            idName: "productId",
+            idValue: productId
+        )
+
+        // Creation articles
+        var index = 0
+        while index >= 0 {
             
+            // Check if exist article
+            let newArticle = Article()
+            var sql =
+                "SELECT a.* " +
+                "FROM articles as a " +
+                "LEFT JOIN articleattributevalues as b ON a.articleid = b.articleid " +
+                "WHERE a.productId = \(productId) AND b.productattributevalueid IN ("
             for i in 0...lastIndex {
-                let articleAttributeValue = ArticleAttributeValue()
-                articleAttributeValue.articleId = article.articleId
-                articleAttributeValue.productAttributeValueId =
-                    productAttributes[i].internal_attributeValues[indexes[i][0]].productAttributeValueId
-                try addAttributeValue(item: articleAttributeValue)
+                if i > 0 {
+                    sql += ","
+                }
+                sql += "\(productAttributes[i]._attributeValues[indexes[i][0]].productAttributeValueId)"
+            }
+            sql += ") GROUP BY a.articleid HAVING count(b.productattributevalueid) = \(lastIndex + 1)"
+            
+            let current = try newArticle.sqlRows(sql, params: [String]())
+            if current.count > 0 {
+                newArticle.to(current[0])
+                newArticle.isValid = true;
+                try newArticle.save()
+            }
+            else {
+                // Add article
+                newArticle.productId = productId
+                barcode += 1
+                newArticle.barcode = "\(barcode)"
+                newArticle.isValid = true;
+                try add(item: newArticle)
+                
+                // Add article attribute values
+                for i in 0...lastIndex {
+                    let articleAttributeValue = ArticleAttributeValue()
+                    articleAttributeValue.articleId = newArticle.articleId
+                    articleAttributeValue.productAttributeValueId =
+                        productAttributes[i]._attributeValues[indexes[i][0]].productAttributeValueId
+                    try addAttributeValue(item: articleAttributeValue)
+                }
+                countInserted += 1
             }
             
+            // Recalculate matrix indexes
             index = lastIndex
             while index >= 0 {
                 if indexes[index][0] < indexes[index][1] {
@@ -48,10 +108,36 @@ class ArticleRepository : ArticleProtocol {
                 }
                 index -= 1
                 if index > -1 && indexes[index][0] < indexes[index][1] {
-                    indexes[index + 1][0] = 0
+                    for i in index + 1...lastIndex {
+                        indexes[i][0] = 0
+                    }
                 }
             }
         }
+
+        // Clean articles
+        let articles = try get(productId: productId)
+        for item in articles {
+            if !item.isValid {
+                try item.delete()
+            }
+        }
+        
+        // Check integrity
+        var count: Int = 1
+        for attribute in productAttributes {
+            count *= attribute._attributeValues.count
+        }
+        
+        if articles.count == count {
+
+            // Update product
+            product.isValid = true
+            product.updated = Helper.now()
+            try product.save()
+        }
+        
+        return countInserted
     }
     
     func getAll() throws -> [Article] {

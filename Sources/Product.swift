@@ -18,13 +18,15 @@ class Product: PostgresSqlORM, JSONConvertible {
     public var productName	: String = ""
     public var productUm	: String = ""
     public var productPrice	: Double = 0
+    public var isActive     : Bool = false
+    public var isValid      : Bool = false
     public var created      : Int = Helper.now()
     public var updated      : Int = Helper.now()
     
-    public var internal_brand: Brand = Brand()
-    public var internal_categories: [ProductCategory] = [ProductCategory]()
-    public var internal_attributes: [ProductAttribute] = [ProductAttribute]()
-    public var internal_articles: [Article] = [Article]()
+    public var _brand: Brand = Brand()
+    public var _categories: [ProductCategory] = [ProductCategory]()
+    public var _attributes: [ProductAttribute] = [ProductAttribute]()
+    public var _articles: [Article] = [Article]()
     
 
     open override func table() -> String { return "products" }
@@ -36,6 +38,8 @@ class Product: PostgresSqlORM, JSONConvertible {
         productName     = this.data["productname"] as? String   ?? ""
         productUm       = this.data["productum"] as? String     ?? ""
         productPrice    = Double(this.data["productprice"] as? Float ?? 0)
+        isActive        = this.data["isactive"] as? Bool        ?? false
+        isValid         = this.data["isvalid"] as? Bool         ?? false
         created         = this.data["created"] as? Int          ?? 0
         updated         = this.data["updated"] as? Int          ?? 0
     }
@@ -49,12 +53,12 @@ class Product: PostgresSqlORM, JSONConvertible {
             // get brand
             let brand = Brand()
             try brand.get(row.brandId)
-            row.internal_brand = brand
+            row._brand = brand
 
             // get categories
             let productCategory = ProductCategory()
             try productCategory.find([("productId", row.productId)])
-            row.internal_categories = try productCategory.rows()
+            row._categories = try productCategory.rows()
             
             rows.append(row)
         }
@@ -68,6 +72,9 @@ class Product: PostgresSqlORM, JSONConvertible {
         self.productName = Helper.getJSONValue(named: "productName", from: values, defaultValue: "")
         self.productUm = Helper.getJSONValue(named: "productUm", from: values, defaultValue: "")
         self.productPrice = Helper.getJSONValue(named: "productPrice", from: values, defaultValue: 0.0)
+        self.productUm = Helper.getJSONValue(named: "productUm", from: values, defaultValue: "")
+        self.isActive = Helper.getJSONValue(named: "isActive", from: values, defaultValue: false)
+        self.isValid = Helper.getJSONValue(named: "isValid", from: values, defaultValue: false)
     }
     
     func jsonEncodedString() throws -> String {
@@ -81,11 +88,13 @@ class Product: PostgresSqlORM, JSONConvertible {
             "productName": productName,
             "productUm": productUm,
             "productPrice": Helper.roundCurrency(value: productPrice),
+            "isActive": isActive,
+            "isValid": isValid,
             //"brandId": brandId,
-            "brand": internal_brand,
-            "categories": internal_categories,
-            "attributes": internal_attributes,
-            "articles": internal_articles,
+            "brand": _brand,
+            "categories": _categories,
+            "attributes": _attributes,
+            "articles": _articles,
             "created": Helper.formatDate(unixdate: created),
             "updated": Helper.formatDate(unixdate: updated)
         ]

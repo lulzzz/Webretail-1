@@ -12,11 +12,12 @@ import PerfectLib
 
 class Article: PostgresSqlORM, JSONConvertible {
     
-    public var articleId		: Int = 0
-    public var productId		: Int = 0
-    public var barcode          : String = ""
-    public var created          : Int = Helper.now()
-    public var updated          : Int = Helper.now()
+    public var articleId	: Int = 0
+    public var productId	: Int = 0
+    public var barcode      : String = ""
+    public var isValid      : Bool = false
+    public var created      : Int = Helper.now()
+    public var updated      : Int = Helper.now()
     
     public var _attributeValues: [ArticleAttributeValue] = [ArticleAttributeValue]()
 
@@ -27,6 +28,7 @@ class Article: PostgresSqlORM, JSONConvertible {
         articleId		= this.data["articleid"] as? Int    ?? 0
         productId		= this.data["productid"] as? Int    ?? 0
         barcode         = this.data["barcode"] as? String   ?? ""
+        isValid         = this.data["isvalid"] as? Bool     ?? false
         created         = this.data["created"] as? Int      ?? 0
         updated         = this.data["updated"] as? Int      ?? 0
     }

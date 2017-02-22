@@ -16,7 +16,7 @@ class ProductAttributeValue: PostgresSqlORM, JSONConvertible {
     public var productAttributeId       : Int = 0
     public var attributeValueId         : Int = 0
     
-    public var internal_attributeValue: AttributeValue = AttributeValue()
+    public var _attributeValue: AttributeValue = AttributeValue()
 
     
     open override func table() -> String { return "productattributevalues" }
@@ -36,7 +36,7 @@ class ProductAttributeValue: PostgresSqlORM, JSONConvertible {
             // get attributeValue
             let attributeValue = AttributeValue()
             try attributeValue.get(row.attributeValueId)
-            row.internal_attributeValue = attributeValue
+            row._attributeValue = attributeValue
 
             rows.append(row)
         }
@@ -58,7 +58,7 @@ class ProductAttributeValue: PostgresSqlORM, JSONConvertible {
             "productAttributeValueId": productAttributeValueId,
             //"productAttributeId": productAttributeId,
             //"attributeValueId": attributeValueId,
-            "attributeValue": internal_attributeValue
+            "attributeValue": _attributeValue
         ]
     }
 }

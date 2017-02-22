@@ -24,7 +24,7 @@ class ProductRepository : ProductProtocol {
         // get brand
         let brand = Brand()
         try brand.get(item.brandId)
-        item.internal_brand = brand
+        item._brand = brand
         
         // get categories
         let productCategory = ProductCategory()
@@ -34,7 +34,7 @@ class ProductRepository : ProductProtocol {
             orderby: ["categoryId"]
         )
         try productCategory.find([("productId", id)])
-        item.internal_categories = try productCategory.rows()
+        item._categories = try productCategory.rows()
         
         // get attributes
         let productAttribute = ProductAttribute()
@@ -43,7 +43,7 @@ class ProductRepository : ProductProtocol {
             params: [id],
             orderby: ["attributeId"]
         )
-        item.internal_attributes = try productAttribute.rows()
+        item._attributes = try productAttribute.rows()
         
         // get articles
         let article = Article()
@@ -52,7 +52,7 @@ class ProductRepository : ProductProtocol {
             params: [id],
             orderby: ["articleId"]
         )
-        item.internal_articles = try article.rows()
+        item._articles = try article.rows()
 
         return item
     }
@@ -76,6 +76,7 @@ class ProductRepository : ProductProtocol {
         current.productUm = item.productUm
         current.productPrice = item.productPrice
         current.productCode = item.productCode
+        current.isActive = item.isActive
         current.brandId = item.brandId
         current.updated = Helper.now()
         try current.save()
@@ -105,6 +106,7 @@ class ProductRepository : ProductProtocol {
         try item.save {
             id in item.productAttributeId = id as! Int
         }
+        try setValid(productId: item.productId, valid: false)
     }
     
     func removeAttribute(item: ProductAttribute) throws {
@@ -113,12 +115,14 @@ class ProductRepository : ProductProtocol {
             ("attributeId", item.attributeId)
         ])
         try item.delete()
+        try setValid(productId: item.productId, valid: false)
     }
     
     func addAttributeValue(item: ProductAttributeValue) throws {
         try item.save {
             id in item.productAttributeValueId = id as! Int
         }
+        try setValid(productAttributeId: item.productAttributeId, valid: false)
     }
     
     func removeAttributeValue(item: ProductAttributeValue) throws {
@@ -127,5 +131,20 @@ class ProductRepository : ProductProtocol {
             ("attributeValueId", item.attributeValueId)
         ])
         try item.delete()
+        try setValid(productAttributeId: item.productAttributeId, valid: false)
+    }
+    
+    internal func setValid(productId: Int, valid: Bool) throws {
+        let product = try get(id: productId)!
+        if product.isValid != valid {
+            product.isValid = valid
+            try update(id: productId, item: product)
+        }
+    }
+    
+    internal func setValid(productAttributeId: Int, valid: Bool) throws {
+        let productAttribute = ProductAttribute()
+        try productAttribute.get(productAttributeId)
+        try setValid(productId: productAttribute.productId, valid: valid)
     }
 }

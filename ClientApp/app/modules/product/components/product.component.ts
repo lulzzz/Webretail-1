@@ -202,7 +202,11 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     addNodes(event: any) {
+        let productCategories: ProductCategory[] = [];
+        let productAttributes: ProductAttribute[] = [];
+        let productAttributeValues: ProductAttributeValue[] = [];
         let nodes: TreeNode[] = event.items;
+
         nodes.forEach(p => {
             switch (p.type) {
                 case 'category':
@@ -210,49 +214,64 @@ export class ProductComponent implements OnInit, OnDestroy {
                         productId: this.product.productId,
                         category: new Category(p.data, p.label)
                     };
-                    this.productService
-                        .addCategory(productCategory)
-                        .subscribe(result => this.msgs.push({
-                                severity: 'success',
-                                summary: 'Success',
-                                detail: 'Added category ' + p.label
-                            }));
+                    productCategories.push(productCategory);
                     break;
                 case (p.type.startsWith('attribute:') ? p.type : undefined):
                     let productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
                         attribute: new Attribute(p.data, p.label)
                     };
-                    this.productService
-                        .addAttribute(productAttribute)
-                        .subscribe(result => {
-                            p.type = `attribute:${result.productAttributeId}`;
-                            this.msgs.push({
-                                severity: 'success',
-                                summary: 'Success',
-                                detail: 'Added attribute ' + p.label
-                            });
-                        });
+                    productAttributes.push(productAttribute);
                     break;
                 case 'attributeValue':
                     let productAttributeValue = <ProductAttributeValue>{
                         productAttributeId: Number(this.selectedNode.type.split(':')[1]),
                         attributeValue: new AttributeValue(0, p.data, '', p.label)
                     };
-                    this.productService
-                        .addAttributeValue(productAttributeValue)
-                        .subscribe(result => this.msgs.push({
-                                severity: 'success',
-                                summary: 'Success',
-                                detail: 'Added attribute value ' + p.label
-                            }));
+                    productAttributeValues.push(productAttributeValue);
                     break;
             }
         });
+
+        if (productCategories.length > 0) {
+            this.productService
+                .addCategories(productCategories)
+                .subscribe(result => this.msgs.push({
+                        severity: 'success',
+                        summary: 'Success',
+                        detail: 'Added ' + result.length + ' categories'
+                    }));
+        } else if (productAttributes.length > 0) {
+            this.productService
+                .addAttributes(productAttributes)
+                .subscribe(result => {
+                    result.forEach((p, i) => {
+                        alert(i);
+                        this.nodesTarget[i].type = `attribute:${p.productAttributeId}`;
+                    });
+                    this.msgs.push({
+                        severity: 'success',
+                        summary: 'Success',
+                        detail: 'Added ' + result.length + ' attributes'
+                    });
+                });
+        } else if (productAttributeValues.length > 0) {
+            this.productService
+                .addAttributeValues(productAttributeValues)
+                .subscribe(result => this.msgs.push({
+                        severity: 'success',
+                        summary: 'Success',
+                        detail: 'Added ' + result.length + ' attribute values'
+                    }));
+        }
     }
 
     removeNodes(event: any) {
+        let productCategories: ProductCategory[] = [];
+        let productAttributes: ProductAttribute[] = [];
+        let productAttributeValues: ProductAttributeValue[] = [];
         let nodes: TreeNode[] = event.items;
+
         nodes.forEach(p => {
             switch (p.type) {
                 case 'category':
@@ -260,42 +279,52 @@ export class ProductComponent implements OnInit, OnDestroy {
                         productId: this.product.productId,
                         category: new Category(p.data, p.label)
                     };
-                    this.productService
-                        .removeCategory(productCategory)
-                        .subscribe(result => this.msgs.push({
-                                severity: 'success',
-                                summary: 'Success',
-                                detail: 'Removed category ' + p.label
-                            }));
+                    productCategories.push(productCategory);
                     break;
-                case 'attribute':
+                case (p.type.startsWith('attribute:') ? p.type : undefined):
                     let productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
                         attribute: new Attribute(p.data, p.label)
                     };
-                    this.productService
-                        .removeAttribute(productAttribute)
-                        .subscribe(result => this.msgs.push({
-                                severity: 'success',
-                                summary: 'Success',
-                                detail: 'Removed attribute ' + p.label
-                            }));
+                    productAttributes.push(productAttribute);
                     break;
                 case 'attributeValue':
                     let productAttributeValue = <ProductAttributeValue>{
                         productAttributeId: Number(this.selectedNode.type.split(':')[1]),
                         attributeValue: new AttributeValue(0, p.data, '', p.label)
                     };
-                    this.productService
-                        .removeAttributeValue(productAttributeValue)
-                        .subscribe(result => this.msgs.push({
-                                severity: 'success',
-                                summary: 'Success',
-                                detail: 'Removed attribute value ' + p.label
-                            }));
+                    productAttributeValues.push(productAttributeValue);
                     break;
             }
         });
+
+        if (productCategories.length > 0) {
+            this.productService
+                .removeCategories(productCategories)
+                .subscribe(result => this.msgs.push({
+                        severity: 'success',
+                        summary: 'Success',
+                        detail: 'Removed ' + result.length + ' categories'
+                    }));
+        } else if (productAttributes.length > 0) {
+            this.productService
+                .removeAttributes(productAttributes)
+                .subscribe(result => {
+                    this.msgs.push({
+                        severity: 'success',
+                        summary: 'Success',
+                        detail: 'Removed ' + result.length + ' attributes'
+                    });
+                });
+        } else if (productAttributeValues.length > 0) {
+            this.productService
+                .removeAttributeValues(productAttributeValues)
+                .subscribe(result => this.msgs.push({
+                        severity: 'success',
+                        summary: 'Success',
+                        detail: 'Removed ' + result.length + ' attribute values'
+                    }));
+        }
     }
 
     buildClick() {
@@ -303,10 +332,10 @@ export class ProductComponent implements OnInit, OnDestroy {
                            .subscribe(result => this.msgs.push({
                                 severity: 'success',
                                 summary: 'Success',
-                                detail: 'Data builded'
+                                detail: 'Articles added: ' + result
                            }), onerror => this.msgs.push({
                                 severity: 'error',
-                                summary: 'Data build',
+                                summary: 'Articles build',
                                 detail: onerror
                            }));
     }

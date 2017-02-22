@@ -16,7 +16,7 @@ class ProductCategory: PostgresSqlORM, JSONConvertible {
     public var productId            : Int = 0
     public var categoryId           : Int = 0
     
-    public var internal_category: Category = Category()
+    public var _category: Category = Category()
 
     
     open override func table() -> String { return "productcategories" }
@@ -36,7 +36,7 @@ class ProductCategory: PostgresSqlORM, JSONConvertible {
             // get value
             let category = Category()
             try category.get(row.categoryId)
-            row.internal_category = category
+            row._category = category
             
             rows.append(row)
         }
@@ -58,7 +58,7 @@ class ProductCategory: PostgresSqlORM, JSONConvertible {
             //"productCategoryId": productCategoryId,
             //"productId": productId,
             //"categoryId": categoryId,
-            "category": internal_category
+            "category": _category
         ]
     }
 }

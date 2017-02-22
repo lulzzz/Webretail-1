@@ -123,11 +123,16 @@ class ProductController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = ProductCategory()
-                item.setJSONValues(json!)
-                try self.repository.addCategory(item: item)
-                try response.setBody(json: item)
+                var result = [ProductCategory]()
+                
+                let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+                for json in jsons! {
+                    let item = ProductCategory()
+                    item.setJSONValues(json)
+                    try self.repository.addCategory(item: item)
+                    result.append(item)
+                }
+                try response.setBody(json: result)
             } catch {
                 print(error)
             }
@@ -139,11 +144,13 @@ class ProductController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = ProductCategory()
-                item.setJSONValues(json!)
-                try self.repository.removeCategory(item: item)
-                try response.setBody(json: item)
+                let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+                for json in jsons! {
+                    let item = ProductCategory()
+                    item.setJSONValues(json)
+                    try self.repository.removeCategory(item: item)
+                }
+                try response.setBody(json: jsons)
             } catch {
                 print(error)
             }
@@ -155,11 +162,16 @@ class ProductController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = ProductAttribute()
-                item.setJSONValues(json!)
-                try self.repository.addAttribute(item: item)
-                try response.setBody(json: item)
+                var result = [ProductAttribute]()
+                
+                let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+                for json in jsons! {
+                    let item = ProductAttribute()
+                    item.setJSONValues(json)
+                    try self.repository.addAttribute(item: item)
+                    result.append(item)
+                }
+                try response.setBody(json: result)
             } catch {
                 print(error)
             }
@@ -171,11 +183,13 @@ class ProductController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = ProductAttribute()
-                item.setJSONValues(json!)
-                try self.repository.removeAttribute(item: item)
-                try response.setBody(json: item)
+                let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+                for json in jsons! {
+                    let item = ProductAttribute()
+                    item.setJSONValues(json)
+                    try self.repository.removeAttribute(item: item)
+                }
+                try response.setBody(json: jsons)
             } catch {
                 print(error)
             }
@@ -187,11 +201,16 @@ class ProductController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+                var result = [ProductAttributeValue]()
+
+                let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+                for json in jsons! {
                 let item = ProductAttributeValue()
-                item.setJSONValues(json!)
-                try self.repository.addAttributeValue(item: item)
-                try response.setBody(json: item)
+                    item.setJSONValues(json)
+                    try self.repository.addAttributeValue(item: item)
+                    result.append(item)
+                }
+                try response.setBody(json: result)
             } catch {
                 print(error)
             }
@@ -203,11 +222,13 @@ class ProductController {
             response.setHeader(.contentType, value: "application/json")
             
             do {
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = ProductAttributeValue()
-                item.setJSONValues(json!)
-                try self.repository.removeAttributeValue(item: item)
-                try response.setBody(json: item)
+                let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+                for json in jsons! {
+                    let item = ProductAttributeValue()
+                    item.setJSONValues(json)
+                    try self.repository.removeAttributeValue(item: item)
+                }
+                try response.setBody(json: jsons)
             } catch {
                 print(error)
             }

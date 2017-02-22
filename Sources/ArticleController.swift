@@ -32,12 +32,13 @@ class ArticleController {
             
             do {
                 let id = request.urlVariables["id"]?.toInt()
-                try self.repository.build(productId: id!)
-                try response.setBody(json: id)
+                let count = try self.repository.build(productId: id!)
+                try response.setBody(json: count)
+                response.completed()
             } catch {
                 print(error)
+                response.completed(status: HTTPResponseStatus.badRequest)
             }
-            response.completed()
         })
 
         routes.add(method: .get, uri: "/api/article", handler: {

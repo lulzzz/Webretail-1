@@ -35,7 +35,7 @@ class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
 //            // get productAttributeValue
 //            let productAttributeValue = ProductAttributeValue()
 //            try productAttributeValue.get(row.productAttributeValueId)
-//            row.internal_productAttributeValue = productAttributeValue
+//            row._productAttributeValue = productAttributeValue
             
             rows.append(row)
         }
