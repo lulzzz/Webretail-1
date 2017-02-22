@@ -28,17 +28,30 @@ class ProductRepository : ProductProtocol {
         
         // get categories
         let productCategory = ProductCategory()
-        try productCategory.find([("productId", item.productId)])
+        try productCategory.select(
+            whereclause: "productId = $1",
+            params: [id],
+            orderby: ["categoryId"]
+        )
+        try productCategory.find([("productId", id)])
         item.internal_categories = try productCategory.rows()
         
         // get attributes
         let productAttribute = ProductAttribute()
-        try productAttribute.find([("productId", item.productId)])
+        try productAttribute.select(
+            whereclause: "productId = $1",
+            params: [id],
+            orderby: ["attributeId"]
+        )
         item.internal_attributes = try productAttribute.rows()
         
         // get articles
         let article = Article()
-        try article.find([("productId", item.productId)])
+        try article.select(
+            whereclause: "productId = $1",
+            params: [id],
+            orderby: ["articleId"]
+        )
         item.internal_articles = try article.rows()
 
         return item

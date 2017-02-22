@@ -11,7 +11,7 @@ import PostgresStORM
 import PerfectLib
 
 /// Provides the Account structure for Perfect Turnstile
-class Account : PostgresStORM, JSONConvertible {
+class Account : PostgresSqlORM, JSONConvertible {
     
     /// The User account's Unique ID
     public var uniqueID: String = ""

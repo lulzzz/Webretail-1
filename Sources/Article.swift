@@ -10,7 +10,7 @@ import StORM
 import PostgresStORM
 import PerfectLib
 
-class Article: PostgresStORM, JSONConvertible {
+class Article: PostgresSqlORM, JSONConvertible {
     
     public var articleId		: Int = 0
     public var productId		: Int = 0
@@ -18,7 +18,7 @@ class Article: PostgresStORM, JSONConvertible {
     public var created          : Int = Helper.now()
     public var updated          : Int = Helper.now()
     
-    public var internal_attributeValues: [ArticleAttributeValue] = [ArticleAttributeValue]()
+    public var _attributeValues: [ArticleAttributeValue] = [ArticleAttributeValue]()
 
     
     open override func table() -> String { return "articles" }
@@ -39,8 +39,12 @@ class Article: PostgresStORM, JSONConvertible {
 
             // get attributeValues
             let attributeValue = ArticleAttributeValue()
-            try attributeValue.find([("articleId", row.articleId)])
-            row.internal_attributeValues = try attributeValue.rows()
+            try attributeValue.select(
+                whereclause: "articleId = $1",
+                params: [row.articleId],
+                orderby: ["articleAttributeValueId"]
+            )
+            row._attributeValues = try attributeValue.rows()
 
             rows.append(row)
         }
@@ -62,7 +66,7 @@ class Article: PostgresStORM, JSONConvertible {
             "articleId": articleId,
             //"productId": productId,
             "barcode": barcode,
-            "attributeValues": internal_attributeValues
+            "attributeValues": _attributeValues
             //,"created": Helper.formatDate(unixdate: created)
             //,"updated": Helper.formatDate(unixdate: updated)
         ]

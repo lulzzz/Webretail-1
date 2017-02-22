@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56310C791E5CF937004A96A2 /* PostgreSqlORM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56310C781E5CF937004A96A2 /* PostgreSqlORM.swift */; };
 		5666A6161E56F71000407D6B /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666A6151E56F71000407D6B /* Helper.swift */; };
 		5666A6181E570E9C00407D6B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666A6171E570E9C00407D6B /* Category.swift */; };
 		5666A61A1E570FAC00407D6B /* CategoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666A6191E570FAC00407D6B /* CategoryProtocol.swift */; };
@@ -1769,6 +1770,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		56310C781E5CF937004A96A2 /* PostgreSqlORM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostgreSqlORM.swift; sourceTree = "<group>"; };
 		5666A6151E56F71000407D6B /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		5666A6171E570E9C00407D6B /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		5666A6191E570FAC00407D6B /* CategoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryProtocol.swift; sourceTree = "<group>"; };
@@ -4168,6 +4170,7 @@
 				5666A6741E57728100407D6B /* Publication */,
 				OBJ_866 /* main.swift */,
 				5666A6151E56F71000407D6B /* Helper.swift */,
+				56310C781E5CF937004A96A2 /* PostgreSqlORM.swift */,
 			);
 			name = Webretail;
 			path = Sources;
@@ -5705,6 +5708,7 @@
 				5666A6161E56F71000407D6B /* Helper.swift in Sources */,
 				5672162A1E57BBBB009DCF9B /* AccountRepository.swift in Sources */,
 				5666A6401E574C8D00407D6B /* ProductAttribute.swift in Sources */,
+				56310C791E5CF937004A96A2 /* PostgreSqlORM.swift in Sources */,
 				5666A6711E57678200407D6B /* PublicationRepository.swift in Sources */,
 				5666A66F1E57677600407D6B /* PublicationProtocol.swift in Sources */,
 				5666A6581E57541100407D6B /* ArticleController.swift in Sources */,

@@ -10,13 +10,13 @@ import StORM
 import PostgresStORM
 import PerfectLib
 
-class ArticleAttributeValue: PostgresStORM, JSONConvertible {
+class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
     
     public var articleAttributeValueId	: Int = 0
     public var articleId                : Int = 0
     public var productAttributeValueId  : Int = 0
     
-    public var internal_productAttributeValue: ProductAttributeValue = ProductAttributeValue()
+//    public var _productAttributeValue: ProductAttributeValue = ProductAttributeValue()
 
     open override func table() -> String { return "articleattributevalues" }
     
@@ -57,7 +57,7 @@ class ArticleAttributeValue: PostgresStORM, JSONConvertible {
             //"articleAttributeValueId": articleAttributeValueId,
             //"articleId": articleId,
             "productAttributeValueId": productAttributeValueId,
-            //"productAttributeValue": internal_productAttributeValue
+            //"productAttributeValue": _productAttributeValue
         ]
     }
 }

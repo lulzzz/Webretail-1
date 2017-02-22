@@ -10,7 +10,7 @@ import StORM
 import PostgresStORM
 import PerfectLib
 
-class Attribute: PostgresStORM, JSONConvertible {
+class Attribute: PostgresSqlORM, JSONConvertible {
     
     public var attributeId		: Int = 0
     public var attributeName	: String = ""

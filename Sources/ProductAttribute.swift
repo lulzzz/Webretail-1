@@ -10,7 +10,7 @@ import StORM
 import PostgresStORM
 import PerfectLib
 
-class ProductAttribute: PostgresStORM, JSONConvertible {
+class ProductAttribute: PostgresSqlORM, JSONConvertible {
     
     public var productAttributeId	: Int = 0
     public var productId            : Int = 0
@@ -41,9 +41,12 @@ class ProductAttribute: PostgresStORM, JSONConvertible {
 
             // get attributeValues
             let attributeValue = ProductAttributeValue()
-            try attributeValue.find([("productAttributeId",row.productAttributeId)])
+            try attributeValue.select(
+                whereclause: "productAttributeId = $1",
+                params: [row.productAttributeId],
+                orderby: ["attributeValueId"]
+            )
             row.internal_attributeValues = try attributeValue.rows()
-            
             rows.append(row)
         }
         return rows

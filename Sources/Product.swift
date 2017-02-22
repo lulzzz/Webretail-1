@@ -10,7 +10,7 @@ import StORM
 import PostgresStORM
 import PerfectLib
 
-class Product: PostgresStORM, JSONConvertible {
+class Product: PostgresSqlORM, JSONConvertible {
     
     public var productId	: Int = 0
     public var brandId      : Int = 0

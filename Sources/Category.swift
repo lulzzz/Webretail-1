@@ -10,7 +10,7 @@ import StORM
 import PostgresStORM
 import PerfectLib
 
-class Category: PostgresStORM, JSONConvertible {
+class Category: PostgresSqlORM, JSONConvertible {
     
     public var categoryId		: Int = 0
     public var categoryName		: String = ""
