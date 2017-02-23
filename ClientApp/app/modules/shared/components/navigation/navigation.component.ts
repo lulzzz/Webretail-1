@@ -7,6 +7,15 @@ import { AuthenticationService } from './../../../../services/authentication.ser
 })
 
 export class NavigationComponent {
+
     constructor(private authenticationService: AuthenticationService) {
+    }
+
+    get isAuthenticated() : boolean {
+        return this.authenticationService.isAuthenticated;
+    }
+
+    logoutClick() {
+        this.authenticationService.logout();
     }
 }

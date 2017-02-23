@@ -38,11 +38,16 @@ export class AuthenticationService {
         this.router.navigate(['login']);
     }
 
+    get isAuthenticated() : boolean {
+        return localStorage.getItem('token') != null;
+    }
+
     checkCredentials(local: boolean) {
         if (local) {
-            if (localStorage.getItem('token') == null) {
+            if (!this.isAuthenticated) {
                 this.removeCredentials();
             }
+            return;
         } else {
             this.http.get('/api/authenticated', { headers: Helpers.getHeaders() })
                 .map(response => response.json())
