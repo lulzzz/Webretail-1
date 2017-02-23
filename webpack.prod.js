@@ -71,7 +71,7 @@ module.exports = {
             [
                 './wwwroot/dist',
                 './wwwroot/assets',
-                './wwwroot/views/admin.mustache'
+                './wwwroot'
             ]
         ),
         new webpack.NoEmitOnErrorsPlugin(),
@@ -85,19 +85,18 @@ module.exports = {
             sourceMap: false
         }),
         new webpack.optimize.CommonsChunkPlugin(
-            {
-                name: ['vendor', 'polyfills']
-            }),
-
-        new HtmlWebpackPlugin({
-            filename: 'views/admin.mustache',
+        {
+            name: ['vendor', 'polyfills']
+        }),
+        new HtmlWebpackPlugin(
+        {
+            filename: 'index.html',
             inject: 'body',
             template: 'ClientApp/index.html'
         }),
-
-        // new CopyWebpackPlugin([
-        //     { from: './ClientApp/images/*.*', to: 'assets/', flatten: true }
-        // ])
+        new CopyWebpackPlugin([
+            { from: './ClientApp/images/*.*', to: 'assets/', flatten: true }
+        ])
     ]
 };
 

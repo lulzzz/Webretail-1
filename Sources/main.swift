@@ -49,36 +49,22 @@ try? auth.setup()
 tokenStore = AccessTokenStore()
 try? tokenStore?.setup()
 
-//let facebook = Facebook(clientID: "CLIENT_ID", clientSecret: "CLIENT_SECRET")
-//let google = Google(clientID: "CLIENT_ID", clientSecret: "CLIENT_SECRET")
-
-
 // Create HTTP server.
 let server = HTTPServer()
 
 // Register auth routes and handlers
-let authWebRoutes = makeWebAuthRoutes()
-let authJSONRoutes = makeJSONAuthRoutes("/api")
-server.addRoutes(authWebRoutes)
-server.addRoutes(authJSONRoutes)
-
-// Register web routes and handlers
-var appRoutes = Routes()
-appRoutes.add(method: .get, uri: "/home", handler: {
-    request, response in
-    
-    if (request.user.authenticated) {
-        let context: [String : Any] = [
-            "accountID": request.user.authDetails?.account.uniqueID ?? ""
-        ]
-        response.render(template: "admin", context: context)
-    }
-    else {
-        response.render(template: "login")
-    }
+var authJSONRoutes = makeJSONAuthRoutes("/api")
+authJSONRoutes.add(method: .get, uri: "/api/authenticated", handler: {
+	request, response in
+	response.setHeader(.contentType, value: "application/json")
+	do {
+		try response.setBody(json: request.user.authenticated)
+	} catch {
+		print(error)
+	}
+	response.completed()
 })
-
-server.addRoutes(appRoutes)
+server.addRoutes(authJSONRoutes)
 
 // Register api routes and handlers
 let accountController = AccountController(repository: AccountRepository())
@@ -113,6 +99,7 @@ let myLogger = RequestLogger()
 var authenticationConfig = AuthenticationConfig()
 authenticationConfig.exclude("/api/login")
 authenticationConfig.exclude("/api/register")
+authenticationConfig.exclude("/api/authenticated")
 authenticationConfig.include("/api/*}")
 
 

@@ -2,6 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'login', loadChildren: './modules/login/login.module#LoginModule' },
     { path: 'account', loadChildren: './modules/account/account.module#AccountModule' },
     { path: 'brand', loadChildren: './modules/brand/brand.module#BrandModule' },
     { path: 'category', loadChildren: './modules/category/category.module#CategoryModule' },

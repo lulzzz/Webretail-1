@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { AuthenticationService } from './../../../services/authentication.service';
 import { CategoryService } from './../../../services/category.service';
 import { Category } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
@@ -16,19 +17,24 @@ export class CategoryComponent implements OnInit {
     displayDialog: boolean;
 	dataform: FormGroup;
 
-    constructor(private categoryService: CategoryService,
+    constructor(private authenticationService: AuthenticationService,
+                private categoryService: CategoryService,
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
+        this.authenticationService.checkCredentials(true);
+
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
             'isPrimary': new FormControl('', Validators.required)
         });
 
-        this.categoryService.getAll().subscribe(result => {
-            this.categories = result;
-            this.totalRecords = this.categories.length;
-        }, onerror => alert('ERROR\r\n' + onerror));
+        this.categoryService.getAll()
+            .subscribe(result => {
+                this.categories = result;
+                this.totalRecords = this.categories.length;
+            }//, onerror => alert('ERROR\r\n' + onerror)
+        );
     }
 
     get isNew() : boolean { return this.selected == null || this.selected.categoryId == 0; }

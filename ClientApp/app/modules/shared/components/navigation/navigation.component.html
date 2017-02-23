@@ -26,6 +26,9 @@
                         <li><a [routerLink]="['/attribute']"><i class="glyphicon glyphicon-th-list"></i> Attribute</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a style="cursor: pointer" (click)="this.authenticationService.logout()"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
+                </li>
             </ul>
         </div>
     </div>

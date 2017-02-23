@@ -1,5 +1,11 @@
 // Classes
 
+export class Login {
+  constructor(
+    public username: string,
+    public password: string) { }
+}
+
 export class Account {
   public uniqueID: string;
   public firstname: string;
@@ -98,6 +104,12 @@ export class AttributeValue {
 
 
 // Interfaces
+
+export interface Token {
+    error: string;
+    login: string;
+    token: string;
+}
 
 export interface ProductCategory {
   //productCategoryId: number;

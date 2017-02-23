@@ -69,6 +69,6 @@ StORMlog.txt
 requests.log
 node_modules/
 wwwroot/favicon.ico
-wwwroot/views/admin.mustache
+wwwroot/index.html
 wwwroot/assets/
 wwwroot/dist/

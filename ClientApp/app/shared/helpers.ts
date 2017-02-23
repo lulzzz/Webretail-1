@@ -21,6 +21,7 @@ export class Helpers {
     static getHeaders() : Headers {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `Bearer ${localStorage.getItem('token')}`);
         return headers;
     }
 

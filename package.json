@@ -14,7 +14,7 @@
     "watch-webpack-dev": "set NODE_ENV=development && webpack --watch --color",
     "watch-webpack-production": "npm run build-production --watch --color",
     "build-production": "npm run ngc && npm run webpack-production",
-    "publish": "swift build"
+    "publish": "swift build && npm run build-production"
   },
   "dependencies": {
     "@angular/common": "~2.4.5",

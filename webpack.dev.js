@@ -5,8 +5,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var helpers = require('./webpack.helpers');
 
-const isDevServer = process.argv.find(v => v.includes('webpack-dev-server'));
-//var isDevBuild = process.argv.indexOf('--env.prod') < 0;
+//const isDevServer = process.argv.find(v => v.includes('webpack-dev-server'));
 
 console.log('@@@@@@@@@ USING DEVELOPMENT @@@@@@@@@@@@@@@');
 module.exports = {
@@ -100,27 +99,22 @@ module.exports = {
         exprContextCritical: false
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({ name: ['app', 'polyfills']}),
-    
+        new webpack.optimize.CommonsChunkPlugin({ name: ['app', 'polyfills']}),    
         new CleanWebpackPlugin(
             [
                 './wwwroot/dist',
                 './wwwroot/assets',
-                './wwwroot/views/admin.mustache'
+                './wwwroot'
             ]
         ),
-    ].concat(isDevServer ? [
         new HtmlWebpackPlugin({
             filename: 'index.html',
             inject: 'body',
             template: 'ClientApp/index.html'
-        })
-    ] : [
-        new HtmlWebpackPlugin({
-            filename: 'views/admin.mustache',
-            inject: 'body',
-            template: 'ClientApp/index.html'
-        })
-    ])
+        }),
+        new CopyWebpackPlugin([
+            { from: './ClientApp/images/*.*', to: 'assets/', flatten: true }
+        ])
+    ]
 };
 

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Configuration } from './../../app.constants';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { AuthenticationService } from './../../services/authentication.service';
 
 @NgModule({
     imports: [
@@ -26,7 +27,10 @@ export class SharedModule {
     static forRoot(): ModuleWithProviders {
         return {
             ngModule: SharedModule,
-            providers: [Configuration]
+            providers: [
+                AuthenticationService,
+                Configuration
+            ]
         };
     }
 }

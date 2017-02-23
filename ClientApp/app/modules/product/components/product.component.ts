@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { Product, ProductCategory, Category, ProductAttribute, Attribute, ProductAttributeValue, Article, ArticleAttributeValue, AttributeValue } from './../../../shared/models';
 import { FooterComponent } from './../../shared/components/footer/footer.component';
 import { Helpers } from './../../../shared/helpers';
+import { AuthenticationService } from './../../../services/authentication.service';
 import { ProductService } from './../../../services/product.service';
 import { CategoryService } from './../../../services/category.service';
 import { AttributeService } from './../../../services/attribute.service';
@@ -32,19 +33,24 @@ export class ProductComponent implements OnInit, OnDestroy {
     display: boolean;
 
 	constructor(private activatedRoute: ActivatedRoute,
+                private authenticationService: AuthenticationService,
                 private productService: ProductService,
                 private categoryService: CategoryService,
                 private attributeService: AttributeService) {}
 
     ngOnInit() {
+        this.authenticationService.checkCredentials(true);
+
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
             let id = params['id'];
-            this.productService.getProduct(id).subscribe(result => {
-                this.product = result;
-                this.createTree();
-                this.createSheet();
-            }, onerror => alert('ERROR: ' + onerror));
+            this.productService.getProduct(id)
+                .subscribe(result => {
+                    this.product = result;
+                    this.createTree();
+                    this.createSheet();
+                }//, onerror => alert('ERROR: ' + onerror)
+            );
         });
 
         this.buttons = [

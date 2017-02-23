@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { AuthenticationService } from './../../../services/authentication.service';
 import { AttributeService } from './../../../services/attribute.service';
 import { Attribute, AttributeValue } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
@@ -21,10 +22,13 @@ export class AttributeComponent implements OnInit {
 	dataform: FormGroup;
     dataformValue: FormGroup;
 
-    constructor(private attributeService: AttributeService,
+    constructor(private authenticationService: AuthenticationService,
+                private attributeService: AttributeService,
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
+        this.authenticationService.checkCredentials(true);
+
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required)
         });
@@ -34,10 +38,12 @@ export class AttributeComponent implements OnInit {
             'name': new FormControl('', Validators.required)
         });
 
-        this.attributeService.getAll().subscribe(result => {
-            this.attributes = result;
-            this.totalRecords = this.attributes.length;
-        }, onerror => alert('ERROR\r\n' + onerror));
+        this.attributeService.getAll()
+            .subscribe(result => {
+                this.attributes = result;
+                this.totalRecords = this.attributes.length;
+            }//, onerror => alert('ERROR\r\n' + onerror)
+        );
     }
 
     get isNew() : boolean { return this.selected == null || this.selected.attributeId == 0; }
@@ -72,19 +78,21 @@ export class AttributeComponent implements OnInit {
                 this.attributes.push(result);
             });
         } else {
-            this.attributeService.update(this.selected.attributeId, this.selected).subscribe(result => {
-                //this.attributes[this.selectedIndex] = this.selected;
-            });
+            this.attributeService.update(this.selected.attributeId, this.selected)
+                .subscribe(result => {
+                    //this.attributes[this.selectedIndex] = this.selected;
+                });
         }
         this.displayDialog = false;
     }
 
     deleteClick() {
-        this.attributeService.delete(this.selected.attributeId).subscribe(result => {
-            this.attributes.splice(this.selectedIndex, 1);
-            this.selected = null;
-            this.values.length = 0;
-        });
+        this.attributeService.delete(this.selected.attributeId)
+            .subscribe(result => {
+                this.attributes.splice(this.selectedIndex, 1);
+                this.selected = null;
+                this.values.length = 0;
+            });
         this.displayDialog = false;
     }
 

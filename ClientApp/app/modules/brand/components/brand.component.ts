@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { AuthenticationService } from './../../../services/authentication.service';
 import { BrandService } from './../../../services/brand.service';
 import { Brand } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
@@ -16,18 +17,23 @@ export class BrandComponent implements OnInit {
     displayDialog: boolean;
 	dataform: FormGroup;
 
-    constructor(private brandService: BrandService,
+    constructor(private authenticationService: AuthenticationService,
+                private brandService: BrandService,
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
+        this.authenticationService.checkCredentials(true);
+
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required)
         });
 
-        this.brandService.getAll().subscribe(result => {
-            this.brands = result;
-            this.totalRecords = this.brands.length;
-        }, onerror => alert('ERROR\r\n' + onerror));
+        this.brandService.getAll()
+            .subscribe(result => {
+                this.brands = result;
+                this.totalRecords = this.brands.length;
+            }//, onerror => alert('ERROR\r\n' + onerror)
+        );
     }
 
     get isNew() : boolean { return this.selected == null || this.selected.brandId == 0; }

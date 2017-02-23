@@ -4,6 +4,7 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 import { SelectItem, MenuItem } from 'primeng/primeng';
 import { Product, ProductCategory } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
+import { AuthenticationService } from './../../../services/authentication.service';
 import { BrandService } from './../../../services/brand.service';
 import { ProductService } from './../../../services/product.service';
 
@@ -27,11 +28,14 @@ export class ProductsComponent implements OnInit {
 	dataform: FormGroup;
 
     constructor(private router: Router,
+                private authenticationService: AuthenticationService,
                 private productService: ProductService,
                 private brandService: BrandService,
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
+        this.authenticationService.checkCredentials(true);
+
         this.dataform = this.fb.group({
             'brand': new FormControl('', Validators.required),
             'code': new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
@@ -41,11 +45,13 @@ export class ProductsComponent implements OnInit {
             'isActive': new FormControl('', Validators.required)
         });
 
-        this.productService.getProducts().subscribe(result => {
-            this.products = result;
-            this.totalRecords = this.products.length;
-            this.buildFilter(result);
-        }, onerror => alert('ERROR\r\n' + onerror));
+        this.productService.getProducts()
+            .subscribe(result => {
+                this.products = result;
+                this.totalRecords = this.products.length;
+                this.buildFilter(result);
+            }//, onerror => alert('ERROR\r\n' + onerror)
+        );
 
         this.brandService.getAll().subscribe(result => {
             this.allbrands = result.map(p => Helpers.newSelectItem(p, p.brandName));
