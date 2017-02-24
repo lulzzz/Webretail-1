@@ -24,6 +24,7 @@ import PerfectRequestLogger
 import PerfectTurnstilePostgreSQL
 import PostgresStORM
 import StORM
+import Turnstile
 import TurnstilePerfect
 
 
@@ -49,6 +50,7 @@ try? auth.setup()
 tokenStore = AccessTokenStore()
 try? tokenStore?.setup()
 
+
 // Create HTTP server.
 let server = HTTPServer()
 
@@ -65,6 +67,7 @@ authJSONRoutes.add(method: .get, uri: "/api/authenticated", handler: {
 	response.completed()
 })
 server.addRoutes(authJSONRoutes)
+server.addRoutes(makeSocialAuthenticationRoutes())
 
 // Register api routes and handlers
 let accountController = AccountController(repository: AccountRepository())

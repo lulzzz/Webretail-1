@@ -41,6 +41,7 @@
 		5672162A1E57BBBB009DCF9B /* AccountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567216291E57BBBB009DCF9B /* AccountRepository.swift */; };
 		5672162C1E57BD97009DCF9B /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5672162B1E57BD97009DCF9B /* AccountController.swift */; };
 		5672162E1E57C0A9009DCF9B /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5672162D1E57C0A9009DCF9B /* Account.swift */; };
+		567FAA6B1E5FC74F0095F942 /* SocialAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567FAA6A1E5FC74F0095F942 /* SocialAuthentication.swift */; };
 		OBJ_1000 /* PostgresMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* PostgresMap.swift */; };
 		OBJ_1001 /* PostgresStORM.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* PostgresStORM.swift */; };
 		OBJ_1002 /* Select.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* Select.swift */; };
@@ -1804,6 +1805,7 @@
 		567216291E57BBBB009DCF9B /* AccountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountRepository.swift; sourceTree = "<group>"; };
 		5672162B1E57BD97009DCF9B /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountController.swift; sourceTree = "<group>"; };
 		5672162D1E57C0A9009DCF9B /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		567FAA6A1E5FC74F0095F942 /* SocialAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialAuthentication.swift; sourceTree = "<group>"; };
 		OBJ_100 /* asn1_par.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = asn1_par.c; sourceTree = "<group>"; };
 		OBJ_101 /* asn_mime.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = asn_mime.c; sourceTree = "<group>"; };
 		OBJ_102 /* asn_moid.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = asn_moid.c; sourceTree = "<group>"; };
@@ -4171,6 +4173,7 @@
 				OBJ_866 /* main.swift */,
 				5666A6151E56F71000407D6B /* Helper.swift */,
 				56310C781E5CF937004A96A2 /* PostgreSqlORM.swift */,
+				567FAA6A1E5FC74F0095F942 /* SocialAuthentication.swift */,
 			);
 			name = Webretail;
 			path = Sources;
@@ -5707,6 +5710,7 @@
 				5672162C1E57BD97009DCF9B /* AccountController.swift in Sources */,
 				5666A6161E56F71000407D6B /* Helper.swift in Sources */,
 				5672162A1E57BBBB009DCF9B /* AccountRepository.swift in Sources */,
+				567FAA6B1E5FC74F0095F942 /* SocialAuthentication.swift in Sources */,
 				5666A6401E574C8D00407D6B /* ProductAttribute.swift in Sources */,
 				56310C791E5CF937004A96A2 /* PostgreSqlORM.swift in Sources */,
 				5666A6711E57678200407D6B /* PublicationRepository.swift in Sources */,
