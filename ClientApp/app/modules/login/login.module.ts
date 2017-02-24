@@ -6,6 +6,7 @@ import { GrowlModule, InputTextModule, ButtonModule } from 'primeng/primeng';
 
 import { LoginRoutes } from './login.routes';
 import { LoginComponent } from './components/login.component';
+import { RegisterComponent } from './components/register.component';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import { LoginComponent } from './components/login.component';
         LoginRoutes
     ],
     declarations: [
-        LoginComponent
+        LoginComponent,
+        RegisterComponent
     ]
 })
 

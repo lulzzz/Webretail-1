@@ -14,25 +14,19 @@ import TurnstileWeb
 import PerfectTurnstilePostgreSQL
 
 /// The class that holds all the Social Authentication handlers
-public class AuthHandlersSocial {
-    
+public class AuthHandlers {
     
     let facebook = Facebook(clientID: "1232307486877468", clientSecret: "b852db2dd51e4a9cca80afe812c33a11")
     let google = Google(clientID: "807060073548-m603cvhbmk5e8c633p333hflge1fi8mt.apps.googleusercontent.com", clientSecret: "_qcb-5fEEfDekInFe106Fhhl")
 
     
-    public func makeSocialAuthRoutes() -> Routes {
+    public func makeAuthRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
-        routes.add(method: .get, uri: "/login/facebook/consumer", handler: facebookHandlerConsumer)
-        
-        routes.add(method: .get, uri: "/login/google", handler: googleHandler)
-        routes.add(method: .get, uri: "/login/google/consumer", handler: googleHandlerConsumer)
-        
-        routes.add(method: .post, uri: "/login/consumer", handler: consumerHandlerPOST)
-        
-//        routes.add(method: .get, uri: "/api/authenticated", handler: {
+        routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
+        routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
+        routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
+//        routes.add(method: .get,  uri: "/api/authenticated", handler: {
 //            request, response in
 //            response.setHeader(.contentType, value: "application/json")
 //            do {
@@ -44,8 +38,92 @@ public class AuthHandlersSocial {
 //            response.completed()
 //        })
 
+        routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
+        routes.add(method: .get, uri: "/login/facebook/consumer", handler: facebookHandlerConsumer)
+        
+        routes.add(method: .get, uri: "/login/google", handler: googleHandler)
+        routes.add(method: .get, uri: "/login/google/consumer", handler: googleHandlerConsumer)
+
         return routes
     }
+    
+    func loginHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        var resp = [String: String]()
+        guard let username = request.param(name: "username"),
+            let password = request.param(name: "password") else {
+                resp["error"] = "Missing username or password"
+                do {
+                    try response.setBody(json: resp)
+                } catch {
+                    print(error)
+                }
+                response.completed()
+                return
+        }
+        let credentials = UsernamePassword(username: username, password: password)
+        
+        do {
+            try request.user.login(credentials: credentials)
+            
+            let token = tokenStore?.new((request.user.authDetails?.account.uniqueID)!)
+            
+            resp["error"] = "none"
+            resp["login"] = "ok"
+            resp["token"] = token
+        } catch {
+            resp["error"] = "Invalid username or password"
+        }
+        do {
+            try response.setBody(json: resp)
+        } catch {
+            print(error)
+        }
+        response.completed()
+    }
+
+    func registerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        var resp = [String: String]()
+        
+        guard let username = request.param(name: "username"),
+            let password = request.param(name: "password") else {
+                resp["error"] = "Missing username or password"
+                do {
+                    try response.setBody(json: resp)
+                } catch {
+                    print(error)
+                }
+                response.completed()
+                return
+        }
+        let credentials = UsernamePassword(username: username, password: password)
+        
+        do {
+            try request.user.register(credentials: credentials)
+            
+            try request.user.login(credentials: credentials)
+            
+            let token = tokenStore?.new((request.user.authDetails?.account.uniqueID)!)
+            
+            //register
+            resp["error"] = "none"
+            resp["login"] = "ok"
+            resp["token"] = token
+        } catch let e as TurnstileError {
+            resp["error"] = e.description
+        } catch {
+            resp["error"] = "An unknown error occurred."
+        }
+        do {
+            try response.setBody(json: resp)
+        } catch {
+            print(error)
+        }
+        response.completed()
+    }
+
     
     /* Facebook Signin */
     

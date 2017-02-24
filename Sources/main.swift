@@ -55,11 +55,8 @@ try? tokenStore?.setup()
 let server = HTTPServer()
 
 // Register auth routes and handlers
-let authJSONRoutes = makeJSONAuthRoutes("/api")
-server.addRoutes(authJSONRoutes)
-
-var authSocial = AuthHandlersSocial()
-server.addRoutes(authSocial.makeSocialAuthRoutes())
+var authHandlers = AuthHandlers()
+server.addRoutes(authHandlers.makeAuthRoutes())
 
 // Register api routes and handlers
 let usertController = UserController(repository: UserRepository())
@@ -93,8 +90,9 @@ let myLogger = RequestLogger()
 // add routes to be checked for auth
 var authenticationConfig = AuthenticationConfig()
 authenticationConfig.exclude("/api/login")
+authenticationConfig.exclude("/api/login/consumer")
 authenticationConfig.exclude("/api/register")
-//authenticationConfig.exclude("/api/authenticated")
+authenticationConfig.exclude("/api/authenticated")
 authenticationConfig.include("/api/*}")
 
 

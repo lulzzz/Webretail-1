@@ -20,7 +20,13 @@ export class AuthenticationService {
 
     loginConsumer(social: String, uniqueID: String) : Observable<Token> {
         let body = `social=${social}&uniqueID=${uniqueID}`;
-        return this.http.post('/login/consumer', body, { headers: Helpers.getHeaders() })
+        return this.http.post('/api/login/consumer', body, { headers: Helpers.getHeaders() })
+            .map(response => <Token>response.json());
+    }
+
+    register(user: Login) : Observable<Token> {
+        let body = `username=${user.username}&password=${user.password}`;
+        return this.http.post('/api/register', body, { headers: Helpers.getHeaders() })
             .map(response => <Token>response.json());
     }
 
