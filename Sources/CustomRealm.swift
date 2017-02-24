@@ -67,7 +67,6 @@ open class CustomRealm : AuthRealm {
                 newAccount.facebookID = credentials.uniqueID
             }
             else {
-                newAccount.facebookID = credentials.uniqueID
                 newAccount.googleID = credentials.uniqueID
             }
         default:
