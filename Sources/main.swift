@@ -94,7 +94,7 @@ let myLogger = RequestLogger()
 var authenticationConfig = AuthenticationConfig()
 authenticationConfig.exclude("/api/login")
 authenticationConfig.exclude("/api/register")
-authenticationConfig.exclude("/api/authenticated")
+//authenticationConfig.exclude("/api/authenticated")
 authenticationConfig.include("/api/*}")
 
 

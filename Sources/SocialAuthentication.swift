@@ -32,17 +32,17 @@ public class AuthHandlersSocial {
         
         routes.add(method: .post, uri: "/login/consumer", handler: consumerHandlerPOST)
         
-        routes.add(method: .get, uri: "/api/authenticated", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            do {
-                print(request.user.authDetails?.sessionID ?? "")
-                try response.setBody(json: request.user.authenticated)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
+//        routes.add(method: .get, uri: "/api/authenticated", handler: {
+//            request, response in
+//            response.setHeader(.contentType, value: "application/json")
+//            do {
+//                print(request.user.authDetails?.sessionID ?? "")
+//                try response.setBody(json: request.user.authenticated)
+//            } catch {
+//                print(error)
+//            }
+//            response.completed()
+//        })
 
         return routes
     }

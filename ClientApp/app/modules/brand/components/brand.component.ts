@@ -22,7 +22,7 @@ export class BrandComponent implements OnInit {
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
-        this.authenticationService.checkCredentials(true);
+        this.authenticationService.checkCredentials();
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required)

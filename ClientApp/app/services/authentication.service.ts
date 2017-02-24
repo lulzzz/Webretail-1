@@ -48,20 +48,16 @@ export class AuthenticationService {
         return localStorage.getItem('token') != null;
     }
 
-    checkCredentials(local: boolean) {
-        if (local) {
-            if (!this.isAuthenticated) {
-                this.removeCredentials();
-            }
-            return;
-        } else {
-            this.http.get('/api/authenticated', { headers: Helpers.getHeaders() })
-                .map(response => response.json())
-                .subscribe(authenticated => {
-                    if (!authenticated) {
-                        this.removeCredentials();
-                    }
-                });
+    checkCredentials() {
+        if (!this.isAuthenticated) {
+            this.removeCredentials();
         }
+        // this.http.get('/api/authenticated', { headers: Helpers.getHeaders() })
+        //     .map(response => response.json())
+        //     .subscribe(authenticated => {
+        //         if (!authenticated) {
+        //             this.removeCredentials();
+        //         }
+        //     });
     }
 }
