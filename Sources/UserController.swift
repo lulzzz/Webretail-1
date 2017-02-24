@@ -9,11 +9,11 @@
 import PerfectTurnstilePostgreSQL
 import PerfectHTTP
 
-class AccountController {
+class UserController {
     
-    private let repository: AccountProtocol
+    private let repository: UserProtocol
     
-    init(repository: AccountProtocol) {
+    init(repository: UserProtocol) {
         
         self.repository = repository
     }
@@ -54,7 +54,7 @@ class AccountController {
             
             do {
                 let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = Account()
+                let item = User()
                 item.setJSONValues(json!)
                 try self.repository.add(item: item)
                 try response.setBody(json: item)
@@ -71,7 +71,7 @@ class AccountController {
             do {
                 let id = request.urlVariables["id"]
                 let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = Account()
+                let item = User()
                 item.setJSONValues(json!)
                 try self.repository.update(id: id!, item: item)
                 try response.setBody(json: item)

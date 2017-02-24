@@ -1,4 +1,6 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from './../../../services/authentication.service';
 
 @Component({
     selector: 'home-component',
@@ -7,12 +9,33 @@ import { Component, OnInit  } from '@angular/core';
 
 export class HomeComponent implements OnInit  {
 
+    private sub: any;
     token: string;
 
-    constructor() {
-    }
+    constructor(private activatedRoute: ActivatedRoute,
+                private authenticationService: AuthenticationService
+                ) { }
 
 	ngOnInit() {
-        this.token = localStorage.getItem('token');
+        // Subscribe to route params
+        this.sub = this.activatedRoute.queryParams
+            .subscribe(params => {
+                let social = params['social'];
+                let uniqueID = params['uniqueID'];
+                if (social && uniqueID) {
+                    this.authenticationService.loginConsumer(social, uniqueID)
+                        .subscribe(res => {
+                            this.token = res.token;
+                            this.authenticationService.grantCredentials(this.token, false);
+                        });
+                } else {
+                    this.token = localStorage.getItem('token');
+                }
+            });
+    }
+
+    ngOnDestroy() {
+        // Clean sub to avoid memory leak
+        this.sub.unsubscribe();
     }
 }

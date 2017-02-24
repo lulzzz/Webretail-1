@@ -9,6 +9,7 @@
 import StORM
 import PostgresStORM
 import PerfectLib
+import TurnstileCrypto
 
 /// Provides the Account structure for Perfect Turnstile
 class User : PostgresSqlORM, JSONConvertible {
@@ -56,10 +57,10 @@ class User : PostgresSqlORM, JSONConvertible {
     }
     
     /// Iterate through rows and set to object data
-    public func rows() -> [Account] {
-        var rows = [Account]()
+    public func rows() -> [User] {
+        var rows = [User]()
         for i in 0..<self.results.rows.count {
-            let row = Account()
+            let row = User()
             row.to(self.results.rows[i])
             rows.append(row)
         }

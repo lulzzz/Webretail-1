@@ -6,15 +6,15 @@
 //
 //
 
-protocol AccountProtocol {
+protocol UserProtocol {
     
-    func getAll() throws -> [Account]
+    func getAll() throws -> [User]
     
-    func get(id: String) throws -> Account?
+    func get(id: String) throws -> User?
     
-    func add(item: Account) throws
+    func add(item: User) throws
     
-    func update(id: String, item: Account) throws
+    func update(id: String, item: User) throws
     
     func delete(id: String) throws
 }

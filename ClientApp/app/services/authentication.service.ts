@@ -18,23 +18,29 @@ export class AuthenticationService {
             .map(response => <Token>response.json());
     }
 
+    loginConsumer(social: String, uniqueID: String) : Observable<Token> {
+        let body = `social=${social}&uniqueID=${uniqueID}`;
+        return this.http.post('/login/consumer', body, { headers: Helpers.getHeaders() })
+            .map(response => <Token>response.json());
+    }
+
     logout() {
         this.http.get('/api/logout', { headers: Helpers.getHeaders() })
             .map((response) => response.json())
             .subscribe(result => {
                this.removeCredentials();
-            });
+            }, onerror => this.removeCredentials());
     }
 
-    grantCredentials(token: string, username: string) {
+    grantCredentials(token: string, redirect: boolean) {
         localStorage.setItem('token', token);
-        localStorage.setItem('username', username);
-        this.router.navigate(['home']);
+        if (redirect) {
+            this.router.navigate(['home']);
+        }
     }
 
     removeCredentials() {
         localStorage.removeItem('token');
-        localStorage.removeItem('username');
         this.router.navigate(['login']);
     }
 

@@ -37,11 +37,12 @@
 		5666A66F1E57677600407D6B /* PublicationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666A66E1E57677600407D6B /* PublicationProtocol.swift */; };
 		5666A6711E57678200407D6B /* PublicationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666A6701E57678200407D6B /* PublicationRepository.swift */; };
 		5666A6731E57679200407D6B /* PublicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5666A6721E57679200407D6B /* PublicationController.swift */; };
-		567216281E57BA63009DCF9B /* AccountProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567216271E57BA63009DCF9B /* AccountProtocol.swift */; };
-		5672162A1E57BBBB009DCF9B /* AccountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567216291E57BBBB009DCF9B /* AccountRepository.swift */; };
-		5672162C1E57BD97009DCF9B /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5672162B1E57BD97009DCF9B /* AccountController.swift */; };
-		5672162E1E57C0A9009DCF9B /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5672162D1E57C0A9009DCF9B /* Account.swift */; };
+		567216281E57BA63009DCF9B /* UserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567216271E57BA63009DCF9B /* UserProtocol.swift */; };
+		5672162A1E57BBBB009DCF9B /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567216291E57BBBB009DCF9B /* UserRepository.swift */; };
+		5672162C1E57BD97009DCF9B /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5672162B1E57BD97009DCF9B /* UserController.swift */; };
+		5672162E1E57C0A9009DCF9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5672162D1E57C0A9009DCF9B /* User.swift */; };
 		567FAA6B1E5FC74F0095F942 /* SocialAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567FAA6A1E5FC74F0095F942 /* SocialAuthentication.swift */; };
+		56DD940F1E6049F900AC698A /* CustomRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DD940E1E6049F900AC698A /* CustomRealm.swift */; };
 		OBJ_1000 /* PostgresMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* PostgresMap.swift */; };
 		OBJ_1001 /* PostgresStORM.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* PostgresStORM.swift */; };
 		OBJ_1002 /* Select.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* Select.swift */; };
@@ -1801,11 +1802,12 @@
 		5666A66E1E57677600407D6B /* PublicationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicationProtocol.swift; sourceTree = "<group>"; };
 		5666A6701E57678200407D6B /* PublicationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicationRepository.swift; sourceTree = "<group>"; };
 		5666A6721E57679200407D6B /* PublicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicationController.swift; sourceTree = "<group>"; };
-		567216271E57BA63009DCF9B /* AccountProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountProtocol.swift; sourceTree = "<group>"; };
-		567216291E57BBBB009DCF9B /* AccountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountRepository.swift; sourceTree = "<group>"; };
-		5672162B1E57BD97009DCF9B /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountController.swift; sourceTree = "<group>"; };
-		5672162D1E57C0A9009DCF9B /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		567216271E57BA63009DCF9B /* UserProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProtocol.swift; sourceTree = "<group>"; };
+		567216291E57BBBB009DCF9B /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		5672162B1E57BD97009DCF9B /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
+		5672162D1E57C0A9009DCF9B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		567FAA6A1E5FC74F0095F942 /* SocialAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialAuthentication.swift; sourceTree = "<group>"; };
+		56DD940E1E6049F900AC698A /* CustomRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRealm.swift; sourceTree = "<group>"; };
 		OBJ_100 /* asn1_par.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = asn1_par.c; sourceTree = "<group>"; };
 		OBJ_101 /* asn_mime.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = asn_mime.c; sourceTree = "<group>"; };
 		OBJ_102 /* asn_moid.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = asn_moid.c; sourceTree = "<group>"; };
@@ -3035,15 +3037,15 @@
 			name = Publication;
 			sourceTree = "<group>";
 		};
-		5672162F1E57C2F8009DCF9B /* Account */ = {
+		5672162F1E57C2F8009DCF9B /* User */ = {
 			isa = PBXGroup;
 			children = (
-				5672162D1E57C0A9009DCF9B /* Account.swift */,
-				567216271E57BA63009DCF9B /* AccountProtocol.swift */,
-				567216291E57BBBB009DCF9B /* AccountRepository.swift */,
-				5672162B1E57BD97009DCF9B /* AccountController.swift */,
+				5672162D1E57C0A9009DCF9B /* User.swift */,
+				567216271E57BA63009DCF9B /* UserProtocol.swift */,
+				567216291E57BBBB009DCF9B /* UserRepository.swift */,
+				5672162B1E57BD97009DCF9B /* UserController.swift */,
 			);
-			name = Account;
+			name = User;
 			sourceTree = "<group>";
 		};
 		OBJ_10 /* PerfectLib */ = {
@@ -4162,7 +4164,7 @@
 		OBJ_861 /* Webretail */ = {
 			isa = PBXGroup;
 			children = (
-				5672162F1E57C2F8009DCF9B /* Account */,
+				5672162F1E57C2F8009DCF9B /* User */,
 				5666A61F1E57166300407D6B /* Brand */,
 				5666A6201E57166A00407D6B /* Category */,
 				5666A62A1E571CDF00407D6B /* Attribute */,
@@ -4174,6 +4176,7 @@
 				5666A6151E56F71000407D6B /* Helper.swift */,
 				56310C781E5CF937004A96A2 /* PostgreSqlORM.swift */,
 				567FAA6A1E5FC74F0095F942 /* SocialAuthentication.swift */,
+				56DD940E1E6049F900AC698A /* CustomRealm.swift */,
 			);
 			name = Webretail;
 			path = Sources;
@@ -5704,12 +5707,13 @@
 				5666A6271E571A8C00407D6B /* AttributeRepository.swift in Sources */,
 				OBJ_2040 /* BrandController.swift in Sources */,
 				5666A6391E57306F00407D6B /* ProductProtocol.swift in Sources */,
+				56DD940F1E6049F900AC698A /* CustomRealm.swift in Sources */,
 				5666A6301E571E2A00407D6B /* AttributeValueRepository.swift in Sources */,
 				5666A6731E57679200407D6B /* PublicationController.swift in Sources */,
 				OBJ_2041 /* BrandProtocoll.swift in Sources */,
-				5672162C1E57BD97009DCF9B /* AccountController.swift in Sources */,
+				5672162C1E57BD97009DCF9B /* UserController.swift in Sources */,
 				5666A6161E56F71000407D6B /* Helper.swift in Sources */,
-				5672162A1E57BBBB009DCF9B /* AccountRepository.swift in Sources */,
+				5672162A1E57BBBB009DCF9B /* UserRepository.swift in Sources */,
 				567FAA6B1E5FC74F0095F942 /* SocialAuthentication.swift in Sources */,
 				5666A6401E574C8D00407D6B /* ProductAttribute.swift in Sources */,
 				56310C791E5CF937004A96A2 /* PostgreSqlORM.swift in Sources */,
@@ -5717,7 +5721,7 @@
 				5666A66F1E57677600407D6B /* PublicationProtocol.swift in Sources */,
 				5666A6581E57541100407D6B /* ArticleController.swift in Sources */,
 				5666A63B1E5730C300407D6B /* ProductRepository.swift in Sources */,
-				567216281E57BA63009DCF9B /* AccountProtocol.swift in Sources */,
+				567216281E57BA63009DCF9B /* UserProtocol.swift in Sources */,
 				OBJ_2042 /* BrandRepository.swift in Sources */,
 				5666A6321E571E3A00407D6B /* AttributeValueController.swift in Sources */,
 				5666A66D1E57635100407D6B /* Publication.swift in Sources */,
@@ -5731,7 +5735,7 @@
 				OBJ_2043 /* main.swift in Sources */,
 				5666A6521E57528D00407D6B /* Article.swift in Sources */,
 				5666A65B1E5755E500407D6B /* ArticleAttributeValue.swift in Sources */,
-				5672162E1E57C0A9009DCF9B /* Account.swift in Sources */,
+				5672162E1E57C0A9009DCF9B /* User.swift in Sources */,
 				5666A6491E57500000407D6B /* ProductAttributeValue.swift in Sources */,
 				5666A6181E570E9C00407D6B /* Category.swift in Sources */,
 			);

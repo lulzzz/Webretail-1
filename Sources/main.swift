@@ -32,7 +32,7 @@ StORMdebug = true
 RequestLogFile.location = "./requests.log"
 
 // Used later in script for the Realm and how the user authenticates.
-let pturnstile = TurnstilePerfectRealm()
+let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
 
 PostgresConnector.host        = "localhost"
@@ -55,23 +55,15 @@ try? tokenStore?.setup()
 let server = HTTPServer()
 
 // Register auth routes and handlers
-var authJSONRoutes = makeJSONAuthRoutes("/api")
-authJSONRoutes.add(method: .get, uri: "/api/authenticated", handler: {
-	request, response in
-	response.setHeader(.contentType, value: "application/json")
-	do {
-		try response.setBody(json: request.user.authenticated)
-	} catch {
-		print(error)
-	}
-	response.completed()
-})
+let authJSONRoutes = makeJSONAuthRoutes("/api")
 server.addRoutes(authJSONRoutes)
-server.addRoutes(makeSocialAuthenticationRoutes())
+
+var authSocial = AuthHandlersSocial()
+server.addRoutes(authSocial.makeSocialAuthRoutes())
 
 // Register api routes and handlers
-let accountController = AccountController(repository: AccountRepository())
-server.addRoutes(accountController.getRoutes())
+let usertController = UserController(repository: UserRepository())
+server.addRoutes(usertController.getRoutes())
 
 let brandController = BrandController(repository: BrandRepository())
 server.addRoutes(brandController.getRoutes())

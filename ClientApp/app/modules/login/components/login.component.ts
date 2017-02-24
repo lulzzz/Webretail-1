@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     	this.authenticationService.login(this.user)
     		.subscribe(result => {
 				if (result.login === 'ok') {
-		    		this.authenticationService.grantCredentials(result.token, this.user.username);
+		    		this.authenticationService.grantCredentials(result.token, true);
 		    	} else {
 		    		this.msgs.push({severity: 'warn', summary: 'Authentication', detail: result.error});
 				}

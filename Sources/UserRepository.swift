@@ -9,31 +9,31 @@
 import StORM
 import TurnstileCrypto
 
-class AccountRepository : AccountProtocol {
+class UserRepository : UserProtocol {
     
    public var random: Random = URandom()
    
-   func getAll() throws -> [Account] {
-        let items = Account()
+   func getAll() throws -> [User] {
+        let items = User()
         try items.findAll()
         
         return items.rows()
     }
     
-    func get(id: String) throws -> Account? {
-        let item = Account()
+    func get(id: String) throws -> User? {
+        let item = User()
         try item.get(id)
         
         return item
     }
     
-    func add(item: Account) throws {
+    func add(item: User) throws {
         item.uniqueID = String(random.secureToken)
         item.password = BCrypt.hash(password: item.password)
         try item.create()
     }
     
-    func update(id: String, item: Account) throws {
+    func update(id: String, item: User) throws {
         
         guard let current = try get(id: id) else {
             throw StORMError.noRecordFound
@@ -51,7 +51,7 @@ class AccountRepository : AccountProtocol {
     }
     
     func delete(id: String) throws {
-        let item = Account()
+        let item = User()
         item.uniqueID = id
         try item.delete()
     }
