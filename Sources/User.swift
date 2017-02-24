@@ -11,7 +11,7 @@ import PostgresStORM
 import PerfectLib
 
 /// Provides the Account structure for Perfect Turnstile
-class Account : PostgresSqlORM, JSONConvertible {
+class User : PostgresSqlORM, JSONConvertible {
     
     /// The User account's Unique ID
     public var uniqueID: String = ""
@@ -31,7 +31,13 @@ class Account : PostgresSqlORM, JSONConvertible {
     /// Optional email
     public var email: String = ""
     
+    /// Stored Facebook ID when logging in with Facebook
+    public var facebookID: String = ""
+    
+    /// Stored Google ID when logging in with Google
+    public var googleID: String = ""
 
+    
     /// The table to store the data
     override open func table() -> String {
         return "users"
@@ -39,12 +45,14 @@ class Account : PostgresSqlORM, JSONConvertible {
     
     /// Set incoming data from database to object
     override open func to(_ this: StORMRow) {
-        uniqueID	= this.data["uniqueid"] as? String ?? ""
-        username	= this.data["username"] as? String ?? ""
-        password	= this.data["password"] as? String ?? ""
-        firstname	= this.data["firstname"] as? String ?? ""
-        lastname	= this.data["lastname"] as? String ?? ""
-        email		= this.data["email"] as? String ?? ""
+        uniqueID	= this.data["uniqueid"]     as? String ?? ""
+        username	= this.data["username"]     as? String ?? ""
+        password	= this.data["password"]     as? String ?? ""
+        firstname	= this.data["firstname"]    as? String ?? ""
+        lastname	= this.data["lastname"]     as? String ?? ""
+        email		= this.data["email"]        as? String ?? ""
+        facebookID	= this.data["facebookid"]   as? String ?? ""
+        googleID	= this.data["googleid"]     as? String ?? ""
     }
     
     /// Iterate through rows and set to object data
@@ -80,6 +88,31 @@ class Account : PostgresSqlORM, JSONConvertible {
             "lastname": lastname,
             "email": email
         ]
+    }
+    
+    /// Forces a create with a hashed password
+    func make() throws {
+        do {
+            password = BCrypt.hash(password: password)
+            try create() // can't use save as the id is populated
+        } catch {
+            print(error)
+        }
+    }
+    
+    /// Returns a true / false depending on if the username exits in the database.
+    func exists(_ un: String) -> Bool {
+        do {
+            try select(whereclause: "username = $1", params: [un], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
+            if results.rows.count == 1 {
+                return true
+            } else {
+                return false
+            }
+        } catch {
+            print("Exists error: \(error)")
+            return false
+        }
     }
 }
 
