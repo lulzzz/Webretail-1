@@ -22,16 +22,16 @@ open class CustomRealm : AuthRealm {
             return try authenticate(credentials: credentials)
         case let credentials as AccessToken:
             return try authenticate(credentials: credentials)
-        case let credentials as SocialAccount:
+        case let credentials as ConsumerAccount:
             return try authenticate(credentials: credentials)
         default:
             throw UnsupportedCredentialsError()
         }
     }
     
-    private func authenticate(credentials: SocialAccount) throws -> Account {
+    private func authenticate(credentials: ConsumerAccount) throws -> Account {
         let account = AuthAccount()
-        try account.find([("\(credentials.social)ID", credentials.uniqueID)])
+        try account.find([("\(credentials.consumer)ID", credentials.uniqueID)])
         if !account.uniqueID.isEmpty {
             return account
         } else {
@@ -57,13 +57,13 @@ open class CustomRealm : AuthRealm {
             } catch {
                 throw AccountTakenError()
             }
-        case let credentials as SocialAccount:
-            try account.find([("\(credentials.social)ID", credentials.uniqueID)])
+        case let credentials as ConsumerAccount:
+            try account.find([("\(credentials.consumer)ID", credentials.uniqueID)])
             guard account.uniqueID.isEmpty else {
                 throw AccountTakenError()
             }
-            newAccount.username = credentials.social
-            if credentials.social == "facebook" {
+            newAccount.username = credentials.consumer
+            if credentials.consumer == "facebook" {
                 newAccount.facebookID = credentials.uniqueID
             }
             else {
@@ -84,8 +84,8 @@ open class CustomRealm : AuthRealm {
     }
 }
 
-public struct SocialAccount: Account, Credentials {
-    public let social: String
+public struct ConsumerAccount: Account, Credentials {
+    public let consumer: String
     public let uniqueID: String
 }
 

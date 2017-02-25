@@ -27,7 +27,7 @@ export class AttributeComponent implements OnInit {
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
-        this.authenticationService.checkCredentials();
+        this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required)

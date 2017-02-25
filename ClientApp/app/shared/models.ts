@@ -109,6 +109,7 @@ export interface Token {
     error: string;
     login: string;
     token: string;
+    role: string;
 }
 
 export interface ProductCategory {

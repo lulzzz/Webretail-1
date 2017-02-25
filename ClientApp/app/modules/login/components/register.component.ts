@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
 		this.authenticationService.register(this.user)
     		.subscribe(result => {
 				if (result.login === 'ok') {
-					this.authenticationService.grantCredentials(result.token, true);
+					this.authenticationService.grantCredentials(result.token, result.role);
 		    	} else {
 		    		this.msgs.push({severity: 'warn', summary: 'Authentication', detail: result.error});
 				}

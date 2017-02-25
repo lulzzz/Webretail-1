@@ -18,7 +18,7 @@ export class MyInfoComponent implements OnInit {
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
-        this.authenticationService.checkCredentials();
+        this.authenticationService.checkCredentials(false);
 
         this.myinfo = new Account();
         this.authenticationService.getCredentials()

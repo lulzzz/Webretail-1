@@ -102,9 +102,10 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({ name: ['app', 'polyfills']}),    
         new CleanWebpackPlugin(
             [
+                './wwwroot/index.html',
+                './wwwroot/favicon.ico',
                 './wwwroot/dist',
-                './wwwroot/assets',
-                './wwwroot'
+                './wwwroot/assets'
             ]
         ),
         new HtmlWebpackPlugin({

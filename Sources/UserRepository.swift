@@ -8,11 +8,43 @@
 
 import StORM
 import TurnstileCrypto
+import PerfectTurnstilePostgreSQL
 
 class UserRepository : UserProtocol {
     
    public var random: Random = URandom()
    
+    init() {
+        
+        // Set up the Authentication table
+        let user = User()
+        try? user.setup()
+        
+        do {
+            try user.select(whereclause: "isadmin = $1", params: [true], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
+            
+            if user.results.rows.count == 0 {
+                if user.exists("admin") {
+                    user.isAdmin = true
+                    try update(id: user.uniqueID, item: user)
+                }
+                else {
+                    user.firstname = "Administrator"
+                    user.username = "admin"
+                    user.password = "admin"
+                    user.isAdmin = true
+                    try add(item: user)
+                }
+            }
+        } catch {
+            print("Create admin error: \(error)")
+        }
+        
+        // Connect the AccessTokenStore
+        tokenStore = AccessTokenStore()
+        try? tokenStore?.setup()
+    }
+    
    func getAll() throws -> [User] {
         let items = User()
         try items.findAll()

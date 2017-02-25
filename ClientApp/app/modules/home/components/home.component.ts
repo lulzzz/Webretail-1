@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from './../../../services/authentication.service';
 
@@ -9,33 +9,35 @@ import { AuthenticationService } from './../../../services/authentication.servic
 
 export class HomeComponent implements OnInit  {
 
-    private sub: any;
     token: string;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private authenticationService: AuthenticationService
-                ) { }
+                private authenticationService: AuthenticationService) { }
 
 	ngOnInit() {
-        // Subscribe to route params
-        this.sub = this.activatedRoute.queryParams
+
+        if (this.authenticationService.isAuthenticated) {
+            this.token = localStorage.getItem('token');
+            return;
+        }
+
+        // this.authenticationService.getCredentials()
+        //     .subscribe(res => {
+        //         alert(JSON.stringify(res));
+        //     });
+
+        this.activatedRoute.queryParams
             .subscribe(params => {
-                let social = params['social'];
+                let consumer = params['consumer'];
                 let uniqueID = params['uniqueID'];
-                if (social && uniqueID) {
-                    this.authenticationService.loginConsumer(social, uniqueID)
+                if (consumer && uniqueID) {
+                    this.authenticationService.loginConsumer(consumer, uniqueID)
                         .subscribe(res => {
                             this.token = res.token;
-                            this.authenticationService.grantCredentials(this.token, false);
+                            this.authenticationService.grantCredentials(res.token, res.role);
                         });
-                } else {
-                    this.token = localStorage.getItem('token');
                 }
-            });
-    }
-
-    ngOnDestroy() {
-        // Clean sub to avoid memory leak
-        this.sub.unsubscribe();
-    }
+            })
+            .unsubscribe();
+     }
 }

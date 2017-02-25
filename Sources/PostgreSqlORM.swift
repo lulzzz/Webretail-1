@@ -41,7 +41,7 @@ open class PostgresSqlORM: PostgresStORM {
                             verbage += " REFERENCES \(table) ON DELETE CASCADE"
                         }
                     } else if child.value is Bool {
-                        verbage += "bool"
+                        verbage += "boolean DEFAULT false"
                     } else if child.value is [String:Any] {
                         verbage += "jsonb"
                     } else if child.value is Double {
@@ -57,7 +57,7 @@ open class PostgresSqlORM: PostgresStORM {
                     }
                     opt.append(verbage)
                     
-                    if key.hasSuffix("Name") || key.hasPrefix("Code") || key.lowercased().hasPrefix("email") {
+                    if key.hasSuffix("Name") || key.hasPrefix("Code") {
                         createIndexes.append("CREATE UNIQUE INDEX IF NOT EXISTS \(key)_idx ON \(table())(\( key ));")
                     }
                 }

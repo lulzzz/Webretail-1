@@ -69,9 +69,10 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(
             [
+                './wwwroot/index.html',
+                './wwwroot/favicon.ico',
                 './wwwroot/dist',
-                './wwwroot/assets',
-                './wwwroot'
+                './wwwroot/assets'
             ]
         ),
         new webpack.NoEmitOnErrorsPlugin(),

@@ -22,14 +22,15 @@ export class AccountComponent implements OnInit {
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
-        this.authenticationService.checkCredentials();
+        this.authenticationService.checkCredentials(true);
 
         this.dataform = this.fb.group({
             'firstname': new FormControl('', Validators.required),
             'lastname': new FormControl('', Validators.required),
             'email': new FormControl('', Validators.required),
             'username': new FormControl('', Validators.required),
-            'password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)]))
+            'password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
+            'isAdmin': new FormControl('', Validators.required),
         });
 
         this.accountService.getAll()

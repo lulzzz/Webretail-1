@@ -39,7 +39,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                 private attributeService: AttributeService) {}
 
     ngOnInit() {
-        this.authenticationService.checkCredentials();
+        this.authenticationService.checkCredentials(false);
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

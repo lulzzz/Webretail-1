@@ -15,6 +15,10 @@ export class NavigationComponent {
         return this.authenticationService.isAuthenticated;
     }
 
+    get isAdmin() : boolean {
+        return this.authenticationService.isAdmin;
+    }
+
     logoutClick() {
         this.authenticationService.logout();
     }

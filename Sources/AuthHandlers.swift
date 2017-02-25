@@ -32,10 +32,16 @@ public class AuthHandlers {
             response.setHeader(.contentType, value: "application/json")
             do {
                 var resp = [String: Any]()
-                
-                resp["authenticated"] = request.user.authenticated
-                resp["uniqueID"] = request.user.authDetails?.account.uniqueID
-
+                resp["authenticated"] = false
+                if request.user.authenticated {
+                    let user = User()
+                    let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
+                    try user.get(uniqueID)
+                    
+                    resp["authenticated"] = true
+                    resp["uniqueID"] = request.user.authDetails?.account.uniqueID
+                    resp["role"] = user.isAdmin ? "Admin" : "User"
+                }
                 try response.setBody(json: resp)
             } catch {
                 print(error)
@@ -71,12 +77,15 @@ public class AuthHandlers {
         
         do {
             try request.user.login(credentials: credentials)
-            
-            let token = tokenStore?.new((request.user.authDetails?.account.uniqueID)!)
+            let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
+            let token = tokenStore?.new(uniqueID)
+            let user = User()
+            try user.get(uniqueID)
             
             resp["error"] = "none"
             resp["login"] = "ok"
             resp["token"] = token
+            resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch {
             resp["error"] = "Invalid username or password"
         }
@@ -107,15 +116,18 @@ public class AuthHandlers {
         
         do {
             try request.user.register(credentials: credentials)
-            
             try request.user.login(credentials: credentials)
             
-            let token = tokenStore?.new((request.user.authDetails?.account.uniqueID)!)
+            let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
+            let token = tokenStore?.new(uniqueID)
+            let user = User()
+            try user.get(uniqueID)
             
             //register
             resp["error"] = "none"
             resp["login"] = "ok"
             resp["token"] = token
+            resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch let e as TurnstileError {
             resp["error"] = e.description
         } catch {
@@ -162,7 +174,7 @@ public class AuthHandlers {
         do {
             let credentials = try facebook.authenticate(authorizationCodeCallbackURL: uri, state: state) as! FacebookAccount
             //try request.user.login(credentials: credentials, persist: true)
-            response.redirect(path: "/?social=facebook&uniqueID=\(credentials.uniqueID)")
+            response.redirect(path: "/?consumer=facebook&uniqueID=\(credentials.uniqueID)")
         } catch let error {
             let description = (error as? TurnstileError)?.description ?? "Unknown Error"
             resp["error"] = description
@@ -201,7 +213,7 @@ public class AuthHandlers {
         do {
             let credentials = try google.authenticate(authorizationCodeCallbackURL: uri, state: state) as! GoogleAccount
             //try request.user.login(credentials: credentials, persist: true)
-            response.redirect(path: "/?social=google&uniqueID=\(credentials.uniqueID)")
+            response.redirect(path: "/?consumer=google&uniqueID=\(credentials.uniqueID)")
         } catch let error {
             let description = (error as? TurnstileError)?.description ?? "Unknown Error"
             resp["error"] = description
@@ -220,7 +232,7 @@ public class AuthHandlers {
         response.setHeader(.contentType, value: "application/json")
         
         var resp = [String: String]()
-        guard let social = request.param(name: "social"),
+        guard let consumer = request.param(name: "consumer"),
               let uniqueID = request.param(name: "uniqueID") else {
                 resp["error"] = "Missing uniqueID"
                 do {
@@ -232,15 +244,19 @@ public class AuthHandlers {
                 return
         }
         
-        let credentials = SocialAccount(social: social, uniqueID: uniqueID)
+        let credentials = ConsumerAccount(consumer: consumer, uniqueID: uniqueID)
         
         do {
             try request.user.login(credentials: credentials, persist: true)
-            let token = tokenStore?.new((request.user.authDetails?.account.uniqueID)!)
+            let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
+            let token = tokenStore?.new(uniqueID)
+            let user = User()
+            try user.get(uniqueID)
             
             resp["error"] = "none"
             resp["login"] = "ok"
             resp["token"] = token
+            resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch {
             resp["error"] = "Invalid uniqueID"
         }

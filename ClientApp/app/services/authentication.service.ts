@@ -18,8 +18,8 @@ export class AuthenticationService {
             .map(response => <Token>response.json());
     }
 
-    loginConsumer(social: String, uniqueID: String) : Observable<Token> {
-        let body = `social=${social}&uniqueID=${uniqueID}`;
+    loginConsumer(consumer: String, uniqueID: String) : Observable<Token> {
+        let body = `consumer=${consumer}&uniqueID=${uniqueID}`;
         return this.http.post('/api/login/consumer', body, { headers: Helpers.getHeaders() })
             .map(response => <Token>response.json());
     }
@@ -38,15 +38,15 @@ export class AuthenticationService {
             }, onerror => this.removeCredentials());
     }
 
-    grantCredentials(token: string, redirect: boolean) {
+    grantCredentials(token: string, role: string) {
         localStorage.setItem('token', token);
-        if (redirect) {
-            this.router.navigate(['home']);
-        }
+        localStorage.setItem('role', role);
+        this.router.navigate(['home']);
     }
 
     removeCredentials() {
         localStorage.removeItem('token');
+        localStorage.removeItem('role');
         this.router.navigate(['login']);
     }
 
@@ -54,17 +54,14 @@ export class AuthenticationService {
         return localStorage.getItem('token') != null;
     }
 
-    checkCredentials() {
-        if (!this.isAuthenticated) {
+    get isAdmin() : boolean {
+        return localStorage.getItem('role') == 'Admin';
+    }
+
+    checkCredentials(isAdmin: boolean) {
+        if (!this.isAuthenticated || isAdmin && !this.isAdmin) {
             this.removeCredentials();
         }
-        // this.http.get('/api/authenticated', { headers: Helpers.getHeaders() })
-        //     .map(response => response.json())
-        //     .subscribe(res => {
-        //         if (!res.authenticated) {
-        //             this.removeCredentials();
-        //         }
-        //     });
     }
 
     getCredentials() : Observable<any>  {
