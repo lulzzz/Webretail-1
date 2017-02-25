@@ -29,7 +29,7 @@ export class AccountComponent implements OnInit {
             'lastname': new FormControl('', Validators.required),
             'email': new FormControl('', Validators.required),
             'username': new FormControl('', Validators.required),
-            'password': new FormControl('', [Validators.required, Validators.minLength(6)])
+            'password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)]))
         });
 
         this.accountService.getAll()

@@ -5,8 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTableModule, SharedModule, PaginatorModule, DialogModule, InputTextModule, InputSwitchModule, ButtonModule } from 'primeng/primeng';
 
 import { AccountRoutes } from './account.routes';
-import { AccountComponent } from './components/account.component';
 import { AccountService } from './../../services/account.service';
+import { AccountComponent } from './components/account.component';
+import { MyInfoComponent } from './components/myinfo.component';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { AccountService } from './../../services/account.service';
         AccountRoutes
     ],
     declarations: [
-        AccountComponent
+        AccountComponent,
+        MyInfoComponent
     ],
     providers: [
         AccountService

@@ -26,17 +26,21 @@ public class AuthHandlers {
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
         routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
         routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
-//        routes.add(method: .get,  uri: "/api/authenticated", handler: {
-//            request, response in
-//            response.setHeader(.contentType, value: "application/json")
-//            do {
-//                print(request.user.authDetails?.sessionID ?? "")
-//                try response.setBody(json: request.user.authenticated)
-//            } catch {
-//                print(error)
-//            }
-//            response.completed()
-//        })
+        routes.add(method: .get,  uri: "/api/authenticated", handler: {
+            request, response in
+            response.setHeader(.contentType, value: "application/json")
+            do {
+                var resp = [String: Any]()
+                
+                resp["authenticated"] = request.user.authenticated
+                resp["uniqueID"] = request.user.authDetails?.account.uniqueID
+
+                try response.setBody(json: resp)
+            } catch {
+                print(error)
+            }
+            response.completed()
+        })
 
         routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
         routes.add(method: .get, uri: "/login/facebook/consumer", handler: facebookHandlerConsumer)

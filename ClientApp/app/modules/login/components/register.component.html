@@ -37,6 +37,21 @@
             </div>
         </div>
         <div class="ui-grid-row">
+            <div class="ui-grid-col-2">
+                <label for="password2">Repeat Password</label>
+            </div>
+            <div class="ui-grid-col-6">
+                <input pInputText type="password" formControlName="password2"/>
+            </div>
+            <div class="ui-grid-col-4">
+                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['password2'].valid&&userform.controls['password2'].dirty">
+                    <i class="fa fa-close"></i>
+                    <span *ngIf="userform.controls['password2'].errors['required']">Repeat Password is required</span>
+                    <span *ngIf="userform.controls['password2'].errors['passwordMatch']">Must be equal to Password</span>
+                </div>
+            </div>
+        </div>
+        <div class="ui-grid-row">
             <div class="ui-grid-col-2"></div>
             <div class="ui-grid-col-4">
                 <button type="button" pButton label="Register" (click)="register()" icon="fa-sign-in" [disabled]="!userform.valid"></button>

@@ -60,10 +60,15 @@ export class AuthenticationService {
         }
         // this.http.get('/api/authenticated', { headers: Helpers.getHeaders() })
         //     .map(response => response.json())
-        //     .subscribe(authenticated => {
-        //         if (!authenticated) {
+        //     .subscribe(res => {
+        //         if (!res.authenticated) {
         //             this.removeCredentials();
         //         }
         //     });
+    }
+
+    getCredentials() : Observable<any>  {
+        return this.http.get('/api/authenticated', { headers: Helpers.getHeaders() })
+            .map(response => response.json());
     }
 }

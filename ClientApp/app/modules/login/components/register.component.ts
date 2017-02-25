@@ -23,16 +23,20 @@ export class RegisterComponent implements OnInit {
 	ngOnInit() {
         this.userform = this.fb.group({
             'username': new FormControl('', Validators.required),
-            'password': new FormControl('', [Validators.required, Validators.minLength(6)])
+            'password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
+			'password2': new FormControl('', Validators.required)
         });
     }
 
 	register() {
-    	this.authenticationService.register(this.user)
+		if (this.userform.value.password !== this.userform.value.password2) {
+			this.msgs.push({severity: 'error', summary: 'Registration', detail: 'The passwords do not match'});
+			return;
+		}
+		this.authenticationService.register(this.user)
     		.subscribe(result => {
 				if (result.login === 'ok') {
-					alert(JSON.stringify(result));
-		    		this.authenticationService.grantCredentials(result.token, true);
+					this.authenticationService.grantCredentials(result.token, true);
 		    	} else {
 		    		this.msgs.push({severity: 'warn', summary: 'Authentication', detail: result.error});
 				}
