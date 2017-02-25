@@ -16,7 +16,15 @@ class UserController {
     init(repository: UserProtocol) {
         
         self.repository = repository
-    }
+
+        // Set up the Authentication table
+        let user = User()
+        try? user.setup()
+        
+        // Connect the AccessTokenStore
+        tokenStore = AccessTokenStore()
+        try? tokenStore?.setup()
+   }
     
     func getRoutes() -> Routes {
         var routes = Routes()

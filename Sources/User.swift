@@ -38,6 +38,9 @@ class User : PostgresSqlORM, JSONConvertible {
     /// Stored Google ID when logging in with Google
     public var googleID: String = ""
 
+    /// Is Administrator
+    public var isAdmin: Bool = false
+
     
     /// The table to store the data
     override open func table() -> String {
@@ -52,6 +55,7 @@ class User : PostgresSqlORM, JSONConvertible {
         firstname	= this.data["firstname"]    as? String ?? ""
         lastname	= this.data["lastname"]     as? String ?? ""
         email		= this.data["email"]        as? String ?? ""
+        isAdmin     = this.data["isadmin"]      as? Bool ?? false
         facebookID	= this.data["facebookid"]   as? String ?? ""
         googleID	= this.data["googleid"]     as? String ?? ""
     }
@@ -74,6 +78,7 @@ class User : PostgresSqlORM, JSONConvertible {
         self.firstname = Helper.getJSONValue(named: "firstname", from: values, defaultValue: "")
         self.lastname = Helper.getJSONValue(named: "lastname", from: values, defaultValue: "")
         self.email = Helper.getJSONValue(named: "email", from: values, defaultValue: "")
+        self.isAdmin = Helper.getJSONValue(named: "isAdmin", from: values, defaultValue: false)
     }
     
     func jsonEncodedString() throws -> String {
@@ -89,7 +94,8 @@ class User : PostgresSqlORM, JSONConvertible {
             "password": password,
             "firstname": firstname,
             "lastname": lastname,
-            "email": email
+            "email": email,
+            "isAdmin": isAdmin
         ]
     }
     

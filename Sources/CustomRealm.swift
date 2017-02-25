@@ -6,9 +6,9 @@
 //
 //
 
+import Foundation
 import Turnstile
 import TurnstileCrypto
-import TurnstileWeb
 import PerfectTurnstilePostgreSQL
 
 /// The "Turnstile Realm" that holds the main routing functionality for request filters

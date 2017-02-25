@@ -25,6 +25,7 @@ import PerfectTurnstilePostgreSQL
 import PostgresStORM
 import StORM
 import Turnstile
+import TurnstileWeb
 import TurnstilePerfect
 
 
@@ -34,21 +35,12 @@ RequestLogFile.location = "./requests.log"
 // Used later in script for the Realm and how the user authenticates.
 let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
-
+// Database connection
 PostgresConnector.host        = "localhost"
 //PostgresConnector.username    = "postgres"
 //PostgresConnector.password    = "postgres"
 PostgresConnector.database    = "webretail"
 PostgresConnector.port        = 5432
-
-
-// Set up the Authentication table
-let auth = AuthAccount()
-try? auth.setup()
-
-// Connect the AccessTokenStore
-tokenStore = AccessTokenStore()
-try? tokenStore?.setup()
 
 
 // Create HTTP server.
@@ -101,9 +93,7 @@ let authFilter = AuthFilter(authenticationConfig)
 // Note that order matters when the filters are of the same priority level
 server.setRequestFilters([pturnstile.requestFilter])
 server.setResponseFilters([pturnstile.responseFilter])
-
 server.setRequestFilters([(authFilter, .high)])
-
 server.setRequestFilters([(myLogger, .high)])
 server.setResponseFilters([(myLogger, .low)])
 
