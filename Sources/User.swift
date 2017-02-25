@@ -83,6 +83,8 @@ class User : PostgresSqlORM, JSONConvertible {
     func getJSONValues() -> [String : Any] {
         return [
             "uniqueID": uniqueID,
+            "facebookID": facebookID,
+            "googleID": googleID,
             "username": username,
             "password": password,
             "firstname": firstname,

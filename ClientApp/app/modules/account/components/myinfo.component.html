@@ -9,6 +9,14 @@
                 <div class="ui-grid-col-8">{{myinfo.uniqueID}}</div>
             </div>
             <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>Facebook</label></div>
+                <div class="ui-grid-col-8">{{myinfo.facebookID}}</div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>Google</label></div>
+                <div class="ui-grid-col-8">{{myinfo.googleID}}</div>
+            </div>
+            <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="firstname">Firstname</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="firstname" [(ngModel)]="myinfo.firstname"/>
