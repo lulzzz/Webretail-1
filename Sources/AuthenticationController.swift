@@ -25,7 +25,7 @@ public class AuthenticationController {
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
         routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
         routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
-        routes.add(method: .get,  uri: "/api/authenticated", handler: authenticatedHandlerPOST)
+        routes.add(method: .get,  uri: "/api/authenticated", handler: authenticatedHandlerGET)
 
         routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
         routes.add(method: .get, uri: "/login/facebook/consumer", handler: facebookHandlerConsumer)
@@ -36,7 +36,7 @@ public class AuthenticationController {
         return routes
     }
 
-    func authenticatedHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+    func authenticatedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
 
         var resp = [String: Any]()
@@ -53,9 +53,13 @@ public class AuthenticationController {
                 resp["uniqueID"] = request.user.authDetails?.account.uniqueID
                 resp["role"] = user.isAdmin ? "Admin" : "User"
             }
-            try response.setBody(json: resp)
         } catch {
             LogFile.error("/api/authenticated .get: \(error)", logFile: "./error.log")
+        }
+        do {
+            try response.setBody(json: resp)
+        } catch {
+            print(error)
         }
         response.completed()
     }

@@ -99,7 +99,6 @@ class CategoryController {
         let id = request.urlVariables["id"]?.toInt()
         do {
             try self.repository.delete(id: id!)
-            try response.setBody(json: id)
             response.completed(status: HTTPResponseStatus.noContent)
         } catch {
             LogFile.error("/api/category/\(id) .delete: \(error)", logFile: "./error.log")

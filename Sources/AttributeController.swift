@@ -66,20 +66,6 @@ class AttributeController {
         
         let id = request.urlVariables["id"]?.toInt()
         do {
-            try self.repository.delete(id: id!)
-            try response.setBody(json: id)
-            response.completed(status: HTTPResponseStatus.noContent)
-        } catch {
-            LogFile.error("/api/attribute/\(id) .delete: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
-        }
-    }
-
-    func attributeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
-        let id = request.urlVariables["id"]?.toInt()
-        do {
             let item = try self.repository.getValues(id: id!)
             try response.setBody(json: item)
             response.completed(status: HTTPResponseStatus.created)
@@ -89,7 +75,7 @@ class AttributeController {
         }
     }
 
-    func attributeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+    func attributeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {
@@ -105,7 +91,7 @@ class AttributeController {
         }
     }
 
-    func attributeHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+    func attributeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]?.toInt()
@@ -118,6 +104,19 @@ class AttributeController {
             response.completed(status: HTTPResponseStatus.accepted)
         } catch {
             LogFile.error("/api/attribute/\(id) .put: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
+    }
+
+    func attributeHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        let id = request.urlVariables["id"]?.toInt()
+        do {
+            try self.repository.delete(id: id!)
+            response.completed(status: HTTPResponseStatus.noContent)
+        } catch {
+            LogFile.error("/api/attribute/\(id) .delete: \(error)", logFile: "./error.log")
             response.completed(status: HTTPResponseStatus.badRequest)
         }
     }

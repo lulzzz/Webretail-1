@@ -56,14 +56,14 @@ export class CategoryComponent implements OnInit {
             this.categoryService.create(this.selected)
                 .subscribe(result => {
                     this.categories.push(result);
+                    this.selected = null;
                 });
         } else {
             this.categoryService.update(this.selected.categoryId, this.selected)
                 .subscribe(result => {
-                    //this.categories[this.selectedIndex] = this.selected;
+                    this.selected = null;
                 });
         }
-        this.selected = null;
         this.displayDialog = false;
     }
 
@@ -71,8 +71,8 @@ export class CategoryComponent implements OnInit {
         this.categoryService.delete(this.selected.categoryId)
             .subscribe(result => {
                 this.categories.splice(this.selectedIndex, 1);
+                this.selected = null;
             });
-        this.selected = null;
         this.displayDialog = false;
     }
 }

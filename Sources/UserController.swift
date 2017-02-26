@@ -22,7 +22,7 @@ class UserController {
         var routes = Routes()
         
         routes.add(method: .get,    uri: "/api/account",        handler: accountsHandlerGET)
-        routes.add(method: .get,    uri: "/api/account/{id}",   handler: accountsHandlerGET)
+        routes.add(method: .get,    uri: "/api/account/{id}",   handler: accountHandlerGET)
         routes.add(method: .post,   uri: "/api/account",        handler: accountHandlerPOST)
         routes.add(method: .put,    uri: "/api/account/{id}",   handler: accountHandlerPUT)
         routes.add(method: .delete, uri: "/api/account/{id}",   handler: accountHandlerDELETE)
@@ -96,7 +96,6 @@ class UserController {
         let id = request.urlVariables["id"]
         do {
             try self.repository.delete(id: id!)
-            try response.setBody(json: id)
             response.completed(status: HTTPResponseStatus.noContent)
         } catch {
             LogFile.error("/api/account/\(id) .delete: \(error)", logFile: "./error.log")

@@ -32,7 +32,7 @@ export class BrandComponent implements OnInit {
             .subscribe(result => {
                 this.brands = result;
                 this.totalRecords = this.brands.length;
-            }//, onerror => alert('ERROR\r\n' + onerror)
+            }
         );
     }
 
@@ -55,14 +55,14 @@ export class BrandComponent implements OnInit {
             this.brandService.create(this.selected)
                 .subscribe(result => {
                     this.brands.push(result);
+                    this.selected = null;
                 });
         } else {
             this.brandService.update(this.selected.brandId, this.selected)
                 .subscribe(result => {
-                    //this.brands[this.selectedIndex] = this.selected;
+                    this.selected = null;
                 });
         }
-        this.selected = null;
         this.displayDialog = false;
     }
 
@@ -70,8 +70,8 @@ export class BrandComponent implements OnInit {
         this.brandService.delete(this.selected.brandId)
             .subscribe(result => {
                 this.brands.splice(this.selectedIndex, 1);
+                this.selected = null;
             });
-        this.selected = null;
         this.displayDialog = false;
     }
 }

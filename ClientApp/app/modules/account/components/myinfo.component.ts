@@ -10,7 +10,7 @@ import { Account } from './../../../shared/models';
 })
 
 export class MyInfoComponent implements OnInit {
-	myinfo: Account;
+	public myinfo: Account;
 	dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
@@ -18,17 +18,13 @@ export class MyInfoComponent implements OnInit {
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
-        this.authenticationService.checkCredentials(false);
-
-        this.myinfo = new Account();
         this.authenticationService.getCredentials()
             .subscribe(p => {
                 this.accountService.getById(p.uniqueID)
                     .subscribe(account => {
-                        JSON.stringify(account);
                         this.myinfo = account;
                     });
-            });
+            }, onerror => alert(onerror));
 
         this.dataform = this.fb.group({
             'firstname': new FormControl('', Validators.required),
@@ -37,13 +33,6 @@ export class MyInfoComponent implements OnInit {
             'username': new FormControl('', Validators.required),
             'password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)]))
         });
-
-        // this.accountService.getAll()
-        //     .subscribe(result => {
-        //         this.accounts = result;
-        //         this.totalRecords = this.accounts.length;
-        //     }//, onerror => alert('ERROR\r\n' + onerror)
-        // );
     }
 
     saveClick() {

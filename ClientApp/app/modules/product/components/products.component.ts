@@ -105,7 +105,6 @@ export class ProductsComponent implements OnInit {
         } else {
             this.productService.update(this.selected.productId, this.selected)
                 .subscribe(result => {
-                    //this.products[this.selectedIndex] = this.selected;
                     this.selected = null;
                 });
         }
@@ -116,8 +115,8 @@ export class ProductsComponent implements OnInit {
         this.productService.delete(this.selected.productId)
             .subscribe(result => {
                 this.products.splice(this.selectedIndex, 1);
+                this.selected = null;
             });
-        this.selected = null;
         this.displayDialog = false;
     }
 }
