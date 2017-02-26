@@ -73,12 +73,8 @@ open class CustomRealm : AuthRealm {
             throw UnsupportedCredentialsError()
         }
         
-        do {
-            newAccount.password = BCrypt.hash(password: newAccount.password)
-            try newAccount.create() // can't use save as the id is populated
-        } catch {
-            print("REGISTER ERROR: \(error)")
-        }
+        newAccount.password = BCrypt.hash(password: newAccount.password)
+        try newAccount.create() // can't use save as the id is populated
         
         return newAccount
     }

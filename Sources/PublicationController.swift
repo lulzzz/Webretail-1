@@ -6,8 +6,8 @@
 //
 //
 
-import Foundation
 import PerfectHTTP
+import PerfectLogger
 
 class PublicationController {
     
@@ -19,97 +19,91 @@ class PublicationController {
         
         let publication = Publication()
         try? publication.setup()
-        
-//        do {
-//            let item1 = Publication()
-//            item1.productId = 1
-//            item1.featured = true
-//            item1.startAt = Helper.now()
-//            item1.finishAt = Int(Date().addingTimeInterval(30*24*60*60).timeIntervalSinceReferenceDate)
-//            try self.repository.add(item: item1)
-// 
-//        } catch {
-//            print(error)
-//        }
     }
     
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get, uri: "/api/publication", handler: {
-            _, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let items = try self.repository.getAll()
-                try response.setBody(json: items)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
-        
-        routes.add(method: .get, uri: "/api/publication/{id}", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let id = request.urlVariables["id"]?.toInt()
-                let item = try self.repository.get(id: id!)
-                try response.setBody(json: item)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
-        
-        routes.add(method: .post, uri: "/api/publication", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = Publication()
-                item.setJSONValues(json!)
-                try self.repository.add(item: item)
-                try response.setBody(json: item)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
-        
-        routes.add(method: .put, uri: "/api/publication/{id}", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let id = request.urlVariables["id"]?.toInt()
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = Publication()
-                item.setJSONValues(json!)
-                try self.repository.update(id: id!, item: item)
-                try response.setBody(json: item)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
-        
-        routes.add(method: .delete, uri: "/api/publication/{id}", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let id = request.urlVariables["id"]?.toInt()
-                try self.repository.delete(id: id!)
-                try response.setBody(json: id)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
+        routes.add(method: .get,    uri: "/api/publication",        handler: publicationsHandlerGET)
+        routes.add(method: .get,    uri: "/api/publication/{id}",   handler: publicationHandlerGET)
+        routes.add(method: .post,   uri: "/api/publication",        handler: publicationHandlerPOST)
+        routes.add(method: .put,    uri: "/api/publication/{id}",   handler: publicationHandlerPUT)
+        routes.add(method: .delete, uri: "/api/publication/{id}",   handler: publicationHandlerDELETE)
         
         return routes
+    }
+
+    func publicationsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        do {
+            let items = try self.repository.getAll()
+            try response.setBody(json: items)
+            response.completed(status: HTTPResponseStatus.ok)
+        } catch {
+            LogFile.error("/api/publication .get: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
+    }
+
+    func publicationHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        let id = request.urlVariables["id"]?.toInt()
+        do {
+            let item = try self.repository.get(id: id!)
+            try response.setBody(json: item)
+            response.completed(status: HTTPResponseStatus.ok)
+        } catch {
+            LogFile.error("/api/publication/\(id) .get: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
+    }
+
+    func publicationHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        do {
+            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let item = Publication()
+            item.setJSONValues(json!)
+            try self.repository.add(item: item)
+            try response.setBody(json: item)
+            response.completed(status: HTTPResponseStatus.created)
+        } catch {
+            LogFile.error("/api/publication .post: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
+    }
+
+    func publicationHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        let id = request.urlVariables["id"]?.toInt()
+        do {
+            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let item = Publication()
+            item.setJSONValues(json!)
+            try self.repository.update(id: id!, item: item)
+            try response.setBody(json: item)
+            response.completed(status: HTTPResponseStatus.accepted)
+        } catch {
+            LogFile.error("/api/publication/\(id) .put: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
+    }
+
+    func publicationHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        let id = request.urlVariables["id"]?.toInt()
+        do {
+            try self.repository.delete(id: id!)
+            try response.setBody(json: id)
+            response.completed(status: HTTPResponseStatus.noContent)
+        } catch {
+            LogFile.error("/api/publication/\(id) .delete: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
     }
 }

@@ -47,8 +47,8 @@ PostgresConnector.port        = 5432
 let server = HTTPServer()
 
 // Register auth routes and handlers
-var authHandlers = AuthHandlers()
-server.addRoutes(authHandlers.makeAuthRoutes())
+var authController = AuthController()
+server.addRoutes(authController.getRoutes())
 
 // Register api routes and handlers
 let usertController = UserController(repository: UserRepository())

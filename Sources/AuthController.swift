@@ -9,45 +9,25 @@
 import Foundation
 import PerfectLib
 import PerfectHTTP
+import PerfectLogger
 import Turnstile
 import TurnstileCrypto
 import TurnstileWeb
 import PerfectTurnstilePostgreSQL
 
-/// The class that holds all the Social Authentication handlers
-public class AuthHandlers {
+public class AuthController {
     
     let facebook = Facebook(clientID: "1232307486877468", clientSecret: "b852db2dd51e4a9cca80afe812c33a11")
     let google = Google(clientID: "807060073548-m603cvhbmk5e8c633p333hflge1fi8mt.apps.googleusercontent.com", clientSecret: "_qcb-5fEEfDekInFe106Fhhl")
 
     
-    public func makeAuthRoutes() -> Routes {
+    public func getRoutes() -> Routes {
         var routes = Routes()
         
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
         routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
         routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
-        routes.add(method: .get,  uri: "/api/authenticated", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            do {
-                var resp = [String: Any]()
-                resp["authenticated"] = false
-                if request.user.authenticated {
-                    let user = User()
-                    let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
-                    try user.get(uniqueID)
-                    
-                    resp["authenticated"] = true
-                    resp["uniqueID"] = request.user.authDetails?.account.uniqueID
-                    resp["role"] = user.isAdmin ? "Admin" : "User"
-                }
-                try response.setBody(json: resp)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
+        routes.add(method: .get,  uri: "/api/authenticated", handler: authenticatedHandlerPOST)
 
         routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
         routes.add(method: .get, uri: "/login/facebook/consumer", handler: facebookHandlerConsumer)
@@ -56,6 +36,30 @@ public class AuthHandlers {
         routes.add(method: .get, uri: "/login/google/consumer", handler: googleHandlerConsumer)
 
         return routes
+    }
+
+    func authenticatedHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+
+        var resp = [String: Any]()
+        resp["authenticated"] = false
+        do {
+            if request.user.authenticated {
+                guard let uniqueID = request.user.authDetails?.account.uniqueID else {
+                    throw AccountTakenError()
+                }
+                let user = User()
+                try user.get(uniqueID)
+                
+                resp["authenticated"] = true
+                resp["uniqueID"] = request.user.authDetails?.account.uniqueID
+                resp["role"] = user.isAdmin ? "Admin" : "User"
+            }
+            try response.setBody(json: resp)
+        } catch {
+            LogFile.error("/api/authenticated .get: \(error)", logFile: "./error.log")
+        }
+        response.completed()
     }
     
     func loginHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
@@ -77,7 +81,9 @@ public class AuthHandlers {
         
         do {
             try request.user.login(credentials: credentials)
-            let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
+            guard let uniqueID = request.user.authDetails?.account.uniqueID else {
+                throw AccountTakenError()
+            }
             let token = tokenStore?.new(uniqueID)
             let user = User()
             try user.get(uniqueID)
@@ -88,6 +94,7 @@ public class AuthHandlers {
             resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch {
             resp["error"] = "Invalid username or password"
+            LogFile.error("/api/login .post: \(error)", logFile: "./error.log")
         }
         do {
             try response.setBody(json: resp)
@@ -130,8 +137,10 @@ public class AuthHandlers {
             resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch let e as TurnstileError {
             resp["error"] = e.description
+            LogFile.error("/api/register .post: \(e.description)", logFile: "./error.log")
         } catch {
             resp["error"] = "An unknown error occurred."
+            LogFile.error("/api/register .post: \(error)", logFile: "./error.log")
         }
         do {
             try response.setBody(json: resp)
@@ -259,6 +268,7 @@ public class AuthHandlers {
             resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch {
             resp["error"] = "Invalid uniqueID"
+            LogFile.error("/api/login/consumer .post: \(error)", logFile: "./error.log")
         }
         do {
             try response.setBody(json: resp)

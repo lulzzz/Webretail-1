@@ -8,6 +8,7 @@
 
 
 import PerfectHTTP
+import PerfectLogger
 
 class AttributeValueController {
     
@@ -19,101 +20,91 @@ class AttributeValueController {
         
         let attributeValue = AttributeValue()
         try? attributeValue.setup()
-        
-//        do {
-//            let item1 = AttributeValue()
-//            item1.attributeId = 1
-//            item1.attributeValueCode = "00001"
-//            item1.attributeValueName = "Black"
-//            try self.repository.add(item: item1)
-//            
-//            let item2 = AttributeValue()
-//            item2.attributeId = 2
-//            item2.attributeValueCode = "001"
-//            item2.attributeValueName = "Small"
-//            try self.repository.add(item: item2)
-//        } catch {
-//            print(error)
-//        }
     }
     
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get, uri: "/api/attributevalue", handler: {
-            _, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let items = try self.repository.getAll()
-                try response.setBody(json: items)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
-        
-        routes.add(method: .get, uri: "/api/attributevalue/{id}", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let id = request.urlVariables["id"]?.toInt()
-                let item = try self.repository.get(id: id!)
-                try response.setBody(json: item)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
-        
-        routes.add(method: .post, uri: "/api/attributevalue", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = AttributeValue()
-                item.setJSONValues(json!)
-                try self.repository.add(item: item)
-                try response.setBody(json: item)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
-        
-        routes.add(method: .put, uri: "/api/attributevalue/{id}", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let id = request.urlVariables["id"]?.toInt()
-                let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-                let item = AttributeValue()
-                item.setJSONValues(json!)
-                try self.repository.update(id: id!, item: item)
-                try response.setBody(json: item)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
-        
-        routes.add(method: .delete, uri: "/api/attributevalue/{id}", handler: {
-            request, response in
-            response.setHeader(.contentType, value: "application/json")
-            
-            do {
-                let id = request.urlVariables["id"]?.toInt()
-                try self.repository.delete(id: id!)
-                try response.setBody(json: id)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        })
+        routes.add(method: .get,    uri: "/api/attributevalue",         handler: attributevaluesHandlerGET)
+        routes.add(method: .get,    uri: "/api/attributevalue/{id}",    handler: attributevalueHandlerGET)
+        routes.add(method: .post,   uri: "/api/attributevalue",         handler: attributevalueHandlerPOST)
+        routes.add(method: .put,    uri: "/api/attributevalue/{id}",    handler: attributevalueHandlerPUT)
+        routes.add(method: .delete, uri: "/api/attributevalue/{id}",    handler: attributevalueHandlerDELETE)
         
         return routes
+    }
+
+    func attributevaluesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        do {
+            let items = try self.repository.getAll()
+            try response.setBody(json: items)
+            response.completed(status: HTTPResponseStatus.ok)
+        } catch {
+            LogFile.error("/api/attributevalue .get: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
+    }
+    
+    func attributevalueHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        let id = request.urlVariables["id"]?.toInt()
+        do {
+            let item = try self.repository.get(id: id!)
+            try response.setBody(json: item)
+            response.completed(status: HTTPResponseStatus.ok)
+        } catch {
+            LogFile.error("/api/attributevalue/\(id) .get: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
+    }
+
+    func attributevalueHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        do {
+            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let item = AttributeValue()
+            item.setJSONValues(json!)
+            try self.repository.add(item: item)
+            try response.setBody(json: item)
+            response.completed(status: HTTPResponseStatus.created)
+        } catch {
+            LogFile.error("/api/attributevalue .post: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
+    }
+
+    func attributevalueHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        let id = request.urlVariables["id"]?.toInt()
+        do {
+            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let item = AttributeValue()
+            item.setJSONValues(json!)
+            try self.repository.update(id: id!, item: item)
+            try response.setBody(json: item)
+            response.completed(status: HTTPResponseStatus.accepted)
+        } catch {
+            LogFile.error("/api/attributevalue/\(id) .put: \(error)", logFile: "./error.log")
+            response.completed(status: HTTPResponseStatus.badRequest)
+        }
+    }
+
+    func attributevalueHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        let id = request.urlVariables["id"]?.toInt()
+        do {
+            try self.repository.delete(id: id!)
+            try response.setBody(json: id)
+            response.completed(status: HTTPResponseStatus.noContent)
+        } catch {
+            response.completed(status: HTTPResponseStatus.badRequest)
+            LogFile.error("/api/attributevalue/\(id) .delete: \(error)", logFile: "./error.log")
+        }
     }
 }
