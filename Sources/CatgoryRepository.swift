@@ -25,8 +25,8 @@ class CategoryRepository : CategoryProtocol {
     }
     
     func add(item: Category) throws {
-        item.created = Helper.now()
-        item.updated = Helper.now()
+        item.created = Int.now()
+        item.updated = Int.now()
         try item.save {
             id in item.categoryId = id as! Int
         }
@@ -40,7 +40,7 @@ class CategoryRepository : CategoryProtocol {
         
         current.categoryName = item.categoryName
         current.isPrimary = item.isPrimary
-        current.updated = Helper.now()
+        current.updated = Int.now()
         try current.save()
     }
     

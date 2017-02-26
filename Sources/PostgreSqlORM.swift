@@ -6,12 +6,29 @@
 //
 //
 
-import StORM
-import PostgresStORM
+import PerfectLib
 import PerfectLogger
+import PostgresStORM
+import StORM
 
 open class PostgresSqlORM: PostgresStORM {
     
+    /// Get value from json object
+    func getJSONValue<T: JSONConvertible>(named namd: String, from:[String:Any], defaultValue: T) -> T {
+        let f = from[namd]
+        if let v = f as? T {
+            return v
+        }
+        else if defaultValue is Int, let d = f as? String {
+            return Int(d) as! T
+        }
+        else if defaultValue is Double, let d = f as? String {
+            return Double(d) as! T
+        }
+        
+        return defaultValue
+    }
+
     /// Table Creation
     /// Requires the connection to be configured, as well as a valid "table" property to have been set in the class
     @discardableResult

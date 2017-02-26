@@ -15,8 +15,8 @@ class Category: PostgresSqlORM, JSONConvertible {
     public var categoryId		: Int = 0
     public var categoryName		: String = ""
     public var isPrimary        : Bool = false
-    public var created          : Int = Helper.now()
-    public var updated          : Int = Helper.now()
+    public var created          : Int = Int.now()
+    public var updated          : Int = Int.now()
     
     open override func table() -> String { return "categories" }
     
@@ -39,9 +39,9 @@ class Category: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.categoryId = Helper.getJSONValue(named: "categoryId", from: values, defaultValue: 0)
-        self.categoryName = Helper.getJSONValue(named: "categoryName", from: values, defaultValue: "")
-        self.isPrimary = Helper.getJSONValue(named: "isPrimary", from: values, defaultValue: false)
+        self.categoryId = getJSONValue(named: "categoryId", from: values, defaultValue: 0)
+        self.categoryName = getJSONValue(named: "categoryName", from: values, defaultValue: "")
+        self.isPrimary = getJSONValue(named: "isPrimary", from: values, defaultValue: false)
     }
 
     func jsonEncodedString() throws -> String {

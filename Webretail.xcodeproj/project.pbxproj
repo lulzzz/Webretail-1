@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		564913D51E6364F00052D7CA /* AngularController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564913D41E6364F00052D7CA /* AngularController.swift */; };
 		OBJ_1000 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* Moment.swift */; };
 		OBJ_1001 /* MomentFromNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* MomentFromNow.swift */; };
 		OBJ_1002 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* Operators.swift */; };
@@ -854,7 +855,7 @@
 		OBJ_1988 /* CategoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_874 /* CategoryProtocol.swift */; };
 		OBJ_1989 /* CatgoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_875 /* CatgoryRepository.swift */; };
 		OBJ_1990 /* CustomRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_876 /* CustomRealm.swift */; };
-		OBJ_1991 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_877 /* Helper.swift */; };
+		OBJ_1991 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_877 /* Extensions.swift */; };
 		OBJ_1992 /* HTTPTurnstile.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_878 /* HTTPTurnstile.swift */; };
 		OBJ_1993 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_879 /* main.swift */; };
 		OBJ_1994 /* PerfectSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_880 /* PerfectSessionManager.swift */; };
@@ -1447,6 +1448,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		564913D41E6364F00052D7CA /* AngularController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngularController.swift; sourceTree = "<group>"; };
 		OBJ_10 /* StringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHTML.swift; sourceTree = "<group>"; };
 		OBJ_100 /* aes_ige.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_ige.c; sourceTree = "<group>"; };
 		OBJ_101 /* aes_misc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_misc.c; sourceTree = "<group>"; };
@@ -2271,7 +2273,7 @@
 		OBJ_874 /* CategoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryProtocol.swift; sourceTree = "<group>"; };
 		OBJ_875 /* CatgoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatgoryRepository.swift; sourceTree = "<group>"; };
 		OBJ_876 /* CustomRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRealm.swift; sourceTree = "<group>"; };
-		OBJ_877 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		OBJ_877 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		OBJ_878 /* HTTPTurnstile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPTurnstile.swift; sourceTree = "<group>"; };
 		OBJ_879 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		OBJ_88 /* a_strex.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = a_strex.c; sourceTree = "<group>"; };
@@ -2566,6 +2568,7 @@
 		564913CE1E6302DA0052D7CA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				564913D41E6364F00052D7CA /* AngularController.swift */,
 				OBJ_865 /* AuthenticationController.swift */,
 				OBJ_854 /* ArticleController.swift */,
 				OBJ_858 /* AttributeController.swift */,
@@ -3768,7 +3771,7 @@
 				564913D11E63034A0052D7CA /* Models */,
 				564913CF1E6303050052D7CA /* Protocols */,
 				564913D01E6303270052D7CA /* Repositories */,
-				OBJ_877 /* Helper.swift */,
+				OBJ_877 /* Extensions.swift */,
 				OBJ_879 /* main.swift */,
 			);
 			name = Webretail;
@@ -5213,7 +5216,7 @@
 				OBJ_1988 /* CategoryProtocol.swift in Sources */,
 				OBJ_1989 /* CatgoryRepository.swift in Sources */,
 				OBJ_1990 /* CustomRealm.swift in Sources */,
-				OBJ_1991 /* Helper.swift in Sources */,
+				OBJ_1991 /* Extensions.swift in Sources */,
 				OBJ_1992 /* HTTPTurnstile.swift in Sources */,
 				OBJ_1993 /* main.swift in Sources */,
 				OBJ_1994 /* PerfectSessionManager.swift in Sources */,
@@ -5222,6 +5225,7 @@
 				OBJ_1997 /* ProductAttribute.swift in Sources */,
 				OBJ_1998 /* ProductAttributeValue.swift in Sources */,
 				OBJ_1999 /* ProductCategory.swift in Sources */,
+				564913D51E6364F00052D7CA /* AngularController.swift in Sources */,
 				OBJ_2000 /* ProductController.swift in Sources */,
 				OBJ_2001 /* ProductProtocol.swift in Sources */,
 				OBJ_2002 /* ProductRepository.swift in Sources */,

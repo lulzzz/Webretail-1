@@ -25,8 +25,8 @@ class AttributeValueRepository : AttributeValueProtocol {
     }
     
     func add(item: AttributeValue) throws {
-        item.created = Helper.now()
-        item.updated = Helper.now()
+        item.created = Int.now()
+        item.updated = Int.now()
         try item.save {
             id in item.attributeValueId = id as! Int
         }
@@ -40,7 +40,7 @@ class AttributeValueRepository : AttributeValueProtocol {
         
         current.attributeValueCode = item.attributeValueCode
         current.attributeValueName = item.attributeValueName
-        current.updated = Helper.now()
+        current.updated = Int.now()
         try current.save()
     }
     

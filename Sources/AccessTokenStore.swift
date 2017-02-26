@@ -60,9 +60,9 @@ class AccessTokenStore : PostgresStORM {
     /// Checks to see if the token is active
     /// Upticks the updated int to keep it alive.
     public func check() -> Bool? {
-        if (updated + idle) < Helper.now() { return false } else {
+        if (updated + idle) < Int.now() { return false } else {
             do {
-                updated = Helper.now()
+                updated = Int.now()
                 try save()
             } catch {
                 print(error)
@@ -77,8 +77,8 @@ class AccessTokenStore : PostgresStORM {
         token = rand.secureToken
         token = token.replacingOccurrences(of: "-", with: "a")
         userid = u
-        created = Helper.now()
-        updated = Helper.now()
+        created = Int.now()
+        updated = Int.now()
         do {
             try create()
         } catch {

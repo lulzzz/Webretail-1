@@ -78,6 +78,10 @@ server.addRoutes(articleController.getRoutes())
 let publicationController = PublicationController(repository: PublicationRepository())
 server.addRoutes(publicationController.getRoutes())
 
+// Register Angular routes and handlers
+let angularController = AngularController()
+server.addRoutes(angularController.getRoutes())
+
 
 // Setup logging
 let myLogger = RequestLogger()

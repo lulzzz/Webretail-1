@@ -25,8 +25,8 @@ class BrandRepository : BrandProtocol {
     }
     
     func add(item: Brand) throws {
-        item.created = Helper.now()
-        item.updated = Helper.now()
+        item.created = Int.now()
+        item.updated = Int.now()
         try item.save {
             id in item.brandId = id as! Int
         }
@@ -39,7 +39,7 @@ class BrandRepository : BrandProtocol {
         }
         
         current.brandName = item.brandName
-        current.updated = Helper.now()
+        current.updated = Int.now()
         try current.save()
     }
     

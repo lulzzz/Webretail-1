@@ -20,8 +20,8 @@ class Product: PostgresSqlORM, JSONConvertible {
     public var productPrice	: Double = 0
     public var isActive     : Bool = false
     public var isValid      : Bool = false
-    public var created      : Int = Helper.now()
-    public var updated      : Int = Helper.now()
+    public var created      : Int = Int.now()
+    public var updated      : Int = Int.now()
     
     public var _brand: Brand = Brand()
     public var _categories: [ProductCategory] = [ProductCategory]()
@@ -66,15 +66,15 @@ class Product: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.productId = Helper.getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.brandId = Helper.getJSONValue(named: "brandId", from: values["brand"] as! [String : Any], defaultValue: 0)
-        self.productCode = Helper.getJSONValue(named: "productCode", from: values, defaultValue: "")
-        self.productName = Helper.getJSONValue(named: "productName", from: values, defaultValue: "")
-        self.productUm = Helper.getJSONValue(named: "productUm", from: values, defaultValue: "")
-        self.productPrice = Helper.getJSONValue(named: "productPrice", from: values, defaultValue: 0.0)
-        self.productUm = Helper.getJSONValue(named: "productUm", from: values, defaultValue: "")
-        self.isActive = Helper.getJSONValue(named: "isActive", from: values, defaultValue: false)
-        self.isValid = Helper.getJSONValue(named: "isValid", from: values, defaultValue: false)
+        self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
+        self.brandId = getJSONValue(named: "brandId", from: values["brand"] as! [String : Any], defaultValue: 0)
+        self.productCode = getJSONValue(named: "productCode", from: values, defaultValue: "")
+        self.productName = getJSONValue(named: "productName", from: values, defaultValue: "")
+        self.productUm = getJSONValue(named: "productUm", from: values, defaultValue: "")
+        self.productPrice = getJSONValue(named: "productPrice", from: values, defaultValue: 0.0)
+        self.productUm = getJSONValue(named: "productUm", from: values, defaultValue: "")
+        self.isActive = getJSONValue(named: "isActive", from: values, defaultValue: false)
+        self.isValid = getJSONValue(named: "isValid", from: values, defaultValue: false)
     }
     
     func jsonEncodedString() throws -> String {
@@ -87,7 +87,7 @@ class Product: PostgresSqlORM, JSONConvertible {
             "productCode": productCode,
             "productName": productName,
             "productUm": productUm,
-            "productPrice": Helper.roundCurrency(value: productPrice),
+            "productPrice": productPrice.roundCurrency(),
             "isActive": isActive,
             "isValid": isValid,
             //"brandId": brandId,
@@ -95,8 +95,8 @@ class Product: PostgresSqlORM, JSONConvertible {
             "categories": _categories,
             "attributes": _attributes,
             "articles": _articles,
-            "created": Helper.formatDate(unixdate: created),
-            "updated": Helper.formatDate(unixdate: updated)
+            "created": created.formatDate(),
+            "updated": updated.formatDate(),
         ]
     }
 }

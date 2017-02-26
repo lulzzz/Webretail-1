@@ -16,8 +16,8 @@ class Article: PostgresSqlORM, JSONConvertible {
     public var productId	: Int = 0
     public var barcode      : String = ""
     public var isValid      : Bool = false
-    public var created      : Int = Helper.now()
-    public var updated      : Int = Helper.now()
+    public var created      : Int = Int.now()
+    public var updated      : Int = Int.now()
     
     public var _attributeValues: [ArticleAttributeValue] = [ArticleAttributeValue]()
 
@@ -54,9 +54,9 @@ class Article: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.articleId = Helper.getJSONValue(named: "articleId", from: values, defaultValue: 0)
-        self.productId = Helper.getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.barcode = Helper.getJSONValue(named: "barcode", from: values, defaultValue: "")
+        self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
+        self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
+        self.barcode = getJSONValue(named: "barcode", from: values, defaultValue: "")
     }
     
     func jsonEncodedString() throws -> String {

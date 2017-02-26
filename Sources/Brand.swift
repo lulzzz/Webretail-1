@@ -14,8 +14,8 @@ class Brand: PostgresSqlORM, JSONConvertible {
     
     public var brandId			: Int = 0
     public var brandName		: String = ""
-    public var created          : Int = Helper.now()
-    public var updated          : Int = Helper.now()
+    public var created          : Int = Int.now()
+    public var updated          : Int = Int.now()
     
     open override func table() -> String { return "brands" }
     
@@ -37,8 +37,8 @@ class Brand: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.brandId = Helper.getJSONValue(named: "brandId", from: values, defaultValue: 0)
-        self.brandName = Helper.getJSONValue(named: "brandName", from: values, defaultValue: "")
+        self.brandId = getJSONValue(named: "brandId", from: values, defaultValue: 0)
+        self.brandName = getJSONValue(named: "brandName", from: values, defaultValue: "")
     }
     
     func jsonEncodedString() throws -> String {

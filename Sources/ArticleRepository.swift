@@ -44,7 +44,7 @@ class ArticleRepository : ArticleProtocol {
         
         // Invalidate product and articles
         product.isValid = false
-        product.updated = Helper.now()
+        product.updated = Int.now()
         try product.save()
 
         let article = Article()
@@ -133,7 +133,7 @@ class ArticleRepository : ArticleProtocol {
 
             // Update product
             product.isValid = true
-            product.updated = Helper.now()
+            product.updated = Int.now()
             try product.save()
         }
         
@@ -162,8 +162,8 @@ class ArticleRepository : ArticleProtocol {
     }
     
     func add(item: Article) throws {
-        item.created = Helper.now()
-        item.updated = Helper.now()
+        item.created = Int.now()
+        item.updated = Int.now()
         try item.save {
             id in item.articleId = id as! Int
         }
@@ -175,7 +175,7 @@ class ArticleRepository : ArticleProtocol {
         }
         
         current.barcode = item.barcode
-        current.updated = Helper.now()
+        current.updated = Int.now()
         try current.save()
     }
     

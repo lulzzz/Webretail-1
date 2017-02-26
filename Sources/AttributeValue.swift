@@ -17,8 +17,8 @@ class AttributeValue: PostgresSqlORM, JSONConvertible {
     public var attributeValueCode	: String = ""
     public var attributeValueName	: String = ""
     public var attributeId          : Int = 0
-    public var created              : Int = Helper.now()
-    public var updated              : Int = Helper.now()
+    public var created              : Int = Int.now()
+    public var updated              : Int = Int.now()
     
     open override func table() -> String { return "attributevalues" }
     
@@ -42,10 +42,10 @@ class AttributeValue: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.attributeValueId = Helper.getJSONValue(named: "attributeValueId", from: values, defaultValue: 0)
-        self.attributeValueCode = Helper.getJSONValue(named: "attributeValueCode", from: values, defaultValue: "")
-        self.attributeValueName = Helper.getJSONValue(named: "attributeValueName", from: values, defaultValue: "")
-        self.attributeId = Helper.getJSONValue(named: "attributeId", from: values, defaultValue: 0)
+        self.attributeValueId = getJSONValue(named: "attributeValueId", from: values, defaultValue: 0)
+        self.attributeValueCode = getJSONValue(named: "attributeValueCode", from: values, defaultValue: "")
+        self.attributeValueName = getJSONValue(named: "attributeValueName", from: values, defaultValue: "")
+        self.attributeId = getJSONValue(named: "attributeId", from: values, defaultValue: 0)
     }
 
     func jsonEncodedString() throws -> String {

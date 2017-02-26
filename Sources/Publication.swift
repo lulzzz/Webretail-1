@@ -15,8 +15,8 @@ class Publication: PostgresSqlORM, JSONConvertible {
     public var publicationId    : Int = 0
     public var productId		: Int = 0
     public var featured         : Bool = false
-    public var startAt          : Int = Helper.now()
-    public var finishAt         : Int = Helper.now()
+    public var startAt          : Int = Int.now()
+    public var finishAt         : Int = Int.now()
     
     open override func table() -> String { return "publications" }
     
@@ -39,11 +39,11 @@ class Publication: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.publicationId = Helper.getJSONValue(named: "publicationId", from: values, defaultValue: 0)
-        self.productId = Helper.getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.featured = Helper.getJSONValue(named: "featured", from: values, defaultValue: false)
-        self.startAt = Helper.getJSONValue(named: "startAt", from: values, defaultValue: 0)
-        self.finishAt = Helper.getJSONValue(named: "finishAt", from: values, defaultValue: 0)
+        self.publicationId = getJSONValue(named: "publicationId", from: values, defaultValue: 0)
+        self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
+        self.featured = getJSONValue(named: "featured", from: values, defaultValue: false)
+        self.startAt = getJSONValue(named: "startAt", from: values, defaultValue: 0)
+        self.finishAt = getJSONValue(named: "finishAt", from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {
@@ -55,8 +55,8 @@ class Publication: PostgresSqlORM, JSONConvertible {
             "publicationId": publicationId,
             "productId": productId,
             "featured": featured,
-            "startAt": Helper.formatDate(unixdate: startAt),
-            "finishAt": Helper.formatDate(unixdate: finishAt)
+            "startAt": startAt.formatDate(),
+            "finishAt": finishAt.formatDate()
         ]
     }
 }

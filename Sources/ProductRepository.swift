@@ -58,8 +58,8 @@ class ProductRepository : ProductProtocol {
     }
     
     func add(item: Product) throws {
-        item.created = Helper.now()
-        item.updated = Helper.now()
+        item.created = Int.now()
+        item.updated = Int.now()
         try item.save {
             id in item.productId = id as! Int
         }
@@ -78,7 +78,7 @@ class ProductRepository : ProductProtocol {
         current.productCode = item.productCode
         current.isActive = item.isActive
         current.brandId = item.brandId
-        current.updated = Helper.now()
+        current.updated = Int.now()
         try current.save()
     }
     
