@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { ConfirmationService } from 'primeng/primeng';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { AttributeService } from './../../../services/attribute.service';
 import { Attribute, AttributeValue } from './../../../shared/models';
@@ -24,6 +25,7 @@ export class AttributeComponent implements OnInit {
 
     constructor(private authenticationService: AuthenticationService,
                 private attributeService: AttributeService,
+                private confirmationService: ConfirmationService,
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
@@ -42,7 +44,7 @@ export class AttributeComponent implements OnInit {
             .subscribe(result => {
                 this.attributes = result;
                 this.totalRecords = this.attributes.length;
-            }//, onerror => alert('ERROR\r\n' + onerror)
+            }
         );
     }
 
@@ -87,13 +89,18 @@ export class AttributeComponent implements OnInit {
     }
 
     deleteClick() {
-        this.attributeService.delete(this.selected.attributeId)
-            .subscribe(result => {
-                this.attributes.splice(this.selectedIndex, 1);
-                this.selected = null;
-                this.values.length = 0;
-            });
-        this.displayDialog = false;
+        this.confirmationService.confirm({
+            message: 'All values of this attribute and related articles will be deleted. Are you sure that you want to delete this attribute?',
+            accept: () => {
+                this.attributeService.delete(this.selected.attributeId)
+                    .subscribe(result => {
+                        this.attributes.splice(this.selectedIndex, 1);
+                        this.selected = null;
+                        this.values.length = 0;
+                    });
+                this.displayDialog = false;
+            }
+        });
     }
 
     addValueClick() {
@@ -127,11 +134,16 @@ export class AttributeComponent implements OnInit {
     }
 
     deleteValueClick() {
-        this.attributeService.deleteValue(this.selectedValue.attributeValueId)
-            .subscribe(result => {
-                this.values.splice(this.selectedValueIndex, 1);
-                this.selectedValue = null;
-            });
-        this.displayDialogValue = false;
+        this.confirmationService.confirm({
+            message: 'All related articles of this attribute value will be deleted. Are you sure that you want to delete this attribute value?',
+            accept: () => {
+                this.attributeService.deleteValue(this.selectedValue.attributeValueId)
+                    .subscribe(result => {
+                        this.values.splice(this.selectedValueIndex, 1);
+                        this.selectedValue = null;
+                    });
+                this.displayDialogValue = false;
+            }
+        });
     }
 }

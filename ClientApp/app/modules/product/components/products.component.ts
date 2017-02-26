@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { SelectItem, MenuItem } from 'primeng/primeng';
+import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
 import { Product, ProductCategory } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
 import { AuthenticationService } from './../../../services/authentication.service';
@@ -31,6 +31,7 @@ export class ProductsComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 private productService: ProductService,
                 private brandService: BrandService,
+                private confirmationService: ConfirmationService,
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
@@ -86,6 +87,7 @@ export class ProductsComponent implements OnInit {
         this.selected = new Product();
         this.selected.brand = this.allbrands[0].value;
         this.selected.productUm = this.ums[0].value;
+        this.selected.isActive = false;
         this.displayDialog = true;
     }
 
@@ -112,11 +114,16 @@ export class ProductsComponent implements OnInit {
     }
 
     deleteClick() {
-        this.productService.delete(this.selected.productId)
-            .subscribe(result => {
-                this.products.splice(this.selectedIndex, 1);
-                this.selected = null;
-            });
-        this.displayDialog = false;
+        this.confirmationService.confirm({
+            message: 'All information related to this product will be deleted. Are you sure that you want to delete this product?',
+            accept: () => {
+                this.productService.delete(this.selected.productId)
+                    .subscribe(result => {
+                        this.products.splice(this.selectedIndex, 1);
+                        this.selected = null;
+                    });
+                this.displayDialog = false;
+            }
+        });
     }
 }

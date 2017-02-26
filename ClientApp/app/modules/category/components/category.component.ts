@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { ConfirmationService } from 'primeng/primeng';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { CategoryService } from './../../../services/category.service';
 import { Category } from './../../../shared/models';
@@ -19,6 +20,7 @@ export class CategoryComponent implements OnInit {
 
     constructor(private authenticationService: AuthenticationService,
                 private categoryService: CategoryService,
+                private confirmationService: ConfirmationService,
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
@@ -68,11 +70,16 @@ export class CategoryComponent implements OnInit {
     }
 
     deleteClick() {
-        this.categoryService.delete(this.selected.categoryId)
-            .subscribe(result => {
-                this.categories.splice(this.selectedIndex, 1);
-                this.selected = null;
-            });
-        this.displayDialog = false;
+        this.confirmationService.confirm({
+            message: 'All associations with the products will be deleted. Are you sure that you want to delete this category?',
+            accept: () => {
+                this.categoryService.delete(this.selected.categoryId)
+                    .subscribe(result => {
+                        this.categories.splice(this.selectedIndex, 1);
+                        this.selected = null;
+                    });
+                this.displayDialog = false;
+            }
+        });
     }
 }

@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { DataTableModule, SharedModule, PaginatorModule, DialogModule, InputTextModule, InputSwitchModule, ButtonModule } from 'primeng/primeng';
+import {
+    ConfirmDialogModule, ConfirmationService,
+    DataTableModule, SharedModule, PaginatorModule,
+    DialogModule, InputTextModule, InputSwitchModule, ButtonModule
+} from 'primeng/primeng';
 
 import { AccountRoutes } from './account.routes';
 import { AccountService } from './../../services/account.service';
@@ -12,7 +16,8 @@ import { MyInfoComponent } from './components/myinfo.component';
 @NgModule({
     imports: [
         FormsModule, ReactiveFormsModule,
-        DataTableModule, SharedModule, PaginatorModule, DialogModule, InputTextModule, InputSwitchModule, ButtonModule,
+        DataTableModule, SharedModule, PaginatorModule, ConfirmDialogModule,
+        DialogModule, InputTextModule, InputSwitchModule, ButtonModule,
         CommonModule,
         AccountRoutes
     ],
@@ -21,7 +26,8 @@ import { MyInfoComponent } from './components/myinfo.component';
         MyInfoComponent
     ],
     providers: [
-        AccountService
+        AccountService,
+        ConfirmationService
     ]
 })
 

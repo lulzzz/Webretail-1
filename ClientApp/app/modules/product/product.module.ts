@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
+    ConfirmDialogModule, ConfirmationService,
     DataTableModule, SharedModule, PaginatorModule, TreeModule, ButtonModule,
     DropdownModule, SliderModule, MultiSelectModule, InputTextModule, InputSwitchModule,
     PanelModule, SplitButtonModule, DialogModule, PickListModule, GrowlModule
@@ -20,7 +21,7 @@ import { ProductService } from './../../services/product.service';
         FormsModule, ReactiveFormsModule,
         DataTableModule, SharedModule, PaginatorModule, TreeModule, ButtonModule,
         DropdownModule, SliderModule, MultiSelectModule, InputTextModule, InputSwitchModule,
-        PanelModule, SplitButtonModule, DialogModule, PickListModule, GrowlModule,
+        PanelModule, SplitButtonModule, DialogModule, PickListModule, GrowlModule, ConfirmDialogModule,
         CommonModule,
         ProductRoutes
     ],
@@ -30,7 +31,8 @@ import { ProductService } from './../../services/product.service';
         ProductComponent
     ],
     providers: [
-        ProductService
+        ProductService,
+        ConfirmationService
     ]
 })
 

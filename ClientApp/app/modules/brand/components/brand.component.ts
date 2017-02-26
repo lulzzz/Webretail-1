@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { ConfirmationService } from 'primeng/primeng';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { BrandService } from './../../../services/brand.service';
 import { Brand } from './../../../shared/models';
@@ -19,6 +20,7 @@ export class BrandComponent implements OnInit {
 
     constructor(private authenticationService: AuthenticationService,
                 private brandService: BrandService,
+                private confirmationService: ConfirmationService,
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
@@ -67,11 +69,16 @@ export class BrandComponent implements OnInit {
     }
 
     deleteClick() {
-        this.brandService.delete(this.selected.brandId)
-            .subscribe(result => {
-                this.brands.splice(this.selectedIndex, 1);
-                this.selected = null;
-            });
-        this.displayDialog = false;
+        this.confirmationService.confirm({
+            message: 'All related products will be deleted. Are you sure that you want to delete this brand?',
+            accept: () => {
+                this.brandService.delete(this.selected.brandId)
+                    .subscribe(result => {
+                        this.brands.splice(this.selectedIndex, 1);
+                        this.selected = null;
+                    });
+                this.displayDialog = false;
+            }
+        });
     }
 }

@@ -57,6 +57,7 @@ export class Product {
   public categories: ProductCategory[];
   public attributes: ProductAttribute[];
   public articles: Article[];
+  public isActive: boolean;
   public created: Date;
   public updated: Date;
 
