@@ -13,14 +13,12 @@ import PerfectLogger
 import Turnstile
 import TurnstileCrypto
 import TurnstileWeb
-import PerfectTurnstilePostgreSQL
 
-public class AuthController {
+public class AuthenticationController {
     
     let facebook = Facebook(clientID: "1232307486877468", clientSecret: "b852db2dd51e4a9cca80afe812c33a11")
     let google = Google(clientID: "807060073548-m603cvhbmk5e8c633p333hflge1fi8mt.apps.googleusercontent.com", clientSecret: "_qcb-5fEEfDekInFe106Fhhl")
 
-    
     public func getRoutes() -> Routes {
         var routes = Routes()
         
@@ -84,7 +82,7 @@ public class AuthController {
             guard let uniqueID = request.user.authDetails?.account.uniqueID else {
                 throw AccountTakenError()
             }
-            let token = tokenStore?.new(uniqueID)
+            let token = tokenStore.new(uniqueID)
             let user = User()
             try user.get(uniqueID)
             
@@ -126,7 +124,7 @@ public class AuthController {
             try request.user.login(credentials: credentials)
             
             let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
-            let token = tokenStore?.new(uniqueID)
+            let token = tokenStore.new(uniqueID)
             let user = User()
             try user.get(uniqueID)
             
@@ -213,7 +211,6 @@ public class AuthController {
         var resp = [String: String]()
         
         guard let state = request.cookies.filter({$0.0 == "OAuthState"}).first?.1 else {
-            response.render(template: "login", context: ["flash": "Unknown Error"])
             return
         }
         response.addCookie(HTTPCookie(name: "OAuthState", value: state, domain: nil, expires: HTTPCookie.Expiration.absoluteSeconds(0), path: "/", secure: nil, httpOnly: true))
@@ -258,7 +255,7 @@ public class AuthController {
         do {
             try request.user.login(credentials: credentials, persist: true)
             let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
-            let token = tokenStore?.new(uniqueID)
+            let token = tokenStore.new(uniqueID)
             let user = User()
             try user.get(uniqueID)
             

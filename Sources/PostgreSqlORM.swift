@@ -66,14 +66,14 @@ open class PostgresSqlORM: PostgresStORM {
             createStatement = "CREATE TABLE IF NOT EXISTS \(table()) (\(opt.joined(separator: ", "))\(keyComponent));"
         }
         do {
-            //if StORMdebug { LogFile.info("createStatement: \(createStatement)", logFile: "./StORMlog.txt") }
+            if StORMdebug { LogFile.info("createStatement: \(createStatement)", logFile: "./StORMlog.txt") }
             try sql(createStatement, params: [])
             for createIndex in createIndexes {
-                //if StORMdebug { LogFile.info("createIndex: \(createIndex)", logFile: "./StORMlog.txt") }
+                if StORMdebug { LogFile.info("createIndex: \(createIndex)", logFile: "./StORMlog.txt") }
                 try sql(createIndex, params: [])
             }
         } catch {
-            LogFile.error("Error msg: \(error)", logFile: "./StORMlog.txt")
+            LogFile.error("Error setup: \(error)", logFile: "./StORMlog.txt")
             throw StORMError.error("\(error)")
         }
     }

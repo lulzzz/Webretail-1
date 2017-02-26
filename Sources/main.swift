@@ -21,12 +21,10 @@ import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
 import PerfectRequestLogger
-import PerfectTurnstilePostgreSQL
 import PostgresStORM
 import StORM
 import Turnstile
 import TurnstileWeb
-import TurnstilePerfect
 
 
 StORMdebug = true
@@ -41,6 +39,11 @@ PostgresConnector.host        = "localhost"
 //PostgresConnector.password    = "postgres"
 PostgresConnector.database    = "webretail"
 PostgresConnector.port        = 5432
+
+
+// Connect the AccessTokenStore
+let tokenStore = AccessTokenStore()
+try? tokenStore.setup()
 
 
 // Create HTTP server.

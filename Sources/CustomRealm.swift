@@ -9,13 +9,14 @@
 import Foundation
 import Turnstile
 import TurnstileCrypto
-import PerfectTurnstilePostgreSQL
 
 /// The "Turnstile Realm" that holds the main routing functionality for request filters
-open class CustomRealm : AuthRealm {
+open class CustomRealm : Realm {
     
+    public var random: Random = URandom()
+
     /// Used when a "Credentials" onject is passed to the authenticate function. Returns an Account object.
-    open override func authenticate(credentials: Credentials) throws -> Account {
+    open func authenticate(credentials: Credentials) throws -> Account {
         
         switch credentials {
         case let credentials as UsernamePassword:
@@ -29,8 +30,36 @@ open class CustomRealm : AuthRealm {
         }
     }
     
+    /// Used when an "AccessToken" onject is passed to the authenticate function. Returns an Account object.
+    open func authenticate(credentials: AccessToken) throws -> Account {
+        let account = User()
+        let token = AccessTokenStore()
+        print(credentials.string)
+        do {
+            try token.get(credentials.string)
+            if token.check() == false {
+                throw IncorrectCredentialsError()
+            }
+            try account.get(token.userid)
+            return account
+        } catch {
+            throw IncorrectCredentialsError()
+        }
+    }
+    
+    /// Used when a "UsernamePassword" onject is passed to the authenticate function. Returns an Account object.
+    open func authenticate(credentials: UsernamePassword) throws -> Account {
+        let account = User()
+        do {
+            let thisAccount = try account.get(credentials.username, credentials.password)
+            return thisAccount
+        } catch {
+            throw IncorrectCredentialsError()
+        }
+    }
+    
     private func authenticate(credentials: ConsumerAccount) throws -> Account {
-        let account = AuthAccount()
+        let account = User()
         try account.find([("\(credentials.consumer)ID", credentials.uniqueID)])
         if !account.uniqueID.isEmpty {
             return account
@@ -40,10 +69,10 @@ open class CustomRealm : AuthRealm {
     }
     
     /// Registers PasswordCredentials against the AuthRealm.
-    open override func register(credentials: Credentials) throws -> Account {
+    open func register(credentials: Credentials) throws -> Account {
         
         let account = User()
-        let newAccount = AuthAccount()
+        let newAccount = User()
         newAccount.id(String(random.secureToken))
         
         switch credentials {

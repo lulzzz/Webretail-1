@@ -8,11 +8,10 @@
 
 import StORM
 import TurnstileCrypto
-import PerfectTurnstilePostgreSQL
 
 class UserRepository : UserProtocol {
     
-   public var random: Random = URandom()
+    public var random: Random = URandom()
    
     init() {
         
@@ -20,10 +19,6 @@ class UserRepository : UserProtocol {
         let user = User()
         try? user.setup()
         
-        // Connect the AccessTokenStore
-        tokenStore = AccessTokenStore()
-        try? tokenStore?.setup()
-
         do {
             try user.select(whereclause: "isadmin = $1", params: [true], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
             

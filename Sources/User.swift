@@ -9,10 +9,11 @@
 import StORM
 import PostgresStORM
 import PerfectLib
+import Turnstile
 import TurnstileCrypto
 
 /// Provides the Account structure for Perfect Turnstile
-class User : PostgresSqlORM, JSONConvertible {
+class User : PostgresSqlORM, Account, JSONConvertible {
     
     /// The User account's Unique ID
     public var uniqueID: String = ""
@@ -99,6 +100,11 @@ class User : PostgresSqlORM, JSONConvertible {
         ]
     }
     
+    /// Shortcut to store the id
+    public func id(_ newid: String) {
+        uniqueID = newid
+    }
+
     /// Forces a create with a hashed password
     func make() throws {
         do {
@@ -106,6 +112,27 @@ class User : PostgresSqlORM, JSONConvertible {
             try create() // can't use save as the id is populated
         } catch {
             print(error)
+        }
+    }
+    
+    
+    /// Performs a find on supplied username, and matches hashed password
+    open func get(_ un: String, _ pw: String) throws -> User {
+        let cursor = StORMCursor(limit: 1, offset: 0)
+        do {
+            try select(whereclause: "username = $1", params: [un], orderby: [], cursor: cursor)
+            if self.results.rows.count == 0 {
+                throw StORMError.noRecordFound
+            }
+            to(self.results.rows[0])
+        } catch {
+            print(error)
+            throw StORMError.noRecordFound
+        }
+        if try BCrypt.verify(password: pw, matchesHash: password) {
+            return self
+        } else {
+            throw StORMError.noRecordFound
         }
     }
     
