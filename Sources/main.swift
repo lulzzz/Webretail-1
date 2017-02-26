@@ -50,8 +50,8 @@ try? tokenStore.setup()
 let server = HTTPServer()
 
 // Register auth routes and handlers
-var authController = AuthController()
-server.addRoutes(authController.getRoutes())
+var authenticationController = AuthenticationController()
+server.addRoutes(authenticationController.getRoutes())
 
 // Register api routes and handlers
 let usertController = UserController(repository: UserRepository())

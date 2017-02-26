@@ -15,6 +15,10 @@ class UserRepository : UserProtocol {
    
     init() {
         
+        // Connect the AccessTokenStore
+        let tokenStore = AccessTokenStore()
+        try? tokenStore.setup()
+        
         // Set up the Authentication table
         let user = User()
         try? user.setup()
