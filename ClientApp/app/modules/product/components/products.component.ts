@@ -87,7 +87,6 @@ export class ProductsComponent implements OnInit {
         this.selected = new Product();
         this.selected.brand = this.allbrands[0].value;
         this.selected.productUm = this.ums[0].value;
-        this.selected.isActive = false;
         this.displayDialog = true;
     }
 

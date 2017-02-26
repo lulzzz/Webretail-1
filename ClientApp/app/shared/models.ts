@@ -13,6 +13,7 @@ export class Account {
   public email: string;
   public username: string;
   public password: string;
+  public isAdmin: boolean;
 
   constructor() {
     this.uniqueID = '';
@@ -21,6 +22,7 @@ export class Account {
     this.email = '';
     this.username = '';
     this.password = '';
+    this.isAdmin = false;
   }
 }
 
@@ -72,6 +74,7 @@ export class Product {
     this.categories = [];
     this.attributes = [];
     this.articles = [];
+    this.isActive = false;
     this.created = new Date();
     this.updated = new Date();
   }
