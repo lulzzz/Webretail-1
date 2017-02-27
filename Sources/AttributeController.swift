@@ -13,12 +13,8 @@ class AttributeController {
     
     private let repository: AttributeProtocol
     
-    init(repository: AttributeProtocol) {
-        
-        self.repository = repository
-        
-        let attribute = Attribute()
-        try? attribute.setup()
+    init() {
+        self.repository = ioCContainer.resolve() as AttributeProtocol
     }
     
     func getRoutes() -> Routes {

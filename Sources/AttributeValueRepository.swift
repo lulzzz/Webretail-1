@@ -10,6 +10,11 @@ import StORM
 
 class AttributeValueRepository : AttributeValueProtocol {
     
+    init() {
+        let attributeValue = AttributeValue()
+        try? attributeValue.setup()
+    }
+
     func getAll() throws -> [AttributeValue] {
         let items = AttributeValue()
         try items.findAll()

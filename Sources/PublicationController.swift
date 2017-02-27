@@ -13,12 +13,8 @@ class PublicationController {
     
     private let repository: PublicationProtocol
     
-    init(repository: PublicationProtocol) {
-        
-        self.repository = repository
-        
-        let publication = Publication()
-        try? publication.setup()
+    init() {
+        self.repository = ioCContainer.resolve() as PublicationProtocol
     }
     
     func getRoutes() -> Routes {

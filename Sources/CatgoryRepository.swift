@@ -10,6 +10,11 @@ import StORM
 
 class CategoryRepository : CategoryProtocol {
     
+    init() {
+        let categoy = Category()
+        try? categoy.setup()
+    }
+
     func getAll() throws -> [Category] {
         let items = Category()
         try items.findAll()

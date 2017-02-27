@@ -10,6 +10,11 @@ import StORM
 
 class BrandRepository : BrandProtocol {
     
+    init() {        
+        let brand = Brand()
+        try? brand.setup()
+    }
+    
     func getAll() throws -> [Brand] {
         let items = Brand()
         try items.findAll()

@@ -10,6 +10,20 @@ import StORM
 
 class ProductRepository : ProductProtocol {
     
+    init() {
+        let product = Product()
+        try? product.setup()
+        
+        let productCategory = ProductCategory()
+        try? productCategory.setup()
+        
+        let productAttribute = ProductAttribute()
+        try? productAttribute.setup()
+        
+        let productAttributeValue = ProductAttributeValue()
+        try? productAttributeValue.setup()
+    }
+    
     func getAll() throws -> [Product] {
         let product = Product()
         try product.findAll()

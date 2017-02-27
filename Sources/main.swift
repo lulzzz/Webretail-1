@@ -45,6 +45,16 @@ PostgresConnector.port        = 5432
 let tokenStore = AccessTokenStore()
 try? tokenStore.setup()
 
+// Register dependency injection
+let ioCContainer = IoCContainer()
+ioCContainer.factory { UserRepository() as UserProtocol }
+ioCContainer.factory { BrandRepository() as BrandProtocol }
+ioCContainer.factory { CategoryRepository() as CategoryProtocol }
+ioCContainer.factory { AttributeRepository() as AttributeProtocol }
+ioCContainer.factory { AttributeValueRepository() as AttributeValueProtocol }
+ioCContainer.factory { ProductRepository() as ProductProtocol }
+ioCContainer.factory { ArticleRepository() as ArticleProtocol }
+ioCContainer.factory { PublicationRepository() as PublicationProtocol }
 
 // Create HTTP server.
 let server = HTTPServer()
@@ -54,28 +64,28 @@ var authenticationController = AuthenticationController()
 server.addRoutes(authenticationController.getRoutes())
 
 // Register api routes and handlers
-let usertController = UserController(repository: UserRepository())
+let usertController = UserController()
 server.addRoutes(usertController.getRoutes())
 
-let brandController = BrandController(repository: BrandRepository())
+let brandController = BrandController()
 server.addRoutes(brandController.getRoutes())
 
-let categoryController = CategoryController(repository: CategoryRepository())
+let categoryController = CategoryController()
 server.addRoutes(categoryController.getRoutes())
 
-let attributeController = AttributeController(repository: AttributeRepository())
+let attributeController = AttributeController()
 server.addRoutes(attributeController.getRoutes())
 
-let attributeValueController = AttributeValueController(repository: AttributeValueRepository())
+let attributeValueController = AttributeValueController()
 server.addRoutes(attributeValueController.getRoutes())
 
-let productController = ProductController(repository: ProductRepository())
+let productController = ProductController()
 server.addRoutes(productController.getRoutes())
 
-let articleController = ArticleController(repository: ArticleRepository())
+let articleController = ArticleController()
 server.addRoutes(articleController.getRoutes())
 
-let publicationController = PublicationController(repository: PublicationRepository())
+let publicationController = PublicationController()
 server.addRoutes(publicationController.getRoutes())
 
 // Register Angular routes and handlers
@@ -83,19 +93,17 @@ let angularController = AngularController()
 server.addRoutes(angularController.getRoutes())
 
 
-// Setup logging
-let myLogger = RequestLogger()
-
-// add routes to be checked for auth
+// Add routes to be checked for auth
 var authenticationConfig = AuthenticationConfig()
 authenticationConfig.exclude("/api/login")
 authenticationConfig.exclude("/api/login/consumer")
 authenticationConfig.exclude("/api/register")
 authenticationConfig.exclude("/api/authenticated")
 authenticationConfig.include("/api/*}")
-
-
 let authFilter = AuthFilter(authenticationConfig)
+
+// Setup logging
+let myLogger = RequestLogger()
 
 // Note that order matters when the filters are of the same priority level
 server.setRequestFilters([pturnstile.requestFilter])

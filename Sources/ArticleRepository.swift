@@ -12,6 +12,14 @@ import TurnstileCrypto
 
 class ArticleRepository : ArticleProtocol {
     
+    init() {
+        let article = Article()
+        try? article.setup()
+        
+        let articleAttributeValue = ArticleAttributeValue()
+        try? articleAttributeValue.setup()
+    }
+
     func build(productId: Int) throws -> Int {
         
         var countInserted: Int = 0

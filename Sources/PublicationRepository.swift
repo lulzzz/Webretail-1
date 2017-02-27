@@ -10,6 +10,11 @@ import StORM
 
 class PublicationRepository : PublicationProtocol {
     
+    init() {
+        let publication = Publication()
+        try? publication.setup()
+    }
+
     func getAll() throws -> [Publication] {
         let items = Publication()
         try items.findAll()

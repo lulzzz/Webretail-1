@@ -9,17 +9,12 @@
 import PerfectHTTP
 import PerfectLogger
 
-
 class AttributeValueController {
     
     private let repository: AttributeValueProtocol
     
-    init(repository: AttributeValueProtocol) {
-        
-        self.repository = repository
-        
-        let attributeValue = AttributeValue()
-        try? attributeValue.setup()
+    init() {
+        self.repository = ioCContainer.resolve() as AttributeValueProtocol
     }
     
     func getRoutes() -> Routes {

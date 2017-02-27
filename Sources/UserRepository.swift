@@ -14,7 +14,6 @@ class UserRepository : UserProtocol {
     public var random: Random = URandom()
    
     init() {
-        
         // Set up the Authentication table
         let user = User()
         try? user.setup()

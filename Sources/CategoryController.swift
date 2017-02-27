@@ -13,12 +13,8 @@ class CategoryController {
     
     private let repository: CategoryProtocol
     
-    init(repository: CategoryProtocol) {
-        
-        self.repository = repository
-        
-        let categoy = Category()
-        try? categoy.setup()
+    init() {
+        self.repository = ioCContainer.resolve() as CategoryProtocol
     }
     
     func getRoutes() -> Routes {

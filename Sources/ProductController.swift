@@ -13,21 +13,8 @@ class ProductController {
     
     private let repository: ProductProtocol
     
-    init(repository: ProductProtocol) {
-        
-        self.repository = repository
-        
-        let product = Product()
-        try? product.setup()
-
-        let productCategory = ProductCategory()
-        try? productCategory.setup()
-
-        let productAttribute = ProductAttribute()
-        try? productAttribute.setup()
-
-        let productAttributeValue = ProductAttributeValue()
-        try? productAttributeValue.setup()
+    init() {
+        self.repository = ioCContainer.resolve() as ProductProtocol
     }
     
     func getRoutes() -> Routes {

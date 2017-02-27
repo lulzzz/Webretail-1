@@ -13,15 +13,8 @@ class ArticleController {
     
     private let repository: ArticleProtocol
     
-    init(repository: ArticleProtocol) {
-        
-        self.repository = repository
-        
-        let article = Article()
-        try? article.setup()
-        
-        let articleAttributeValue = ArticleAttributeValue()
-        try? articleAttributeValue.setup()
+    init() {
+        self.repository = ioCContainer.resolve() as ArticleProtocol
     }
     
     func getRoutes() -> Routes {

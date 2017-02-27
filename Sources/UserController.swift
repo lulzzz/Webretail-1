@@ -13,9 +13,8 @@ class UserController {
     
     private let repository: UserProtocol
     
-    init(repository: UserProtocol) {
-        
-        self.repository = repository
+    init() {
+        self.repository = ioCContainer.resolve() as UserProtocol
     }
     
     public func getRoutes() -> Routes {

@@ -13,12 +13,8 @@ class BrandController {
     
     private let repository: BrandProtocol
     
-    init(repository: BrandProtocol) {
-        
-        self.repository = repository
-        
-        let brand = Brand()
-        try? brand.setup()
+    init() {
+        self.repository = ioCContainer.resolve() as BrandProtocol
     }
     
     func getRoutes() -> Routes {

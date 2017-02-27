@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		564913D51E6364F00052D7CA /* AngularController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564913D41E6364F00052D7CA /* AngularController.swift */; };
+		564913D71E639EC70052D7CA /* IoCContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564913D61E639EC70052D7CA /* IoCContainer.swift */; };
 		OBJ_1000 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* Moment.swift */; };
 		OBJ_1001 /* MomentFromNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* MomentFromNow.swift */; };
 		OBJ_1002 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* Operators.swift */; };
@@ -1449,6 +1450,7 @@
 
 /* Begin PBXFileReference section */
 		564913D41E6364F00052D7CA /* AngularController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngularController.swift; sourceTree = "<group>"; };
+		564913D61E639EC70052D7CA /* IoCContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IoCContainer.swift; sourceTree = "<group>"; };
 		OBJ_10 /* StringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHTML.swift; sourceTree = "<group>"; };
 		OBJ_100 /* aes_ige.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_ige.c; sourceTree = "<group>"; };
 		OBJ_101 /* aes_misc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_misc.c; sourceTree = "<group>"; };
@@ -3773,6 +3775,7 @@
 				564913D01E6303270052D7CA /* Repositories */,
 				OBJ_877 /* Extensions.swift */,
 				OBJ_879 /* main.swift */,
+				564913D61E639EC70052D7CA /* IoCContainer.swift */,
 			);
 			name = Webretail;
 			path = Sources;
@@ -5235,6 +5238,7 @@
 				OBJ_2006 /* PublicationRepository.swift in Sources */,
 				OBJ_2007 /* TurnstileFilter.swift in Sources */,
 				OBJ_2008 /* TurnstilePerfectRealm.swift in Sources */,
+				564913D71E639EC70052D7CA /* IoCContainer.swift in Sources */,
 				OBJ_2009 /* User.swift in Sources */,
 				OBJ_2010 /* UserController.swift in Sources */,
 				OBJ_2011 /* UserProtocol.swift in Sources */,
