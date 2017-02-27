@@ -39,9 +39,9 @@ class Category: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.categoryId = getJSONValue(named: "categoryId", from: values, defaultValue: 0)
+        self.categoryId =   getJSONValue(named: "categoryId",   from: values, defaultValue: 0)
         self.categoryName = getJSONValue(named: "categoryName", from: values, defaultValue: "")
-        self.isPrimary = getJSONValue(named: "isPrimary", from: values, defaultValue: false)
+        self.isPrimary =    getJSONValue(named: "isPrimary",    from: values, defaultValue: false)
     }
 
     func jsonEncodedString() throws -> String {

@@ -25,12 +25,12 @@ class Article: PostgresSqlORM, JSONConvertible {
     open override func table() -> String { return "articles" }
     
     open override func to(_ this: StORMRow) {
-        articleId		= this.data["articleid"] as? Int    ?? 0
-        productId		= this.data["productid"] as? Int    ?? 0
-        barcode         = this.data["barcode"] as? String   ?? ""
-        isValid         = this.data["isvalid"] as? Bool     ?? false
-        created         = this.data["created"] as? Int      ?? 0
-        updated         = this.data["updated"] as? Int      ?? 0
+        articleId	= this.data["articleid"] as? Int    ?? 0
+        productId	= this.data["productid"] as? Int    ?? 0
+        barcode     = this.data["barcode"] as? String   ?? ""
+        isValid     = this.data["isvalid"] as? Bool     ?? false
+        created     = this.data["created"] as? Int      ?? 0
+        updated     = this.data["updated"] as? Int      ?? 0
     }
     
     func rows() throws -> [Article] {
@@ -54,9 +54,9 @@ class Article: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
-        self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.barcode = getJSONValue(named: "barcode", from: values, defaultValue: "")
+        self.articleId =    getJSONValue(named: "articleId",    from: values, defaultValue: 0)
+        self.productId =    getJSONValue(named: "productId",    from: values, defaultValue: 0)
+        self.barcode =      getJSONValue(named: "barcode",      from: values, defaultValue: "")
     }
     
     func jsonEncodedString() throws -> String {

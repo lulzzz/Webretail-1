@@ -73,13 +73,13 @@ class User : PostgresSqlORM, Account, JSONConvertible {
     }
 
     public func setJSONValues(_ values:[String:Any]) {
-        self.uniqueID = getJSONValue(named: "uniqueID", from: values, defaultValue: "")
-        self.username = getJSONValue(named: "username", from: values, defaultValue: "")
-        self.password = getJSONValue(named: "password", from: values, defaultValue: "")
-        self.firstname = getJSONValue(named: "firstname", from: values, defaultValue: "")
-        self.lastname = getJSONValue(named: "lastname", from: values, defaultValue: "")
-        self.email = getJSONValue(named: "email", from: values, defaultValue: "")
-        self.isAdmin = getJSONValue(named: "isAdmin", from: values, defaultValue: false)
+        self.uniqueID =     getJSONValue(named: "uniqueID",     from: values, defaultValue: "")
+        self.username =     getJSONValue(named: "username",     from: values, defaultValue: "")
+        self.password =     getJSONValue(named: "password",     from: values, defaultValue: "")
+        self.firstname =    getJSONValue(named: "firstname",    from: values, defaultValue: "")
+        self.lastname =     getJSONValue(named: "lastname",     from: values, defaultValue: "")
+        self.email =        getJSONValue(named: "email",        from: values, defaultValue: "")
+        self.isAdmin =      getJSONValue(named: "isAdmin",      from: values, defaultValue: false)
     }
     
     func jsonEncodedString() throws -> String {
