@@ -40,10 +40,10 @@ class ArticleController {
         do {
             let count = try self.repository.build(productId: id!)
             try response.setBody(json: count)
-            response.completed(status: HTTPResponseStatus.ok)
+            response.completed(status: .ok)
         } catch {
             LogFile.error("/api/product/\(id)/build .get: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
     
@@ -53,10 +53,10 @@ class ArticleController {
         do {
             let items = try self.repository.getAll()
             try response.setBody(json: items)
-            response.completed(status: HTTPResponseStatus.ok)
+            response.completed(status: .ok)
         } catch {
             LogFile.error("/api/article .get: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -67,10 +67,10 @@ class ArticleController {
         do {
             let item = try self.repository.get(productId: id!)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.ok)
+            response.completed(status: .ok)
         } catch {
             LogFile.error("/api/product/\(id)/article .get: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -81,10 +81,10 @@ class ArticleController {
         do {
             let item = try self.repository.get(id: id!)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.ok)
+            response.completed(status: .ok)
         } catch {
             LogFile.error("/api/article/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -97,10 +97,10 @@ class ArticleController {
             item.setJSONValues(json!)
             try self.repository.add(item: item)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.created)
+            response.completed(status: .created)
         } catch {
             LogFile.error("/api/article .post: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -114,10 +114,10 @@ class ArticleController {
             item.setJSONValues(json!)
             try self.repository.update(id: id!, item: item)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.accepted)
+            response.completed(status: .accepted)
         } catch {
             LogFile.error("/api/article/\(id) .put: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -127,10 +127,10 @@ class ArticleController {
         let id = request.urlVariables["id"]?.toInt()
         do {
             try self.repository.delete(id: id!)
-            response.completed(status: HTTPResponseStatus.noContent)
+            response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/article/\(id) .delete: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -143,10 +143,10 @@ class ArticleController {
             item.setJSONValues(json!)
             try self.repository.addAttributeValue(item: item)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.created)
+            response.completed(status: .created)
         } catch {
             LogFile.error("/api/articleattributevalue .post: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -156,10 +156,10 @@ class ArticleController {
         let id = request.urlVariables["id"]?.toInt()
         do {
             try self.repository.removeAttributeValue(id: id!)
-            response.completed(status: HTTPResponseStatus.noContent)
+            response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/articleattributevalue/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 }

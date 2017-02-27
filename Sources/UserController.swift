@@ -35,10 +35,10 @@ class UserController {
         do {
             let items = try self.repository.getAll()
             try response.setBody(json: items)
-            response.completed(status: HTTPResponseStatus.ok)
+            response.completed(status: .ok)
         } catch {
             LogFile.error("/api/account .get: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -49,10 +49,10 @@ class UserController {
         do {
             let item = try self.repository.get(id: id!)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.ok)
+            response.completed(status: .ok)
         } catch {
             LogFile.error("/api/account/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -65,10 +65,10 @@ class UserController {
             item.setJSONValues(json!)
             try self.repository.add(item: item)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.created)
+            response.completed(status: .created)
         } catch {
             LogFile.error("/api/account .post: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
     
@@ -82,10 +82,10 @@ class UserController {
             item.setJSONValues(json!)
             try self.repository.update(id: id!, item: item)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.accepted)
+            response.completed(status: .accepted)
         } catch {
             LogFile.error("/api/account/\(id) .put: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
     
@@ -95,10 +95,10 @@ class UserController {
         let id = request.urlVariables["id"]
         do {
             try self.repository.delete(id: id!)
-            response.completed(status: HTTPResponseStatus.noContent)
+            response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/account/\(id) .delete: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 }

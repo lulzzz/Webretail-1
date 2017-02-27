@@ -31,7 +31,7 @@ public class AngularController {
         let data = FileManager.default.contents(atPath: "./wwwroot/index.html")
         
         guard let content = String(data: data!, encoding: .utf8) else {
-            response.completed(status: HTTPResponseStatus.notFound)
+            response.completed(status: .notFound)
             return
         }
 

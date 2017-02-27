@@ -35,10 +35,10 @@ class CategoryController {
         do {
             let items = try self.repository.getAll()
             try response.setBody(json: items)
-            response.completed(status: HTTPResponseStatus.ok)
+            response.completed(status: .ok)
         } catch {
             LogFile.error("/api/category .get: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
     
@@ -49,10 +49,10 @@ class CategoryController {
         do {
             let item = try self.repository.get(id: id!)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.ok)
+            response.completed(status: .ok)
         } catch {
             LogFile.error("/api/category/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -65,10 +65,10 @@ class CategoryController {
             item.setJSONValues(json!)
             try self.repository.add(item: item)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.created)
+            response.completed(status: .created)
         } catch {
             LogFile.error("/api/category .post: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -82,10 +82,10 @@ class CategoryController {
             item.setJSONValues(json!)
             try self.repository.update(id: id!, item: item)
             try response.setBody(json: item)
-            response.completed(status: HTTPResponseStatus.accepted)
+            response.completed(status: .accepted)
         } catch {
             LogFile.error("/api/category/\(id) .put: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 
@@ -95,10 +95,10 @@ class CategoryController {
         let id = request.urlVariables["id"]?.toInt()
         do {
             try self.repository.delete(id: id!)
-            response.completed(status: HTTPResponseStatus.noContent)
+            response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/category/\(id) .delete: \(error)", logFile: "./error.log")
-            response.completed(status: HTTPResponseStatus.badRequest)
+            response.completed(status: .badRequest)
         }
     }
 }
