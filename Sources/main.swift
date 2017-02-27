@@ -47,14 +47,14 @@ try? tokenStore.setup()
 
 // Register dependency injection
 let ioCContainer = IoCContainer()
-ioCContainer.factory { UserRepository() as UserProtocol }
-ioCContainer.factory { BrandRepository() as BrandProtocol }
-ioCContainer.factory { CategoryRepository() as CategoryProtocol }
-ioCContainer.factory { AttributeRepository() as AttributeProtocol }
-ioCContainer.factory { AttributeValueRepository() as AttributeValueProtocol }
-ioCContainer.factory { ProductRepository() as ProductProtocol }
-ioCContainer.factory { ArticleRepository() as ArticleProtocol }
-ioCContainer.factory { PublicationRepository() as PublicationProtocol }
+ioCContainer.register { UserRepository() as UserProtocol }
+ioCContainer.register { BrandRepository() as BrandProtocol }
+ioCContainer.register { CategoryRepository() as CategoryProtocol }
+ioCContainer.register { AttributeRepository() as AttributeProtocol }
+ioCContainer.register { AttributeValueRepository() as AttributeValueProtocol }
+ioCContainer.register { ProductRepository() as ProductProtocol }
+ioCContainer.register { ArticleRepository() as ArticleProtocol }
+ioCContainer.register { PublicationRepository() as PublicationProtocol }
 
 // Create HTTP server.
 let server = HTTPServer()

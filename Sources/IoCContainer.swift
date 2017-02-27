@@ -11,7 +11,7 @@ import Foundation
 class IoCContainer {
     var factories = [String: Any]()
     
-    func factory<T>(factory: @escaping () -> T) {
+    func register<T>(factory: @escaping () -> T) {
         let key = String(describing: T.self)
         factories[key] = factory
     }
