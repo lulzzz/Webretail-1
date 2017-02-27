@@ -27,6 +27,7 @@
                     <ul class="dropdown-menu">
                         <li *ngIf="!isAdmin"><a [routerLink]="['/account/myinfo']"><i class="glyphicon glyphicon-user"></i> Account</a></li>
                         <li *ngIf="isAdmin"><a [routerLink]="['/account']"><i class="glyphicon glyphicon-user"></i> Account</a></li>
+                        <li><a [routerLink]="['/store']"><i class="glyphicon glyphicon-th-list"></i> Store</a></li>
                         <li><a [routerLink]="['/brand']"><i class="glyphicon glyphicon-th-list"></i> Brand</a></li>
                         <li><a [routerLink]="['/category']"><i class="glyphicon glyphicon-th-list"></i> Category</a></li>
                         <li><a [routerLink]="['/attribute']"><i class="glyphicon glyphicon-th-list"></i> Attribute</a></li>

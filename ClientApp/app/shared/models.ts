@@ -26,6 +26,24 @@ export class Account {
   }
 }
 
+export class Store {
+  public storeId: number;
+  public storeName: string;
+  public storeAddress: string;
+  public storeCity: string;
+  public storeZip: string;
+  public storeCountry: string;
+
+  constructor() {
+    this.storeId = 0;
+    this.storeName = '';
+    this.storeAddress = '';
+    this.storeCity = '';
+    this.storeZip = '';
+    this.storeCountry = '';
+  }
+}
+
 export class Brand {
   public brandId: number;
   public brandName: string;

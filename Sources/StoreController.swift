@@ -1,35 +1,35 @@
 //
-//  BrandController.swift
-//  PerfectTurnstilePostgreSQLDemo
+//  StoreController.swift
+//  Webretail
 //
-//  Created by Gerardo Grisolini on 16/02/17.
+//  Created by Gerardo Grisolini on 27/02/17.
 //
 //
 
 import PerfectHTTP
 import PerfectLogger
 
-class BrandController {
+class StoreController {
     
-    private let repository: BrandProtocol
+    private let repository: StoreProtocol
     
     init() {
-        self.repository = ioCContainer.resolve() as BrandProtocol
+        self.repository = ioCContainer.resolve() as StoreProtocol
     }
     
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/brand",      handler: brandsHandlerGET)
-        routes.add(method: .get,    uri: "/api/brand/{id}", handler: brandHandlerGET)
-        routes.add(method: .post,   uri: "/api/brand",      handler: brandHandlerPOST)
-        routes.add(method: .put,    uri: "/api/brand/{id}", handler: brandHandlerPUT)
-        routes.add(method: .delete, uri: "/api/brand/{id}", handler: brandHandlerDELETE)
+        routes.add(method: .get,    uri: "/api/store",      handler: storesHandlerGET)
+        routes.add(method: .get,    uri: "/api/store/{id}", handler: storeHandlerGET)
+        routes.add(method: .post,   uri: "/api/store",      handler: storeHandlerPOST)
+        routes.add(method: .put,    uri: "/api/store/{id}", handler: storeHandlerPUT)
+        routes.add(method: .delete, uri: "/api/store/{id}", handler: storeHandlerDELETE)
         
         return routes
     }
-
-    func brandsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func storesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {
@@ -37,12 +37,12 @@ class BrandController {
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/brand .get: \(error)", logFile: "./error.log")
+            LogFile.error("/api/store .get: \(error)", logFile: "./error.log")
             response.completed(status: .badRequest)
         }
     }
     
-    func brandHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    func storeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]?.toInt()
@@ -51,45 +51,45 @@ class BrandController {
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/brand/\(id) .get: \(error)", logFile: "./error.log")
+            LogFile.error("/api/store/\(id) .get: \(error)", logFile: "./error.log")
             response.completed(status: .badRequest)
         }
     }
-
-    func brandHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func storeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = Brand()
+            let item = Store()
             item.setJSONValues(json!)
             try self.repository.add(item: item)
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("/api/brand .post: \(error)", logFile: "./error.log")
+            LogFile.error("/api/store .post: \(error)", logFile: "./error.log")
             response.completed(status: .badRequest)
         }
     }
-
-    func brandHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func storeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]?.toInt()
         do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = Brand()
+            let item = Store()
             item.setJSONValues(json!)
             try self.repository.update(id: id!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
-            LogFile.error("/api/brand/\(id) .put: \(error)", logFile: "./error.log")
+            LogFile.error("/api/store/\(id) .put: \(error)", logFile: "./error.log")
             response.completed(status: .badRequest)
         }
     }
-
-    func brandHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func storeHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]?.toInt()
@@ -97,7 +97,7 @@ class BrandController {
             try self.repository.delete(id: id!)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("/api/brand/\(id) .delete: \(error)", logFile: "./error.log")
+            LogFile.error("/api/store/\(id) .delete: \(error)", logFile: "./error.log")
             response.completed(status: .badRequest)
         }
     }

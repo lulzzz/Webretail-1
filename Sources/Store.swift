@@ -12,7 +12,7 @@ import PerfectLib
 
 class Store: PostgresSqlORM, JSONConvertible {
     
-    public var storedId		: Int = 0
+    public var storeId		: Int = 0
     public var storeName	: String = ""
     public var storeAddress	: String = ""
     public var storeCity	: String = ""
@@ -21,10 +21,10 @@ class Store: PostgresSqlORM, JSONConvertible {
     public var created      : Int = Int.now()
     public var updated      : Int = Int.now()
     
-    open override func table() -> String { return "brands" }
+    open override func table() -> String { return "stores" }
     
     open override func to(_ this: StORMRow) {
-        storedId        = this.data["storedid"] as? Int         ?? 0
+        storeId         = this.data["storeid"] as? Int          ?? 0
         storeName       = this.data["storename"] as? String     ?? ""
         storeAddress	= this.data["storeaddress"] as? String  ?? ""
         storeCity       = this.data["storecity"] as? String     ?? ""
@@ -34,10 +34,10 @@ class Store: PostgresSqlORM, JSONConvertible {
         updated         = this.data["updated"] as? Int          ?? 0
     }
     
-    func rows() -> [Brand] {
-        var rows = [Brand]()
+    func rows() -> [Store] {
+        var rows = [Store]()
         for i in 0..<self.results.rows.count {
-            let row = Brand()
+            let row = Store()
             row.to(self.results.rows[i])
             rows.append(row)
         }
@@ -45,7 +45,7 @@ class Store: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.storedId =     getJSONValue(named: "storedId",     from: values, defaultValue: 0)
+        self.storeId =     getJSONValue(named: "storeId",     from: values, defaultValue: 0)
         self.storeName =    getJSONValue(named: "storeName",    from: values, defaultValue: "")
         self.storeAddress = getJSONValue(named: "storeAddress", from: values, defaultValue: "")
         self.storeCity =    getJSONValue(named: "storeCity",    from: values, defaultValue: "")
@@ -59,7 +59,7 @@ class Store: PostgresSqlORM, JSONConvertible {
     
     func getJSONValues() -> [String : Any] {
         return [
-            "storedId": storedId,
+            "storeId": storeId,
             "storeName": storeName,
             "storeAddress":	storeAddress,
             "storeCity": storeCity,

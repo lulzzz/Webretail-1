@@ -21,6 +21,7 @@
     "ClientApp/app/app.module.ts",
     "ClientApp/app/modules/login/login.module.ts",
     "ClientApp/app/modules/account/account.module.ts",
+    "ClientApp/app/modules/store/store.module.ts",
     "ClientApp/app/modules/brand/brand.module.ts",
     "ClientApp/app/modules/category/category.module.ts",
     "ClientApp/app/modules/attribute/attribute.module.ts",

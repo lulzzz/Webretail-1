@@ -1,0 +1,105 @@
+﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash" [responsive]="true"></p-confirmDialog>
+
+<div class="container-fluid">
+
+    <h2>Store</h2>
+    <div class="global-search">
+        <i class="fa fa-search"></i>
+        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
+    </div>
+    <p>List of stores: {{totalRecords}}</p>
+    <hr />
+
+    <p *ngIf="!stores"><em>Loading...</em></p>
+
+    <p-dataTable [style]="{'width': '100%'}" [value]="brands" selectionMode="none"
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
+        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
+        <p-column field="storeId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+        <p-column field="storeName" header="Name" [sortable]="true"></p-column>
+        <p-column field="storeCity" header="City" [sortable]="true"></p-column>
+        <p-column field="storeCountry" header="Country" [sortable]="true"></p-column>
+        <p-column [style]="{'width':'60px','text-align':'center'}">
+            <template pTemplate="header">
+                <button type="button" pButton (click)="addClick()" icon="fa-plus-circle"></button>
+            </template>
+            <template let-data="rowData" pTemplate="body">
+                <button type="button" pButton (click)="editClick(data)" icon="fa-edit"></button>
+            </template>
+        </p-column>
+        <p-column [style]="{'width':'60px','text-align':'center'}">
+            <template pTemplate="header">
+                <i class="fa fa-trash-o"></i>
+            </template>
+            <template let-data="rowData" pTemplate="body">
+                <button type="button" pButton (click)="deleteClick(data)" icon="fa-trash"></button>
+            </template>
+        </p-column>
+    </p-dataTable>
+
+    <p-dialog header="Store" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <form [formGroup]="dataform">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="id">Id</label></div>
+                <div class="ui-grid-col-8">{{selected.storeId}}</div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="name" [(ngModel)]="selected.storeName"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                        <i class="fa fa-close"></i> Name is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="address">Address</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="address" [(ngModel)]="selected.storeAddress"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['address'].valid&&dataform.controls['address'].dirty">
+                        <i class="fa fa-close"></i> Address is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="city">City</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="city" [(ngModel)]="selected.storeCity"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['city'].valid&&dataform.controls['city'].dirty">
+                        <i class="fa fa-close"></i> City is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="zip">Zip</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="zip" [(ngModel)]="selected.storeZip"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
+                        <i class="fa fa-close"></i>
+                        <span *ngIf="dataform.controls['zip'].errors['required']">Zip is required</span>
+                        <span *ngIf="dataform.controls['zip'].errors['minlength']">Must be equals than 5 characters</span>
+                        <span *ngIf="dataform.controls['zip'].errors['maxlength']">Must be equals than 5 characters</span>
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="country">Country</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="country" [(ngModel)]="selected.storeCountry"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
+                        <i class="fa fa-close"></i> Country is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-8"></div>
+                <div class="ui-grid-col-4">
+                    <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    </p-dialog>
+
+</div>

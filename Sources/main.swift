@@ -48,6 +48,7 @@ try? tokenStore.setup()
 // Register dependency injection
 let ioCContainer = IoCContainer()
 ioCContainer.register { UserRepository() as UserProtocol }
+ioCContainer.register { StoreRepository() as StoreProtocol }
 ioCContainer.register { BrandRepository() as BrandProtocol }
 ioCContainer.register { CategoryRepository() as CategoryProtocol }
 ioCContainer.register { AttributeRepository() as AttributeProtocol }
@@ -66,6 +67,9 @@ server.addRoutes(authenticationController.getRoutes())
 // Register api routes and handlers
 let usertController = UserController()
 server.addRoutes(usertController.getRoutes())
+
+let storeController = StoreController()
+server.addRoutes(storeController.getRoutes())
 
 let brandController = BrandController()
 server.addRoutes(brandController.getRoutes())

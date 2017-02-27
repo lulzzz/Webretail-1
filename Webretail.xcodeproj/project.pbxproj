@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5627E4D91E6491F2006D04FD /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5627E4D81E6491F2006D04FD /* Store.swift */; };
+		5627E4DB1E64C17F006D04FD /* StoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5627E4DA1E64C17F006D04FD /* StoreProtocol.swift */; };
+		5627E4DD1E64C1C4006D04FD /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5627E4DC1E64C1C4006D04FD /* StoreRepository.swift */; };
+		5627E4DF1E64C336006D04FD /* StoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5627E4DE1E64C336006D04FD /* StoreController.swift */; };
+		5627E4E11E64D205006D04FD /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5627E4E01E64D205006D04FD /* Stock.swift */; };
 		564913D51E6364F00052D7CA /* AngularController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564913D41E6364F00052D7CA /* AngularController.swift */; };
 		564913D71E639EC70052D7CA /* IoCContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564913D61E639EC70052D7CA /* IoCContainer.swift */; };
 		OBJ_1000 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* Moment.swift */; };
@@ -1451,6 +1455,10 @@
 
 /* Begin PBXFileReference section */
 		5627E4D81E6491F2006D04FD /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		5627E4DA1E64C17F006D04FD /* StoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreProtocol.swift; sourceTree = "<group>"; };
+		5627E4DC1E64C1C4006D04FD /* StoreRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
+		5627E4DE1E64C336006D04FD /* StoreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreController.swift; sourceTree = "<group>"; };
+		5627E4E01E64D205006D04FD /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		564913D41E6364F00052D7CA /* AngularController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngularController.swift; sourceTree = "<group>"; };
 		564913D61E639EC70052D7CA /* IoCContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IoCContainer.swift; sourceTree = "<group>"; };
 		OBJ_10 /* StringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHTML.swift; sourceTree = "<group>"; };
@@ -2582,6 +2590,7 @@
 				OBJ_886 /* ProductController.swift */,
 				OBJ_890 /* PublicationController.swift */,
 				OBJ_896 /* UserController.swift */,
+				5627E4DE1E64C336006D04FD /* StoreController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2597,6 +2606,7 @@
 				OBJ_887 /* ProductProtocol.swift */,
 				OBJ_891 /* PublicationProtocol.swift */,
 				OBJ_897 /* UserProtocol.swift */,
+				5627E4DA1E64C17F006D04FD /* StoreProtocol.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -2612,6 +2622,7 @@
 				OBJ_888 /* ProductRepository.swift */,
 				OBJ_892 /* PublicationRepository.swift */,
 				OBJ_898 /* UserRepository.swift */,
+				5627E4DC1E64C1C4006D04FD /* StoreRepository.swift */,
 			);
 			name = Repositories;
 			sourceTree = "<group>";
@@ -2634,6 +2645,7 @@
 				OBJ_889 /* Publication.swift */,
 				OBJ_895 /* User.swift */,
 				5627E4D81E6491F2006D04FD /* Store.swift */,
+				5627E4E01E64D205006D04FD /* Stock.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -5217,13 +5229,16 @@
 				OBJ_1984 /* BrandProtocoll.swift in Sources */,
 				OBJ_1985 /* BrandRepository.swift in Sources */,
 				OBJ_1986 /* Category.swift in Sources */,
+				5627E4DD1E64C1C4006D04FD /* StoreRepository.swift in Sources */,
 				OBJ_1987 /* CategoryController.swift in Sources */,
 				OBJ_1988 /* CategoryProtocol.swift in Sources */,
 				OBJ_1989 /* CatgoryRepository.swift in Sources */,
+				5627E4DB1E64C17F006D04FD /* StoreProtocol.swift in Sources */,
 				OBJ_1990 /* CustomRealm.swift in Sources */,
 				OBJ_1991 /* Extensions.swift in Sources */,
 				5627E4D91E6491F2006D04FD /* Store.swift in Sources */,
 				OBJ_1992 /* HTTPTurnstile.swift in Sources */,
+				5627E4DF1E64C336006D04FD /* StoreController.swift in Sources */,
 				OBJ_1993 /* main.swift in Sources */,
 				OBJ_1994 /* PerfectSessionManager.swift in Sources */,
 				OBJ_1995 /* PostgreSqlORM.swift in Sources */,
@@ -5245,6 +5260,7 @@
 				OBJ_2009 /* User.swift in Sources */,
 				OBJ_2010 /* UserController.swift in Sources */,
 				OBJ_2011 /* UserProtocol.swift in Sources */,
+				5627E4E11E64D205006D04FD /* Stock.swift in Sources */,
 				OBJ_2012 /* UserRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
