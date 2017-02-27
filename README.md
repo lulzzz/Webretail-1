@@ -84,4 +84,6 @@ npm install
 npm start
 
 go to http://localhost:8888/webpack-dev-server/
+username: admin
+password: admin
 ```
