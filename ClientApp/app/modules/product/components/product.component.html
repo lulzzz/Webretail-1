@@ -1,13 +1,15 @@
 <p-growl [value]="msgs"></p-growl>
+<p-blockUI [blocked]="isBusy"></p-blockUI>
 
 <div class="container-fluid">
     <h2>Product</h2>
     <div class="global-search">
-        <p-splitButton label="Edit" icon="fa-check" (onClick)="editClick()" [model]="buttons"></p-splitButton>
+        <p-splitButton label="Edit" icon="fa-check" (onClick)="editClick()" [(disabled)]="isBusy" [model]="buttons"></p-splitButton>
     </div>
     <p>Code: {{product?.productCode}}</p>
     <hr />
     <p *ngIf="!productInfo"><em>Loading...</em></p>
+    <p *ngIf="isBusy"><em>Building articles...please wait</em></p>
     <p-tree [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode"></p-tree>
     <div style="margin-top:8px">Selected Node => {{selectedNode ? selectedNode.type + ' : ' + selectedNode.data : 'none'}}</div>
 </div>

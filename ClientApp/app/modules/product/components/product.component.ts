@@ -31,6 +31,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     nodesSource: TreeNode[];
     nodesTarget: TreeNode[];
     display: boolean;
+    isBusy: boolean;
 
 	constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
@@ -252,7 +253,6 @@ export class ProductComponent implements OnInit, OnDestroy {
                 .addAttributes(productAttributes)
                 .subscribe(result => {
                     result.forEach((p, i) => {
-                        alert(i);
                         this.nodesTarget[i].type = `attribute:${p.productAttributeId}`;
                     });
                     this.msgs.push({
@@ -334,15 +334,23 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     buildClick() {
+        this.isBusy = true;
         this.productService.build(this.product.productId)
-                           .subscribe(result => this.msgs.push({
-                                severity: 'success',
-                                summary: 'Success',
-                                detail: 'Articles added: ' + result
-                           }), onerror => this.msgs.push({
-                                severity: 'error',
-                                summary: 'Articles build',
-                                detail: onerror
-                           }));
+                           .subscribe(
+                               result => {
+                                this.isBusy = false;
+                                this.msgs.push({
+                                    severity: 'success',
+                                    summary: 'Success',
+                                    detail: 'Articles added: ' + result
+                                });
+                            }, onerror => {
+                                this.isBusy = false;
+                                this.msgs.push({
+                                    severity: 'error',
+                                    summary: 'Articles build',
+                                    detail: onerror
+                                });
+                            });
     }
 }

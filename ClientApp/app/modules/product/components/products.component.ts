@@ -85,8 +85,8 @@ export class ProductsComponent implements OnInit {
 
     addClick() {
         this.selected = new Product();
-        this.selected.brand = this.allbrands[0].value;
-        this.selected.productUm = this.ums[0].value;
+        this.selected.brand = this.allbrands.length > 0 ? this.allbrands[0].value : null;
+        this.selected.productUm =  this.ums[0].value;
         this.displayDialog = true;
     }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5627E4D91E6491F2006D04FD /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5627E4D81E6491F2006D04FD /* Store.swift */; };
 		564913D51E6364F00052D7CA /* AngularController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564913D41E6364F00052D7CA /* AngularController.swift */; };
 		564913D71E639EC70052D7CA /* IoCContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564913D61E639EC70052D7CA /* IoCContainer.swift */; };
 		OBJ_1000 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* Moment.swift */; };
@@ -1449,6 +1450,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5627E4D81E6491F2006D04FD /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		564913D41E6364F00052D7CA /* AngularController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngularController.swift; sourceTree = "<group>"; };
 		564913D61E639EC70052D7CA /* IoCContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IoCContainer.swift; sourceTree = "<group>"; };
 		OBJ_10 /* StringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHTML.swift; sourceTree = "<group>"; };
@@ -2631,6 +2633,7 @@
 				OBJ_885 /* ProductCategory.swift */,
 				OBJ_889 /* Publication.swift */,
 				OBJ_895 /* User.swift */,
+				5627E4D81E6491F2006D04FD /* Store.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2737,7 +2740,7 @@
 			path = "Packages/SwiftMoment-0.9.1/Sources/SwiftMoment";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2747,7 +2750,6 @@
 				OBJ_901 /* wwwroot */,
 				OBJ_902 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_51 /* PerfectThread */ = {
@@ -4263,7 +4265,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_902 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -5220,6 +5222,7 @@
 				OBJ_1989 /* CatgoryRepository.swift in Sources */,
 				OBJ_1990 /* CustomRealm.swift in Sources */,
 				OBJ_1991 /* Extensions.swift in Sources */,
+				5627E4D91E6491F2006D04FD /* Store.swift in Sources */,
 				OBJ_1992 /* HTTPTurnstile.swift in Sources */,
 				OBJ_1993 /* main.swift in Sources */,
 				OBJ_1994 /* PerfectSessionManager.swift in Sources */,
