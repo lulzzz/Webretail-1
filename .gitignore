@@ -39,7 +39,7 @@ playground.xcworkspace
 Packages/
 
 StORMlog.txt
-requests.log
+*.log
 error.log 
 node_modules/
 wwwroot/favicon.ico
