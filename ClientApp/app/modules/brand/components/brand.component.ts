@@ -68,7 +68,8 @@ export class BrandComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick() {
+    deleteClick(item: Brand) {
+        this.selected = item;
         this.confirmationService.confirm({
             message: 'All related products will be deleted. Are you sure that you want to delete this brand?',
             accept: () => {

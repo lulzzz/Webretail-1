@@ -112,7 +112,8 @@ export class ProductsComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick() {
+    deleteClick(item: Product) {
+        this.selected = item;
         this.confirmationService.confirm({
             message: 'All information related to this product will be deleted. Are you sure that you want to delete this product?',
             accept: () => {

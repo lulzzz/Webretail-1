@@ -69,7 +69,8 @@ export class CategoryComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick() {
+    deleteClick(item: Category) {
+        this.selected = item;
         this.confirmationService.confirm({
             message: 'All associations with the products will be deleted. Are you sure that you want to delete this category?',
             accept: () => {
