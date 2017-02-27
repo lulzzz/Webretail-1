@@ -69,8 +69,8 @@ class Article: PostgresSqlORM, JSONConvertible {
             //"productId": productId,
             "barcode": barcode,
             "attributeValues": _attributeValues
-            //,"created": Helper.formatDate(unixdate: created)
-            //,"updated": Helper.formatDate(unixdate: updated)
+//            "created": created.formatDate(),
+//            "updated": updated.formatDate()
         ]
     }
 }

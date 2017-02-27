@@ -53,8 +53,8 @@ class Category: PostgresSqlORM, JSONConvertible {
             "categoryId": categoryId,
             "categoryName": categoryName,
             "isPrimary": isPrimary
-            //,"created": Helper.formatDate(unixdate: created)
-            //,"updated": Helper.formatDate(unixdate: updated)
+//            "created": created.formatDate(),
+//            "updated": updated.formatDate()
         ]
     }
 }

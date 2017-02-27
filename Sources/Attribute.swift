@@ -49,8 +49,8 @@ class Attribute: PostgresSqlORM, JSONConvertible {
         return [
             "attributeId": attributeId,
             "attributeName": attributeName
-            //,"created": Helper.formatDate(unixdate: created)
-            //,"updated": Helper.formatDate(unixdate: updated)
+//            "created": created.formatDate(),
+//            "updated": updated.formatDate()
         ]
     }
 }
