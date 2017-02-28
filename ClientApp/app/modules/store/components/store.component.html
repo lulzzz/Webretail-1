@@ -12,7 +12,7 @@
 
     <p *ngIf="!stores"><em>Loading...</em></p>
 
-    <p-dataTable [style]="{'width': '100%'}" [value]="brands" selectionMode="none"
+    <p-dataTable [style]="{'width': '100%'}" [value]="stores" selectionMode="none"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
         [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
         <p-column field="storeId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>

@@ -13,6 +13,9 @@ class StoreRepository : StoreProtocol {
     init() {
         let store = Store()
         try? store.setup()
+
+        let stock = Stock()
+        try? stock.setup()
     }
     
     func getAll() throws -> [Store] {

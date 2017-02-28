@@ -32,10 +32,10 @@ class Stock: PostgresSqlORM, JSONConvertible {
         updated     = this.data["updated"] as? Int              ?? 0
     }
     
-    func rows() -> [Store] {
-        var rows = [Store]()
+    func rows() -> [Stock] {
+        var rows = [Stock]()
         for i in 0..<self.results.rows.count {
-            let row = Store()
+            let row = Stock()
             row.to(self.results.rows[i])
             rows.append(row)
         }

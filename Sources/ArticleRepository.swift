@@ -27,7 +27,6 @@ class ArticleRepository : ArticleProtocol {
         //TODO: complete this func
         let product = Product()
         try product.get(productId)
-        var barcode: Int = 1000000000001
         
         // Get product attributes
         let productAttribute = ProductAttribute()
@@ -56,6 +55,15 @@ class ArticleRepository : ArticleProtocol {
         try product.save()
 
         let article = Article()
+        
+        // TODO: fix barcode counter
+        var barcode: Int = 1000000000001
+        let cursor = StORMCursor(limit: 1, offset: 0)
+        try article.select(whereclause: "", params: [], orderby: ["barcode"], cursor: cursor)
+        if try article.rows().count > 0 {
+            barcode = Int(article.barcode)!
+        }
+        
         try article.update(
             cols: ["isValid"],
             params: [false],

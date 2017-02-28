@@ -18,7 +18,9 @@ class Article: PostgresSqlORM, JSONConvertible {
     public var isValid      : Bool = false
     public var created      : Int = Int.now()
     public var updated      : Int = Int.now()
-    
+
+    public var _quantity    : Double = 0
+    public var _booked      : Double = 0
     public var _attributeValues: [ArticleAttributeValue] = [ArticleAttributeValue]()
 
     
@@ -48,6 +50,17 @@ class Article: PostgresSqlORM, JSONConvertible {
             )
             row._attributeValues = try attributeValue.rows()
 
+            // get stock of all stores
+            let stock = Stock()
+            try stock.select(
+                whereclause: "articleId = $1",
+                params: [row.articleId],
+                orderby: []
+            )
+            let stocks = stock.rows()
+            row._quantity = stocks.reduce(0) { $0 + $1.quantity }
+            row._booked = stocks.reduce(0) { $0 + $1.booked }
+
             rows.append(row)
         }
         return rows
@@ -68,6 +81,8 @@ class Article: PostgresSqlORM, JSONConvertible {
             "articleId": articleId,
             //"productId": productId,
             "barcode": barcode,
+            "quantity": _quantity,
+            "booked": _booked,
             "attributeValues": _attributeValues
 //            "created": created.formatDate(),
 //            "updated": updated.formatDate()

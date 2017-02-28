@@ -133,10 +133,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             //console.log('Key: ' + obs.key);
             let isFirst = true;
             obs.forEach(e => {
-
-                //TODO: get stock for this barcode
-                let qta = 0;
-
+                let qta = e.quantity;
                 if (isFirst) {
                     e.attributeValues.forEach(ex => {
                         let productAttributeValue = productAttributeValues.find(
@@ -336,8 +333,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     buildClick() {
         this.isBusy = true;
         this.productService.build(this.product.productId)
-                           .subscribe(
-                               result => {
+                           .subscribe(result => {
                                 this.isBusy = false;
                                 this.msgs.push({
                                     severity: 'success',

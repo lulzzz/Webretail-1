@@ -101,11 +101,15 @@ export class Product {
 export class Article {
   public articleId: number;
   public barcode: string;
+  public quantity: number;
+  public booked: number;
   public attributeValues: ArticleAttributeValue[];
 
   constructor() {
     this.articleId = 0;
     this.barcode = '';
+    this.quantity = 0;
+    this.booked = 0;
     this.attributeValues = [];
   }
 }
