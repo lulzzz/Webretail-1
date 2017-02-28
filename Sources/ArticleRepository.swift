@@ -44,7 +44,7 @@ class ArticleRepository : ArticleProtocol {
         for attribute in productAttributes {
             let count = attribute._attributeValues.count - 1
             if count == -1 {
-                throw StORMError.error("Not values found for attributeId: \(attribute.attributeId)")
+                throw StORMError.error("Not values found for attribute: \(attribute._attribute.attributeName)")
             }
             indexes.append([0, count])
         }

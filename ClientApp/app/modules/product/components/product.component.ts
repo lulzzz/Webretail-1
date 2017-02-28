@@ -337,6 +337,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                                 this.productService.getProduct(this.product.productId)
                                     .subscribe(res => {
                                         this.product = res;
+                                        this.productInfo[0].expanded = false;
                                         this.createSheet();
                                         this.isBusy = false;
                                         this.msgs.push({

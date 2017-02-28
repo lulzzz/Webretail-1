@@ -11,15 +11,16 @@
     <p *ngIf="!productInfo"><em>Loading...</em></p>
     <p *ngIf="isBusy"><em>Building articles...please wait</em></p>
     <p-tree [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode"></p-tree>
-    <div style="margin-top:8px">Selected Node => {{selectedNode ? selectedNode.type + ' : ' + selectedNode.data : 'none'}}</div>
+    <!--<div style="margin-top:8px">Selected Node => {{selectedNode ? selectedNode.type + ' : ' + selectedNode.data : 'none'}}</div>-->
 </div>
 
 <div class="container-fluid">
-    <h3>Articles ({{totalRecords}})</h3>   
+    <h3>Articles</h3>
+    <p>Items count: {{totalRecords}}</p>
     <p *ngIf="!articles"><em>Loading...</em></p>
     <table *ngIf="articles" class="table" cellpadding="2" cellspacing="2">    
         <tr> 
-            <td *ngFor="let h of header" align="center">{{h}}</td> 
+            <td *ngFor="let h of header" align="center" style="background-color: lightgray"><strong>{{h}}</strong></td> 
         </tr> 
         <tbody *ngFor="let item of articles"> 
             <tr> 
