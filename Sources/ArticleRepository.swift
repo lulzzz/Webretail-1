@@ -40,7 +40,6 @@ class ArticleRepository : ArticleProtocol {
         let productAttributes = try productAttribute.rows()
         
         // Create matrix indexes
-        //var indexes = Array(repeating: Array(repeating: 0, count: 2), count: productAttributes.count)
         var indexes = [[Int]]()
         for attribute in productAttributes {
             let count = attribute._attributeValues.count - 1
@@ -140,10 +139,11 @@ class ArticleRepository : ArticleProtocol {
         }
 
         // Clean articles
-        let articles = try get(productId: productId)
-        for item in articles {
+        var articles = try get(productId: productId)
+        for (i, item) in articles.enumerated() {
             if !item.isValid {
                 try item.delete()
+                articles.remove(at: i - countDeleted)
                 countDeleted += 1
             }
         }
@@ -153,19 +153,20 @@ class ArticleRepository : ArticleProtocol {
         for attribute in productAttributes {
             count *= attribute._attributeValues.count
         }
-        
-        if articles.count == count {
-
-            // Update product
-            product.isValid = true
-            product.updated = Int.now()
-            try product.save()
+        if articles.count != count {
+            throw StORMError.error("Integrity error: \(count) budgeted items and \(articles.count) items found")
         }
+
+        // Commit update product
+        product.isValid = true
+        product.updated = Int.now()
+        try product.save()
         
         var result = [String: Any]()
         result["added"] = countAdded
         result["updated"] = countUpdated
         result["deleted"] = countDeleted
+
         return result
     }
     

@@ -351,7 +351,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                                 this.msgs.push({
                                     severity: 'error',
                                     summary: 'Articles build',
-                                    detail: onerror
+                                    detail: onerror._body
                                 });
                             });
     }

@@ -36,13 +36,14 @@ class ArticleController {
     func articleBuildHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            let count = try self.repository.build(productId: id!)
+            let count = try self.repository.build(productId: id.toInt()!)
             try response.setBody(json: count)
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/product/\(id)/build .get: \(error)", logFile: "./error.log")
+            response.setBody(string: "\(error)")
             response.completed(status: .badRequest)
         }
     }
