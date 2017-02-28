@@ -38,21 +38,21 @@ class UserController {
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/account .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
     func accountHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]
+        let id = request.urlVariables["id"]!
         do {
-            let item = try self.repository.get(id: id!)
+            let item = try self.repository.get(id: id)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/account/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
@@ -68,37 +68,37 @@ class UserController {
             response.completed(status: .created)
         } catch {
             LogFile.error("/api/account .post: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
     func accountHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]
+        let id = request.urlVariables["id"]!
         do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = User()
             item.setJSONValues(json!)
-            try self.repository.update(id: id!, item: item)
+            try self.repository.update(id: id, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
             LogFile.error("/api/account/\(id) .put: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
     func accountHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]
+        let id = request.urlVariables["id"]!
         do {
-            try self.repository.delete(id: id!)
+            try self.repository.delete(id: id)
             response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/account/\(id) .delete: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 }

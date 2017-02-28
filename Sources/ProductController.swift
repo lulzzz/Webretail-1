@@ -44,21 +44,21 @@ class ProductController {
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/product .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
     func productHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            let item = try self.repository.get(id: id!)
+            let item = try self.repository.get(id: id.toInt()!)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/product/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
@@ -74,37 +74,37 @@ class ProductController {
             response.completed(status: .created)
         } catch {
             LogFile.error("/api/product .post: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
     func productHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = Product()
             item.setJSONValues(json!)
-            try self.repository.update(id: id!, item: item)
+            try self.repository.update(id: id.toInt()!, item: item)
             try response.setBody(json: id)
             response.completed(status: .accepted)
         } catch {
             LogFile.error("/api/product/\(id) .put: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
     func productHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            try self.repository.delete(id: id!)
+            try self.repository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/product/\(id) .delete: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
@@ -125,7 +125,7 @@ class ProductController {
             response.completed(status: .created)
         } catch {
             LogFile.error("/api/productcategory .post: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
@@ -143,7 +143,7 @@ class ProductController {
             response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/productcategory .put: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
@@ -164,7 +164,7 @@ class ProductController {
             response.completed(status: .created)
         } catch {
             LogFile.error("/api/productattribute .post: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
@@ -181,7 +181,7 @@ class ProductController {
             response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/productattribute .put: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
@@ -202,7 +202,7 @@ class ProductController {
             response.completed(status: .created)
         } catch {
             LogFile.error("/api/productattributevalue .post: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
@@ -219,7 +219,7 @@ class ProductController {
             response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/productattributevalue .put: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 }

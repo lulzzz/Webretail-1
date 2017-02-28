@@ -38,21 +38,21 @@ class StoreController {
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/store .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
     func storeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            let item = try self.repository.get(id: id!)
+            let item = try self.repository.get(id: id.toInt()!)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/store/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
@@ -68,37 +68,37 @@ class StoreController {
             response.completed(status: .created)
         } catch {
             LogFile.error("/api/store .post: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
     func storeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = Store()
             item.setJSONValues(json!)
-            try self.repository.update(id: id!, item: item)
+            try self.repository.update(id: id.toInt()!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
             LogFile.error("/api/store/\(id) .put: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
     func storeHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            try self.repository.delete(id: id!)
+            try self.repository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/store/\(id) .delete: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 }

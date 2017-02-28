@@ -38,21 +38,21 @@ class AttributeValueController {
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/attributevalue .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
     func attributevalueHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            let item = try self.repository.get(id: id!)
+            let item = try self.repository.get(id: id.toInt()!)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/attributevalue/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
@@ -68,37 +68,37 @@ class AttributeValueController {
             response.completed(status: .created)
         } catch {
             LogFile.error("/api/attributevalue .post: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
     func attributevalueHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = AttributeValue()
             item.setJSONValues(json!)
-            try self.repository.update(id: id!, item: item)
+            try self.repository.update(id: id.toInt()!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
             LogFile.error("/api/attributevalue/\(id) .put: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
     func attributevalueHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            try self.repository.delete(id: id!)
+            try self.repository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
-            response.completed(status: .badRequest)
             LogFile.error("/api/attributevalue/\(id) .delete: \(error)", logFile: "./error.log")
+            response.badRequest(error: error)
         }
     }
 }

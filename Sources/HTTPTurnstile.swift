@@ -11,10 +11,17 @@ import Turnstile
 import Foundation
 
 extension HTTPResponse {
+    
     /// Extends the HTTPRequest with redirect.
     public func redirect(path: String) {
         self.status = .found
         self.addHeader(.location, value: path)
+        self.completed()
+    }
+    
+    public func badRequest(error: Error) {
+        self.status = .badRequest
+        self.appendBody(string: "\(error)")
         self.completed()
     }
 }

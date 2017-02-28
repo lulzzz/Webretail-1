@@ -11,7 +11,7 @@ import PerfectLib
 
 extension Int {
     
-    public static func now() -> Int {
+    static func now() -> Int {
         return Int(Date.timeIntervalSinceReferenceDate)
     }
     

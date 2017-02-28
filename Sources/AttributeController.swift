@@ -39,35 +39,35 @@ class AttributeController {
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/attribute .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
     
     func attributeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            let item = try self.repository.get(id: id!)
+            let item = try self.repository.get(id: id.toInt()!)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
             LogFile.error("/api/attribute/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
     func attributevalueHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            let item = try self.repository.getValues(id: id!)
+            let item = try self.repository.getValues(id: id.toInt()!)
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
             LogFile.error("/api/attribute/\(id) .get: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
@@ -83,37 +83,37 @@ class AttributeController {
             response.completed(status: .created)
         } catch {
             LogFile.error("/api/attribute .post: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
     func attributeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = Attribute()
             item.setJSONValues(json!)
-            try self.repository.update(id: id!, item: item)
+            try self.repository.update(id: id.toInt()!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
             LogFile.error("/api/attribute/\(id) .put: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 
     func attributeHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]?.toInt()
+        let id = request.urlVariables["id"]!
         do {
-            try self.repository.delete(id: id!)
+            try self.repository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
             LogFile.error("/api/attribute/\(id) .delete: \(error)", logFile: "./error.log")
-            response.completed(status: .badRequest)
+            response.badRequest(error: error)
         }
     }
 }
