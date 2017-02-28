@@ -42,7 +42,8 @@ export class ProductsComponent implements OnInit {
             'code': new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
             'name': new FormControl('', Validators.required),
             'um': new FormControl('', Validators.required),
-            'price': new FormControl('', Validators.required),
+            'selling': new FormControl('', Validators.required),
+            'purchase': new FormControl('', Validators.required),
             'isActive': new FormControl('', Validators.required)
         });
 

@@ -71,7 +71,8 @@ export class Product {
   public productCode: string;
   public productName: string;
   public productUm: string;
-  public productPrice: number;
+  public sellingPrice: number;
+  public purchasePrice: number;
   public brand: Brand;
   public category: string;
   public categories: ProductCategory[];
@@ -86,7 +87,8 @@ export class Product {
     this.productCode = '';
     this.productName = '';
     this.productUm = '';
-    this.productPrice = 0;
+    this.sellingPrice = 0;
+    this.purchasePrice = 0;
     this.brand = new Brand();
     this.category = '';
     this.categories = [];

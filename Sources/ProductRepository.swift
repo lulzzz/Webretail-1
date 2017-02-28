@@ -88,7 +88,8 @@ class ProductRepository : ProductProtocol {
         current.productCode = item.productCode
         current.productName = item.productName
         current.productUm = item.productUm
-        current.productPrice = item.productPrice
+        current.sellingPrice = item.sellingPrice
+        current.purchasePrice = item.purchasePrice
         current.productCode = item.productCode
         current.isActive = item.isActive
         current.brandId = item.brandId

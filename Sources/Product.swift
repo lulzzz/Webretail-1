@@ -12,16 +12,17 @@ import PerfectLib
 
 class Product: PostgresSqlORM, JSONConvertible {
     
-    public var productId	: Int = 0
-    public var brandId      : Int = 0
-    public var productCode	: String = ""
-    public var productName	: String = ""
-    public var productUm	: String = ""
-    public var productPrice	: Double = 0
-    public var isActive     : Bool = false
-    public var isValid      : Bool = false
-    public var created      : Int = Int.now()
-    public var updated      : Int = Int.now()
+    public var productId        : Int = 0
+    public var brandId          : Int = 0
+    public var productCode      : String = ""
+    public var productName      : String = ""
+    public var productUm        : String = ""
+    public var sellingPrice     : Double = 0
+    public var purchasePrice    : Double = 0
+    public var isActive         : Bool = false
+    public var isValid          : Bool = false
+    public var created          : Int = Int.now()
+    public var updated          : Int = Int.now()
     
     public var _brand: Brand = Brand()
     public var _categories: [ProductCategory] = [ProductCategory]()
@@ -37,7 +38,8 @@ class Product: PostgresSqlORM, JSONConvertible {
         productCode     = this.data["productcode"] as? String   ?? ""
         productName     = this.data["productname"] as? String   ?? ""
         productUm       = this.data["productum"] as? String     ?? ""
-        productPrice    = Double(this.data["productprice"] as? Float ?? 0)
+        sellingPrice    = Double(this.data["sellingprice"] as? Float ?? 0)
+        purchasePrice   = Double(this.data["purchaseprice"] as? Float ?? 0)
         isActive        = this.data["isactive"] as? Bool        ?? false
         isValid         = this.data["isvalid"] as? Bool         ?? false
         created         = this.data["created"] as? Int          ?? 0
@@ -66,15 +68,16 @@ class Product: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.productId =    getJSONValue(named: "productId",    from: values, defaultValue: 0)
-        self.brandId =      getJSONValue(named: "brandId",      from: values["brand"] as! [String : Any], defaultValue: 0)
-        self.productCode =  getJSONValue(named: "productCode",  from: values, defaultValue: "")
-        self.productName =  getJSONValue(named: "productName",  from: values, defaultValue: "")
-        self.productUm =    getJSONValue(named: "productUm",    from: values, defaultValue: "")
-        self.productPrice = getJSONValue(named: "productPrice", from: values, defaultValue: 0.0)
-        self.productUm =    getJSONValue(named: "productUm",    from: values, defaultValue: "")
-        self.isActive =     getJSONValue(named: "isActive",     from: values, defaultValue: false)
-        self.isValid =      getJSONValue(named: "isValid",      from: values, defaultValue: false)
+        self.productId =        getJSONValue(named: "productId",        from: values, defaultValue: 0)
+        self.brandId =          getJSONValue(named: "brandId",          from: values["brand"] as! [String : Any], defaultValue: 0)
+        self.productCode =      getJSONValue(named: "productCode",      from: values, defaultValue: "")
+        self.productName =      getJSONValue(named: "productName",      from: values, defaultValue: "")
+        self.productUm =        getJSONValue(named: "productUm",        from: values, defaultValue: "")
+        self.sellingPrice =     getJSONValue(named: "sellingPrice",     from: values, defaultValue: 0.0)
+        self.purchasePrice =    getJSONValue(named: "purchasePrice",    from: values, defaultValue: 0.0)
+        self.productUm =        getJSONValue(named: "productUm",        from: values, defaultValue: "")
+        self.isActive =         getJSONValue(named: "isActive",         from: values, defaultValue: false)
+        self.isValid =          getJSONValue(named: "isValid",          from: values, defaultValue: false)
     }
     
     func jsonEncodedString() throws -> String {
@@ -87,7 +90,8 @@ class Product: PostgresSqlORM, JSONConvertible {
             "productCode": productCode,
             "productName": productName,
             "productUm": productUm,
-            "productPrice": productPrice.roundCurrency(),
+            "sellingPrice": sellingPrice.roundCurrency(),
+            "purchasePrice": purchasePrice.roundCurrency(),
             "isActive": isActive,
             "isValid": isValid,
             //"brandId": brandId,
