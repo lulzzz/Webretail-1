@@ -54,11 +54,11 @@ export class ProductComponent implements OnInit, OnDestroy {
             );
         });
 
-        this.buttons = [
-            {label: 'Build Articles', icon: 'fa-database', command: () => {
+        this.buttons = [{
+            label: 'Build Articles', icon: 'fa-database', command: () => {
                 this.buildClick();
-            }}
-        ];
+            }
+        }];
     }
 
     ngOnDestroy() {
@@ -334,12 +334,18 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.isBusy = true;
         this.productService.build(this.product.productId)
                            .subscribe(result => {
-                                this.isBusy = false;
-                                this.msgs.push({
-                                    severity: 'success',
-                                    summary: 'Success',
-                                    detail: 'Articles added: ' + result
-                                });
+                                this.productService.getProduct(this.product.productId)
+                                    .subscribe(res => {
+                                        this.product = res;
+                                        this.createSheet();
+                                        this.isBusy = false;
+                                        this.msgs.push({
+                                            severity: 'success',
+                                            summary: 'Articles build',
+                                            detail: 'Totals: added ' + result.added + ' updated ' + result.updated + ' deleted ' + result.deleted
+                                        });
+                                    }
+                                );
                             }, onerror => {
                                 this.isBusy = false;
                                 this.msgs.push({

@@ -20,9 +20,11 @@ class ArticleRepository : ArticleProtocol {
         try? articleAttributeValue.setup()
     }
 
-    func build(productId: Int) throws -> Int {
+    func build(productId: Int) throws -> [String:Any] {
         
-        var countInserted: Int = 0
+        var countAdded: Int = 0
+        var countUpdated: Int = 0
+        var countDeleted: Int = 0
         
         //TODO: complete this func
         let product = Product()
@@ -59,9 +61,10 @@ class ArticleRepository : ArticleProtocol {
         // TODO: fix barcode counter
         var barcode: Int = 1000000000001
         let cursor = StORMCursor(limit: 1, offset: 0)
-        try article.select(whereclause: "", params: [], orderby: ["barcode"], cursor: cursor)
-        if try article.rows().count > 0 {
-            barcode = Int(article.barcode)!
+        try article.select(whereclause: "", params: [], orderby: ["barcode DESC"], cursor: cursor)
+        let rows = try article.rows();
+        if (rows.count > 0) {
+            barcode = Int(rows[0].barcode)!
         }
         
         try article.update(
@@ -77,30 +80,35 @@ class ArticleRepository : ArticleProtocol {
             
             // Check if exist article
             let newArticle = Article()
+            var params = [String]()
+            params.append(String(productId))
             var sql =
                 "SELECT a.* " +
                 "FROM articles as a " +
                 "LEFT JOIN articleattributevalues as b ON a.articleid = b.articleid " +
-                "WHERE a.productId = \(productId) AND b.productattributevalueid IN ("
+                "WHERE a.productId = $1 AND b.productattributevalueid IN ("
             for i in 0...lastIndex {
                 if i > 0 {
                     sql += ","
                 }
-                sql += "\(productAttributes[i]._attributeValues[indexes[i][0]].productAttributeValueId)"
+                params.append(String(productAttributes[i]._attributeValues[indexes[i][0]].productAttributeValueId))
+                sql += "$\(i + 2)"
             }
-            sql += ") GROUP BY a.articleid HAVING count(b.productattributevalueid) = \(lastIndex + 1)"
+            sql += ") GROUP BY a.articleid HAVING count(b.productattributevalueid) = $\(lastIndex + 3)"
+            params.append(String(lastIndex + 1))
             
-            let current = try newArticle.sqlRows(sql, params: [String]())
+            let current = try newArticle.sqlRows(sql, params: params)
             if current.count > 0 {
                 newArticle.to(current[0])
                 newArticle.isValid = true;
                 try newArticle.save()
+                countUpdated += 1
             }
             else {
                 // Add article
                 newArticle.productId = productId
                 barcode += 1
-                newArticle.barcode = "\(barcode)"
+                newArticle.barcode = String(barcode)
                 newArticle.isValid = true;
                 try add(item: newArticle)
                 
@@ -112,7 +120,7 @@ class ArticleRepository : ArticleProtocol {
                         productAttributes[i]._attributeValues[indexes[i][0]].productAttributeValueId
                     try addAttributeValue(item: articleAttributeValue)
                 }
-                countInserted += 1
+                countAdded += 1
             }
             
             // Recalculate matrix indexes
@@ -136,6 +144,7 @@ class ArticleRepository : ArticleProtocol {
         for item in articles {
             if !item.isValid {
                 try item.delete()
+                countDeleted += 1
             }
         }
         
@@ -153,7 +162,11 @@ class ArticleRepository : ArticleProtocol {
             try product.save()
         }
         
-        return countInserted
+        var result = [String: Any]()
+        result["added"] = countAdded
+        result["updated"] = countUpdated
+        result["deleted"] = countDeleted
+        return result
     }
     
     func getAll() throws -> [Article] {
