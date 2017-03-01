@@ -20,11 +20,11 @@ class PublicationController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/publication",        handler: publicationsHandlerGET)
-        routes.add(method: .get,    uri: "/api/publication/{id}",   handler: publicationHandlerGET)
-        routes.add(method: .post,   uri: "/api/publication",        handler: publicationHandlerPOST)
-        routes.add(method: .put,    uri: "/api/publication/{id}",   handler: publicationHandlerPUT)
-        routes.add(method: .delete, uri: "/api/publication/{id}",   handler: publicationHandlerDELETE)
+        routes.add(method: .get, uri: "/api/publication", handler: publicationsHandlerGET)
+        routes.add(method: .get, uri: "/api/publication/{id}", handler: publicationHandlerGET)
+        routes.add(method: .post, uri: "/api/publication", handler: publicationHandlerPOST)
+        routes.add(method: .put, uri: "/api/publication/{id}", handler: publicationHandlerPUT)
+        routes.add(method: .delete, uri: "/api/publication/{id}", handler: publicationHandlerDELETE)
         
         return routes
     }

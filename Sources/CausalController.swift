@@ -20,10 +20,10 @@ class CausalController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/causal",      handler: causalsHandlerGET)
-        routes.add(method: .get,    uri: "/api/causal/{id}", handler: causalHandlerGET)
-        routes.add(method: .post,   uri: "/api/causal",      handler: causalHandlerPOST)
-        routes.add(method: .put,    uri: "/api/causal/{id}", handler: causalHandlerPUT)
+        routes.add(method: .get, uri: "/api/causal", handler: causalsHandlerGET)
+        routes.add(method: .get, uri: "/api/causal/{id}", handler: causalHandlerGET)
+        routes.add(method: .post, uri: "/api/causal", handler: causalHandlerPOST)
+        routes.add(method: .put, uri: "/api/causal/{id}", handler: causalHandlerPUT)
         routes.add(method: .delete, uri: "/api/causal/{id}", handler: causalHandlerDELETE)
         
         return routes

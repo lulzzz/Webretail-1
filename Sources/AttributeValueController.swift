@@ -20,11 +20,11 @@ class AttributeValueController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/attributevalue",         handler: attributevaluesHandlerGET)
-        routes.add(method: .get,    uri: "/api/attributevalue/{id}",    handler: attributevalueHandlerGET)
-        routes.add(method: .post,   uri: "/api/attributevalue",         handler: attributevalueHandlerPOST)
-        routes.add(method: .put,    uri: "/api/attributevalue/{id}",    handler: attributevalueHandlerPUT)
-        routes.add(method: .delete, uri: "/api/attributevalue/{id}",    handler: attributevalueHandlerDELETE)
+        routes.add(method: .get, uri: "/api/attributevalue", handler: attributevaluesHandlerGET)
+        routes.add(method: .get, uri: "/api/attributevalue/{id}", handler: attributevalueHandlerGET)
+        routes.add(method: .post, uri: "/api/attributevalue", handler: attributevalueHandlerPOST)
+        routes.add(method: .put, uri: "/api/attributevalue/{id}", handler: attributevalueHandlerPUT)
+        routes.add(method: .delete, uri: "/api/attributevalue/{id}", handler: attributevalueHandlerDELETE)
         
         return routes
     }

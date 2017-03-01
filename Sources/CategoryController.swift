@@ -20,11 +20,11 @@ class CategoryController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/category",       handler: categoriesHandlerGET)
-        routes.add(method: .get,    uri: "/api/category/{id}",  handler: categoryHandlerGET)
-        routes.add(method: .post,   uri: "/api/category",       handler: categoryHandlerPOST)
-        routes.add(method: .put,    uri: "/api/category/{id}",  handler: categoryHandlerPUT)
-        routes.add(method: .delete, uri: "/api/category/{id}",  handler: categoryHandlerDELETE)
+        routes.add(method: .get, uri: "/api/category", handler: categoriesHandlerGET)
+        routes.add(method: .get, uri: "/api/category/{id}", handler: categoryHandlerGET)
+        routes.add(method: .post, uri: "/api/category", handler: categoryHandlerPOST)
+        routes.add(method: .put, uri: "/api/category/{id}", handler: categoryHandlerPUT)
+        routes.add(method: .delete, uri: "/api/category/{id}", handler: categoryHandlerDELETE)
         
         return routes
     }

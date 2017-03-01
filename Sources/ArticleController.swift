@@ -20,15 +20,15 @@ class ArticleController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/product/{id}/build",             handler: articleBuildHandlerGET)
-        routes.add(method: .get,    uri: "/api/article",                               handler: articlesHandlerGET)
-        routes.add(method: .get,    uri: "/api/product/{id}/article",           handler: productArticleHandlerGET)
-        routes.add(method: .get,    uri: "/api/article/{id}",                        handler: articleHandlerGET)
-        routes.add(method: .post,   uri: "/api/article",                              handler: articleHandlerPOST)
-        routes.add(method: .put,    uri: "/api/article/{id}",                        handler: articleHandlerPUT)
-        routes.add(method: .delete, uri: "/api/article/{id}",                       handler: articleHandlerDELETE)
-        routes.add(method: .post,   uri: "/api/articleattributevalue",          handler: articleAttributeValueHandlerPOST)
-        routes.add(method: .delete, uri: "/api/articleattributevalue/{id}",   handler: articleAttributeValueHandlerDELETE)
+        routes.add(method: .get, uri: "/api/product/{id}/build", handler: articleBuildHandlerGET)
+        routes.add(method: .get, uri: "/api/article", handler: articlesHandlerGET)
+        routes.add(method: .get, uri: "/api/product/{id}/article", handler: productArticleHandlerGET)
+        routes.add(method: .get, uri: "/api/article/{id}", handler: articleHandlerGET)
+        routes.add(method: .post, uri: "/api/article", handler: articleHandlerPOST)
+        routes.add(method: .put, uri: "/api/article/{id}", handler: articleHandlerPUT)
+        routes.add(method: .delete, uri: "/api/article/{id}", handler: articleHandlerDELETE)
+        routes.add(method: .post, uri: "/api/articleattributevalue", handler: articleAttributeValueHandlerPOST)
+        routes.add(method: .delete, uri: "/api/articleattributevalue/{id}", handler: articleAttributeValueHandlerDELETE)
         
         return routes
     }

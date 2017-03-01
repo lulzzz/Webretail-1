@@ -20,10 +20,10 @@ class BrandController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/brand",      handler: brandsHandlerGET)
-        routes.add(method: .get,    uri: "/api/brand/{id}", handler: brandHandlerGET)
-        routes.add(method: .post,   uri: "/api/brand",      handler: brandHandlerPOST)
-        routes.add(method: .put,    uri: "/api/brand/{id}", handler: brandHandlerPUT)
+        routes.add(method: .get, uri: "/api/brand", handler: brandsHandlerGET)
+        routes.add(method: .get, uri: "/api/brand/{id}", handler: brandHandlerGET)
+        routes.add(method: .post, uri: "/api/brand", handler: brandHandlerPOST)
+        routes.add(method: .put, uri: "/api/brand/{id}", handler: brandHandlerPUT)
         routes.add(method: .delete, uri: "/api/brand/{id}", handler: brandHandlerDELETE)
         
         return routes

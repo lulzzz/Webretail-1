@@ -20,10 +20,10 @@ class MovementController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/movement",      handler: movementsHandlerGET)
-        routes.add(method: .get,    uri: "/api/movement/{id}", handler: movementHandlerGET)
-        routes.add(method: .post,   uri: "/api/movement",      handler: movementHandlerPOST)
-        routes.add(method: .put,    uri: "/api/movement/{id}", handler: movementHandlerPUT)
+        routes.add(method: .get, uri: "/api/movement", handler: movementsHandlerGET)
+        routes.add(method: .get, uri: "/api/movement/{id}", handler: movementHandlerGET)
+        routes.add(method: .post, uri: "/api/movement", handler: movementHandlerPOST)
+        routes.add(method: .put, uri: "/api/movement/{id}", handler: movementHandlerPUT)
         routes.add(method: .delete, uri: "/api/movement/{id}", handler: movementHandlerDELETE)
         
         return routes

@@ -20,11 +20,11 @@ class UserController {
     public func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/account",        handler: accountsHandlerGET)
-        routes.add(method: .get,    uri: "/api/account/{id}",   handler: accountHandlerGET)
-        routes.add(method: .post,   uri: "/api/account",        handler: accountHandlerPOST)
-        routes.add(method: .put,    uri: "/api/account/{id}",   handler: accountHandlerPUT)
-        routes.add(method: .delete, uri: "/api/account/{id}",   handler: accountHandlerDELETE)
+        routes.add(method: .get, uri: "/api/account", handler: accountsHandlerGET)
+        routes.add(method: .get, uri: "/api/account/{id}", handler: accountHandlerGET)
+        routes.add(method: .post, uri: "/api/account", handler: accountHandlerPOST)
+        routes.add(method: .put, uri: "/api/account/{id}", handler: accountHandlerPUT)
+        routes.add(method: .delete, uri: "/api/account/{id}", handler: accountHandlerDELETE)
         
         return routes
     }

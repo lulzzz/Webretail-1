@@ -25,7 +25,7 @@ public class AuthenticationController {
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
         routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
         routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
-        routes.add(method: .get,  uri: "/api/authenticated", handler: authenticatedHandlerGET)
+        routes.add(method: .get, uri: "/api/authenticated", handler: authenticatedHandlerGET)
 
         routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
         routes.add(method: .get, uri: "/login/facebook/consumer", handler: facebookHandlerConsumer)

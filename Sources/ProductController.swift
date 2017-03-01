@@ -20,17 +20,17 @@ class ProductController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/product",                handler: productsHandlerGET)
-        routes.add(method: .get,    uri: "/api/product/{id}",           handler: productHandlerGET)
-        routes.add(method: .post,   uri: "/api/product",                handler: productHandlerPOST)
-        routes.add(method: .put,    uri: "/api/product/{id}",           handler: productHandlerPUT)
-        routes.add(method: .delete, uri: "/api/product/{id}",           handler: productHandlerDELETE)
-        routes.add(method: .post,   uri: "/api/productcategory",        handler: productCategoryHandlerPOST)
-        routes.add(method: .put,    uri: "/api/productcategory",        handler: productCategoryHandlerPUT)
-        routes.add(method: .post,   uri: "/api/productattribute",       handler: productAttributeHandlerPOST)
-        routes.add(method: .put,    uri: "/api/productattribute",       handler: productAttributeHandlerPUT)
-        routes.add(method: .post,   uri: "/api/productattributevalue",  handler: productAttributeValueHandlerPOST)
-        routes.add(method: .put,    uri: "/api/productattributevalue",  handler: productAttributeValueHandlerPUT)
+        routes.add(method: .get, uri: "/api/product", handler: productsHandlerGET)
+        routes.add(method: .get, uri: "/api/product/{id}", handler: productHandlerGET)
+        routes.add(method: .post, uri: "/api/product", handler: productHandlerPOST)
+        routes.add(method: .put, uri: "/api/product/{id}", handler: productHandlerPUT)
+        routes.add(method: .delete, uri: "/api/product/{id}", handler: productHandlerDELETE)
+        routes.add(method: .post, uri: "/api/productcategory", handler: productCategoryHandlerPOST)
+        routes.add(method: .put, uri: "/api/productcategory", handler: productCategoryHandlerPUT)
+        routes.add(method: .post, uri: "/api/productattribute", handler: productAttributeHandlerPOST)
+        routes.add(method: .put, uri: "/api/productattribute", handler: productAttributeHandlerPUT)
+        routes.add(method: .post, uri: "/api/productattributevalue", handler: productAttributeValueHandlerPOST)
+        routes.add(method: .put, uri: "/api/productattributevalue", handler: productAttributeValueHandlerPUT)
         
         return routes
     }

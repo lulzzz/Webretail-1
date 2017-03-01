@@ -20,10 +20,10 @@ class StoreController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/store",      handler: storesHandlerGET)
-        routes.add(method: .get,    uri: "/api/store/{id}", handler: storeHandlerGET)
-        routes.add(method: .post,   uri: "/api/store",      handler: storeHandlerPOST)
-        routes.add(method: .put,    uri: "/api/store/{id}", handler: storeHandlerPUT)
+        routes.add(method: .get, uri: "/api/store", handler: storesHandlerGET)
+        routes.add(method: .get, uri: "/api/store/{id}", handler: storeHandlerGET)
+        routes.add(method: .post, uri: "/api/store", handler: storeHandlerPOST)
+        routes.add(method: .put, uri: "/api/store/{id}", handler: storeHandlerPUT)
         routes.add(method: .delete, uri: "/api/store/{id}", handler: storeHandlerDELETE)
         
         return routes
