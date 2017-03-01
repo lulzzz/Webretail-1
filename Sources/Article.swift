@@ -84,8 +84,6 @@ class Article: PostgresSqlORM, JSONConvertible {
             "quantity": _quantity,
             "booked": _booked,
             "attributeValues": _attributeValues
-//            "created": created.formatDate(),
-//            "updated": updated.formatDate()
         ]
     }
 }

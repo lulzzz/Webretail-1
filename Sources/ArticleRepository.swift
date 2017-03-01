@@ -18,6 +18,9 @@ class ArticleRepository : ArticleProtocol {
         
         let articleAttributeValue = ArticleAttributeValue()
         try? articleAttributeValue.setup()
+
+        let stock = Stock()
+        try? stock.setup()
     }
 
     func build(productId: Int) throws -> [String:Any] {

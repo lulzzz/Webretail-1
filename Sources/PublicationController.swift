@@ -37,7 +37,7 @@ class PublicationController {
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/publication .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -51,7 +51,7 @@ class PublicationController {
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/publication/\(id) .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -67,7 +67,7 @@ class PublicationController {
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("/api/publication .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -84,7 +84,7 @@ class PublicationController {
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
-            LogFile.error("/api/publication/\(id) .put: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -97,7 +97,7 @@ class PublicationController {
             try self.repository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("/api/publication/\(id) .delete: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }

@@ -61,8 +61,6 @@ class Stock: PostgresSqlORM, JSONConvertible {
             "articleId": articleId,
             "quantity": quantity,
             "booked": booked
-//            "created": created.formatDate(),
-//            "updated": updated.formatDate()
         ]
     }
 }

@@ -37,7 +37,7 @@ class BrandController {
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/brand .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -51,7 +51,7 @@ class BrandController {
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/brand/\(id) .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -67,7 +67,7 @@ class BrandController {
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("/api/brand .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -84,7 +84,7 @@ class BrandController {
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
-            LogFile.error("/api/brand/\(id) .put: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -97,7 +97,7 @@ class BrandController {
             try self.repository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("/api/brand/\(id) .delete: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }

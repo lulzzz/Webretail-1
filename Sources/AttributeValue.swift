@@ -58,8 +58,6 @@ class AttributeValue: PostgresSqlORM, JSONConvertible {
             "attributeValueCode": attributeValueCode,
             "attributeValueName": attributeValueName,
             "attributeId": attributeId
-//            "created": created.formatDate(),
-//            "updated": updated.formatDate()
         ]
     }
 }

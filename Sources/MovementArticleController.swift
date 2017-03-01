@@ -1,36 +1,35 @@
 //
-//  AttributeController.swift
+//  MovementArticleController.swift
 //  Webretail
 //
-//  Created by Gerardo Grisolini on 17/02/17.
+//  Created by Gerardo Grisolini on 01/03/17.
 //
 //
 
 import PerfectHTTP
 import PerfectLogger
 
-class AttributeController {
+class MovementArticleController {
     
-    private let repository: AttributeProtocol
+    private let repository: MovementArticleProtocol
     
     init() {
-        self.repository = ioCContainer.resolve() as AttributeProtocol
+        self.repository = ioCContainer.resolve() as MovementArticleProtocol
     }
     
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get,    uri: "/api/attribute",              handler: attributesHandlerGET)
-        routes.add(method: .get,    uri: "/api/attribute/{id}",         handler: attributeHandlerGET)
-        routes.add(method: .get,    uri: "/api/attribute/{id}/value",   handler: attributevalueHandlerGET)
-        routes.add(method: .post,   uri: "/api/attribute",              handler: attributeHandlerPOST)
-        routes.add(method: .put,    uri: "/api/attribute/{id}",         handler: attributeHandlerPUT)
-        routes.add(method: .delete, uri: "/api/attribute/{id}",         handler: attributeHandlerDELETE)
+        routes.add(method: .get,    uri: "/api/movementarticle",      handler: movementsHandlerGET)
+        routes.add(method: .get,    uri: "/api/movementarticle/{id}", handler: movementHandlerGET)
+        routes.add(method: .post,   uri: "/api/movementarticle",      handler: movementHandlerPOST)
+        routes.add(method: .put,    uri: "/api/movementarticle/{id}", handler: movementHandlerPUT)
+        routes.add(method: .delete, uri: "/api/movementarticle/{id}", handler: movementHandlerDELETE)
         
         return routes
     }
-
-    func attributesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func movementsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {
@@ -43,7 +42,7 @@ class AttributeController {
         }
     }
     
-    func attributeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    func movementHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]!
@@ -56,27 +55,13 @@ class AttributeController {
             response.badRequest(error: error)
         }
     }
-
-    func attributevalueHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
-        let id = request.urlVariables["id"]!
-        do {
-            let item = try self.repository.getValues(id: id.toInt()!)
-            try response.setBody(json: item)
-            response.completed(status: .created)
-        } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
-            response.badRequest(error: error)
-        }
-    }
-
-    func attributeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func movementHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = Attribute()
+            let item = MovementArticle()
             item.setJSONValues(json!)
             try self.repository.add(item: item)
             try response.setBody(json: item)
@@ -86,14 +71,14 @@ class AttributeController {
             response.badRequest(error: error)
         }
     }
-
-    func attributeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func movementHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]!
         do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = Attribute()
+            let item = MovementArticle()
             item.setJSONValues(json!)
             try self.repository.update(id: id.toInt()!, item: item)
             try response.setBody(json: item)
@@ -103,8 +88,8 @@ class AttributeController {
             response.badRequest(error: error)
         }
     }
-
-    func attributeHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func movementHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]!

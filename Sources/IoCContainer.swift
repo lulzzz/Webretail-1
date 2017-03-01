@@ -9,6 +9,7 @@
 import Foundation
 
 class IoCContainer {
+    
     var factories = [String: Any]()
     
     func register<T>(factory: @escaping () -> T) {

@@ -14,6 +14,18 @@
 		5627E4E11E64D205006D04FD /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5627E4E01E64D205006D04FD /* Stock.swift */; };
 		564913D51E6364F00052D7CA /* AngularController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564913D41E6364F00052D7CA /* AngularController.swift */; };
 		564913D71E639EC70052D7CA /* IoCContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564913D61E639EC70052D7CA /* IoCContainer.swift */; };
+		56A27B2F1E663225006774D7 /* Movement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B2E1E663225006774D7 /* Movement.swift */; };
+		56A27B311E663D19006774D7 /* MovementArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B301E663D19006774D7 /* MovementArticle.swift */; };
+		56A27B331E6642FF006774D7 /* Causal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B321E6642FF006774D7 /* Causal.swift */; };
+		56A27B351E664E39006774D7 /* CausalProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B341E664E39006774D7 /* CausalProtocol.swift */; };
+		56A27B371E664E77006774D7 /* CausalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B361E664E77006774D7 /* CausalRepository.swift */; };
+		56A27B391E66513C006774D7 /* CausalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B381E66513C006774D7 /* CausalController.swift */; };
+		56A27B3B1E665674006774D7 /* MovementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B3A1E665674006774D7 /* MovementProtocol.swift */; };
+		56A27B3D1E6656C3006774D7 /* MovementRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B3C1E6656C3006774D7 /* MovementRepository.swift */; };
+		56A27B3F1E665AC4006774D7 /* MovementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B3E1E665AC4006774D7 /* MovementController.swift */; };
+		56A27B411E665B84006774D7 /* MovementArticleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B401E665B84006774D7 /* MovementArticleProtocol.swift */; };
+		56A27B431E665BB1006774D7 /* MovementArticleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B421E665BB1006774D7 /* MovementArticleRepository.swift */; };
+		56A27B451E665C4A006774D7 /* MovementArticleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A27B441E665C4A006774D7 /* MovementArticleController.swift */; };
 		OBJ_1000 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* Moment.swift */; };
 		OBJ_1001 /* MomentFromNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* MomentFromNow.swift */; };
 		OBJ_1002 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* Operators.swift */; };
@@ -1461,6 +1473,18 @@
 		5627E4E01E64D205006D04FD /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		564913D41E6364F00052D7CA /* AngularController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngularController.swift; sourceTree = "<group>"; };
 		564913D61E639EC70052D7CA /* IoCContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IoCContainer.swift; sourceTree = "<group>"; };
+		56A27B2E1E663225006774D7 /* Movement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movement.swift; sourceTree = "<group>"; };
+		56A27B301E663D19006774D7 /* MovementArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementArticle.swift; sourceTree = "<group>"; };
+		56A27B321E6642FF006774D7 /* Causal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Causal.swift; sourceTree = "<group>"; };
+		56A27B341E664E39006774D7 /* CausalProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CausalProtocol.swift; sourceTree = "<group>"; };
+		56A27B361E664E77006774D7 /* CausalRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CausalRepository.swift; sourceTree = "<group>"; };
+		56A27B381E66513C006774D7 /* CausalController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CausalController.swift; sourceTree = "<group>"; };
+		56A27B3A1E665674006774D7 /* MovementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementProtocol.swift; sourceTree = "<group>"; };
+		56A27B3C1E6656C3006774D7 /* MovementRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementRepository.swift; sourceTree = "<group>"; };
+		56A27B3E1E665AC4006774D7 /* MovementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementController.swift; sourceTree = "<group>"; };
+		56A27B401E665B84006774D7 /* MovementArticleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementArticleProtocol.swift; sourceTree = "<group>"; };
+		56A27B421E665BB1006774D7 /* MovementArticleRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementArticleRepository.swift; sourceTree = "<group>"; };
+		56A27B441E665C4A006774D7 /* MovementArticleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovementArticleController.swift; sourceTree = "<group>"; };
 		OBJ_10 /* StringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHTML.swift; sourceTree = "<group>"; };
 		OBJ_100 /* aes_ige.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_ige.c; sourceTree = "<group>"; };
 		OBJ_101 /* aes_misc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_misc.c; sourceTree = "<group>"; };
@@ -2591,6 +2615,9 @@
 				OBJ_890 /* PublicationController.swift */,
 				OBJ_896 /* UserController.swift */,
 				5627E4DE1E64C336006D04FD /* StoreController.swift */,
+				56A27B381E66513C006774D7 /* CausalController.swift */,
+				56A27B3E1E665AC4006774D7 /* MovementController.swift */,
+				56A27B441E665C4A006774D7 /* MovementArticleController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2607,6 +2634,9 @@
 				OBJ_891 /* PublicationProtocol.swift */,
 				OBJ_897 /* UserProtocol.swift */,
 				5627E4DA1E64C17F006D04FD /* StoreProtocol.swift */,
+				56A27B341E664E39006774D7 /* CausalProtocol.swift */,
+				56A27B3A1E665674006774D7 /* MovementProtocol.swift */,
+				56A27B401E665B84006774D7 /* MovementArticleProtocol.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -2623,6 +2653,9 @@
 				OBJ_892 /* PublicationRepository.swift */,
 				OBJ_898 /* UserRepository.swift */,
 				5627E4DC1E64C1C4006D04FD /* StoreRepository.swift */,
+				56A27B361E664E77006774D7 /* CausalRepository.swift */,
+				56A27B3C1E6656C3006774D7 /* MovementRepository.swift */,
+				56A27B421E665BB1006774D7 /* MovementArticleRepository.swift */,
 			);
 			name = Repositories;
 			sourceTree = "<group>";
@@ -2646,6 +2679,9 @@
 				OBJ_895 /* User.swift */,
 				5627E4D81E6491F2006D04FD /* Store.swift */,
 				5627E4E01E64D205006D04FD /* Stock.swift */,
+				56A27B2E1E663225006774D7 /* Movement.swift */,
+				56A27B301E663D19006774D7 /* MovementArticle.swift */,
+				56A27B321E6642FF006774D7 /* Causal.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -5209,6 +5245,7 @@
 			files = (
 				OBJ_1965 /* AccessTokenStore.swift in Sources */,
 				OBJ_1966 /* Article.swift in Sources */,
+				56A27B311E663D19006774D7 /* MovementArticle.swift in Sources */,
 				OBJ_1967 /* ArticleAttributeValue.swift in Sources */,
 				OBJ_1968 /* ArticleController.swift in Sources */,
 				OBJ_1969 /* ArticleProtocol.swift in Sources */,
@@ -5218,10 +5255,12 @@
 				OBJ_1973 /* AttributeProtocol.swift in Sources */,
 				OBJ_1974 /* AttributeRepository.swift in Sources */,
 				OBJ_1975 /* AttributeValue.swift in Sources */,
+				56A27B411E665B84006774D7 /* MovementArticleProtocol.swift in Sources */,
 				OBJ_1976 /* AttributeValueController.swift in Sources */,
 				OBJ_1977 /* AttributeValueProtocol.swift in Sources */,
 				OBJ_1978 /* AttributeValueRepository.swift in Sources */,
 				OBJ_1979 /* AuthenticationController.swift in Sources */,
+				56A27B431E665BB1006774D7 /* MovementArticleRepository.swift in Sources */,
 				OBJ_1980 /* AuthenticationConfig.swift in Sources */,
 				OBJ_1981 /* AuthFilter.swift in Sources */,
 				OBJ_1982 /* Brand.swift in Sources */,
@@ -5230,15 +5269,21 @@
 				OBJ_1985 /* BrandRepository.swift in Sources */,
 				OBJ_1986 /* Category.swift in Sources */,
 				5627E4DD1E64C1C4006D04FD /* StoreRepository.swift in Sources */,
+				56A27B391E66513C006774D7 /* CausalController.swift in Sources */,
 				OBJ_1987 /* CategoryController.swift in Sources */,
 				OBJ_1988 /* CategoryProtocol.swift in Sources */,
 				OBJ_1989 /* CatgoryRepository.swift in Sources */,
 				5627E4DB1E64C17F006D04FD /* StoreProtocol.swift in Sources */,
+				56A27B3D1E6656C3006774D7 /* MovementRepository.swift in Sources */,
 				OBJ_1990 /* CustomRealm.swift in Sources */,
+				56A27B3B1E665674006774D7 /* MovementProtocol.swift in Sources */,
 				OBJ_1991 /* Extensions.swift in Sources */,
 				5627E4D91E6491F2006D04FD /* Store.swift in Sources */,
+				56A27B3F1E665AC4006774D7 /* MovementController.swift in Sources */,
 				OBJ_1992 /* HTTPTurnstile.swift in Sources */,
+				56A27B451E665C4A006774D7 /* MovementArticleController.swift in Sources */,
 				5627E4DF1E64C336006D04FD /* StoreController.swift in Sources */,
+				56A27B351E664E39006774D7 /* CausalProtocol.swift in Sources */,
 				OBJ_1993 /* main.swift in Sources */,
 				OBJ_1994 /* PerfectSessionManager.swift in Sources */,
 				OBJ_1995 /* PostgreSqlORM.swift in Sources */,
@@ -5255,10 +5300,13 @@
 				OBJ_2005 /* PublicationProtocol.swift in Sources */,
 				OBJ_2006 /* PublicationRepository.swift in Sources */,
 				OBJ_2007 /* TurnstileFilter.swift in Sources */,
+				56A27B371E664E77006774D7 /* CausalRepository.swift in Sources */,
 				OBJ_2008 /* TurnstilePerfectRealm.swift in Sources */,
 				564913D71E639EC70052D7CA /* IoCContainer.swift in Sources */,
 				OBJ_2009 /* User.swift in Sources */,
+				56A27B331E6642FF006774D7 /* Causal.swift in Sources */,
 				OBJ_2010 /* UserController.swift in Sources */,
+				56A27B2F1E663225006774D7 /* Movement.swift in Sources */,
 				OBJ_2011 /* UserProtocol.swift in Sources */,
 				5627E4E11E64D205006D04FD /* Stock.swift in Sources */,
 				OBJ_2012 /* UserRepository.swift in Sources */,

@@ -43,7 +43,7 @@ class ProductController {
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/product .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -57,7 +57,7 @@ class ProductController {
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/product/\(id) .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -73,7 +73,7 @@ class ProductController {
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("/api/product .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -90,7 +90,7 @@ class ProductController {
             try response.setBody(json: id)
             response.completed(status: .accepted)
         } catch {
-            LogFile.error("/api/product/\(id) .put: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -124,7 +124,7 @@ class ProductController {
             try response.setBody(json: result)
             response.completed(status: .created)
         } catch {
-            LogFile.error("/api/productcategory .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -142,7 +142,7 @@ class ProductController {
             try response.setBody(json: jsons)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("/api/productcategory .put: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -163,7 +163,7 @@ class ProductController {
             try response.setBody(json: result)
             response.completed(status: .created)
         } catch {
-            LogFile.error("/api/productattribute .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -180,7 +180,7 @@ class ProductController {
             }
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("/api/productattribute .put: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -201,7 +201,7 @@ class ProductController {
             try response.setBody(json: result)
             response.completed(status: .created)
         } catch {
-            LogFile.error("/api/productattributevalue .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -218,7 +218,7 @@ class ProductController {
             }
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("/api/productattributevalue .put: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }

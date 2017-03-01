@@ -49,8 +49,6 @@ class Brand: PostgresSqlORM, JSONConvertible {
         return [
             "brandId": brandId,
             "brandName": brandName
-//            "created": created.formatDate(),
-//            "updated": updated.formatDate()
         ]
     }
 }

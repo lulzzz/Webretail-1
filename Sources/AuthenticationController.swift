@@ -54,7 +54,7 @@ public class AuthenticationController {
                 resp["role"] = user.isAdmin ? "Admin" : "User"
             }
         } catch {
-            LogFile.error("/api/authenticated .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
         }
         do {
             try response.setBody(json: resp)
@@ -96,7 +96,7 @@ public class AuthenticationController {
             resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch {
             resp["error"] = "Invalid username or password"
-            LogFile.error("/api/login .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
         }
         do {
             try response.setBody(json: resp)
@@ -139,10 +139,10 @@ public class AuthenticationController {
             resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch let e as TurnstileError {
             resp["error"] = e.description
-            LogFile.error("/api/register .post: \(e.description)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(e.description)", logFile: "./error.log")
         } catch {
             resp["error"] = "An unknown error occurred."
-            LogFile.error("/api/register .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
         }
         do {
             try response.setBody(json: resp)
@@ -269,7 +269,7 @@ public class AuthenticationController {
             resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch {
             resp["error"] = "Invalid uniqueID"
-            LogFile.error("/api/login/consumer .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
         }
         do {
             try response.setBody(json: resp)

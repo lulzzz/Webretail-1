@@ -48,6 +48,7 @@ try? tokenStore.setup()
 // Register dependency injection
 let ioCContainer = IoCContainer()
 ioCContainer.register { UserRepository() as UserProtocol }
+ioCContainer.register { CausalRepository() as CausalProtocol }
 ioCContainer.register { StoreRepository() as StoreProtocol }
 ioCContainer.register { BrandRepository() as BrandProtocol }
 ioCContainer.register { CategoryRepository() as CategoryProtocol }
@@ -55,46 +56,33 @@ ioCContainer.register { AttributeRepository() as AttributeProtocol }
 ioCContainer.register { AttributeValueRepository() as AttributeValueProtocol }
 ioCContainer.register { ProductRepository() as ProductProtocol }
 ioCContainer.register { ArticleRepository() as ArticleProtocol }
+ioCContainer.register { MovementRepository() as MovementProtocol }
+ioCContainer.register { MovementArticleRepository() as MovementArticleProtocol }
 ioCContainer.register { PublicationRepository() as PublicationProtocol }
+
 
 // Create HTTP server.
 let server = HTTPServer()
 
 // Register auth routes and handlers
-var authenticationController = AuthenticationController()
-server.addRoutes(authenticationController.getRoutes())
+server.addRoutes(AuthenticationController().getRoutes())
 
 // Register api routes and handlers
-let usertController = UserController()
-server.addRoutes(usertController.getRoutes())
-
-let storeController = StoreController()
-server.addRoutes(storeController.getRoutes())
-
-let brandController = BrandController()
-server.addRoutes(brandController.getRoutes())
-
-let categoryController = CategoryController()
-server.addRoutes(categoryController.getRoutes())
-
-let attributeController = AttributeController()
-server.addRoutes(attributeController.getRoutes())
-
-let attributeValueController = AttributeValueController()
-server.addRoutes(attributeValueController.getRoutes())
-
-let productController = ProductController()
-server.addRoutes(productController.getRoutes())
-
-let articleController = ArticleController()
-server.addRoutes(articleController.getRoutes())
-
-let publicationController = PublicationController()
-server.addRoutes(publicationController.getRoutes())
+server.addRoutes(UserController().getRoutes())
+server.addRoutes(CausalController().getRoutes())
+server.addRoutes(StoreController().getRoutes())
+server.addRoutes(BrandController().getRoutes())
+server.addRoutes(CategoryController().getRoutes())
+server.addRoutes(AttributeController().getRoutes())
+server.addRoutes(AttributeValueController().getRoutes())
+server.addRoutes(ProductController().getRoutes())
+server.addRoutes(ArticleController().getRoutes())
+server.addRoutes(MovementController().getRoutes())
+server.addRoutes(MovementArticleController().getRoutes())
+server.addRoutes(PublicationController().getRoutes())
 
 // Register Angular routes and handlers
-let angularController = AngularController()
-server.addRoutes(angularController.getRoutes())
+server.addRoutes(AngularController().getRoutes())
 
 
 // Add routes to be checked for auth

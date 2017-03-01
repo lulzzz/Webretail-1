@@ -42,7 +42,7 @@ class ArticleController {
             try response.setBody(json: count)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/product/\(id)/build .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -55,7 +55,7 @@ class ArticleController {
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/article .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -69,7 +69,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/product/\(id)/article .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -83,7 +83,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("/api/article/\(id) .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -99,7 +99,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("/api/article .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -116,7 +116,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
-            LogFile.error("/api/article/\(id) .put: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -129,7 +129,7 @@ class ArticleController {
             try self.repository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("/api/article/\(id) .delete: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -145,7 +145,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("/api/articleattributevalue .post: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }
@@ -158,7 +158,7 @@ class ArticleController {
             try self.repository.removeAttributeValue(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("/api/articleattributevalue/\(id) .get: \(error)", logFile: "./error.log")
+            LogFile.error("\(request.uri) \(request.method): \(error)", logFile: "./error.log")
             response.badRequest(error: error)
         }
     }

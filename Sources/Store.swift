@@ -45,7 +45,7 @@ class Store: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.storeId =     getJSONValue(named: "storeId",     from: values, defaultValue: 0)
+        self.storeId =      getJSONValue(named: "storeId",      from: values, defaultValue: 0)
         self.storeName =    getJSONValue(named: "storeName",    from: values, defaultValue: "")
         self.storeAddress = getJSONValue(named: "storeAddress", from: values, defaultValue: "")
         self.storeCity =    getJSONValue(named: "storeCity",    from: values, defaultValue: "")
@@ -65,8 +65,6 @@ class Store: PostgresSqlORM, JSONConvertible {
             "storeCity": storeCity,
             "storeCountry": storeCountry,
             "storeZip": storeZip
-//            "created": created.formatDate(),
-//            "updated": updated.formatDate()
         ]
     }
 }

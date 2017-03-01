@@ -49,7 +49,7 @@ open class PostgresSqlORM: PostgresStORM {
                     if child.value is Int && opt.count == 0 {
                         verbage += "serial"
                     } else if child.value is Int {
-                        verbage += "integer"
+                        verbage += "integer DEFAULT 0"
                         if key.hasSuffix("Id") {
                             var table = key.substring(to: key.index(key.endIndex, offsetBy: -2)) + "s"
                             if table.hasSuffix("ys") {
@@ -59,10 +59,12 @@ open class PostgresSqlORM: PostgresStORM {
                         }
                     } else if child.value is Bool {
                         verbage += "boolean DEFAULT false"
+                    } else if child.value is Character {
+                        verbage += "char DEFAULT ' '"
                     } else if child.value is [String:Any] {
                         verbage += "jsonb"
                     } else if child.value is Double {
-                        verbage += "double precision"
+                        verbage += "double precision DEFAULT 0"
                     } else if child.value is UInt || child.value is UInt8 || child.value is UInt16 || child.value is UInt32 || child.value is UInt64 {
                         verbage += "bytea"
                     } else {
