@@ -12,18 +12,18 @@ import PerfectLib
 
 class Attribute: PostgresSqlORM, JSONConvertible {
     
-    public var attributeId		: Int = 0
-    public var attributeName	: String = ""
-    public var created          : Int = Int.now()
-    public var updated          : Int = Int.now()
+    public var attributeId	: Int = 0
+    public var attributeName : String = ""
+    public var created : Int = Int.now()
+    public var updated : Int = Int.now()
     
     open override func table() -> String { return "attributes" }
     
     open override func to(_ this: StORMRow) {
-        attributeId		= this.data["attributeid"] as? Int      ?? 0
-        attributeName	= this.data["attributename"] as? String ?? ""
-        created         = this.data["created"] as? Int          ?? 0
-        updated         = this.data["updated"] as? Int          ?? 0
+        attributeId = this.data["attributeid"] as? Int ?? 0
+        attributeName = this.data["attributename"] as? String ?? ""
+        created = this.data["created"] as? Int ?? 0
+        updated = this.data["updated"] as? Int ?? 0
     }
     
     func rows() -> [Attribute] {
@@ -37,8 +37,8 @@ class Attribute: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.attributeId =      getJSONValue(named: "attributeId",      from: values, defaultValue: 0)
-        self.attributeName =    getJSONValue(named: "attributeName",    from: values, defaultValue: "")
+        self.attributeId = getJSONValue(named: "attributeId", from: values, defaultValue: 0)
+        self.attributeName = getJSONValue(named: "attributeName", from: values, defaultValue: "")
     }
 
     func jsonEncodedString() throws -> String {

@@ -12,18 +12,18 @@ import PerfectLib
 
 class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
     
-    public var articleAttributeValueId	: Int = 0
-    public var articleId                : Int = 0
-    public var productAttributeValueId  : Int = 0
+    public var articleAttributeValueId : Int = 0
+    public var articleId : Int = 0
+    public var productAttributeValueId : Int = 0
     
 //    public var _productAttributeValue: ProductAttributeValue = ProductAttributeValue()
 
     open override func table() -> String { return "articleattributevalues" }
     
     open override func to(_ this: StORMRow) {
-        articleAttributeValueId	= this.data["articleattributevalueid"] as? Int  ?? 0
-        articleId               = this.data["articleid"] as? Int                ?? 0
-        productAttributeValueId = this.data["productattributevalueid"] as? Int  ?? 0
+        articleAttributeValueId = this.data["articleattributevalueid"] as? Int ?? 0
+        articleId = this.data["articleid"] as? Int ?? 0
+        productAttributeValueId = this.data["productattributevalueid"] as? Int ?? 0
     }
     
     func rows() throws -> [ArticleAttributeValue] {
@@ -43,9 +43,9 @@ class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.articleAttributeValueId =  getJSONValue(named: "articleAttributeValueId",  from: values, defaultValue: 0)
-        self.articleId =                getJSONValue(named: "articleId",                from: values, defaultValue: 0)
-        self.productAttributeValueId =  getJSONValue(named: "productAttributeValueId",  from: values, defaultValue: 0)
+        self.articleAttributeValueId = getJSONValue(named: "articleAttributeValueId", from: values, defaultValue: 0)
+        self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
+        self.productAttributeValueId = getJSONValue(named: "productAttributeValueId",  from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {

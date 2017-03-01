@@ -23,13 +23,13 @@ class Stock: PostgresSqlORM, JSONConvertible {
     open override func table() -> String { return "stocks" }
     
     open override func to(_ this: StORMRow) {
-        stockId     = this.data["stockid"] as? Int              ?? 0
-        storeId     = this.data["storeid"] as? Int              ?? 0
-        articleId   = this.data["articleid"] as? Int            ?? 0
-        quantity    = Double(this.data["quantity"] as? Float    ?? 0)
-        booked      = Double(this.data["booked"] as? Float      ?? 0)
-        created     = this.data["created"] as? Int              ?? 0
-        updated     = this.data["updated"] as? Int              ?? 0
+        stockId = this.data["stockid"] as? Int ?? 0
+        storeId = this.data["storeid"] as? Int ?? 0
+        articleId = this.data["articleid"] as? Int ?? 0
+        quantity = Double(this.data["quantity"] as? Float ?? 0)
+        booked = Double(this.data["booked"] as? Float ?? 0)
+        created = this.data["created"] as? Int ?? 0
+        updated = this.data["updated"] as? Int ?? 0
     }
     
     func rows() -> [Stock] {
@@ -43,11 +43,11 @@ class Stock: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.stockId =      getJSONValue(named: "stockId",      from: values, defaultValue: 0)
-        self.storeId =      getJSONValue(named: "storeId",      from: values, defaultValue: 0)
-        self.articleId =    getJSONValue(named: "articleId",    from: values, defaultValue: 0)
-        self.quantity =     getJSONValue(named: "quantity",     from: values, defaultValue: 0)
-        self.booked =       getJSONValue(named: "booked",       from: values, defaultValue: 0)
+        self.stockId = getJSONValue(named: "stockId", from: values, defaultValue: 0)
+        self.storeId = getJSONValue(named: "storeId", from: values, defaultValue: 0)
+        self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
+        self.quantity = getJSONValue(named: "quantity", from: values, defaultValue: 0)
+        self.booked = getJSONValue(named: "booked", from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {

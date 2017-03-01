@@ -35,15 +35,13 @@ class AccessTokenStore : PostgresStORM {
         return "tokens"
     }
     
-    
     /// Set incoming data from database to object
     open override func to(_ this: StORMRow) {
-        if let val = this.data["token"]		{ token		= val as! String }
+        if let val = this.data["token"]	{ token = val as! String }
         if let val = this.data["userid"]	{ userid	= val as! String }
-        if let val = this.data["created"]	{ created	= val as! Int }
-        if let val = this.data["updated"]	{ updated	= val as! Int }
-        if let val = this.data["idle"]		{ idle		= val as! Int}
-        
+        if let val = this.data["created"] { created	 = val as! Int }
+        if let val = this.data["updated"] { updated = val as! Int }
+        if let val = this.data["idle"]	 { idle = val as! Int}
     }
     
     /// Iterate through rows and set to object data

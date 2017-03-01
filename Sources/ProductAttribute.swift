@@ -13,19 +13,18 @@ import PerfectLib
 class ProductAttribute: PostgresSqlORM, JSONConvertible {
     
     public var productAttributeId	: Int = 0
-    public var productId            : Int = 0
-    public var attributeId          : Int = 0
+    public var productId : Int = 0
+    public var attributeId : Int = 0
     
     public var _attribute: Attribute = Attribute()
     public var _attributeValues: [ProductAttributeValue] = [ProductAttributeValue]()
 
-    
     open override func table() -> String { return "productattributes" }
     
     open override func to(_ this: StORMRow) {
-        productAttributeId	= this.data["productattributeid"] as? Int   ?? 0
-        productId           = this.data["productid"] as? Int            ?? 0
-        attributeId         = this.data["attributeid"] as? Int          ?? 0
+        productAttributeId	= this.data["productattributeid"] as? Int ?? 0
+        productId = this.data["productid"] as? Int ?? 0
+        attributeId = this.data["attributeid"] as? Int ?? 0
     }
     
     func rows() throws -> [ProductAttribute] {
@@ -54,8 +53,8 @@ class ProductAttribute: PostgresSqlORM, JSONConvertible {
     
     public func setJSONValues(_ values:[String:Any]) {
         //self.productAttributeId = getJSONValue(named: "productAttributeId", from: values, defaultValue: 0)
-        self.productId =    getJSONValue(named: "productId",    from: values, defaultValue: 0)
-        self.attributeId =  getJSONValue(named: "attributeId",  from: values["attribute"] as! [String : Any], defaultValue: 0)
+        self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
+        self.attributeId = getJSONValue(named: "attributeId", from: values["attribute"] as! [String : Any], defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {

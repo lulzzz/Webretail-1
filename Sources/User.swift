@@ -50,15 +50,15 @@ class User : PostgresSqlORM, Account, JSONConvertible {
     
     /// Set incoming data from database to object
     override open func to(_ this: StORMRow) {
-        uniqueID	= this.data["uniqueid"]     as? String ?? ""
-        username	= this.data["username"]     as? String ?? ""
-        password	= this.data["password"]     as? String ?? ""
-        firstname	= this.data["firstname"]    as? String ?? ""
-        lastname	= this.data["lastname"]     as? String ?? ""
-        email		= this.data["email"]        as? String ?? ""
-        isAdmin     = this.data["isadmin"]      as? Bool ?? false
-        facebookID	= this.data["facebookid"]   as? String ?? ""
-        googleID	= this.data["googleid"]     as? String ?? ""
+        uniqueID = this.data["uniqueid"] as? String ?? ""
+        username = this.data["username"] as? String ?? ""
+        password = this.data["password"] as? String ?? ""
+        firstname = this.data["firstname"] as? String ?? ""
+        lastname = this.data["lastname"] as? String ?? ""
+        email	 = this.data["email"] as? String ?? ""
+        isAdmin = this.data["isadmin"] as? Bool ?? false
+        facebookID = this.data["facebookid"] as? String ?? ""
+        googleID = this.data["googleid"] as? String ?? ""
     }
     
     /// Iterate through rows and set to object data
@@ -73,13 +73,13 @@ class User : PostgresSqlORM, Account, JSONConvertible {
     }
 
     public func setJSONValues(_ values:[String:Any]) {
-        self.uniqueID =     getJSONValue(named: "uniqueID",     from: values, defaultValue: "")
-        self.username =     getJSONValue(named: "username",     from: values, defaultValue: "")
-        self.password =     getJSONValue(named: "password",     from: values, defaultValue: "")
-        self.firstname =    getJSONValue(named: "firstname",    from: values, defaultValue: "")
-        self.lastname =     getJSONValue(named: "lastname",     from: values, defaultValue: "")
-        self.email =        getJSONValue(named: "email",        from: values, defaultValue: "")
-        self.isAdmin =      getJSONValue(named: "isAdmin",      from: values, defaultValue: false)
+        self.uniqueID = getJSONValue(named: "uniqueID", from: values, defaultValue: "")
+        self.username = getJSONValue(named: "username", from: values, defaultValue: "")
+        self.password = getJSONValue(named: "password", from: values, defaultValue: "")
+        self.firstname = getJSONValue(named: "firstname", from: values, defaultValue: "")
+        self.lastname = getJSONValue(named: "lastname", from: values, defaultValue: "")
+        self.email = getJSONValue(named: "email", from: values, defaultValue: "")
+        self.isAdmin = getJSONValue(named: "isAdmin", from: values, defaultValue: false)
     }
     
     func jsonEncodedString() throws -> String {
