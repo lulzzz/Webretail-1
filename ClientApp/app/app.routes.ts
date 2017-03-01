@@ -8,7 +8,8 @@ export const routes: Routes = [
     { path: 'brand', loadChildren: './modules/brand/brand.module#BrandModule' },
     { path: 'category', loadChildren: './modules/category/category.module#CategoryModule' },
     { path: 'attribute', loadChildren: './modules/attribute/attribute.module#AttributeModule' },
-    { path: 'product', loadChildren: './modules/product/product.module#ProductModule' }
+    { path: 'product', loadChildren: './modules/product/product.module#ProductModule' },
+    { path: 'causal', loadChildren: './modules/causal/causal.module#CausalModule' }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);

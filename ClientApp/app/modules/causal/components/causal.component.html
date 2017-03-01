@@ -1,0 +1,84 @@
+﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash" [responsive]="true"></p-confirmDialog>
+
+<div class="container-fluid">
+
+    <h2>Causals</h2>
+    <div class="global-search">
+        <i class="fa fa-search"></i>
+        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
+    </div>
+    <p>Items count: {{totalRecords}}</p>
+    <hr />
+
+    <p *ngIf="!causals"><em>Loading...</em></p>
+
+    <p-dataTable [style]="{'width': '100%'}" [value]="causals" selectionMode="none"
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
+        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
+        <p-column field="causalId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+        <p-column field="causalName" header="Name" [sortable]="true"></p-column>
+        <p-column [style]="{'width':'120px','text-align':'center'}" field="quantity" header="Quantity" [sortable]="true"></p-column>
+        <p-column [style]="{'width':'120px','text-align':'center'}" field="booked" header="Booked" [sortable]="true"></p-column>
+        <p-column [style]="{'width':'60px','text-align':'center'}">
+            <template pTemplate="header">
+                <button type="button" pButton (click)="addClick()" icon="fa-plus-circle"></button>
+            </template>
+            <template let-data="rowData" pTemplate="body">
+                <button type="button" pButton (click)="editClick(data)" icon="fa-edit"></button>
+            </template>
+        </p-column>
+        <p-column [style]="{'width':'60px','text-align':'center'}">
+            <template pTemplate="header">
+                <i class="fa fa-trash-o"></i>
+            </template>
+            <template let-data="rowData" pTemplate="body">
+                <button type="button" pButton (click)="deleteClick(data)" icon="fa-trash"></button>
+            </template>
+        </p-column>
+    </p-dataTable>
+
+    <p-dialog header="Causal" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <form [formGroup]="dataform">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="id">Id</label></div>
+                <div class="ui-grid-col-8">{{selected.causalId}}</div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="name" [(ngModel)]="selected.causalName"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                        <i class="fa fa-close"></i> Name is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="quantity">Quantity</label></div>
+                <div class="ui-grid-col-8">
+                    <p-selectButton formControlName="quantity" [options]="operators" [(ngModel)]="selected.quantity"></p-selectButton>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['quantity'].valid&&dataform.controls['quantity'].dirty">
+                        <i class="fa fa-close"></i> Quantity is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="booked">Booked</label></div>
+                <div class="ui-grid-col-8">
+                    <p-selectButton formControlName="booked" [options]="operators" [(ngModel)]="selected.booked"></p-selectButton>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['booked'].valid&&dataform.controls['booked'].dirty">
+                        <i class="fa fa-close"></i> Booked is required
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-8"></div>
+                <div class="ui-grid-col-4">
+                    <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    </p-dialog>
+
+</div>

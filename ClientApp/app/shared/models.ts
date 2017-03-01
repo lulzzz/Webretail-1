@@ -130,6 +130,19 @@ export class AttributeValue {
     public attributeValueName: string) { }
 }
 
+export class Causal {
+  public causalId: number;
+  public causalName: string;
+  public quantity: string;
+  public booked: string;
+
+  constructor() {
+    this.causalId = 0;
+    this.causalName = '';
+    this.quantity = ' ';
+    this.booked = ' ';
+  }
+}
 
 // Interfaces
 
