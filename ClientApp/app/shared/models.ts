@@ -133,14 +133,14 @@ export class AttributeValue {
 export class Causal {
   public causalId: number;
   public causalName: string;
-  public quantity: string;
-  public booked: string;
+  public quantity: number;
+  public booked: number;
 
   constructor() {
     this.causalId = 0;
     this.causalName = '';
-    this.quantity = ' ';
-    this.booked = ' ';
+    this.quantity = 0;
+    this.booked = 0;
   }
 }
 

@@ -28,9 +28,9 @@ export class CausalComponent implements OnInit {
         this.authenticationService.checkCredentials(false);
 
         this.operators = [];
-        this.operators.push({label: 'Increse', value: '+'});
-        this.operators.push({label: 'Nothing', value: ' '});
-        this.operators.push({label: 'Decrese', value: '-'});
+        this.operators.push({label: '+1', value: +1});
+        this.operators.push({label: '0', value: 0});
+        this.operators.push({label: '-1', value: -1});
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
@@ -42,7 +42,7 @@ export class CausalComponent implements OnInit {
             .subscribe(result => {
                 this.causals = result;
                 this.totalRecords = this.causals.length;
-            }
+            }, onerror => alert(onerror._body)
         );
     }
 

@@ -14,8 +14,8 @@ class Causal: PostgresSqlORM, JSONConvertible {
     
     public var causalId : Int = 0
     public var causalName : String = ""
-    public var quantity : Character = " "
-    public var booked  : Character = " "
+    public var quantity : Int = 0
+    public var booked  : Int = 0
     public var created : Int = Int.now()
     public var updated : Int = Int.now()
     
@@ -24,8 +24,8 @@ class Causal: PostgresSqlORM, JSONConvertible {
     open override func to(_ this: StORMRow) {
         causalId  = this.data["causalid"] as? Int ?? 0
         causalName = this.data["causalname"] as? String ?? ""
-        quantity = this.data["quantity"] as? Character ?? " "
-        booked = this.data["booked"] as? Character ?? " "
+        quantity = this.data["quantity"] as? Int ?? 0
+        booked = this.data["booked"] as? Int ?? 0
         created = this.data["created"] as? Int ?? 0
         updated = this.data["updated"] as? Int ?? 0
     }
@@ -43,8 +43,8 @@ class Causal: PostgresSqlORM, JSONConvertible {
     public func setJSONValues(_ values:[String:Any]) {
         self.causalId = getJSONValue(named: "causalId", from: values, defaultValue: 0)
         self.causalName = getJSONValue(named: "causalName", from: values, defaultValue: "")
-        self.quantity = Character(getJSONValue(named: "quantity", from: values, defaultValue: ""))
-        self.booked = Character(getJSONValue(named: "booked",  from: values, defaultValue: ""))
+        self.quantity = getJSONValue(named: "quantity", from: values, defaultValue: 0)
+        self.booked = getJSONValue(named: "booked",  from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {
