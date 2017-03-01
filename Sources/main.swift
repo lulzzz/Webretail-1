@@ -20,6 +20,7 @@
 import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
+import PerfectLogger
 import PerfectRequestLogger
 import PostgresStORM
 import StORM
@@ -28,6 +29,7 @@ import TurnstileWeb
 
 
 StORMdebug = true
+LogFile.location = "./error.log"
 RequestLogFile.location = "./requests.log"
 
 // Used later in script for the Realm and how the user authenticates.
