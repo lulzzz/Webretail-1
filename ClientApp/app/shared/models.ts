@@ -144,6 +144,46 @@ export class Causal {
   }
 }
 
+export class Movement {
+  public movementId: number;
+  public storeId: number;
+  public causalId: number;
+  public movementDesc: string;
+  public movementNote: string;
+  public movementUser: string;
+  public created: Date;
+  public updated: Date;
+
+  constructor() {
+    this.movementId = 0;
+    this.storeId = 0;
+    this.causalId = 0;
+    this.movementDesc = '';
+    this.movementNote = '';
+    this.movementUser = '';
+    this.created = new Date();
+    this.updated = new Date();
+  }
+}
+
+export class MovementArticle {
+  public movementArticleId: number;
+  public movementId: number;
+  public articleId: number;
+  public quantity: number;
+  public created: Date;
+  public updated: Date;
+
+  constructor() {
+    this.movementArticleId = 0;
+    this.movementId = 0;
+    this.articleId = 0;
+    this.quantity = 0;
+    this.created = new Date();
+    this.updated = new Date();
+  }
+}
+
 // Interfaces
 
 export interface Token {

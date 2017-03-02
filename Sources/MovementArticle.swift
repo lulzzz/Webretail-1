@@ -45,8 +45,8 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         self.movementId = getJSONValue(named: "movementId", from: values, defaultValue: 0)
         self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
         self.quantity = getJSONValue(named: "quantity", from: values, defaultValue: 0)
-        self.created = getJSONValue(named: "created", from: values, defaultValue: Int.now())
-        self.updated = getJSONValue(named: "updated", from: values, defaultValue: Int.now())
+        self.created = getJSONValue(named: "created", from: values, defaultValue: 0)
+        self.updated = getJSONValue(named: "updated", from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {

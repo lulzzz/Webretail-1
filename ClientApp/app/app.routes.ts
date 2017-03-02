@@ -9,7 +9,8 @@ export const routes: Routes = [
     { path: 'category', loadChildren: './modules/category/category.module#CategoryModule' },
     { path: 'attribute', loadChildren: './modules/attribute/attribute.module#AttributeModule' },
     { path: 'product', loadChildren: './modules/product/product.module#ProductModule' },
-    { path: 'causal', loadChildren: './modules/causal/causal.module#CausalModule' }
+    { path: 'causal', loadChildren: './modules/causal/causal.module#CausalModule' },
+    { path: 'movement', loadChildren: './modules/movement/movement.module#MovementModule' }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);
