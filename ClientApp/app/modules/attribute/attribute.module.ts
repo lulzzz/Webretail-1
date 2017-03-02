@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-    ConfirmDialogModule, ConfirmationService,
+    ConfirmDialogModule, ConfirmationService, ToolbarModule,
     DataTableModule, SharedModule, PaginatorModule,
     DialogModule, InputTextModule, ButtonModule
 } from 'primeng/primeng';
@@ -14,7 +14,7 @@ import { AttributeService } from './../../services/attribute.service';
 
 @NgModule({
     imports: [
-        FormsModule, ReactiveFormsModule,
+        FormsModule, ReactiveFormsModule, ToolbarModule,
         ButtonModule, DataTableModule, SharedModule,
         PaginatorModule, DialogModule, InputTextModule, ConfirmDialogModule,
         CommonModule,

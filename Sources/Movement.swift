@@ -21,6 +21,9 @@ class Movement: PostgresSqlORM, JSONConvertible {
     public var created : Int = Int.now()
     public var updated : Int = Int.now()
     
+    public var _store : Store = Store()
+    public var _causal : Causal = Causal()
+    
     open override func table() -> String { return "movements" }
     
     open override func to(_ this: StORMRow) {
@@ -34,11 +37,22 @@ class Movement: PostgresSqlORM, JSONConvertible {
         updated = this.data["updated"] as? Int ?? 0
     }
     
-    func rows() -> [Movement] {
+    func rows() throws -> [Movement] {
         var rows = [Movement]()
         for i in 0..<self.results.rows.count {
             let row = Movement()
             row.to(self.results.rows[i])
+
+            // get store
+            let store = Store()
+            try store.get(row.storeId)
+            row._store = store
+
+            // get causal
+            let causal = Causal()
+            try causal.get(row.causalId)
+            row._causal = causal
+
             rows.append(row)
         }
         return rows
@@ -46,13 +60,17 @@ class Movement: PostgresSqlORM, JSONConvertible {
     
     public func setJSONValues(_ values:[String:Any]) {
         self.movementId =  getJSONValue(named: "movementId", from: values, defaultValue: 0)
-        self.storeId = getJSONValue(named: "storeId", from: values, defaultValue: 0)
-        self.causalId = getJSONValue(named: "causalId", from: values, defaultValue: 0)
+        let store = Store()
+        store.setJSONValues(getJSONValue(named: "store", from: values, defaultValue: [String:Any]()))
+        self._store = store
+        self.storeId =  store.storeId
+        let causal = Causal()
+        causal.setJSONValues(getJSONValue(named: "causal", from: values, defaultValue: [String:Any]()))
+        self._causal = causal
+        self.causalId =  causal.causalId
         self.movementDesc = getJSONValue(named: "movementDesc", from: values, defaultValue: "")
         self.movementNote = getJSONValue(named: "movementNote", from: values, defaultValue: "")
         self.movementUser = getJSONValue(named: "movementUser", from: values, defaultValue: "")
-        self.created = getJSONValue(named: "created", from: values, defaultValue: 0)
-        self.updated = getJSONValue(named: "updated", from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {
@@ -62,8 +80,8 @@ class Movement: PostgresSqlORM, JSONConvertible {
     func getJSONValues() -> [String : Any] {
         return [
             "movementId": movementId,
-            "storeId": storeId,
-            "causalId": causalId,
+            "store": _store,
+            "causal": _causal,
             "movementDesc": movementDesc,
             "movementNote": movementNote,
             "movementUser": movementUser,

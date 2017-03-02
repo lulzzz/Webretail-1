@@ -21,6 +21,7 @@ public class AngularController {
         routes.add(method: .get, uri: "/category", handler: angularHandlerGET)
         routes.add(method: .get, uri: "/attribute", handler: angularHandlerGET)
         routes.add(method: .get, uri: "/product", handler: angularHandlerGET)
+        routes.add(method: .get, uri: "/movement", handler: angularHandlerGET)
         
         return routes
     }

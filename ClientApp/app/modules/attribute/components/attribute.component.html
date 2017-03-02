@@ -3,13 +3,22 @@
 <div class="container-fluid">
 
     <h2>Attributes</h2>
-    <div class="global-search">
-        <i class="fa fa-search"></i>
-        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
-    </div>
     <p>Items count: {{totalRecords}}</p>
     <hr />
   
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
+            <i class="fa fa-search"></i>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
+            <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <i class="fa fa-bars"></i>
+            <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash"></button>
+        </div>
+    </p-toolbar>
+
     <p *ngIf="!attributes"><em>Loading...</em></p>
 
     <p-dataTable [style]="{'width': '100%'}" [value]="attributes" 
@@ -17,22 +26,6 @@
         [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
         <p-column field="attributeId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="attributeName" header="Name" [sortable]="true"></p-column>
-        <p-column [style]="{'width':'60px','text-align':'center'}">
-            <template pTemplate="header">
-                <button type="button" pButton (click)="addClick()" icon="fa-plus-circle"></button>
-            </template>
-            <template let-data="rowData" pTemplate="body">
-                <button type="button" pButton (click)="editClick(data)" icon="fa-edit"></button>
-            </template>
-        </p-column>
-        <p-column [style]="{'width':'60px','text-align':'center'}">
-            <template pTemplate="header">
-                <i class="fa fa-trash-o"></i>
-            </template>
-            <template let-data="rowData" pTemplate="body">
-                <button type="button" pButton (click)="deleteClick(data)" icon="fa-trash"></button>
-            </template>
-        </p-column>
    </p-dataTable>
 
     <p-dialog header="Attribute" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
@@ -63,35 +56,26 @@
     
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 20px">
 
-    <div>
-        <h3>Attribute Values</h3>
-        <p>List of attribute values: {{totalValues}}</p>
-    </div>
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <h4>Attribute values: {{totalValues}}</h4>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <button pButton type="button" (click)="addValueClick()" class="ui-button-primary" icon="fa-plus-square"></button>
+            <button pButton type="button" (click)="editValueClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <i class="fa fa-bars"></i>
+            <button pButton type="button" (click)="deleteValueClick()" class="ui-button-danger" icon="fa-trash"></button>
+        </div>
+    </p-toolbar>
     
-    <p-dataTable [style]="{'width': '100%'}" [value]="values" selectionMode="none"
+    <p-dataTable [style]="{'width': '100%'}" [value]="values" selectionMode="single" [(selection)]="selectedValue"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
         [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
         <p-column field="attributeValueId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="attributeValueCode" header="Code" [sortable]="true"></p-column>
         <p-column field="attributeValueName" header="Name" [sortable]="true"></p-column>
-        <p-column [style]="{'width':'60px','text-align':'center'}">
-            <template pTemplate="header">
-                <button type="button" pButton (click)="addValueClick()" icon="fa-plus-circle"></button>
-            </template>
-            <template let-data="rowData" pTemplate="body">
-                <button type="button" pButton (click)="editValueClick(data)" icon="fa-edit"></button>
-            </template>
-        </p-column>
-        <p-column [style]="{'width':'5%','text-align':'center'}">
-            <template pTemplate="header">
-                <i class="fa fa-trash-o"></i>
-            </template>
-            <template let-data="rowData" pTemplate="body">
-                <button type="button" pButton (click)="deleteValueClick(data)" icon="fa-trash"></button>
-            </template>
-        </p-column>
     </p-dataTable>
 
     <p-dialog header="Attribute Value" [(visible)]="displayDialogValue" [responsive]="true" showEffect="fade" [modal]="true">

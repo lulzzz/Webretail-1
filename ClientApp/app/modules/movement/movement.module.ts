@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-    ConfirmDialogModule, ConfirmationService,
+    ConfirmDialogModule, ConfirmationService, ToolbarModule,
     DataTableModule, SharedModule, PaginatorModule,
     DialogModule, InputTextModule, ButtonModule, DropdownModule
 } from 'primeng/primeng';
@@ -15,7 +15,7 @@ import { MovementService } from './../../services/movement.service';
 
 @NgModule({
     imports: [
-        FormsModule, ReactiveFormsModule,
+        FormsModule, ReactiveFormsModule, ToolbarModule,
         DataTableModule, SharedModule, ConfirmDialogModule,
         PaginatorModule, DialogModule, InputTextModule,
         ButtonModule, DropdownModule,

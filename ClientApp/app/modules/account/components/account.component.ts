@@ -47,8 +47,7 @@ export class AccountComponent implements OnInit {
 
     get selectedIndex(): number { return this.accounts.indexOf(this.selected); }
 
-    editClick(item: Account) {
-        this.selected = item;
+    editClick() {
         this.displayDialog = true;
     }
 
@@ -76,8 +75,7 @@ export class AccountComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick(item: Account) {
-        this.selected = item;
+    deleteClick() {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete this account?',
             accept: () => {

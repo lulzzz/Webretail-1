@@ -19,7 +19,7 @@ class MovementRepository : MovementProtocol {
         let items = Movement()
         try items.findAll()
         
-        return items.rows()
+        return try items.rows()
     }
     
     func get(id: Int) throws -> Movement? {

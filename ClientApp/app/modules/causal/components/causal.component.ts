@@ -55,8 +55,7 @@ export class CausalComponent implements OnInit {
         this.displayDialog = true;
     }
 
-    editClick(item: Causal) {
-        this.selected = item;
+    editClick() {
         this.displayDialog = true;
     }
 
@@ -76,8 +75,7 @@ export class CausalComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick(item: Causal) {
-        this.selected = item;
+    deleteClick() {
         this.confirmationService.confirm({
             message: 'All related movements will be deleted. Are you sure that you want to delete this causal?',
             accept: () => {

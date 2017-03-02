@@ -69,8 +69,7 @@ export class AttributeComponent implements OnInit {
         this.displayDialog = true;
     }
 
-    editClick(item: Attribute) {
-        this.selected = item;
+    editClick() {
         this.displayDialog = true;
     }
 
@@ -88,8 +87,7 @@ export class AttributeComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick(item: Attribute) {
-        this.selected = item;
+    deleteClick() {
         this.confirmationService.confirm({
             message: 'All values of this attribute and related articles will be deleted. Are you sure that you want to delete this attribute?',
             accept: () => {
@@ -113,8 +111,7 @@ export class AttributeComponent implements OnInit {
         }
     }
 
-    editValueClick(item: AttributeValue) {
-        this.selectedValue = item;
+    editValueClick() {
         this.displayDialogValue = true;
     }
 
@@ -134,8 +131,7 @@ export class AttributeComponent implements OnInit {
         this.displayDialogValue = false;
     }
 
-    deleteValueClick(item: AttributeValue) {
-        this.selectedValue = item;
+    deleteValueClick() {
         this.confirmationService.confirm({
             message: 'All related articles of this attribute value will be deleted. Are you sure that you want to delete this attribute value?',
             accept: () => {

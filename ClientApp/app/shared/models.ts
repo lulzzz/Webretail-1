@@ -146,8 +146,10 @@ export class Causal {
 
 export class Movement {
   public movementId: number;
-  public storeId: number;
-  public causalId: number;
+  //public storeId: number;
+  //public causalId: number;
+  public store: Store;
+  public causal: Causal;
   public movementDesc: string;
   public movementNote: string;
   public movementUser: string;
@@ -156,8 +158,10 @@ export class Movement {
 
   constructor() {
     this.movementId = 0;
-    this.storeId = 0;
-    this.causalId = 0;
+    //this.storeId = 0;
+    //this.causalId = 0;
+    this.store = new Store();
+    this.causal = new Causal();
     this.movementDesc = '';
     this.movementNote = '';
     this.movementUser = '';

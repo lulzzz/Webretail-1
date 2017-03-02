@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { AuthenticationService } from './../../../services/authentication.service';
@@ -19,11 +20,14 @@ export class MovementsComponent implements OnInit {
     movements: Movement[];
 	selected: Movement;
     stores: SelectItem[];
+    storesFiltered: SelectItem[];
     causals: SelectItem[];
+    causalsFiltered: SelectItem[];
     displayDialog: boolean;
 	dataform: FormGroup;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private router: Router,
+                private authenticationService: AuthenticationService,
                 private storeService: StoreService,
                 private causalService: CausalService,
                 private movementService: MovementService,
@@ -37,13 +41,14 @@ export class MovementsComponent implements OnInit {
             'store': new FormControl('', Validators.required),
             'causal': new FormControl('', Validators.required),
             'desc': new FormControl('', Validators.required),
-            'note': new FormControl('', Validators.required)
+            'note': new FormControl('', Validators.nullValidator)
         });
 
         this.movementService.getAll()
             .subscribe(result => {
                 this.movements = result;
                 this.totalRecords = this.movements.length;
+                this.buildFilter(result);
             }
         );
 
@@ -60,6 +65,18 @@ export class MovementsComponent implements OnInit {
         );
     }
 
+    buildFilter(items: Movement[]) {
+        this.storesFiltered = [];
+        this.storesFiltered.push({label: 'All', value: null});
+        let filterStores = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.store.storeName)));
+        this.storesFiltered = this.storesFiltered.concat(filterStores);
+
+        this.causalsFiltered = [];
+        this.causalsFiltered.push({label: 'All', value: null});
+        let filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.causal.causalName)));
+        this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
+    }
+
     get isNew() : boolean { return this.selected == null || this.selected.movementId == 0; }
 
     get selectedIndex(): number { return this.movements.indexOf(this.selected); }
@@ -67,16 +84,15 @@ export class MovementsComponent implements OnInit {
     addClick() {
         this.selected = new Movement();
         if (this.stores.length > 0) {
-            this.selected.storeId = this.stores[0].value;
+            this.selected.store.storeId = this.stores[0].value;
         }
         if (this.causals.length > 0) {
-            this.selected.causalId = this.causals[0].value;
+            this.selected.causal.causalId = this.causals[0].value;
         }
         this.displayDialog = true;
     }
 
-    editClick(item: Movement) {
-        this.selected = item;
+    editClick() {
         this.displayDialog = true;
     }
 
@@ -96,8 +112,7 @@ export class MovementsComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick(item: Movement) {
-        this.selected = item;
+    deleteClick() {
         this.confirmationService.confirm({
             message: 'All related items will be deleted. Are you sure that you want to delete this movement?',
             accept: () => {
@@ -109,5 +124,9 @@ export class MovementsComponent implements OnInit {
                 this.displayDialog = false;
             }
         });
+    }
+
+    onRowSelect(event: any) {
+        this.router.navigateByUrl('movement/' + this.selected.movementId);
     }
 }

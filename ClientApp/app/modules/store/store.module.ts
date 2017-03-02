@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-    ConfirmDialogModule, ConfirmationService,
+    ConfirmDialogModule, ConfirmationService, ToolbarModule,
     DataTableModule, SharedModule, PaginatorModule,
     DialogModule, InputTextModule, ButtonModule
 } from 'primeng/primeng';
@@ -15,7 +15,7 @@ import { StoreService } from './../../services/store.service';
 @NgModule({
     imports: [
         FormsModule, ReactiveFormsModule,
-        DataTableModule, SharedModule, ConfirmDialogModule,
+        DataTableModule, SharedModule, ConfirmDialogModule, ToolbarModule,
         PaginatorModule, DialogModule, InputTextModule, ButtonModule,
         CommonModule,
         StoreRoutes

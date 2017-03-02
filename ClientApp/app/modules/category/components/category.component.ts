@@ -48,8 +48,7 @@ export class CategoryComponent implements OnInit {
         this.displayDialog = true;
     }
 
-    editClick(item: Category) {
-        this.selected = item;
+    editClick() {
         this.displayDialog = true;
     }
 
@@ -69,8 +68,7 @@ export class CategoryComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick(item: Category) {
-        this.selected = item;
+    deleteClick() {
         this.confirmationService.confirm({
             message: 'All associations with the products will be deleted. Are you sure that you want to delete this category?',
             accept: () => {

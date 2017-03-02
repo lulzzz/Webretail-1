@@ -3,12 +3,21 @@
 <div class="container-fluid">
 
     <h2>Products</h2>
-    <div class="global-search">
-        <i class="fa fa-search"></i>
-        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
-    </div>
     <p>Items count: {{totalRecords}}</p>
     <hr />
+
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
+            <i class="fa fa-search"></i>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
+            <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <i class="fa fa-bars"></i>
+            <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash"></button>
+        </div>
+    </p-toolbar>
 
     <p *ngIf="!products"><em>Loading...</em></p>
 
@@ -23,7 +32,7 @@
                 <p-multiSelect [options]="names" defaultLabel="All" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-multiSelect>
             </template>
         </p-column>
-        <p-column field="brand.brandName" header="Brand" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="in">
+        <p-column field="brand.brandName" header="Brand" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="brands" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
@@ -44,22 +53,6 @@
             </template>
             <template let-col let-data="rowData" pTemplate="body">
                 {{data.sellingPrice | currency: 'EUR' : true}}
-            </template>
-        </p-column>
-        <p-column [style]="{'width':'60px','text-align':'center'}">
-            <template pTemplate="header">
-                <button type="button" pButton (click)="addClick()" icon="fa-plus-circle"></button>
-            </template>
-            <template let-data="rowData" pTemplate="body">
-                <button type="button" pButton (click)="editClick(data)" icon="fa-edit"></button>
-            </template>
-        </p-column>
-        <p-column [style]="{'width':'60px','text-align':'center'}">
-            <template pTemplate="header">
-                <i class="fa fa-trash-o"></i>
-            </template>
-            <template let-data="rowData" pTemplate="body">
-                <button type="button" pButton (click)="deleteClick(data)" icon="fa-trash"></button>
             </template>
         </p-column>
     </p-dataTable>

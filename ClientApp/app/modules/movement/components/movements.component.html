@@ -3,34 +3,38 @@
 <div class="container-fluid">
 
     <h2>Movements</h2>
-    <div class="global-search">
-        <i class="fa fa-search"></i>
-        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
-    </div>
     <p>Items count: {{totalRecords}}</p>
     <hr />
 
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
+            <i class="fa fa-search"></i>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
+            <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <i class="fa fa-bars"></i>
+            <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash"></button>
+        </div>
+    </p-toolbar>
+
     <p *ngIf="!movements"><em>Loading...</em></p>
 
-    <p-dataTable [style]="{'width': '100%'}" [value]="movements" selectionMode="none"
+    <p-dataTable [style]="{'width': '100%'}" [value]="movements" selectionMode="single" [(selection)]="selected"
+        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
         [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
-        <p-column field="movementId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
-        <p-column field="movementDesc" header="Description" [sortable]="true"></p-column>
-        <p-column [style]="{'width':'60px','text-align':'center'}">
-            <template pTemplate="header">
-                <button type="button" pButton (click)="addClick()" icon="fa-plus-circle"></button>
-            </template>
-            <template let-data="rowData" pTemplate="body">
-                <button type="button" pButton (click)="editClick(data)" icon="fa-edit"></button>
+        <p-column field="movementId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="movementDesc" header="Description" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="causalsFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>
-        <p-column [style]="{'width':'60px','text-align':'center'}">
-            <template pTemplate="header">
-                <i class="fa fa-trash-o"></i>
-            </template>
-            <template let-data="rowData" pTemplate="body">
-                <button type="button" pButton (click)="deleteClick(data)" icon="fa-trash"></button>
+        <p-column field="store.storeName" header="Store" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="storesFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>
     </p-dataTable>
@@ -43,22 +47,22 @@
                 <div class="ui-grid-col-8">{{selected.movementId}}</div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="store">Store</label></div>
-                <div class="ui-grid-col-8">
-                    <p-dropdown [options]="stores" formControlName="store" [(ngModel)]="selected.store" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['store'].valid&&dataform.controls['store'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['store'].errors['required']">Store is required</span>
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="causal">Causal</label></div>
                 <div class="ui-grid-col-8">
                     <p-dropdown [options]="causals" formControlName="causal" [(ngModel)]="selected.causal" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                     <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['causal'].valid&&dataform.controls['causal'].dirty">
                         <i class="fa fa-close"></i>
                         <span *ngIf="dataform.controls['causal'].errors['required']">Causal is required</span>
+                    </div>
+               </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="store">Store</label></div>
+                <div class="ui-grid-col-8">
+                    <p-dropdown [options]="stores" formControlName="store" [(ngModel)]="selected.store" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['store'].valid&&dataform.controls['store'].dirty">
+                        <i class="fa fa-close"></i>
+                        <span *ngIf="dataform.controls['store'].errors['required']">Store is required</span>
                     </div>
                </div>
             </div>
@@ -75,9 +79,6 @@
                 <div class="ui-grid-col-4"><label for="note">Note</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="note" [(ngModel)]="selected.movementNote"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['note'].valid&&dataform.controls['note'].dirty">
-                        <i class="fa fa-close"></i> Note is required
-                    </div>
                </div>
             </div>
             <div class="ui-grid-row">

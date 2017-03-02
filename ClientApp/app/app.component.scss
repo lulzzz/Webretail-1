@@ -1,6 +1,7 @@
 body {
   padding-top: 60px;
   font-size: medium;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
 .starter-template {
@@ -38,4 +39,10 @@ a {
 
 .ui-growl {
   margin-top: 40px;
+}
+
+body .ui-widget-header {
+  border: none;
+  margin-bottom: 10px;
+  padding: 0px;
 }

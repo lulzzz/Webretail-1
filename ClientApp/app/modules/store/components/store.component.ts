@@ -51,8 +51,7 @@ export class StoreComponent implements OnInit {
         this.displayDialog = true;
     }
 
-    editClick(item: Store) {
-        this.selected = item;
+    editClick() {
         this.displayDialog = true;
     }
 
@@ -72,8 +71,7 @@ export class StoreComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick(item: Store) {
-        this.selected = item;
+    deleteClick() {
         this.confirmationService.confirm({
             message: 'All related articles stocks will be deleted. Are you sure that you want to delete this store?',
             accept: () => {

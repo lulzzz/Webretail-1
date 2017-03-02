@@ -91,9 +91,8 @@ export class ProductsComponent implements OnInit {
         this.displayDialog = true;
     }
 
-    editClick(item: Product) {
-    	this.selected = item;
-        this.displayDialog = true;
+    editClick() {
+    	this.displayDialog = true;
     }
 
     saveClick() {
@@ -113,8 +112,7 @@ export class ProductsComponent implements OnInit {
         this.displayDialog = false;
     }
 
-    deleteClick(item: Product) {
-        this.selected = item;
+    deleteClick() {
         this.confirmationService.confirm({
             message: 'All information related to this product will be deleted. Are you sure that you want to delete this product?',
             accept: () => {

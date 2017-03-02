@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-    ConfirmDialogModule, ConfirmationService,
+    ConfirmDialogModule, ConfirmationService, ToolbarModule,
     DataTableModule, SharedModule, PaginatorModule,
     DialogModule, InputTextModule, InputSwitchModule, ButtonModule
 } from 'primeng/primeng';
@@ -15,7 +15,7 @@ import { MyInfoComponent } from './components/myinfo.component';
 
 @NgModule({
     imports: [
-        FormsModule, ReactiveFormsModule,
+        FormsModule, ReactiveFormsModule, ToolbarModule,
         DataTableModule, SharedModule, PaginatorModule, ConfirmDialogModule,
         DialogModule, InputTextModule, InputSwitchModule, ButtonModule,
         CommonModule,
