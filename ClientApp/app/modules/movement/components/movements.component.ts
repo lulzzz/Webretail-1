@@ -126,7 +126,7 @@ export class MovementsComponent implements OnInit {
         });
     }
 
-    onRowSelect(event: any) {
+    openClick() {
         this.router.navigateByUrl('movement/' + this.selected.movementId);
     }
 }

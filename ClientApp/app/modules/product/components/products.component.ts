@@ -80,7 +80,7 @@ export class ProductsComponent implements OnInit {
         this.categories = this.categories.concat(filterCategories);
     }
 
-    onRowSelect(event: any) {
+    openClick() {
         this.router.navigateByUrl('product/' + this.selected.productId);
     }
 

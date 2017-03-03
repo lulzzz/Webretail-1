@@ -46,3 +46,8 @@ body .ui-widget-header {
   margin-bottom: 10px;
   padding: 0px;
 }
+
+body .ui-toolbar-group-right button,
+body .ui-toolbar-group-right i {
+  margin-left: 10px;
+}

@@ -14,6 +14,7 @@
         <div class="ui-toolbar-group-right">
             <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
             <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
             <i class="fa fa-bars"></i>
             <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash"></button>
         </div>
@@ -22,7 +23,7 @@
     <p *ngIf="!products"><em>Loading...</em></p>
 
     <p-dataTable [style]="{'width': '100%'}" [value]="products | priceFilter:sliderValue" 
-        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)" 
+        selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
         [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
         <p-column field="productId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
