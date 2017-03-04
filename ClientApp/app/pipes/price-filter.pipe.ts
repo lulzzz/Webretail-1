@@ -16,6 +16,6 @@ export class PriceFilterPipe implements PipeTransform {
     }
 
     let maxPrice = args;
-    return value.filter(item => item.productPrice <= maxPrice);
+    return value.filter(item => item.sellingPrice <= maxPrice);
   }
 }
