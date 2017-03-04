@@ -16,6 +16,7 @@ import { Helpers } from './../../../shared/helpers';
 
 export class MovementComponent implements OnInit, OnDestroy {
     private sub: any;
+    movementId: number;
     totalRecords = 0;
     items: MovementArticle[];
 	selected: MovementArticle;
@@ -34,8 +35,8 @@ export class MovementComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            let id = params['id'];
-            this.movementService.getItemsById(id)
+            this.movementId = params['id'];
+            this.movementService.getItemsById(this.movementId)
                 .subscribe(result => {
                     this.items = result;
                 }//, onerror => alert('ERROR: ' + onerror)
@@ -43,7 +44,7 @@ export class MovementComponent implements OnInit, OnDestroy {
         });
 
         this.dataform = this.fb.group({
-            'article': new FormControl('', Validators.required),
+            'barcode': new FormControl('', Validators.required),
             'quantity': new FormControl('', Validators.required)
         });
 
@@ -61,12 +62,13 @@ export class MovementComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.movementId == 0; }
+    get isNew() : boolean { return this.selected == null || this.selected.movementArticleId == 0; }
 
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
     addClick() {
         this.selected = new MovementArticle();
+        this.selected.movementId = this.movementId;
         this.displayDialog = true;
     }
 

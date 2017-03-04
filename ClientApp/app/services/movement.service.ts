@@ -42,6 +42,7 @@ export class MovementService {
     }
 
     createItem(model: MovementArticle) : Observable<MovementArticle> {
+        alert(JSON.stringify(model));
         return this.http.post('/api/movementarticle', model, { headers: Helpers.getHeaders() })
             .map(result => <MovementArticle>result.json());
     }

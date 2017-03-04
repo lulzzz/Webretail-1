@@ -38,7 +38,7 @@ class ArticleRepository : ArticleProtocol {
         try productAttribute.select(
             whereclause: "productId = $1",
             params: [productId],
-            orderby: ["attributeId"]
+            orderby: ["productAttributeId"]
         )
         let productAttributes = try productAttribute.rows()
         
@@ -88,15 +88,15 @@ class ArticleRepository : ArticleProtocol {
                 "SELECT a.* " +
                 "FROM articles as a " +
                 "LEFT JOIN articleattributevalues as b ON a.articleid = b.articleid " +
-                "WHERE a.productId = $1 AND b.productattributevalueid IN ("
+                "WHERE a.productId = $1 AND b.attributevalueid IN ("
             for i in 0...lastIndex {
                 if i > 0 {
                     sql += ","
                 }
-                params.append(String(productAttributes[i]._attributeValues[indexes[i][0]].productAttributeValueId))
+                params.append(String(productAttributes[i]._attributeValues[indexes[i][0]].attributeValueId))
                 sql += "$\(i + 2)"
             }
-            sql += ") GROUP BY a.articleid HAVING count(b.productattributevalueid) = $\(lastIndex + 3)"
+            sql += ") GROUP BY a.articleid HAVING count(b.attributevalueid) = $\(lastIndex + 3)"
             params.append(String(lastIndex + 1))
             
             let current = try newArticle.sqlRows(sql, params: params)
@@ -118,8 +118,7 @@ class ArticleRepository : ArticleProtocol {
                 for i in 0...lastIndex {
                     let articleAttributeValue = ArticleAttributeValue()
                     articleAttributeValue.articleId = newArticle.articleId
-                    articleAttributeValue.productAttributeValueId =
-                        productAttributes[i]._attributeValues[indexes[i][0]].productAttributeValueId
+                    articleAttributeValue.attributeValueId = productAttributes[i]._attributeValues[indexes[i][0]].attributeValueId
                     try addAttributeValue(item: articleAttributeValue)
                 }
                 countAdded += 1

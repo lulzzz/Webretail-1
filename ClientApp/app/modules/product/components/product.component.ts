@@ -121,7 +121,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             .groupBy(
                 function (x) {
                     return x.attributeValues
-                        .map(p => p.productAttributeValueId)
+                        .map(p => p.attributeValueId)
                         .slice(0, x.attributeValues.length - 1)
                         .join('#');
                 },
@@ -130,14 +130,14 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         source.subscribe(obs => {
             let row: any[] = [];
-            //console.log('Key: ' + obs.key);
+            console.log('Key: ' + obs.key);
             let isFirst = true;
             obs.forEach(e => {
                 let qta = e.quantity;
                 if (isFirst) {
                     e.attributeValues.forEach(ex => {
                         let productAttributeValue = productAttributeValues.find(
-                            p => p.productAttributeValueId === ex.productAttributeValueId
+                            p => p.attributeValue.attributeValueId === ex.attributeValueId
                         );
                         row.push(productAttributeValue.attributeValue.attributeValueName);
                     });
@@ -203,6 +203,12 @@ export class ProductComponent implements OnInit, OnDestroy {
         }
 
         this.display = true;
+    }
+
+    orderNodes(event: any) {
+        alert(event);
+        this.removeNodes(event);
+        this.addNodes(event);
     }
 
     addNodes(event: any) {

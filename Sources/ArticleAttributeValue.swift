@@ -14,16 +14,16 @@ class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
     
     public var articleAttributeValueId : Int = 0
     public var articleId : Int = 0
-    public var productAttributeValueId : Int = 0
+    public var attributeValueId : Int = 0
     
-//    public var _productAttributeValue: ProductAttributeValue = ProductAttributeValue()
+    public var _attributeValue: AttributeValue = AttributeValue()
 
     open override func table() -> String { return "articleattributevalues" }
     
     open override func to(_ this: StORMRow) {
         articleAttributeValueId = this.data["articleattributevalueid"] as? Int ?? 0
         articleId = this.data["articleid"] as? Int ?? 0
-        productAttributeValueId = this.data["productattributevalueid"] as? Int ?? 0
+        attributeValueId = this.data["attributevalueid"] as? Int ?? 0
     }
     
     func rows() throws -> [ArticleAttributeValue] {
@@ -32,10 +32,10 @@ class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
             let row = ArticleAttributeValue()
             row.to(self.results.rows[i])
             
-//            // get productAttributeValue
-//            let productAttributeValue = ProductAttributeValue()
-//            try productAttributeValue.get(row.productAttributeValueId)
-//            row._productAttributeValue = productAttributeValue
+//            // get attributeValue
+//            let attributeValue = AttributeValue()
+//            try attributeValue.get(row.attributeValueId)
+//            row._attributeValue = attributeValue
             
             rows.append(row)
         }
@@ -43,9 +43,9 @@ class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.articleAttributeValueId = getJSONValue(named: "articleAttributeValueId", from: values, defaultValue: 0)
+        //self.articleAttributeValueId = getJSONValue(named: "articleAttributeValueId", from: values, defaultValue: 0)
         self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
-        self.productAttributeValueId = getJSONValue(named: "productAttributeValueId",  from: values, defaultValue: 0)
+        self.attributeValueId = getJSONValue(named: "attributeValueId",  from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {
@@ -56,8 +56,8 @@ class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
         return [
             //"articleAttributeValueId": articleAttributeValueId,
             //"articleId": articleId,
-            "productAttributeValueId": productAttributeValueId,
-            //"productAttributeValue": _productAttributeValue
+            "attributeValueId": attributeValueId,
+            //"attributeValue": _attributeValue
         ]
     }
 }

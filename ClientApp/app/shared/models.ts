@@ -213,7 +213,7 @@ export interface ProductAttribute {
 }
 
 export interface ProductAttributeValue {
-  productAttributeValueId: number;
+  //productAttributeValueId: number;
   productAttributeId: number;
   attributeValue: AttributeValue;
 }
@@ -221,6 +221,6 @@ export interface ProductAttributeValue {
 export interface ArticleAttributeValue {
   //articleAttributeValueId: number;
   //articleId: number;
-  productAttributeValueId: number;
-  //productAttributeValue: ProductAttributeValue;
+  attributeValueId: number;
+  //attributeValue: AttributeValue;
 }

@@ -55,7 +55,7 @@ class ProductRepository : ProductProtocol {
         try productAttribute.select(
             whereclause: "productId = $1",
             params: [id],
-            orderby: ["attributeId"]
+            orderby: ["productAttributeId"]
         )
         item._attributes = try productAttribute.rows()
         

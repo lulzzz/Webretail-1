@@ -48,8 +48,6 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         self.barcode = getJSONValue(named: "barcode", from: values, defaultValue: "")
         self.product = getJSONValue(named: "product", from: values, defaultValue: [String:Any]())
         self.quantity = getJSONValue(named: "quantity", from: values, defaultValue: 0)
-        self.created = getJSONValue(named: "created", from: values, defaultValue: 0)
-        self.updated = getJSONValue(named: "updated", from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {
