@@ -19,7 +19,8 @@ class Category: PostgresSqlORM, JSONConvertible {
     public var updated : Int = Int.now()
     
     open override func table() -> String { return "categories" }
-    
+    open override func tableIndexes() -> [String] { return ["categoryName"] }
+
     open override func to(_ this: StORMRow) {
         categoryId = this.data["categoryid"] as? Int ?? 0
         categoryName = this.data["categoryname"] as? String  ?? ""

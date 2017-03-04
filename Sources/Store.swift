@@ -22,7 +22,8 @@ class Store: PostgresSqlORM, JSONConvertible {
     public var updated : Int = Int.now()
     
     open override func table() -> String { return "stores" }
-    
+    open override func tableIndexes() -> [String] { return ["storeName"] }
+  
     open override func to(_ this: StORMRow) {
         storeId = this.data["storeid"] as? Int ?? 0
         storeName = this.data["storename"] as? String ?? ""

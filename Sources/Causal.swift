@@ -20,6 +20,7 @@ class Causal: PostgresSqlORM, JSONConvertible {
     public var updated : Int = Int.now()
     
     open override func table() -> String { return "causals" }
+    open override func tableIndexes() -> [String] { return ["causalName"] }
     
     open override func to(_ this: StORMRow) {
         causalId  = this.data["causalid"] as? Int ?? 0

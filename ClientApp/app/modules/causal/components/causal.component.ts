@@ -28,9 +28,9 @@ export class CausalComponent implements OnInit {
         this.authenticationService.checkCredentials(false);
 
         this.operators = [];
-        this.operators.push({label: '+1', value: +1});
-        this.operators.push({label: '0', value: 0});
         this.operators.push({label: '-1', value: -1});
+        this.operators.push({label: '0', value: 0});
+        this.operators.push({label: '+1', value: +1});
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

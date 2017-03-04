@@ -2,7 +2,7 @@
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Movement } from '../shared/models';
+import { Movement, MovementArticle } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -33,6 +33,26 @@ export class MovementService {
 
     delete(id: number) : Observable<any> {
         return this.http.delete('/api/movement/' + id, { headers: Helpers.getHeaders() })
+            .map(result => result.json());
+    }
+
+    getItemsById(movementId: number) : Observable<MovementArticle[]> {
+        return this.http.get('/api/movementarticle/' + movementId, { headers: Helpers.getHeaders() })
+            .map(result => <MovementArticle[]>result.json());
+    }
+
+    createItem(model: MovementArticle) : Observable<MovementArticle> {
+        return this.http.post('/api/movementarticle', model, { headers: Helpers.getHeaders() })
+            .map(result => <MovementArticle>result.json());
+    }
+
+    updateItem(id: number, model: MovementArticle) : Observable<MovementArticle> {
+        return this.http.put('/api/movementarticle/' + id, model, { headers: Helpers.getHeaders() })
+            .map(result => <MovementArticle>result.json());
+    }
+
+    deleteItem(id: number) : Observable<any> {
+        return this.http.delete('/api/movementarticle/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
 }

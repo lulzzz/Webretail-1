@@ -25,7 +25,8 @@ class Article: PostgresSqlORM, JSONConvertible {
 
     
     open override func table() -> String { return "articles" }
-    
+    open override func tableIndexes() -> [String] { return ["barcode"] }
+   
     open override func to(_ this: StORMRow) {
         articleId = this.data["articleid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0

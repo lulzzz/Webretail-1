@@ -13,7 +13,7 @@ import SwiftRandom
 import Turnstile
 
 /// Class for handling the tokens that are used for JSON API and Web authentication
-class AccessTokenStore : PostgresStORM {
+class AccessTokenStore : PostgresSqlORM {
     
     /// The token itself.
     public var token: String = ""
@@ -31,9 +31,8 @@ class AccessTokenStore : PostgresStORM {
     public var idle: Int = 86400 // 86400 seconds = 1 day
     
     /// Table name used to store Tokens
-    override open func table() -> String {
-        return "tokens"
-    }
+    override open func table() -> String { return "tokens" }
+    open override func tableIndexes() -> [String] { return ["token"] }
     
     /// Set incoming data from database to object
     open override func to(_ this: StORMRow) {

@@ -173,7 +173,8 @@ export class Movement {
 export class MovementArticle {
   public movementArticleId: number;
   public movementId: number;
-  public articleId: number;
+  public barcode: string;
+  public product: Product;
   public quantity: number;
   public created: Date;
   public updated: Date;
@@ -181,7 +182,8 @@ export class MovementArticle {
   constructor() {
     this.movementArticleId = 0;
     this.movementId = 0;
-    this.articleId = 0;
+    this.barcode = '';
+    this.product = new Product();
     this.quantity = 0;
     this.created = new Date();
     this.updated = new Date();

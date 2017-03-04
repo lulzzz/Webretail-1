@@ -30,7 +30,8 @@ class Product: PostgresSqlORM, JSONConvertible {
     public var _articles: [Article] = [Article]()
 
     open override func table() -> String { return "products" }
-    
+    open override func tableIndexes() -> [String] { return ["productCode", "productName"] }
+
     open override func to(_ this: StORMRow) {
         productId = this.data["productid"] as? Int ?? 0
         brandId = this.data["brandid"] as? Int ?? 0

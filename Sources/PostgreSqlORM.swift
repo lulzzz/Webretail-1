@@ -29,18 +29,20 @@ open class PostgresSqlORM: PostgresStORM {
         return defaultValue
     }
 
+    // Table unique indexes
+    open func tableIndexes() -> [String] { return [String]() }
+
     /// Table Creation
     /// Requires the connection to be configured, as well as a valid "table" property to have been set in the class
     @discardableResult
     open override func setup(_ str: String = "") throws {
         LogFile.info("Running setup: \(table())", logFile: "./StORMlog.txt")
         var createStatement = str
-        var createIndexes = [String]()
         if str.characters.count == 0 {
             var opt = [String]()
             var keyName = ""
             for child in Mirror(reflecting: self).children {
-                guard let key = child.label else {
+                guard let key = child.label?.lowercased() else {
                     continue
                 }
                 var verbage = ""
@@ -75,20 +77,17 @@ open class PostgresSqlORM: PostgresStORM {
                         keyName = key
                     }
                     opt.append(verbage)
-                    
-                    if key.hasSuffix("Name") || key.hasPrefix("Code") {
-                        createIndexes.append("CREATE UNIQUE INDEX IF NOT EXISTS \(key)_idx ON \(table())(\( key ));")
-                    }
                 }
             }
             let keyComponent = ", CONSTRAINT \(table())_key PRIMARY KEY (\(keyName)) NOT DEFERRABLE INITIALLY IMMEDIATE"
             createStatement = "CREATE TABLE IF NOT EXISTS \(table()) (\(opt.joined(separator: ", "))\(keyComponent));"
         }
         do {
-            if StORMdebug { LogFile.info("createStatement: \(createStatement)", logFile: "./StORMlog.txt") }
+            //if StORMdebug { LogFile.info("createStatement: \(createStatement)", logFile: "./StORMlog.txt") }
             try sql(createStatement, params: [])
-            for createIndex in createIndexes {
-                if StORMdebug { LogFile.info("createIndex: \(createIndex)", logFile: "./StORMlog.txt") }
+            for key in tableIndexes() {
+                let createIndex = "CREATE UNIQUE INDEX IF NOT EXISTS \(key)_idx ON \(table())(\( key ));"
+                //if StORMdebug { LogFile.info("createIndex: \(createIndex)", logFile: "./StORMlog.txt") }
                 try sql(createIndex, params: [])
             }
         } catch {

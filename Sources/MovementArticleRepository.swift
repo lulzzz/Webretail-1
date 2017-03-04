@@ -15,10 +15,14 @@ class MovementArticleRepository : MovementArticleProtocol {
         try? movementArticle.setup()
     }
     
-    func getAll() throws -> [MovementArticle] {
+    func getAll(movementId: Int) throws -> [MovementArticle] {
         let items = MovementArticle()
-        try items.findAll()
-        
+        try items.select(
+            whereclause: "movementId = $1",
+            params: [movementId],
+            orderby: ["movementArticleId"]
+        )
+    
         return items.rows()
     }
     

@@ -20,7 +20,8 @@ class AttributeValue: PostgresSqlORM, JSONConvertible {
     public var updated : Int = Int.now()
     
     open override func table() -> String { return "attributevalues" }
-    
+    open override func tableIndexes() -> [String] { return ["attributeValueCode", "attributeValueName"] }
+
     open override func to(_ this: StORMRow) {
         attributeValueId	= this.data["attributevalueid"] as? Int ?? 0
         attributeValueCode = this.data["attributevaluecode"] as? String ?? ""

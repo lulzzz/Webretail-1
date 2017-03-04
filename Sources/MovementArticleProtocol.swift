@@ -8,7 +8,7 @@
 
 protocol MovementArticleProtocol {
     
-    func getAll() throws -> [MovementArticle]
+    func getAll(movementId: Int) throws -> [MovementArticle]
     
     func get(id: Int) throws -> MovementArticle?
     

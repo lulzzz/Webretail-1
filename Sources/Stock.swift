@@ -12,13 +12,13 @@ import PerfectLib
 
 class Stock: PostgresSqlORM, JSONConvertible {
     
-    public var stockId		: Int = 0
-    public var storeId		: Int = 0
+    public var stockId : Int = 0
+    public var storeId : Int = 0
     public var articleId	: Int = 0
-    public var quantity     : Double = 0
-    public var booked       : Double = 0
-    public var created      : Int = Int.now()
-    public var updated      : Int = Int.now()
+    public var quantity : Double = 0
+    public var booked : Double = 0
+    public var created : Int = Int.now()
+    public var updated : Int = Int.now()
     
     open override func table() -> String { return "stocks" }
     

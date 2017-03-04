@@ -20,20 +20,20 @@ class MovementArticleController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        routes.add(method: .get, uri: "/api/movementarticle", handler: movementsHandlerGET)
-        routes.add(method: .get, uri: "/api/movementarticle/{id}", handler: movementHandlerGET)
-        routes.add(method: .post, uri: "/api/movementarticle", handler: movementHandlerPOST)
-        routes.add(method: .put, uri: "/api/movementarticle/{id}", handler: movementHandlerPUT)
-        routes.add(method: .delete, uri: "/api/movementarticle/{id}", handler: movementHandlerDELETE)
+        routes.add(method: .get, uri: "/api/movementarticle/{id}", handler: movementArticlesHandlerGET)
+        routes.add(method: .post, uri: "/api/movementarticle", handler: movementArticleHandlerPOST)
+        routes.add(method: .put, uri: "/api/movementarticle/{id}", handler: movementArticleHandlerPUT)
+        routes.add(method: .delete, uri: "/api/movementarticle/{id}", handler: movementArticleHandlerDELETE)
         
         return routes
     }
     
-    func movementsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    func movementArticlesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
+        let id = request.urlVariables["id"]!
         do {
-            let items = try self.repository.getAll()
+            let items = try self.repository.getAll(movementId: id.toInt()!)
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
@@ -42,21 +42,7 @@ class MovementArticleController {
         }
     }
     
-    func movementHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
-        let id = request.urlVariables["id"]!
-        do {
-            let item = try self.repository.get(id: id.toInt()!)
-            try response.setBody(json: item)
-            response.completed(status: .ok)
-        } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
-        }
-    }
-    
-    func movementHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+    func movementArticleHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {
@@ -72,7 +58,7 @@ class MovementArticleController {
         }
     }
     
-    func movementHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+    func movementArticleHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]!
@@ -89,7 +75,7 @@ class MovementArticleController {
         }
     }
     
-    func movementHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+    func movementArticleHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]!

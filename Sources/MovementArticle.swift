@@ -14,17 +14,19 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
     
     public var movementArticleId : Int = 0
     public var movementId : Int = 0
-    public var articleId : Int = 0
+    public var barcode : String = ""
+    public var product : [String:Any] = [String:Any]()
     public var quantity : Double = 0
     public var created : Int = Int.now()
     public var updated : Int = Int.now()
     
     open override func table() -> String { return "movementarticles" }
-    
+      
     open override func to(_ this: StORMRow) {
         movementArticleId = this.data["movementarticleid"] as? Int ?? 0
         movementId = this.data["movementid"] as? Int ?? 0
-        articleId = this.data["articleid"] as? Int ?? 0
+        barcode = this.data["barcode"] as? String ?? ""
+        product = this.data["product"] as? [String:Any] ?? [String:Any]()
         quantity = Double(this.data["quantity"] as? Float ?? 0)
         created = this.data["created"] as? Int ?? 0
         updated = this.data["updated"] as? Int ?? 0
@@ -43,7 +45,8 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
     public func setJSONValues(_ values:[String:Any]) {
         self.movementArticleId = getJSONValue(named: "movementArticleId", from: values, defaultValue: 0)
         self.movementId = getJSONValue(named: "movementId", from: values, defaultValue: 0)
-        self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
+        self.barcode = getJSONValue(named: "barcode", from: values, defaultValue: "")
+        self.product = getJSONValue(named: "product", from: values, defaultValue: [String:Any]())
         self.quantity = getJSONValue(named: "quantity", from: values, defaultValue: 0)
         self.created = getJSONValue(named: "created", from: values, defaultValue: 0)
         self.updated = getJSONValue(named: "updated", from: values, defaultValue: 0)
@@ -57,7 +60,8 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         return [
             "movementArticleId": movementArticleId,
             "movementId": movementId,
-            "articleId": articleId,
+            "barcode": barcode,
+            "product": product,
             "quantity": quantity,
             "created": created.formatDate(),
             "updated": updated.formatDate()
