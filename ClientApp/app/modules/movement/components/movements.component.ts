@@ -84,10 +84,10 @@ export class MovementsComponent implements OnInit {
     addClick() {
         this.selected = new Movement();
         if (this.stores.length > 0) {
-            this.selected.store.storeId = this.stores[0].value;
+            this.selected.store = this.stores[0].value;
         }
         if (this.causals.length > 0) {
-            this.selected.causal.causalId = this.causals[0].value;
+            this.selected.causal = this.causals[0].value;
         }
         this.displayDialog = true;
     }
