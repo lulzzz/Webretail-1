@@ -205,12 +205,6 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.display = true;
     }
 
-    orderNodes(event: any) {
-        alert(event);
-        this.removeNodes(event);
-        this.addNodes(event);
-    }
-
     addNodes(event: any) {
         let productCategories: ProductCategory[] = [];
         let productAttributes: ProductAttribute[] = [];
