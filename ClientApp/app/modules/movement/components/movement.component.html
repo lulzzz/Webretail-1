@@ -24,9 +24,9 @@
     <p-dataTable [style]="{'width': '100%'}" [value]="items"
         selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
-        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand">
+        resizableColumns="true" columnResizeMode="expand">
         <p-column field="movementArticleId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="articleId" header="Article" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="barcode" header="Barcode" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="quantity" header="Quantity" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     </p-dataTable>
 
@@ -34,15 +34,15 @@
     <form [formGroup]="dataform">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="id">Id</label></div>
+                <div class="ui-grid-col-4"><label>Id</label></div>
                 <div class="ui-grid-col-8">{{selected.movementArticleId}}</div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="article">Article</label></div>
+                <div class="ui-grid-col-4"><label for="barcode">Barcode</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="article" [(ngModel)]="selected.articleId"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['article'].valid&&dataform.controls['article'].dirty">
-                        <i class="fa fa-close"></i> Article is required
+                    <input pInputText formControlName="barcode" [(ngModel)]="selected.barcode"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['barcode'].valid&&dataform.controls['barcode'].dirty">
+                        <i class="fa fa-close"></i> Barcode is required
                     </div>
                </div>
             </div>
