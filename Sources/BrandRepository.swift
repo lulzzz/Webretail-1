@@ -11,8 +11,7 @@ import StORM
 class BrandRepository : BrandProtocol {
     
     init() {        
-        let brand = Brand()
-        try? brand.setup()
+        try? Brand().setup()
     }
     
     func getAll() throws -> [Brand] {

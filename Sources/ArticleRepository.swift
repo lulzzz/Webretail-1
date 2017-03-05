@@ -13,14 +13,9 @@ import TurnstileCrypto
 class ArticleRepository : ArticleProtocol {
     
     init() {
-        let article = Article()
-        try? article.setup()
-        
-        let articleAttributeValue = ArticleAttributeValue()
-        try? articleAttributeValue.setup()
-
-        let stock = Stock()
-        try? stock.setup()
+        try? Article().setup()
+        try? ArticleAttributeValue().setup()
+        try? Stock().setup()
     }
 
     func build(productId: Int) throws -> [String:Any] {

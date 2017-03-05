@@ -31,7 +31,7 @@
                 {{data.product | articleInfo:data.barcode}}
             </template>
         </p-column>
-        <p-column field="quantity" header="Quantity" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="quantity" header="Quantity" [style]="{'text-align':'center'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     </p-dataTable>
 
     <p-dialog header="Article" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">

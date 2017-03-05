@@ -23,6 +23,7 @@ export class ProductsComponent implements OnInit {
     ums: SelectItem[];
     brands: SelectItem[];
     names: SelectItem[];
+    categoryValue: string;
     sliderValue: number;
     displayDialog: boolean;
 	dataform: FormGroup;
@@ -92,7 +93,7 @@ export class ProductsComponent implements OnInit {
     }
 
     editClick() {
-    	this.displayDialog = true;
+        this.displayDialog = true;
     }
 
     saveClick() {

@@ -11,8 +11,7 @@ import StORM
 class CategoryRepository : CategoryProtocol {
     
     init() {
-        let categoy = Category()
-        try? categoy.setup()
+        try? Category().setup()
     }
 
     func getAll() throws -> [Category] {

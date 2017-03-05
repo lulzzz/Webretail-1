@@ -96,6 +96,7 @@ class Product: PostgresSqlORM, JSONConvertible {
             "isValid": isValid,
             //"brandId": brandId,
             "brand": _brand,
+            //"category": _categories.map { $0._category.categoryName }.joined(separator: ", "),
             "categories": _categories,
             "attributes": _attributes,
             "articles": _articles,

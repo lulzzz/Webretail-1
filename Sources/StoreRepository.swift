@@ -11,8 +11,7 @@ import StORM
 class StoreRepository : StoreProtocol {
     
     init() {
-        let store = Store()
-        try? store.setup()
+        try? Store().setup()
     }
     
     func getAll() throws -> [Store] {

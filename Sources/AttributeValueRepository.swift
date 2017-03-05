@@ -11,8 +11,7 @@ import StORM
 class AttributeValueRepository : AttributeValueProtocol {
     
     init() {
-        let attributeValue = AttributeValue()
-        try? attributeValue.setup()
+        try? AttributeValue().setup()
     }
 
     func getAll() throws -> [AttributeValue] {

@@ -1,15 +1,16 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
+    <div class="global-search">
+        <i class="fa fa-search"></i>
+        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
+    </div>
 
     <h2>Attributes</h2>
-    <p>Items count: {{totalRecords}}</p>
-    <hr />
   
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
-            <i class="fa fa-search"></i>
+            Items count: {{totalRecords}}
         </div>
         <div class="ui-toolbar-group-right">
             <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
@@ -22,8 +23,8 @@
     <p *ngIf="!attributes"><em>Loading...</em></p>
 
     <p-dataTable [style]="{'width': '100%'}" [value]="attributes" 
-        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)" 
-        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
+        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
+        [globalFilter]="gb" #dt>
         <p-column field="attributeId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="attributeName" header="Name" [sortable]="true"></p-column>
    </p-dataTable>
@@ -60,7 +61,7 @@
 
     <p-toolbar>
         <div class="ui-toolbar-group-left" style="margin-top: 10px">
-            <p>Values count: {{totalValues}}</p>
+            <p>Items count: {{totalValues}}</p>
         </div>
         <div class="ui-toolbar-group-right">
             <button pButton type="button" (click)="addValueClick()" class="ui-button-primary" icon="fa-plus-square"></button>
@@ -72,7 +73,7 @@
     
     <p-dataTable [style]="{'width': '100%'}" [value]="values" selectionMode="single" [(selection)]="selectedValue"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
-        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
+        [globalFilter]="gb" #dt>
         <p-column field="attributeValueId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="attributeValueCode" header="Code" [sortable]="true"></p-column>
         <p-column field="attributeValueName" header="Name" [sortable]="true"></p-column>

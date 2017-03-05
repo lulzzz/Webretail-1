@@ -11,8 +11,7 @@ import StORM
 class PublicationRepository : PublicationProtocol {
     
     init() {
-        let publication = Publication()
-        try? publication.setup()
+        try? Publication().setup()
     }
 
     func getAll() throws -> [Publication] {

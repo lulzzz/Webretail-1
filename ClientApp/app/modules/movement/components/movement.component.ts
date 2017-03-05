@@ -56,19 +56,19 @@ export class MovementComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.movementArticleId == 0; }
-
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
     addBarcode() {
         let item = new MovementArticle();
         item.movementId = this.movementId;
-        item.barcode = this.barcodes[0];
-        this.movementService.createItem(item)
-            .subscribe(result => {
-                this.items.push(result);
-                this.barcodes.length = 0;
-             });
+        this.barcodes.forEach(barcode => {
+            item.barcode = barcode;
+            this.movementService.createItem(item)
+                .subscribe(result => {
+                    this.items.push(result);
+                    this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
+                });
+        });
     }
 
     addClick() {
@@ -82,18 +82,10 @@ export class MovementComponent implements OnInit, OnDestroy {
     }
 
     saveClick() {
-        if (this.isNew) {
-            this.movementService.createItem(this.selected)
-                .subscribe(result => {
-                    this.items.push(result);
-                    this.selected = null;
-                });
-        } else {
-            this.movementService.updateItem(this.selected.movementId, this.selected)
-                .subscribe(result => {
-                    this.selected = null;
-                });
-        }
+        this.movementService.updateItem(this.selected.movementId, this.selected)
+            .subscribe(result => {
+                this.selected = null;
+            });
         this.displayDialog = false;
     }
 

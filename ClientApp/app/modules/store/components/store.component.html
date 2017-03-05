@@ -1,15 +1,16 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
+    <div class="global-search">
+        <i class="fa fa-search"></i>
+        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
+    </div>
 
     <h2>Store</h2>
-    <p>List of stores: {{totalRecords}}</p>
-    <hr />
-
+    
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
-            <i class="fa fa-search"></i>
+            Items count: {{totalRecords}}
         </div>
         <div class="ui-toolbar-group-right">
             <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
@@ -23,7 +24,7 @@
 
     <p-dataTable [style]="{'width': '100%'}" [value]="stores" selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
-        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
+        [globalFilter]="gb" #dt>
         <p-column field="storeId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="storeName" header="Name" [sortable]="true"></p-column>
         <p-column field="storeCity" header="City" [sortable]="true"></p-column>

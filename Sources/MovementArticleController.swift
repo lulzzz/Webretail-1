@@ -51,9 +51,11 @@ class MovementArticleController {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = MovementArticle()
             item.setJSONValues(json!)
-            if let product = try self.productRepository.get(barcode: item.barcode)?.getJSONValues() {
-                item.product = product
+            guard let product = try self.productRepository.get(barcode: item.barcode)?.getJSONValues() else {
+                response.completed(status: .notFound)
+                return
             }
+            item.product = product
             try self.movementRepository.add(item: item)
             try response.setBody(json: item)
             response.completed(status: .created)

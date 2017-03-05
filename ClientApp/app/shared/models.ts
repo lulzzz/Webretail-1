@@ -74,7 +74,6 @@ export class Product {
   public sellingPrice: number;
   public purchasePrice: number;
   public brand: Brand;
-  public category: string;
   public categories: ProductCategory[];
   public attributes: ProductAttribute[];
   public articles: Article[];
@@ -90,17 +89,12 @@ export class Product {
     this.sellingPrice = 0;
     this.purchasePrice = 0;
     this.brand = new Brand();
-    this.category = '';
     this.categories = [];
     this.attributes = [];
     this.articles = [];
     this.isActive = false;
     this.created = new Date();
     this.updated = new Date();
-  }
-
-  public getDescription(barcode: string) : string {
-    return 'pippo';
   }
 }
 

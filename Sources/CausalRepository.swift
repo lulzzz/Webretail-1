@@ -11,8 +11,7 @@ import StORM
 class CausalRepository : CausalProtocol {
     
     init() {
-        let causal = Causal()
-        try? causal.setup()
+        try?Causal().setup()
     }
     
     func getAll() throws -> [Causal] {

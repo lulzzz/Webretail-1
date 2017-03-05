@@ -3,13 +3,10 @@
 <div class="container-fluid">
 
     <h2>Products</h2>
-    <p>Items count: {{totalRecords}}</p>
-    <hr />
-
+ 
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
-            <i class="fa fa-search"></i>
+            Items count: {{totalRecords}}
         </div>
         <div class="ui-toolbar-group-right">
             <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
@@ -22,10 +19,9 @@
 
     <p *ngIf="!products"><em>Loading...</em></p>
 
-    <p-dataTable [style]="{'width': '100%'}" [value]="products | priceFilter:sliderValue" 
+    <p-dataTable [style]="{'width': '100%'}" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
         selectionMode="single" [(selection)]="selected"
-        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
-        [globalFilter]="gb" resizableColumns="true" columnResizeMode="expand" #dt>
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
         <p-column field="productId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="productCode" header="Code" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="productName" header="Name" [sortable]="true" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}">
@@ -38,9 +34,9 @@
                 <p-dropdown [options]="brands" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>     
-        <p-column field="category" header="Categories" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="contains">
+        <p-column header="Categories" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
             <template pTemplate="filter" let-col>
-                <p-dropdown [options]="categories" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+                <p-dropdown [options]="categories" [style]="{'width':'100%'}" [(ngModel)]="categoryValue" styleClass="ui-column-filter"></p-dropdown>
             </template>
             <template let-col let-data="rowData" pTemplate="body">
                 <li *ngFor="let item of data.categories"> {{ item.category.categoryName }} </li>

@@ -11,8 +11,7 @@ import StORM
 class MovementRepository : MovementProtocol {
     
     init() {
-        let movement = Movement()
-        try? movement.setup()
+        try? Movement().setup()
     }
     
     func getAll() throws -> [Movement] {

@@ -11,17 +11,10 @@ import StORM
 class ProductRepository : ProductProtocol {
     
     init() {
-        let product = Product()
-        try? product.setup()
-        
-        let productCategory = ProductCategory()
-        try? productCategory.setup()
-        
-        let productAttribute = ProductAttribute()
-        try? productAttribute.setup()
-        
-        let productAttributeValue = ProductAttributeValue()
-        try? productAttributeValue.setup()
+        try?  Product().setup()
+        try? ProductCategory().setup()
+        try? ProductAttribute().setup()
+        try? ProductAttributeValue().setup()
     }
     
     func getAll() throws -> [Product] {
@@ -34,6 +27,9 @@ class ProductRepository : ProductProtocol {
     func get(id: Int) throws -> Product? {
         let item = Product()
         try item.get(id)
+        if item.productId == 0 {
+            return nil
+        }
         
         // get brand
         let brand = Brand()
@@ -73,8 +69,10 @@ class ProductRepository : ProductProtocol {
     func get(barcode: String) throws -> Product? {
         let article = Article()
         try article.find([("barcode", barcode)])
-        //let article = try articles.rows().first!
-        
+        if article.articleId == 0 {
+            return nil
+        }
+       
         // get product
         let item = Product()
         try item.get(article.productId)

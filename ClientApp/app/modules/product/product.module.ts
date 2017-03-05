@@ -12,6 +12,7 @@ import {
 import { ProductRoutes } from './product.routes';
 import { ProductsComponent } from './components/products.component';
 import { ProductComponent } from './components/product.component';
+import { CategoryFilterPipe } from './../../pipes/category-filter.pipe';
 import { PriceFilterPipe } from './../../pipes/price-filter.pipe';
 import { ProductService } from './../../services/product.service';
 
@@ -27,6 +28,7 @@ import { ProductService } from './../../services/product.service';
         ProductRoutes
     ],
     declarations: [
+        CategoryFilterPipe,
         PriceFilterPipe,
         ProductsComponent,
         ProductComponent
