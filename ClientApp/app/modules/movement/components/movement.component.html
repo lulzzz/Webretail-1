@@ -8,8 +8,7 @@
 
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <input type="text" placeholder="Barcode" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
-            <i class="fa fa-barcode"></i>
+            <p-chips [(ngModel)]="barcodes" placeholder="barcode" (onAdd)="addBarcode()"></p-chips><i class="fa fa-barcode"></i>
         </div>
         <div class="ui-toolbar-group-right">
             <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
@@ -31,8 +30,8 @@
     </p-dataTable>
 
     <p-dialog header="Article" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
-    <form [formGroup]="dataform">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
+    <form *ngIf="selected" [formGroup]="dataform">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label>Id</label></div>
                 <div class="ui-grid-col-8">{{selected.movementArticleId}}</div>

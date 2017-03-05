@@ -18,6 +18,7 @@ export class MovementComponent implements OnInit, OnDestroy {
     private sub: any;
     movementId: number;
     totalRecords = 0;
+    barcodes: string[];
     items: MovementArticle[];
 	selected: MovementArticle;
     displayDialog: boolean;
@@ -28,7 +29,9 @@ export class MovementComponent implements OnInit, OnDestroy {
                 //rivate productService: ProductService,
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+        this.selected = new MovementArticle();
+    }
 
 	ngOnInit() {
         this.authenticationService.checkCredentials(false);
@@ -39,6 +42,7 @@ export class MovementComponent implements OnInit, OnDestroy {
             this.movementService.getItemsById(this.movementId)
                 .subscribe(result => {
                     this.items = result;
+                    this.totalRecords = result.length;
                 }//, onerror => alert('ERROR: ' + onerror)
             );
         });
@@ -65,6 +69,17 @@ export class MovementComponent implements OnInit, OnDestroy {
     get isNew() : boolean { return this.selected == null || this.selected.movementArticleId == 0; }
 
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
+
+    addBarcode() {
+        let item = new MovementArticle();
+        item.movementId = this.movementId;
+        item.barcode = this.barcodes[0];
+        this.movementService.createItem(item)
+            .subscribe(result => {
+                this.items.push(result);
+                this.barcodes.length = 0;
+             });
+    }
 
     addClick() {
         this.selected = new MovementArticle();
@@ -96,7 +111,7 @@ export class MovementComponent implements OnInit, OnDestroy {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete this item?',
             accept: () => {
-                this.movementService.delete(this.selected.movementId)
+                this.movementService.deleteItem(this.selected.movementArticleId)
                     .subscribe(result => {
                         this.items.splice(this.selectedIndex, 1);
                         this.selected = null;

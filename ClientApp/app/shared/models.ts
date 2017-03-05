@@ -184,7 +184,7 @@ export class MovementArticle {
     this.movementId = 0;
     this.barcode = '';
     this.product = new Product();
-    this.quantity = 0;
+    this.quantity = 1.0;
     this.created = new Date();
     this.updated = new Date();
   }
