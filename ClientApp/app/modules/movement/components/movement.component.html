@@ -26,6 +26,11 @@
         resizableColumns="true" columnResizeMode="expand">
         <p-column field="movementArticleId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="barcode" header="Barcode" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="product" header="Product" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.product | articleInfo:data.barcode}}
+            </template>
+        </p-column>
         <p-column field="quantity" header="Quantity" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     </p-dataTable>
 

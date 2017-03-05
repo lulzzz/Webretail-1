@@ -98,6 +98,10 @@ export class Product {
     this.created = new Date();
     this.updated = new Date();
   }
+
+  public getDescription(barcode: string) : string {
+    return 'pippo';
+  }
 }
 
 export class Article {

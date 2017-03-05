@@ -47,7 +47,6 @@ class ProductRepository : ProductProtocol {
             params: [id],
             orderby: ["categoryId"]
         )
-        try productCategory.find([("productId", id)])
         item._categories = try productCategory.rows()
         
         // get attributes
@@ -71,6 +70,42 @@ class ProductRepository : ProductProtocol {
         return item
     }
     
+    func get(barcode: String) throws -> Product? {
+        let article = Article()
+        try article.find([("barcode", barcode)])
+        //let article = try articles.rows().first!
+        
+        // get product
+        let item = Product()
+        try item.get(article.productId)
+        item._articles = try article.rows()
+       
+        // get brand
+        let brand = Brand()
+        try brand.get(item.brandId)
+        item._brand = brand
+        
+        // get categories
+        let productCategory = ProductCategory()
+        try productCategory.select(
+            whereclause: "productId = $1",
+            params: [article.productId],
+            orderby: ["categoryId"]
+        )
+        item._categories = try productCategory.rows()
+        
+        // get attributes
+        let productAttribute = ProductAttribute()
+        try productAttribute.select(
+            whereclause: "productId = $1",
+            params: [article.productId],
+            orderby: ["productAttributeId"]
+        )
+        item._attributes = try productAttribute.rows()
+        
+        return item
+    }
+
     func add(item: Product) throws {
         item.created = Int.now()
         item.updated = Int.now()

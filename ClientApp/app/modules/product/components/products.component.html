@@ -37,8 +37,7 @@
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="brands" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
-        </p-column>
-        
+        </p-column>     
         <p-column field="category" header="Categories" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="contains">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="categories" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>

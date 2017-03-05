@@ -10,8 +10,7 @@ import { Helpers } from './../../../shared/helpers';
 
 @Component({
     selector: 'movement-component',
-    templateUrl: 'movement.component.html',
-    //providers: [ ProductService ]
+    templateUrl: 'movement.component.html'
 })
 
 export class MovementComponent implements OnInit, OnDestroy {
@@ -26,7 +25,6 @@ export class MovementComponent implements OnInit, OnDestroy {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
-                //rivate productService: ProductService,
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -51,14 +49,6 @@ export class MovementComponent implements OnInit, OnDestroy {
             'barcode': new FormControl('', Validators.required),
             'quantity': new FormControl('', Validators.required)
         });
-
-        /*
-        this.ProductService.getAll()
-            .subscribe(result => {
-                this.products = result.map(p => Helpers.newSelectItem(p, p.productName));
-            }
-        );
-        */
     }
 
     ngOnDestroy() {

@@ -11,10 +11,12 @@ import PerfectLogger
 
 class MovementArticleController {
     
-    private let repository: MovementArticleProtocol
+    private let movementRepository: MovementArticleProtocol
+    private let productRepository: ProductProtocol
     
     init() {
-        self.repository = ioCContainer.resolve() as MovementArticleProtocol
+        self.movementRepository = ioCContainer.resolve() as MovementArticleProtocol
+        self.productRepository = ioCContainer.resolve() as ProductProtocol
     }
     
     func getRoutes() -> Routes {
@@ -33,7 +35,7 @@ class MovementArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            let items = try self.repository.getAll(movementId: id.toInt()!)
+            let items = try self.movementRepository.getAll(movementId: id.toInt()!)
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
@@ -49,7 +51,10 @@ class MovementArticleController {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = MovementArticle()
             item.setJSONValues(json!)
-            try self.repository.add(item: item)
+            if let product = try self.productRepository.get(barcode: item.barcode)?.getJSONValues() {
+                item.product = product
+            }
+            try self.movementRepository.add(item: item)
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
@@ -66,7 +71,7 @@ class MovementArticleController {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = MovementArticle()
             item.setJSONValues(json!)
-            try self.repository.update(id: id.toInt()!, item: item)
+            try self.movementRepository.update(id: id.toInt()!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
@@ -80,7 +85,7 @@ class MovementArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            try self.repository.delete(id: id.toInt()!)
+            try self.movementRepository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
             LogFile.error("\(request.uri) \(request.method): \(error)")
