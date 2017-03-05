@@ -1,14 +1,15 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
+    <div class="global-search">
+        <p-chips [(ngModel)]="barcodes" placeholder="barcode" (onAdd)="addBarcode()"></p-chips>
+    </div>
 
     <h2>Movement</h2>
-    <p>Items count: {{totalRecords}}</p>
-    <hr />
-
+    
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <p-chips [(ngModel)]="barcodes" placeholder="barcode" (onAdd)="addBarcode()"></p-chips><i class="fa fa-barcode"></i>
+            Items count: {{totalRecords}}
         </div>
         <div class="ui-toolbar-group-right">
             <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
@@ -22,8 +23,7 @@
 
     <p-dataTable [style]="{'width': '100%'}" [value]="items"
         selectionMode="single" [(selection)]="selected"
-        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
-        resizableColumns="true" columnResizeMode="expand">
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]">
         <p-column field="movementArticleId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="barcode" header="Barcode" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="product" header="Product" [sortable]="true" [filter]="true" filterPlaceholder="Search">
