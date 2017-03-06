@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
     ConfirmDialogModule, ConfirmationService, ToolbarModule,
-    DataTableModule, SharedModule, PaginatorModule,
+    DataTableModule, SharedModule, PaginatorModule, OverlayPanelModule,
     DialogModule, InputTextModule, ButtonModule, DropdownModule, ChipsModule
 } from 'primeng/primeng';
 
@@ -18,7 +18,7 @@ import { ArticleInfoPipe } from './../../pipes/articleinfo.pipe';
     imports: [
         FormsModule, ReactiveFormsModule, ToolbarModule,
         DataTableModule, SharedModule, ConfirmDialogModule,
-        PaginatorModule, DialogModule, InputTextModule,
+        PaginatorModule, OverlayPanelModule, DialogModule, InputTextModule,
         ButtonModule, DropdownModule, ChipsModule,
         CommonModule,
         MovementRoutes

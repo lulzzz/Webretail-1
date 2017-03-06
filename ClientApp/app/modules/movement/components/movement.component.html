@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
     <div class="global-search">
-        <p-chips [(ngModel)]="barcodes" placeholder="barcode" (onAdd)="addBarcode()"></p-chips>
+        <p-chips [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
     </div>
 
     <h2>Movement</h2>
@@ -12,8 +12,8 @@
             Items count: {{totalRecords}}
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
-            <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <button pButton type="button" (click)="find.toggle($event)" class="ui-button-primary" icon="fa-plus-square"></button>
+            <button pButton type="button" (click)="upd.toggle($event)" class="ui-button-primary" icon="fa-edit"></button>
             <i class="fa fa-bars"></i>
             <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash"></button>
         </div>
@@ -26,7 +26,7 @@
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]">
         <p-column field="movementArticleId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="barcode" header="Barcode" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="product" header="Product" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        <p-column field="product" header="Product" [sortable]="true" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains">
             <template let-col let-data="rowData" pTemplate="body">
                 {{data.product | articleInfo:data.barcode}}
             </template>
@@ -34,39 +34,42 @@
         <p-column field="quantity" header="Quantity" [style]="{'text-align':'center'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     </p-dataTable>
 
-    <p-dialog header="Article" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
-    <form *ngIf="selected" [formGroup]="dataform">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Id</label></div>
-                <div class="ui-grid-col-8">{{selected.movementArticleId}}</div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="barcode">Barcode</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="barcode" [(ngModel)]="selected.barcode"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['barcode'].valid&&dataform.controls['barcode'].dirty">
-                        <i class="fa fa-close"></i> Barcode is required
+    <p-overlayPanel #find [dismissable]="true">
+        Content
+    </p-overlayPanel>
+
+    <p-overlayPanel #upd [dismissable]="true">
+        <form *ngIf="selected" [formGroup]="dataform">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Id</label></div>
+                    <div class="ui-grid-col-8">{{selected.movementArticleId}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Barcode</label></div>
+                    <div class="ui-grid-col-8">{{selected.barcode}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Product</label></div>
+                    <div class="ui-grid-col-8">{{selected.product.productName}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="quantity">Quantity</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="quantity" [(ngModel)]="selected.quantity"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['quantity'].valid&&dataform.controls['quantity'].dirty">
+                            <i class="fa fa-close"></i> Quantity is required
+                        </div>
                     </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="quantity">Quantity</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="quantity" [(ngModel)]="selected.quantity"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['quantity'].valid&&dataform.controls['quantity'].dirty">
-                        <i class="fa fa-close"></i> Article is required
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-8"></div>
+                    <div class="ui-grid-col-4">
+                        <button type="button" pButton icon="fa-save" (click)="saveClick();upd.hide();" label="Save" [disabled]="!dataform.valid"></button>
                     </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-8"></div>
-                <div class="ui-grid-col-4">
-                    <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                 </div>
             </div>
-        </div>
-    </form>
-    </p-dialog>
+        </form>
+    </p-overlayPanel>
 
 </div>

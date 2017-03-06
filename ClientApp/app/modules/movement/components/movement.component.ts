@@ -20,8 +20,7 @@ export class MovementComponent implements OnInit, OnDestroy {
     barcodes: string[];
     items: MovementArticle[];
 	selected: MovementArticle;
-    displayDialog: boolean;
-	dataform: FormGroup;
+    dataform: FormGroup;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
@@ -46,7 +45,6 @@ export class MovementComponent implements OnInit, OnDestroy {
         });
 
         this.dataform = this.fb.group({
-            'barcode': new FormControl('', Validators.required),
             'quantity': new FormControl('', Validators.required)
         });
     }
@@ -74,19 +72,13 @@ export class MovementComponent implements OnInit, OnDestroy {
     addClick() {
         this.selected = new MovementArticle();
         this.selected.movementId = this.movementId;
-        this.displayDialog = true;
-    }
-
-    editClick() {
-        this.displayDialog = true;
-    }
+   }
 
     saveClick() {
-        this.movementService.updateItem(this.selected.movementId, this.selected)
+        this.movementService.updateItem(this.selected.movementArticleId, this.selected)
             .subscribe(result => {
                 this.selected = null;
             });
-        this.displayDialog = false;
     }
 
     deleteClick() {
@@ -98,7 +90,6 @@ export class MovementComponent implements OnInit, OnDestroy {
                         this.items.splice(this.selectedIndex, 1);
                         this.selected = null;
                     });
-                this.displayDialog = false;
             }
         });
     }
