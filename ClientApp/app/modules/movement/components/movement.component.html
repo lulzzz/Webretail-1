@@ -21,12 +21,15 @@
 
     <p *ngIf="!items"><em>Loading...</em></p>
 
-    <p-dataTable [style]="{'width': '100%'}" [value]="items"
+    <p-dataTable [style]="{'width': '100%'}" [value]="items | articleFilter:articleValue"
         selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]">
         <p-column field="movementArticleId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="barcode" header="Barcode" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="product" header="Product" [sortable]="true" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains">
+        <p-column field="product" header="Product" [sortable]="true" [filter]="true">
+            <template pTemplate="filter" let-col>
+                <input pInputText [(ngModel)]="articleValue" placeholder="Search"  styleClass="ui-column-filter"/>
+            </template>
             <template let-col let-data="rowData" pTemplate="body">
                 {{data.product | articleInfo:data.barcode}}
             </template>

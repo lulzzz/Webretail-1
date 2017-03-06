@@ -41,7 +41,6 @@ export class AuthenticationService {
     grantCredentials(token: string, role: string) {
         localStorage.setItem('token', token);
         localStorage.setItem('role', role);
-        alert(role);
         this.router.navigate(['home']);
     }
 

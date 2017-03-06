@@ -25,6 +25,9 @@ open class PostgresSqlORM: PostgresStORM {
         else if defaultValue is Double, let d = f as? String {
             return Double(d) as! T
         }
+        else if defaultValue is Double, let d = f as? Int {
+            return Double(d) as! T
+        }
         
         return defaultValue
     }

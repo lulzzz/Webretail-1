@@ -21,6 +21,7 @@ export class MovementComponent implements OnInit, OnDestroy {
     items: MovementArticle[];
 	selected: MovementArticle;
     dataform: FormGroup;
+    articleSearch: string;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
@@ -57,22 +58,29 @@ export class MovementComponent implements OnInit, OnDestroy {
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
     addBarcode() {
-        let item = new MovementArticle();
-        item.movementId = this.movementId;
         this.barcodes.forEach(barcode => {
-            item.barcode = barcode;
-            this.movementService.createItem(item)
-                .subscribe(result => {
-                    this.items.push(result);
-                    this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
-                });
+            let item = this.items.find(p => p.barcode === barcode);
+            if (item) {
+                item.quantity += 1.0;
+                alert(item.quantity);
+                this.movementService
+                    .updateItem(item.movementArticleId, item)
+                    .subscribe(result => {
+                        this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
+                    });
+            } else {
+                item = new MovementArticle();
+                item.movementId = this.movementId;
+                item.barcode = barcode;
+                this.movementService
+                    .createItem(item)
+                    .subscribe(result => {
+                        this.items.push(result);
+                        this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
+                    });
+            }
         });
     }
-
-    addClick() {
-        this.selected = new MovementArticle();
-        this.selected.movementId = this.movementId;
-   }
 
     saveClick() {
         this.movementService.updateItem(this.selected.movementArticleId, this.selected)

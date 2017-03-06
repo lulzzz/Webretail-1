@@ -13,6 +13,7 @@ import { MovementsComponent } from './components/movements.component';
 import { MovementComponent } from './components/movement.component';
 import { MovementService } from './../../services/movement.service';
 import { ArticleInfoPipe } from './../../pipes/articleinfo.pipe';
+import { ArticleFilterPipe } from './../../pipes/article-filter.pipe';
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import { ArticleInfoPipe } from './../../pipes/articleinfo.pipe';
         MovementRoutes
     ],
     declarations: [
+        ArticleFilterPipe,
         ArticleInfoPipe,
         MovementsComponent,
         MovementComponent
