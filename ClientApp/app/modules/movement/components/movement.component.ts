@@ -21,7 +21,7 @@ export class MovementComponent implements OnInit, OnDestroy {
     items: MovementArticle[];
 	selected: MovementArticle;
     dataform: FormGroup;
-    articleSearch: string;
+    articleValue: string;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
@@ -62,7 +62,6 @@ export class MovementComponent implements OnInit, OnDestroy {
             let item = this.items.find(p => p.barcode === barcode);
             if (item) {
                 item.quantity += 1.0;
-                alert(item.quantity);
                 this.movementService
                     .updateItem(item.movementArticleId, item)
                     .subscribe(result => {

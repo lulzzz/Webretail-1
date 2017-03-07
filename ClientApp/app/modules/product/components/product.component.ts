@@ -2,8 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TreeNode, Message, MenuItem } from 'primeng/primeng';
 import { Observable } from 'rxjs/Rx';
-import { Product, ProductCategory, Category, ProductAttribute, Attribute, ProductAttributeValue, Article, ArticleAttributeValue, AttributeValue } from './../../../shared/models';
-import { FooterComponent } from './../../shared/components/footer/footer.component';
+import {
+    Product, ProductCategory, Category, ProductAttribute, Attribute,
+    ProductAttributeValue, Article, ArticleAttributeValue, AttributeValue
+} from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { ProductService } from './../../../services/product.service';

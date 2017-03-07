@@ -1,0 +1,50 @@
+﻿<div class="container-fluid">
+
+    <h2>Article picker</h2>
+ 
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            Items count: {{totalRecords}}
+        </div>
+        <div class="ui-toolbar-group-right">
+            <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
+        </div>
+    </p-toolbar>
+
+    <p *ngIf="!products"><em>Loading...</em></p>
+
+    <p-dataTable [style]="{'width': '100%'}" [value]="products" 
+        selectionMode="single" [(selection)]="selected"
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
+        <p-column field="productId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="productCode" header="Code" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="productName" header="Name" [sortable]="true" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}">
+            <template pTemplate="filter" let-col>
+                <p-multiSelect [options]="names" defaultLabel="All" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-multiSelect>
+            </template>
+        </p-column>
+        <p-column field="brand.brandName" header="Brand" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="brands" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </template>
+        </p-column>     
+        <p-column header="Categories" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="categories" [style]="{'width':'100%'}" [(ngModel)]="categoryValue" styleClass="ui-column-filter"></p-dropdown>
+            </template>
+            <template let-col let-data="rowData" pTemplate="body">
+                <li *ngFor="let item of data.categories"> {{ item.category.categoryName }} </li>
+            </template>
+        </p-column>
+        <p-column field="sellingPrice" header="Price ({{sliderValue||'No Filter'}})" [style]="{'text-align':'right'}" [sortable]="true" [filter]="true" filterMatchMode="equals">
+            <template pTemplate="filter" let-col>
+                <i class="fa fa-close" (click)="sliderValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000"></p-slider>
+            </template>
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.sellingPrice | currency: 'EUR' : true}}
+            </template>
+        </p-column>
+    </p-dataTable>
+
+</div>

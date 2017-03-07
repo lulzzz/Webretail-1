@@ -28,7 +28,7 @@
         <p-column field="barcode" header="Barcode" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="product" header="Product" [sortable]="true" [filter]="true">
             <template pTemplate="filter" let-col>
-                <input pInputText [(ngModel)]="articleValue" placeholder="Search"  styleClass="ui-column-filter"/>
+                <input pInputText [(ngModel)]="articleValue" placeholder="Search" style="width: 100%;margin-top: 4px;" styleClass="ui-column-filter"/>
             </template>
             <template let-col let-data="rowData" pTemplate="body">
                 {{data.product | articleInfo:data.barcode}}
@@ -38,7 +38,7 @@
     </p-dataTable>
 
     <p-overlayPanel #find [dismissable]="true">
-        Content
+        <article-picker></article-picker>
     </p-overlayPanel>
 
     <p-overlayPanel #upd [dismissable]="true">

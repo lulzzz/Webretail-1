@@ -3,15 +3,13 @@ import { HttpModule } from '@angular/http';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Configuration } from './../../app.constants';
-import { FooterComponent } from './components/footer/footer.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
 import { AuthenticationService } from './../../services/authentication.service';
+import { FooterComponent } from './components/footer.component';
+import { NavigationComponent } from './components/navigation.component';
 
 @NgModule({
     imports: [
-        CommonModule,
-        RouterModule,
-        HttpModule
+        CommonModule, RouterModule, HttpModule
     ],
     declarations: [
         NavigationComponent,
