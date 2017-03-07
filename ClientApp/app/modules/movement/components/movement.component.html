@@ -12,8 +12,8 @@
             Items count: {{totalRecords}}
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" (click)="find.toggle($event)" class="ui-button-primary" icon="fa-plus-square"></button>
-            <button pButton type="button" (click)="upd.toggle($event)" class="ui-button-primary" icon="fa-edit"></button>
+            <button pButton type="button" (click)="pickerClick()" class="ui-button-primary" icon="fa-plus-square"></button>
+            <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
             <i class="fa fa-bars"></i>
             <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash"></button>
         </div>
@@ -37,11 +37,11 @@
         <p-column field="quantity" header="Quantity" [style]="{'text-align':'center'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     </p-dataTable>
 
-    <p-overlayPanel #find [dismissable]="true">
+    <p-dialog header="Article picker" [(visible)]="displayPicker" [responsive]="true" showEffect="fade" [modal]="true">
         <article-picker></article-picker>
-    </p-overlayPanel>
+    </p-dialog>
 
-    <p-overlayPanel #upd [dismissable]="true">
+    <p-dialog header="Update" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
         <form *ngIf="selected" [formGroup]="dataform">
             <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
                 <div class="ui-grid-row">
@@ -73,6 +73,6 @@
                 </div>
             </div>
         </form>
-    </p-overlayPanel>
+    </p-dialog>
 
 </div>

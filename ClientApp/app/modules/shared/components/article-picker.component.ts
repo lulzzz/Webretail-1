@@ -18,12 +18,10 @@ export class ArticlePickerComponent implements OnInit {
 	selected: Product;
     categories: SelectItem[];
     allbrands: SelectItem[];
-    ums: SelectItem[];
     brands: SelectItem[];
     names: SelectItem[];
     categoryValue: string;
     sliderValue: number;
-    displayDialog: boolean;
 
     constructor(private authenticationService: AuthenticationService,
                 private productService: ProductService,
@@ -31,8 +29,11 @@ export class ArticlePickerComponent implements OnInit {
 
 	ngOnInit() {
         this.authenticationService.checkCredentials(false);
+    }
 
-        /*
+ 	LoadData() {
+        alert('CIAO');
+
         this.productService.getProducts()
             .subscribe(result => {
                 this.products = result;
@@ -40,12 +41,6 @@ export class ArticlePickerComponent implements OnInit {
                 this.buildFilter(result);
             }//, onerror => alert('ERROR\r\n' + onerror)
         );
-
-        this.brandService.getAll().subscribe(result => {
-            this.allbrands = result.map(p => Helpers.newSelectItem(p, p.brandName));
-            this.ums = Helpers.getUnitOfMeasure();
-        });
-        */
     }
 
     buildFilter(items: Product[]) {

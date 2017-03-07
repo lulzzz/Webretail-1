@@ -22,6 +22,8 @@ export class MovementComponent implements OnInit, OnDestroy {
 	selected: MovementArticle;
     dataform: FormGroup;
     articleValue: string;
+    displayPicker: boolean;
+    displayDialog: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
@@ -79,6 +81,14 @@ export class MovementComponent implements OnInit, OnDestroy {
                     });
             }
         });
+    }
+
+    pickerClick() {
+        this.displayPicker = true;
+    }
+
+    editClick() {
+        this.displayDialog = true;
     }
 
     saveClick() {

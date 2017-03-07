@@ -6,7 +6,7 @@ import {
     ConfirmDialogModule, ConfirmationService,
     ToolbarModule, DataTableModule, SharedModule, PaginatorModule, ButtonModule,
     DropdownModule, SliderModule, MultiSelectModule, InputTextModule, InputSwitchModule,
-    OverlayPanelModule, DialogModule, ChipsModule
+    DialogModule, ChipsModule
 } from 'primeng/primeng';
 
 import { MovementRoutes } from './movement.routes';
@@ -25,7 +25,7 @@ import { ArticlePickerComponent } from './../../modules/shared/components/articl
         ConfirmDialogModule,
         ToolbarModule, DataTableModule, SharedModule, PaginatorModule, ButtonModule,
         DropdownModule, SliderModule, MultiSelectModule, InputTextModule, InputSwitchModule,
-        OverlayPanelModule, DialogModule, ChipsModule,
+        DialogModule, ChipsModule,
         CommonModule,
         MovementRoutes
     ],

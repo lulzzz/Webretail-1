@@ -1,16 +1,5 @@
 ﻿<div class="container-fluid">
 
-    <h2>Article picker</h2>
- 
-    <p-toolbar>
-        <div class="ui-toolbar-group-left">
-            Items count: {{totalRecords}}
-        </div>
-        <div class="ui-toolbar-group-right">
-            <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
-        </div>
-    </p-toolbar>
-
     <p *ngIf="!products"><em>Loading...</em></p>
 
     <p-dataTable [style]="{'width': '100%'}" [value]="products" 
