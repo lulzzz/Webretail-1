@@ -8,7 +8,7 @@
 
 protocol MovementProtocol {
     
-    func getAll() throws -> [Movement]
+    func getAll(committed: Bool) throws -> [Movement]
     
     func get(id: Int) throws -> Movement?
     
@@ -17,4 +17,8 @@ protocol MovementProtocol {
     func update(id: Int, item: Movement) throws
     
     func delete(id: Int) throws
+
+	func commit(id: Int) throws
+
+	func rollback(id: Int) throws
 }

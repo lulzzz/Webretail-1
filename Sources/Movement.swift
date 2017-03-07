@@ -18,6 +18,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
     public var movementDesc : String = ""
     public var movementNote : String = ""
     public var movementUser : String = ""
+	public var committed : Bool = false
     public var created : Int = Int.now()
     public var updated : Int = Int.now()
     
@@ -33,6 +34,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
         movementDesc = this.data["movementdesc"] as? String  ?? ""
         movementNote = this.data["movementnote"] as? String  ?? ""
         movementUser = this.data["movementuser"] as? String  ?? ""
+		committed = this.data["committed"] as? Bool ?? false
         created = this.data["created"] as? Int ?? 0
         updated = this.data["updated"] as? Int ?? 0
     }
@@ -71,6 +73,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
         self.movementDesc = getJSONValue(named: "movementDesc", from: values, defaultValue: "")
         self.movementNote = getJSONValue(named: "movementNote", from: values, defaultValue: "")
         self.movementUser = getJSONValue(named: "movementUser", from: values, defaultValue: "")
+		self.movementUser = getJSONValue(named: "movementUser", from: values, defaultValue: "")
     }
     
     func jsonEncodedString() throws -> String {
@@ -85,6 +88,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
             "movementDesc": movementDesc,
             "movementNote": movementNote,
             "movementUser": movementUser,
+            "committed": committed,
             "created": created.formatDate(),
             "updated": updated.formatDate()
         ]

@@ -37,8 +37,8 @@ let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
 // Database connection
 PostgresConnector.host        = "localhost"
-//PostgresConnector.username    = "postgres"
-//PostgresConnector.password    = "postgres"
+PostgresConnector.username    = ""
+PostgresConnector.password    = ""
 PostgresConnector.database    = "webretail"
 PostgresConnector.port        = 5432
 

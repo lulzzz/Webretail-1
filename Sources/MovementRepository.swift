@@ -14,10 +14,13 @@ class MovementRepository : MovementProtocol {
         try? Movement().setup()
     }
     
-    func getAll() throws -> [Movement] {
+	func getAll(committed: Bool) throws -> [Movement] {
         let items = Movement()
-        try items.findAll()
-        
+		try items.select(
+			whereclause: "committed = $1",
+			params: [committed],
+			orderby: ["movementId"])
+		
         return try items.rows()
     }
     
@@ -56,4 +59,92 @@ class MovementRepository : MovementProtocol {
         item.movementId = id
         try item.delete()
     }
+
+	func commit(id: Int) throws {
+		let movement = Movement()
+		try movement.get(id)
+		if movement.committed {
+			throw StORMError.error("Movement already committed")
+		}
+		
+		let stock = Stock()
+		let article = MovementArticle()
+		try article.find([("movementId", id)])
+		for item in article.rows() {
+			
+			let articles = item.product["articles"] as! [[String : Any]];
+			let articleId = item.getJSONValue(named: "articleId", from: articles[0], defaultValue: 0)
+			
+			let cursor = StORMCursor(limit: 1, offset: 0)
+			try stock.select(
+				whereclause: "articleId = $1 AND stockId = $2",
+				params: [ articleId, movement.storeId ],
+				orderby: [],
+				cursor: cursor)
+			
+			let stocks = stock.rows();
+			if (stocks.count > 0) {
+			
+				if movement._causal.quantity > 0 {
+					stocks[0].quantity += item.quantity
+				} else if movement._causal.quantity < 0 {
+					stocks[0].quantity -= item.quantity
+				}
+				
+				if movement._causal.booked > 0 {
+					stocks[0].booked += item.quantity
+				} else if movement._causal.booked < 0 {
+					stocks[0].booked -= item.quantity
+				}
+			}
+		}
+		
+		movement.committed = true
+		movement.updated = Int.now()
+		try movement.save()
+	}
+	
+	func rollback(id: Int) throws {
+		let movement = Movement()
+		try movement.get(id)
+		if !movement.committed {
+			throw StORMError.error("Not committed movement")
+		}
+		
+		let stock = Stock()
+		let article = MovementArticle()
+		try article.find([("movementId", id)])
+		for item in article.rows() {
+			
+			let articles = item.product["articles"] as! [[String : Any]];
+			let articleId = item.getJSONValue(named: "articleId", from: articles[0], defaultValue: 0)
+			
+			let cursor = StORMCursor(limit: 1, offset: 0)
+			try stock.select(
+				whereclause: "articleId = $1 AND stockId = $2",
+				params: [ articleId, movement.storeId ],
+				orderby: [],
+				cursor: cursor)
+			
+			let stocks = stock.rows();
+			if (stocks.count > 0) {
+				
+				if movement._causal.quantity > 0 {
+					stocks[0].quantity -= item.quantity
+				} else if movement._causal.quantity < 0 {
+					stocks[0].quantity += item.quantity
+				}
+				
+				if movement._causal.booked > 0 {
+					stocks[0].booked -= item.quantity
+				} else if movement._causal.booked < 0 {
+					stocks[0].booked += item.quantity
+				}
+			}
+		}
+		
+		movement.committed = false
+		movement.updated = Int.now()
+		try movement.save()
+	}
 }
