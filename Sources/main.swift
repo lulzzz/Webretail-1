@@ -36,9 +36,9 @@ RequestLogFile.location = "./requests.log"
 let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
 // Database connection
-PostgresConnector.host        = "localhost"
-PostgresConnector.username    = ""
-PostgresConnector.password    = ""
+PostgresConnector.host        = "192.168.1.44"
+PostgresConnector.username    = "gerardo"
+PostgresConnector.password    = "gerardo"
 PostgresConnector.database    = "webretail"
 PostgresConnector.port        = 5432
 

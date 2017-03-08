@@ -27,7 +27,11 @@ extension Int {
 }
 
 extension Double {
-    
+	func roundCurrency() -> Double {
+		return (self * 100).rounded() / 100
+	}
+
+	/*
     func formatCurrency() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -37,8 +41,5 @@ extension Double {
         
         return result!
     }
-    
-    func roundCurrency() -> Double {
-        return (self * 100).rounded() / 100
-    }
+    */
 }
