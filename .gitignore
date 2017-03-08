@@ -6,6 +6,8 @@
 .build/
 build/
 DerivedData/
+.build_lin/
+PADockerfile_build
 
 ## Various settings
 *.pbxuser
