@@ -1,4 +1,4 @@
-﻿<p-confirmDialog icon="fa-trash" [responsive]="true"></p-confirmDialog>
+﻿<p-confirmDialog icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
     <div class="global-search">
@@ -16,7 +16,7 @@
             <div *ngIf="!committed">
                 <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
                 <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-                <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash"></button>
+                <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
                 <i class="fa fa-bars"></i>
                 <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
                 <button pButton type="button" label="Commit" (click)="commitClick()" class="ui-button-success" icon="fa-share"></button>
