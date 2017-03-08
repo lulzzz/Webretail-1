@@ -11,6 +11,7 @@
     <p-toolbar>
         <div class="ui-toolbar-group-left">
             Items: {{totalRecords}}
+            <p *ngIf="!categories"><em>Loading...</em></p>
         </div>
         <div class="ui-toolbar-group-right">
             <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
@@ -18,8 +19,6 @@
             <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
         </div>
     </p-toolbar>
-
-    <p *ngIf="!categories"><em>Loading...</em></p>
 
     <p-dataTable [style]="{'width': '100%'}" [value]="categories" selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 

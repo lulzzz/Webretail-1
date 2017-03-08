@@ -11,6 +11,7 @@
     <p-toolbar>
         <div class="ui-toolbar-group-left">
             Items: {{totalRecords}}
+            <p *ngIf="!movements"><em>Loading...</em></p>
         </div>
         <div class="ui-toolbar-group-right">
             <div *ngIf="!committed">
@@ -27,8 +28,6 @@
             </div>
         </div>
     </p-toolbar>
-
-    <p *ngIf="!movements"><em>Loading...</em></p>
 
     <p-dataTable [style]="{'width': '100%'}" [value]="movements"
         selectionMode="single" [(selection)]="selected"
