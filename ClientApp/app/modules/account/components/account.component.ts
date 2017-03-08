@@ -85,7 +85,6 @@ export class AccountComponent implements OnInit {
                         this.accounts.splice(this.selectedIndex, 1);
                         this.selected = null;
                     });
-                this.displayDialog = false;
             }
         });
     }

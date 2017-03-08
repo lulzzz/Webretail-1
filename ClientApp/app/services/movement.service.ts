@@ -11,8 +11,12 @@ export class MovementService {
     constructor(private http: Http) {
     }
 
-    getAll(): Observable<Movement[]> {
-        return this.http.get('/api/movement', { headers: Helpers.getHeaders() })
+    getAll(committed: boolean): Observable<Movement[]> {
+        let url = '/api/movement';
+        if (committed) {
+            url += 'committed';
+        }
+        return this.http.get(url, { headers: Helpers.getHeaders() })
             .map(result => <Movement[]>result.json());
     }
 
@@ -53,6 +57,16 @@ export class MovementService {
 
     deleteItem(id: number) : Observable<any> {
         return this.http.delete('/api/movementarticle/' + id, { headers: Helpers.getHeaders() })
+            .map(result => result.json());
+    }
+
+    commit(movementId: number) : Observable<any> {
+        return this.http.get('/api/movement/' + movementId + '/commit', { headers: Helpers.getHeaders() })
+            .map(result => result.json());
+    }
+
+    roolback(movementId: number) : Observable<any> {
+        return this.http.get('/api/movement/' + movementId + '/roolback', { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
 }

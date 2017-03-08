@@ -15,8 +15,8 @@ import { MovementComponent } from './components/movement.component';
 import { MovementService } from './../../services/movement.service';
 import { ArticleInfoPipe } from './../../pipes/articleinfo.pipe';
 import { ArticleFilterPipe } from './../../pipes/article-filter.pipe';
-import { CategoryFilterPipe } from './../../pipes/category-filter.pipe';
-import { PriceFilterPipe } from './../../pipes/price-filter.pipe';
+//import { CategoryFilterPipe } from './../../pipes/category-filter.pipe';
+//import { PriceFilterPipe } from './../../pipes/price-filter.pipe';
 import { ArticlePickerComponent } from './../../modules/shared/components/article-picker.component';
 
 @NgModule({
@@ -32,8 +32,8 @@ import { ArticlePickerComponent } from './../../modules/shared/components/articl
     declarations: [
         ArticleFilterPipe,
         ArticleInfoPipe,
-        CategoryFilterPipe,
-        PriceFilterPipe,
+        //CategoryFilterPipe,
+        //PriceFilterPipe,
         MovementsComponent,
         MovementComponent,
         ArticlePickerComponent

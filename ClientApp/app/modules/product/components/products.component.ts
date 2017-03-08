@@ -122,7 +122,6 @@ export class ProductsComponent implements OnInit {
                         this.products.splice(this.selectedIndex, 1);
                         this.selected = null;
                     });
-                this.displayDialog = false;
             }
         });
     }

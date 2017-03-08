@@ -84,7 +84,6 @@ export class CausalComponent implements OnInit {
                         this.causals.splice(this.selectedIndex, 1);
                         this.selected = null;
                     });
-                this.displayDialog = false;
             }
         });
     }

@@ -77,7 +77,6 @@ export class CategoryComponent implements OnInit {
                         this.categories.splice(this.selectedIndex, 1);
                         this.selected = null;
                     });
-                this.displayDialog = false;
             }
         });
     }

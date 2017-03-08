@@ -1,19 +1,30 @@
-﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash" [responsive]="true"></p-confirmDialog>
+﻿<p-confirmDialog icon="fa-trash" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
+    <div class="global-search">
+        <button *ngIf="!committed" pButton type="button" label="Show Committed" (click)="committedClick()" class="ui-button-info"></button>
+        <button *ngIf="committed" pButton type="button" label="Show Uncommitted" (click)="uncommittedClick()" class="ui-button-info"></button>
+    </div>
 
     <h2>Movements</h2>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            Items count: {{totalRecords}}
+            Items: {{totalRecords}}
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
-            <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
-            <i class="fa fa-bars"></i>
-            <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash"></button>
+            <div *ngIf="!committed">
+                <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
+                <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+                <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash"></button>
+                <i class="fa fa-bars"></i>
+                <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
+                <button pButton type="button" label="Commit" (click)="commitClick()" class="ui-button-success" icon="fa-share"></button>
+            </div>
+            <div *ngIf="committed">
+                <button pButton type="button" label="Open" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
+                <button *ngIf="committed" pButton type="button" label="Roolback" (click)="roolbackClick()" class="ui-button-warning" icon="fa-reply"></button>
+            </div>
         </div>
     </p-toolbar>
 

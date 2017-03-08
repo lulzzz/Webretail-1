@@ -76,7 +76,6 @@ export class BrandComponent implements OnInit {
                         this.brands.splice(this.selectedIndex, 1);
                         this.selected = null;
                     });
-                this.displayDialog = false;
             }
         });
     }

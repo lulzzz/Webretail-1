@@ -80,7 +80,6 @@ export class StoreComponent implements OnInit {
                         this.stores.splice(this.selectedIndex, 1);
                         this.selected = null;
                     });
-                this.displayDialog = false;
             }
         });
     }

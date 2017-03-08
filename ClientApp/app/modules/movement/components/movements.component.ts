@@ -17,7 +17,8 @@ import { Helpers } from './../../../shared/helpers';
 
 export class MovementsComponent implements OnInit {
     totalRecords = 0;
-    movements: Movement[];
+    committed: boolean;
+	movements: Movement[];
 	selected: Movement;
     stores: SelectItem[];
     storesFiltered: SelectItem[];
@@ -44,13 +45,8 @@ export class MovementsComponent implements OnInit {
             'note': new FormControl('', Validators.nullValidator)
         });
 
-        this.movementService.getAll()
-            .subscribe(result => {
-                this.movements = result;
-                this.totalRecords = this.movements.length;
-                this.buildFilter(result);
-            }
-        );
+        this.committed = false;
+        this.loadData();
 
         this.storeService.getAll()
             .subscribe(result => {
@@ -61,6 +57,16 @@ export class MovementsComponent implements OnInit {
         this.causalService.getAll()
             .subscribe(result => {
                 this.causals = result.map(p => Helpers.newSelectItem(p, p.causalName));
+            }
+        );
+    }
+
+    loadData() {
+         this.movementService.getAll(this.committed)
+            .subscribe(result => {
+                this.movements = result;
+                this.totalRecords = this.movements.length;
+                this.buildFilter(result);
             }
         );
     }
@@ -114,6 +120,7 @@ export class MovementsComponent implements OnInit {
 
     deleteClick() {
         this.confirmationService.confirm({
+            header: 'Confirmation delete on cascade',
             message: 'All related items will be deleted. Are you sure that you want to delete this movement?',
             accept: () => {
                 this.movementService.delete(this.selected.movementId)
@@ -121,9 +128,46 @@ export class MovementsComponent implements OnInit {
                         this.movements.splice(this.selectedIndex, 1);
                         this.selected = null;
                     });
-                this.displayDialog = false;
             }
         });
+    }
+
+    commitClick() {
+        this.confirmationService.confirm({
+            header: 'Commit',
+            message: 'All related items will be send to warehouse. Are you sure that you want to "commit" this movement?',
+            accept: () => {
+                this.movementService.commit(this.selected.movementId)
+                    .subscribe(result => {
+                        this.movements.splice(this.selectedIndex, 1);
+                        this.selected = null;
+                    });
+            }
+        });
+    }
+
+    roolbackClick() {
+        this.confirmationService.confirm({
+            header: 'Roolback',
+            message: 'All related items will be taken to warehouse. Are you sure that you want to "uncommit" this movement?',
+            accept: () => {
+                this.movementService.roolback(this.selected.movementId)
+                    .subscribe(result => {
+                        this.movements.splice(this.selectedIndex, 1);
+                        this.selected = null;
+                    });
+            }
+        });
+    }
+
+    committedClick() {
+        this.committed = true;
+        this.loadData();
+    }
+
+    uncommittedClick() {
+        this.committed = false;
+        this.loadData();
     }
 
     openClick() {

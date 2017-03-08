@@ -97,7 +97,6 @@ export class AttributeComponent implements OnInit {
                         this.selected = null;
                         this.values.length = 0;
                     });
-                this.displayDialog = false;
             }
         });
     }
@@ -140,7 +139,6 @@ export class AttributeComponent implements OnInit {
                         this.values.splice(this.selectedValueIndex, 1);
                         this.selectedValue = null;
                     });
-                this.displayDialogValue = false;
             }
         });
     }
