@@ -27,7 +27,7 @@ class Store: PostgresSqlORM, JSONConvertible {
     open override func to(_ this: StORMRow) {
         storeId = this.data["storeid"] as? Int ?? 0
         storeName = this.data["storename"] as? String ?? ""
-        storeAddress	= this.data["storeaddress"] as? String ?? ""
+        storeAddress = this.data["storeaddress"] as? String ?? ""
         storeCity = this.data["storecity"] as? String ?? ""
         storeCountry = this.data["storecountry"] as? String ?? ""
         storeZip = this.data["storezip"] as? String ?? ""

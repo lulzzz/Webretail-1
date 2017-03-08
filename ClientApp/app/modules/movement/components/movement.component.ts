@@ -95,6 +95,7 @@ export class MovementComponent implements OnInit, OnDestroy {
         this.movementService.updateItem(this.selected.movementArticleId, this.selected)
             .subscribe(result => {
                 this.selected = null;
+                this.displayDialog = false;
             });
     }
 

@@ -23,7 +23,7 @@
                 <button pButton type="button" label="Commit" (click)="commitClick()" class="ui-button-success" icon="fa-share"></button>
             </div>
             <div *ngIf="committed">
-                <button pButton type="button" label="Open" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
+                <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
                 <button *ngIf="committed" pButton type="button" label="Roolback" (click)="roolbackClick()" class="ui-button-warning" icon="fa-reply"></button>
             </div>
         </div>

@@ -4,6 +4,7 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DCD994A20FFF69E73D7DE28EB512BBF004934554" : 9223372036854775807,
     "9197B75B1BC29921D6E3B1CCDC2B258350009F3A" : 9223372036854775807,
     "57BE24692F467FFA1EF91B57FC1919A5D9BBBF4F" : 9223372036854775807,
     "735A06A83BD3E78D8C3B53C09F33A6FB7CEBF8E1" : 9223372036854775807,
@@ -14,6 +15,7 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "32C1CEC2-9100-44EA-A4A8-572D0DB7243F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DCD994A20FFF69E73D7DE28EB512BBF004934554" : "Webretail\/Packages\/COpenSSL-2.0.4\/",
     "9197B75B1BC29921D6E3B1CCDC2B258350009F3A" : "Webretail\/Packages\/PerfectHTTP-2.1.6\/",
     "57BE24692F467FFA1EF91B57FC1919A5D9BBBF4F" : "Webretail\/",
     "735A06A83BD3E78D8C3B53C09F33A6FB7CEBF8E1" : "Webretail\/Packages\/PerfectLogger-1.0.0\/",
@@ -60,6 +62,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/Perfect-HTTPServer.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C4127C9B9C8FDF608B532AD72407863CE2797629"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/Perfect-COpenSSL.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DCD994A20FFF69E73D7DE28EB512BBF004934554"
     }
   ]
 }

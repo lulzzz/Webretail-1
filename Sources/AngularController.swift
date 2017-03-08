@@ -31,12 +31,12 @@ public class AngularController {
         
         let data = FileManager.default.contents(atPath: "./wwwroot/index.html")
         
-        guard let content = String(data: data!, encoding: .utf8) else {
+        guard let content = data else {
             response.completed(status: .notFound)
             return
         }
 
-        response.appendBody(string: content)
+        response.appendBody(string: String(data: content, encoding: .utf8)!)
         response.completed()
     }
 }

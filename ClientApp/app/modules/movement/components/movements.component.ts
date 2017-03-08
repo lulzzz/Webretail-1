@@ -99,6 +99,9 @@ export class MovementsComponent implements OnInit {
     }
 
     editClick() {
+        if (!this.selected) {
+            return;
+        }
         this.displayDialog = true;
     }
 
@@ -119,6 +122,9 @@ export class MovementsComponent implements OnInit {
     }
 
     deleteClick() {
+        if (!this.selected) {
+            return;
+        }
         this.confirmationService.confirm({
             header: 'Confirmation delete on cascade',
             message: 'All related items will be deleted. Are you sure that you want to delete this movement?',
@@ -133,6 +139,9 @@ export class MovementsComponent implements OnInit {
     }
 
     commitClick() {
+        if (!this.selected) {
+            return;
+        }
         this.confirmationService.confirm({
             header: 'Commit',
             message: 'All related items will be send to warehouse. Are you sure that you want to "commit" this movement?',
@@ -147,6 +156,9 @@ export class MovementsComponent implements OnInit {
     }
 
     roolbackClick() {
+        if (!this.selected) {
+            return;
+        }
         this.confirmationService.confirm({
             header: 'Roolback',
             message: 'All related items will be taken to warehouse. Are you sure that you want to "uncommit" this movement?',
@@ -171,6 +183,9 @@ export class MovementsComponent implements OnInit {
     }
 
     openClick() {
+        if (!this.selected) {
+            return;
+        }
         this.router.navigateByUrl('movement/' + this.selected.movementId);
     }
 }
