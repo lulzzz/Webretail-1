@@ -2684,7 +2684,7 @@
 			path = "Packages/SwiftMoment-0.9.1/Sources/SwiftMoment";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2694,7 +2694,6 @@
 				OBJ_921 /* webroot */,
 				OBJ_922 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_51 /* PerfectThread */ = {
@@ -4269,7 +4268,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_922 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
