@@ -46,7 +46,7 @@ StORMlog.txt
 *.log
 error.log 
 node_modules/
-wwwroot/favicon.ico
-wwwroot/index.html
-wwwroot/assets/
-wwwroot/dist/
+webroot/favicon.ico
+webroot/index.html
+webroot/assets/
+webroot/dist/
