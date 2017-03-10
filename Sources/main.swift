@@ -36,9 +36,9 @@ RequestLogFile.location = "./requests.log"
 let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
 // Database connection
-PostgresConnector.host        = "localhost"
-//PostgresConnector.username    = "postgres"
-//PostgresConnector.password    = "webretail"
+PostgresConnector.host        = "webretail.csb42stoatzh.eu-central-1.rds.amazonaws.com"
+PostgresConnector.username    = "webretail"
+PostgresConnector.password    = "webretail"
 PostgresConnector.database    = "webretail"
 PostgresConnector.port        = 5432
 
@@ -110,7 +110,7 @@ server.setResponseFilters([(myLogger, .low)])
 server.serverPort = 8080
 
 // Where to serve static files from
-server.documentRoot = "./wwwroot"
+server.documentRoot = "./webroot"
 
 do {
     // Launch the HTTP server.

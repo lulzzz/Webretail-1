@@ -19,7 +19,7 @@ module.exports = {
     },
 
     output: {
-        path: __dirname +  '/wwwroot/',
+        path: __dirname +  '/webroot/',
         filename: 'dist/[name].bundle.js',
         chunkFilename: 'dist/[id].chunk.js',
         publicPath: '/'
@@ -33,7 +33,7 @@ module.exports = {
         port: 8888,
         host: 'localhost',
         historyApiFallback: true,
-        contentBase: path.join(__dirname, '/wwwroot/'),
+        contentBase: path.join(__dirname, '/webroot/'),
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
@@ -102,10 +102,10 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({ name: ['app', 'polyfills']}),    
         new CleanWebpackPlugin(
             [
-                './wwwroot/index.html',
-                './wwwroot/favicon.ico',
-                './wwwroot/dist',
-                './wwwroot/assets'
+                './webroot/index.html',
+                './webroot/favicon.ico',
+                './webroot/dist',
+                './webroot/assets'
             ]
         ),
         new HtmlWebpackPlugin({

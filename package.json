@@ -2,7 +2,7 @@
   "name": "Webretail",
   "version": "1.0.0",
   "description": "",
-  "main": "wwwroot/index.html",
+  "main": "webroot/index.html",
   "author": "",
   "license": "ISC",
   "scripts": {

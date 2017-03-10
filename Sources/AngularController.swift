@@ -29,7 +29,7 @@ public class AngularController {
     func angularHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "text/html")
         
-        let data = FileManager.default.contents(atPath: "./wwwroot/index.html")
+        let data = FileManager.default.contents(atPath: "./webroot/index.html")
         
         guard let content = data else {
             response.completed(status: .notFound)

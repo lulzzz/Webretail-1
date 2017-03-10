@@ -16,7 +16,7 @@ module.exports = {
     },
 
     output: {
-        path: './wwwroot/',
+        path: './webroot/',
         filename: 'dist/[name].[hash].bundle.js',
         chunkFilename: 'dist/[id].[hash].chunk.js',
         publicPath: '/'
@@ -69,10 +69,10 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(
             [
-                './wwwroot/index.html',
-                './wwwroot/favicon.ico',
-                './wwwroot/dist',
-                './wwwroot/assets'
+                './webroot/index.html',
+                './webroot/favicon.ico',
+                './webroot/dist',
+                './webroot/assets'
             ]
         ),
         new webpack.NoEmitOnErrorsPlugin(),
