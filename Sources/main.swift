@@ -21,16 +21,14 @@ import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
 import PerfectLogger
-import PerfectRequestLogger
 import PostgresStORM
 import StORM
 import Turnstile
 import TurnstileWeb
 
 
-StORMdebug = true
+StORMdebug = false
 LogFile.location = "./error.log"
-RequestLogFile.location = "./requests.log"
 
 // Used later in script for the Realm and how the user authenticates.
 let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
@@ -96,15 +94,10 @@ authenticationConfig.exclude("/api/authenticated")
 authenticationConfig.include("/api/*}")
 let authFilter = AuthFilter(authenticationConfig)
 
-// Setup logging
-let myLogger = RequestLogger()
-
 // Note that order matters when the filters are of the same priority level
 server.setRequestFilters([pturnstile.requestFilter])
 server.setResponseFilters([pturnstile.responseFilter])
 server.setRequestFilters([(authFilter, .high)])
-server.setRequestFilters([(myLogger, .high)])
-server.setResponseFilters([(myLogger, .low)])
 
 // Set a listen port of 8080
 server.serverPort = 8080

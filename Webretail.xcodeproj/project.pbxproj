@@ -792,19 +792,6 @@
 		OBJ_1888 /* PerfectHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_936 /* PerfectHTTP.framework */; };
 		OBJ_1889 /* CHTTPParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_937 /* CHTTPParser.framework */; };
 		OBJ_1890 /* CZlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_938 /* CZlib.framework */; };
-		OBJ_1903 /* PerfectRequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_811 /* PerfectRequestLogger.swift */; };
-		OBJ_1905 /* PerfectLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_926 /* PerfectLib.framework */; };
-		OBJ_1906 /* SwiftMoment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_929 /* SwiftMoment.framework */; };
-		OBJ_1907 /* PerfectThread.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_930 /* PerfectThread.framework */; };
-		OBJ_1908 /* PerfectCURL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_931 /* PerfectCURL.framework */; };
-		OBJ_1909 /* PerfectLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_932 /* PerfectLogger.framework */; };
-		OBJ_1910 /* COpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_934 /* COpenSSL.framework */; };
-		OBJ_1911 /* PerfectNet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_935 /* PerfectNet.framework */; };
-		OBJ_1912 /* PerfectHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_936 /* PerfectHTTP.framework */; };
-		OBJ_1913 /* CHTTPParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_937 /* CHTTPParser.framework */; };
-		OBJ_1914 /* CZlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_938 /* CZlib.framework */; };
-		OBJ_1915 /* PerfectHTTPServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_939 /* PerfectHTTPServer.framework */; };
-		OBJ_1916 /* SwiftRandom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_924 /* SwiftRandom.framework */; };
 		OBJ_1934 /* TurnstileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_813 /* TurnstileError.swift */; };
 		OBJ_1935 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_815 /* Subject.swift */; };
 		OBJ_1936 /* Turnstile.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_816 /* Turnstile.swift */; };
@@ -920,7 +907,6 @@
 		OBJ_2068 /* CHTTPParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_937 /* CHTTPParser.framework */; };
 		OBJ_2069 /* CZlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_938 /* CZlib.framework */; };
 		OBJ_2070 /* PerfectHTTPServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_939 /* PerfectHTTPServer.framework */; };
-		OBJ_2071 /* PerfectRequestLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_940 /* PerfectRequestLogger.framework */; };
 		OBJ_2072 /* TurnstileCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_942 /* TurnstileCrypto.framework */; };
 		OBJ_2073 /* Turnstile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_941 /* Turnstile.framework */; };
 		OBJ_2074 /* TurnstileWeb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_943 /* TurnstileWeb.framework */; };
@@ -1212,90 +1198,6 @@
 			remoteGlobalIDString = OBJ_1838;
 			remoteInfo = CZlib;
 		};
-		56E02F3B1E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_970;
-			remoteInfo = PerfectLib;
-		};
-		56E02F3C1E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1013;
-			remoteInfo = SwiftMoment;
-		};
-		56E02F3D1E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1025;
-			remoteInfo = PerfectThread;
-		};
-		56E02F3E1E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1034;
-			remoteInfo = PerfectCURL;
-		};
-		56E02F3F1E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1043;
-			remoteInfo = PerfectLogger;
-		};
-		56E02F401E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1092;
-			remoteInfo = COpenSSL;
-		};
-		56E02F411E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1780;
-			remoteInfo = PerfectNet;
-		};
-		56E02F421E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1797;
-			remoteInfo = PerfectHTTP;
-		};
-		56E02F431E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1820;
-			remoteInfo = CHTTPParser;
-		};
-		56E02F441E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1838;
-			remoteInfo = CZlib;
-		};
-		56E02F451E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1870;
-			remoteInfo = PerfectHTTPServer;
-		};
-		56E02F461E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_954;
-			remoteInfo = SwiftRandom;
-		};
 		56E02F471E72204100B51614 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
@@ -1435,13 +1337,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = OBJ_1870;
 			remoteInfo = PerfectHTTPServer;
-		};
-		56E02F5B1E72204100B51614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = OBJ_1898;
-			remoteInfo = PerfectRequestLogger;
 		};
 		56E02F5C1E72204100B51614 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2231,7 +2126,6 @@
 		OBJ_808 /* HTTPServerEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServerEx.swift; sourceTree = "<group>"; };
 		OBJ_809 /* HTTPServerExConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServerExConfig.swift; sourceTree = "<group>"; };
 		OBJ_81 /* a_i2d_fp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = a_i2d_fp.c; sourceTree = "<group>"; };
-		OBJ_811 /* PerfectRequestLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfectRequestLogger.swift; sourceTree = "<group>"; };
 		OBJ_813 /* TurnstileError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnstileError.swift; sourceTree = "<group>"; };
 		OBJ_815 /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		OBJ_816 /* Turnstile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Turnstile.swift; sourceTree = "<group>"; };
@@ -2360,7 +2254,6 @@
 		OBJ_938 /* CZlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CZlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_939 /* PerfectHTTPServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PerfectHTTPServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_94 /* a_utf8.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = a_utf8.c; sourceTree = "<group>"; };
-		OBJ_940 /* PerfectRequestLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PerfectRequestLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_941 /* Turnstile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Turnstile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_942 /* TurnstileCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TurnstileCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_943 /* TurnstileWeb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TurnstileWeb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2501,25 +2394,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_1904 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_1905 /* PerfectLib.framework in Frameworks */,
-				OBJ_1906 /* SwiftMoment.framework in Frameworks */,
-				OBJ_1907 /* PerfectThread.framework in Frameworks */,
-				OBJ_1908 /* PerfectCURL.framework in Frameworks */,
-				OBJ_1909 /* PerfectLogger.framework in Frameworks */,
-				OBJ_1910 /* COpenSSL.framework in Frameworks */,
-				OBJ_1911 /* PerfectNet.framework in Frameworks */,
-				OBJ_1912 /* PerfectHTTP.framework in Frameworks */,
-				OBJ_1913 /* CHTTPParser.framework in Frameworks */,
-				OBJ_1914 /* CZlib.framework in Frameworks */,
-				OBJ_1915 /* PerfectHTTPServer.framework in Frameworks */,
-				OBJ_1916 /* SwiftRandom.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		OBJ_1947 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
@@ -2565,7 +2439,6 @@
 				OBJ_2068 /* CHTTPParser.framework in Frameworks */,
 				OBJ_2069 /* CZlib.framework in Frameworks */,
 				OBJ_2070 /* PerfectHTTPServer.framework in Frameworks */,
-				OBJ_2071 /* PerfectRequestLogger.framework in Frameworks */,
 				OBJ_2072 /* TurnstileCrypto.framework in Frameworks */,
 				OBJ_2073 /* Turnstile.framework in Frameworks */,
 				OBJ_2074 /* TurnstileWeb.framework in Frameworks */,
@@ -2765,7 +2638,6 @@
 				OBJ_775 /* CHTTPParser */,
 				OBJ_780 /* CZlib */,
 				OBJ_801 /* PerfectHTTPServer */,
-				OBJ_810 /* PerfectRequestLogger */,
 				OBJ_812 /* Turnstile */,
 				OBJ_830 /* TurnstileCrypto */,
 				OBJ_834 /* TurnstileWeb */,
@@ -3586,15 +3458,6 @@
 			path = "Packages/PerfectHTTPServer-2.1.14/Sources/PerfectHTTPServer";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_810 /* PerfectRequestLogger */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_811 /* PerfectRequestLogger.swift */,
-			);
-			name = PerfectRequestLogger;
-			path = "Packages/PerfectRequestLogger-1.0.2/Sources";
-			sourceTree = SOURCE_ROOT;
-		};
 		OBJ_812 /* Turnstile */ = {
 			isa = PBXGroup;
 			children = (
@@ -3813,7 +3676,6 @@
 				OBJ_937 /* CHTTPParser.framework */,
 				OBJ_938 /* CZlib.framework */,
 				OBJ_939 /* PerfectHTTPServer.framework */,
-				OBJ_940 /* PerfectRequestLogger.framework */,
 				OBJ_941 /* Turnstile.framework */,
 				OBJ_942 /* TurnstileCrypto.framework */,
 				OBJ_943 /* TurnstileWeb.framework */,
@@ -4056,34 +3918,6 @@
 			productReference = OBJ_939 /* PerfectHTTPServer.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		OBJ_1898 /* PerfectRequestLogger */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_1899 /* Build configuration list for PBXNativeTarget "PerfectRequestLogger" */;
-			buildPhases = (
-				OBJ_1902 /* Sources */,
-				OBJ_1904 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				OBJ_1917 /* PBXTargetDependency */,
-				OBJ_1918 /* PBXTargetDependency */,
-				OBJ_1919 /* PBXTargetDependency */,
-				OBJ_1920 /* PBXTargetDependency */,
-				OBJ_1921 /* PBXTargetDependency */,
-				OBJ_1922 /* PBXTargetDependency */,
-				OBJ_1923 /* PBXTargetDependency */,
-				OBJ_1924 /* PBXTargetDependency */,
-				OBJ_1925 /* PBXTargetDependency */,
-				OBJ_1926 /* PBXTargetDependency */,
-				OBJ_1927 /* PBXTargetDependency */,
-				OBJ_1928 /* PBXTargetDependency */,
-			);
-			name = PerfectRequestLogger;
-			productName = PerfectRequestLogger;
-			productReference = OBJ_940 /* PerfectRequestLogger.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		OBJ_1929 /* Turnstile */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = OBJ_1930 /* Build configuration list for PBXNativeTarget "Turnstile" */;
@@ -4162,7 +3996,6 @@
 				OBJ_2089 /* PBXTargetDependency */,
 				OBJ_2090 /* PBXTargetDependency */,
 				OBJ_2091 /* PBXTargetDependency */,
-				OBJ_2092 /* PBXTargetDependency */,
 				OBJ_2093 /* PBXTargetDependency */,
 				OBJ_2094 /* PBXTargetDependency */,
 				OBJ_2095 /* PBXTargetDependency */,
@@ -4290,7 +4123,6 @@
 				OBJ_1820 /* CHTTPParser */,
 				OBJ_1838 /* CZlib */,
 				OBJ_1870 /* PerfectHTTPServer */,
-				OBJ_1898 /* PerfectRequestLogger */,
 				OBJ_1929 /* Turnstile */,
 				OBJ_1950 /* TurnstileCrypto */,
 				OBJ_1959 /* TurnstileWeb */,
@@ -5160,14 +4992,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_1902 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_1903 /* PerfectRequestLogger.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		OBJ_1933 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
@@ -5542,66 +5366,6 @@
 			target = OBJ_1838 /* CZlib */;
 			targetProxy = 56E02F3A1E72204100B51614 /* PBXContainerItemProxy */;
 		};
-		OBJ_1917 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_970 /* PerfectLib */;
-			targetProxy = 56E02F3B1E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1918 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1013 /* SwiftMoment */;
-			targetProxy = 56E02F3C1E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1919 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1025 /* PerfectThread */;
-			targetProxy = 56E02F3D1E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1920 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1034 /* PerfectCURL */;
-			targetProxy = 56E02F3E1E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1921 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1043 /* PerfectLogger */;
-			targetProxy = 56E02F3F1E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1922 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1092 /* COpenSSL */;
-			targetProxy = 56E02F401E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1923 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1780 /* PerfectNet */;
-			targetProxy = 56E02F411E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1924 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1797 /* PerfectHTTP */;
-			targetProxy = 56E02F421E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1925 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1820 /* CHTTPParser */;
-			targetProxy = 56E02F431E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1926 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1838 /* CZlib */;
-			targetProxy = 56E02F441E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1927 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1870 /* PerfectHTTPServer */;
-			targetProxy = 56E02F451E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_1928 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_954 /* SwiftRandom */;
-			targetProxy = 56E02F461E72204100B51614 /* PBXContainerItemProxy */;
-		};
 		OBJ_1949 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = OBJ_1950 /* TurnstileCrypto */;
@@ -5701,11 +5465,6 @@
 			isa = PBXTargetDependency;
 			target = OBJ_1870 /* PerfectHTTPServer */;
 			targetProxy = 56E02F5A1E72204100B51614 /* PBXContainerItemProxy */;
-		};
-		OBJ_2092 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = OBJ_1898 /* PerfectRequestLogger */;
-			targetProxy = 56E02F5B1E72204100B51614 /* PBXContainerItemProxy */;
 		};
 		OBJ_2093 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6319,60 +6078,6 @@
 			};
 			name = Release;
 		};
-		OBJ_1900 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"Packages/cURL-2.0.1",
-					"Packages/COpenSSL-2.0.4/COpenSSL/include",
-					"Packages/PerfectHTTPServer-2.1.14/Sources/CHTTPParser/include",
-					"Packages/PerfectHTTPServer-2.1.14/Sources/CZlib/include",
-				);
-				INFOPLIST_FILE = Webretail.xcodeproj/PerfectRequestLogger_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_TEMP_DIR)/SymlinkLibs/";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = PerfectRequestLogger;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				TARGET_NAME = PerfectRequestLogger;
-			};
-			name = Debug;
-		};
-		OBJ_1901 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"Packages/cURL-2.0.1",
-					"Packages/COpenSSL-2.0.4/COpenSSL/include",
-					"Packages/PerfectHTTPServer-2.1.14/Sources/CHTTPParser/include",
-					"Packages/PerfectHTTPServer-2.1.14/Sources/CZlib/include",
-				);
-				INFOPLIST_FILE = Webretail.xcodeproj/PerfectRequestLogger_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_TEMP_DIR)/SymlinkLibs/";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = PerfectRequestLogger;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				TARGET_NAME = PerfectRequestLogger;
-			};
-			name = Release;
-		};
 		OBJ_1931 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -6922,15 +6627,6 @@
 			buildConfigurations = (
 				OBJ_1872 /* Debug */,
 				OBJ_1873 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_1899 /* Build configuration list for PBXNativeTarget "PerfectRequestLogger" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_1900 /* Debug */,
-				OBJ_1901 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -78,6 +78,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                     .subscribe(result => {
                         this.items.push(result);
                         this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
+                        this.totalRecords++;
                     });
             }
         });
@@ -107,6 +108,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                     .subscribe(result => {
                         this.items.splice(this.selectedIndex, 1);
                         this.selected = null;
+                        this.totalRecords--;
                     });
             }
         });
