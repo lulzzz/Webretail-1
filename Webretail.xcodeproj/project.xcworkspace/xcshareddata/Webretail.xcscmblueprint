@@ -16,7 +16,7 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7B5190DE-9DEA-418E-8F8A-43B6463B6F75",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "DCD994A20FFF69E73D7DE28EB512BBF004934554" : "Webretail\/Packages\/COpenSSL-2.0.4\/",
-    "9197B75B1BC29921D6E3B1CCDC2B258350009F3A" : "Webretail\/Packages\/PerfectHTTP-2.1.6\/",
+    "9197B75B1BC29921D6E3B1CCDC2B258350009F3A" : "Webretail\/Packages\/PerfectHTTP-2.1.8\/",
     "57BE24692F467FFA1EF91B57FC1919A5D9BBBF4F" : "Webretail\/",
     "735A06A83BD3E78D8C3B53C09F33A6FB7CEBF8E1" : "Webretail\/Packages\/PerfectLogger-1.0.0\/",
     "C4127C9B9C8FDF608B532AD72407863CE2797629" : "Webretail\/Packages\/PerfectHTTPServer-2.1.14\/",

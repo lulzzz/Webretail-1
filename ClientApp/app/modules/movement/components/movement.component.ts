@@ -1,12 +1,12 @@
-﻿import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { ProductService } from './../../../services/product.service';
 import { MovementService } from './../../../services/movement.service';
-import { MovementArticle } from './../../../shared/models';
+import { Movement, MovementArticle } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
+import { ArticlePickerComponent } from './../../shared/components/article-picker.component';
 
 @Component({
     selector: 'movement-component',
@@ -14,23 +14,21 @@ import { Helpers } from './../../../shared/helpers';
 })
 
 export class MovementComponent implements OnInit, OnDestroy {
+    @ViewChild(ArticlePickerComponent) inputComponent: ArticlePickerComponent;
     private sub: any;
     movementId: number;
     totalRecords = 0;
+    totalItems = 0;
     barcodes: string[];
+    movement: Movement;
     items: MovementArticle[];
-	selected: MovementArticle;
-    dataform: FormGroup;
     articleValue: string;
     displayPicker: boolean;
-    displayDialog: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
                 private movementService: MovementService,
-                private confirmationService: ConfirmationService,
-                private fb: FormBuilder) {
-        this.selected = new MovementArticle();
+                private confirmationService: ConfirmationService) {
     }
 
 	ngOnInit() {
@@ -39,25 +37,29 @@ export class MovementComponent implements OnInit, OnDestroy {
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.movementId = params['id'];
+            this.movementService.getById(this.movementId)
+                .subscribe(result => {
+                    this.movement = result;
+                }//, onerror => alert('ERROR: ' + onerror)
+            );
             this.movementService.getItemsById(this.movementId)
                 .subscribe(result => {
                     this.items = result;
-                    this.totalRecords = result.length;
+                    this.updateTotals();
                 }//, onerror => alert('ERROR: ' + onerror)
             );
         });
+    }
 
-        this.dataform = this.fb.group({
-            'quantity': new FormControl('', Validators.required)
-        });
+    updateTotals() {
+        this.totalRecords = this.items.length;
+        this.totalItems = this.items.map(p => p.quantity).reduce((sum, current) => sum + current);
     }
 
     ngOnDestroy() {
         // Clean sub to avoid memory leak
         this.sub.unsubscribe();
     }
-
-    get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
     addBarcode() {
         this.barcodes.forEach(barcode => {
@@ -68,6 +70,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                     .updateItem(item.movementArticleId, item)
                     .subscribe(result => {
                         this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
+                        this.updateTotals();
                     });
             } else {
                 item = new MovementArticle();
@@ -78,39 +81,35 @@ export class MovementComponent implements OnInit, OnDestroy {
                     .subscribe(result => {
                         this.items.push(result);
                         this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
-                        this.totalRecords++;
+                        this.updateTotals();
                     });
             }
         });
+        this.displayPicker = false;
     }
 
     pickerClick() {
         this.displayPicker = true;
+        this.inputComponent.loadData();
     }
 
-    editClick() {
-        this.displayDialog = true;
-    }
-
-    saveClick() {
-        this.movementService.updateItem(this.selected.movementArticleId, this.selected)
-            .subscribe(result => {
-                this.selected = null;
-                this.displayDialog = false;
+    updateClick(data: MovementArticle) {
+        if (data.quantity > 0) {
+            this.movementService.updateItem(data.movementArticleId, data)
+                .subscribe(result => {
+                    this.updateTotals();
+                });
+        } else {
+            this.confirmationService.confirm({
+                message: 'Are you sure that you want to delete this item?',
+                accept: () => {
+                    this.movementService.deleteItem(data.movementArticleId)
+                        .subscribe(result => {
+                            this.items.splice(this.items.indexOf(data), 1);
+                            this.updateTotals();
+                        });
+                }
             });
-    }
-
-    deleteClick() {
-        this.confirmationService.confirm({
-            message: 'Are you sure that you want to delete this item?',
-            accept: () => {
-                this.movementService.deleteItem(this.selected.movementArticleId)
-                    .subscribe(result => {
-                        this.items.splice(this.selectedIndex, 1);
-                        this.selected = null;
-                        this.totalRecords--;
-                    });
-            }
-        });
+        }
     }
 }

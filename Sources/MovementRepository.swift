@@ -28,9 +28,19 @@ class MovementRepository : MovementProtocol {
         let item = Movement()
         try item.get(id)
         
-        return item
+		// get store
+		let store = Store()
+		try store.get(item.storeId)
+		item._store = store
+		
+		// get causal
+		let causal = Causal()
+		try causal.get(item.causalId)
+		item._causal = causal
+
+		return item
     }
-    
+	
     func add(item: Movement) throws {
         item.created = Int.now()
         item.updated = Int.now()

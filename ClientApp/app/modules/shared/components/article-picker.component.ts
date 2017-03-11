@@ -1,8 +1,7 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
+﻿import { Component, Input } from '@angular/core';
 import { SelectItem, MenuItem } from 'primeng/primeng';
 import { Product, ProductCategory } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
-import { AuthenticationService } from './../../../services/authentication.service';
 import { BrandService } from './../../../services/brand.service';
 import { ProductService } from './../../../services/product.service';
 
@@ -12,7 +11,7 @@ import { ProductService } from './../../../services/product.service';
     providers: [ ProductService, BrandService ]
 })
 
-export class ArticlePickerComponent implements OnInit {
+export class ArticlePickerComponent {
     totalRecords = 0;
     products: Product[];
 	selected: Product;
@@ -23,17 +22,10 @@ export class ArticlePickerComponent implements OnInit {
     categoryValue: string;
     sliderValue: number;
 
-    constructor(private authenticationService: AuthenticationService,
-                private productService: ProductService,
+    constructor(private productService: ProductService,
                 private brandService: BrandService) { }
 
-	ngOnInit() {
-        this.authenticationService.checkCredentials(false);
-    }
-
- 	LoadData() {
-        alert('CIAO');
-
+    public loadData() {
         this.productService.getProducts()
             .subscribe(result => {
                 this.products = result;

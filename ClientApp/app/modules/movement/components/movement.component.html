@@ -1,30 +1,32 @@
-﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+﻿<p-confirmDialog header="Confirmation delete" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
-    <div class="global-search">
+    <div class="global-search" style="padding-right: 30px">
         <p-chips [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
+        <button pButton type="button" (click)="pickerClick()" style="position: absolute; top: 68px; right: 28px;" class="ui-button-primary" icon="fa-search-plus"></button>
     </div>
 
     <h2>Movement</h2>
+    <p *ngIf="!items"><em>Loading...</em></p>
     
-    <p-toolbar>
+    <p-toolbar *ngIf="movement">
         <div class="ui-toolbar-group-left">
-            Items: {{totalRecords}}
-            <p *ngIf="!items"><em>Loading...</em></p>
+            <b>n°</b> {{movement.movementId}} <b>date</b> {{movement.created | date: 'yyyy-MM-dd'}}
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" (click)="pickerClick()" class="ui-button-primary" icon="fa-plus-square"></button>
-            <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
+            <b>description</b>: {{movement.movementDesc}} <b>causal</b>: {{movement.causal.causalName}} <b>store</b>: {{movement.store.storeName}}
         </div>
     </p-toolbar>
 
-    <p-dataTable [style]="{'width': '100%'}" [value]="items | articleFilter:articleValue"
-        selectionMode="single" [(selection)]="selected"
-        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]">
-        <p-column field="movementArticleId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="barcode" header="Barcode" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="product" header="Product" [sortable]="true" [filter]="true">
+    <p-dataTable [style]="{'width': '100%'}" [editable]="true" [value]="items | articleFilter:articleValue">
+        <p-footer>
+            <span style="float: left"><b>{{totalRecords}}</b> rows</span>
+            <span style="float: right">items <b>{{totalItems}}</b></span>
+            <p>&nbsp;</p>
+        </p-footer>
+        <p-column field="movementArticleId" header="Id" [editable]="false" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="barcode" header="Barcode" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="product" header="Product" [editable]="false" [sortable]="true" [filter]="true">
             <template pTemplate="filter" let-col>
                 <input pInputText [(ngModel)]="articleValue" placeholder="Search" style="width: 100%;margin-top: 4px;" styleClass="ui-column-filter"/>
             </template>
@@ -32,7 +34,11 @@
                 {{data.product | articleInfo:data.barcode}}
             </template>
         </p-column>
-        <p-column field="quantity" header="Quantity" [style]="{'text-align':'center'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="quantity" header="Quantity" [style]="{'text-align':'center'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+            <template let-col let-data="rowData" pTemplate="editor">
+                <p-spinner [(ngModel)]="data.quantity" [min]="0" (onChange)="updateClick(data)"></p-spinner>
+            </template>
+        </p-column>
     </p-dataTable>
 
     <p-dialog header="Article picker" [(visible)]="displayPicker" [responsive]="true" showEffect="fade" [modal]="true">
