@@ -132,7 +132,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         source.subscribe(obs => {
             let row: any[] = [];
-            console.log('Key: ' + obs.key);
+            //console.log('Key: ' + obs.key);
             let isFirst = true;
             obs.forEach(e => {
                 let qta = e.quantity;

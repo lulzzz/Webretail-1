@@ -76,8 +76,8 @@ export class ProductsComponent implements OnInit {
 
         this.categories = [];
         this.categories.push({label: 'All', value: null});
-        let array =  items.map((p: Product) => p.categories.map((c: ProductCategory) => c.category.categoryName)).join(',');
-        let filterCategories =  Helpers.distinct(array.split(',').map((item: string) => Helpers.newSelectItem(item)));
+        let array = items.map((p: Product) => p.categories.map((c: ProductCategory) => c.category.categoryName)).join(',');
+        let filterCategories = Helpers.distinct(array.split(',').map((item: string) => Helpers.newSelectItem(item)));
         this.categories = this.categories.concat(filterCategories);
     }
 

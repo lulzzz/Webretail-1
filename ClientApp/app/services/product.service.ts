@@ -2,7 +2,7 @@
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Product, ProductCategory, ProductAttribute, ProductAttributeValue } from '../shared/models';
+import { Product, ProductCategory, ProductAttribute, ProductAttributeValue, Article } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -19,6 +19,12 @@ export class ProductService {
     getProduct(id: number) : Observable<Product> {
         return this.http.get('/api/product/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Product>result.json());
+    }
+
+    getArticles(id: number) : Observable<Article[]> {
+        alert(id);
+        return this.http.get('/api/product/' + id + '/article', { headers: Helpers.getHeaders() })
+            .map(result => <Article[]>result.json());
     }
 
     create(model: Product) : Observable<Product> {

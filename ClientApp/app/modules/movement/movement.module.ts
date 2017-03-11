@@ -11,9 +11,11 @@ import { MovementRoutes } from './movement.routes';
 import { MovementsComponent } from './components/movements.component';
 import { MovementComponent } from './components/movement.component';
 import { MovementService } from './../../services/movement.service';
+import { ArticlePickerComponent } from './../shared/components/article-picker.component';
 import { ArticleInfoPipe } from './../../pipes/articleinfo.pipe';
 import { ArticleFilterPipe } from './../../pipes/article-filter.pipe';
-import { ArticlePickerComponent } from './../shared/components/article-picker.component';
+import { CategoryFilterPipe } from './../../pipes/category-filter.pipe';
+import { PriceFilterPipe } from './../../pipes/price-filter.pipe';
 
 @NgModule({
     imports: [
@@ -28,6 +30,8 @@ import { ArticlePickerComponent } from './../shared/components/article-picker.co
     declarations: [
         ArticleFilterPipe,
         ArticleInfoPipe,
+        CategoryFilterPipe,
+        PriceFilterPipe,
         ArticlePickerComponent,
         MovementsComponent,
         MovementComponent

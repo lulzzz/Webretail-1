@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="global-search" style="padding-right: 30px">
         <p-chips [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
-        <button pButton type="button" (click)="pickerClick()" style="position: absolute; top: 68px; right: 28px;" class="ui-button-primary" icon="fa-search-plus"></button>
+        <button pButton type="button" (click)="showPickerClick()" style="position: absolute; top: 68px; right: 28px;" class="ui-button-primary" icon="fa-search-plus"></button>
     </div>
 
     <h2>Movement</h2>
@@ -11,10 +11,10 @@
     
     <p-toolbar *ngIf="movement">
         <div class="ui-toolbar-group-left">
-            <b>n°</b> {{movement.movementId}} <b>date</b> {{movement.created | date: 'yyyy-MM-dd'}}
+            <b>n°</b> {{movement.movementId}} <b>date</b> {{movement.created | date: 'yyyy-MM-dd'}} <b>description</b>: {{movement.movementDesc}}
         </div>
         <div class="ui-toolbar-group-right">
-            <b>description</b>: {{movement.movementDesc}} <b>causal</b>: {{movement.causal.causalName}} <b>store</b>: {{movement.store.storeName}}
+            <b>causal</b>: {{movement.causal.causalName}} <b>store</b>: {{movement.store.storeName}}
         </div>
     </p-toolbar>
 
@@ -42,7 +42,7 @@
     </p-dataTable>
 
     <p-dialog header="Article picker" [(visible)]="displayPicker" [responsive]="true" showEffect="fade" [modal]="true">
-        <article-picker></article-picker>
+        <article-picker (onPicked)="pickerClick($event)"></article-picker>
     </p-dialog>
 
     <p-dialog header="Update" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">

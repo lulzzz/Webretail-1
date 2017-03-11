@@ -29,6 +29,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                 private authenticationService: AuthenticationService,
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService) {
+        this.barcodes = [];
     }
 
 	ngOnInit() {
@@ -40,13 +41,13 @@ export class MovementComponent implements OnInit, OnDestroy {
             this.movementService.getById(this.movementId)
                 .subscribe(result => {
                     this.movement = result;
-                }//, onerror => alert('ERROR: ' + onerror)
+                }
             );
             this.movementService.getItemsById(this.movementId)
                 .subscribe(result => {
                     this.items = result;
                     this.updateTotals();
-                }//, onerror => alert('ERROR: ' + onerror)
+                }
             );
         });
     }
@@ -88,9 +89,15 @@ export class MovementComponent implements OnInit, OnDestroy {
         this.displayPicker = false;
     }
 
-    pickerClick() {
+    showPickerClick() {
         this.displayPicker = true;
         this.inputComponent.loadData();
+    }
+
+    pickerClick(event: any) {
+        this.displayPicker = false;
+        this.barcodes.push(event);
+        this.addBarcode();
     }
 
     updateClick(data: MovementArticle) {

@@ -1,6 +1,7 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, EventEmitter } from '@angular/core';
 import { SelectItem, MenuItem } from 'primeng/primeng';
-import { Product, ProductCategory } from './../../../shared/models';
+import { Observable } from 'rxjs/Rx';
+import { Product, ProductCategory, ProductAttributeValue } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
 import { BrandService } from './../../../services/brand.service';
 import { ProductService } from './../../../services/product.service';
@@ -8,7 +9,8 @@ import { ProductService } from './../../../services/product.service';
 @Component({
     selector: 'article-picker',
     templateUrl: 'article-picker.component.html',
-    providers: [ ProductService, BrandService ]
+    providers: [ ProductService, BrandService ],
+    outputs: ['onPicked']
 })
 
 export class ArticlePickerComponent {
@@ -21,18 +23,37 @@ export class ArticlePickerComponent {
     names: SelectItem[];
     categoryValue: string;
     sliderValue: number;
+    header: string[];
+    articles: any[];
+    onPicked = new EventEmitter();
 
     constructor(private productService: ProductService,
                 private brandService: BrandService) { }
 
+    pickedClick(picked: string) {
+        if (picked.indexOf('#') > 0) {
+            this.onPicked.emit(picked.split('#')[1]);
+        }
+    }
+
     public loadData() {
-        this.productService.getProducts()
+        if (!this.products) {
+            this.productService.getProducts()
+                .subscribe(result => {
+                    this.products = result;
+                    this.totalRecords = this.products.length;
+                    this.buildFilter(result);
+                }
+            );
+        }
+    }
+
+    onRowExpanded(expandedItem: any) {
+        this.productService.getProduct(expandedItem.data.productId)
             .subscribe(result => {
-                this.products = result;
-                this.totalRecords = this.products.length;
-                this.buildFilter(result);
-            }//, onerror => alert('ERROR\r\n' + onerror)
-        );
+                this.selected = result;
+                this.createSheet();
+            });
     }
 
     buildFilter(items: Product[]) {
@@ -45,12 +66,60 @@ export class ArticlePickerComponent {
 
         this.categories = [];
         this.categories.push({label: 'All', value: null});
-        let array =  items.map((p: Product) => p.categories.map((c: ProductCategory) => c.category.categoryName)).join(',');
-        let filterCategories =  Helpers.distinct(array.split(',').map((item: string) => Helpers.newSelectItem(item)));
+        let array = items.map((p: Product) => p.categories.map((c: ProductCategory) => c.category.categoryName)).join(',');
+        let filterCategories = Helpers.distinct(array.split(',').map((item: string) => Helpers.newSelectItem(item)));
         this.categories = this.categories.concat(filterCategories);
     }
 
-    openClick() {
-        alert(this.selected.productId);
+    createSheet() {
+        this.header = [];
+        this.articles = [];
+        let productAttributeValues: ProductAttributeValue[] = [];
+
+        let lenght = this.selected.attributes.length - 1;
+        if (lenght > 0) {
+            this.selected.attributes.forEach(elem => {
+                this.header.push(elem.attribute.attributeName);
+                productAttributeValues = productAttributeValues.concat(elem.attributeValues);
+            });
+            this.header.pop();
+
+            this.selected.attributes[lenght].attributeValues.forEach(elem => {
+                this.header.push(elem.attributeValue.attributeValueName);
+            });
+        }
+
+        let source = Observable.from(this.selected.articles)
+            .groupBy(
+                function (x) {
+                    return x.attributeValues
+                        .map(p => p.attributeValueId)
+                        .slice(0, x.attributeValues.length - 1)
+                        .join('#');
+                },
+                function (x) { return x; }
+            );
+
+        source.subscribe(obs => {
+            let row: any[] = [];
+            let isFirst = true;
+            obs.forEach(e => {
+                let qta = `${e.quantity}#${e.barcode}`;
+                if (isFirst) {
+                    e.attributeValues.forEach(ex => {
+                        let productAttributeValue = productAttributeValues.find(
+                            p => p.attributeValue.attributeValueId === ex.attributeValueId
+                        );
+                        row.push(productAttributeValue.attributeValue.attributeValueName);
+                    });
+                    isFirst = false;
+                    row[row.length - 1] = qta;
+                } else {
+                    row.push(qta);
+                }
+            }).then(p => {
+                this.articles.push(row);
+            });
+        });
     }
 }

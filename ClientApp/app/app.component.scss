@@ -14,7 +14,7 @@ body {
 }
 
 a {
-    color: #333 important;
+    color: #333;
     text-decoration: none; 
 }
 
@@ -55,4 +55,14 @@ body .ui-widget-header {
 body .ui-toolbar-group-right button,
 body .ui-toolbar-group-right i {
   margin-left: 10px;
+}
+
+.aspan {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.aspan:hover {
+    font-weight: bold;
+    background-color: whitesmoke;
 }
