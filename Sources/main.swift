@@ -101,7 +101,7 @@ server.setResponseFilters([pturnstile.responseFilter])
 server.setRequestFilters([(authFilter, .high)])
 
 // Set a listen port of 8080
-server.serverPort = 80
+server.serverPort = 8080
 
 // Where to serve static files from
 server.documentRoot = "./webroot"
