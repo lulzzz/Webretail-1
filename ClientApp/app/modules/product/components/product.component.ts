@@ -142,7 +142,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             let row: any[] = [];
             let isFirst = true;
             obs.forEach(e => {
-                let qta = `${e.quantity}#{e.barcode}`;
+                let qta = `${e.quantity}#${e.barcode}`;
                 if (isFirst) {
                     e.attributeValues.forEach(ex => {
                         let productAttributeValue = productAttributeValues.find(
