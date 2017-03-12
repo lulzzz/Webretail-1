@@ -101,57 +101,13 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     createSheet() {
-        this.totalRecords = this.product.articles.length;
-        this.header = [];
-        this.articles = [];
-        let productAttributeValues: ProductAttributeValue[] = [];
-
-        let lenght = this.product.attributes.length - 1;
-        if (lenght > 0) {
-            this.product.attributes.forEach(elem => {
-                this.header.push(elem.attribute.attributeName);
-                productAttributeValues = productAttributeValues.concat(elem.attributeValues);
+        this.productService.getArticles(this.product.productId)
+            .subscribe(result => {
+                this.header = result[0];
+                result.splice(0, 1);
+                this.articles = result;
+                this.totalRecords = this.articles.length;
             });
-            this.header.pop();
-
-            this.product.attributes[lenght].attributeValues.forEach(elem => {
-                this.header.push(elem.attributeValue.attributeValueName);
-            });
-        }
-
-        let source = Observable.from(this.product.articles)
-            .groupBy(
-                function (x) {
-                    return x.attributeValues
-                        .map(p => p.attributeValueId)
-                        .slice(0, x.attributeValues.length - 1)
-                        .join('#');
-                },
-                function (x) { return x; }
-            );
-
-        source.subscribe(obs => {
-            let row: any[] = [];
-            //console.log('Key: ' + obs.key);
-            let isFirst = true;
-            obs.forEach(e => {
-                let qta = e.quantity;
-                if (isFirst) {
-                    e.attributeValues.forEach(ex => {
-                        let productAttributeValue = productAttributeValues.find(
-                            p => p.attributeValue.attributeValueId === ex.attributeValueId
-                        );
-                        row.push(productAttributeValue.attributeValue.attributeValueName);
-                    });
-                    isFirst = false;
-                    row[row.length - 1] = qta;
-                } else {
-                    row.push(qta);
-                }
-            }).then(p => {
-                this.articles.push(row);
-            });
-        }, err => this.msgs.push({severity: 'error', summary: 'Error', detail: err}));
     }
 
     editClick() {

@@ -16,8 +16,6 @@ class ArticleRepository : ArticleProtocol {
         try? Article().setup()
         try? ArticleAttributeValue().setup()
         try? Stock().setup()
-
-		_ = try? getFormatted(productId: 1)
 	}
 
     func build(productId: Int) throws -> [String:Any] {
@@ -225,7 +223,7 @@ class ArticleRepository : ArticleProtocol {
 			var isFirst = true;
 			var row = [String]()
 			for article in group.value {
-				let qta = article._quantity;
+				let qta = "\(article._quantity)#\(article.barcode)";
 				if (isFirst) {
 					for value in article._attributeValues {
 						let productAttributeValue = productAttributeValues.first(where: { pair -> Bool in
@@ -243,11 +241,6 @@ class ArticleRepository : ArticleProtocol {
 		}
 		
 		return rows;
-	}
-	
-	func makeBigger(value: [ArticleAttributeValue]) -> String {
-		return value.reduce("", { "\($1.attributeValueId)#\($0)" })
-		//return value.joined(separator: "#")
 	}
 	
 	func add(item: Article) throws {

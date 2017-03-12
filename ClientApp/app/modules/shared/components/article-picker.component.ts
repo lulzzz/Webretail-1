@@ -48,14 +48,6 @@ export class ArticlePickerComponent {
         }
     }
 
-    onRowExpanded(expandedItem: any) {
-        this.productService.getProduct(expandedItem.data.productId)
-            .subscribe(result => {
-                this.selected = result;
-                this.createSheet();
-            });
-    }
-
     buildFilter(items: Product[]) {
         this.names = items.map((item: Product) => Helpers.newSelectItem(item.productName));
 
@@ -71,7 +63,24 @@ export class ArticlePickerComponent {
         this.categories = this.categories.concat(filterCategories);
     }
 
-    createSheet() {
+    onRowExpanded(expandedItem: any) {
+        this.productService.getProduct(expandedItem.data.productId)
+            .subscribe(result => {
+                this.selected = result;
+                this.getArticles();
+            });
+    }
+
+    getArticles() {
+        this.productService.getArticles(this.selected.productId)
+            .subscribe(result => {
+                this.header = result[0];
+                result.splice(0, 1);
+                this.articles = result;
+                this.totalRecords = this.articles.length;
+            });
+        /*
+        this.totalRecords = this.selected.articles.length;
         this.header = [];
         this.articles = [];
         let productAttributeValues: ProductAttributeValue[] = [];
@@ -104,7 +113,7 @@ export class ArticlePickerComponent {
             let row: any[] = [];
             let isFirst = true;
             obs.forEach(e => {
-                let qta = `${e.quantity}#${e.barcode}`;
+                let qta = `${e.quantity}#{e.barcode}`;
                 if (isFirst) {
                     e.attributeValues.forEach(ex => {
                         let productAttributeValue = productAttributeValues.find(
@@ -121,5 +130,6 @@ export class ArticlePickerComponent {
                 this.articles.push(row);
             });
         });
+        */
     }
 }

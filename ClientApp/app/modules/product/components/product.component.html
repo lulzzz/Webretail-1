@@ -31,7 +31,7 @@
         <tbody *ngFor="let item of articles"> 
             <tr> 
                 <td *ngFor="let col of item" align="center"> 
-                    <span>{{col}}</span> 
+                    <span>{{col.split('#')[0]}}</span> 
                 </td> 
             </tr> 
         </tbody>
