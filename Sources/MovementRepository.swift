@@ -71,13 +71,12 @@ class MovementRepository : MovementProtocol {
     }
 
 	func commit(id: Int) throws {
-		let movement = Movement()
-		try movement.get(id)
+		let movement = try get(id: id)!
 		if movement.committed {
 			throw StORMError.error("Movement already committed")
 		}
 		
-		let stock = Stock()
+		var stock = Stock()
 		let article = MovementArticle()
 		try article.find([("movementId", id)])
 		for item in article.rows() {
@@ -87,26 +86,31 @@ class MovementRepository : MovementProtocol {
 			
 			let cursor = StORMCursor(limit: 1, offset: 0)
 			try stock.select(
-				whereclause: "articleId = $1 AND stockId = $2",
+				whereclause: "articleId = $1 AND storeId = $2",
 				params: [ articleId, movement.storeId ],
 				orderby: [],
 				cursor: cursor)
 			
-			let stocks = stock.rows();
-			if (stocks.count > 0) {
-			
-				if movement._causal.quantity > 0 {
-					stocks[0].quantity += item.quantity
-				} else if movement._causal.quantity < 0 {
-					stocks[0].quantity -= item.quantity
-				}
-				
-				if movement._causal.booked > 0 {
-					stocks[0].booked += item.quantity
-				} else if movement._causal.booked < 0 {
-					stocks[0].booked -= item.quantity
-				}
+			if (stock.rows().count == 0) {
+				stock.storeId = movement.storeId
+				stock.articleId = articleId
+				try stock.save()
+			} else {
+				stock = stock.rows().first!
 			}
+
+			if movement._causal.quantity > 0 {
+				stock.quantity += item.quantity
+			} else if movement._causal.quantity < 0 {
+				stock.quantity -= item.quantity
+			}
+			
+			if movement._causal.booked > 0 {
+				stock.booked += item.quantity
+			} else if movement._causal.booked < 0 {
+				stock.booked -= item.quantity
+			}
+			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
 		}
 		
 		movement.committed = true
@@ -121,7 +125,7 @@ class MovementRepository : MovementProtocol {
 			throw StORMError.error("Not committed movement")
 		}
 		
-		let stock = Stock()
+		var stock = Stock()
 		let article = MovementArticle()
 		try article.find([("movementId", id)])
 		for item in article.rows() {
@@ -136,21 +140,26 @@ class MovementRepository : MovementProtocol {
 				orderby: [],
 				cursor: cursor)
 			
-			let stocks = stock.rows();
-			if (stocks.count > 0) {
-				
-				if movement._causal.quantity > 0 {
-					stocks[0].quantity -= item.quantity
-				} else if movement._causal.quantity < 0 {
-					stocks[0].quantity += item.quantity
-				}
-				
-				if movement._causal.booked > 0 {
-					stocks[0].booked -= item.quantity
-				} else if movement._causal.booked < 0 {
-					stocks[0].booked += item.quantity
-				}
+			if (stock.rows().count == 0) {
+				stock.storeId = movement.storeId
+				stock.articleId = articleId
+				try stock.save()
+			} else {
+				stock = stock.rows().first!
 			}
+			
+			if movement._causal.quantity > 0 {
+				stock.quantity -= item.quantity
+			} else if movement._causal.quantity < 0 {
+				stock.quantity += item.quantity
+			}
+			
+			if movement._causal.booked > 0 {
+				stock.booked -= item.quantity
+			} else if movement._causal.booked < 0 {
+				stock.booked += item.quantity
+			}
+			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
 		}
 		
 		movement.committed = false
