@@ -44,39 +44,4 @@
     <p-dialog header="Article picker" [(visible)]="displayPicker" [responsive]="true" showEffect="fade" [modal]="true">
         <article-picker (onPicked)="pickerClick($event)"></article-picker>
     </p-dialog>
-
-    <p-dialog header="Update" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
-        <form *ngIf="selected" [formGroup]="dataform">
-            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label>Id</label></div>
-                    <div class="ui-grid-col-8">{{selected.movementArticleId}}</div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label>Barcode</label></div>
-                    <div class="ui-grid-col-8">{{selected.barcode}}</div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label>Product</label></div>
-                    <div class="ui-grid-col-8">{{selected.product.productName}}</div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="quantity">Quantity</label></div>
-                    <div class="ui-grid-col-8">
-                        <input pInputText formControlName="quantity" [(ngModel)]="selected.quantity"/>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['quantity'].valid&&dataform.controls['quantity'].dirty">
-                            <i class="fa fa-close"></i> Quantity is required
-                        </div>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-8"></div>
-                    <div class="ui-grid-col-4">
-                        <button type="button" pButton icon="fa-save" (click)="saveClick();upd.hide();" label="Save" [disabled]="!dataform.valid"></button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </p-dialog>
-
 </div>
