@@ -16,7 +16,9 @@ protocol ArticleProtocol {
     
     func get(id: Int) throws -> Article?
     
-    func add(item: Article) throws
+	func getFormatted(productId: Int) throws -> [[String]]
+
+	func add(item: Article) throws
     
     func update(id: Int, item: Article) throws
     

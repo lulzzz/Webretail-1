@@ -43,3 +43,35 @@ extension Double {
     }
     */
 }
+
+extension Sequence {
+	func categorise<U : Hashable>(_ key: (Iterator.Element) -> U) -> [U:[Iterator.Element]] {
+		var dict: [U:[Iterator.Element]] = [:]
+		for el in self {
+			let key = key(el)
+			if case nil = dict[key]?.append(el) { dict[key] = [el] }
+		}
+		return dict
+	}
+}
+
+extension Sequence {
+	
+	func groupBy<G: Hashable>(closure: (Iterator.Element)->G) -> [G: [Iterator.Element]] {
+		var results = [G: Array<Iterator.Element>]()
+		
+		forEach {
+			let key = closure($0)
+			
+			if var array = results[key] {
+				array.append($0)
+				results[key] = array
+			}
+			else {
+				results[key] = [$0]
+			}
+		}
+		
+		return results
+	}
+}

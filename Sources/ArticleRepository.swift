@@ -16,7 +16,9 @@ class ArticleRepository : ArticleProtocol {
         try? Article().setup()
         try? ArticleAttributeValue().setup()
         try? Stock().setup()
-    }
+
+		_ = try? getFormatted(productId: 1)
+	}
 
     func build(productId: Int) throws -> [String:Any] {
         
@@ -188,7 +190,67 @@ class ArticleRepository : ArticleProtocol {
         return item
     }
     
-    func add(item: Article) throws {
+	func getFormatted(productId: Int) throws -> [[String]] {
+		var rows = [[String]]()
+		var productAttributeValues = [ProductAttributeValue]()
+		
+		let productAttribute = ProductAttribute()
+		try productAttribute.find([("productId", productId)])
+		let attributes = try productAttribute.rows();
+		let lenght = attributes.count - 1;
+	
+		if (lenght > 0) {
+			var row = [String]()
+			for attribute in attributes {
+				row.append(attribute._attribute.attributeName)
+				productAttributeValues.append(contentsOf: attribute._attributeValues)
+			}
+			row.removeLast()
+			
+			for value in attributes[lenght]._attributeValues {
+				row.append(value._attributeValue.attributeValueName)
+			}
+			rows.append(row)
+		}
+		
+		let articles = try get(productId: productId)
+		
+		let grouped = articles.groupBy {
+			$0._attributeValues.dropLast().reduce("") {
+				a,b in "\(a)#\(b.attributeValueId)"
+			}
+		}
+
+		for group in grouped {
+			var isFirst = true;
+			var row = [String]()
+			for article in group.value {
+				let qta = article._quantity;
+				if (isFirst) {
+					for value in article._attributeValues {
+						let productAttributeValue = productAttributeValues.first(where: { pair -> Bool in
+							return pair._attributeValue.attributeValueId == value.attributeValueId
+						})
+						row.append((productAttributeValue?._attributeValue.attributeValueName)!);
+					}
+					isFirst = false;
+					row[row.count - 1] = "\(qta)";
+				} else {
+					row.append("\(qta)");
+				}
+			}
+			rows.append(row)
+		}
+		
+		return rows;
+	}
+	
+	func makeBigger(value: [ArticleAttributeValue]) -> String {
+		return value.reduce("", { "\($1.attributeValueId)#\($0)" })
+		//return value.joined(separator: "#")
+	}
+	
+	func add(item: Article) throws {
         item.created = Int.now()
         item.updated = Int.now()
         try item.save {

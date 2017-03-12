@@ -34,10 +34,10 @@ LogFile.location = "./error.log"
 let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
 // Database connection
-//PostgresConnector.host        = "localhost"
-PostgresConnector.host        = "webretail.csb42stoatzh.eu-central-1.rds.amazonaws.com"
-PostgresConnector.username    = "webretail"
-PostgresConnector.password    = "webretail"
+PostgresConnector.host        = "localhost"
+//PostgresConnector.host        = "webretail.csb42stoatzh.eu-central-1.rds.amazonaws.com"
+//PostgresConnector.username    = "webretail"
+//PostgresConnector.password    = "webretail"
 PostgresConnector.database    = "webretail"
 PostgresConnector.port        = 5432
 
