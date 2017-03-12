@@ -14,8 +14,7 @@ import { MovementService } from './../../services/movement.service';
 import { ArticlePickerComponent } from './../shared/components/article-picker.component';
 import { ArticleInfoPipe } from './../../pipes/articleinfo.pipe';
 import { ArticleFilterPipe } from './../../pipes/article-filter.pipe';
-import { CategoryFilterPipe } from './../../pipes/category-filter.pipe';
-import { PriceFilterPipe } from './../../pipes/price-filter.pipe';
+import { SharedPipeModule } from './../../modules/shared/shared-pipe.module';
 
 @NgModule({
     imports: [
@@ -24,14 +23,13 @@ import { PriceFilterPipe } from './../../pipes/price-filter.pipe';
         ToolbarModule, DataTableModule, SharedModule, PaginatorModule, ButtonModule,
         DropdownModule, SliderModule, MultiSelectModule, InputTextModule, InputSwitchModule,
         DialogModule, ChipsModule, SpinnerModule,
+        SharedPipeModule.forRoot(),
         CommonModule,
         MovementRoutes
     ],
     declarations: [
         ArticleFilterPipe,
         ArticleInfoPipe,
-        CategoryFilterPipe,
-        PriceFilterPipe,
         ArticlePickerComponent,
         MovementsComponent,
         MovementComponent
