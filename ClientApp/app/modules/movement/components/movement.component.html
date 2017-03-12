@@ -2,8 +2,8 @@
 
 <div class="container-fluid">
     <div class="global-search" style="padding-right: 30px">
-        <p-chips [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
-        <button pButton type="button" (click)="showPickerClick()" style="position: absolute; top: 68px; right: 28px;" class="ui-button-primary" icon="fa-search-plus"></button>
+        <p-chips [disabled]="committed" [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
+        <button pButton type="button" [disabled]="committed" (click)="showPickerClick()" style="position: absolute; top: 68px; right: 28px;" class="ui-button-primary" icon="fa-search-plus"></button>
     </div>
 
     <h2>Movement</h2>
@@ -36,7 +36,7 @@
         </p-column>
         <p-column field="quantity" header="Quantity" [style]="{'text-align':'center'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
             <template let-col let-data="rowData" pTemplate="editor">
-                <p-spinner [(ngModel)]="data.quantity" [min]="0" (onChange)="updateClick(data)"></p-spinner>
+                <p-spinner [disabled]="committed" [(ngModel)]="data.quantity" [min]="0" (onChange)="updateClick(data)"></p-spinner>
             </template>
         </p-column>
     </p-dataTable>

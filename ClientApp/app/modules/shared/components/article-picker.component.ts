@@ -72,15 +72,14 @@ export class ArticlePickerComponent {
     }
 
     getArticles() {
-        this.productService.getArticles(this.selected.productId)
-            .subscribe(result => {
-                this.header = result[0];
-                result.splice(0, 1);
-                this.articles = result;
-                this.totalRecords = this.articles.length;
-            });
-        /*
-        this.totalRecords = this.selected.articles.length;
+        /// from server
+        // this.productService.getArticles(this.selected.productId)
+        //     .subscribe(result => {
+        //         this.header = result[0];
+        //         result.splice(0, 1);
+        //         this.articles = result;
+        //     });
+        /// or from client
         this.header = [];
         this.articles = [];
         let productAttributeValues: ProductAttributeValue[] = [];
@@ -130,6 +129,5 @@ export class ArticlePickerComponent {
                 this.articles.push(row);
             });
         });
-        */
     }
 }

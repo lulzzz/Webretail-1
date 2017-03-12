@@ -24,12 +24,14 @@ export class MovementComponent implements OnInit, OnDestroy {
     items: MovementArticle[];
     articleValue: string;
     displayPicker: boolean;
+    committed: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService) {
         this.barcodes = [];
+        this.committed = false;
     }
 
 	ngOnInit() {
@@ -41,6 +43,7 @@ export class MovementComponent implements OnInit, OnDestroy {
             this.movementService.getById(this.movementId)
                 .subscribe(result => {
                     this.movement = result;
+                    this.committed = this.movement.committed;
                 }
             );
             this.movementService.getItemsById(this.movementId)

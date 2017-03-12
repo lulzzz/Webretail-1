@@ -148,6 +148,7 @@ export class Movement {
   //public causalId: number;
   public store: Store;
   public causal: Causal;
+  public committed: boolean;
   public movementDesc: string;
   public movementNote: string;
   public movementUser: string;
@@ -160,6 +161,7 @@ export class Movement {
     //this.causalId = 0;
     this.store = new Store();
     this.causal = new Causal();
+    this.committed = false;
     this.movementDesc = '';
     this.movementNote = '';
     this.movementUser = '';
