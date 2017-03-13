@@ -15,9 +15,6 @@ import TurnstileCrypto
 import TurnstileWeb
 
 public class AuthenticationController {
-    
-    let facebook = Facebook(clientID: "1232307486877468", clientSecret: "b852db2dd51e4a9cca80afe812c33a11")
-    let google = Google(clientID: "807060073548-m603cvhbmk5e8c633p333hflge1fi8mt.apps.googleusercontent.com", clientSecret: "_qcb-5fEEfDekInFe106Fhhl")
 
     public func getRoutes() -> Routes {
         var routes = Routes()
@@ -159,7 +156,7 @@ public class AuthenticationController {
         response.setHeader(.contentType, value: "application/json")
         
         let state = URandom().secureToken
-        let redirectURL = facebook.getLoginLink(redirectURL: "http://localhost:8080/login/facebook/consumer", state: state)
+        let redirectURL = facebook.getLoginLink(redirectURL: "http://" + host + "/login/facebook/consumer", state: state)
         
         response.addCookie(HTTPCookie(name: "OAuthState", value: state, domain: nil, expires: HTTPCookie.Expiration.relativeSeconds(3600), path: "/", secure: nil, httpOnly: true))
         response.redirect(path: redirectURL.absoluteString)
@@ -180,7 +177,7 @@ public class AuthenticationController {
             return
         }
         response.addCookie(HTTPCookie(name: "OAuthState", value: state, domain: nil, expires: HTTPCookie.Expiration.absoluteSeconds(0), path: "/", secure: nil, httpOnly: true))
-        let uri = "http://localhost:8080" + request.uri
+        let uri = "http://" + host + request.uri
         
         do {
             let credentials = try facebook.authenticate(authorizationCodeCallbackURL: uri, state: state) as! FacebookAccount
@@ -204,7 +201,7 @@ public class AuthenticationController {
         response.setHeader(.contentType, value: "application/json")
         
         let state = URandom().secureToken
-        let redirectURL = google.getLoginLink(redirectURL: "http://localhost:8080/login/google/consumer", state: state)
+        let redirectURL = google.getLoginLink(redirectURL: "http://" + host + "/login/google/consumer", state: state)
         
         response.addCookie(HTTPCookie(name: "OAuthState", value: state, domain: nil, expires: nil, path: "/", secure: nil, httpOnly: true))
         response.redirect(path: redirectURL.absoluteString)
@@ -218,7 +215,7 @@ public class AuthenticationController {
             return
         }
         response.addCookie(HTTPCookie(name: "OAuthState", value: state, domain: nil, expires: HTTPCookie.Expiration.absoluteSeconds(0), path: "/", secure: nil, httpOnly: true))
-        let uri = "http://localhost:8080" + request.uri
+        let uri = "http://" + host + request.uri
         
         do {
             let credentials = try google.authenticate(authorizationCodeCallbackURL: uri, state: state) as! GoogleAccount
