@@ -190,6 +190,34 @@ export class MovementArticle {
   }
 }
 
+export class Customer {
+  public customerId: number;
+  public customerFirtname: string;
+  public customerLastname: string;
+  public customerEmail: string;
+  public customerPhone: string;
+  public customerAddress: string;
+  public customerCity: string;
+  public customerZip: string;
+  public customerCountry: string;
+  public customerFiscalCode: string;
+  public customerVatNumber: string;
+
+  constructor() {
+    this.customerId = 0;
+    this.customerFirtname = '';
+    this.customerLastname = '';
+    this.customerEmail = '';
+    this.customerPhone = '';
+    this.customerAddress = '';
+    this.customerCity = '';
+    this.customerZip = '';
+    this.customerCountry = '';
+    this.customerFiscalCode = '';
+    this.customerVatNumber = '';
+  }
+}
+
 // Interfaces
 
 export interface Token {

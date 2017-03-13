@@ -38,8 +38,6 @@ export class MyInfoComponent implements OnInit {
     saveClick() {
         this.accountService
             .update(this.myinfo.uniqueID, this.myinfo)
-            .subscribe(result => {
-                
-            });
+            .subscribe(result => { });
     }
 }

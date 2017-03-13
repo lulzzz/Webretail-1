@@ -26,6 +26,7 @@
     "ClientApp/app/modules/product/product.module.ts",
     "ClientApp/app/modules/causal/causal.module.ts",
     "ClientApp/app/modules/movement/movement.module.ts",
+    "ClientApp/app/modules/customer/customer.module.ts",
     "ClientApp/main-aot.ts"
   ],
   "angularCompilerOptions": {

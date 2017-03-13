@@ -101,7 +101,7 @@ class Product: PostgresSqlORM, JSONConvertible {
             "attributes": _attributes,
             "articles": _articles,
             "created": created.formatDate(),
-            "updated": updated.formatDate(),
+            "updated": updated.formatDate()
         ]
     }
 }

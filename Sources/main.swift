@@ -72,6 +72,7 @@ ioCContainer.register { ArticleRepository() as ArticleProtocol }
 ioCContainer.register { MovementRepository() as MovementProtocol }
 ioCContainer.register { MovementArticleRepository() as MovementArticleProtocol }
 ioCContainer.register { PublicationRepository() as PublicationProtocol }
+ioCContainer.register { CustomerRepository() as CustomerProtocol }
 
 
 // Register auth routes and handlers
@@ -90,6 +91,7 @@ server.addRoutes(ArticleController().getRoutes())
 server.addRoutes(MovementController().getRoutes())
 server.addRoutes(MovementArticleController().getRoutes())
 server.addRoutes(PublicationController().getRoutes())
+server.addRoutes(CustomerController().getRoutes())
 
 // Register Angular routes and handlers
 server.addRoutes(AngularController().getRoutes())

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		565AC8CE1E76FEBB00F1EF6F /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565AC8CD1E76FEBB00F1EF6F /* Customer.swift */; };
+		565AC8D01E7705C300F1EF6F /* CustomerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565AC8CF1E7705C300F1EF6F /* CustomerProtocol.swift */; };
+		565AC8D21E77064400F1EF6F /* CustomerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565AC8D11E77064400F1EF6F /* CustomerRepository.swift */; };
+		565AC8D41E771DB900F1EF6F /* CustomerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565AC8D31E771DB900F1EF6F /* CustomerController.swift */; };
 		OBJ_1000 /* PerfectLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_924 /* PerfectLib.framework */; };
 		OBJ_1007 /* PerfectXML.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* PerfectXML.swift */; };
 		OBJ_1008 /* PerfectXPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* PerfectXPath.swift */; };
@@ -1362,6 +1366,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		565AC8CD1E76FEBB00F1EF6F /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
+		565AC8CF1E7705C300F1EF6F /* CustomerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerProtocol.swift; sourceTree = "<group>"; };
+		565AC8D11E77064400F1EF6F /* CustomerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerRepository.swift; sourceTree = "<group>"; };
+		565AC8D31E771DB900F1EF6F /* CustomerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerController.swift; sourceTree = "<group>"; };
 		OBJ_10 /* StringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHTML.swift; sourceTree = "<group>"; };
 		OBJ_100 /* aes_ecb.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_ecb.c; sourceTree = "<group>"; };
 		OBJ_101 /* aes_ige.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_ige.c; sourceTree = "<group>"; };
@@ -2557,7 +2565,7 @@
 			path = "Packages/SwiftMoment-0.9.1/Sources/SwiftMoment";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2567,7 +2575,6 @@
 				OBJ_919 /* webroot */,
 				OBJ_920 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_51 /* PerfectThread */ = {
@@ -3645,6 +3652,10 @@
 				OBJ_914 /* UserController.swift */,
 				OBJ_915 /* UserProtocol.swift */,
 				OBJ_916 /* UserRepository.swift */,
+				565AC8CD1E76FEBB00F1EF6F /* Customer.swift */,
+				565AC8CF1E7705C300F1EF6F /* CustomerProtocol.swift */,
+				565AC8D11E77064400F1EF6F /* CustomerRepository.swift */,
+				565AC8D31E771DB900F1EF6F /* CustomerController.swift */,
 			);
 			name = Webretail;
 			path = Sources;
@@ -4102,7 +4113,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_920 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -5057,14 +5068,18 @@
 				OBJ_1960 /* AttributeController.swift in Sources */,
 				OBJ_1961 /* AttributeProtocol.swift in Sources */,
 				OBJ_1962 /* AttributeRepository.swift in Sources */,
+				565AC8CE1E76FEBB00F1EF6F /* Customer.swift in Sources */,
 				OBJ_1963 /* AttributeValue.swift in Sources */,
 				OBJ_1964 /* AttributeValueController.swift in Sources */,
 				OBJ_1965 /* AttributeValueProtocol.swift in Sources */,
 				OBJ_1966 /* AttributeValueRepository.swift in Sources */,
 				OBJ_1967 /* AuthenticationConfig.swift in Sources */,
+				565AC8D01E7705C300F1EF6F /* CustomerProtocol.swift in Sources */,
 				OBJ_1968 /* AuthenticationController.swift in Sources */,
 				OBJ_1969 /* AuthFilter.swift in Sources */,
 				OBJ_1970 /* Brand.swift in Sources */,
+				565AC8D21E77064400F1EF6F /* CustomerRepository.swift in Sources */,
+				565AC8D41E771DB900F1EF6F /* CustomerController.swift in Sources */,
 				OBJ_1971 /* BrandController.swift in Sources */,
 				OBJ_1972 /* BrandProtocoll.swift in Sources */,
 				OBJ_1973 /* BrandRepository.swift in Sources */,
