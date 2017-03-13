@@ -39,7 +39,7 @@ export class MyInfoComponent implements OnInit {
         this.accountService
             .update(this.myinfo.uniqueID, this.myinfo)
             .subscribe(result => {
-                alert(result);
+                
             });
     }
 }
