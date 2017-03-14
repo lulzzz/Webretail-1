@@ -15,7 +15,7 @@ export class CategoryComponent implements OnInit {
     totalRecords = 0;
     categories: Category[];
 	selected: Category;
-    displayDialog: boolean;
+    displayPanel: boolean;
 	dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
@@ -45,11 +45,16 @@ export class CategoryComponent implements OnInit {
 
     addClick() {
         this.selected = new Category(0, '');
-        this.displayDialog = true;
+        this.displayPanel = true;
     }
 
-    editClick() {
-        this.displayDialog = true;
+    onRowSelect(event: any) {
+        this.displayPanel = true;
+    }
+
+    closeClick() {
+        this.displayPanel = false;
+        this.selected = null;
     }
 
     saveClick() {
@@ -65,7 +70,7 @@ export class CategoryComponent implements OnInit {
                     this.selected = null;
                 });
         }
-        this.displayDialog = false;
+        this.displayPanel = false;
     }
 
     deleteClick() {

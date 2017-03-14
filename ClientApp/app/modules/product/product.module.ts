@@ -5,7 +5,7 @@ import {
     ConfirmDialogModule, ConfirmationService, BlockUIModule, ToolbarModule,
     DataTableModule, SharedModule, PaginatorModule, TreeModule, ButtonModule,
     DropdownModule, SliderModule, MultiSelectModule, InputTextModule, InputSwitchModule,
-    PanelModule, SplitButtonModule, DialogModule, PickListModule, GrowlModule
+    PanelModule, SplitButtonModule, PickListModule, GrowlModule
 } from 'primeng/primeng';
 import { ProductRoutes } from './product.routes';
 import { ProductsComponent } from './components/products.component';
@@ -18,7 +18,7 @@ import { SharedPipeModule } from './../../modules/shared/shared-pipe.module';
         FormsModule, ReactiveFormsModule,
         DataTableModule, SharedModule, PaginatorModule, TreeModule, ButtonModule,
         DropdownModule, SliderModule, MultiSelectModule, InputTextModule, InputSwitchModule,
-        PanelModule, SplitButtonModule, DialogModule, PickListModule, GrowlModule,
+        PanelModule, SplitButtonModule, PickListModule, GrowlModule,
         ConfirmDialogModule, BlockUIModule, ToolbarModule,
         SharedPipeModule.forRoot(),
         CommonModule,

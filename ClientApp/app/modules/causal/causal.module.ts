@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     ConfirmDialogModule, ConfirmationService, ToolbarModule,
     DataTableModule, SharedModule, PaginatorModule,
-    DialogModule, InputTextModule, ButtonModule, SelectButtonModule
+    PanelModule, InputTextModule, ButtonModule, SelectButtonModule
 } from 'primeng/primeng';
 
 import { CausalRoutes } from './causal.routes';
@@ -16,7 +16,7 @@ import { CausalService } from './../../services/causal.service';
     imports: [
         FormsModule, ReactiveFormsModule, ToolbarModule,
         DataTableModule, SharedModule, ConfirmDialogModule,
-        PaginatorModule, DialogModule, InputTextModule,
+        PaginatorModule, PanelModule, InputTextModule,
         ButtonModule, SelectButtonModule,
         CommonModule,
         CausalRoutes

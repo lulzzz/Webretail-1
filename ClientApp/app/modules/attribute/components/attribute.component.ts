@@ -18,8 +18,8 @@ export class AttributeComponent implements OnInit {
     values: AttributeValue[];
 	selected: Attribute;
     selectedValue: AttributeValue;
-    displayDialog: boolean;
-	displayDialogValue: boolean;
+    displayPanel: boolean;
+	displayPanelValue: boolean;
 	dataform: FormGroup;
     dataformValue: FormGroup;
 
@@ -67,11 +67,16 @@ export class AttributeComponent implements OnInit {
 
     addClick() {
         this.selected = new Attribute(0, '');
-        this.displayDialog = true;
+        this.displayPanel = true;
     }
 
     editClick() {
-        this.displayDialog = true;
+        this.displayPanel = true;
+    }
+    
+    closeClick() {
+        this.displayPanel = false;
+        this.selected = null;
     }
 
     saveClick() {
@@ -85,7 +90,7 @@ export class AttributeComponent implements OnInit {
                     //this.attributes[this.selectedIndex] = this.selected;
                 });
         }
-        this.displayDialog = false;
+        this.displayPanel = false;
     }
 
     deleteClick() {
@@ -102,19 +107,28 @@ export class AttributeComponent implements OnInit {
         });
     }
 
+    onRowValueSelect(event: any) {
+        this.displayPanelValue = true;
+    }
+    
     addValueClick() {
         if (this.selected && this.selected.attributeId > 0) {
             this.selectedValue = new AttributeValue(this.selected.attributeId, 0, '', '');
-            this.displayDialogValue = true;
+            this.displayPanelValue = true;
         } else {
             alert('Select a attribute before add value!');
         }
     }
 
     editValueClick() {
-        this.displayDialogValue = true;
+        this.displayPanelValue = true;
     }
 
+    closeValueClick() {
+        this.displayPanelValue = false;
+        this.selectedValue = null;
+    }
+    
     saveValueClick() {
         if (this.isNewValue) {
             this.attributeService.createValue(this.selectedValue)
@@ -128,7 +142,7 @@ export class AttributeComponent implements OnInit {
                     this.selectedValue = null;
                 });
         }
-        this.displayDialogValue = false;
+        this.displayPanelValue = false;
     }
 
     deleteValueClick() {

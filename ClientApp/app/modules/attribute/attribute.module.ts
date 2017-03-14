@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     ConfirmDialogModule, ConfirmationService, ToolbarModule,
     DataTableModule, SharedModule, PaginatorModule,
-    DialogModule, InputTextModule, ButtonModule
+    PanelModule, InputTextModule, ButtonModule
 } from 'primeng/primeng';
 
 import { AttributeRoutes } from './attribute.routes';
@@ -16,7 +16,7 @@ import { AttributeService } from './../../services/attribute.service';
     imports: [
         FormsModule, ReactiveFormsModule, ToolbarModule,
         ButtonModule, DataTableModule, SharedModule,
-        PaginatorModule, DialogModule, InputTextModule, ConfirmDialogModule,
+        PaginatorModule, PanelModule, InputTextModule, ConfirmDialogModule,
         CommonModule,
         AttributeRoutes
     ],

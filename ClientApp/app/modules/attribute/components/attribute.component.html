@@ -13,24 +13,29 @@
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
-            <button pButton type="button" title="Edit" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <button pButton type="button" title="Delete" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
+            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
+            <i class="fa fa-search"></i>
         </div>
         <div class="ui-toolbar-group-right">
-            <i class="fa fa-search"></i>
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
+            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" title="Edit" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
         </div>
     </p-toolbar>
 
-    <p-dataTable [style]="{'width': '100%'}" [value]="attributes" 
+    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="attributes" 
         selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
         [globalFilter]="gb" #dt>
         <p-column field="attributeId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="attributeName" header="Name" [sortable]="true"></p-column>
    </p-dataTable>
 
-    <p-dialog header="Attribute" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <p-panel *ngIf="displayPanel">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Attribute</span>
+            <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
+        </div>
+    </p-header>
     <form [formGroup]="dataform">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
             <div class="ui-grid-row">
@@ -47,32 +52,34 @@
                </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-8"></div>
+                <div class="ui-grid-col-4">
+                    <button *ngIf="selected.attributeId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+                </div>
+                <div class="ui-grid-col-4"></div>
                 <div class="ui-grid-col-4">
                     <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                 </div>
             </div>
         </div>
     </form>
-    </p-dialog>
+    </p-panel>
     
 </div>
 
 <div class="container-fluid">
 
     <p-toolbar>
-        <div class="ui-toolbar-group-left" style="margin-top: 18px">
-            <button pButton type="button" title="Add" (click)="addValueClick()" class="ui-button-primary" icon="fa-plus"></button>
-            <button pButton type="button" title="Edit" (click)="editValueClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <button pButton type="button" title="Delete" (click)="deleteValueClick()" class="ui-button-danger" icon="fa-trash-o"></button>
-        </div>
-        <div class="ui-toolbar-group-right">
+        <div class="ui-toolbar-group-left">
             <span *ngIf="values" style="margin-top: 30px; float: right;"><b>{{totalValues}}</b> items</span>
             <img *ngIf="!values&&selected" src="assets/loading.gif" style="float: right" height="50">
         </div>
+        <div class="ui-toolbar-group-right" style="margin-top: 18px">
+            <button pButton type="button" title="Add" (click)="addValueClick()" class="ui-button-primary" icon="fa-plus"></button>
+        </div>
     </p-toolbar>
     
-    <p-dataTable [style]="{'width': '100%', 'margin-top': '5px'}" [value]="values" selectionMode="single" [(selection)]="selectedValue"
+    <p-dataTable *ngIf="!displayPanelValue" [style]="{'width': '100%', 'margin-top': '5px'}" [value]="values"
+        selectionMode="single" [(selection)]="selectedValue" (onRowSelect)="onRowValueSelect($event)"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
         [globalFilter]="gb" #dt>
         <p-column field="attributeValueId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
@@ -80,9 +87,15 @@
         <p-column field="attributeValueName" header="Name" [sortable]="true"></p-column>
     </p-dataTable>
 
-    <p-dialog header="Attribute Value" [(visible)]="displayDialogValue" [responsive]="true" showEffect="fade" [modal]="true">
+    <p-panel *ngIf="displayPanelValue">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Attribute</span>
+            <button pButton type="button" (click)="closeValueClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
+        </div>
+    </p-header>
     <form [formGroup]="dataformValue">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selectedValue">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label>Id</label></div>
                 <div class="ui-grid-col-8">{{selectedValue.attributeValueId}}</div>
@@ -112,13 +125,16 @@
                </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-8"></div>
+                <div class="ui-grid-col-4">
+                    <button *ngIf="selectedValue.attributeValueId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+                </div>
+                <div class="ui-grid-col-4"></div>
                 <div class="ui-grid-col-4">
                     <button type="button" pButton icon="fa-save" (click)="saveValueClick()" label="Save" [disabled]="!dataformValue.valid"></button>
                 </div>
             </div>
         </div>
     </form>
-    </p-dialog>
+    </p-panel>
 
 </div>

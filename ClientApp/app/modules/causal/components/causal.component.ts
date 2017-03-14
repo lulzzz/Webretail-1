@@ -16,7 +16,7 @@ export class CausalComponent implements OnInit {
     causals: Causal[];
     operators: SelectItem[];
 	selected: Causal;
-    displayDialog: boolean;
+    displayPanel: boolean;
 	dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
@@ -51,11 +51,16 @@ export class CausalComponent implements OnInit {
 
     addClick() {
         this.selected = new Causal();
-        this.displayDialog = true;
+        this.displayPanel = true;
     }
 
-    editClick() {
-        this.displayDialog = true;
+    onRowSelect(event: any) {
+        this.displayPanel = true;
+    }
+
+    closeClick() {
+        this.displayPanel = false;
+        this.selected = null;
     }
 
     saveClick() {
@@ -71,7 +76,7 @@ export class CausalComponent implements OnInit {
                     this.selected = null;
                 });
         }
-        this.displayDialog = false;
+        this.displayPanel = false;
     }
 
     deleteClick() {

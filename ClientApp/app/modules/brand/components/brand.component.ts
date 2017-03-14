@@ -15,7 +15,7 @@ export class BrandComponent implements OnInit {
     totalRecords = 0;
     brands: Brand[];
 	selected: Brand;
-    displayDialog: boolean;
+    displayPanel: boolean;
 	dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
@@ -44,11 +44,16 @@ export class BrandComponent implements OnInit {
 
     addClick() {
         this.selected = new Brand();
-        this.displayDialog = true;
+        this.displayPanel = true;
     }
 
-    editClick() {
-        this.displayDialog = true;
+    onRowSelect(event: any) {
+        this.displayPanel = true;
+    }
+
+    closeClick() {
+        this.displayPanel = false;
+        this.selected = null;
     }
 
     saveClick() {
@@ -64,7 +69,7 @@ export class BrandComponent implements OnInit {
                     this.selected = null;
                 });
         }
-        this.displayDialog = false;
+        this.displayPanel = false;
     }
 
     deleteClick() {

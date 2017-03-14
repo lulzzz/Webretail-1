@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     ConfirmDialogModule, ConfirmationService, ToolbarModule,
     DataTableModule, SharedModule, PaginatorModule,
-    DialogModule, InputTextModule, InputSwitchModule, ButtonModule
+    PanelModule, InputTextModule, InputSwitchModule, ButtonModule
 } from 'primeng/primeng';
 
 import { AccountRoutes } from './account.routes';
@@ -17,7 +17,7 @@ import { MyInfoComponent } from './components/myinfo.component';
     imports: [
         FormsModule, ReactiveFormsModule, ToolbarModule,
         DataTableModule, SharedModule, PaginatorModule, ConfirmDialogModule,
-        DialogModule, InputTextModule, InputSwitchModule, ButtonModule,
+        PanelModule, InputTextModule, InputSwitchModule, ButtonModule,
         CommonModule,
         AccountRoutes
     ],

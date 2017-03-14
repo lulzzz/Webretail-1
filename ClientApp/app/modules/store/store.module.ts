@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     ConfirmDialogModule, ConfirmationService, ToolbarModule,
     DataTableModule, SharedModule, PaginatorModule,
-    DialogModule, InputTextModule, ButtonModule
+    PanelModule, InputTextModule, ButtonModule
 } from 'primeng/primeng';
 
 import { StoreRoutes } from './store.routes';
@@ -16,7 +16,7 @@ import { StoreService } from './../../services/store.service';
     imports: [
         FormsModule, ReactiveFormsModule,
         DataTableModule, SharedModule, ConfirmDialogModule, ToolbarModule,
-        PaginatorModule, DialogModule, InputTextModule, ButtonModule,
+        PaginatorModule, PanelModule, InputTextModule, ButtonModule,
         CommonModule,
         StoreRoutes
     ],

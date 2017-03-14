@@ -16,7 +16,7 @@ export class CustomerComponent implements OnInit {
     totalRecords = 0;
     customers: Customer[];
 	selected: Customer;
-    displayDialog: boolean;
+    displayPanel: boolean;
 	dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
@@ -52,13 +52,18 @@ export class CustomerComponent implements OnInit {
 
     get selectedIndex(): number { return this.customers.indexOf(this.selected); }
 
-    editClick() {
-        this.displayDialog = true;
+    onRowSelect(event: any) {
+        this.displayPanel = true;
+    }
+
+    closeClick() {
+        this.displayPanel = false;
+        this.selected = null;
     }
 
     addClick() {
         this.selected = new Customer();
-        this.displayDialog = true;
+        this.displayPanel = true;
     }
 
     saveClick() {
@@ -77,7 +82,7 @@ export class CustomerComponent implements OnInit {
                     this.selected = null;
                 });
         }
-        this.displayDialog = false;
+        this.displayPanel = false;
     }
 
     deleteClick() {

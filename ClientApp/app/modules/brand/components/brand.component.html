@@ -13,26 +13,31 @@
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
-            <button pButton type="button" title="Edit" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <button pButton type="button" title="Delete" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
+            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
+            <i class="fa fa-search"></i>
         </div>
         <div class="ui-toolbar-group-right">
-            <i class="fa fa-search"></i>
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
+            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
         </div>
     </p-toolbar>
 
-    <p-dataTable [style]="{'width': '100%'}" [value]="brands" selectionMode="single" [(selection)]="selected"
+    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="brands" 
+        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
         [globalFilter]="gb" #dt>
         <p-column field="brandId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="brandName" header="Name" [sortable]="true"></p-column>
     </p-dataTable>
 
-    <p-dialog header="Brand" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <p-panel *ngIf="displayPanel">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Brand</span>
+            <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
+        </div>
+    </p-header>
     <form [formGroup]="dataform">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label>Id</label></div>
                 <div class="ui-grid-col-8">{{selected.brandId}}</div>
@@ -47,13 +52,16 @@
                </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-8"></div>
+                <div class="ui-grid-col-4">
+                    <button *ngIf="selected.brandId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+                </div>
+                <div class="ui-grid-col-4"></div>
                 <div class="ui-grid-col-4">
                     <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                 </div>
             </div>
         </div>
     </form>
-    </p-dialog>
+    </p-panel>
 
 </div>

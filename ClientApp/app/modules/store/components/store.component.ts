@@ -15,7 +15,7 @@ export class StoreComponent implements OnInit {
     totalRecords = 0;
     stores: Store[];
 	selected: Store;
-    displayDialog: boolean;
+    displayPanel: boolean;
 	dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
@@ -48,11 +48,16 @@ export class StoreComponent implements OnInit {
 
     addClick() {
         this.selected = new Store();
-        this.displayDialog = true;
+        this.displayPanel = true;
     }
 
-    editClick() {
-        this.displayDialog = true;
+    onRowSelect(event: any) {
+        this.displayPanel = true;
+    }
+
+    closeClick() {
+        this.displayPanel = false;
+        this.selected = null;
     }
 
     saveClick() {
@@ -68,7 +73,7 @@ export class StoreComponent implements OnInit {
                     this.selected = null;
                 });
         }
-        this.displayDialog = false;
+        this.displayPanel = false;
     }
 
     deleteClick() {
