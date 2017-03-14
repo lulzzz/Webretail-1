@@ -66,6 +66,11 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
+    closeClick() {
+        this.display = false;
+        this.selectedNode = null;
+    }
+
     createTree() {
         let rootNode = Helpers.newNode(this.product.productName, this.product.productCode, 'product');
         rootNode.expanded = true;

@@ -18,7 +18,7 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable [style]="{'width': '100%'}" [editable]="true" [value]="items | articleFilter:articleValue">
+    <p-dataTable *ngIf="!this.inputComponent.isOpen" [style]="{'width': '100%'}" [editable]="true" [value]="items | articleFilter:articleValue">
         <p-footer>
             <span style="float: left"><b>{{totalRecords}}</b> rows</span>
             <span style="float: right">items <b>{{totalItems}}</b></span>
@@ -41,7 +41,5 @@
         </p-column>
     </p-dataTable>
 
-    <p-dialog header="Article picker" [(visible)]="displayPicker" [responsive]="true" showEffect="fade" [modal]="true">
-        <article-picker (onPicked)="pickerClick($event)"></article-picker>
-    </p-dialog>
+    <article-picker (onPicked)="pickerClick($event)"></article-picker>
 </div>

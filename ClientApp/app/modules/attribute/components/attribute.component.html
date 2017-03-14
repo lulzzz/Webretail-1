@@ -71,7 +71,7 @@
     <p-toolbar>
         <div class="ui-toolbar-group-left">
             <span *ngIf="values" style="margin-top: 30px; float: right;"><b>{{totalValues}}</b> items</span>
-            <img *ngIf="!values&&selected" src="assets/loading.gif" style="float: right" height="50">
+            <img *ngIf="!values&&selected&&selected.attributeId>0" src="assets/loading.gif" style="float: right" height="50">
         </div>
         <div class="ui-toolbar-group-right" style="margin-top: 18px">
             <button pButton type="button" title="Add" (click)="addValueClick()" class="ui-button-primary" icon="fa-plus"></button>
@@ -90,7 +90,7 @@
     <p-panel *ngIf="displayPanelValue">
     <p-header>
         <div class="ui-helper-clearfix">
-            <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Attribute</span>
+            <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Attribute Value</span>
             <button pButton type="button" (click)="closeValueClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
         </div>
     </p-header>

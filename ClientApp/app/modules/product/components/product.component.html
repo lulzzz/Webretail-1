@@ -2,6 +2,7 @@
 <p-blockUI [blocked]="isBusy"></p-blockUI>
 
 <div class="container-fluid">
+
     <h2>Product</h2>
 
     <p-toolbar>
@@ -15,9 +16,23 @@
 
     <p *ngIf="!productInfo"><em>Loading...</em></p>
     <p *ngIf="isBusy"><em>Building articles...please wait</em></p>
-    
-    <p-tree [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode"></p-tree>
+    <p-tree *ngIf="!display" [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode"></p-tree>
     <!--<div style="margin-top:8px">Selected Node => {{selectedNode ? selectedNode.type + ' : ' + selectedNode.data : 'none'}}</div>-->
+
+    <p-panel *ngIf="display">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Edit node</span>
+                <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
+            </div>
+        </p-header>
+        <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" [showTargetControls]="false"
+        (onMoveToSource)="removeNodes($event)" (onMoveToTarget)="addNodes($event)">
+            <template let-attr pTemplate="item">
+                <span>{{attr.data}}</span> | <span>{{attr.label}}</span>
+            </template>
+        </p-pickList>
+    </p-panel>
 </div>
 
 <div class="container-fluid">
@@ -37,12 +52,3 @@
         </tbody>
     </table>
 </div>
-
-<p-dialog header="Edit node" [modal]=true showEffect="fade" [(visible)]="display">
-    <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" [showTargetControls]="false"
-    (onMoveToSource)="removeNodes($event)" (onMoveToTarget)="addNodes($event)">
-        <template let-attr pTemplate="item">
-            <span>{{attr.data}}</span> | <span>{{attr.label}}</span>
-        </template>
-    </p-pickList>
-</p-dialog>

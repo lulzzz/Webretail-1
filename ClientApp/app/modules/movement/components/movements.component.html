@@ -16,7 +16,6 @@
             <button pButton type="button" title="Add" [disabled]="committed" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
             <button pButton type="button" title="Update" [disabled]="committed" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
             <p-splitButton icon="fa-bars" title="Open" (onClick)="openClick()" [model]="buttons"></p-splitButton>
-            <button pButton type="button" title="Delete" [disabled]="committed" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
         </div>
         <div class="ui-toolbar-group-right">
             <i class="fa fa-search"></i>
@@ -24,7 +23,7 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable [style]="{'width': '100%'}" [value]="movements"
+    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="movements"
         selectionMode="single" [(selection)]="selected" [globalFilter]="gb"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
         <p-column field="movementId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
@@ -41,55 +40,64 @@
         </p-column>
     </p-dataTable>
 
-    <p-dialog header="Movement" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
-    <form [formGroup]="dataform">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Id</label></div>
-                <div class="ui-grid-col-8">{{selected.movementId}}</div>
+    <p-panel *ngIf="displayPanel">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Movement</span>
+                <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
             </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="causal">Causal</label></div>
-                <div class="ui-grid-col-8">
-                    <p-dropdown [options]="causals" formControlName="causal" [(ngModel)]="selected.causal" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['causal'].valid&&dataform.controls['causal'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['causal'].errors['required']">Causal is required</span>
+        </p-header>
+        <form [formGroup]="dataform">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Id</label></div>
+                    <div class="ui-grid-col-8">{{selected.movementId}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="causal">Causal</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-dropdown [options]="causals" formControlName="causal" [(ngModel)]="selected.causal" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['causal'].valid&&dataform.controls['causal'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['causal'].errors['required']">Causal is required</span>
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="store">Store</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-dropdown [options]="stores" formControlName="store" [(ngModel)]="selected.store" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['store'].valid&&dataform.controls['store'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['store'].errors['required']">Store is required</span>
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="desc">Description</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="desc" [(ngModel)]="selected.movementDesc"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['desc'].valid&&dataform.controls['desc'].dirty">
+                            <i class="fa fa-close"></i> Description is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="note">Note</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="note" [(ngModel)]="selected.movementNote"/>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <button *ngIf="selected.movementId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
                     </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="store">Store</label></div>
-                <div class="ui-grid-col-8">
-                    <p-dropdown [options]="stores" formControlName="store" [(ngModel)]="selected.store" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['store'].valid&&dataform.controls['store'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['store'].errors['required']">Store is required</span>
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4">
+                        <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                     </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="desc">Description</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="desc" [(ngModel)]="selected.movementDesc"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['desc'].valid&&dataform.controls['desc'].dirty">
-                        <i class="fa fa-close"></i> Description is required
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="note">Note</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="note" [(ngModel)]="selected.movementNote"/>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-8"></div>
-                <div class="ui-grid-col-4">
-                    <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                 </div>
             </div>
-        </div>
-    </form>
-    </p-dialog>
+        </form>
+    </p-panel>
 </div>

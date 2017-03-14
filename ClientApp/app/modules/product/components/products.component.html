@@ -16,7 +16,6 @@
             <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
             <button pButton type="button" title="Update" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
             <button pButton type="button" title="Open" (click)="openClick()" class="ui-button-primary" icon="fa-bars"></button>
-            <button pButton type="button" title="Delete" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
         </div>
         <div class="ui-toolbar-group-right">
             <i class="fa fa-search"></i>
@@ -24,7 +23,7 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable [style]="{'width': '100%'}" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
+    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
         selectionMode="single" [(selection)]="selected" [globalFilter]="gb"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
         <p-column field="productId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
@@ -58,88 +57,96 @@
         </p-column>
     </p-dataTable>
 
-    <p-dialog header="Product" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
-    <form [formGroup]="dataform">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Id</label></div>
-                <div class="ui-grid-col-8">{{selected.productId}}</div>
+    <p-panel *ngIf="displayPanel">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Product</span>
+                <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
             </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="code">Code</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['code'].errors['required']">Code is required</span>
-                        <span *ngIf="dataform.controls['code'].errors['minlength']">Must be equals than 5 characters</span>
-                        <span *ngIf="dataform.controls['code'].errors['maxlength']">Must be equals than 5 characters</span>
+        </p-header>
+        <form [formGroup]="dataform">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Id</label></div>
+                    <div class="ui-grid-col-8">{{selected.productId}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="code">Code</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['code'].errors['required']">Code is required</span>
+                            <span *ngIf="dataform.controls['code'].errors['minlength']">Must be equals than 5 characters</span>
+                            <span *ngIf="dataform.controls['code'].errors['maxlength']">Must be equals than 5 characters</span>
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="name" [(ngModel)]="selected.productName"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                            <i class="fa fa-close"></i> Name is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="brand">Brand</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-dropdown [options]="allbrands" formControlName="brand" [(ngModel)]="selected.brand" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['brand'].valid&&dataform.controls['brand'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['brand'].errors['required']">Brand is required</span>
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="um">Unit of Measure</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-dropdown [options]="ums" formControlName="um" [(ngModel)]="selected.productUm" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['um'].valid&&dataform.controls['um'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['um'].errors['required']">Unit of Measure is required</span>
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="selling">Selling Price</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="selling" [(ngModel)]="selected.sellingPrice"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['selling'].valid&&dataform.controls['selling'].dirty">
+                            <i class="fa fa-close"></i> Selling Price is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="purchase">Purchase Price</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="purchase" [(ngModel)]="selected.purchasePrice"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['purchase'].valid&&dataform.controls['purchase'].dirty">
+                            <i class="fa fa-close"></i> Purchase Price is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="isActive">Active</label></div>
+                    <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="isActive" [(ngModel)]="selected.isActive"></p-inputSwitch></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="updated">Updated</label></div>
+                    <div class="ui-grid-col-8">{{selected.updated | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
                     </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="name">Name</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="name" [(ngModel)]="selected.productName"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
-                        <i class="fa fa-close"></i> Name is required
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4">
+                        <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                     </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="brand">Brand</label></div>
-                <div class="ui-grid-col-8">
-                    <p-dropdown [options]="allbrands" formControlName="brand" [(ngModel)]="selected.brand" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['brand'].valid&&dataform.controls['brand'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['brand'].errors['required']">Brand is required</span>
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="um">Unit of Measure</label></div>
-                <div class="ui-grid-col-8">
-                    <p-dropdown [options]="ums" formControlName="um" [(ngModel)]="selected.productUm" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['um'].valid&&dataform.controls['um'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['um'].errors['required']">Unit of Measure is required</span>
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="selling">Selling Price</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="selling" [(ngModel)]="selected.sellingPrice"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['selling'].valid&&dataform.controls['selling'].dirty">
-                        <i class="fa fa-close"></i> Selling Price is required
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="purchase">Purchase Price</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="purchase" [(ngModel)]="selected.purchasePrice"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['purchase'].valid&&dataform.controls['purchase'].dirty">
-                        <i class="fa fa-close"></i> Purchase Price is required
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="isActive">Active</label></div>
-                <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="isActive" [(ngModel)]="selected.isActive"></p-inputSwitch></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="updated">Updated</label></div>
-                <div class="ui-grid-col-8">{{selected.updated | date:'yyyy-MM-dd HH:mm:ss'}}</div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-8"></div>
-                <div class="ui-grid-col-4">
-                    <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                 </div>
             </div>
-        </div>
-    </form>
-    </p-dialog>
-
+        </form>
+    </p-panel>
 </div>

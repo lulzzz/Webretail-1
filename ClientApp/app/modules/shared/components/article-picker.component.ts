@@ -26,17 +26,21 @@ export class ArticlePickerComponent {
     header: string[];
     articles: any[];
     onPicked = new EventEmitter();
+    public isOpen: boolean;
 
-    constructor(private productService: ProductService,
-                private brandService: BrandService) { }
+    constructor(private productService: ProductService, private brandService: BrandService) {
+        this.isOpen = false;
+    }
 
     pickedClick(picked: string) {
         if (picked.indexOf('#') > 0) {
             this.onPicked.emit(picked.split('#')[1]);
+            this.isOpen = false;
         }
     }
 
     public loadData() {
+        this.isOpen = true;
         if (!this.products) {
             this.productService.getProducts()
                 .subscribe(result => {
@@ -46,6 +50,10 @@ export class ArticlePickerComponent {
                 }
             );
         }
+    }
+    
+    hidePickerClick() {
+        this.isOpen = false;
     }
 
     buildFilter(items: Product[]) {

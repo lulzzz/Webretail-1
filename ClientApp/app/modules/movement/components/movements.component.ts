@@ -24,7 +24,7 @@ export class MovementsComponent implements OnInit {
     storesFiltered: SelectItem[];
     causals: SelectItem[];
     causalsFiltered: SelectItem[];
-    displayDialog: boolean;
+    displayPanel: boolean;
 	dataform: FormGroup;
     buttons: MenuItem[];
 
@@ -95,14 +95,19 @@ export class MovementsComponent implements OnInit {
         if (this.causals.length > 0) {
             this.selected.causal = this.causals[0].value;
         }
-        this.displayDialog = true;
+        this.displayPanel = true;
     }
 
     editClick() {
         if (!this.selected) {
             return;
         }
-        this.displayDialog = true;
+        this.displayPanel = true;
+    }
+
+    closeClick() {
+        this.displayPanel = false;
+        this.selected = null;
     }
 
     saveClick() {
@@ -118,7 +123,7 @@ export class MovementsComponent implements OnInit {
                     this.selected = null;
                 });
         }
-        this.displayDialog = false;
+        this.displayPanel = false;
     }
 
     deleteClick() {

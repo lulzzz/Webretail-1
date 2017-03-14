@@ -73,10 +73,9 @@ export class AttributeComponent implements OnInit {
     editClick() {
         this.displayPanel = true;
     }
-    
+
     closeClick() {
         this.displayPanel = false;
-        this.selected = null;
     }
 
     saveClick() {
@@ -110,7 +109,7 @@ export class AttributeComponent implements OnInit {
     onRowValueSelect(event: any) {
         this.displayPanelValue = true;
     }
-    
+
     addValueClick() {
         if (this.selected && this.selected.attributeId > 0) {
             this.selectedValue = new AttributeValue(this.selected.attributeId, 0, '', '');
@@ -128,7 +127,7 @@ export class AttributeComponent implements OnInit {
         this.displayPanelValue = false;
         this.selectedValue = null;
     }
-    
+
     saveValueClick() {
         if (this.isNewValue) {
             this.attributeService.createValue(this.selectedValue)

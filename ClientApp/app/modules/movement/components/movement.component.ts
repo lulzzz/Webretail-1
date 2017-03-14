@@ -23,7 +23,6 @@ export class MovementComponent implements OnInit, OnDestroy {
     movement: Movement;
     items: MovementArticle[];
     articleValue: string;
-    displayPicker: boolean;
     committed: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
@@ -89,16 +88,13 @@ export class MovementComponent implements OnInit, OnDestroy {
                     });
             }
         });
-        this.displayPicker = false;
     }
 
     showPickerClick() {
-        this.displayPicker = true;
         this.inputComponent.loadData();
     }
 
     pickerClick(event: any) {
-        this.displayPicker = false;
         this.barcodes.push(event);
         this.addBarcode();
     }

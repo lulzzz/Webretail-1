@@ -25,7 +25,7 @@ export class ProductsComponent implements OnInit {
     names: SelectItem[];
     categoryValue: string;
     sliderValue: number;
-    displayDialog: boolean;
+    displayPanel: boolean;
 	dataform: FormGroup;
 
     constructor(private router: Router,
@@ -89,11 +89,16 @@ export class ProductsComponent implements OnInit {
         this.selected = new Product();
         this.selected.brand = this.allbrands.length > 0 ? this.allbrands[0].value : null;
         this.selected.productUm =  this.ums[0].value;
-        this.displayDialog = true;
+        this.displayPanel = true;
     }
 
     editClick() {
-        this.displayDialog = true;
+        this.displayPanel = true;
+    }
+
+    closeClick() {
+        this.displayPanel = false;
+        this.selected = null;
     }
 
     saveClick() {
@@ -110,7 +115,7 @@ export class ProductsComponent implements OnInit {
                     this.selected = null;
                 });
         }
-        this.displayDialog = false;
+        this.displayPanel = false;
     }
 
     deleteClick() {
