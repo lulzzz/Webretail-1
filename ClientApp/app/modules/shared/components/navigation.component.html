@@ -36,12 +36,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li *ngIf="!isAdmin"><a [routerLink]="['/account/myinfo']"><i class="glyphicon glyphicon-user"></i> Account</a></li>
-                        <li *ngIf="isAdmin"><a [routerLink]="['/account']"><i class="glyphicon glyphicon-user"></i> Account</a></li>
-                        <li><a [routerLink]="['/store']"><i class="glyphicon glyphicon-th-list"></i> Store</a></li>
-                        <li><a [routerLink]="['/brand']"><i class="glyphicon glyphicon-th-list"></i> Brand</a></li>
-                        <li><a [routerLink]="['/category']"><i class="glyphicon glyphicon-th-list"></i> Category</a></li>
-                        <li><a [routerLink]="['/attribute']"><i class="glyphicon glyphicon-th-list"></i> Attribute</a></li>
-                        <li><a [routerLink]="['/causal']"><i class="glyphicon glyphicon-th-list"></i> Causal</a></li>
+                        <li *ngIf="isAdmin"><a [routerLink]="['/account']"><i class="glyphicon glyphicon-user"></i> Accounts</a></li>
+                        <li><a [routerLink]="['/store']"><i class="glyphicon glyphicon-th-list"></i> Stores</a></li>
+                        <li><a [routerLink]="['/brand']"><i class="glyphicon glyphicon-th-list"></i> Brands</a></li>
+                        <li><a [routerLink]="['/category']"><i class="glyphicon glyphicon-th-list"></i> Categories</a></li>
+                        <li><a [routerLink]="['/attribute']"><i class="glyphicon glyphicon-th-list"></i> Attributes</a></li>
+                        <li><a [routerLink]="['/causal']"><i class="glyphicon glyphicon-th-list"></i> Causals</a></li>
                     </ul>
                 </li>
                 <li><a style="cursor: pointer" (click)="logoutClick()"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
