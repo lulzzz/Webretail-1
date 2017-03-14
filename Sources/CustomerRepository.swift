@@ -33,7 +33,9 @@ class CustomerRepository : CustomerProtocol {
 	func add(item: Customer) throws {
 		item.created = Int.now()
 		item.updated = Int.now()
-		try item.create()
+		try item.save {
+			id in item.customerId = id as! Int
+		}
 	}
 	
 	func update(id: Int, item: Customer) throws {

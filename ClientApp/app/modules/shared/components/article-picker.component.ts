@@ -51,7 +51,7 @@ export class ArticlePickerComponent {
             );
         }
     }
-    
+
     hidePickerClick() {
         this.isOpen = false;
     }
