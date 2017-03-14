@@ -25,7 +25,7 @@ export class CustomerComponent implements OnInit {
                 private fb: FormBuilder) { }
 
 	ngOnInit() {
-        this.authenticationService.checkCredentials(true);
+        this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
             'firstname': new FormControl('', Validators.required),
