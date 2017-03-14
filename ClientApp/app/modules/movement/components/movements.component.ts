@@ -26,7 +26,7 @@ export class MovementsComponent implements OnInit {
     causalsFiltered: SelectItem[];
     displayDialog: boolean;
 	dataform: FormGroup;
-    buttons : MenuItem[]
+    buttons: MenuItem[];
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
