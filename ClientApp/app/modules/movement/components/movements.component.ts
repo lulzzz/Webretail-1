@@ -26,6 +26,7 @@ export class MovementsComponent implements OnInit {
     causalsFiltered: SelectItem[];
     displayDialog: boolean;
 	dataform: FormGroup;
+    buttons : MenuItem[]
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
@@ -45,8 +46,7 @@ export class MovementsComponent implements OnInit {
             'note': new FormControl('', Validators.nullValidator)
         });
 
-        this.committed = false;
-        this.loadData();
+        this.uncommittedClick();
 
         this.storeService.getAll()
             .subscribe(result => {
@@ -81,19 +81,6 @@ export class MovementsComponent implements OnInit {
         this.causalsFiltered.push({label: 'All', value: null});
         let filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.causal.causalName)));
         this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
-    }
-
-    get buttons() : MenuItem[] {
-        if (this.committed) {
-            return [
-                { label: 'Roolbak', icon: 'fa-reply', command: () => { this.roolbackClick(); } },
-                { label: 'Show Uncommitted', icon: 'fa-reply', command: () => { this.uncommittedClick(); } }
-            ];
-        }
-        return [
-            { label: 'Commit', icon: 'fa-share', command: () => { this.commitClick(); } },
-            { label: 'Show Committed', icon: 'fa-share', command: () => { this.committedClick(); } }
-        ];
     }
 
     get isNew() : boolean { return this.selected == null || this.selected.movementId == 0; }
@@ -187,11 +174,20 @@ export class MovementsComponent implements OnInit {
 
     committedClick() {
         this.committed = true;
+        this.buttons = [
+            { label: 'Roolbak', icon: 'fa-reply', command: () => this.roolbackClick() },
+            { label: 'Show Uncommitted', icon: 'fa-reply', command: () => this.uncommittedClick() }
+        ];
+
         this.loadData();
     }
 
     uncommittedClick() {
         this.committed = false;
+        this.buttons = [
+            { label: 'Commit', icon: 'fa-share', command: () => this.commitClick() },
+            { label: 'Show Committed', icon: 'fa-share', command: () => this.committedClick() }
+        ];
         this.loadData();
     }
 

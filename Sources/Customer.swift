@@ -27,7 +27,7 @@ class Customer: PostgresSqlORM, JSONConvertible {
 	public var updated : Int = Int.now()
 	
 	open override func table() -> String { return "customers" }
-	open override func tableIndexes() -> [String] { return ["customerName"] }
+	open override func tableIndexes() -> [String] { return ["customerEmail"] }
 	
 	open override func to(_ this: StORMRow) {
 		customerId = this.data["customerid"] as? Int ?? 0
