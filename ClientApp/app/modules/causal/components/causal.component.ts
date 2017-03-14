@@ -42,8 +42,7 @@ export class CausalComponent implements OnInit {
             .subscribe(result => {
                 this.causals = result;
                 this.totalRecords = this.causals.length;
-            }, onerror => alert(onerror._body)
-        );
+            });
     }
 
     get isNew() : boolean { return this.selected == null || this.selected.causalId == 0; }

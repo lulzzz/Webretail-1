@@ -1,25 +1,31 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
-
-    <h1>Products</h1>
- 
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            Items: {{totalRecords}}
-            <p *ngIf="!products"><em>Loading...</em></p>
+            <h2>Products</h2>
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
-            <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
-            <i class="fa fa-bars"></i>
-            <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
+            <p *ngIf="products" style="padding-top: 30px">{{totalRecords}} items</p>
+            <img *ngIf="!products" src="assets/loading.gif" height="60">
+        </div>
+    </p-toolbar>
+    
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" title="Update" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <button pButton type="button" title="Open" (click)="openClick()" class="ui-button-primary" icon="fa-bars"></button>
+            <button pButton type="button" title="Delete" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <i class="fa fa-search"></i>
+            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
         </div>
     </p-toolbar>
 
     <p-dataTable [style]="{'width': '100%'}" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
-        selectionMode="single" [(selection)]="selected"
+        selectionMode="single" [(selection)]="selected" [globalFilter]="gb"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
         <p-column field="productId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="productCode" header="Code" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>

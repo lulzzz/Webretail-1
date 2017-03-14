@@ -1,22 +1,25 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
-    <div class="global-search">
-        <i class="fa fa-search"></i>
-        <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">          
-    </div>
-
-    <h2>Categories</h2>
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <h2>Category</h2>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <p *ngIf="categories" style="padding-top: 30px">{{totalRecords}} items</p>
+            <img *ngIf="!categories" src="assets/loading.gif" height="60">
+        </div>
+    </p-toolbar>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            Items: {{totalRecords}}
-            <p *ngIf="!categories"><em>Loading...</em></p>
+            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" title="Edit" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <button pButton type="button" title="Delete" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
-            <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
+            <i class="fa fa-search"></i>
+            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
         </div>
     </p-toolbar>
 

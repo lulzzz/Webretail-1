@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { ConfirmationService, SelectItem } from 'primeng/primeng';
+import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { StoreService } from './../../../services/store.service';
 import { CausalService } from './../../../services/causal.service';
@@ -81,6 +81,19 @@ export class MovementsComponent implements OnInit {
         this.causalsFiltered.push({label: 'All', value: null});
         let filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.causal.causalName)));
         this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
+    }
+
+    get buttons() : MenuItem[] {
+        if (this.committed) {
+            return [
+                { label: 'Roolbak', icon: 'fa-reply', command: () => { this.roolbackClick(); } },
+                { label: 'Show Uncommitted', icon: 'fa-reply', command: () => { this.uncommittedClick(); } }
+            ];
+        }
+        return [
+            { label: 'Commit', icon: 'fa-share', command: () => { this.commitClick(); } },
+            { label: 'Show Committed', icon: 'fa-share', command: () => { this.committedClick(); } }
+        ];
     }
 
     get isNew() : boolean { return this.selected == null || this.selected.movementId == 0; }

@@ -1,36 +1,31 @@
 ﻿<p-confirmDialog icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
-    <div class="global-search">
-        <button *ngIf="!committed" pButton type="button" label="Show Committed" (click)="committedClick()" class="ui-button-info"></button>
-        <button *ngIf="committed" pButton type="button" label="Show Uncommitted" (click)="uncommittedClick()" class="ui-button-info"></button>
-    </div>
-
-    <h2>Movements</h2>
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <h2>Movements</h2>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <p *ngIf="movements" style="padding-top: 30px">{{totalRecords}} items</p>
+            <img *ngIf="!movements" src="assets/loading.gif" height="60">
+        </div>
+    </p-toolbar>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            Items: {{totalRecords}}
-            <p *ngIf="!movements"><em>Loading...</em></p>
+            <button pButton type="button" title="Add" [disabled]="committed" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" title="Update" [disabled]="committed" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <p-splitButton icon="fa-bars" title="Open" (onClick)="openClick()" [model]="buttons"></p-splitButton>
+            <button pButton type="button" title="Delete" [disabled]="committed" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <div *ngIf="!committed">
-                <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus-square"></button>
-                <button pButton type="button" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-                <button pButton type="button" (click)="deleteClick()" class="ui-button-danger" icon="fa-trash-o"></button>
-                <i class="fa fa-bars"></i>
-                <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
-                <button pButton type="button" label="Commit" (click)="commitClick()" class="ui-button-success" icon="fa-share"></button>
-            </div>
-            <div *ngIf="committed">
-                <button pButton type="button" (click)="openClick()" class="ui-button-info" icon="fa-folder-open"></button>
-                <button *ngIf="committed" pButton type="button" label="Roolback" (click)="roolbackClick()" class="ui-button-warning" icon="fa-reply"></button>
-            </div>
+            <i class="fa fa-search"></i>
+            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
         </div>
     </p-toolbar>
 
     <p-dataTable [style]="{'width': '100%'}" [value]="movements"
-        selectionMode="single" [(selection)]="selected"
+        selectionMode="single" [(selection)]="selected" [globalFilter]="gb"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
         <p-column field="movementId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="movementDesc" header="Description" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>

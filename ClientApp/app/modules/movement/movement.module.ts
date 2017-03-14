@@ -5,7 +5,7 @@ import {
     ConfirmDialogModule, ConfirmationService,
     ToolbarModule, DataTableModule, SharedModule, PaginatorModule, ButtonModule,
     DropdownModule, SliderModule, MultiSelectModule, InputTextModule, InputSwitchModule,
-    DialogModule, ChipsModule, SpinnerModule
+    DialogModule, ChipsModule, SpinnerModule, SplitButtonModule
 } from 'primeng/primeng';
 import { MovementRoutes } from './movement.routes';
 import { MovementsComponent } from './components/movements.component';
@@ -22,7 +22,7 @@ import { SharedPipeModule } from './../../modules/shared/shared-pipe.module';
         ConfirmDialogModule,
         ToolbarModule, DataTableModule, SharedModule, PaginatorModule, ButtonModule,
         DropdownModule, SliderModule, MultiSelectModule, InputTextModule, InputSwitchModule,
-        DialogModule, ChipsModule, SpinnerModule,
+        DialogModule, ChipsModule, SpinnerModule, SplitButtonModule,
         SharedPipeModule.forRoot(),
         CommonModule,
         MovementRoutes
