@@ -181,7 +181,7 @@ export class MovementsComponent implements OnInit {
         this.committed = true;
         this.buttons = [
             { label: 'Roolbak', icon: 'fa-reply', command: () => this.roolbackClick() },
-            { label: 'Show Uncommitted', icon: 'fa-reply', command: () => this.uncommittedClick() }
+            { label: 'Show Uncommitted', icon: 'fa-tasks', command: () => this.uncommittedClick() }
         ];
 
         this.loadData();
@@ -191,7 +191,7 @@ export class MovementsComponent implements OnInit {
         this.committed = false;
         this.buttons = [
             { label: 'Commit', icon: 'fa-share', command: () => this.commitClick() },
-            { label: 'Show Committed', icon: 'fa-share', command: () => this.committedClick() }
+            { label: 'Show Committed', icon: 'fa-tasks', command: () => this.committedClick() }
         ];
         this.loadData();
     }
