@@ -3,11 +3,11 @@
 <div class="container-fluid">
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <h2>Attribute</h2>
+            <h2>Attributes</h2>
         </div>
         <div class="ui-toolbar-group-right">
-            <p *ngIf="attributes" style="padding-top: 30px">{{totalRecords}} items</p>
-            <img *ngIf="!attributes||!values&&selected" src="assets/loading.gif" height="60">
+            <p *ngIf="attributes" style="padding-top: 30px"><b>{{totalRecords}}</b> items</p>
+            <img *ngIf="!attributes" src="assets/loading.gif" height="60">
         </div>
     </p-toolbar>
     
@@ -58,20 +58,21 @@
     
 </div>
 
-<div class="container-fluid" style="margin-top: 20px">
+<div class="container-fluid">
 
     <p-toolbar>
-        <div class="ui-toolbar-group-left">
+        <div class="ui-toolbar-group-left" style="margin-top: 18px">
             <button pButton type="button" title="Add" (click)="addValueClick()" class="ui-button-primary" icon="fa-plus"></button>
             <button pButton type="button" title="Edit" (click)="editValueClick()" class="ui-button-primary" icon="fa-edit"></button>
             <button pButton type="button" title="Delete" (click)="deleteValueClick()" class="ui-button-danger" icon="fa-trash-o"></button>
         </div>
-        <div class="ui-toolbar-group-right" style="margin-top: 10px">
-            <p *ngIf="values">{{totalValues}} items</p>
+        <div class="ui-toolbar-group-right">
+            <span *ngIf="values" style="margin-top: 30px; float: right;"><b>{{totalValues}}</b> items</span>
+            <img *ngIf="!values&&selected" src="assets/loading.gif" style="float: right" height="50">
         </div>
     </p-toolbar>
     
-    <p-dataTable [style]="{'width': '100%'}" [value]="values" selectionMode="single" [(selection)]="selectedValue"
+    <p-dataTable [style]="{'width': '100%', 'margin-top': '5px'}" [value]="values" selectionMode="single" [(selection)]="selectedValue"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
         [globalFilter]="gb" #dt>
         <p-column field="attributeValueId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>

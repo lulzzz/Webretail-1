@@ -57,6 +57,7 @@ export class AttributeComponent implements OnInit {
     get selectedValueIndex(): number { return this.values.indexOf(this.selectedValue); }
 
     onRowSelect(event: any) {
+        this.values = null;
         this.attributeService.getValueByAttributeId(this.selected.attributeId)
             .subscribe(result => {
                 this.values = result;
