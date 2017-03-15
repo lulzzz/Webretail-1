@@ -2,34 +2,32 @@
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { AuthenticationService } from './../../../services/authentication.service';
-import { MovementService } from './../../../services/movement.service';
-import { Movement, MovementArticle } from './../../../shared/models';
+import { OrderService } from './../../../services/order.service';
+import { Order, OrderArticle } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
 import { ArticlePickerComponent } from './../../shared/components/article-picker.component';
 
 @Component({
-    selector: 'movement-component',
-    templateUrl: 'movement.component.html'
+    selector: 'order-component',
+    templateUrl: 'order.component.html'
 })
 
-export class MovementComponent implements OnInit, OnDestroy {
+export class OrderComponent implements OnInit, OnDestroy {
     @ViewChild(ArticlePickerComponent) inputComponent: ArticlePickerComponent;
     private sub: any;
-    movementId: number;
+    orderId: number;
     totalRecords = 0;
     totalItems = 0;
     barcodes: string[];
-    movement: Movement;
-    items: MovementArticle[];
+    order: Order;
+    items: OrderArticle[];
     articleValue: string;
-    committed: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
-                private movementService: MovementService,
+                private orderService: OrderService,
                 private confirmationService: ConfirmationService) {
         this.barcodes = [];
-        this.committed = false;
     }
 
 	ngOnInit() {
@@ -37,14 +35,13 @@ export class MovementComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            this.movementId = params['id'];
-            this.movementService.getById(this.movementId)
+            this.orderId = params['id'];
+            this.orderService.getById(this.orderId)
                 .subscribe(result => {
-                    this.movement = result;
-                    this.committed = this.movement.committed;
+                    this.order = result;
                 }
             );
-            this.movementService.getItemsById(this.movementId)
+            this.orderService.getItemsById(this.orderId)
                 .subscribe(result => {
                     this.items = result;
                     this.updateTotals();
@@ -68,17 +65,17 @@ export class MovementComponent implements OnInit, OnDestroy {
             let item = this.items.find(p => p.barcode === barcode);
             if (item) {
                 item.quantity += 1.0;
-                this.movementService
-                    .updateItem(item.movementArticleId, item)
+                this.orderService
+                    .updateItem(item.orderArticleId, item)
                     .subscribe(result => {
                         this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
                         this.updateTotals();
                     });
             } else {
-                item = new MovementArticle();
-                item.movementId = this.movementId;
+                item = new OrderArticle();
+                item.orderId = this.orderId;
                 item.barcode = barcode;
-                this.movementService
+                this.orderService
                     .createItem(item)
                     .subscribe(result => {
                         this.items.push(result);
@@ -98,9 +95,9 @@ export class MovementComponent implements OnInit, OnDestroy {
         this.addBarcode();
     }
 
-    updateClick(data: MovementArticle) {
+    updateClick(data: OrderArticle) {
         if (data.quantity > 0) {
-            this.movementService.updateItem(data.movementArticleId, data)
+            this.orderService.updateItem(data.orderArticleId, data)
                 .subscribe(result => {
                     this.updateTotals();
                 });
@@ -108,7 +105,7 @@ export class MovementComponent implements OnInit, OnDestroy {
             this.confirmationService.confirm({
                 message: 'Are you sure that you want to delete this item?',
                 accept: () => {
-                    this.movementService.deleteItem(data.movementArticleId)
+                    this.orderService.deleteItem(data.orderArticleId)
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(data), 1);
                             this.updateTotals();

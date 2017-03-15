@@ -7,12 +7,12 @@ import {
     ConfirmDialogModule, ConfirmationService,
     ToolbarModule, ButtonModule,
     InputTextModule, InputSwitchModule,
-    PanelModule, ChipsModule, SpinnerModule, SplitButtonModule, InputTextareaModule
+    PanelModule, ChipsModule, SpinnerModule, InputTextareaModule
 } from 'primeng/primeng';
-import { MovementRoutes } from './movement.routes';
-import { MovementsComponent } from './components/movements.component';
-import { MovementComponent } from './components/movement.component';
-import { MovementService } from './../../services/movement.service';
+import { OrderRoutes } from './order.routes';
+import { OrdersComponent } from './components/orders.component';
+import { OrderComponent } from './components/order.component';
+import { OrderService } from './../../services/order.service';
 import { SharedComponentModule } from './../../modules/shared/shared-component.module';
 
 @NgModule({
@@ -21,20 +21,20 @@ import { SharedComponentModule } from './../../modules/shared/shared-component.m
         DataTableModule, SharedModule, PaginatorModule,
         MultiSelectModule, DropdownModule, SliderModule,
         ConfirmDialogModule, ToolbarModule, ButtonModule,
-        InputTextModule, InputSwitchModule, PanelModule, ChipsModule,
-        SpinnerModule, SplitButtonModule, InputTextareaModule,
+        InputTextModule, InputSwitchModule,
+        PanelModule, ChipsModule, SpinnerModule, InputTextareaModule,
         SharedComponentModule.forRoot(),
         CommonModule,
-        MovementRoutes
+        OrderRoutes
     ],
     declarations: [
-        MovementsComponent,
-        MovementComponent
+        OrdersComponent,
+        OrderComponent
     ],
     providers: [
-        MovementService,
+        OrderService,
         ConfirmationService
     ]
 })
 
-export class MovementModule { }
+export class OrderModule { }

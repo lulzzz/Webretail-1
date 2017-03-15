@@ -144,8 +144,6 @@ export class Causal {
 
 export class Movement {
   public movementId: number;
-  //public storeId: number;
-  //public causalId: number;
   public store: Store;
   public causal: Causal;
   public committed: boolean;
@@ -157,8 +155,6 @@ export class Movement {
 
   constructor() {
     this.movementId = 0;
-    //this.storeId = 0;
-    //this.causalId = 0;
     this.store = new Store();
     this.causal = new Causal();
     this.committed = false;
@@ -192,7 +188,7 @@ export class MovementArticle {
 
 export class Customer {
   public customerId: number;
-  public customerFirtname: string;
+  public customerFirstname: string;
   public customerLastname: string;
   public customerEmail: string;
   public customerPhone: string;
@@ -205,7 +201,7 @@ export class Customer {
 
   constructor() {
     this.customerId = 0;
-    this.customerFirtname = '';
+    this.customerFirstname = '';
     this.customerLastname = '';
     this.customerEmail = '';
     this.customerPhone = '';
@@ -215,6 +211,53 @@ export class Customer {
     this.customerCountry = '';
     this.customerFiscalCode = '';
     this.customerVatNumber = '';
+  }
+}
+
+export class Order {
+  public orderId: number;
+  public store: Store;
+  public causal: Causal;
+  public customer: Customer;
+  public orderNumber: number;
+  public orderDate: Date;
+  public orderNote: string;
+  public orderStatus: string;
+  public created: Date;
+  public updated: Date;
+
+  constructor() {
+    this.orderId = 0;
+    this.store = new Store();
+    this.causal = new Causal();
+    this.customer = new Customer();
+    this.orderDate = new Date();
+    this.orderNote = '';
+    this.orderStatus = '';
+    this.created = new Date();
+    this.updated = new Date();
+  }
+}
+
+export class OrderArticle {
+  public orderArticleId: number;
+  public orderId: number;
+  public barcode: string;
+  public product: Product;
+  public quantity: number;
+  public price: number;
+  public created: Date;
+  public updated: Date;
+
+  constructor() {
+    this.orderArticleId = 0;
+    this.orderId = 0;
+    this.barcode = '';
+    this.product = new Product();
+    this.quantity = 1.0;
+    this.price = 0.0;
+    this.created = new Date();
+    this.updated = new Date();
   }
 }
 
