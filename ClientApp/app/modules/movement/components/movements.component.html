@@ -26,7 +26,7 @@
     <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="movements"
         selectionMode="single" [(selection)]="selected" [globalFilter]="gb"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
-        <p-column field="movementId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="movementId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="movementDesc" header="Description" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>

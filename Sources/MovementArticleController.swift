@@ -35,7 +35,7 @@ class MovementArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            let items = try self.movementRepository.getAll(movementId: id.toInt()!)
+            let items = try self.movementRepository.get(movementId: id.toInt()!)
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {

@@ -14,7 +14,7 @@ class MovementArticleRepository : MovementArticleProtocol {
         try? MovementArticle().setup()
     }
     
-    func getAll(movementId: Int) throws -> [MovementArticle] {
+    func get(movementId: Int) throws -> [MovementArticle] {
         let items = MovementArticle()
         try items.select(
             whereclause: "movementId = $1",

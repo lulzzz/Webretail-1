@@ -71,12 +71,17 @@ ioCContainer.register { ProductRepository() as ProductProtocol }
 ioCContainer.register { ArticleRepository() as ArticleProtocol }
 ioCContainer.register { MovementRepository() as MovementProtocol }
 ioCContainer.register { MovementArticleRepository() as MovementArticleProtocol }
-ioCContainer.register { PublicationRepository() as PublicationProtocol }
 ioCContainer.register { CustomerRepository() as CustomerProtocol }
+ioCContainer.register { OrderRepository() as OrderProtocol }
+ioCContainer.register { OrderArticleRepository() as OrderArticleProtocol }
+//ioCContainer.register { PublicationRepository() as PublicationProtocol }
 
 
 // Register auth routes and handlers
 server.addRoutes(AuthenticationController().getRoutes())
+
+// Register Angular routes and handlers
+server.addRoutes(AngularController().getRoutes())
 
 // Register api routes and handlers
 server.addRoutes(UserController().getRoutes())
@@ -90,11 +95,10 @@ server.addRoutes(ProductController().getRoutes())
 server.addRoutes(ArticleController().getRoutes())
 server.addRoutes(MovementController().getRoutes())
 server.addRoutes(MovementArticleController().getRoutes())
-server.addRoutes(PublicationController().getRoutes())
 server.addRoutes(CustomerController().getRoutes())
-
-// Register Angular routes and handlers
-server.addRoutes(AngularController().getRoutes())
+server.addRoutes(OrderController().getRoutes())
+server.addRoutes(OrderArticleController().getRoutes())
+//server.addRoutes(PublicationController().getRoutes())
 
 
 // Add routes to be checked for auth

@@ -26,7 +26,7 @@
         selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
         [globalFilter]="gb" #dt>
-        <p-column field="customerId" header="Id" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="customerId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="customerFirstname" header="Firstname" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="customerLastname" header="Lastname" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="customerEmail" header="Email" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
