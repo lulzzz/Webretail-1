@@ -72,7 +72,7 @@ To run this project from Xcode, edit the Scheme, Under "Options" for "run", chec
 * Once the project has compiled, execute `./.build/debug/Webretail`
 
 ```
-[INFO] Starting HTTP server on 0.0.0.0:8080 with document root ./wwwroot
+[INFO] Starting HTTP server on 0.0.0.0:8080 with document root ./webroot
 ```
 
 ## Angular2
