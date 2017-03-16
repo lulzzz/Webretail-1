@@ -11,11 +11,11 @@
     <p *ngIf="!items"><em>Loading...</em></p>
     
     <p-toolbar *ngIf="order">
-        <div class="ui-toolbar-group-left">
+        <div class="ui-toolbar-group-left" style="padding: 10px 0">
             <span><b>n°</b> {{order.orderNumber}}</span> <span><b>date</b>: {{order.orderDate | date: 'yyyy-MM-dd'}}</span>
             <br/><span><b>status</b>: {{order.orderStatus}}</span>
         </div>
-        <div class="ui-toolbar-group-right" style="text-align: right">
+        <div class="ui-toolbar-group-right" style="text-align: right;padding: 10px 0;">
             <span><b>causal</b>: {{order.causal.causalName}}</span><br/><span><b>store</b>: {{order.store.storeName}}</span>
         </div>
     </p-toolbar>
