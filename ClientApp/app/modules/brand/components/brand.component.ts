@@ -61,15 +61,14 @@ export class BrandComponent implements OnInit {
             this.brandService.create(this.selected)
                 .subscribe(result => {
                     this.brands.push(result);
-                    this.selected = null;
+                    this.closeClick();
                 });
         } else {
             this.brandService.update(this.selected.brandId, this.selected)
                 .subscribe(result => {
-                    this.selected = null;
+                    this.closeClick();
                 });
         }
-        this.displayPanel = false;
     }
 
     deleteClick() {
@@ -79,7 +78,7 @@ export class BrandComponent implements OnInit {
                 this.brandService.delete(this.selected.brandId)
                     .subscribe(result => {
                         this.brands.splice(this.selectedIndex, 1);
-                        this.selected = null;
+                        this.closeClick();
                     });
             }
         });

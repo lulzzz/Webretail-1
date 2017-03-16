@@ -11,10 +11,10 @@
     
     <p-toolbar *ngIf="order">
         <div class="ui-toolbar-group-left">
-            <b>n°</b> {{order.orderNumber}} <b>date</b> {{order.orderDate | date: 'yyyy-MM-dd'}} <b>status</b>: {{order.orderStatus}}
+            <span><b>n°</b> {{order.orderNumber}}</span> <span><b>date</b>: {{order.orderDate | date: 'yyyy-MM-dd'}}</span> <span><b>status</b>: {{order.orderStatus}}</span>
         </div>
         <div class="ui-toolbar-group-right">
-            <b>causal</b>: {{order.causal.causalName}} <b>store</b>: {{order.store.storeName}}
+            <span><b>causal</b>: {{order.causal.causalName}}</span> <span><b>store</b>: {{order.store.storeName}}</span>
         </div>
     </p-toolbar>
 
@@ -25,7 +25,7 @@
             <p>&nbsp;</p>
         </p-footer>
         <p-column field="orderArticleId" header="Id" [editable]="false" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="barcode" header="Barcode" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="barcode" header="Barcode" [editable]="false" [style]="{'width':'150px'}" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
         <p-column field="product" header="Product" [editable]="false" [sortable]="true" [filter]="true">
             <template pTemplate="filter" let-col>
                 <input pInputText [(ngModel)]="articleValue" placeholder="Search" style="width: 100%;margin-top: 4px;" styleClass="ui-column-filter"/>
@@ -34,12 +34,12 @@
                 {{data.product | articleInfo:data.barcode}}
             </template>
         </p-column>
-        <p-column field="quantity" header="Quantity" [style]="{'text-align':'center'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        <p-column field="quantity" header="Quantity" [style]="{'text-align':'center','width':'140px'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
             <template let-col let-data="rowData" pTemplate="editor">
                 <p-spinner [disabled]="committed" [(ngModel)]="data.quantity" [min]="0" (onChange)="onUpdate(data)"></p-spinner>
             </template>
         </p-column>
-        <p-column field="price" header="Price" [style]="{'text-align':'center'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        <p-column field="price" header="Price" [style]="{'text-align':'center','width':'140px'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
             <template let-col let-data="rowData" pTemplate="editor">
                 <p-spinner [disabled]="committed" [(ngModel)]="data.price" [min]="0" (onChange)="onUpdate(data)"></p-spinner>
             </template>

@@ -67,17 +67,16 @@ export class AccountComponent implements OnInit {
                 .create(this.selected)
                 .subscribe(result => {
                     this.accounts.push(result);
-                    this.selected = null;
+                    this.closeClick();
                 });
         } else {
             this.accountService
                 .update(this.selected.uniqueID, this.selected)
                 .subscribe(result => {
                     this.accounts[this.selectedIndex] = this.selected;
-                    this.selected = null;
+                    this.closeClick();
                 });
         }
-        this.displayPanel = false;
     }
 
     deleteClick() {
@@ -88,7 +87,7 @@ export class AccountComponent implements OnInit {
                     .delete(this.selected.uniqueID)
                     .subscribe(result => {
                         this.accounts.splice(this.selectedIndex, 1);
-                        this.selected = null;
+                        this.closeClick();
                     });
             }
         });

@@ -115,15 +115,14 @@ export class MovementsComponent implements OnInit {
             this.movementService.create(this.selected)
                 .subscribe(result => {
                     this.movements.push(result);
-                    this.selected = null;
+                    this.closeClick();
                 });
         } else {
             this.movementService.update(this.selected.movementId, this.selected)
                 .subscribe(result => {
-                    this.selected = null;
+                    this.closeClick();
                 });
         }
-        this.displayPanel = false;
     }
 
     deleteClick() {
@@ -137,7 +136,7 @@ export class MovementsComponent implements OnInit {
                 this.movementService.delete(this.selected.movementId)
                     .subscribe(result => {
                         this.movements.splice(this.selectedIndex, 1);
-                        this.selected = null;
+                        this.closeClick();
                     });
             }
         });
@@ -181,7 +180,7 @@ export class MovementsComponent implements OnInit {
         this.committed = true;
         this.buttons = [
             { label: 'Roolbak', icon: 'fa-reply', command: () => this.roolbackClick() },
-            { label: 'Show Uncommitted', icon: 'fa-tasks', command: () => this.uncommittedClick() }
+            { label: 'Uncommitted', icon: 'fa-tasks', command: () => this.uncommittedClick() }
         ];
 
         this.loadData();
@@ -191,7 +190,7 @@ export class MovementsComponent implements OnInit {
         this.committed = false;
         this.buttons = [
             { label: 'Commit', icon: 'fa-share', command: () => this.commitClick() },
-            { label: 'Show Committed', icon: 'fa-tasks', command: () => this.committedClick() }
+            { label: 'Committed', icon: 'fa-tasks', command: () => this.committedClick() }
         ];
         this.loadData();
     }

@@ -72,17 +72,16 @@ export class CustomerComponent implements OnInit {
                 .create(this.selected)
                 .subscribe(result => {
                     this.customers.push(result);
-                    this.selected = null;
+                    this.closeClick();
                 });
         } else {
             this.customerService
                 .update(this.selected.customerId, this.selected)
                 .subscribe(result => {
                     this.customers[this.selectedIndex] = this.selected;
-                    this.selected = null;
+                    this.closeClick();
                 });
         }
-        this.displayPanel = false;
     }
 
     deleteClick() {
@@ -93,7 +92,7 @@ export class CustomerComponent implements OnInit {
                     .delete(this.selected.customerId)
                     .subscribe(result => {
                         this.customers.splice(this.selectedIndex, 1);
-                        this.selected = null;
+                        this.closeClick();
                     });
             }
         });

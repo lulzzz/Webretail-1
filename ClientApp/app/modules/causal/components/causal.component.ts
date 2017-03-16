@@ -68,15 +68,14 @@ export class CausalComponent implements OnInit {
             this.causalService.create(this.selected)
                 .subscribe(result => {
                     this.causals.push(result);
-                    this.selected = null;
+                    this.closeClick();
                 });
         } else {
             this.causalService.update(this.selected.causalId, this.selected)
                 .subscribe(result => {
-                    this.selected = null;
+                    this.closeClick();
                 });
         }
-        this.displayPanel = false;
     }
 
     deleteClick() {
@@ -86,7 +85,7 @@ export class CausalComponent implements OnInit {
                 this.causalService.delete(this.selected.causalId)
                     .subscribe(result => {
                         this.causals.splice(this.selectedIndex, 1);
-                        this.selected = null;
+                        this.closeClick();
                     });
             }
         });

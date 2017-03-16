@@ -80,16 +80,17 @@ export class AttributeComponent implements OnInit {
 
     saveClick() {
         if (this.isNew) {
-            this.attributeService.create(this.selected).subscribe(result => {
-                this.attributes.push(result);
-            });
+            this.attributeService.create(this.selected)
+                .subscribe(result => {
+                    this.attributes.push(result);
+                    this.displayPanel = false;
+                });
         } else {
             this.attributeService.update(this.selected.attributeId, this.selected)
                 .subscribe(result => {
-                    //this.attributes[this.selectedIndex] = this.selected;
+                    this.displayPanel = false;
                 });
         }
-        this.displayPanel = false;
     }
 
     deleteClick() {
@@ -101,6 +102,7 @@ export class AttributeComponent implements OnInit {
                         this.attributes.splice(this.selectedIndex, 1);
                         this.selected = null;
                         this.values.length = 0;
+                        this.displayPanel = false;
                     });
             }
         });
@@ -133,15 +135,14 @@ export class AttributeComponent implements OnInit {
             this.attributeService.createValue(this.selectedValue)
                 .subscribe(result => {
                     this.values.push(result);
-                    this.selectedValue = null;
+                    this.closeValueClick();
                 });
         } else {
             this.attributeService.updateValue(this.selectedValue.attributeValueId, this.selectedValue)
                 .subscribe(result => {
-                    this.selectedValue = null;
+                    this.closeValueClick();
                 });
         }
-        this.displayPanelValue = false;
     }
 
     deleteValueClick() {
@@ -151,7 +152,7 @@ export class AttributeComponent implements OnInit {
                 this.attributeService.deleteValue(this.selectedValue.attributeValueId)
                     .subscribe(result => {
                         this.values.splice(this.selectedValueIndex, 1);
-                        this.selectedValue = null;
+                        this.closeValueClick();
                     });
             }
         });

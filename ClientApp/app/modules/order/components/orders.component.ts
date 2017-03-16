@@ -151,15 +151,14 @@ export class OrdersComponent implements OnInit {
             this.orderService.create(this.selected)
                 .subscribe(result => {
                     this.orders.push(result);
-                    this.selected = null;
+                    this.closeClick();
                 });
         } else {
             this.orderService.update(this.selected.orderId, this.selected)
                 .subscribe(result => {
-                    this.selected = null;
+                    this.closeClick();
                 });
         }
-        this.displayPanel = false;
     }
 
     deleteClick() {
@@ -173,41 +172,7 @@ export class OrdersComponent implements OnInit {
                 this.orderService.delete(this.selected.orderId)
                     .subscribe(result => {
                         this.orders.splice(this.selectedIndex, 1);
-                        this.selected = null;
-                    });
-            }
-        });
-    }
-
-    commitClick() {
-        if (!this.selected) {
-            return;
-        }
-        this.confirmationService.confirm({
-            header: 'Commit',
-            message: 'All related items will be booked. Are you sure that you want to "commit" this order?',
-            accept: () => {
-                this.orderService.commit(this.selected.orderId)
-                    .subscribe(result => {
-                        this.orders.splice(this.selectedIndex, 1);
-                        this.selected = null;
-                    });
-            }
-        });
-    }
-
-    roolbackClick() {
-        if (!this.selected) {
-            return;
-        }
-        this.confirmationService.confirm({
-            header: 'Roolback',
-            message: 'All related items will be removed from booking. Are you sure that you want to "uncommit" this order?',
-            accept: () => {
-                this.orderService.roolback(this.selected.orderId)
-                    .subscribe(result => {
-                        this.orders.splice(this.selectedIndex, 1);
-                        this.selected = null;
+                        this.closeClick();
                     });
             }
         });

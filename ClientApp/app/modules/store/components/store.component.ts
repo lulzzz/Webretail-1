@@ -65,15 +65,14 @@ export class StoreComponent implements OnInit {
             this.storeService.create(this.selected)
                 .subscribe(result => {
                     this.stores.push(result);
-                    this.selected = null;
+                    this.closeClick();
                 });
         } else {
             this.storeService.update(this.selected.storeId, this.selected)
                 .subscribe(result => {
-                    this.selected = null;
+                    this.closeClick();
                 });
         }
-        this.displayPanel = false;
     }
 
     deleteClick() {
@@ -83,7 +82,7 @@ export class StoreComponent implements OnInit {
                 this.storeService.delete(this.selected.storeId)
                     .subscribe(result => {
                         this.stores.splice(this.selectedIndex, 1);
-                        this.selected = null;
+                        this.closeClick();
                     });
             }
         });

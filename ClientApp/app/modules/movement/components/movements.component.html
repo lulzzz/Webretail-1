@@ -17,7 +17,7 @@
         <div class="ui-toolbar-group-right">
             <button pButton type="button" title="Add" [disabled]="committed" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
             <button pButton type="button" title="Update" [disabled]="committed" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <p-splitButton icon="fa-bars" title="Open" (onClick)="openClick()" [model]="buttons"></p-splitButton>
+            <p-splitButton [style]="{'margin-left':'10px'}" icon="fa-bars" title="Open" (onClick)="openClick()" [model]="buttons"></p-splitButton>
         </div>
     </p-toolbar>
 

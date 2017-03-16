@@ -66,3 +66,11 @@ body .ui-toolbar-group-right i {
     font-weight: bold;
     background-color: whitesmoke;
 }
+
+.ui-toolbar-group-left span {
+  margin-right: 10px;
+}
+
+.ui-toolbar-group-right span {
+  margin-left: 10px;
+}
