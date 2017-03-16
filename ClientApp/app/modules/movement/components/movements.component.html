@@ -3,28 +3,26 @@
 <div class="container-fluid">
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <h2>Movements</h2>
+            <h1>Movements</h1>
         </div>
         <div class="ui-toolbar-group-right">
-            <p *ngIf="movements" style="padding-top: 30px"><b>{{totalRecords}}</b> items</p>
             <img *ngIf="!movements" src="assets/loading.gif" height="60">
         </div>
     </p-toolbar>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
+            <span><b>{{totalRecords}}</b> items</span>
+        </div>
+        <div class="ui-toolbar-group-right">
             <button pButton type="button" title="Add" [disabled]="committed" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
             <button pButton type="button" title="Update" [disabled]="committed" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
             <p-splitButton icon="fa-bars" title="Open" (onClick)="openClick()" [model]="buttons"></p-splitButton>
         </div>
-        <div class="ui-toolbar-group-right">
-            <i class="fa fa-search"></i>
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
-        </div>
     </p-toolbar>
 
     <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="movements"
-        selectionMode="single" [(selection)]="selected" [globalFilter]="gb"
+        selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
         <p-column field="movementId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="movementDesc" header="Description" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>

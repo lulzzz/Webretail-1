@@ -27,6 +27,21 @@ class OrderRepository : OrderProtocol {
 		let item = Order()
 		try item.get(id)
 		
+		// get store
+		let store = Store()
+		try store.get(item.storeId)
+		item._store = store
+		
+		// get causal
+		let causal = Causal()
+		try causal.get(item.causalId)
+		item._causal = causal
+
+		// get customer
+		let customer = Customer()
+		try customer.get(item.customerId)
+		item._customer = customer
+
 		return item
 	}
 	
@@ -59,5 +74,14 @@ class OrderRepository : OrderProtocol {
 		let item = Order()
 		item.orderId = id
 		try item.delete()
+	}
+	
+	func getStatus() -> [OrderStatus] {
+		var status = [OrderStatus]()
+		status.append(OrderStatus(value: "Processing"))
+		status.append(OrderStatus(value: "Suspended"))
+		status.append(OrderStatus(value: "Canceled"))
+		status.append(OrderStatus(value: "Completed"))
+		return status
 	}
 }

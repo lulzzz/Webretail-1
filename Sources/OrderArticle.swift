@@ -21,7 +21,7 @@ class OrderArticle: PostgresSqlORM, JSONConvertible {
 	public var created : Int = Int.now()
 	public var updated : Int = Int.now()
 	
-	open override func table() -> String { return "movementarticles" }
+	open override func table() -> String { return "orderarticles" }
 	
 	open override func to(_ this: StORMRow) {
 		orderArticleId = this.data["orderarticleid"] as? Int ?? 0

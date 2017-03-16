@@ -95,7 +95,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.addBarcode();
     }
 
-    updateClick(data: OrderArticle) {
+    onUpdateQuantity(data: OrderArticle) {
         if (data.quantity > 0) {
             this.orderService.updateItem(data.orderArticleId, data)
                 .subscribe(result => {
@@ -113,5 +113,12 @@ export class OrderComponent implements OnInit, OnDestroy {
                 }
             });
         }
+    }
+
+    onUpdatePrice(data: OrderArticle) {
+        this.orderService.updateItem(data.orderArticleId, data)
+            .subscribe(result => {
+                this.updateTotals();
+            });
     }
 }

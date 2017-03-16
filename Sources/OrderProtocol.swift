@@ -17,4 +17,6 @@ protocol OrderProtocol {
 	func update(id: Int, item: Order) throws
 	
 	func delete(id: Int) throws
+	
+	func getStatus() -> [OrderStatus]
 }

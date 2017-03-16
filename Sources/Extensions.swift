@@ -20,8 +20,8 @@ extension Int {
         let date = Date(timeIntervalSinceReferenceDate: TimeInterval(self))
         let formatter = DateFormatter()
         formatter.dateFormat = format
-        formatter.timeZone = TimeZone.current
-        
+		formatter.timeZone = TimeZone.current
+		
         return formatter.string(from: date)
     }
 }
@@ -42,6 +42,17 @@ extension Double {
         return result!
     }
     */
+}
+
+extension String {
+	func DateToInt() -> Int {
+		let formatter = DateFormatter()
+		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+		formatter.timeZone = TimeZone.current
+		let date = formatter.date(from: self)!
+		
+		return Int(date.timeIntervalSinceReferenceDate)
+	}
 }
 
 extension Sequence {

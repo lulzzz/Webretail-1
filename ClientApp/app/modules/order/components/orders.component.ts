@@ -26,9 +26,13 @@ export class OrdersComponent implements OnInit {
     causalsFiltered: SelectItem[];
     customers: SelectItem[];
     customersFiltered: SelectItem[];
+    status: SelectItem[];
+    statusFiltered: SelectItem[];
     displayPanel: boolean;
 	dataform: FormGroup;
     buttons: MenuItem[];
+    newNumber: number;
+    dateValue: Date;
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
@@ -57,6 +61,12 @@ export class OrdersComponent implements OnInit {
                 this.orders = result;
                 this.totalRecords = this.orders.length;
                 this.buildFilter(result);
+             }
+        );
+
+        this.orderService.getStatus()
+            .subscribe(result => {
+                this.status = result.map(p => Helpers.newSelectItem(p.value));
             }
         );
 
@@ -94,6 +104,11 @@ export class OrdersComponent implements OnInit {
         this.customersFiltered.push({label: 'All', value: null});
         let filterCustomer = Helpers.distinct(items.map((item: Order) => Helpers.newSelectItem(item.customer.customerLastname + ' ' + item.customer.customerFirstname)));
         this.customersFiltered = this.customersFiltered.concat(filterCustomer);
+
+        this.statusFiltered = [];
+        this.statusFiltered.push({label: 'All', value: null});
+        let filterStatus = Helpers.distinct(items.map((item: Order) => Helpers.newSelectItem(item.orderStatus)));
+        this.statusFiltered = this.statusFiltered.concat(filterStatus);
     }
 
     get isNew() : boolean { return this.selected == null || this.selected.orderId == 0; }
@@ -102,11 +117,18 @@ export class OrdersComponent implements OnInit {
 
     addClick() {
         this.selected = new Order();
+        this.selected.orderNumber = this.orders.length > 0 ? Math.max.apply(this, this.orders.map(p => p.orderNumber)) + 1 : 1000;
         if (this.stores.length > 0) {
             this.selected.store = this.stores[0].value;
         }
         if (this.causals.length > 0) {
             this.selected.causal = this.causals[0].value;
+        }
+        if (this.customers.length > 0) {
+            this.selected.customer = this.customers[0].value;
+        }
+        if (this.status.length > 0) {
+            this.selected.orderStatus = this.status[0].value;
         }
         this.displayPanel = true;
     }
@@ -115,6 +137,7 @@ export class OrdersComponent implements OnInit {
         if (!this.selected) {
             return;
         }
+        this.selected.orderDate = new Date(this.selected.orderDate);
         this.displayPanel = true;
     }
 

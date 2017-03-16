@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     DataTableModule, SharedModule, PaginatorModule,
-    MultiSelectModule, DropdownModule, SliderModule
+    MultiSelectModule, DropdownModule, SliderModule, ButtonModule
 } from 'primeng/primeng';
 import { ArticlePickerComponent } from './components/article-picker.component';
 import { CategoryFilterPipe } from './../../pipes/category-filter.pipe';
@@ -15,7 +15,7 @@ import { ArticleFilterPipe } from './../../pipes/article-filter.pipe';
     imports: [
         CommonModule, FormsModule, ReactiveFormsModule,
         DataTableModule, SharedModule, PaginatorModule,
-        MultiSelectModule, DropdownModule, SliderModule
+        MultiSelectModule, DropdownModule, SliderModule, ButtonModule
     ],
     declarations: [
         ArticlePickerComponent,

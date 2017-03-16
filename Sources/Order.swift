@@ -6,9 +6,22 @@
 //
 //
 
+import Foundation
 import StORM
 import PostgresStORM
 import PerfectLib
+
+struct OrderStatus: JSONConvertible {
+	public var value: String
+	
+	func getJSONValues() -> [String : Any] {
+		return ["value": value]
+	}
+
+	func jsonEncodedString() throws -> String {
+		return try self.getJSONValues().jsonEncodedString()
+	}
+}
 
 class Order: PostgresSqlORM, JSONConvertible {
 	
@@ -84,7 +97,7 @@ class Order: PostgresSqlORM, JSONConvertible {
 		self._customer = customer
 		self.customerId =  customer.customerId
 		self.orderNumber = getJSONValue(named: "orderNumber", from: values, defaultValue: 0)
-		self.orderDate = getJSONValue(named: "orderDate", from: values, defaultValue: 0)
+		self.orderDate = getJSONValue(named: "orderDate", from: values, defaultValue: "").DateToInt()
 		self.orderNote = getJSONValue(named: "orderNote", from: values, defaultValue: "")
 		self.orderStatus = getJSONValue(named: "orderStatus", from: values, defaultValue: "")
 	}
@@ -106,12 +119,5 @@ class Order: PostgresSqlORM, JSONConvertible {
 			"created": created.formatDate(),
 			"updated": updated.formatDate()
 		]
-	}
-	
-	enum OrderStatus {
-		case Processing
-		case Suspended
-		case Canceled
-		case Completed
 	}
 }

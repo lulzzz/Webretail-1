@@ -295,3 +295,7 @@ export interface ArticleAttributeValue {
   attributeValueId: number;
   //attributeValue: AttributeValue;
 }
+
+export interface OrderStatus {
+	value: string;
+}

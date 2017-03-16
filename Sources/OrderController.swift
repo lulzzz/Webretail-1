@@ -20,6 +20,7 @@ class OrderController {
 	public func getRoutes() -> Routes {
 		var routes = Routes()
 		
+		routes.add(method: .get, uri: "/api/orderstatus", handler: orderStatusHandlerGET)
 		routes.add(method: .get, uri: "/api/order", handler: ordersHandlerGET)
 		routes.add(method: .get, uri: "/api/order/{id}", handler: orderHandlerGET)
 		routes.add(method: .post, uri: "/api/order", handler: orderHandlerPOST)
@@ -28,7 +29,20 @@ class OrderController {
 		
 		return routes
 	}
-	
+
+	func orderStatusHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		do {
+			let status = self.repository.getStatus()
+			try response.setBody(json: status)
+			response.completed(status: .ok)
+		} catch {
+			LogFile.error("\(request.uri) \(request.method): \(error)")
+			response.badRequest(error: error)
+		}
+	}
+
 	func ordersHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		

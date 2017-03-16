@@ -6,7 +6,7 @@
         <button pButton type="button" [disabled]="committed" (click)="showPickerClick()" style="position: absolute; top: 68px; right: 28px;" class="ui-button-primary" icon="fa-search-plus"></button>
     </div>
 
-    <h2>Order</h2>
+    <h1>Order</h1>
     <p *ngIf="!items"><em>Loading...</em></p>
     
     <p-toolbar *ngIf="order">
@@ -36,7 +36,15 @@
         </p-column>
         <p-column field="quantity" header="Quantity" [style]="{'text-align':'center'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
             <template let-col let-data="rowData" pTemplate="editor">
-                <p-spinner [disabled]="committed" [(ngModel)]="data.quantity" [min]="0" (onChange)="updateClick(data)"></p-spinner>
+                <p-spinner [disabled]="order.orderStatus==''" [(ngModel)]="data.quantity" [min]="0" (onChange)="onUpdateQuantity(data)"></p-spinner>
+            </template>
+        </p-column>
+        <p-column field="price" header="Price" [style]="{'text-align':'center'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+            <template let-col let-data="rowData" pTemplate="editor">
+                <p-spinner [disabled]="order.orderStatus==''" [(ngModel)]="data.price" [min]="0" (onChange)="onUpdatePrice(data)"></p-spinner>
+            </template>
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.price | currency: 'EUR' : true}}
             </template>
         </p-column>
     </p-dataTable>

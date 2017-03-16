@@ -2,7 +2,7 @@
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Order, OrderArticle } from '../shared/models';
+import { Order, OrderArticle, OrderStatus } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -37,7 +37,7 @@ export class OrderService {
     }
 
     getItemsById(orderId: number) : Observable<OrderArticle[]> {
-        return this.http.get('/api/movementarticle/' + orderId, { headers: Helpers.getHeaders() })
+        return this.http.get('/api/orderarticle/' + orderId, { headers: Helpers.getHeaders() })
             .map(result => <OrderArticle[]>result.json());
     }
 
@@ -64,5 +64,10 @@ export class OrderService {
     roolback(orderId: number) : Observable<any> {
         return this.http.get('/api/order/' + orderId + '/roolback', { headers: Helpers.getHeaders() })
             .map(result => result.json());
+    }
+
+    getStatus(): Observable<OrderStatus[]> {
+        return this.http.get('/api/orderstatus', { headers: Helpers.getHeaders() })
+            .map(result => <OrderStatus[]>result.json());
     }
 }

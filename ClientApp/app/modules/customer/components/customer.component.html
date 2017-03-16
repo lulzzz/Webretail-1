@@ -4,18 +4,16 @@
 
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <h2>Customers</h2>
+            <h1>Customers</h1>
         </div>
         <div class="ui-toolbar-group-right">
-            <p *ngIf="customers" style="padding-top: 30px"><b>{{totalRecords}}</b> items</p>
             <img *ngIf="!customers" src="assets/loading.gif" height="60">
         </div>
     </p-toolbar>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
-            <i class="fa fa-search"></i>
+            <span><b>{{totalRecords}}</b> items</span>
         </div>
         <div class="ui-toolbar-group-right">
             <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>

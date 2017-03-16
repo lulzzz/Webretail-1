@@ -3,39 +3,49 @@
 <div class="container-fluid">
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <h2>Orders</h2>
+            <h1>Orders</h1>
         </div>
         <div class="ui-toolbar-group-right">
-            <p *ngIf="orders" style="padding-top: 30px"><b>{{totalRecords}}</b> items</p>
             <img *ngIf="!orders" src="assets/loading.gif" height="60">
         </div>
     </p-toolbar>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
+            <span><b>{{totalRecords}}</b> items</span>
+        </div>
+        <div class="ui-toolbar-group-right">
             <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
             <button pButton type="button" title="Update"(click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
             <button pButton type="button" title="Open" (click)="openClick()" class="ui-button-primary" icon="fa-bars"></button>
         </div>
-        <div class="ui-toolbar-group-right">
-            <i class="fa fa-search"></i>
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
-        </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="orders"
-        selectionMode="single" [(selection)]="selected" [globalFilter]="gb"
+    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="orders | dateFilter:dateValue"
+        selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
         <p-column field="orderId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="orderNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="orderDate" header="Date" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="orderStatus" header="Status" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
+        <p-column field="orderDate" header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.orderDate | date:'yyyy-MM-dd'}}
+            </template>            
+            <template pTemplate="filter" let-col>
+                <i class="fa fa-close" (click)="dateValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-calendar [(ngModel)]="dateValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Search" styleClass="ui-column-filter"></p-calendar>
+            </template>
+        </p-column>
+        <p-column field="orderStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="statusFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </template>
+        </p-column>
+        <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="causalsFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>
-        <p-column field="store.storeName" header="Store" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
+        <p-column field="store.storeName" header="Store" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="storesFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
@@ -97,7 +107,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="date">Date</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="date" [(ngModel)]="selected.orderNumber"/>
+                        <p-calendar formControlName="date" [(ngModel)]="selected.orderDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['date'].valid&&dataform.controls['date'].dirty">
                             <i class="fa fa-close"></i> Date is required
                         </div>
@@ -106,7 +116,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="status">Status</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="status" [(ngModel)]="selected.orderStatus"/>
+                        <p-dropdown [options]="status" formControlName="status" [(ngModel)]="selected.orderStatus" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['status'].valid&&dataform.controls['status'].dirty">
                             <i class="fa fa-close"></i> Status is required
                         </div>
