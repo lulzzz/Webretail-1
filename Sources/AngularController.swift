@@ -24,6 +24,9 @@ public class AngularController {
 		routes.add(method: .get, uri: "/product/{id}", handler: angularHandlerGET)
         routes.add(method: .get, uri: "/movement", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/movement/{id}", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/customer", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/order", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/order/{id}", handler: angularHandlerGET)
 		
         return routes
     }
