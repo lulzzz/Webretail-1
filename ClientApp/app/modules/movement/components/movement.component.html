@@ -1,9 +1,9 @@
 ﻿<p-confirmDialog header="Confirmation delete" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
 
 <div class="container-fluid">
-    <div class="global-search" style="padding-right: 30px">
+    <div class="global-search" style="padding-top: 20px;padding-right: 30px;">
         <p-chips [disabled]="committed" [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
-        <button pButton type="button" [disabled]="committed" (click)="showPickerClick()" style="position: absolute; top: 68px; right: 28px;" class="ui-button-primary" icon="fa-search-plus"></button>
+        <button pButton type="button" [disabled]="committed" (click)="showPickerClick()" style="position: absolute; top: 88px; right: 28px;" class="ui-button-primary" icon="fa-search-plus"></button>
     </div>
 
     <h1>Movement</h1>
@@ -11,10 +11,11 @@
     
     <p-toolbar *ngIf="movement">
         <div class="ui-toolbar-group-left">
-            <span><b>n°</b> {{movement.movementId}}</span> <span><b>date</b>: {{movement.created | date: 'yyyy-MM-dd'}}</span> <span><b>description</b>: {{movement.movementDesc}}</span>
+            <span><b>n°</b> {{movement.movementId}}</span> <span><b>date</b>: {{movement.created | date: 'yyyy-MM-dd'}}</span>
+            <br/><span><b>description</b>: {{movement.movementDesc}}</span>
         </div>
-        <div class="ui-toolbar-group-right">
-            <span><b>causal</b>: {{movement.causal.causalName}}</span> <span><b>store</b>: {{movement.store.storeName}}</span>
+        <div class="ui-toolbar-group-right" style="text-align: right">
+            <span><b>store</b>: {{movement.store.storeName}}</span><br/><span><b>causal</b>: {{movement.causal.causalName}}</span>
         </div>
     </p-toolbar>
 
@@ -24,8 +25,8 @@
             <span style="float: right">items <b>{{totalItems}}</b></span>
             <p>&nbsp;</p>
         </p-footer>
-        <p-column field="movementArticleId" header="Id" [editable]="false" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="barcode" header="Barcode" [editable]="false" [style]="{'width':'150px'}" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="movementArticleId" header="Id" [editable]="false" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="barcode" header="Barcode" [editable]="false" [style]="{'width':'18%'}" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
         <p-column field="product" header="Product" [editable]="false" [sortable]="true" [filter]="true">
             <template pTemplate="filter" let-col>
                 <input pInputText [(ngModel)]="articleValue" placeholder="Search" style="width: 100%;margin-top: 4px;" styleClass="ui-column-filter"/>
@@ -34,7 +35,7 @@
                 {{data.product | articleInfo:data.barcode}}
             </template>
         </p-column>
-        <p-column field="quantity" header="Quantity" [style]="{'text-align':'center','width':'140px'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        <p-column field="quantity" header="Quantity" [style]="{'text-align':'center','width':'14%'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
             <template let-col let-data="rowData" pTemplate="editor">
                 <p-spinner [disabled]="committed" [(ngModel)]="data.quantity" [min]="0" (onChange)="updateClick(data)"></p-spinner>
             </template>
