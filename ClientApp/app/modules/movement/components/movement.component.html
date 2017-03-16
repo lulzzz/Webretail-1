@@ -6,7 +6,8 @@
         <button pButton type="button" [disabled]="committed" (click)="showPickerClick()" style="position: absolute; top: 88px; right: 28px;" class="ui-button-primary" icon="fa-search-plus"></button>
     </div>
 
-    <h1>Movement</h1>
+    <h1 style="margin-left: 40px">Movement</h1>
+    <button pButton type="button" title="Movements" style="position: absolute; top: 85px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
     <p *ngIf="!items"><em>Loading...</em></p>
     
     <p-toolbar *ngIf="movement">

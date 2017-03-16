@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { MovementService } from './../../../services/movement.service';
@@ -27,7 +28,8 @@ export class MovementComponent implements OnInit, OnDestroy {
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
                 private movementService: MovementService,
-                private confirmationService: ConfirmationService) {
+                private confirmationService: ConfirmationService,
+                private location: Location) {
         this.barcodes = [];
         this.committed = false;
     }
@@ -53,14 +55,18 @@ export class MovementComponent implements OnInit, OnDestroy {
         });
     }
 
-    updateTotals() {
-        this.totalRecords = this.items.length;
-        this.totalItems = this.items.map(p => p.quantity).reduce((sum, current) => sum + current);
-    }
-
     ngOnDestroy() {
         // Clean sub to avoid memory leak
         this.sub.unsubscribe();
+    }
+
+    cancelClick() {
+        this.location.back();
+    }
+
+    updateTotals() {
+        this.totalRecords = this.items.length;
+        this.totalItems = this.items.map(p => p.quantity).reduce((sum, current) => sum + current);
     }
 
     addBarcode() {

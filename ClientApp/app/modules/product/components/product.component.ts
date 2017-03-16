@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { TreeNode, Message, MenuItem } from 'primeng/primeng';
 import { Observable } from 'rxjs/Rx';
 import {
@@ -39,7 +40,8 @@ export class ProductComponent implements OnInit, OnDestroy {
                 private authenticationService: AuthenticationService,
                 private productService: ProductService,
                 private categoryService: CategoryService,
-                private attributeService: AttributeService) {}
+                private attributeService: AttributeService,
+                private location: Location) {}
 
     ngOnInit() {
         this.authenticationService.checkCredentials(false);
@@ -64,6 +66,10 @@ export class ProductComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         // Clean sub to avoid memory leak
         this.sub.unsubscribe();
+    }
+
+    cancelClick() {
+        this.location.back();
     }
 
     closeClick() {
