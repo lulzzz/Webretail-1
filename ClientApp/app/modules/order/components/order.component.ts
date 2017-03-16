@@ -22,12 +22,14 @@ export class OrderComponent implements OnInit, OnDestroy {
     order: Order;
     items: OrderArticle[];
     articleValue: string;
+    committed: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
                 private orderService: OrderService,
                 private confirmationService: ConfirmationService) {
         this.barcodes = [];
+        this.committed = false;
     }
 
 	ngOnInit() {
@@ -39,6 +41,7 @@ export class OrderComponent implements OnInit, OnDestroy {
             this.orderService.getById(this.orderId)
                 .subscribe(result => {
                     this.order = result;
+                    this.committed = result.orderStatus != 'New';
                 }
             );
             this.orderService.getItemsById(this.orderId)
@@ -95,7 +98,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.addBarcode();
     }
 
-    onUpdateQuantity(data: OrderArticle) {
+    onUpdate(data: OrderArticle) {
         if (data.quantity > 0) {
             this.orderService.updateItem(data.orderArticleId, data)
                 .subscribe(result => {
@@ -113,12 +116,5 @@ export class OrderComponent implements OnInit, OnDestroy {
                 }
             });
         }
-    }
-
-    onUpdatePrice(data: OrderArticle) {
-        this.orderService.updateItem(data.orderArticleId, data)
-            .subscribe(result => {
-                this.updateTotals();
-            });
     }
 }

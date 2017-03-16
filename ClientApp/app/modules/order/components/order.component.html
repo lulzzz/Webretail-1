@@ -18,7 +18,7 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!this.inputComponent.isOpen" [style]="{'width': '100%'}" [editable]="true" [value]="items | articleFilter:articleValue">
+    <p-dataTable *ngIf="!inputComponent.isOpen" [style]="{'width': '100%'}" [editable]="true" [value]="items | articleFilter:articleValue">
         <p-footer>
             <span style="float: left"><b>{{totalRecords}}</b> rows</span>
             <span style="float: right">items <b>{{totalItems}}</b></span>
@@ -36,12 +36,12 @@
         </p-column>
         <p-column field="quantity" header="Quantity" [style]="{'text-align':'center'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
             <template let-col let-data="rowData" pTemplate="editor">
-                <p-spinner [disabled]="order.orderStatus==''" [(ngModel)]="data.quantity" [min]="0" (onChange)="onUpdateQuantity(data)"></p-spinner>
+                <p-spinner [disabled]="committed" [(ngModel)]="data.quantity" [min]="0" (onChange)="onUpdate(data)"></p-spinner>
             </template>
         </p-column>
         <p-column field="price" header="Price" [style]="{'text-align':'center'}" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
             <template let-col let-data="rowData" pTemplate="editor">
-                <p-spinner [disabled]="order.orderStatus==''" [(ngModel)]="data.price" [min]="0" (onChange)="onUpdatePrice(data)"></p-spinner>
+                <p-spinner [disabled]="committed" [(ngModel)]="data.price" [min]="0" (onChange)="onUpdate(data)"></p-spinner>
             </template>
             <template let-col let-data="rowData" pTemplate="body">
                 {{data.price | currency: 'EUR' : true}}

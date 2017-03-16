@@ -51,11 +51,12 @@ class OrderArticleController {
 			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
 			let item = OrderArticle()
 			item.setJSONValues(json!)
-			guard let product = try self.productRepository.get(barcode: item.barcode)?.getJSONValues() else {
+			guard let product = try self.productRepository.get(barcode: item.barcode) else {
 				response.completed(status: .notFound)
 				return
 			}
-			item.product = product
+			item.product = try product.getJSONValues()
+			item.price = product.sellingPrice
 			try self.orderRepository.add(item: item)
 			try response.setBody(json: item)
 			response.completed(status: .created)

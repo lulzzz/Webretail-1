@@ -78,6 +78,7 @@ class OrderRepository : OrderProtocol {
 	
 	func getStatus() -> [OrderStatus] {
 		var status = [OrderStatus]()
+		status.append(OrderStatus(value: "New"))
 		status.append(OrderStatus(value: "Processing"))
 		status.append(OrderStatus(value: "Suspended"))
 		status.append(OrderStatus(value: "Canceled"))
