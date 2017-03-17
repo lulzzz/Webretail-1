@@ -64,6 +64,7 @@ class OrderArticle: PostgresSqlORM, JSONConvertible {
 			"barcode": barcode,
 			"product": product,
 			"quantity": quantity,
+			"amount": (quantity * price).roundCurrency(),
 			"price": price.roundCurrency(),
 			"created": created.formatDate(),
 			"updated": updated.formatDate()

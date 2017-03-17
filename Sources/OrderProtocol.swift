@@ -19,4 +19,6 @@ protocol OrderProtocol {
 	func delete(id: Int) throws
 	
 	func getStatus() -> [OrderStatus]
+	
+	func generatePdf(id: Int)
 }

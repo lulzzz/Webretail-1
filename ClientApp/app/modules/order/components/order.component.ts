@@ -19,6 +19,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     orderId: number;
     totalRecords = 0;
     totalItems = 0;
+    totalAmount = 0.0;
     barcodes: string[];
     order: Order;
     items: OrderArticle[];
@@ -67,6 +68,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     updateTotals() {
         this.totalRecords = this.items.length;
         this.totalItems = this.items.map(p => p.quantity).reduce((sum, current) => sum + current);
+        this.totalAmount = this.items.map(p => p.amount).reduce((sum, current) => sum + current);
     }
 
     addBarcode() {
@@ -108,6 +110,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         if (data.quantity > 0) {
             this.orderService.updateItem(data.orderArticleId, data)
                 .subscribe(result => {
+                    data.amount = result.amount;
                     this.updateTotals();
                 });
         } else {

@@ -246,6 +246,7 @@ export class OrderArticle {
   public product: Product;
   public quantity: number;
   public price: number;
+  public amount: number;
   public created: Date;
   public updated: Date;
 
@@ -256,6 +257,7 @@ export class OrderArticle {
     this.product = new Product();
     this.quantity = 1.0;
     this.price = 0.0;
+    this.amount = 0.0;
     this.created = new Date();
     this.updated = new Date();
   }

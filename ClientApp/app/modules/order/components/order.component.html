@@ -23,7 +23,7 @@
     <p-dataTable *ngIf="!inputComponent.isOpen" [style]="{'width': '100%'}" [editable]="true" [value]="items | articleFilter:articleValue">
         <p-footer>
             <span style="float: left"><b>{{totalRecords}}</b> rows</span>
-            <span style="float: right">items <b>{{totalItems}}</b></span>
+            <span style="float: right"><b>Totals</b> items <b>{{totalItems}}</b> amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
             <p>&nbsp;</p>
         </p-footer>
         <p-column field="orderArticleId" header="Id" [editable]="false" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
@@ -47,6 +47,11 @@
             </template>
             <template let-col let-data="rowData" pTemplate="body">
                 {{data.price | currency: 'EUR' : true}}
+            </template>
+        </p-column>
+        <p-column field="amount" header="Amount" [style]="{'text-align':'center','width':'14%'}" [editable]="false" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.amount | currency: 'EUR' : true}}
             </template>
         </p-column>
     </p-dataTable>
