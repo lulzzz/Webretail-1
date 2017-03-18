@@ -1,28 +1,23 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!customers" src="assets/loading.gif" class="loading">
 
 <div class="container-fluid">
 
-    <p-toolbar>
-        <div class="ui-toolbar-group-left">
-            <h1>Customers</h1>
-        </div>
-        <div class="ui-toolbar-group-right">
-            <img *ngIf="!customers" src="assets/loading.gif" height="60">
-        </div>
-    </p-toolbar>
+    <h1>Customers</h1>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <span><b>{{totalRecords}}</b> items</span>
+            <input #gb type="text" pInputText placeholder="Search" style="width: 180px">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="customers"
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="customers"
         selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
-        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
         [globalFilter]="gb" #dt>
         <p-column field="customerId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="customerFirstname" header="Firstname" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
@@ -32,109 +27,109 @@
     </p-dataTable>
 
     <p-panel *ngIf="displayPanel">
-    <p-header>
-        <div class="ui-helper-clearfix">
-            <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Customer</span>
-            <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
-        </div>
-    </p-header>
-    <form [formGroup]="dataform">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Id</label></div>
-                <div class="ui-grid-col-8">{{selected.customerId}}</div>
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Customer</b></span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="firstname">Firstname</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="firstname" [(ngModel)]="selected.customerFirstname"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['firstname'].valid&&dataform.controls['firstname'].dirty">
-                        <i class="fa fa-close"></i> Name is required
+        </p-header>
+        <form [formGroup]="dataform">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Id</label></div>
+                    <div class="ui-grid-col-8">{{selected.customerId}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="firstname">Firstname</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="firstname" [(ngModel)]="selected.customerFirstname"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['firstname'].valid&&dataform.controls['firstname'].dirty">
+                            <i class="fa fa-close"></i> Name is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="lastname">Lastname</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="lastname" [(ngModel)]="selected.customerLastname"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['lastname'].valid&&dataform.controls['lastname'].dirty">
+                            <i class="fa fa-close"></i> Lastname is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="email">Email</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="email" [(ngModel)]="selected.customerEmail" type="email"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
+                            <i class="fa fa-close"></i> Email is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="phone">Phone</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="phone" [(ngModel)]="selected.customerPhone"/>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="address">Address</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="address" [(ngModel)]="selected.customerAddress"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['address'].valid&&dataform.controls['address'].dirty">
+                            <i class="fa fa-close"></i> Address is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="city">City</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="city" [(ngModel)]="selected.customerCity"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['city'].valid&&dataform.controls['city'].dirty">
+                            <i class="fa fa-close"></i> City is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="zip">Zip</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="zip" [(ngModel)]="selected.customerZip"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
+                            <i class="fa fa-close"></i> Zip is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="country">Country</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="country" [(ngModel)]="selected.customerCountry"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
+                            <i class="fa fa-close"></i> Country is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="fiscalCode">Fiscal Code</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="fiscalCode" [(ngModel)]="selected.customerFiscalCode"/>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="vatNumber">VAT number</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="vatNumber" [(ngModel)]="selected.customerVatNumber"/>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <button *ngIf="selected.customerId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+                    </div>
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4">
+                        <button type="button" pButton icon="fa-save" (click)="saveClick()" class="ui-button-success" label="Save" [disabled]="!dataform.valid"></button>
                     </div>
                 </div>
             </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="lastname">Lastname</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="lastname" [(ngModel)]="selected.customerLastname"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['lastname'].valid&&dataform.controls['lastname'].dirty">
-                        <i class="fa fa-close"></i> Lastname is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="email">Email</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="email" [(ngModel)]="selected.customerEmail" type="email"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
-                        <i class="fa fa-close"></i> Email is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="phone">Phone</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="phone" [(ngModel)]="selected.customerPhone"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="address">Address</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="address" [(ngModel)]="selected.customerAddress"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['address'].valid&&dataform.controls['address'].dirty">
-                        <i class="fa fa-close"></i> Address is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="city">City</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="city" [(ngModel)]="selected.customerCity"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['city'].valid&&dataform.controls['city'].dirty">
-                        <i class="fa fa-close"></i> City is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="zip">Zip</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="zip" [(ngModel)]="selected.customerZip"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
-                        <i class="fa fa-close"></i> Zip is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="country">Country</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="country" [(ngModel)]="selected.customerCountry"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
-                        <i class="fa fa-close"></i> Country is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="fiscalCode">Fiscal Code</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="fiscalCode" [(ngModel)]="selected.customerFiscalCode"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="vatNumber">VAT number</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="vatNumber" [(ngModel)]="selected.customerVatNumber"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4">
-                    <button *ngIf="selected.customerId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
-                </div>
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4">
-                    <button type="button" pButton icon="fa-save" (click)="saveClick()" class="ui-button-success" label="Save" [disabled]="!dataform.valid"></button>
-                </div>
-            </div>
-        </div>
-    </form>
+        </form>
     </p-panel>
  </div>

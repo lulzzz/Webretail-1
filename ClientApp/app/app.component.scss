@@ -33,13 +33,11 @@ a:hover{
   margin-right: 10px;
 }
 
-.ui-dialog {
-  width: 75% !important;
-}
-
-.global-search {
+.loading {
   float: right;
   margin-top: 10px;
+  margin-right: 20px;
+  height: 50px;
 }
 
 .ui-growl {
@@ -47,9 +45,9 @@ a:hover{
 }
 
 body .ui-widget-header {
-  border: none;
-  margin-bottom: 10px;
-  padding: 0px;
+  border: 0;
+  background-color: transparent;
+  padding: 10px 0;
 }
 
 body .ui-toolbar-group-right button,
@@ -65,8 +63,4 @@ body .ui-toolbar-group-right i {
 .aspan:hover {
     font-weight: bold;
     background-color: whitesmoke;
-}
-
-.ui-toolbar-group-left span {
-  margin-right: 10px;
 }

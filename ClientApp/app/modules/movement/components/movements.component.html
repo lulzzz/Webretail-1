@@ -1,30 +1,24 @@
 ﻿<p-confirmDialog icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!movements" src="assets/loading.gif" class="loading">
 
 <div class="container-fluid">
+
+    <h1>Movements</h1>
+
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <h1>Movements</h1>
+            <button pButton type="button" label="{{totalRecords}} items" title="Add item" [disabled]="committed" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" label="Edit" title="Edit item" [disabled]="committed" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <img *ngIf="!movements" src="assets/loading.gif" height="60">
-        </div>
-    </p-toolbar>
-    
-    <p-toolbar>
-        <div class="ui-toolbar-group-left">
-            <span><b>{{totalRecords}}</b> items</span>
-        </div>
-        <div class="ui-toolbar-group-right">
-            <button pButton type="button" title="Add" [disabled]="committed" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
-            <button pButton type="button" title="Update" [disabled]="committed" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <p-splitButton [style]="{'margin-left':'10px'}" icon="fa-bars" title="Open" (onClick)="openClick()" [model]="buttons"></p-splitButton>
+            <p-splitButton icon="fa-bars" label="Details" title="Details" (onClick)="openClick()" [model]="buttons"></p-splitButton>
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="movements"
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="movements"
         selectionMode="single" [(selection)]="selected"
-        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
-        <p-column field="movementId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
+        <p-column field="movementId" header="Id" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="movementDesc" header="Description" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
@@ -41,8 +35,8 @@
     <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">
-                <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Movement</span>
-                <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Movement</b></span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
         <form [formGroup]="dataform">
@@ -88,7 +82,7 @@
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">
-                        <button *ngIf="selected.movementId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+                        <button *ngIf="selected.movementId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
                     </div>
                     <div class="ui-grid-col-4"></div>
                     <div class="ui-grid-col-4">

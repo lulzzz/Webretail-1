@@ -1,42 +1,36 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!products" src="assets/loading.gif" class="loading">
 
 <div class="container-fluid">
-    <p-toolbar>
-        <div class="ui-toolbar-group-left">
-            <h1>Products</h1>
-        </div>
-        <div class="ui-toolbar-group-right">
-            <img *ngIf="!products" src="assets/loading.gif" height="60">
-        </div>
-    </p-toolbar>
+
+    <h1>Products</h1>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <span><b>{{totalRecords}}</b> items</span>
+            <button pButton type="button" label="{{totalRecords}} items" title="Add product" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" label="Edit" title="Edit product" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
-            <button pButton type="button" title="Update" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
-            <button pButton type="button" title="Open" (click)="openClick()" class="ui-button-primary" icon="fa-bars"></button>
+            <button pButton type="button" label="Details" title="Details" (click)="openClick()" class="ui-button-primary" icon="fa-bars"></button>
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
-        selectionMode="single" [(selection)]="selected" [globalFilter]="gb"
-        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" #dt>
-        <p-column field="productId" header="Id" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="productCode" header="Code" [style]="{'width':'12%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
+        selectionMode="single" [(selection)]="selected"
+        [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
+        <p-column field="productId" header="Id" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="productCode" header="Code" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="productName" header="Name" [sortable]="true" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}">
             <template pTemplate="filter" let-col>
                 <p-multiSelect [options]="names" defaultLabel="All" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-multiSelect>
             </template>
         </p-column>
-        <p-column field="brand.brandName" header="Brand" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
+        <p-column field="brand.brandName" header="Brand" [sortable]="true" [filter]="true" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="brands" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>     
-        <p-column header="Categories" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
+        <p-column header="Categories" [sortable]="true" [filter]="true">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="categories" [style]="{'width':'100%'}" [(ngModel)]="categoryValue" styleClass="ui-column-filter"></p-dropdown>
             </template>
@@ -44,7 +38,7 @@
                 <li *ngFor="let item of data.categories"> {{ item.category.categoryName }} </li>
             </template>
         </p-column>
-        <p-column field="sellingPrice" header="Price ({{sliderValue||'No Filter'}})" [style]="{'text-align':'right'}" [sortable]="true" [filter]="true" filterMatchMode="equals">
+        <p-column field="sellingPrice" header="Price ({{sliderValue||'No Filter'}})"[sortable]="true" [filter]="true" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="sliderValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000"></p-slider>
@@ -58,8 +52,8 @@
     <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">
-                <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Product</span>
-                <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Product</b></span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
         <form [formGroup]="dataform">
@@ -137,14 +131,15 @@
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">
-                        <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+                        <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
                     </div>
                     <div class="ui-grid-col-4"></div>
                     <div class="ui-grid-col-4">
-                        <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                     </div>
                 </div>
             </div>
         </form>
     </p-panel>
+
 </div>

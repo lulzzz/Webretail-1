@@ -1,29 +1,23 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!stores" src="assets/loading.gif" class="loading">
 
 <div class="container-fluid">
-    <p-toolbar>
-        <div class="ui-toolbar-group-left">
-            <h1>Stores</h1>
-        </div>
-        <div class="ui-toolbar-group-right">
-            <p *ngIf="stores" style="padding-top: 30px"><b>{{totalRecords}}</b> items</p>
-            <img *ngIf="!stores" src="assets/loading.gif" height="60">
-        </div>
-    </p-toolbar>
+
+    <h1>Stores</h1>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
-            <i class="fa fa-search"></i>
+            <input #gb type="text" pInputText placeholder="Search" style="width: 180px">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="stores"
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="stores"
         selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
-        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
         [globalFilter]="gb" #dt>
         <p-column field="storeId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="storeName" header="Name" [sortable]="true"></p-column>
@@ -32,77 +26,77 @@
     </p-dataTable>
 
     <p-panel *ngIf="displayPanel">
-    <p-header>
-        <div class="ui-helper-clearfix">
-            <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Store</span>
-            <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
-        </div>
-    </p-header>
-    <form [formGroup]="dataform">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Id</label></div>
-                <div class="ui-grid-col-8">{{selected.storeId}}</div>
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Store</b></span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="name">Name</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="name" [(ngModel)]="selected.storeName"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
-                        <i class="fa fa-close"></i> Name is required
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="address">Address</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="address" [(ngModel)]="selected.storeAddress"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['address'].valid&&dataform.controls['address'].dirty">
-                        <i class="fa fa-close"></i> Address is required
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="city">City</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="city" [(ngModel)]="selected.storeCity"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['city'].valid&&dataform.controls['city'].dirty">
-                        <i class="fa fa-close"></i> City is required
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="zip">Zip</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="zip" [(ngModel)]="selected.storeZip"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['zip'].errors['required']">Zip is required</span>
-                        <span *ngIf="dataform.controls['zip'].errors['minlength']">Must be equals than 5 characters</span>
-                        <span *ngIf="dataform.controls['zip'].errors['maxlength']">Must be equals than 5 characters</span>
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="country">Country</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="country" [(ngModel)]="selected.storeCountry"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
-                        <i class="fa fa-close"></i> Country is required
-                    </div>
-               </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4">
-                    <button *ngIf="selected.storeId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+        </p-header>
+        <form [formGroup]="dataform">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Id</label></div>
+                    <div class="ui-grid-col-8">{{selected.storeId}}</div>
                 </div>
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4">
-                    <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="name" [(ngModel)]="selected.storeName"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                            <i class="fa fa-close"></i> Name is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="address">Address</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="address" [(ngModel)]="selected.storeAddress"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['address'].valid&&dataform.controls['address'].dirty">
+                            <i class="fa fa-close"></i> Address is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="city">City</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="city" [(ngModel)]="selected.storeCity"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['city'].valid&&dataform.controls['city'].dirty">
+                            <i class="fa fa-close"></i> City is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="zip">Zip</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="zip" [(ngModel)]="selected.storeZip"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['zip'].errors['required']">Zip is required</span>
+                            <span *ngIf="dataform.controls['zip'].errors['minlength']">Must be equals than 5 characters</span>
+                            <span *ngIf="dataform.controls['zip'].errors['maxlength']">Must be equals than 5 characters</span>
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="country">Country</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="country" [(ngModel)]="selected.storeCountry"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
+                            <i class="fa fa-close"></i> Country is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <button *ngIf="selected.storeId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+                    </div>
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4">
+                        <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
     </p-panel>
 
 </div>

@@ -1,29 +1,23 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!brands" src="assets/loading.gif" class="loading">
 
 <div class="container-fluid">
-    <p-toolbar>
-        <div class="ui-toolbar-group-left">
-            <h1>Brands</h1>
-        </div>
-        <div class="ui-toolbar-group-right">
-            <p *ngIf="brands" style="padding-top: 30px"><b>{{totalRecords}}</b> items</p>
-            <img *ngIf="!brands" src="assets/loading.gif" height="60">
-        </div>
-    </p-toolbar>
+
+    <h1>Brands</h1>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <input #gb type="text" placeholder="Global search" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
-            <i class="fa fa-search"></i>
+            <input #gb type="text" pInputText placeholder="Search" style="width: 180px">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" title="Add" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [style]="{'width': '100%'}" [value]="brands" 
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="brands"
         selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
-        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[15,30,50,100]" 
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
         [globalFilter]="gb" #dt>
         <p-column field="brandId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="brandName" header="Name" [sortable]="true"></p-column>
@@ -32,8 +26,8 @@
     <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">
-                <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Brand</span>
-                <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Brand</b></span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
         <form [formGroup]="dataform">
@@ -53,11 +47,11 @@
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">
-                        <button *ngIf="selected.brandId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+                        <button *ngIf="selected.brandId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
                     </div>
                     <div class="ui-grid-col-4"></div>
                     <div class="ui-grid-col-4">
-                        <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                     </div>
                 </div>
             </div>

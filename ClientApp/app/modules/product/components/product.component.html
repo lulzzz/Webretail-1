@@ -1,22 +1,21 @@
 <p-growl [value]="msgs"></p-growl>
 <p-blockUI [blocked]="isBusy"></p-blockUI>
+<img *ngIf="!productInfo||!articles||isBusy" src="assets/loading.gif" class="loading">
 
 <div class="container-fluid">
 
+    <button pButton type="button" title="Products" style="position: absolute; top: 84px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
     <h1 style="margin-left: 40px">Product</h1>
-    <button pButton type="button" title="Products" style="position: absolute; top: 85px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
 
     <p-toolbar>
         <div class="ui-toolbar-group-left">
             Code: {{product?.productCode}}
         </div>
         <div class="ui-toolbar-group-right">
-            <p-splitButton label="Edit" icon="fa-check" (onClick)="editClick()" [(disabled)]="isBusy" [model]="buttons"></p-splitButton>
+            <p-splitButton label="Edit" icon="fa-edit" (onClick)="editClick()" [(disabled)]="isBusy" [model]="buttons"></p-splitButton>
         </div>
     </p-toolbar>
 
-    <p *ngIf="!productInfo"><em>Loading...</em></p>
-    <p *ngIf="isBusy"><em>Building articles...please wait</em></p>
     <p-tree *ngIf="!display" [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode"></p-tree>
     <!--<div style="margin-top:8px">Selected Node => {{selectedNode ? selectedNode.type + ' : ' + selectedNode.data : 'none'}}</div>-->
 
@@ -28,7 +27,7 @@
             </div>
         </p-header>
         <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" [showTargetControls]="false"
-        (onMoveToSource)="removeNodes($event)" (onMoveToTarget)="addNodes($event)">
+            (onMoveToSource)="removeNodes($event)" (onMoveToTarget)="addNodes($event)">
             <template let-attr pTemplate="item">
                 <span>{{attr.data}}</span> | <span>{{attr.label}}</span>
             </template>
@@ -37,9 +36,10 @@
 </div>
 
 <div class="container-fluid">
+ 
     <h2>Articles</h2>
     <p>Items: {{totalRecords}}</p>
-    <p *ngIf="!articles"><em>Loading...</em></p>
+ 
     <table *ngIf="articles" class="table" cellpadding="2" cellspacing="2">    
         <tr> 
             <td *ngFor="let h of header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
