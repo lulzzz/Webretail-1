@@ -20,5 +20,9 @@ protocol OrderProtocol {
 	
 	func getStatus() -> [OrderStatus]
 	
+	func commit(id: Int) throws
+	
+	func rollback(id: Int) throws
+
 	func generatePdf(id: Int)
 }

@@ -28,8 +28,7 @@ export class CustomerComponent implements OnInit {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
-            'firstname': new FormControl('', Validators.required),
-            'lastname': new FormControl('', Validators.required),
+            'name': new FormControl('', Validators.required),
             'email': new FormControl('', Validators.required),
             'phone': new FormControl('', Validators.nullValidator),
             'address': new FormControl('', Validators.required),

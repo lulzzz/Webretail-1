@@ -66,7 +66,15 @@ class OrderRepository : OrderProtocol {
 		current.orderNumber = item.orderNumber
 		current.orderDate = item.orderDate
 		current.orderNote = item.orderNote
+		
+		if current.orderStatus == "New" && item.orderStatus == "Processing" {
+			try commit(order: item)
+		}
+		if current.orderStatus == "Processing" && item.orderStatus != "Processing" {
+			try rollback(order: item)
+		}
 		current.orderStatus = item.orderStatus
+		
 		current.updated = Int.now()
 		try current.save()
 	}
@@ -85,6 +93,92 @@ class OrderRepository : OrderProtocol {
 		status.append(OrderStatus(value: "Canceled"))
 		status.append(OrderStatus(value: "Completed"))
 		return status
+	}
+	
+	func commit(order: Order) throws {
+		if order.orderStatus != "New" {
+			throw StORMError.error("Order already committed")
+		}
+		
+		var stock = Stock()
+		let article = OrderArticle()
+		try article.find([("orderId", order.orderId)])
+		for item in article.rows() {
+			
+			let articles = item.product["articles"] as! [[String : Any]];
+			let articleId = item.getJSONValue(named: "articleId", from: articles[0], defaultValue: 0)
+			
+			let cursor = StORMCursor(limit: 1, offset: 0)
+			try stock.select(
+				whereclause: "articleId = $1 AND storeId = $2",
+				params: [ articleId, order.storeId ],
+				orderby: [],
+				cursor: cursor)
+			
+			if (stock.rows().count == 0) {
+				stock.storeId = order.storeId
+				stock.articleId = articleId
+				try stock.save()
+			} else {
+				stock = stock.rows().first!
+			}
+			
+			if order._causal.quantity > 0 {
+				stock.quantity += item.quantity
+			} else if order._causal.quantity < 0 {
+				stock.quantity -= item.quantity
+			}
+			
+			if order._causal.booked > 0 {
+				stock.booked += item.quantity
+			} else if order._causal.booked < 0 {
+				stock.booked -= item.quantity
+			}
+			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
+		}
+	}
+	
+	func rollback(order: Order) throws {
+		if order.orderStatus != "New" {
+			throw StORMError.error("Order not committed")
+		}
+		
+		var stock = Stock()
+		let article = MovementArticle()
+		try article.find([("orderId", order.orderId)])
+		for item in article.rows() {
+			
+			let articles = item.product["articles"] as! [[String : Any]];
+			let articleId = item.getJSONValue(named: "orderId", from: articles[0], defaultValue: 0)
+			
+			let cursor = StORMCursor(limit: 1, offset: 0)
+			try stock.select(
+				whereclause: "articleId = $1 AND stockId = $2",
+				params: [ articleId, order.storeId ],
+				orderby: [],
+				cursor: cursor)
+			
+			if (stock.rows().count == 0) {
+				stock.storeId = order.storeId
+				stock.articleId = articleId
+				try stock.save()
+			} else {
+				stock = stock.rows().first!
+			}
+			
+			if order._causal.quantity > 0 {
+				stock.quantity -= item.quantity
+			} else if order._causal.quantity < 0 {
+				stock.quantity += item.quantity
+			}
+			
+			if order._causal.booked > 0 {
+				stock.booked -= item.quantity
+			} else if order._causal.booked < 0 {
+				stock.booked += item.quantity
+			}
+			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
+		}
 	}
 	
 	func generatePdf(id: Int) {

@@ -13,8 +13,7 @@ import PerfectLib
 class Customer: PostgresSqlORM, JSONConvertible {
 	
 	public var customerId : Int = 0
-	public var customerFirstname	: String = ""
-	public var customerLastname	: String = ""
+	public var customerName	: String = ""
 	public var customerEmail : String = ""
 	public var customerPhone : String = ""
 	public var customerAddress : String = ""
@@ -27,12 +26,11 @@ class Customer: PostgresSqlORM, JSONConvertible {
 	public var updated : Int = Int.now()
 	
 	open override func table() -> String { return "customers" }
-	open override func tableIndexes() -> [String] { return ["customerEmail"] }
+	open override func tableIndexes() -> [String] { return ["customerName", "customerEmail"] }
 	
 	open override func to(_ this: StORMRow) {
 		customerId = this.data["customerid"] as? Int ?? 0
-		customerFirstname = this.data["customerfirstname"] as? String ?? ""
-		customerLastname = this.data["customerlastname"] as? String ?? ""
+		customerName = this.data["customername"] as? String ?? ""
 		customerEmail = this.data["customeremail"] as? String ?? ""
 		customerPhone = this.data["customerPhone"] as? String ?? ""
 		customerAddress = this.data["customeraddress"] as? String ?? ""
@@ -57,8 +55,7 @@ class Customer: PostgresSqlORM, JSONConvertible {
 	
 	public func setJSONValues(_ values:[String:Any]) {
 		self.customerId = getJSONValue(named: "customerId", from: values, defaultValue: 0)
-		self.customerFirstname = getJSONValue(named: "customerFirstname", from: values, defaultValue: "")
-		self.customerLastname = getJSONValue(named: "customerLastname", from: values, defaultValue: "")
+		self.customerName = getJSONValue(named: "customerName", from: values, defaultValue: "")
 		self.customerEmail = getJSONValue(named: "customerEmail", from: values, defaultValue: "")
 		self.customerPhone = getJSONValue(named: "customerPhone", from: values, defaultValue: "")
 		self.customerAddress = getJSONValue(named: "customerAddress", from: values, defaultValue: "")
@@ -76,8 +73,7 @@ class Customer: PostgresSqlORM, JSONConvertible {
 	func getJSONValues() -> [String : Any] {
 		return [
 			"customerId": customerId,
-			"customerFirstname": customerFirstname,
-			"customerLastname": customerLastname,
+			"customerName": customerName,
 			"customerEmail": customerEmail,
 			"customerPhone": customerPhone,
 			"customerAddress":	customerAddress,

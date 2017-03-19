@@ -44,8 +44,7 @@ class CustomerRepository : CustomerProtocol {
 			throw StORMError.noRecordFound
 		}
 		
-		current.customerFirstname = item.customerFirstname
-		current.customerLastname = item.customerLastname
+		current.customerName = item.customerName
 		current.customerEmail = item.customerEmail
 		current.customerPhone = item.customerPhone
 		current.customerAddress = item.customerAddress

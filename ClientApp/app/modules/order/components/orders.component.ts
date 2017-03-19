@@ -84,7 +84,7 @@ export class OrdersComponent implements OnInit {
 
         this.customerService.getAll()
             .subscribe(result => {
-                this.customers = result.map(p => Helpers.newSelectItem(p, p.customerLastname + ' ' + p.customerFirstname));
+                this.customers = result.map(p => Helpers.newSelectItem(p, p.customerName));
             }
         );
     }
@@ -102,7 +102,7 @@ export class OrdersComponent implements OnInit {
 
         this.customersFiltered = [];
         this.customersFiltered.push({label: 'All', value: null});
-        let filterCustomer = Helpers.distinct(items.map((item: Order) => Helpers.newSelectItem(item.customer.customerLastname + ' ' + item.customer.customerFirstname)));
+        let filterCustomer = Helpers.distinct(items.map((item: Order) => Helpers.newSelectItem(item.customer.customerName)));
         this.customersFiltered = this.customersFiltered.concat(filterCustomer);
 
         this.statusFiltered = [];

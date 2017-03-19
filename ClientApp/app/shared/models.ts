@@ -188,8 +188,7 @@ export class MovementArticle {
 
 export class Customer {
   public customerId: number;
-  public customerFirstname: string;
-  public customerLastname: string;
+  public customerName: string;
   public customerEmail: string;
   public customerPhone: string;
   public customerAddress: string;
@@ -201,8 +200,7 @@ export class Customer {
 
   constructor() {
     this.customerId = 0;
-    this.customerFirstname = '';
-    this.customerLastname = '';
+    this.customerName = '';
     this.customerEmail = '';
     this.customerPhone = '';
     this.customerAddress = '';

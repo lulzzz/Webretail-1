@@ -27,7 +27,6 @@
             <span style="float: right"><b>Totals</b> items <b>{{totalItems}}</b> amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
             <p>&nbsp;</p>
         </p-footer>
-        <p-column field="orderArticleId" header="Id" [editable]="false" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="barcode" header="Barcode" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
         <p-column field="product" header="Product" [editable]="false" [sortable]="true" [filter]="true">
             <template pTemplate="filter" let-col>

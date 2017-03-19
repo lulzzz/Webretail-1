@@ -18,7 +18,6 @@
     <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="orders | dateFilter:dateValue"
         selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
-        <p-column field="orderId" header="Id" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="orderNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="orderDate" header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <template let-col let-data="rowData" pTemplate="body">
@@ -29,9 +28,9 @@
                 <p-calendar [(ngModel)]="dateValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Search" styleClass="ui-column-filter"></p-calendar>
             </template>
         </p-column>
-        <p-column field="orderStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+        <p-column field="customer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
-                <p-dropdown [options]="statusFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+                <p-dropdown [options]="customersFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>
         <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
@@ -42,6 +41,11 @@
         <p-column field="store.storeName" header="Store" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="storesFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </template>
+        </p-column>
+        <p-column field="orderStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="statusFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>
     </p-dataTable>
@@ -60,6 +64,34 @@
                     <div class="ui-grid-col-8">{{selected.orderId}}</div>
                 </div>
                 <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="number">Number</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="number" [(ngModel)]="selected.orderNumber"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['number'].valid&&dataform.controls['number'].dirty">
+                            <i class="fa fa-close"></i> Number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="date">Date</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-calendar formControlName="date" [(ngModel)]="selected.orderDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['date'].valid&&dataform.controls['date'].dirty">
+                            <i class="fa fa-close"></i> Date is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="store">Customer</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.customer" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['customer'].valid&&dataform.controls['customer'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['store'].errors['required']">Customer is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="causal">Causal</label></div>
                     <div class="ui-grid-col-8">
                         <p-dropdown [options]="causals" formControlName="causal" [(ngModel)]="selected.causal" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
@@ -76,34 +108,6 @@
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['store'].valid&&dataform.controls['store'].dirty">
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['store'].errors['required']">Store is required</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="store">Customer</label></div>
-                    <div class="ui-grid-col-8">
-                        <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.customer" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['customer'].valid&&dataform.controls['customer'].dirty">
-                            <i class="fa fa-close"></i>
-                            <span *ngIf="dataform.controls['store'].errors['required']">Customer is required</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="number">Number</label></div>
-                    <div class="ui-grid-col-8">
-                        <input pInputText formControlName="number" [(ngModel)]="selected.orderNumber"/>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['number'].valid&&dataform.controls['number'].dirty">
-                            <i class="fa fa-close"></i> Number is required
-                        </div>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="date">Date</label></div>
-                    <div class="ui-grid-col-8">
-                        <p-calendar formControlName="date" [(ngModel)]="selected.orderDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['date'].valid&&dataform.controls['date'].dirty">
-                            <i class="fa fa-close"></i> Date is required
                         </div>
                     </div>
                 </div>
