@@ -57,7 +57,8 @@ export class OrdersComponent implements OnInit {
             'note': new FormControl('', Validators.nullValidator)
         });
 
-        this.orderService.getAll()
+        this.orderService
+            .getAll()
             .subscribe(result => {
                 this.orders = result;
                 this.totalRecords = this.orders.length;
@@ -65,25 +66,29 @@ export class OrdersComponent implements OnInit {
              }
         );
 
-        this.orderService.getStatus()
+        this.orderService
+            .getStatus()
             .subscribe(result => {
                 this.status = result.map(p => Helpers.newSelectItem(p.value));
             }
         );
 
-        this.storeService.getAll()
+        this.storeService
+            .getAll()
             .subscribe(result => {
                 this.stores = result.map(p => Helpers.newSelectItem(p, p.storeName));
             }
         );
 
-        this.causalService.getAll()
+        this.causalService
+            .getAll()
             .subscribe(result => {
                 this.causals = result.map(p => Helpers.newSelectItem(p, p.causalName));
             }
         );
 
-        this.customerService.getAll()
+        this.customerService
+            .getAll()
             .subscribe(result => {
                 this.customers = result.map(p => Helpers.newSelectItem(p, p.customerName));
             }

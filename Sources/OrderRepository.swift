@@ -68,7 +68,7 @@ class OrderRepository : OrderProtocol {
 		current.orderNote = item.orderNote
 		
 		if current.orderStatus == "New" && item.orderStatus == "Processing" {
-			try commit(order: item)
+			try commit(order: current)
 		}
 		if current.orderStatus == "Processing" && item.orderStatus != "Processing" {
 			try rollback(order: current)
@@ -139,12 +139,12 @@ class OrderRepository : OrderProtocol {
 	}
 	
 	func rollback(order: Order) throws {
-		if order.orderStatus != "New" {
+		if order.orderStatus != "Processing" {
 			throw StORMError.error("Order not committed")
 		}
 		
 		var stock = Stock()
-		let article = MovementArticle()
+		let article = OrderArticle()
 		try article.find([("orderId", order.orderId)])
 		for item in article.rows() {
 			
