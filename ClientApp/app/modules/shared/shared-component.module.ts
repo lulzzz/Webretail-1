@@ -2,8 +2,8 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-    DataTableModule, SharedModule, PaginatorModule,
-    MultiSelectModule, DropdownModule, SliderModule, ButtonModule
+    DataTableModule, SharedModule, PaginatorModule, SpinnerModule,
+    MultiSelectModule, DropdownModule, SliderModule, ButtonModule, TooltipModule
 } from 'primeng/primeng';
 import { ArticlePickerComponent } from './components/article-picker.component';
 import { CategoryFilterPipe } from './../../pipes/category-filter.pipe';
@@ -14,8 +14,8 @@ import { ArticleFilterPipe } from './../../pipes/article-filter.pipe';
 @NgModule({
     imports: [
         CommonModule, FormsModule, ReactiveFormsModule,
-        DataTableModule, SharedModule, PaginatorModule,
-        MultiSelectModule, DropdownModule, SliderModule, ButtonModule
+        DataTableModule, SharedModule, PaginatorModule, SpinnerModule,
+        MultiSelectModule, DropdownModule, SliderModule, ButtonModule, TooltipModule
     ],
     declarations: [
         ArticlePickerComponent,

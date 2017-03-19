@@ -29,9 +29,9 @@
             {{data.sellingPrice | currency: 'EUR' : true}}
         </template>
     </p-column>
-    <p-column expander="true" [style]="{'width':'60px','text-align':'center'}" styleClass="col-icon">
+    <p-column expander="true" styleClass="col-icon">
         <template pTemplate="header">
-            <button pButton type="button" (click)="hidePickerClick()" class="ui-button-info" icon="fa-close"></button>
+            <button pButton label="Save" type="button" (click)="hidePickerClick()" class="ui-button-success" icon="fa-save"></button>
         </template>        
     </p-column>
     <template pTemplate="rowexpansion">
@@ -42,7 +42,8 @@
             <tbody *ngFor="let item of articleForm.body"> 
                 <tr> 
                     <td *ngFor="let col of item" align="center"> 
-                        <span (click)="pickedClick(col)" title="{{col.value}}" class="aspan">{{col.label}}</span> 
+                        <span *ngIf="col.value===''">{{col.label}}</span>
+                        <p-spinner *ngIf="col.value!==''" pTooltip="{{col.label}}" tooltipPosition="left" size="4" [(ngModel)]="col.data" [min]="0"></p-spinner>
                     </td> 
                 </tr> 
             </tbody>

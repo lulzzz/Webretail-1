@@ -220,7 +220,7 @@ class ArticleRepository : ArticleProtocol {
 			var isFirst = true;
 			for article in group.value {
 				let articleItem = ArticleItem(
-					label: article._quantity.description,
+					label: "Stock \(article._quantity) - Booked \(article._booked)",
 					value: article.barcode,
 					data: 0.0
 				)
