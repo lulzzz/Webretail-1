@@ -30,11 +30,12 @@ export class BrandComponent implements OnInit {
             'name': new FormControl('', Validators.required)
         });
 
-        this.brandService.getAll()
+        this.brandService
+            .getAll()
             .subscribe(result => {
                 this.brands = result;
                 this.totalRecords = this.brands.length;
-            }
+            }, onerror => alert(onerror._body)
         );
     }
 
@@ -58,16 +59,18 @@ export class BrandComponent implements OnInit {
 
     saveClick() {
         if (this.isNew) {
-            this.brandService.create(this.selected)
+            this.brandService
+                .create(this.selected)
                 .subscribe(result => {
                     this.brands.push(result);
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         } else {
-            this.brandService.update(this.selected.brandId, this.selected)
+            this.brandService
+                .update(this.selected.brandId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         }
     }
 
@@ -75,11 +78,12 @@ export class BrandComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'All related products will be deleted. Are you sure that you want to delete this brand?',
             accept: () => {
-                this.brandService.delete(this.selected.brandId)
+                this.brandService
+                    .delete(this.selected.brandId)
                     .subscribe(result => {
                         this.brands.splice(this.selectedIndex, 1);
                         this.closeClick();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }

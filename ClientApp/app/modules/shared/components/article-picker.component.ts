@@ -42,12 +42,13 @@ export class ArticlePickerComponent {
     public loadData() {
         this.isOpen = true;
         if (!this.products) {
-            this.productService.getProducts()
+            this.productService
+                .getProducts()
                 .subscribe(result => {
                     this.products = result;
                     this.totalRecords = this.products.length;
                     this.buildFilter(result);
-                }
+                }, onerror => alert(onerror._body)
             );
         }
     }
@@ -72,11 +73,12 @@ export class ArticlePickerComponent {
     }
 
     onRowExpanded(expandedItem: any) {
-        this.productService.getProduct(expandedItem.data.productId)
+        this.productService
+            .getProduct(expandedItem.data.productId)
             .subscribe(result => {
                 this.selected = result;
                 this.getArticles();
-            });
+            }, onerror => alert(onerror._body));
     }
 
     getArticles() {

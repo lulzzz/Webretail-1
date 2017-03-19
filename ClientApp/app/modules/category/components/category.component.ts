@@ -31,11 +31,12 @@ export class CategoryComponent implements OnInit {
             'isPrimary': new FormControl('', Validators.required)
         });
 
-        this.categoryService.getAll()
+        this.categoryService
+            .getAll()
             .subscribe(result => {
                 this.categories = result;
                 this.totalRecords = this.categories.length;
-            }//, onerror => alert('ERROR\r\n' + onerror)
+            }, onerror => alert(onerror._body)
         );
     }
 
@@ -59,16 +60,18 @@ export class CategoryComponent implements OnInit {
 
     saveClick() {
         if (this.isNew) {
-            this.categoryService.create(this.selected)
+            this.categoryService
+                .create(this.selected)
                 .subscribe(result => {
                     this.categories.push(result);
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         } else {
-            this.categoryService.update(this.selected.categoryId, this.selected)
+            this.categoryService
+                .update(this.selected.categoryId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         }
     }
 
@@ -76,11 +79,12 @@ export class CategoryComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'All associations with the products will be deleted. Are you sure that you want to delete this category?',
             accept: () => {
-                this.categoryService.delete(this.selected.categoryId)
+                this.categoryService
+                    .delete(this.selected.categoryId)
                     .subscribe(result => {
                         this.categories.splice(this.selectedIndex, 1);
                         this.closeClick();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }

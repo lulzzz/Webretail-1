@@ -34,11 +34,12 @@ export class StoreComponent implements OnInit {
             'country': new FormControl('', Validators.nullValidator)
         });
 
-        this.storeService.getAll()
+        this.storeService
+            .getAll()
             .subscribe(result => {
                 this.stores = result;
                 this.totalRecords = this.stores.length;
-            }
+            }, onerror => alert(onerror._body)
         );
     }
 
@@ -62,16 +63,18 @@ export class StoreComponent implements OnInit {
 
     saveClick() {
         if (this.isNew) {
-            this.storeService.create(this.selected)
+            this.storeService
+                .create(this.selected)
                 .subscribe(result => {
                     this.stores.push(result);
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         } else {
-            this.storeService.update(this.selected.storeId, this.selected)
+            this.storeService
+                .update(this.selected.storeId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         }
     }
 
@@ -79,11 +82,12 @@ export class StoreComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'All related articles stocks will be deleted. Are you sure that you want to delete this store?',
             accept: () => {
-                this.storeService.delete(this.selected.storeId)
+                this.storeService
+                    .delete(this.selected.storeId)
                     .subscribe(result => {
                         this.stores.splice(this.selectedIndex, 1);
                         this.closeClick();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }

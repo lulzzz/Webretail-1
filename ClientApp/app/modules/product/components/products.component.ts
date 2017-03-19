@@ -53,13 +53,14 @@ export class ProductsComponent implements OnInit {
                 this.products = result;
                 this.totalRecords = this.products.length;
                 this.buildFilter(result);
-            }//, onerror => alert('ERROR\r\n' + onerror)
+            }, onerror => alert(onerror._body)
         );
 
-        this.brandService.getAll().subscribe(result => {
-            this.allbrands = result.map(p => Helpers.newSelectItem(p, p.brandName));
-            this.ums = Helpers.getUnitOfMeasure();
-        });
+        this.brandService.getAll()
+            .subscribe(result => {
+                this.allbrands = result.map(p => Helpers.newSelectItem(p, p.brandName));
+                this.ums = Helpers.getUnitOfMeasure();
+            }, onerror => alert(onerror._body));
     }
 
     get isNew() : boolean { return this.selected == null || this.selected.productId == 0; }
@@ -108,12 +109,12 @@ export class ProductsComponent implements OnInit {
                     result.brand = this.selected.brand;
                     this.products.push(result);
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         } else {
             this.productService.update(this.selected.productId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         }
     }
 
@@ -125,7 +126,7 @@ export class ProductsComponent implements OnInit {
                     .subscribe(result => {
                         this.products.splice(this.selectedIndex, 1);
                         this.closeClick();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }

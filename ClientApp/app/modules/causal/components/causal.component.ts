@@ -38,11 +38,12 @@ export class CausalComponent implements OnInit {
             'booked': new FormControl('', Validators.required)
         });
 
-        this.causalService.getAll()
+        this.causalService
+            .getAll()
             .subscribe(result => {
                 this.causals = result;
                 this.totalRecords = this.causals.length;
-            });
+            }, onerror => alert(onerror._body));
     }
 
     get isNew() : boolean { return this.selected == null || this.selected.causalId == 0; }
@@ -65,16 +66,18 @@ export class CausalComponent implements OnInit {
 
     saveClick() {
         if (this.isNew) {
-            this.causalService.create(this.selected)
+            this.causalService
+                .create(this.selected)
                 .subscribe(result => {
                     this.causals.push(result);
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         } else {
-            this.causalService.update(this.selected.causalId, this.selected)
+            this.causalService
+                .update(this.selected.causalId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         }
     }
 
@@ -82,11 +85,12 @@ export class CausalComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'All related movements will be deleted. Are you sure that you want to delete this causal?',
             accept: () => {
-                this.causalService.delete(this.selected.causalId)
+                this.causalService
+                    .delete(this.selected.causalId)
                     .subscribe(result => {
                         this.causals.splice(this.selectedIndex, 1);
                         this.closeClick();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }

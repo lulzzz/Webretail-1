@@ -18,9 +18,9 @@
     </p-toolbar>
 
     <p-dataTable *ngIf="!inputComponent.isOpen" [responsive]="true" [editable]="true" [value]="items | articleFilter:articleValue">
-        <p-header>
-            <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Article picker" [disabled]="committed" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
-            <p-chips [disabled]="committed" [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
+        <p-header *ngIf="!committed">
+            <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
+            <p-chips [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
         </p-header>
         <p-footer>
             <span style="float: left"><b>{{totalRecords}}</b> rows</span>

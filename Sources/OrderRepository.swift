@@ -71,7 +71,7 @@ class OrderRepository : OrderProtocol {
 			try commit(order: item)
 		}
 		if current.orderStatus == "Processing" && item.orderStatus != "Processing" {
-			try rollback(order: item)
+			try rollback(order: current)
 		}
 		current.orderStatus = item.orderStatus
 		

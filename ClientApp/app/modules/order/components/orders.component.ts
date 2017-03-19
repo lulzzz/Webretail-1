@@ -29,6 +29,7 @@ export class OrdersComponent implements OnInit {
     status: SelectItem[];
     statusFiltered: SelectItem[];
     displayPanel: boolean;
+	committed: boolean;
 	dataform: FormGroup;
     buttons: MenuItem[];
     newNumber: number;
@@ -117,6 +118,7 @@ export class OrdersComponent implements OnInit {
 
     addClick() {
         this.selected = new Order();
+        this.committed = false;
         this.selected.orderNumber = this.orders.length > 0 ? Math.max.apply(this, this.orders.map(p => p.orderNumber)) + 1 : 1000;
         if (this.stores.length > 0) {
             this.selected.store = this.stores[0].value;
@@ -137,6 +139,7 @@ export class OrdersComponent implements OnInit {
         if (!this.selected) {
             return;
         }
+        this.committed = this.selected.orderStatus !== 'New';
         this.selected.orderDate = new Date(this.selected.orderDate);
         this.displayPanel = true;
     }
@@ -144,6 +147,7 @@ export class OrdersComponent implements OnInit {
     closeClick() {
         this.displayPanel = false;
         this.selected = null;
+        this.committed = false;
     }
 
     saveClick() {
@@ -152,12 +156,12 @@ export class OrdersComponent implements OnInit {
                 .subscribe(result => {
                     this.orders.push(result);
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         } else {
             this.orderService.update(this.selected.orderId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         }
     }
 
@@ -173,7 +177,7 @@ export class OrdersComponent implements OnInit {
                     .subscribe(result => {
                         this.orders.splice(this.selectedIndex, 1);
                         this.closeClick();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }

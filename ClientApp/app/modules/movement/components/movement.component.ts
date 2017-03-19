@@ -44,13 +44,13 @@ export class MovementComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     this.movement = result;
                     this.committed = this.movement.committed;
-                }
+                }, onerror => alert(onerror._body)
             );
             this.movementService.getItemsById(this.movementId)
                 .subscribe(result => {
                     this.items = result;
                     this.updateTotals();
-                }
+                }, onerror => alert(onerror._body)
             );
         });
     }
@@ -79,7 +79,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                     .subscribe(result => {
                         this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
                         this.updateTotals();
-                    });
+                    }, onerror => alert(onerror._body));
             } else {
                 item = new MovementArticle();
                 item.movementId = this.movementId;
@@ -90,7 +90,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                         this.items.push(result);
                         this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
                         this.updateTotals();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }
@@ -109,7 +109,7 @@ export class MovementComponent implements OnInit, OnDestroy {
             this.movementService.updateItem(data.movementArticleId, data)
                 .subscribe(result => {
                     this.updateTotals();
-                });
+                }, onerror => alert(onerror._body));
         } else {
             this.confirmationService.confirm({
                 message: 'Are you sure that you want to delete this item?',
@@ -118,7 +118,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(data), 1);
                             this.updateTotals();
-                        });
+                        }, onerror => alert(onerror._body));
                 }
             });
         }

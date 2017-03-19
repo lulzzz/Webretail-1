@@ -116,12 +116,12 @@ export class MovementsComponent implements OnInit {
                 .subscribe(result => {
                     this.movements.push(result);
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         } else {
             this.movementService.update(this.selected.movementId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         }
     }
 
@@ -137,7 +137,7 @@ export class MovementsComponent implements OnInit {
                     .subscribe(result => {
                         this.movements.splice(this.selectedIndex, 1);
                         this.closeClick();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }
@@ -154,7 +154,7 @@ export class MovementsComponent implements OnInit {
                     .subscribe(result => {
                         this.movements.splice(this.selectedIndex, 1);
                         this.selected = null;
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }
@@ -171,7 +171,7 @@ export class MovementsComponent implements OnInit {
                     .subscribe(result => {
                         this.movements.splice(this.selectedIndex, 1);
                         this.selected = null;
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }

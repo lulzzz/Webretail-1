@@ -39,7 +39,7 @@ export class AccountComponent implements OnInit {
             .subscribe(result => {
                 this.accounts = result;
                 this.totalRecords = this.accounts.length;
-            }
+            }, onerror => alert(onerror._body)
         );
     }
 
@@ -68,14 +68,14 @@ export class AccountComponent implements OnInit {
                 .subscribe(result => {
                     this.accounts.push(result);
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         } else {
             this.accountService
                 .update(this.selected.uniqueID, this.selected)
                 .subscribe(result => {
                     this.accounts[this.selectedIndex] = this.selected;
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         }
     }
 
@@ -88,7 +88,7 @@ export class AccountComponent implements OnInit {
                     .subscribe(result => {
                         this.accounts.splice(this.selectedIndex, 1);
                         this.closeClick();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }

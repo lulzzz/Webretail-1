@@ -43,7 +43,7 @@ export class CustomerComponent implements OnInit {
             .subscribe(result => {
                 this.customers = result;
                 this.totalRecords = this.customers.length;
-            }
+            }, onerror => alert(onerror._body)
         );
     }
 
@@ -72,14 +72,14 @@ export class CustomerComponent implements OnInit {
                 .subscribe(result => {
                     this.customers.push(result);
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         } else {
             this.customerService
                 .update(this.selected.customerId, this.selected)
                 .subscribe(result => {
                     this.customers[this.selectedIndex] = this.selected;
                     this.closeClick();
-                });
+                }, onerror => alert(onerror._body));
         }
     }
 
@@ -92,7 +92,7 @@ export class CustomerComponent implements OnInit {
                     .subscribe(result => {
                         this.customers.splice(this.selectedIndex, 1);
                         this.closeClick();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }

@@ -45,13 +45,13 @@ export class OrderComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     this.order = result;
                     this.committed = result.orderStatus != 'New';
-                }
+                }, onerror => alert(onerror._body)
             );
             this.orderService.getItemsById(this.orderId)
                 .subscribe(result => {
                     this.items = result;
                     this.updateTotals();
-                }
+                }, onerror => alert(onerror._body)
             );
         });
     }
@@ -81,7 +81,7 @@ export class OrderComponent implements OnInit, OnDestroy {
                     .subscribe(result => {
                         this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
                         this.updateTotals();
-                    });
+                    }, onerror => alert(onerror._body));
             } else {
                 item = new OrderArticle();
                 item.orderId = this.orderId;
@@ -92,7 +92,7 @@ export class OrderComponent implements OnInit, OnDestroy {
                         this.items.push(result);
                         this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
                         this.updateTotals();
-                    });
+                    }, onerror => alert(onerror._body));
             }
         });
     }
@@ -112,7 +112,7 @@ export class OrderComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     data.amount = result.amount;
                     this.updateTotals();
-                });
+                }, onerror => alert(onerror._body));
         } else {
             this.confirmationService.confirm({
                 message: 'Are you sure that you want to delete this item?',
@@ -121,7 +121,7 @@ export class OrderComponent implements OnInit, OnDestroy {
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(data), 1);
                             this.updateTotals();
-                        });
+                        }, onerror => alert(onerror._body));
                 }
             });
         }

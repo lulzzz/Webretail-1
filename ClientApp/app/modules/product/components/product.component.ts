@@ -54,7 +54,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                     this.product = result;
                     this.createTree();
                     this.createSheet();
-                }//, onerror => alert('ERROR: ' + onerror)
+                }, onerror => this.msgs.push({severity: 'error', summary: 'Get product', detail: onerror._body})
             );
         });
 
@@ -189,7 +189,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                                 this.nodesSource.push(Helpers.newNode(p.categoryName, p.categoryId.toString(), 'category'));
                             }
                         });
-                    });
+                    }, onerror => this.msgs.push({severity: 'error', summary: 'Get categories', detail: onerror._body}));
                 break;
             case 'attributes':
                 this.nodesTarget = this.productInfo[0].children.find(p => p.type == 'attributes').children;
@@ -200,7 +200,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                                 this.nodesSource.push(Helpers.newNode(p.attributeName, p.attributeId.toString(), 'attribute:0'));
                             }
                         });
-                    });
+                    }, onerror => this.msgs.push({severity: 'error', summary: 'Get attributes', detail: onerror._body}));
                 break;
             case (type.startsWith('attribute:') ? type : undefined):
                 this.nodesTarget = this.productInfo[0].children.find(p => p.type == 'attributes')
@@ -213,7 +213,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                                 this.nodesSource.push(Helpers.newNode(p.attributeValueName, p.attributeValueId.toString(), 'attributeValue'));
                             }
                         });
-                    });
+                    }, onerror => this.msgs.push({severity: 'error', summary: 'Get values by attributeId', detail: onerror._body}));
                 break;
             default:
                 this.msgs.push({severity: 'warn', summary: 'warning', detail: 'You can not update anything to this node!'});
@@ -262,7 +262,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                         severity: 'success',
                         summary: 'Success',
                         detail: 'Added ' + result.length + ' categories'
-                    }));
+                    }), onerror => this.msgs.push({severity: 'error', summary: 'Add categories', detail: onerror._body}));
         } else if (productAttributes.length > 0) {
             this.productService
                 .addAttributes(productAttributes)
@@ -275,7 +275,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                         summary: 'Success',
                         detail: 'Added ' + result.length + ' attributes'
                     });
-                });
+                }, onerror => this.msgs.push({severity: 'error', summary: 'Add attributes', detail: onerror._body}));
         } else if (productAttributeValues.length > 0) {
             this.productService
                 .addAttributeValues(productAttributeValues)
@@ -283,7 +283,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                         severity: 'success',
                         summary: 'Success',
                         detail: 'Added ' + result.length + ' attribute values'
-                    }));
+                    }), onerror => this.msgs.push({severity: 'error', summary: 'Add attribute values', detail: onerror._body}));
         }
     }
 
@@ -326,7 +326,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                         severity: 'success',
                         summary: 'Success',
                         detail: 'Removed ' + result.length + ' categories'
-                    }));
+                    }), onerror => this.msgs.push({severity: 'error', summary: 'Remove categories', detail: onerror._body}));
         } else if (productAttributes.length > 0) {
             this.productService
                 .removeAttributes(productAttributes)
@@ -336,7 +336,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                         summary: 'Success',
                         detail: 'Removed ' + result.length + ' attributes'
                     });
-                });
+                }, onerror => this.msgs.push({severity: 'error', summary: 'Remove attributes', detail: onerror._body}));
         } else if (productAttributeValues.length > 0) {
             this.productService
                 .removeAttributeValues(productAttributeValues)
@@ -344,7 +344,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                         severity: 'success',
                         summary: 'Success',
                         detail: 'Removed ' + result.length + ' attribute values'
-                    }));
+                    }), onerror => this.msgs.push({severity: 'error', summary: 'Remove attribute Values', detail: onerror._body}));
         }
     }
 
