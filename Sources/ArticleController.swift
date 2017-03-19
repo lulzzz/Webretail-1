@@ -65,7 +65,7 @@ class ArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            let item = try self.repository.getFormatted(productId: id.toInt()!)
+            let item = try self.repository.getForm(productId: id.toInt()!)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {

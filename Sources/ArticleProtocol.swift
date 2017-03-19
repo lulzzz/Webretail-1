@@ -6,9 +6,11 @@
 //
 //
 
+import PerfectLib
+
 protocol ArticleProtocol {
     
-    func build(productId: Int) throws -> [String:Any]
+    func build(productId: Int) throws -> [String: Any]
 
     func getAll() throws -> [Article]
     
@@ -16,7 +18,7 @@ protocol ArticleProtocol {
     
     func get(id: Int) throws -> Article?
     
-	func getFormatted(productId: Int) throws -> [[String]]
+	func getForm(productId: Int) throws -> ArticleForm
 
 	func add(item: Article) throws
     
@@ -27,4 +29,39 @@ protocol ArticleProtocol {
     func addAttributeValue(item: ArticleAttributeValue) throws
     
     func removeAttributeValue(id: Int) throws
+}
+
+
+struct ArticleForm: JSONConvertible {
+	public var header: [String]
+	public var body: [[ArticleItem]]
+
+	func getJSONValues() -> [String: Any] {
+		return [
+			"header": header,
+			"body": body
+		]
+	}
+	
+	func jsonEncodedString() throws -> String {
+		return try self.getJSONValues().jsonEncodedString()
+	}
+}
+
+struct ArticleItem: JSONConvertible {
+	public var label: String
+	public var value: String
+	public var data: Double
+
+	func getJSONValues() -> [String: Any] {
+		return [
+			"label": label,
+			"value": value,
+			"data": data
+		]
+	}
+	
+	func jsonEncodedString() throws -> String {
+		return try self.getJSONValues().jsonEncodedString()
+	}
 }

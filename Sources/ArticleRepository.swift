@@ -188,59 +188,64 @@ class ArticleRepository : ArticleProtocol {
         return item
     }
     
-	func getFormatted(productId: Int) throws -> [[String]] {
-		var rows = [[String]]()
-		var productAttributeValues = [ProductAttributeValue]()
+	func getForm(productId: Int) throws -> ArticleForm {
+		var header = [String]()
+		var body = [[ArticleItem]]()
 		
+		var productAttributeValues = [ProductAttributeValue]()
 		let productAttribute = ProductAttribute()
 		try productAttribute.find([("productId", productId)])
 		let attributes = try productAttribute.rows();
 		let lenght = attributes.count - 1;
-	
 		if (lenght > 0) {
-			var row = [String]()
 			for attribute in attributes {
-				row.append(attribute._attribute.attributeName)
+				header.append(attribute._attribute.attributeName)
 				productAttributeValues.append(contentsOf: attribute._attributeValues)
 			}
-			row.removeLast()
+			header.removeLast()
 			
 			for value in attributes[lenght]._attributeValues {
-				row.append(value._attributeValue.attributeValueName)
+				header.append(value._attributeValue.attributeValueName)
 			}
-			rows.append(row)
 		}
 		
 		let articles = try get(productId: productId)
-		
 		let grouped = articles.groupBy {
 			$0._attributeValues.dropLast().reduce("") {
 				a,b in "\(a)#\(b.attributeValueId)"
 			}
 		}
-
 		for group in grouped {
+			var row = [ArticleItem]()
 			var isFirst = true;
-			var row = [String]()
 			for article in group.value {
-				let qta = "\(article._quantity)#\(article.barcode)";
+				let articleItem = ArticleItem(
+					label: article._quantity.description,
+					value: article.barcode,
+					data: 0.0
+				)
 				if (isFirst) {
 					for value in article._attributeValues {
 						let productAttributeValue = productAttributeValues.first(where: { pair -> Bool in
 							return pair._attributeValue.attributeValueId == value.attributeValueId
 						})
-						row.append((productAttributeValue?._attributeValue.attributeValueName)!);
+						let articleLabel = ArticleItem(
+							label: (productAttributeValue?._attributeValue.attributeValueName)!,
+							value: "",
+							data: 0.0
+						)
+						row.append(articleLabel);
 					}
 					isFirst = false;
-					row[row.count - 1] = "\(qta)";
+					row[row.count - 1] = articleItem;
 				} else {
-					row.append("\(qta)");
+					row.append(articleItem);
 				}
 			}
-			rows.append(row)
+			body.append(row)
 		}
 		
-		return rows;
+		return ArticleForm(header: header, body: body)
 	}
 	
 	func add(item: Article) throws {

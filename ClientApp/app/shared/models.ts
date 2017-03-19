@@ -299,3 +299,14 @@ export interface ArticleAttributeValue {
 export interface OrderStatus {
 	value: string;
 }
+
+export interface ArticleForm {
+	header: string[];
+	body: ArticleItem[][];
+}
+
+export interface ArticleItem {
+	label: string;
+	value: string;
+  data: number;
+}

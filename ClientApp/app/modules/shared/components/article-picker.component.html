@@ -35,14 +35,14 @@
         </template>        
     </p-column>
     <template pTemplate="rowexpansion">
-        <table *ngIf="articles" class="table" cellpadding="2" cellspacing="2">    
+        <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">    
             <tr> 
-                <td *ngFor="let h of header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
+                <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
             </tr> 
-            <tbody *ngFor="let item of articles"> 
+            <tbody *ngFor="let item of articleForm.body"> 
                 <tr> 
                     <td *ngFor="let col of item" align="center"> 
-                        <span (click)="pickedClick(col)" title="{{col.split('#')[1]}}" class="aspan">{{col.split('#')[0]}}</span> 
+                        <span (click)="pickedClick(col)" title="{{col.value}}" class="aspan">{{col.label}}</span> 
                     </td> 
                 </tr> 
             </tbody>

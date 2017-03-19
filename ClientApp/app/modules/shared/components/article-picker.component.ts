@@ -1,7 +1,7 @@
 ﻿import { Component, Input, EventEmitter } from '@angular/core';
 import { SelectItem, MenuItem } from 'primeng/primeng';
-import { Observable } from 'rxjs/Rx';
-import { Product, ProductCategory, ProductAttributeValue } from './../../../shared/models';
+//import { Observable } from 'rxjs/Rx';
+import { Product, ProductCategory, ProductAttributeValue, ArticleForm, ArticleItem } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
 import { BrandService } from './../../../services/brand.service';
 import { ProductService } from './../../../services/product.service';
@@ -23,8 +23,7 @@ export class ArticlePickerComponent {
     names: SelectItem[];
     categoryValue: string;
     sliderValue: number;
-    header: string[];
-    articles: any[];
+    articleForm: ArticleForm;
     onPicked = new EventEmitter();
     public isOpen: boolean;
 
@@ -32,9 +31,9 @@ export class ArticlePickerComponent {
         this.isOpen = false;
     }
 
-    pickedClick(picked: string) {
-        if (picked.indexOf('#') > 0) {
-            this.onPicked.emit(picked.split('#')[1]);
+    pickedClick(item: ArticleItem) {
+        if (item.value !== '') {
+            this.onPicked.emit(item.value);
             this.isOpen = false;
         }
     }
@@ -82,14 +81,13 @@ export class ArticlePickerComponent {
     }
 
     getArticles() {
-        /// from server
-        // this.productService.getArticles(this.selected.productId)
-        //     .subscribe(result => {
-        //         this.header = result[0];
-        //         result.splice(0, 1);
-        //         this.articles = result;
-        //     });
-        /// or from client
+        // from server
+        this.productService.getArticles(this.selected.productId)
+            .subscribe(result => {
+                this.articleForm = result;
+            }, onerror => alert(onerror._body));
+        /*
+        // or from client
         this.header = [];
         this.articles = [];
         let productAttributeValues: ProductAttributeValue[] = [];
@@ -139,5 +137,6 @@ export class ArticlePickerComponent {
                 this.articles.push(row);
             });
         });
+        */
     }
 }
