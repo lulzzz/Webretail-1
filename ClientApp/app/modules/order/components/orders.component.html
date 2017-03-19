@@ -114,7 +114,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="status">Status</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="status" formControlName="status" [(ngModel)]="selected.orderStatus" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="getStatus" formControlName="status" [(ngModel)]="selected.orderStatus" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['status'].valid&&dataform.controls['status'].dirty">
                             <i class="fa fa-close"></i> Status is required
                         </div>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">
-                        <button [disabled]="selected.orderId==0||committed" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+                        <button *ngIf="selected.orderId>0&&!selected.orderStatus==='New'" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
                     </div>
                     <div class="ui-grid-col-4"></div>
                     <div class="ui-grid-col-4">

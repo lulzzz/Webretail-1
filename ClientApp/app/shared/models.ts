@@ -231,7 +231,7 @@ export class Order {
     this.customer = new Customer();
     this.orderDate = new Date();
     this.orderNote = '';
-    this.orderStatus = '';
+    this.orderStatus = 'New';
     this.created = new Date();
     this.updated = new Date();
   }

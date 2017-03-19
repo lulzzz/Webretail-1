@@ -28,8 +28,8 @@ export class OrdersComponent implements OnInit {
     customersFiltered: SelectItem[];
     status: SelectItem[];
     statusFiltered: SelectItem[];
-    displayPanel: boolean;
-	committed: boolean;
+    currentStatus: string;
+	displayPanel: boolean;
 	dataform: FormGroup;
     buttons: MenuItem[];
     newNumber: number;
@@ -116,9 +116,14 @@ export class OrdersComponent implements OnInit {
 
     get selectedIndex(): number { return this.orders.indexOf(this.selected); }
 
+    get getStatus() : SelectItem[] {
+        let index = this.status.findIndex(p => p.label === this.selected.orderStatus);
+        return this.status.slice(index, 5);
+    }
+
     addClick() {
         this.selected = new Order();
-        this.committed = false;
+        this.currentStatus = this.selected.orderStatus;
         this.selected.orderNumber = this.orders.length > 0 ? Math.max.apply(this, this.orders.map(p => p.orderNumber)) + 1 : 1000;
         if (this.stores.length > 0) {
             this.selected.store = this.stores[0].value;
@@ -139,7 +144,7 @@ export class OrdersComponent implements OnInit {
         if (!this.selected) {
             return;
         }
-        this.committed = this.selected.orderStatus !== 'New';
+        this.currentStatus = this.selected.orderStatus;
         this.selected.orderDate = new Date(this.selected.orderDate);
         this.displayPanel = true;
     }
@@ -147,7 +152,7 @@ export class OrdersComponent implements OnInit {
     closeClick() {
         this.displayPanel = false;
         this.selected = null;
-        this.committed = false;
+        this.currentStatus = null;
     }
 
     saveClick() {
@@ -161,7 +166,10 @@ export class OrdersComponent implements OnInit {
             this.orderService.update(this.selected.orderId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => {
+                    this.selected.orderStatus = this.currentStatus;
+                    alert(onerror._body);
+                });
         }
     }
 
