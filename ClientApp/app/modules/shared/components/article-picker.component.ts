@@ -1,5 +1,5 @@
-﻿import { Component, Input, EventEmitter } from '@angular/core';
-import { SelectItem, MenuItem } from 'primeng/primeng';
+﻿import { Component, Input, EventEmitter, ViewChild } from '@angular/core';
+import { DataTable, SelectItem, MenuItem } from 'primeng/primeng';
 //import { Observable } from 'rxjs/Rx';
 import { Product, ProductCategory, ProductAttributeValue, ArticleForm, ArticleItem } from './../../../shared/models';
 import { Helpers } from './../../../shared/helpers';
@@ -14,6 +14,7 @@ import { ProductService } from './../../../services/product.service';
 })
 
 export class ArticlePickerComponent {
+    @ViewChild('dt') datatable: DataTable;
     totalRecords = 0;
     products: Product[];
 	selected: Product;
@@ -45,6 +46,10 @@ export class ArticlePickerComponent {
         }
     }
 
+    hidePickerClick() {
+        this.isOpen = false;
+    }
+
     pickerClick() {
         let data: string[] = [];
         this.articleForm.body
@@ -72,7 +77,11 @@ export class ArticlePickerComponent {
         this.categories = this.categories.concat(filterCategories);
     }
 
-    onRowExpanded(expandedItem: any) {
+    onRowSelect(event: any) {
+        this.datatable.toggleRow(event.data);
+    }
+
+    onRowExpand(expandedItem: any) {
         this.productService
             .getProduct(expandedItem.data.productId)
             .subscribe(result => {

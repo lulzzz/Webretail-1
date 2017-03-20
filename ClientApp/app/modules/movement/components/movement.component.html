@@ -16,7 +16,7 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!this.inputComponent.isOpen" [responsive]="true" [editable]="true" [value]="items | articleFilter:articleValue">
+    <p-dataTable *ngIf="!this.inputComponent.isOpen" [responsive]="true" [editable]="true" [value]="items | articleFilter:articleValue" sortField="movementArticleId" sortOrder="0">
         <p-header>
             <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Article picker" [disabled]="committed" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
             <p-chips [disabled]="committed" [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>

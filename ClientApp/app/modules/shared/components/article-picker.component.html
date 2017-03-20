@@ -1,5 +1,6 @@
 ﻿<p-dataTable *ngIf="isOpen" [responsive]="true" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
-    expandableRows="true" (onRowExpand)="onRowExpanded($event)"
+    selectionMode="single" (onRowSelect)="onRowSelect($event)"
+    expandableRows="true" (onRowExpand)="onRowExpand($event)"
     [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
     <p-column field="productCode" header="Code" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     <p-column field="productName" header="Name" [sortable]="true" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}">
@@ -29,24 +30,28 @@
             {{data.sellingPrice | currency: 'EUR' : true}}
         </template>
     </p-column>
-    <p-column expander="true" styleClass="col-icon">
+    <p-column expander="true" [style]="{'width':'60px'}" styleClass="col-icon">
         <template pTemplate="header">
-            <button pButton label="Pickup" type="button" (click)="pickerClick()" class="ui-button-success" icon="fa-reply-all"></button>
+            <button pButton type="button" (click)="hidePickerClick()" class="ui-button-secondary" icon="fa-close"></button>
         </template>        
     </p-column>
     <template pTemplate="rowexpansion">
-        <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">    
-            <tr> 
-                <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
-            </tr> 
-            <tbody *ngFor="let item of articleForm.body"> 
+        <div style="text-align: center">
+            <img *ngIf="!articleForm" src="assets/loading.gif">
+            <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">    
                 <tr> 
-                    <td *ngFor="let col of item" align="center"> 
-                        <span *ngIf="col.value===''">{{col.label}}</span>
-                        <p-spinner *ngIf="col.value!==''" pTooltip="{{col.label}}" tooltipPosition="left" size="4" [(ngModel)]="col.data" [min]="0"></p-spinner>
-                    </td> 
+                    <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
                 </tr> 
-            </tbody>
-        </table>
+                <tbody *ngFor="let item of articleForm.body"> 
+                    <tr> 
+                        <td *ngFor="let col of item" align="center"> 
+                            <span *ngIf="col.value===''">{{col.label}}</span>
+                            <p-spinner *ngIf="col.value!==''" pTooltip="{{col.value}} : {{col.label}}" tooltipPosition="left" size="4" [(ngModel)]="col.data" [min]="0"></p-spinner>
+                        </td> 
+                    </tr> 
+                </tbody>
+            </table>
+            <button pButton label="Pickup" type="button" (click)="pickerClick()" class="ui-button-primary" icon="fa-reply-all"></button>
+        </div>
     </template>
 </p-dataTable>
