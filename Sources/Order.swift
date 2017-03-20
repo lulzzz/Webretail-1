@@ -17,7 +17,6 @@ class Order: PostgresSqlORM, JSONConvertible {
 	public var causalId : Int = 0
 	public var customerId : Int = 0
 	public var orderNumber : Int = 0
-	public var orderDate : Int = 0
 	public var orderNote : String = ""
 	public var orderStatus : String = ""
 	public var created : Int = Int.now()
@@ -36,7 +35,6 @@ class Order: PostgresSqlORM, JSONConvertible {
 		causalId = this.data["causalid"] as? Int ?? 0
 		customerId = this.data["customerid"] as? Int ?? 0
 		orderNumber = this.data["ordernumber"] as? Int ?? 0
-		orderDate = this.data["orderdate"] as? Int ?? 0
 		orderNote = this.data["ordernote"] as? String  ?? ""
 		orderStatus = this.data["orderstatus"] as? String ?? ""
 		created = this.data["created"] as? Int ?? 0
@@ -84,9 +82,9 @@ class Order: PostgresSqlORM, JSONConvertible {
 		self._customer = customer
 		self.customerId =  customer.customerId
 		self.orderNumber = getJSONValue(named: "orderNumber", from: values, defaultValue: 0)
-		self.orderDate = getJSONValue(named: "orderDate", from: values, defaultValue: "").DateToInt()
 		self.orderNote = getJSONValue(named: "orderNote", from: values, defaultValue: "")
 		self.orderStatus = getJSONValue(named: "orderStatus", from: values, defaultValue: "")
+		self.created = getJSONValue(named: "created", from: values, defaultValue: "").DateToInt()
 	}
 	
 	func jsonEncodedString() throws -> String {
@@ -100,7 +98,6 @@ class Order: PostgresSqlORM, JSONConvertible {
 			"causal": _causal,
 			"customer": _customer,
 			"orderNumber": orderNumber,
-			"orderDate": orderDate.formatDate(),
 			"orderNote": orderNote,
 			"orderStatus": orderStatus,
 			"created": created.formatDate(),

@@ -149,7 +149,6 @@ export class Movement {
   public committed: boolean;
   public movementDesc: string;
   public movementNote: string;
-  public movementUser: string;
   public created: Date;
   public updated: Date;
 
@@ -160,7 +159,6 @@ export class Movement {
     this.committed = false;
     this.movementDesc = '';
     this.movementNote = '';
-    this.movementUser = '';
     this.created = new Date();
     this.updated = new Date();
   }
@@ -218,7 +216,6 @@ export class Order {
   public causal: Causal;
   public customer: Customer;
   public orderNumber: number;
-  public orderDate: Date;
   public orderNote: string;
   public orderStatus: string;
   public created: Date;
@@ -229,7 +226,6 @@ export class Order {
     this.store = new Store();
     this.causal = new Causal();
     this.customer = new Customer();
-    this.orderDate = new Date();
     this.orderNote = '';
     this.orderStatus = 'New';
     this.created = new Date();

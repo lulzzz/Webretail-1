@@ -10,6 +10,7 @@ import { CategoryFilterPipe } from './../../pipes/category-filter.pipe';
 import { PriceFilterPipe } from './../../pipes/price-filter.pipe';
 import { ArticleInfoPipe } from './../../pipes/articleinfo.pipe';
 import { ArticleFilterPipe } from './../../pipes/article-filter.pipe';
+import { DateFilterPipe } from './../../pipes/date-filter.pipe';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { ArticleFilterPipe } from './../../pipes/article-filter.pipe';
         CategoryFilterPipe,
         PriceFilterPipe,
         ArticleInfoPipe,
-        ArticleFilterPipe
+        ArticleFilterPipe,
+        DateFilterPipe
     ],
     exports: [
         CommonModule,
@@ -30,7 +32,8 @@ import { ArticleFilterPipe } from './../../pipes/article-filter.pipe';
         CategoryFilterPipe,
         PriceFilterPipe,
         ArticleInfoPipe,
-        ArticleFilterPipe
+        ArticleFilterPipe,
+        DateFilterPipe
     ]
 })
 

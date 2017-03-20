@@ -15,17 +15,18 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="orders | dateFilter:dateValue"
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="orders | dateFilter:dateStartValue:dateFinishValue"
         selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="orderNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="orderDate" header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
+        <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <template let-col let-data="rowData" pTemplate="body">
-                {{data.orderDate | date:'yyyy-MM-dd'}}
+                {{data.created | date:'yyyy-MM-dd'}}
             </template>            
             <template pTemplate="filter" let-col>
-                <i class="fa fa-close" (click)="dateValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
-                <p-calendar [(ngModel)]="dateValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Search" styleClass="ui-column-filter"></p-calendar>
+                <i class="fa fa-close" (click)="dateStartValue=null;dateFinishValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-calendar [(ngModel)]="dateStartValue" [inputStyle]="{'width':'50%','float':'left'}" dateFormat="yy-mm-dd" placeholder="Start" styleClass="ui-column-filter"></p-calendar>
+                <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'50%','float':'right'}" dateFormat="yy-mm-dd" placeholder="Finish" styleClass="ui-column-filter"></p-calendar>
             </template>
         </p-column>
         <p-column field="customer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
@@ -75,7 +76,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="date">Date</label></div>
                     <div class="ui-grid-col-8">
-                        <p-calendar formControlName="date" [(ngModel)]="selected.orderDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        <p-calendar formControlName="date" [(ngModel)]="selected.created" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['date'].valid&&dataform.controls['date'].dirty">
                             <i class="fa fa-close"></i> Date is required
                         </div>

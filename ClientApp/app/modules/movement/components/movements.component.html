@@ -15,10 +15,20 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="movements"
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="movements | dateFilter:dateStartValue:dateFinishValue"
         selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="movementId" header="Id" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.created | date:'yyyy-MM-dd'}}
+            </template>            
+            <template pTemplate="filter" let-col>
+                <i class="fa fa-close" (click)="dateStartValue=null;dateFinishValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-calendar [(ngModel)]="dateStartValue" [inputStyle]="{'width':'50%','float':'left'}" dateFormat="yy-mm-dd" placeholder="Start" styleClass="ui-column-filter"></p-calendar>
+                <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'50%','float':'right'}" dateFormat="yy-mm-dd" placeholder="Finish" styleClass="ui-column-filter"></p-calendar>
+            </template>
+        </p-column>
         <p-column field="movementDesc" header="Description" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
@@ -46,6 +56,15 @@
                     <div class="ui-grid-col-8">{{selected.movementId}}</div>
                 </div>
                 <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="date">Date</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-calendar formControlName="date" [(ngModel)]="selected.created" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['date'].valid&&dataform.controls['date'].dirty">
+                            <i class="fa fa-close"></i> Date is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="causal">Causal</label></div>
                     <div class="ui-grid-col-8">
                         <p-dropdown [options]="causals" formControlName="causal" [(ngModel)]="selected.causal" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
@@ -53,7 +72,7 @@
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['causal'].errors['required']">Causal is required</span>
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="store">Store</label></div>
@@ -63,7 +82,7 @@
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['store'].errors['required']">Store is required</span>
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="desc">Description</label></div>
@@ -72,13 +91,13 @@
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['desc'].valid&&dataform.controls['desc'].dirty">
                             <i class="fa fa-close"></i> Description is required
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="note">Note</label></div>
                     <div class="ui-grid-col-8">
                         <textarea pInputTextarea formControlName="note" [(ngModel)]="selected.orderNote" style="width: 100%"></textarea>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">

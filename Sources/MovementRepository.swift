@@ -42,7 +42,6 @@ class MovementRepository : MovementProtocol {
     }
 	
     func add(item: Movement) throws {
-        item.created = Int.now()
         item.updated = Int.now()
         try item.save {
             id in item.movementId = id as! Int
@@ -59,8 +58,8 @@ class MovementRepository : MovementProtocol {
         current.storeId = item.storeId
         current.movementDesc = item.movementDesc
         current.movementNote = item.movementNote
-        current.movementUser = item.movementUser
-        current.updated = Int.now()
+		current.created = item.created
+		current.updated = Int.now()
         try current.save()
     }
     

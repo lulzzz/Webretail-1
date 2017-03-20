@@ -13,7 +13,6 @@ import { OrdersComponent } from './components/orders.component';
 import { OrderComponent } from './components/order.component';
 import { OrderService } from './../../services/order.service';
 import { SharedComponentModule } from './../../modules/shared/shared-component.module';
-import { DateFilterPipe } from './../../pipes/date-filter.pipe';
 
 @NgModule({
     imports: [
@@ -29,8 +28,7 @@ import { DateFilterPipe } from './../../pipes/date-filter.pipe';
     ],
     declarations: [
         OrdersComponent,
-        OrderComponent,
-        DateFilterPipe
+        OrderComponent
     ],
     providers: [
         OrderService,

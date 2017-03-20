@@ -27,6 +27,8 @@ export class MovementsComponent implements OnInit {
     displayPanel: boolean;
 	dataform: FormGroup;
     buttons: MenuItem[];
+    dateStartValue: Date;
+    dateFinishValue: Date;
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
@@ -42,6 +44,7 @@ export class MovementsComponent implements OnInit {
         this.dataform = this.fb.group({
             'store': new FormControl('', Validators.required),
             'causal': new FormControl('', Validators.required),
+            'date': new FormControl('', Validators.required),
             'desc': new FormControl('', Validators.required),
             'note': new FormControl('', Validators.nullValidator)
         });
@@ -102,6 +105,7 @@ export class MovementsComponent implements OnInit {
         if (!this.selected) {
             return;
         }
+        this.selected.created = new Date(this.selected.created);
         this.displayPanel = true;
     }
 

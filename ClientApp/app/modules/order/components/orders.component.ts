@@ -33,7 +33,8 @@ export class OrdersComponent implements OnInit {
 	dataform: FormGroup;
     buttons: MenuItem[];
     newNumber: number;
-    dateValue: Date;
+    dateStartValue: Date;
+    dateFinishValue: Date;
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
@@ -150,7 +151,7 @@ export class OrdersComponent implements OnInit {
             return;
         }
         this.currentStatus = this.selected.orderStatus;
-        this.selected.orderDate = new Date(this.selected.orderDate);
+        this.selected.created = new Date(this.selected.created);
         this.displayPanel = true;
     }
 
