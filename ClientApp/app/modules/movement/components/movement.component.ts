@@ -70,25 +70,29 @@ export class MovementComponent implements OnInit, OnDestroy {
     }
 
     addBarcode() {
-        this.barcodes.forEach(barcode => {
+        this.barcodes.forEach(data => {
+            let array = data.split('#');
+            let barcode = array[0];
+            let quantity = array.length === 2 ? Number(array[1]) : 1.0;
             let item = this.items.find(p => p.barcode === barcode);
             if (item) {
-                item.quantity += 1.0;
+                item.quantity += quantity;
                 this.movementService
                     .updateItem(item.movementArticleId, item)
                     .subscribe(result => {
-                        this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
+                        this.barcodes.splice(this.barcodes.indexOf(data), 1);
                         this.updateTotals();
                     }, onerror => alert(onerror._body));
             } else {
                 item = new MovementArticle();
                 item.movementId = this.movementId;
                 item.barcode = barcode;
+                item.quantity = quantity;
                 this.movementService
                     .createItem(item)
                     .subscribe(result => {
                         this.items.push(result);
-                        this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
+                        this.barcodes.splice(this.barcodes.indexOf(data), 1);
                         this.updateTotals();
                     }, onerror => alert(onerror._body));
             }
@@ -100,7 +104,7 @@ export class MovementComponent implements OnInit, OnDestroy {
     }
 
     pickerClick(event: any) {
-        this.barcodes.push(event);
+        this.barcodes = this.barcodes.concat(event);
         this.addBarcode();
     }
 

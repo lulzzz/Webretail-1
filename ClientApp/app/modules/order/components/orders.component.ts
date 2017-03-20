@@ -189,6 +189,7 @@ export class OrdersComponent implements OnInit {
                 this.orderService.delete(this.selected.orderId)
                     .subscribe(result => {
                         this.orders.splice(this.selectedIndex, 1);
+                        this.totalRecords = this.orders.length;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

@@ -66,31 +66,38 @@ export class OrderComponent implements OnInit, OnDestroy {
     }
 
     updateTotals() {
+        if (!this.items || this.items.length === 0) {
+            return;
+        }
         this.totalRecords = this.items.length;
         this.totalItems = this.items.map(p => p.quantity).reduce((sum, current) => sum + current);
         this.totalAmount = this.items.map(p => p.amount).reduce((sum, current) => sum + current);
     }
 
     addBarcode() {
-        this.barcodes.forEach(barcode => {
+        this.barcodes.forEach(data => {
+            let array = data.split('#');
+            let barcode = array[0];
+            let quantity = array.length === 2 ? Number(array[1]) : 1.0;
             let item = this.items.find(p => p.barcode === barcode);
             if (item) {
-                item.quantity += 1.0;
+                item.quantity += quantity;
                 this.orderService
                     .updateItem(item.orderArticleId, item)
                     .subscribe(result => {
-                        this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
+                        this.barcodes.splice(this.barcodes.indexOf(data), 1);
                         this.updateTotals();
                     }, onerror => alert(onerror._body));
             } else {
                 item = new OrderArticle();
                 item.orderId = this.orderId;
                 item.barcode = barcode;
+                item.quantity = quantity;
                 this.orderService
                     .createItem(item)
                     .subscribe(result => {
                         this.items.push(result);
-                        this.barcodes.splice(this.barcodes.indexOf(barcode), 1);
+                        this.barcodes.splice(this.barcodes.indexOf(data), 1);
                         this.updateTotals();
                     }, onerror => alert(onerror._body));
             }
@@ -102,7 +109,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     }
 
     pickerClick(event: any) {
-        this.barcodes.push(event);
+        this.barcodes = this.barcodes.concat(event);
         this.addBarcode();
     }
 

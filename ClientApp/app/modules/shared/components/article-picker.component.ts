@@ -31,13 +31,6 @@ export class ArticlePickerComponent {
         this.isOpen = false;
     }
 
-    pickedClick(item: ArticleItem) {
-        if (item.value !== '') {
-            this.onPicked.emit(item.value);
-            this.isOpen = false;
-        }
-    }
-
     public loadData() {
         this.isOpen = true;
         if (!this.products) {
@@ -52,7 +45,15 @@ export class ArticlePickerComponent {
         }
     }
 
-    hidePickerClick() {
+    pickerClick() {
+        let data: string[] = [];
+        this.articleForm.body
+            .forEach(p => p.forEach(e => {
+                if (e.data > 0) {
+                    data.push(`${e.value}#${e.data}`);
+                }
+            }));
+        this.onPicked.emit(data);
         this.isOpen = false;
     }
 
