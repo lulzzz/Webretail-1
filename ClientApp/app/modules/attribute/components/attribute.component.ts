@@ -105,6 +105,7 @@ export class AttributeComponent implements OnInit {
                     .delete(this.selected.attributeId)
                     .subscribe(result => {
                         this.attributes.splice(this.selectedIndex, 1);
+                        this.totalRecords--;
                         this.selected = null;
                         this.values.length = 0;
                         this.displayPanel = false;
@@ -160,6 +161,7 @@ export class AttributeComponent implements OnInit {
                     .deleteValue(this.selectedValue.attributeValueId)
                     .subscribe(result => {
                         this.values.splice(this.selectedValueIndex, 1);
+                        this.totalValues--;
                         this.closeValueClick();
                     }, onerror => alert(onerror._body));
             }

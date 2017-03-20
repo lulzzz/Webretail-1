@@ -83,6 +83,7 @@ export class CategoryComponent implements OnInit {
                     .delete(this.selected.categoryId)
                     .subscribe(result => {
                         this.categories.splice(this.selectedIndex, 1);
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

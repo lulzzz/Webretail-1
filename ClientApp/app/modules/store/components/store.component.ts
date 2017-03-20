@@ -86,6 +86,7 @@ export class StoreComponent implements OnInit {
                     .delete(this.selected.storeId)
                     .subscribe(result => {
                         this.stores.splice(this.selectedIndex, 1);
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

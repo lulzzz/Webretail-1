@@ -125,7 +125,7 @@ export class ProductsComponent implements OnInit {
                 this.productService.delete(this.selected.productId)
                     .subscribe(result => {
                         this.products.splice(this.selectedIndex, 1);
-                        this.totalRecords = this.products.length;
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

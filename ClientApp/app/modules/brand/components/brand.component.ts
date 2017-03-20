@@ -82,6 +82,7 @@ export class BrandComponent implements OnInit {
                     .delete(this.selected.brandId)
                     .subscribe(result => {
                         this.brands.splice(this.selectedIndex, 1);
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

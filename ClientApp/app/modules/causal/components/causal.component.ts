@@ -89,6 +89,7 @@ export class CausalComponent implements OnInit {
                     .delete(this.selected.causalId)
                     .subscribe(result => {
                         this.causals.splice(this.selectedIndex, 1);
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

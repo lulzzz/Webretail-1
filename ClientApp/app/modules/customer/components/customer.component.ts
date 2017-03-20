@@ -91,6 +91,7 @@ export class CustomerComponent implements OnInit {
                     .delete(this.selected.customerId)
                     .subscribe(result => {
                         this.customers.splice(this.selectedIndex, 1);
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

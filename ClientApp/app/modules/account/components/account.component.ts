@@ -87,6 +87,7 @@ export class AccountComponent implements OnInit {
                     .delete(this.selected.uniqueID)
                     .subscribe(result => {
                         this.accounts.splice(this.selectedIndex, 1);
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

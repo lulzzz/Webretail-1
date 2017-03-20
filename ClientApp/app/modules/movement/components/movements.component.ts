@@ -136,7 +136,7 @@ export class MovementsComponent implements OnInit {
                 this.movementService.delete(this.selected.movementId)
                     .subscribe(result => {
                         this.movements.splice(this.selectedIndex, 1);
-                        this.totalRecords = this.movements.length;
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }
