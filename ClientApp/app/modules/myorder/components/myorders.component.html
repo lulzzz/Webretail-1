@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
 
-    <h1>Orders</h1>
+    <h1>My Orders</h1>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
@@ -18,10 +18,10 @@
     <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="orders | dateFilter:dateStartValue:dateFinishValue"
         selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
-        <p-column field="orderNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="myOrderNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <template let-col let-data="rowData" pTemplate="body">
-                {{data.orderDate | date:'yyyy-MM-dd'}}
+                {{data.myOrderDate | date:'yyyy-MM-dd'}}
             </template>            
             <template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="dateStartValue=null;dateFinishValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
@@ -29,11 +29,7 @@
                 <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'50%','float':'right'}" dateFormat="yy-mm-dd" placeholder="Finish" styleClass="ui-column-filter"></p-calendar>
             </template>
         </p-column>
-        <p-column field="customer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
-            <template pTemplate="filter" let-col>
-                <p-dropdown [options]="customersFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-            </template>
-        </p-column>
+        <p-column field="myOrderSupplier" header="Supplier" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" placeholder="Search"></p-column>
         <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="causalsFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
@@ -44,7 +40,7 @@
                 <p-dropdown [options]="storesFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>
-        <p-column field="orderStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+        <p-column field="myOrderStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="statusFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
@@ -54,7 +50,7 @@
     <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">
-                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Order</b></span>
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>My Order</b></span>
                 <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
@@ -62,12 +58,12 @@
             <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label>Id</label></div>
-                    <div class="ui-grid-col-8">{{selected.orderId}}</div>
+                    <div class="ui-grid-col-8">{{selected.myOrderId}}</div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="number">Number</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="number" [(ngModel)]="selected.orderNumber"/>
+                        <input pInputText formControlName="number" [(ngModel)]="selected.myOrderNumber"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['number'].valid&&dataform.controls['number'].dirty">
                             <i class="fa fa-close"></i> Number is required
                         </div>
@@ -76,19 +72,19 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="date">Date</label></div>
                     <div class="ui-grid-col-8">
-                        <p-calendar formControlName="date" [(ngModel)]="selected.orderDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        <p-calendar formControlName="date" [(ngModel)]="selected.myOrderDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['date'].valid&&dataform.controls['date'].dirty">
                             <i class="fa fa-close"></i> Date is required
                         </div>
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="customer">Customer</label></div>
+                    <div class="ui-grid-col-4"><label for="supplier">Supplier</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.customer" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['customer'].valid&&dataform.controls['customer'].dirty">
+                        <input pInputText formControlName="supplier" [(ngModel)]="selected.myOrderSupplier"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['supplier'].valid&&dataform.controls['supplier'].dirty">
                             <i class="fa fa-close"></i>
-                            <span *ngIf="dataform.controls['store'].errors['required']">Customer is required</span>
+                            <span *ngIf="dataform.controls['store'].errors['required']">Supplier is required</span>
                         </div>
                     </div>
                 </div>
@@ -115,7 +111,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="status">Status</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="getStatus" formControlName="status" [(ngModel)]="selected.orderStatus" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="getStatus" formControlName="status" [(ngModel)]="selected.myOrderStatus" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['status'].valid&&dataform.controls['status'].dirty">
                             <i class="fa fa-close"></i> Status is required
                         </div>
@@ -124,12 +120,12 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="note">Note</label></div>
                     <div class="ui-grid-col-8">
-                        <textarea pInputTextarea formControlName="note" [(ngModel)]="selected.orderNote" style="width: 100%"></textarea>
+                        <textarea pInputTextarea formControlName="note" [(ngModel)]="selected.myOrderNote" style="width: 100%"></textarea>
                     </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">
-                        <button *ngIf="selected.orderId>0&&selected.orderStatus==='New'" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+                        <button *ngIf="selected.myOrderId>0&&selected.myOrderStatus==='New'" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
                     </div>
                     <div class="ui-grid-col-4"></div>
                     <div class="ui-grid-col-4">

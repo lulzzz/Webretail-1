@@ -12,7 +12,8 @@ export const routes: Routes = [
     { path: 'causal', loadChildren: './modules/causal/causal.module#CausalModule' },
     { path: 'movement', loadChildren: './modules/movement/movement.module#MovementModule' },
     { path: 'customer', loadChildren: './modules/customer/customer.module#CustomerModule' },
-    { path: 'order', loadChildren: './modules/order/order.module#OrderModule' }
+    { path: 'order', loadChildren: './modules/order/order.module#OrderModule' },
+    { path: 'myorder', loadChildren: './modules/myorder/myorder.module#MyOrderModule' }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);

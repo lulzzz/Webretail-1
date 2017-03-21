@@ -222,6 +222,7 @@ export class Order {
     this.store = new Store();
     this.causal = new Causal();
     this.customer = new Customer();
+    this.orderNumber = 0;
     this.orderDate = new Date();
     this.orderNote = '';
     this.orderStatus = 'New';
@@ -248,6 +249,51 @@ export class OrderArticle {
     this.amount = 0.0;
   }
 }
+
+export class MyOrder {
+  public myOrderId: number;
+  public store: Store;
+  public causal: Causal;
+  public myOrderNumber: number;
+  public myOrderDate: Date;
+  public myOrderSupplier: string;
+  public myOrderNote: string;
+  public myOrderStatus: string;
+  public updated: Date;
+
+  constructor() {
+    this.myOrderId = 0;
+    this.store = new Store();
+    this.causal = new Causal();
+    this.myOrderNumber = 0;
+    this.myOrderDate = new Date();
+    this.myOrderSupplier = '';
+    this.myOrderNote = '';
+    this.myOrderStatus = 'New';
+    this.updated = new Date();
+  }
+}
+
+export class MyOrderArticle {
+  public myOrderArticleId: number;
+  public myOrderId: number;
+  public barcode: string;
+  public product: Product;
+  public quantity: number;
+  public price: number;
+  public amount: number;
+
+  constructor() {
+    this.myOrderArticleId = 0;
+    this.myOrderId = 0;
+    this.barcode = '';
+    this.product = new Product();
+    this.quantity = 1.0;
+    this.price = 0.0;
+    this.amount = 0.0;
+  }
+}
+
 
 // Interfaces
 

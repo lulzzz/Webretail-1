@@ -30,6 +30,7 @@
     "ClientApp/app/modules/movement/movement.module.ts",
     "ClientApp/app/modules/customer/customer.module.ts",
     "ClientApp/app/modules/order/order.module.ts",
+    "ClientApp/app/modules/myorder/myorder.module.ts",
     "ClientApp/main.ts"
   ],
   "awesomeTypescriptLoaderOptions": {
