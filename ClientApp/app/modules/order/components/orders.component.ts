@@ -151,7 +151,7 @@ export class OrdersComponent implements OnInit {
             return;
         }
         this.currentStatus = this.selected.orderStatus;
-        this.selected.created = new Date(this.selected.created);
+        this.selected.orderDate = new Date(this.selected.orderDate);
         this.displayPanel = true;
     }
 

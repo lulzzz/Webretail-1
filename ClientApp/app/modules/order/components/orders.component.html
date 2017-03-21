@@ -21,7 +21,7 @@
         <p-column field="orderNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <template let-col let-data="rowData" pTemplate="body">
-                {{data.created | date:'yyyy-MM-dd'}}
+                {{data.orderDate | date:'yyyy-MM-dd'}}
             </template>            
             <template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="dateStartValue=null;dateFinishValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
@@ -76,7 +76,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="date">Date</label></div>
                     <div class="ui-grid-col-8">
-                        <p-calendar formControlName="date" [(ngModel)]="selected.created" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        <p-calendar formControlName="date" [(ngModel)]="selected.orderDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['date'].valid&&dataform.controls['date'].dirty">
                             <i class="fa fa-close"></i> Date is required
                         </div>

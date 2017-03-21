@@ -146,20 +146,20 @@ export class Movement {
   public movementId: number;
   public store: Store;
   public causal: Causal;
-  public committed: boolean;
+  public movementDate: Date;
   public movementDesc: string;
   public movementNote: string;
-  public created: Date;
+  public committed: boolean;
   public updated: Date;
 
   constructor() {
     this.movementId = 0;
     this.store = new Store();
     this.causal = new Causal();
-    this.committed = false;
+    this.movementDate = new Date();
     this.movementDesc = '';
     this.movementNote = '';
-    this.created = new Date();
+    this.committed = false;
     this.updated = new Date();
   }
 }
@@ -170,8 +170,6 @@ export class MovementArticle {
   public barcode: string;
   public product: Product;
   public quantity: number;
-  public created: Date;
-  public updated: Date;
 
   constructor() {
     this.movementArticleId = 0;
@@ -179,8 +177,6 @@ export class MovementArticle {
     this.barcode = '';
     this.product = new Product();
     this.quantity = 1.0;
-    this.created = new Date();
-    this.updated = new Date();
   }
 }
 
@@ -216,9 +212,9 @@ export class Order {
   public causal: Causal;
   public customer: Customer;
   public orderNumber: number;
+  public orderDate: Date;
   public orderNote: string;
   public orderStatus: string;
-  public created: Date;
   public updated: Date;
 
   constructor() {
@@ -226,9 +222,9 @@ export class Order {
     this.store = new Store();
     this.causal = new Causal();
     this.customer = new Customer();
+    this.orderDate = new Date();
     this.orderNote = '';
     this.orderStatus = 'New';
-    this.created = new Date();
     this.updated = new Date();
   }
 }
@@ -241,8 +237,6 @@ export class OrderArticle {
   public quantity: number;
   public price: number;
   public amount: number;
-  public created: Date;
-  public updated: Date;
 
   constructor() {
     this.orderArticleId = 0;
@@ -252,8 +246,6 @@ export class OrderArticle {
     this.quantity = 1.0;
     this.price = 0.0;
     this.amount = 0.0;
-    this.created = new Date();
-    this.updated = new Date();
   }
 }
 

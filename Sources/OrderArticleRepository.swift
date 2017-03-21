@@ -35,8 +35,6 @@ class OrderArticleRepository : OrderArticleProtocol {
 	}
 	
 	func add(item: OrderArticle) throws {
-		item.created = Int.now()
-		item.updated = Int.now()
 		try item.save {
 			id in item.orderArticleId = id as! Int
 		}
@@ -50,7 +48,6 @@ class OrderArticleRepository : OrderArticleProtocol {
 		
 		current.quantity = item.quantity
 		current.price = item.price
-		current.updated = Int.now()
 		try current.save()
 	}
 	

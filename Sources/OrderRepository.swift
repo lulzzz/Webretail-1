@@ -47,7 +47,6 @@ class OrderRepository : OrderProtocol {
 	}
 	
 	func add(item: Order) throws {
-		item.updated = Int.now()
 		try item.save {
 			id in item.orderId = id as! Int
 		}
@@ -63,8 +62,8 @@ class OrderRepository : OrderProtocol {
 		current.storeId = item.storeId
 		current.customerId = item.customerId
 		current.orderNumber = item.orderNumber
+		current.orderDate = item.orderDate
 		current.orderNote = item.orderNote
-		
 		if current.orderStatus == "New" && item.orderStatus == "Processing" {
 			try commit(order: current)
 		}
@@ -73,8 +72,6 @@ class OrderRepository : OrderProtocol {
 		}
 		current.orderStatus = item.orderStatus
 		
-		current.created = item.created
-		current.updated = Int.now()
 		try current.save()
 	}
 	

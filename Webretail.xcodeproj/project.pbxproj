@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		560EED541E807A2900CAC315 /* MyOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560EED531E807A2900CAC315 /* MyOrder.swift */; };
 		OBJ_1000 /* PerfectServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* PerfectServer.swift */; };
 		OBJ_1001 /* SwiftCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* SwiftCompatibility.swift */; };
 		OBJ_1002 /* SysProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* SysProcess.swift */; };
@@ -1461,6 +1462,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		560EED531E807A2900CAC315 /* MyOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrder.swift; sourceTree = "<group>"; };
 		OBJ_10 /* StringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHTML.swift; sourceTree = "<group>"; };
 		OBJ_100 /* aes_ecb.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_ecb.c; sourceTree = "<group>"; };
 		OBJ_101 /* aes_ige.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_ige.c; sourceTree = "<group>"; };
@@ -2694,7 +2696,7 @@
 			path = "Packages/SwiftMoment-0.9.1/Sources/SwiftMoment";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2705,7 +2707,6 @@
 				OBJ_940 /* webroot */,
 				OBJ_941 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_51 /* PerfectThread */ = {
@@ -3811,6 +3812,7 @@
 				OBJ_934 /* UserController.swift */,
 				OBJ_935 /* UserProtocol.swift */,
 				OBJ_936 /* UserRepository.swift */,
+				560EED531E807A2900CAC315 /* MyOrder.swift */,
 			);
 			name = Webretail;
 			path = Sources;
@@ -4295,7 +4297,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_941 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -5282,6 +5284,7 @@
 				OBJ_2012 /* Attribute.swift in Sources */,
 				OBJ_2013 /* AttributeController.swift in Sources */,
 				OBJ_2014 /* AttributeProtocol.swift in Sources */,
+				560EED541E807A2900CAC315 /* MyOrder.swift in Sources */,
 				OBJ_2015 /* AttributeRepository.swift in Sources */,
 				OBJ_2016 /* AttributeValue.swift in Sources */,
 				OBJ_2017 /* AttributeValueController.swift in Sources */,

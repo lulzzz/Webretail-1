@@ -15,10 +15,10 @@ class Movement: PostgresSqlORM, JSONConvertible {
     public var movementId : Int = 0
     public var storeId : Int = 0
     public var causalId : Int = 0
-    public var movementDesc : String = ""
+	public var movementDate : Int = Int.now()
+	public var movementDesc : String = ""
     public var movementNote : String = ""
 	public var committed : Bool = false
-    public var created : Int = Int.now()
     public var updated : Int = Int.now()
     
     public var _store : Store = Store()
@@ -30,10 +30,10 @@ class Movement: PostgresSqlORM, JSONConvertible {
         movementId = this.data["movementid"] as? Int ?? 0
         storeId = this.data["storeid"] as? Int ?? 0
         causalId = this.data["causalid"] as? Int ?? 0
-        movementDesc = this.data["movementdesc"] as? String  ?? ""
+		movementDate = this.data["movementdate"] as? Int ?? 0
+		movementDesc = this.data["movementdesc"] as? String  ?? ""
         movementNote = this.data["movementnote"] as? String  ?? ""
 		committed = this.data["committed"] as? Bool ?? false
-        created = this.data["created"] as? Int ?? 0
         updated = this.data["updated"] as? Int ?? 0
     }
     
@@ -68,9 +68,9 @@ class Movement: PostgresSqlORM, JSONConvertible {
         causal.setJSONValues(getJSONValue(named: "causal", from: values, defaultValue: [String:Any]()))
         self._causal = causal
         self.causalId =  causal.causalId
+		self.movementDate = getJSONValue(named: "movementDate", from: values, defaultValue: "").DateToInt()
         self.movementDesc = getJSONValue(named: "movementDesc", from: values, defaultValue: "")
         self.movementNote = getJSONValue(named: "movementNote", from: values, defaultValue: "")
-    	self.created = getJSONValue(named: "created", from: values, defaultValue: "").DateToInt()
     }
     
     func jsonEncodedString() throws -> String {
@@ -82,10 +82,10 @@ class Movement: PostgresSqlORM, JSONConvertible {
             "movementId": movementId,
             "store": _store,
             "causal": _causal,
+            "movementDate": movementDate.formatDate(),
             "movementDesc": movementDesc,
             "movementNote": movementNote,
             "committed": committed,
-            "created": created.formatDate(),
             "updated": updated.formatDate()
         ]
     }

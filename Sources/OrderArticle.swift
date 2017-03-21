@@ -18,8 +18,6 @@ class OrderArticle: PostgresSqlORM, JSONConvertible {
 	public var product : [String:Any] = [String:Any]()
 	public var quantity : Double = 0
 	public var price : Double = 0
-	public var created : Int = Int.now()
-	public var updated : Int = Int.now()
 	
 	open override func table() -> String { return "orderarticles" }
 	
@@ -30,8 +28,6 @@ class OrderArticle: PostgresSqlORM, JSONConvertible {
 		product = this.data["product"] as? [String:Any] ?? [String:Any]()
 		quantity = Double(this.data["quantity"] as? Float ?? 0)
 		price = Double(this.data["price"] as? Float ?? 0)
-		created = this.data["created"] as? Int ?? 0
-		updated = this.data["updated"] as? Int ?? 0
 	}
 	
 	func rows() -> [OrderArticle] {
@@ -65,9 +61,7 @@ class OrderArticle: PostgresSqlORM, JSONConvertible {
 			"product": product,
 			"quantity": quantity,
 			"amount": (quantity * price).roundCurrency(),
-			"price": price.roundCurrency(),
-			"created": created.formatDate(),
-			"updated": updated.formatDate()
+			"price": price.roundCurrency()
 		]
 	}
 }

@@ -105,7 +105,7 @@ export class MovementsComponent implements OnInit {
         if (!this.selected) {
             return;
         }
-        this.selected.created = new Date(this.selected.created);
+        this.selected.movementDate = new Date(this.selected.movementDate);
         this.displayPanel = true;
     }
 

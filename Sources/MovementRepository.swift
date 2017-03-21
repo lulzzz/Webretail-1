@@ -56,9 +56,9 @@ class MovementRepository : MovementProtocol {
         
         current.causalId = item.causalId
         current.storeId = item.storeId
-        current.movementDesc = item.movementDesc
+		current.movementDate = item.movementDate
+		current.movementDesc = item.movementDesc
         current.movementNote = item.movementNote
-		current.created = item.created
 		current.updated = Int.now()
         try current.save()
     }
