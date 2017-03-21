@@ -47,6 +47,7 @@ class OrderRepository : OrderProtocol {
 	}
 	
 	func add(item: Order) throws {
+		item.updated = Int.now()
 		try item.save {
 			id in item.orderId = id as! Int
 		}
@@ -71,7 +72,7 @@ class OrderRepository : OrderProtocol {
 			try rollback(order: current)
 		}
 		current.orderStatus = item.orderStatus
-		
+		current.updated = Int.now()
 		try current.save()
 	}
 	

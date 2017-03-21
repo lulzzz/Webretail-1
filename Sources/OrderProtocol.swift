@@ -28,15 +28,3 @@ protocol OrderProtocol {
 
 	func generatePdf(id: Int)
 }
-
-struct OrderStatus: JSONConvertible {
-	public var value: String
-	
-	func getJSONValues() -> [String : Any] {
-		return ["value": value]
-	}
-	
-	func jsonEncodedString() throws -> String {
-		return try self.getJSONValues().jsonEncodedString()
-	}
-}

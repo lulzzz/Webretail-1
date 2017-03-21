@@ -10,6 +10,18 @@ import StORM
 import PostgresStORM
 import PerfectLib
 
+struct OrderStatus: JSONConvertible {
+	public var value: String
+	
+	func getJSONValues() -> [String : Any] {
+		return ["value": value]
+	}
+	
+	func jsonEncodedString() throws -> String {
+		return try self.getJSONValues().jsonEncodedString()
+	}
+}
+
 class Order: PostgresSqlORM, JSONConvertible {
 	
 	public var orderId : Int = 0

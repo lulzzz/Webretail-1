@@ -6,4 +6,15 @@
 //
 //
 
-import Foundation
+protocol MyOrderArticleProtocol {
+	
+	func get(myOrderId: Int) throws -> [MyOrderArticle]
+	
+	func get(id: Int) throws -> MyOrderArticle?
+	
+	func add(item: MyOrderArticle) throws
+	
+	func update(id: Int, item: MyOrderArticle) throws
+	
+	func delete(id: Int) throws
+}

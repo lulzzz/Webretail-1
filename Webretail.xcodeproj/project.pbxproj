@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5606303F1E819C70004A995D /* MyOrderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5606303E1E819C70004A995D /* MyOrderProtocol.swift */; };
+		560630411E819D0E004A995D /* MyOrderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560630401E819D0E004A995D /* MyOrderRepository.swift */; };
+		560630431E819ECC004A995D /* MyOrderArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560630421E819ECC004A995D /* MyOrderArticle.swift */; };
+		560630451E81A00E004A995D /* MyOrderArticleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560630441E81A00E004A995D /* MyOrderArticleProtocol.swift */; };
+		560630471E81A067004A995D /* MyOrderArticleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560630461E81A067004A995D /* MyOrderArticleRepository.swift */; };
+		560630491E81A129004A995D /* MyOrderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560630481E81A129004A995D /* MyOrderController.swift */; };
+		5606304B1E81A18D004A995D /* MyOrderArticleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5606304A1E81A18D004A995D /* MyOrderArticleController.swift */; };
 		OBJ_1000 /* SwiftCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* SwiftCompatibility.swift */; };
 		OBJ_1001 /* SysProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* SysProcess.swift */; };
 		OBJ_1002 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* Utilities.swift */; };
@@ -1462,6 +1469,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5606303E1E819C70004A995D /* MyOrderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderProtocol.swift; sourceTree = "<group>"; };
+		560630401E819D0E004A995D /* MyOrderRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderRepository.swift; sourceTree = "<group>"; };
+		560630421E819ECC004A995D /* MyOrderArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderArticle.swift; sourceTree = "<group>"; };
+		560630441E81A00E004A995D /* MyOrderArticleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderArticleProtocol.swift; sourceTree = "<group>"; };
+		560630461E81A067004A995D /* MyOrderArticleRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderArticleRepository.swift; sourceTree = "<group>"; };
+		560630481E81A129004A995D /* MyOrderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderController.swift; sourceTree = "<group>"; };
+		5606304A1E81A18D004A995D /* MyOrderArticleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderArticleController.swift; sourceTree = "<group>"; };
 		OBJ_10 /* StringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHTML.swift; sourceTree = "<group>"; };
 		OBJ_100 /* aes_ecb.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_ecb.c; sourceTree = "<group>"; };
 		OBJ_101 /* aes_ige.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aes_ige.c; sourceTree = "<group>"; };
@@ -2655,6 +2669,8 @@
 				OBJ_889 /* CustomerController.swift */,
 				OBJ_899 /* MovementArticleController.swift */,
 				OBJ_902 /* MovementController.swift */,
+				5606304A1E81A18D004A995D /* MyOrderArticleController.swift */,
+				560630481E81A129004A995D /* MyOrderController.swift */,
 				OBJ_908 /* OrderArticleController.swift */,
 				OBJ_911 /* OrderController.swift */,
 				OBJ_920 /* ProductController.swift */,
@@ -2668,7 +2684,6 @@
 		5606303A1E81997C004A995D /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_912 /* OrderProtocol.swift */,
 				OBJ_863 /* ArticleProtocol.swift */,
 				OBJ_867 /* AttributeProtocol.swift */,
 				OBJ_871 /* AttributeValueProtocol.swift */,
@@ -2678,7 +2693,10 @@
 				OBJ_890 /* CustomerProtocol.swift */,
 				OBJ_900 /* MovementArticleProtocol.swift */,
 				OBJ_903 /* MovementProtocol.swift */,
+				560630441E81A00E004A995D /* MyOrderArticleProtocol.swift */,
+				5606303E1E819C70004A995D /* MyOrderProtocol.swift */,
 				OBJ_909 /* OrderArticleProtocol.swift */,
+				OBJ_912 /* OrderProtocol.swift */,
 				OBJ_921 /* ProductProtocol.swift */,
 				OBJ_925 /* PublicationProtocol.swift */,
 				OBJ_930 /* StoreProtocol.swift */,
@@ -2699,6 +2717,8 @@
 				OBJ_891 /* CustomerRepository.swift */,
 				OBJ_901 /* MovementArticleRepository.swift */,
 				OBJ_904 /* MovementRepository.swift */,
+				560630461E81A067004A995D /* MyOrderArticleRepository.swift */,
+				560630401E819D0E004A995D /* MyOrderRepository.swift */,
 				OBJ_910 /* OrderArticleRepository.swift */,
 				OBJ_913 /* OrderRepository.swift */,
 				OBJ_922 /* ProductRepository.swift */,
@@ -2724,6 +2744,7 @@
 				OBJ_897 /* Movement.swift */,
 				OBJ_898 /* MovementArticle.swift */,
 				OBJ_905 /* MyOrder.swift */,
+				560630421E819ECC004A995D /* MyOrderArticle.swift */,
 				OBJ_906 /* Order.swift */,
 				OBJ_907 /* OrderArticle.swift */,
 				OBJ_915 /* PostgreSqlORM.swift */,
@@ -5321,6 +5342,8 @@
 			files = (
 				OBJ_2004 /* AccessTokenStore.swift in Sources */,
 				OBJ_2005 /* AngularController.swift in Sources */,
+				5606303F1E819C70004A995D /* MyOrderProtocol.swift in Sources */,
+				560630451E81A00E004A995D /* MyOrderArticleProtocol.swift in Sources */,
 				OBJ_2006 /* Article.swift in Sources */,
 				OBJ_2007 /* ArticleAttributeValue.swift in Sources */,
 				OBJ_2008 /* ArticleController.swift in Sources */,
@@ -5351,6 +5374,7 @@
 				OBJ_2033 /* CausalRepository.swift in Sources */,
 				OBJ_2034 /* Customer.swift in Sources */,
 				OBJ_2035 /* CustomerController.swift in Sources */,
+				5606304B1E81A18D004A995D /* MyOrderArticleController.swift in Sources */,
 				OBJ_2036 /* CustomerProtocol.swift in Sources */,
 				OBJ_2037 /* CustomerRepository.swift in Sources */,
 				OBJ_2038 /* CustomRealm.swift in Sources */,
@@ -5362,12 +5386,15 @@
 				OBJ_2044 /* MovementArticle.swift in Sources */,
 				OBJ_2045 /* MovementArticleController.swift in Sources */,
 				OBJ_2046 /* MovementArticleProtocol.swift in Sources */,
+				560630471E81A067004A995D /* MyOrderArticleRepository.swift in Sources */,
 				OBJ_2047 /* MovementArticleRepository.swift in Sources */,
 				OBJ_2048 /* MovementController.swift in Sources */,
 				OBJ_2049 /* MovementProtocol.swift in Sources */,
 				OBJ_2050 /* MovementRepository.swift in Sources */,
 				OBJ_2051 /* MyOrder.swift in Sources */,
+				560630431E819ECC004A995D /* MyOrderArticle.swift in Sources */,
 				OBJ_2052 /* Order.swift in Sources */,
+				560630411E819D0E004A995D /* MyOrderRepository.swift in Sources */,
 				OBJ_2053 /* OrderArticle.swift in Sources */,
 				OBJ_2054 /* OrderArticleController.swift in Sources */,
 				OBJ_2055 /* OrderArticleProtocol.swift in Sources */,
@@ -5398,6 +5425,7 @@
 				OBJ_2080 /* User.swift in Sources */,
 				OBJ_2081 /* UserController.swift in Sources */,
 				OBJ_2082 /* UserProtocol.swift in Sources */,
+				560630491E81A129004A995D /* MyOrderController.swift in Sources */,
 				OBJ_2083 /* UserRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
