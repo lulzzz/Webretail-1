@@ -23,7 +23,7 @@ a:hover{
 }
 
 .footer {
-  padding: 20px;
+  padding: 40px;
   color: #ccc;
   text-align: center;
   font-size: small;
@@ -53,4 +53,27 @@ body .ui-widget-header {
 body .ui-toolbar-group-right button,
 body .ui-toolbar-group-right i {
   margin-left: 10px;
+}
+
+.ui-widget-content {
+  border: 1px solid #eee !important
+}
+
+.ui-datatable {
+  border-color: #eee;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+}
+
+.ui-datatable .ui-datatable-thead > tr > th {
+  border-style: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.ui-datatable .ui-datatable-data > tr > td {
+  border-color: #eee;
+  border-style: solid;
+  border-left-width: 1px;
 }

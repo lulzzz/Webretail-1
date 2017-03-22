@@ -10,8 +10,8 @@ export class Helpers {
         let j = 0;
         for (let i = 0; i < len; i++) {
             let item = a[i];
-            if (seen[item] !== 1) {
-                seen[item] = 1;
+            if (seen[item.label] !== 1) {
+                seen[item.label] = 1;
                 out[j++] = item;
             }
         }

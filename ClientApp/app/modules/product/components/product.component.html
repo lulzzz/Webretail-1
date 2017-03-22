@@ -47,7 +47,7 @@
         <tbody *ngFor="let item of articleForm.body"> 
             <tr> 
                 <td *ngFor="let col of item" align="center"> 
-                    <span title="{{col.value}}">{{col.label}}</span> 
+                    <span title="{{col.value}}">{{col.value}}<br/>{{col.label}}</span> 
                 </td> 
             </tr> 
         </tbody>
