@@ -3822,11 +3822,11 @@
 		OBJ_857 /* Webretail */ = {
 			isa = PBXGroup;
 			children = (
+				5606303D1E8199E8004A995D /* Authentication */,
 				560630391E81995D004A995D /* Controllers */,
+				5606303C1E8199C4004A995D /* Models */,
 				5606303A1E81997C004A995D /* Protocols */,
 				5606303B1E819998004A995D /* Repositories */,
-				5606303C1E8199C4004A995D /* Models */,
-				5606303D1E8199E8004A995D /* Authentication */,
 				OBJ_893 /* Extensions.swift */,
 				OBJ_895 /* IoCContainer.swift */,
 				OBJ_896 /* main.swift */,
