@@ -14,12 +14,9 @@ class MovementRepository : MovementProtocol {
         try? Movement().setup()
     }
     
-	func getAll(committed: Bool) throws -> [Movement] {
+	func getAll() throws -> [Movement] {
         let items = Movement()
-		try items.select(
-			whereclause: "committed = $1",
-			params: [committed],
-			orderby: ["movementId"])
+		try items.findAll()
 		
         return try items.rows()
     }

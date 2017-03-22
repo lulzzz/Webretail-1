@@ -47,7 +47,7 @@ class MovementController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-			let items = try self.repository.getAll(committed: false)
+			let items = try self.repository.getAll()
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
@@ -55,19 +55,6 @@ class MovementController {
             response.badRequest(error: error)
         }
     }
-    
-	func movementsCommittedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
-		do {
-			let items = try self.repository.getAll(committed: true)
-			try response.setBody(json: items)
-			response.completed(status: .ok)
-		} catch {
-			LogFile.error("\(request.uri) \(request.method): \(error)")
-			response.badRequest(error: error)
-		}
-	}
 
 	func movementHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")

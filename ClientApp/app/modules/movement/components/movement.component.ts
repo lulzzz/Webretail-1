@@ -92,8 +92,9 @@ export class MovementComponent implements OnInit, OnDestroy {
                 item.movementId = this.movementId;
                 item.barcode = barcode;
                 item.quantity = quantity;
+                let price = this.item.causal.quantity > 0 ? 'purchase' : this.item.causal.quantity < 0 ? 'selling' : 'none';
                 this.movementService
-                    .createItem(item)
+                    .createItem(item, price)
                     .subscribe(result => {
                         this.items.push(result);
                         this.barcodes.splice(this.barcodes.indexOf(data), 1);

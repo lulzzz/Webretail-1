@@ -9,7 +9,7 @@
     <p-toolbar *ngIf="item">
         <div class="ui-toolbar-group-left">
             <span><b>n°</b> {{item.movementNumber}}</span> <span><b>date</b>: {{item.movementDate | date: 'yyyy-MM-dd'}}</span>
-            <br/><span><b>status</b>: {{movitemement.movementStatus}}</span>
+            <br/><span><b>status</b>: {{item.movementStatus}}</span>
         </div>
         <div class="ui-toolbar-group-right" style="text-align: right">
             <span><b>causal</b>: {{item.causal.causalName}}</span>

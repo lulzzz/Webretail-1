@@ -23,7 +23,7 @@ class MovementArticleController {
         var routes = Routes()
         
         routes.add(method: .get, uri: "/api/movementarticle/{id}", handler: movementArticlesHandlerGET)
-        routes.add(method: .post, uri: "/api/movementarticle", handler: movementArticleHandlerPOST)
+        routes.add(method: .post, uri: "/api/movementarticle/{price}", handler: movementArticleHandlerPOST)
         routes.add(method: .put, uri: "/api/movementarticle/{id}", handler: movementArticleHandlerPUT)
         routes.add(method: .delete, uri: "/api/movementarticle/{id}", handler: movementArticleHandlerDELETE)
         
@@ -47,16 +47,23 @@ class MovementArticleController {
     func movementArticleHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        do {
+		let price = request.urlVariables["price"]!
+       	do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = MovementArticle()
             item.setJSONValues(json!)
-            guard let product = try self.productRepository.get(barcode: item.barcode)?.getJSONValues() else {
+            guard let product = try self.productRepository.get(barcode: item.barcode) else {
                 response.completed(status: .notFound)
                 return
             }
-            item.product = product
-            try self.movementRepository.add(item: item)
+			item.product = try product.getJSONValues()
+			if price == "selling" {
+				item.price = product.sellingPrice
+			}
+			if price == "purchase" {
+				item.price = product.purchasePrice
+			}
+			try self.movementRepository.add(item: item)
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {

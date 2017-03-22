@@ -8,7 +8,7 @@
 
 protocol MovementProtocol {
     
-    func getAll(committed: Bool) throws -> [Movement]
+    func getAll() throws -> [Movement]
     
     func get(id: Int) throws -> Movement?
     

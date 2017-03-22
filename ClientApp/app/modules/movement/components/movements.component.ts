@@ -159,6 +159,7 @@ export class MovementsComponent implements OnInit {
         this.displayPanel = false;
         this.selected = null;
         this.currentStatus = null;
+        this.buildFilter(this.items);
     }
 
     saveClick() {

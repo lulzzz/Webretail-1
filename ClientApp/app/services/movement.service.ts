@@ -41,8 +41,8 @@ export class MovementService {
             .map(result => <MovementArticle[]>result.json());
     }
 
-    createItem(model: MovementArticle) : Observable<MovementArticle> {
-        return this.http.post('/api/movementarticle', model, { headers: Helpers.getHeaders() })
+    createItem(model: MovementArticle, price: string) : Observable<MovementArticle> {
+        return this.http.post('/api/movementarticle/' + price, model, { headers: Helpers.getHeaders() })
             .map(result => <MovementArticle>result.json());
     }
 

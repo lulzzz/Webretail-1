@@ -100,6 +100,7 @@ export class ProductsComponent implements OnInit {
     closeClick() {
         this.displayPanel = false;
         this.selected = null;
+       this.buildFilter(this.products);
     }
 
     saveClick() {
