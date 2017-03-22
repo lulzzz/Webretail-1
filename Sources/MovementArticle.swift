@@ -17,9 +17,9 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
     public var barcode : String = ""
     public var product : [String:Any] = [String:Any]()
     public var quantity : Double = 0
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
-    
+	public var price : Double = 0
+	public var updated : Int = Int.now()
+	
     open override func table() -> String { return "movementarticles" }
       
     open override func to(_ this: StORMRow) {
@@ -28,8 +28,8 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         barcode = this.data["barcode"] as? String ?? ""
         product = this.data["product"] as? [String:Any] ?? [String:Any]()
         quantity = Double(this.data["quantity"] as? Float ?? 0)
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+		price = Double(this.data["price"] as? Float ?? 0)
+		updated = this.data["updated"] as? Int ?? 0
     }
     
     func rows() -> [MovementArticle] {
@@ -48,8 +48,9 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         self.barcode = getJSONValue(named: "barcode", from: values, defaultValue: "")
         self.product = getJSONValue(named: "product", from: values, defaultValue: [String:Any]())
         self.quantity = getJSONValue(named: "quantity", from: values, defaultValue: 1.0)
+		self.price = getJSONValue(named: "price", from: values, defaultValue: 0.0)
     }
-    
+	
     func jsonEncodedString() throws -> String {
         return try self.getJSONValues().jsonEncodedString()
     }
@@ -61,8 +62,8 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
             "barcode": barcode,
             "product": product,
             "quantity": quantity,
-            "created": created.formatDate(),
-            "updated": updated.formatDate()
+            "price": price.roundCurrency(),
+            "amount": (quantity * price).roundCurrency()
         ]
     }
 }

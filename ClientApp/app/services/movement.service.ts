@@ -2,7 +2,7 @@
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Movement, MovementArticle } from '../shared/models';
+import { Movement, MovementArticle, MovementStatus } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -11,12 +11,8 @@ export class MovementService {
     constructor(private http: Http) {
     }
 
-    getAll(committed: boolean): Observable<Movement[]> {
-        let url = '/api/movement';
-        if (committed) {
-            url += 'committed';
-        }
-        return this.http.get(url, { headers: Helpers.getHeaders() })
+    getAll(): Observable<Movement[]> {
+        return this.http.get('/api/movement', { headers: Helpers.getHeaders() })
             .map(result => <Movement[]>result.json());
     }
 
@@ -68,5 +64,10 @@ export class MovementService {
     roolback(movementId: number) : Observable<any> {
         return this.http.get('/api/movement/' + movementId + '/roolback', { headers: Helpers.getHeaders() })
             .map(result => result.json());
+    }
+
+    getStatus(): Observable<MovementStatus[]> {
+        return this.http.get('/api/movementstatus', { headers: Helpers.getHeaders() })
+            .map(result => <MovementStatus[]>result.json());
     }
 }

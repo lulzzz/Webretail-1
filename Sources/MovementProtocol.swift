@@ -18,7 +18,11 @@ protocol MovementProtocol {
     
     func delete(id: Int) throws
 
-	func commit(id: Int) throws
+	func getStatus() -> [MovementStatus]
 
-	func rollback(id: Int) throws
+	func commit(movement: Movement) throws
+
+	func rollback(movement: Movement) throws
+
+	func generatePdf(id: Int)
 }

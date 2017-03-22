@@ -20,19 +20,30 @@ class MovementController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
+		routes.add(method: .get, uri: "/api/movementstatus", handler: movementStatusHandlerGET)
         routes.add(method: .get, uri: "/api/movement", handler: movementsHandlerGET)
-		routes.add(method: .get, uri: "/api/movementcommitted", handler: movementsCommittedHandlerGET)
 		routes.add(method: .get, uri: "/api/movement/{id}", handler: movementHandlerGET)
         routes.add(method: .post, uri: "/api/movement", handler: movementHandlerPOST)
         routes.add(method: .put, uri: "/api/movement/{id}", handler: movementHandlerPUT)
         routes.add(method: .delete, uri: "/api/movement/{id}", handler: movementHandlerDELETE)
-		routes.add(method: .get, uri: "/api/movement/{id}/commit", handler: movementCommitHandlerGET)
-		routes.add(method: .get, uri: "/api/movement/{id}/roolback", handler: movementRoolbackHandlerGET)
 		
         return routes
     }
     
-    func movementsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func movementStatusHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		do {
+			let status = self.repository.getStatus()
+			try response.setBody(json: status)
+			response.completed(status: .ok)
+		} catch {
+			LogFile.error("\(request.uri) \(request.method): \(error)")
+			response.badRequest(error: error)
+		}
+	}
+
+	func movementsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {
@@ -117,30 +128,4 @@ class MovementController {
             response.badRequest(error: error)
         }
     }
-
-	func movementCommitHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
-		let id = request.urlVariables["id"]!
-		do {
-			try self.repository.commit(id: id.toInt()!)
-			response.completed(status: .noContent)
-		} catch {
-			LogFile.error("\(request.uri) \(request.method): \(error)")
-			response.badRequest(error: error)
-		}
-	}
-
-	func movementRoolbackHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
-		let id = request.urlVariables["id"]!
-		do {
-			try self.repository.rollback(id: id.toInt()!)
-			response.completed(status: .noContent)
-		} catch {
-			LogFile.error("\(request.uri) \(request.method): \(error)")
-			response.badRequest(error: error)
-		}
-	}
 }

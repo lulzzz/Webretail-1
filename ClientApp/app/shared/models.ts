@@ -142,44 +142,6 @@ export class Causal {
   }
 }
 
-export class Movement {
-  public movementId: number;
-  public store: Store;
-  public causal: Causal;
-  public movementDate: Date;
-  public movementDesc: string;
-  public movementNote: string;
-  public committed: boolean;
-  public updated: Date;
-
-  constructor() {
-    this.movementId = 0;
-    this.store = new Store();
-    this.causal = new Causal();
-    this.movementDate = new Date();
-    this.movementDesc = '';
-    this.movementNote = '';
-    this.committed = false;
-    this.updated = new Date();
-  }
-}
-
-export class MovementArticle {
-  public movementArticleId: number;
-  public movementId: number;
-  public barcode: string;
-  public product: Product;
-  public quantity: number;
-
-  constructor() {
-    this.movementArticleId = 0;
-    this.movementId = 0;
-    this.barcode = '';
-    this.product = new Product();
-    this.quantity = 1.0;
-  }
-}
-
 export class Customer {
   public customerId: number;
   public customerName: string;
@@ -206,33 +168,35 @@ export class Customer {
   }
 }
 
-export class Order {
-  public orderId: number;
+export class Movement {
+  public movementId: number;
   public store: Store;
   public causal: Causal;
   public customer: Customer;
-  public orderNumber: number;
-  public orderDate: Date;
-  public orderNote: string;
-  public orderStatus: string;
+  public movementNumber: number;
+  public movementDate: Date;
+  public movementDesc: string;
+  public movementNote: string;
+  public movementStatus: string;
   public updated: Date;
 
   constructor() {
-    this.orderId = 0;
+    this.movementId = 0;
     this.store = new Store();
     this.causal = new Causal();
     this.customer = new Customer();
-    this.orderNumber = 0;
-    this.orderDate = new Date();
-    this.orderNote = '';
-    this.orderStatus = 'New';
+    this.movementNumber = 0;
+    this.movementDate = new Date();
+    this.movementDesc = '';
+    this.movementNote = '';
+    this.movementStatus = 'New';
     this.updated = new Date();
   }
 }
 
-export class OrderArticle {
-  public orderArticleId: number;
-  public orderId: number;
+export class MovementArticle {
+  public movementArticleId: number;
+  public movementId: number;
   public barcode: string;
   public product: Product;
   public quantity: number;
@@ -240,8 +204,8 @@ export class OrderArticle {
   public amount: number;
 
   constructor() {
-    this.orderArticleId = 0;
-    this.orderId = 0;
+    this.movementArticleId = 0;
+    this.movementId = 0;
     this.barcode = '';
     this.product = new Product();
     this.quantity = 1.0;
@@ -249,51 +213,6 @@ export class OrderArticle {
     this.amount = 0.0;
   }
 }
-
-export class MyOrder {
-  public myOrderId: number;
-  public store: Store;
-  public causal: Causal;
-  public myOrderNumber: number;
-  public myOrderDate: Date;
-  public myOrderSupplier: string;
-  public myOrderNote: string;
-  public myOrderStatus: string;
-  public updated: Date;
-
-  constructor() {
-    this.myOrderId = 0;
-    this.store = new Store();
-    this.causal = new Causal();
-    this.myOrderNumber = 0;
-    this.myOrderDate = new Date();
-    this.myOrderSupplier = '';
-    this.myOrderNote = '';
-    this.myOrderStatus = 'New';
-    this.updated = new Date();
-  }
-}
-
-export class MyOrderArticle {
-  public myOrderArticleId: number;
-  public myOrderId: number;
-  public barcode: string;
-  public product: Product;
-  public quantity: number;
-  public price: number;
-  public amount: number;
-
-  constructor() {
-    this.myOrderArticleId = 0;
-    this.myOrderId = 0;
-    this.barcode = '';
-    this.product = new Product();
-    this.quantity = 1.0;
-    this.price = 0.0;
-    this.amount = 0.0;
-  }
-}
-
 
 // Interfaces
 
@@ -330,7 +249,7 @@ export interface ArticleAttributeValue {
   //attributeValue: AttributeValue;
 }
 
-export interface OrderStatus {
+export interface MovementStatus {
 	value: string;
 }
 

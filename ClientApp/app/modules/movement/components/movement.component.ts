@@ -19,8 +19,9 @@ export class MovementComponent implements OnInit, OnDestroy {
     movementId: number;
     totalRecords = 0;
     totalItems = 0;
+    totalAmount = 0.0;
     barcodes: string[];
-    movement: Movement;
+    item: Movement;
     items: MovementArticle[];
     articleValue: string;
     committed: boolean;
@@ -31,7 +32,6 @@ export class MovementComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private location: Location) {
         this.barcodes = [];
-        this.committed = false;
     }
 
 	ngOnInit() {
@@ -42,8 +42,8 @@ export class MovementComponent implements OnInit, OnDestroy {
             this.movementId = params['id'];
             this.movementService.getById(this.movementId)
                 .subscribe(result => {
-                    this.movement = result;
-                    this.committed = this.movement.committed;
+                    this.item = result;
+                    this.committed = result.movementStatus != 'New';
                 }, onerror => alert(onerror._body)
             );
             this.movementService.getItemsById(this.movementId)
@@ -65,8 +65,12 @@ export class MovementComponent implements OnInit, OnDestroy {
     }
 
     updateTotals() {
+        if (!this.items || this.items.length === 0) {
+            return;
+        }
         this.totalRecords = this.items.length;
         this.totalItems = this.items.map(p => p.quantity).reduce((sum, current) => sum + current);
+        this.totalAmount = this.items.map(p => p.amount).reduce((sum, current) => sum + current);
     }
 
     addBarcode() {
@@ -108,17 +112,20 @@ export class MovementComponent implements OnInit, OnDestroy {
         this.addBarcode();
     }
 
-    updateClick(data: MovementArticle) {
+    onUpdate(data: MovementArticle) {
         if (data.quantity > 0) {
-            this.movementService.updateItem(data.movementArticleId, data)
+            this.movementService
+                .updateItem(data.movementArticleId, data)
                 .subscribe(result => {
+                    data.amount = result.amount;
                     this.updateTotals();
                 }, onerror => alert(onerror._body));
         } else {
             this.confirmationService.confirm({
                 message: 'Are you sure that you want to delete this item?',
                 accept: () => {
-                    this.movementService.deleteItem(data.movementArticleId)
+                    this.movementService
+                        .deleteItem(data.movementArticleId)
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(data), 1);
                             this.updateTotals();

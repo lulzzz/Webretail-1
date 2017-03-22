@@ -33,7 +33,6 @@ class MovementArticleRepository : MovementArticleProtocol {
     }
     
     func add(item: MovementArticle) throws {
-        item.created = Int.now()
         item.updated = Int.now()
         try item.save {
             id in item.movementArticleId = id as! Int

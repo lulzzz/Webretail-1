@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     DataTableModule, SharedModule, PaginatorModule,
     MultiSelectModule, DropdownModule, SliderModule,
-    ConfirmDialogModule, ConfirmationService, ToolbarModule,
-    ButtonModule, InputTextModule, InputSwitchModule, CalendarModule,
-    PanelModule, ChipsModule, SpinnerModule, SplitButtonModule, InputTextareaModule
+    ConfirmDialogModule, ConfirmationService, PanelModule,
+    ToolbarModule, ButtonModule, InputTextModule, InputSwitchModule,
+    ChipsModule, SpinnerModule, InputTextareaModule, CalendarModule
 } from 'primeng/primeng';
 import { MovementRoutes } from './movement.routes';
 import { MovementsComponent } from './components/movements.component';
@@ -20,8 +20,8 @@ import { SharedComponentModule } from './../../modules/shared/shared-component.m
         DataTableModule, SharedModule, PaginatorModule,
         MultiSelectModule, DropdownModule, SliderModule,
         ConfirmDialogModule, ToolbarModule, ButtonModule,
-        InputTextModule, InputSwitchModule, PanelModule, ChipsModule,
-        SpinnerModule, SplitButtonModule, InputTextareaModule, CalendarModule,
+        InputTextModule, InputSwitchModule, CalendarModule,
+        PanelModule, ChipsModule, SpinnerModule, InputTextareaModule,
         SharedComponentModule.forRoot(),
         CommonModule,
         MovementRoutes

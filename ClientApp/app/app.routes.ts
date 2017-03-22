@@ -10,10 +10,8 @@ export const routes: Routes = [
     { path: 'attribute', loadChildren: './modules/attribute/attribute.module#AttributeModule' },
     { path: 'product', loadChildren: './modules/product/product.module#ProductModule' },
     { path: 'causal', loadChildren: './modules/causal/causal.module#CausalModule' },
-    { path: 'movement', loadChildren: './modules/movement/movement.module#MovementModule' },
     { path: 'customer', loadChildren: './modules/customer/customer.module#CustomerModule' },
-    { path: 'order', loadChildren: './modules/order/order.module#OrderModule' },
-    { path: 'myorder', loadChildren: './modules/myorder/myorder.module#MyOrderModule' }
+    { path: 'movement', loadChildren: './modules/movement/movement.module#MovementModule' }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);

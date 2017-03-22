@@ -72,10 +72,6 @@ ioCContainer.register { ArticleRepository() as ArticleProtocol }
 ioCContainer.register { MovementRepository() as MovementProtocol }
 ioCContainer.register { MovementArticleRepository() as MovementArticleProtocol }
 ioCContainer.register { CustomerRepository() as CustomerProtocol }
-ioCContainer.register { OrderRepository() as OrderProtocol }
-ioCContainer.register { OrderArticleRepository() as OrderArticleProtocol }
-ioCContainer.register { MyOrderRepository() as MyOrderProtocol }
-ioCContainer.register { MyOrderArticleRepository() as MyOrderArticleProtocol }
 //ioCContainer.register { PublicationRepository() as PublicationProtocol }
 
 
@@ -98,10 +94,6 @@ server.addRoutes(ArticleController().getRoutes())
 server.addRoutes(MovementController().getRoutes())
 server.addRoutes(MovementArticleController().getRoutes())
 server.addRoutes(CustomerController().getRoutes())
-server.addRoutes(OrderController().getRoutes())
-server.addRoutes(OrderArticleController().getRoutes())
-server.addRoutes(MyOrderController().getRoutes())
-server.addRoutes(MyOrderArticleController().getRoutes())
 //server.addRoutes(PublicationController().getRoutes())
 
 

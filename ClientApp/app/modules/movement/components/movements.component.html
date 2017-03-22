@@ -1,24 +1,24 @@
 ﻿<p-confirmDialog icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
-<img *ngIf="!movements" src="assets/loading.gif" class="loading">
+<img *ngIf="!items" src="assets/loading.gif" class="loading">
 
 <div class="container-fluid">
 
     <h1>Movements</h1>
-
+    
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <button pButton type="button" label="{{totalRecords}} items" title="Add item" [disabled]="committed" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
-            <button pButton type="button" label="Edit" title="Edit item" [disabled]="committed" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" label="Edit" title="Edit item"(click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <p-splitButton icon="fa-bars" label="Details" title="Details" (onClick)="openClick()" [model]="buttons"></p-splitButton>
+            <button pButton type="button" label="Details" title="Details" (click)="openClick()" class="ui-button-primary" icon="fa-bars"></button>
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="movements | dateFilter:dateStartValue:dateFinishValue"
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue"
         selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
-        <p-column field="movementId" header="Id" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="movementNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <template let-col let-data="rowData" pTemplate="body">
                 {{data.movementDate | date:'yyyy-MM-dd'}}
@@ -29,15 +29,24 @@
                 <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'50%','float':'right'}" dateFormat="yy-mm-dd" placeholder="Finish" styleClass="ui-column-filter"></p-calendar>
             </template>
         </p-column>
-        <p-column field="movementDesc" header="Description" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
+        <p-column field="customer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="customersFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </template>
+        </p-column>
+        <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="causalsFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>
-        <p-column field="store.storeName" header="Store" [sortable]="true" [filter]="true" [style]="{'overflow':'visible','width':'20%'}" filterMatchMode="equals">
+        <p-column field="store.storeName" header="Store" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <template pTemplate="filter" let-col>
                 <p-dropdown [options]="storesFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </template>
+        </p-column>
+        <p-column field="movementStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+            <template pTemplate="filter" let-col>
+                <p-dropdown [options]="statusFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </template>
         </p-column>
     </p-dataTable>
@@ -45,7 +54,7 @@
     <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">
-                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Movement</b></span>
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>movement</b></span>
                 <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
@@ -56,11 +65,30 @@
                     <div class="ui-grid-col-8">{{selected.movementId}}</div>
                 </div>
                 <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="number">Number</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="number" [(ngModel)]="selected.movementNumber"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['number'].valid&&dataform.controls['number'].dirty">
+                            <i class="fa fa-close"></i> Number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="date">Date</label></div>
                     <div class="ui-grid-col-8">
                         <p-calendar formControlName="date" [(ngModel)]="selected.movementDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['date'].valid&&dataform.controls['date'].dirty">
                             <i class="fa fa-close"></i> Date is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="customer">Customer</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.customer" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['customer'].valid&&dataform.controls['customer'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['store'].errors['required']">Customer is required</span>
                         </div>
                     </div>
                 </div>
@@ -85,27 +113,27 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="desc">Description</label></div>
+                    <div class="ui-grid-col-4"><label for="status">Status</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="desc" [(ngModel)]="selected.movementDesc"/>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['desc'].valid&&dataform.controls['desc'].dirty">
-                            <i class="fa fa-close"></i> Description is required
+                        <p-dropdown [options]="getStatus" formControlName="status" [(ngModel)]="selected.movementStatus" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['status'].valid&&dataform.controls['status'].dirty">
+                            <i class="fa fa-close"></i> Status is required
                         </div>
                     </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="note">Note</label></div>
                     <div class="ui-grid-col-8">
-                        <textarea pInputTextarea formControlName="note" [(ngModel)]="selected.orderNote" style="width: 100%"></textarea>
+                        <textarea pInputTextarea formControlName="note" [(ngModel)]="selected.movementNote" style="width: 100%"></textarea>
                     </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">
-                        <button *ngIf="selected.movementId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+                        <button *ngIf="selected.movementId>0&&selected.movementStatus==='New'" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
                     </div>
                     <div class="ui-grid-col-4"></div>
                     <div class="ui-grid-col-4">
-                        <button type="button" pButton icon="fa-save" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                     </div>
                 </div>
             </div>

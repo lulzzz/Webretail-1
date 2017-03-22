@@ -59,6 +59,13 @@ class MovementRepository : MovementProtocol {
 		current.movementDate = item.movementDate
 		current.movementDesc = item.movementDesc
         current.movementNote = item.movementNote
+		if current.movementStatus == "New" && item.movementStatus == "Processing" {
+			try commit(movement: current)
+		}
+		if current.movementStatus == "Processing" && item.movementStatus != "Processing" {
+			try rollback(movement: current)
+		}
+		current.movementStatus = item.movementStatus
 		current.updated = Int.now()
         try current.save()
     }
@@ -69,15 +76,25 @@ class MovementRepository : MovementProtocol {
         try item.delete()
     }
 
-	func commit(id: Int) throws {
-		let movement = try get(id: id)!
-		if movement.committed {
+	func getStatus() -> [MovementStatus] {
+		var status = [MovementStatus]()
+		status.append(MovementStatus(value: "New"))
+		status.append(MovementStatus(value: "Processing"))
+		status.append(MovementStatus(value: "Suspended"))
+		status.append(MovementStatus(value: "Canceled"))
+		status.append(MovementStatus(value: "Completed"))
+		return status
+	}
+
+	func commit(movement: Movement) throws {
+		let movement = try get(id: movement.movementId)!
+		if movement.movementStatus != "New" {
 			throw StORMError.error("Movement already committed")
 		}
 		
 		var stock = Stock()
 		let article = MovementArticle()
-		try article.find([("movementId", id)])
+		try article.find([("movementId", movement.movementId)])
 		for item in article.rows() {
 			
 			let articles = item.product["articles"] as! [[String : Any]];
@@ -111,22 +128,16 @@ class MovementRepository : MovementProtocol {
 			}
 			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
 		}
-		
-		movement.committed = true
-		movement.updated = Int.now()
-		try movement.save()
 	}
 	
-	func rollback(id: Int) throws {
-		let movement = Movement()
-		try movement.get(id)
-		if !movement.committed {
-			throw StORMError.error("Not committed movement")
+	func rollback(movement: Movement) throws {
+		if movement.movementStatus != "Processing" {
+			throw StORMError.error("Movement not committed")
 		}
 		
 		var stock = Stock()
 		let article = MovementArticle()
-		try article.find([("movementId", id)])
+		try article.find([("movementId", movement.movementId)])
 		for item in article.rows() {
 			
 			let articles = item.product["articles"] as! [[String : Any]];
@@ -160,9 +171,8 @@ class MovementRepository : MovementProtocol {
 			}
 			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
 		}
-		
-		movement.committed = false
-		movement.updated = Int.now()
-		try movement.save()
+	}
+
+	func generatePdf(id: Int) {
 	}
 }
