@@ -56,9 +56,10 @@ export class ProductComponent implements OnInit, OnDestroy {
             );
         });
 
-        this.buttons = [{
-            label: 'Build Articles', icon: 'fa-database', command: () => this.buildClick()
-        }];
+        this.buttons = [
+            { label: 'Build articles', icon: 'fa-database', command: () => this.buildClick() },
+            { label: 'Save barcodes', icon: 'fa-barcode', command: () => this.saveClick() }
+        ];
     }
 
     ngOnDestroy() {
@@ -318,5 +319,35 @@ export class ProductComponent implements OnInit, OnDestroy {
                                     detail: onerror._body
                                 });
                             });
+    }
+
+    saveClick() {
+        let count = 0;
+        this.isBusy = true;
+        let length = this.articleForm.body.length - 1;
+        let barcode = this.articleForm.body[length][this.articleForm.body[length].length - 1].value;
+        this.articleForm.body
+            .forEach(p => {
+                p.forEach(p => {
+                    if (p.id > 0) {
+                        let article = new Article();
+                        article.articleId = p.id;
+                        article.barcode = p.value;
+                        this.productService
+                            .updateArticle(p.id, article)
+                            .subscribe(result => {
+                                count++;
+                                if (result.barcode === barcode) {
+                                    this.isBusy = false;
+                                    this.msgs.push({
+                                        severity: 'success',
+                                        summary: 'Save barcodes',
+                                        detail: count + ' barcodes successfully saved!'
+                                    });
+                                }
+                            });
+                    }
+                });
+            });
     }
 }

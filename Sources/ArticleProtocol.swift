@@ -49,12 +49,14 @@ struct ArticleForm: JSONConvertible {
 }
 
 struct ArticleItem: JSONConvertible {
+	public var id: Int
 	public var label: String
 	public var value: String
 	public var data: Double
 
 	func getJSONValues() -> [String: Any] {
 		return [
+			"id": id,
 			"label": label,
 			"value": value,
 			"data": data

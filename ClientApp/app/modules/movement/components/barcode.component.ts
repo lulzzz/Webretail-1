@@ -31,7 +31,12 @@ export class BarcodeComponent implements OnInit, OnDestroy {
 
             this.movementService.getItemsById(this.movementId)
                 .subscribe(result => {
-                    this.items = result;
+                    this.items = [];
+                    result.forEach(element => {
+                        for (let i = 0; i < element.quantity; i++) {
+                            this.items.push(element);
+                        }
+                    });
                 }, onerror => alert(onerror._body)
             );
         });
@@ -44,5 +49,9 @@ export class BarcodeComponent implements OnInit, OnDestroy {
 
     cancelClick() {
         this.location.back();
+    }
+
+    printClick() {
+        window.print();
     }
 }

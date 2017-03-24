@@ -32,9 +32,11 @@
     "bootstrap": "^3.3.7",
     "core-js": "2.4.1",
     "ie-shim": "~0.1.0",
+    "jsbarcode": "git+https://github.com/lindell/JsBarcode.git",
     "primeng": "^2.0.0",
     "reflect-metadata": "0.1.10",
     "rxjs": "5.2.0",
+    "typings": "^2.1.0",
     "zone.js": "0.7.7"
   },
   "devDependencies": {

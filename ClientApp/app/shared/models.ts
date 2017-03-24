@@ -259,6 +259,7 @@ export interface ArticleForm {
 }
 
 export interface ArticleItem {
+  id: number;
 	label: string;
 	value: string;
   data: number;

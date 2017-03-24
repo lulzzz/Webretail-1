@@ -15,7 +15,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
     private sub: any;
     movementId: number;
     totalItems = 0;
-    totalAmount = 0.0;
+    amount = 0.0;
+    total = 0.0;
     item: Movement;
     groups: any[];
 
@@ -40,15 +41,14 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
             this.movementService.getItemsById(this.movementId)
                 .subscribe(result => {
-                    let items: MovementArticle[] = [];
-                    for (let i = 0; i < 100; i++) {
-                        items.push(result[0]);
-                    }
-
+                    // let items: MovementArticle[] = [];
+                    // for (let i = 0; i < 30; i++) {
+                    //     items.push(result[0]);
+                    // }
                     this.groups = [];
                     let array: MovementArticle[] = [];
                     let index = 0;
-                    items.forEach((item) => {
+                    result.forEach((item) => {
                         array.push(item);
                         if (index > 11) {
                             this.groups.push(array);
@@ -57,10 +57,15 @@ export class DocumentComponent implements OnInit, OnDestroy {
                         }
                         index++;
                     });
+                    let lenght = 13 - array.length;
+                    for (let i = 0; i < lenght; i++) {
+                        array.push(new MovementArticle());
+                    }
                     this.groups.push(array);
 
                     this.totalItems = result.map(p => p.quantity).reduce((sum, current) => sum + current);
-                    this.totalAmount = result.map(p => p.amount).reduce((sum, current) => sum + current);
+                    this.total = result.map(p => p.amount).reduce((sum, current) => sum + current);
+                    this.amount = this.total * 100 / 122;
                 }, onerror => alert(onerror._body)
             );
         });

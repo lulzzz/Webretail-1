@@ -29,6 +29,11 @@ export class ProductService {
             .map(result => <ArticleForm>result.json());
     }
 
+    updateArticle(id: number, model: Article) : Observable<Article> {
+        return this.http.put('/api/article/' + id, model, { headers: Helpers.getHeaders() })
+            .map(result => <Article>result.json());
+    }
+
     create(model: Product) : Observable<Product> {
         return this.http.post('/api/product', model, { headers: Helpers.getHeaders() })
             .map(result => <Product>result.json());
@@ -36,7 +41,7 @@ export class ProductService {
 
     update(id: number, model: Product) : Observable<Product> {
         return this.http.put('/api/product/' + id, model, { headers: Helpers.getHeaders() })
-            .map(result => result.json());
+            .map(result => <Product>result.json());
     }
 
     delete(id: number) : Observable<any> {

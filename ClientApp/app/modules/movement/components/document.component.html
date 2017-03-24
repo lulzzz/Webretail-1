@@ -8,7 +8,7 @@
     </div>
 
     <div *ngFor="let items of groups">          
-        <table *ngIf="item" class="table" cellpadding="2" cellspacing="2">    
+        <table *ngIf="item" class="table">    
             <thead>
                 <tr> 
                     <td colspan="5"><img title="Close" src="assets/ci.jpg" style="width: 100%;margin: 10px 0;"></td> 
@@ -60,27 +60,25 @@
             <tfoot style="background-color: whitesmoke">
                 <tr>
                     <td colspan="2">Amount</td>
-                    <td align="center">{{totalItems}}</td>
-                    <td colspan="2" align="right">{{totalAmount | currency: 'EUR' : true}}</td>
+                    <td colspan="3" align="right">{{amount | currency: 'EUR' : true}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Tax</td>
-                    <td align="center">22%</td>
-                    <td colspan="2" align="right">{{0 | currency: 'EUR' : true}}</td>
+                    <td colspan="2">Tax 22%</td>
+                    <td colspan="3" align="right">{{total - amount | currency: 'EUR' : true}}</td>
                 </tr>
                 <tr>
                     <td colspan="2"><strong>Totals</strong></td>
                     <td align="center"><strong>{{totalItems}}</strong></td>
-                    <td colspan="2" align="right"><strong>{{totalAmount | currency: 'EUR' : true}}</strong></td>
+                    <td colspan="2" align="right"><strong>{{total | currency: 'EUR' : true}}</strong></td>
                 </tr>
             </tfoot>
             <tbody> 
-                <tr *ngFor="let item of items"> 
+                <tr *ngFor="let item of items" style="height: 39px"> 
                     <td><span>{{item.barcode}}</span></td> 
                     <td><span>{{item.product | articleInfo:item.barcode}}</span></td> 
-                    <td align="center"><span>{{item.quantity}}</span></td> 
-                    <td align="right"><span>{{item.price | currency: 'EUR' : true}}</span></td> 
-                    <td align="right"><span>{{item.amount | currency: 'EUR' : true}}</span></td> 
+                    <td align="center"><span>{{item.barcode ? item.quantity : ''}}</span></td> 
+                    <td align="right"><span>{{!item.barcode ? '' : item.price | currency: 'EUR' : true}}</span></td> 
+                    <td align="right"><span>{{!item.barcode ? '' : item.amount | currency: 'EUR' : true}}</span></td> 
                 </tr> 
             </tbody>
         </table>

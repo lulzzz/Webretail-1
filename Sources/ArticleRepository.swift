@@ -220,6 +220,7 @@ class ArticleRepository : ArticleProtocol {
 			var isFirst = true;
 			for article in group.value {
 				let articleItem = ArticleItem(
+					id: article.articleId,
 					label: "Stock \(article._quantity) - Booked \(article._booked)",
 					value: article.barcode,
 					data: 0.0
@@ -230,6 +231,7 @@ class ArticleRepository : ArticleProtocol {
 							return pair._attributeValue.attributeValueId == value.attributeValueId
 						})
 						let articleLabel = ArticleItem(
+							id: 0,
 							label: (productAttributeValue?._attributeValue.attributeValueName)!,
 							value: "",
 							data: 0.0

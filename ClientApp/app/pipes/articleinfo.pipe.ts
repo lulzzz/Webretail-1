@@ -6,6 +6,9 @@ import { Product } from './../shared/models';
 })
 export class ArticleInfoPipe implements PipeTransform {
   transform(value: Product, args?: string): string {
+    if (value.productId == 0) {
+      return '';
+    }
     if (args == null) {
       return value.productName;
     }
