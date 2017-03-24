@@ -42,8 +42,8 @@
                 <tr> 
                     <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
                 </tr> 
-                <tbody *ngFor="let item of articleForm.body"> 
-                    <tr> 
+                <tbody> 
+                    <tr *ngFor="let item of articleForm.body"> 
                         <td *ngFor="let col of item" align="center"> 
                             <span *ngIf="col.value===''">{{col.label}}</span>
                             <p-spinner *ngIf="col.value!==''" pTooltip="{{col.value}} : {{col.label}}" tooltipPosition="left" size="4" [(ngModel)]="col.data" [min]="0"></p-spinner>

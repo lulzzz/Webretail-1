@@ -44,8 +44,8 @@
         <tr> 
             <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
         </tr> 
-        <tbody *ngFor="let item of articleForm.body"> 
-            <tr> 
+        <tbody> 
+            <tr *ngFor="let item of articleForm.body"> 
                 <td *ngFor="let col of item" align="center"> 
                     <span title="{{col.value}}">{{col.value}}<br/>{{col.label}}</span> 
                 </td> 
