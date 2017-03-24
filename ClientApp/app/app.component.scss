@@ -4,11 +4,6 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-.starter-template {
-  padding: 40px 15px;
-  text-align: center;
-}
-
 .navigationLinkButton:hover {
     cursor: pointer;
 }
@@ -76,4 +71,20 @@ body .ui-toolbar-group-right i {
   border-color: #eee;
   border-style: solid;
   border-left-width: 1px;
+}
+
+.noprint {
+  margin-top: 10px;
+}
+
+@media print {
+  body {
+    padding-top: 0;
+  }
+  header nav, footer, .noprint {
+    display: none;
+  }
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+  tbody { display: table-row-group; }
 }

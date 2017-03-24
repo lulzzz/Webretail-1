@@ -1,0 +1,89 @@
+﻿<img *ngIf="!item||!groups" src="assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+
+    <div class="noprint">
+        <button pButton type="button" title="Movements" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+        <button pButton type="button" label="Print" title="Print document" (click)="printClick()" class="ui-button-secondary" icon="fa-print"></button>
+    </div>
+
+    <div *ngFor="let items of groups">          
+        <table *ngIf="item" class="table" cellpadding="2" cellspacing="2">    
+            <thead>
+                <tr> 
+                    <td colspan="5"><img title="Close" src="assets/ci.jpg" style="width: 100%;margin: 10px 0;"></td> 
+                </tr> 
+                <tr> 
+                    <td><strong>Number</strong></td> 
+                    <td align="right">{{item.movementNumber}}</td>
+                    <td style="width: 20%">&nbsp;</td>
+                    <td><strong>Store</strong></td> 
+                    <td align="right">{{item.store.storeName}}</td> 
+                </tr> 
+                <tr> 
+                    <td><strong>Date</strong></td> 
+                    <td align="right">{{item.movementDate | date: 'yyyy-MM-dd'}}</td>
+                    <td style="width: 20%">&nbsp;</td>
+                    <td><strong>Causal</strong></td> 
+                    <td align="right">{{item.causal.causalName}}</td> 
+                </tr> 
+                <tr> 
+                    <td><strong>Status</strong></td> 
+                    <td align="right">{{item.movementStatus}}</td>
+                    <td style="width: 20%">&nbsp;</td>
+                    <td><strong>Customer</strong></td> 
+                    <td rowspan="3" align="right">
+                        {{item.customer.customerName}}
+                        <br/>{{item.customer.customerAddress}}
+                        <br/>{{item.customer.customerCity}}
+                    </td> 
+                </tr> 
+                <tr> 
+                    <td colspan="4"><strong>Note</strong></td> 
+                </tr> 
+                <tr> 
+                    <td colspan="4">{{item.movementNote}}</td>
+                </tr>
+            </thead>
+        </table>
+
+        <table class="table" cellpadding="2" cellspacing="2">    
+            <thead *ngIf="item">
+                <tr style="background-color: whitesmoke"> 
+                    <td><strong>Barcode</strong></td> 
+                    <td><strong>Product</strong></td> 
+                    <td align="center"><strong>Quantity</strong></td> 
+                    <td align="right"><strong>Price</strong></td> 
+                    <td align="right"><strong>Amount</strong></td> 
+                </tr> 
+            </thead>
+            <tfoot style="background-color: whitesmoke">
+                <tr>
+                    <td colspan="2">Amount</td>
+                    <td align="center">{{totalItems}}</td>
+                    <td colspan="2" align="right">{{totalAmount | currency: 'EUR' : true}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Tax</td>
+                    <td align="center">22%</td>
+                    <td colspan="2" align="right">{{0 | currency: 'EUR' : true}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Totals</strong></td>
+                    <td align="center"><strong>{{totalItems}}</strong></td>
+                    <td colspan="2" align="right"><strong>{{totalAmount | currency: 'EUR' : true}}</strong></td>
+                </tr>
+            </tfoot>
+            <tbody> 
+                <tr *ngFor="let item of items"> 
+                    <td><span>{{item.barcode}}</span></td> 
+                    <td><span>{{item.product | articleInfo:item.barcode}}</span></td> 
+                    <td align="center"><span>{{item.quantity}}</span></td> 
+                    <td align="right"><span>{{item.price | currency: 'EUR' : true}}</span></td> 
+                    <td align="right"><span>{{item.amount | currency: 'EUR' : true}}</span></td> 
+                </tr> 
+            </tbody>
+        </table>
+    </div>
+
+</div>

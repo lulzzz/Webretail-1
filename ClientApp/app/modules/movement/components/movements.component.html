@@ -11,12 +11,12 @@
             <button pButton type="button" label="Edit" title="Edit item"(click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" label="Details" title="Details" (click)="openClick()" class="ui-button-primary" icon="fa-bars"></button>
+            <p-splitButton label="Details" icon="fa-bars" (onClick)="openClick()" [model]="buttons"></p-splitButton>
         </div>
     </p-toolbar>
 
     <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue"
-        selectionMode="single" [(selection)]="selected"
+        selectionMode="single" [(selection)]="selected" [contextMenu]="bts"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="movementNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
@@ -50,6 +50,8 @@
             </template>
         </p-column>
     </p-dataTable>
+    
+    <p-contextMenu #bts [model]="buttons"></p-contextMenu>
 
     <p-panel *ngIf="displayPanel">
         <p-header>

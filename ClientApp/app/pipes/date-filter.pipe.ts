@@ -25,9 +25,6 @@ export class DateFilterPipe implements PipeTransform {
   }
 
   getDate(item: any) : Date {
-    if (item.movementDate) {
-      return new Date(item.movementDate);
-    }
-    return new Date(item.orderDate);
+    return item.movementDate as Date;
   }
 }

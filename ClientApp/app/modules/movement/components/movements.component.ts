@@ -58,6 +58,12 @@ export class MovementsComponent implements OnInit {
             'note': new FormControl('', Validators.nullValidator)
         });
 
+        this.buttons = [
+            { label: 'Document', icon: 'fa-print', command: (event) => this.openClick('document/') },
+            { label: 'Barcode', icon: 'fa-barcode', command: (event) => this.openClick('barcode/') },
+            { label: 'Create copy', icon: 'fa-clone', command: (event) => { alert('Create copy'); } }
+        ];
+
         this.movementService
             .getAll()
             .subscribe(result => {
@@ -198,10 +204,10 @@ export class MovementsComponent implements OnInit {
         });
     }
 
-    openClick() {
+    openClick(detail = '') {
         if (!this.selected) {
             return;
         }
-        this.router.navigateByUrl('movement/' + this.selected.movementId);
+        this.router.navigateByUrl('movement/' + detail + this.selected.movementId);
     }
 }

@@ -35,6 +35,11 @@ class MovementRepository : MovementProtocol {
 		try causal.get(item.causalId)
 		item._causal = causal
 
+		// get customer
+		let customer = Customer()
+		try customer.get(item.customerId)
+		item._customer = customer
+
 		return item
     }
 	
