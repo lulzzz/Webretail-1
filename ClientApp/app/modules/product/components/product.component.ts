@@ -78,12 +78,12 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     createTree() {
         let rootNode = Helpers.newNode(this.product.productName, this.product.productCode, 'product');
-        rootNode.expanded = true;
+        rootNode.expanded = this.product.articles.length === 0;
 
-        let producerNode = Helpers.newNode('Brand', '[]', 'brands');
-        producerNode.expanded = true;
-        producerNode.children.push(Helpers.newNode(this.product.brand.brandName, this.product.brand.brandId.toString(), 'brand'));
-        rootNode.children.push(producerNode);
+        // let producerNode = Helpers.newNode('Brand', '[]', 'brands');
+        // producerNode.expanded = true;
+        // producerNode.children.push(Helpers.newNode(this.product.brand.brandName, this.product.brand.brandId.toString(), 'brand'));
+        // rootNode.children.push(producerNode);
 
         let categoriesNode = Helpers.newNode('Categories', '[]', 'categories');
         this.product.categories.forEach(elem => {
@@ -93,7 +93,6 @@ export class ProductComponent implements OnInit, OnDestroy {
         rootNode.children.push(categoriesNode);
 
         let attributesNode = Helpers.newNode('Attributes', '[]', 'attributes');
-        attributesNode.expanded = true;
         this.product.attributes.forEach(elem => {
             let node = Helpers.newNode(elem.attribute.attributeName, elem.attribute.attributeId.toString(), `attribute:${elem.productAttributeId}`);
             elem.attributeValues.forEach(e =>

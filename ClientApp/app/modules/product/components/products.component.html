@@ -71,7 +71,7 @@
                             <span *ngIf="dataform.controls['code'].errors['minlength']">Must be equals than 5 characters</span>
                             <span *ngIf="dataform.controls['code'].errors['maxlength']">Must be equals than 5 characters</span>
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="name">Name</label></div>
@@ -80,7 +80,7 @@
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
                             <i class="fa fa-close"></i> Name is required
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="brand">Brand</label></div>
@@ -90,7 +90,7 @@
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['brand'].errors['required']">Brand is required</span>
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="um">Unit of Measure</label></div>
@@ -100,7 +100,7 @@
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['um'].errors['required']">Unit of Measure is required</span>
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="selling">Selling Price</label></div>
@@ -109,7 +109,7 @@
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['selling'].valid&&dataform.controls['selling'].dirty">
                             <i class="fa fa-close"></i> Selling Price is required
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="purchase">Purchase Price</label></div>
@@ -118,7 +118,7 @@
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['purchase'].valid&&dataform.controls['purchase'].dirty">
                             <i class="fa fa-close"></i> Purchase Price is required
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="isActive">Active</label></div>

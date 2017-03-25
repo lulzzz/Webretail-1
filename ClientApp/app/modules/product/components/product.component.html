@@ -23,7 +23,7 @@
         <p-header>
             <div class="ui-helper-clearfix">
                 <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Edit node</span>
-                <button pButton type="button" (click)="closeClick()" style="float: right" class="ui-button-info" icon="fa-close"></button>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
         <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" [showTargetControls]="false"

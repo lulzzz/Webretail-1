@@ -55,7 +55,7 @@ class ProductCategory: PostgresSqlORM, JSONConvertible {
     func getJSONValues() -> [String : Any] {
         return [
             //"productCategoryId": productCategoryId,
-            //"productId": productId,
+            "productId": productId,
             //"categoryId": categoryId,
             "category": _category
         ]

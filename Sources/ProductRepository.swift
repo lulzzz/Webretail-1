@@ -109,6 +109,10 @@ class ProductRepository : ProductProtocol {
         item.updated = Int.now()
         try item.save {
             id in item.productId = id as! Int
+			
+			for category in item._categories {
+				try? self.addCategory(item: category)
+			}
         }
     }
     
@@ -126,8 +130,8 @@ class ProductRepository : ProductProtocol {
         current.productCode = item.productCode
         current.isActive = item.isActive
         current.brandId = item.brandId
-        current.updated = Int.now()
-        try current.save()
+		current.updated = Int.now()
+		try current.save()
     }
     
     func delete(id: Int) throws {
@@ -142,15 +146,23 @@ class ProductRepository : ProductProtocol {
         }
     }
     
-    func removeCategory(item: ProductCategory) throws {
-        try item.find([
-            ("productId", item.productId),
-            ("categoryId", item.categoryId)
-        ])
-        try item.delete()
-    }
-    
-    func addAttribute(item: ProductAttribute) throws {
+	func removeCategory(item: ProductCategory) throws {
+		try item.find([
+			("productId", item.productId),
+			("categoryId", item.categoryId)
+			])
+		try item.delete()
+   }
+	
+	func removeCategories(productId: Int) throws {
+		let productCategory = ProductCategory()
+		try productCategory.find([("productId", productId)])
+		for row in try productCategory.rows() {
+			try row.delete()
+		}
+	}
+
+	func addAttribute(item: ProductAttribute) throws {
         try item.save {
             id in item.productAttributeId = id as! Int
         }

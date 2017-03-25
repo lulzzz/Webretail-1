@@ -69,7 +69,6 @@ class Product: PostgresSqlORM, JSONConvertible {
     
     public func setJSONValues(_ values:[String:Any]) {
         self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.brandId = getJSONValue(named: "brandId", from: values["brand"] as! [String : Any], defaultValue: 0)
         self.productCode = getJSONValue(named: "productCode", from: values, defaultValue: "")
         self.productName = getJSONValue(named: "productName", from: values, defaultValue: "")
         self.productUm = getJSONValue(named: "productUm", from: values, defaultValue: "")
@@ -78,8 +77,19 @@ class Product: PostgresSqlORM, JSONConvertible {
         self.productUm = getJSONValue(named: "productUm", from: values, defaultValue: "")
         self.isActive = getJSONValue(named: "isActive", from: values, defaultValue: false)
         self.isValid = getJSONValue(named: "isValid", from: values, defaultValue: false)
-    }
-    
+
+		let brand = Brand()
+		brand.setJSONValues(values["brand"] as! [String : Any])
+		self._brand = brand
+		self.brandId = brand.brandId
+
+		for category in values["categories"] as! [Any] {
+			let productCategory = ProductCategory()
+			productCategory.setJSONValues(category as! [String: Any])
+			self._categories.append(productCategory)
+		}
+	}
+	
     func jsonEncodedString() throws -> String {
         return try self.getJSONValues().jsonEncodedString()
     }

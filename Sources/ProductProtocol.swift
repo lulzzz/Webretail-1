@@ -24,7 +24,9 @@ protocol ProductProtocol {
 
     func removeCategory(item: ProductCategory) throws
 
-    func addAttribute(item: ProductAttribute) throws
+	func removeCategories(productId: Int) throws
+
+	func addAttribute(item: ProductAttribute) throws
     
     func removeAttribute(item: ProductAttribute) throws
 
