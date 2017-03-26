@@ -45,8 +45,8 @@
                 <tbody> 
                     <tr *ngFor="let item of articleForm.body"> 
                         <td *ngFor="let col of item" align="center"> 
-                            <span *ngIf="col.value===''">{{col.label}}</span>
-                            <p-spinner *ngIf="col.value!==''" pTooltip="{{col.value}} : {{col.label}}" tooltipPosition="left" size="4" [(ngModel)]="col.data" [min]="0"></p-spinner>
+                            <span *ngIf="col.id===0">{{col.value}}</span>
+                            <p-spinner *ngIf="col.id>0" pTooltip="{{col.value}} : {{col.stock}} - {{col.booked}}" tooltipPosition="left" size="4" [(ngModel)]="col.data" [min]="0"></p-spinner>
                         </td> 
                     </tr> 
                 </tbody>

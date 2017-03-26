@@ -222,8 +222,9 @@ class ArticleRepository : ArticleProtocol {
 			for article in group.value {
 				let articleItem = ArticleItem(
 					id: article.articleId,
-					label: "Stock \(article._quantity) - Booked \(article._booked)",
 					value: article.barcode,
+					stock: article._quantity,
+					booked: article._booked,
 					data: 0.0
 				)
 				if (isFirst) {
@@ -233,8 +234,9 @@ class ArticleRepository : ArticleProtocol {
 						})
 						let articleLabel = ArticleItem(
 							id: 0,
-							label: (productAttributeValue?._attributeValue.attributeValueName)!,
-							value: "",
+							value: (productAttributeValue?._attributeValue.attributeValueName)!,
+							stock: 0.0,
+							booked: 0.0,
 							data: 0.0
 						)
 						row.append(articleLabel);

@@ -46,8 +46,8 @@
         <tbody> 
             <tr *ngFor="let item of articleForm.body"> 
                 <td *ngFor="let col of item" align="center">
-                    <input *ngIf="col.id>0" type="text" size="13" title="{{col.label}}" pInputText [(ngModel)]="col.value" />
-                    <span *ngIf="col.id===0" title="{{col.value}}">{{col.label}}</span> 
+                    <input *ngIf="col.id>0" pInputText type="text" size="13" title="{{col.value}}" [(ngModel)]="col.value" />
+                    <span *ngIf="col.id===0" title="{{col.value}}">{{col.value}}</span> 
                 </td> 
             </tr> 
         </tbody>

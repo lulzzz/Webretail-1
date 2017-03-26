@@ -27,7 +27,7 @@ import Turnstile
 import TurnstileWeb
 
 
-StORMdebug = false
+StORMdebug = true
 LogFile.location = "./error.log"
 
 let facebook = Facebook(clientID: "1232307486877468", clientSecret: "b852db2dd51e4a9cca80afe812c33a11")

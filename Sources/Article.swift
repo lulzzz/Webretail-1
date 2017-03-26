@@ -53,20 +53,24 @@ class Article: PostgresSqlORM, JSONConvertible {
             row._attributeValues = try attributeValue.rows()
 
 			let stock = Stock()
-           	if _storeIds == "0" {
+			var stocks = [Stock]()
+           	if _storeIds.isEmpty || _storeIds == "0" {
 				try stock.select(
 					whereclause: "articleId = $1",
 					params: [row.articleId],
 					orderby: []
 				)
+				stocks.append(contentsOf: stock.rows())
 			} else {
-				try stock.select(
-					whereclause: "articleId = $1 AND stockId IN ($2)",
-					params: [row.articleId, _storeIds],
-					orderby: []
-				)
+				let rows = try self.sqlRows(
+					"SELECT * FROM stocks WHERE articleId = \(row.articleId) AND storeId IN (\(_storeIds))",
+					params: [])
+				for row in rows {
+					let stock = Stock()
+					stock.to(row)
+					stocks.append(stock)
+				}
 			}
-			let stocks = stock.rows()
 			row._quantity = stocks.reduce(0) { $0 + $1.quantity }
 			row._booked = stocks.reduce(0) { $0 + $1.booked }
 			

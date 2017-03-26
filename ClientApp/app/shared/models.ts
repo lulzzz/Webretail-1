@@ -260,7 +260,8 @@ export interface ArticleForm {
 
 export interface ArticleItem {
   id: number;
-	label: string;
 	value: string;
+  stock: number;
+  booked: number;
   data: number;
 }
