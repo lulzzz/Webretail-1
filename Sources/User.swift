@@ -117,9 +117,8 @@ class User : PostgresSqlORM, Account, JSONConvertible {
     
     /// Performs a find on supplied username, and matches hashed password
     open func get(_ un: String, _ pw: String) throws -> User {
-        let cursor = StORMCursor(limit: 1, offset: 0)
         do {
-            try select(whereclause: "username = $1", params: [un], orderby: [], cursor: cursor)
+            try select(whereclause: "username = $1", params: [un], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
             if self.results.rows.count == 0 {
                 throw StORMError.noRecordFound
             }

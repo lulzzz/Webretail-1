@@ -24,8 +24,8 @@ export class ProductService {
             .map(result => <Product>result.json());
     }
 
-    getArticles(id: number) : Observable<ArticleForm> {
-        return this.http.get('/api/product/' + id + '/article', { headers: Helpers.getHeaders() })
+    getArticles(id: number, storeIds: string) : Observable<ArticleForm> {
+        return this.http.get('/api/product/' + id + '/store/' + storeIds, { headers: Helpers.getHeaders() })
             .map(result => <ArticleForm>result.json());
     }
 

@@ -119,4 +119,10 @@ class Movement: PostgresSqlORM, JSONConvertible {
             "updated": updated.formatDate()
         ]
     }
+
+	func newNumber() throws {
+		let getCount = try self.sqlRows("SELECT MAX(movementnumber) AS counter FROM \(table())", params: [])
+		self.movementNumber = 1
+		self.movementNumber += getCount.first?.data["counter"] as? Int ?? 1000
+	}
 }

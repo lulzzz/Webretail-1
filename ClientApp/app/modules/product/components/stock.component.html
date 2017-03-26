@@ -1,0 +1,46 @@
+<img *ngIf="!product||!articleForm" src="assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+
+    <button pButton type="button" title="Products" style="position: absolute; top: 84px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+    <h1 style="margin-left: 40px">Stock</h1>
+    
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <ul *ngIf="product">
+                <li><strong>Name</strong> {{product.productName}}</li>
+                <li><strong>Brand</strong> {{product.brand.brandName}}</li>
+                <li><strong>Category</strong>
+                    <ul>
+                        <li *ngFor="let item of product.categories">{{ item.category.categoryName }}</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <h3>Stores</h3>
+            <p-multiSelect [options]="stores" defaultLabel="All" (onChange)="onStoreChanged($event)"></p-multiSelect>
+        </div>
+    </p-toolbar>
+
+    <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">    
+        <thead>
+            <tr> 
+                <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
+            </tr>
+        </thead>
+        <tfoot>
+            <tr> 
+                <td colspan="2" style="background-color: whitesmoke">Items: <strong>{{totalRecords}}</strong></td> 
+            </tr>
+        </tfoot>
+        <tbody> 
+            <tr *ngFor="let item of articleForm.body"> 
+                <td *ngFor="let col of item" align="center">
+                    <span title="{{col.value}}">{{col.label}}</span> 
+                </td> 
+            </tr> 
+        </tbody>
+    </table>
+
+</div>

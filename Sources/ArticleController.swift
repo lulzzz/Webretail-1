@@ -21,7 +21,7 @@ class ArticleController {
         
         routes.add(method: .get, uri: "/api/product/{id}/build", handler: articleBuildHandlerGET)
         routes.add(method: .get, uri: "/api/article", handler: articlesHandlerGET)
-        routes.add(method: .get, uri: "/api/product/{id}/article", handler: productArticleHandlerGET)
+        routes.add(method: .get, uri: "/api/product/{id}/store/{storeids}", handler: productArticleHandlerGET)
         routes.add(method: .get, uri: "/api/article/{id}", handler: articleHandlerGET)
         routes.add(method: .post, uri: "/api/article", handler: articleHandlerPOST)
         routes.add(method: .put, uri: "/api/article/{id}", handler: articleHandlerPUT)
@@ -61,8 +61,9 @@ class ArticleController {
         response.setHeader(.contentType, value: "application/json")
         
         let id = request.urlVariables["id"]!
-        do {
-            let item = try self.repository.getForm(productId: id.toInt()!)
+		let storeIds = request.urlVariables["storeids"]!
+		do {
+            let item = try self.repository.getStock(productId: id.toInt()!, storeIds: storeIds)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {

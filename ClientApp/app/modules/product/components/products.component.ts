@@ -86,6 +86,10 @@ export class ProductsComponent implements OnInit {
         this.router.navigateByUrl('product/' + this.selected.productId);
     }
 
+    stockClick() {
+        this.router.navigateByUrl('product/' + this.selected.productId + '/stock');
+    }
+
     addClick() {
         this.selected = new Product();
         this.selected.brand = this.allbrands.length > 0 ? this.allbrands[0].value : null;

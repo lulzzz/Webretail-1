@@ -9,10 +9,12 @@ import {
     PanelModule, SplitButtonModule, PickListModule, GrowlModule
 } from 'primeng/primeng';
 import { ProductRoutes } from './product.routes';
+import { ProductService } from './../../services/product.service';
+import { StoreService } from './../../services/store.service';
+import { SharedComponentModule } from './../../modules/shared/shared-component.module';
 import { ProductsComponent } from './components/products.component';
 import { ProductComponent } from './components/product.component';
-import { ProductService } from './../../services/product.service';
-import { SharedComponentModule } from './../../modules/shared/shared-component.module';
+import { StockComponent } from './components/stock.component';
 
 @NgModule({
     imports: [
@@ -29,10 +31,12 @@ import { SharedComponentModule } from './../../modules/shared/shared-component.m
     ],
     declarations: [
         ProductsComponent,
-        ProductComponent
+        ProductComponent,
+        StockComponent
     ],
     providers: [
         ProductService,
+        StoreService,
         ConfirmationService
     ]
 })

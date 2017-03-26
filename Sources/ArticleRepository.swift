@@ -136,7 +136,7 @@ class ArticleRepository : ArticleProtocol {
         }
 
         // Clean articles
-        var articles = try get(productId: productId)
+        var articles = try get(productId: productId, storeIds: "0")
         for (i, item) in articles.enumerated() {
             if !item.isValid {
                 try item.delete()
@@ -174,8 +174,9 @@ class ArticleRepository : ArticleProtocol {
         return try items.rows()
     }
     
-    func get(productId: Int) throws -> [Article] {
+	func get(productId: Int, storeIds: String) throws -> [Article] {
         let items = Article()
+		items._storeIds = storeIds
         try items.find([("productId", productId)])
         
         return try items.rows()
@@ -188,7 +189,7 @@ class ArticleRepository : ArticleProtocol {
         return item
     }
     
-	func getForm(productId: Int) throws -> ArticleForm {
+	func getStock(productId: Int, storeIds: String) throws -> ArticleForm {
 		var header = [String]()
 		var body = [[ArticleItem]]()
 		
@@ -209,7 +210,7 @@ class ArticleRepository : ArticleProtocol {
 			}
 		}
 		
-		let articles = try get(productId: productId)
+		let articles = try get(productId: productId, storeIds: storeIds)
 		let grouped = articles.groupBy {
 			$0._attributeValues.dropLast().reduce("") {
 				a,b in "\(a)#\(b.attributeValueId)"

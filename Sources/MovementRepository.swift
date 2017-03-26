@@ -52,8 +52,11 @@ class MovementRepository : MovementProtocol {
 
 		return item
     }
-	
+		
     func add(item: Movement) throws {
+		if item.movementNumber == 0 {
+			try item.newNumber()
+		}
         item.updated = Int.now()
         try item.save {
             id in item.movementId = id as! Int
@@ -178,6 +181,8 @@ class MovementRepository : MovementProtocol {
 	func clone(sourceId: Int) throws -> Movement {
 		let item = try self.get(id: sourceId)!
 		item.movementId = 0
+		item.movementNumber = 0
+		item.movementDate = Int.now()
 		item.movementStatus = "New"
 		try self.add(item: item)
 		return item

@@ -109,7 +109,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     createSheet() {
         this.totalRecords = this.product.articles.length;
-        this.productService.getArticles(this.product.productId)
+        this.productService.getArticles(this.product.productId, '0')
             .subscribe(result => {
                 this.articleForm = result;
             }, onerror => alert(onerror._body));

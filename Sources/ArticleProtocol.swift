@@ -14,11 +14,11 @@ protocol ArticleProtocol {
 
     func getAll() throws -> [Article]
     
-    func get(productId: Int) throws -> [Article]
+    func get(productId: Int, storeIds: String) throws -> [Article]
     
     func get(id: Int) throws -> Article?
     
-	func getForm(productId: Int) throws -> ArticleForm
+	func getStock(productId: Int, storeIds: String) throws -> ArticleForm
 
 	func add(item: Article) throws
     

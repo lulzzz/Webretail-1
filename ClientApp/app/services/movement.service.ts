@@ -26,6 +26,11 @@ export class MovementService {
             .map(result => <Movement>result.json());
     }
 
+    clone(id: number) : Observable<Movement> {
+        return this.http.post('/api/movement/' + id, null, { headers: Helpers.getHeaders() })
+            .map(result => <Movement>result.json());
+    }
+
     update(id: number, model: Movement) : Observable<Movement> {
         return this.http.put('/api/movement/' + id, model, { headers: Helpers.getHeaders() })
             .map(result => <Movement>result.json());

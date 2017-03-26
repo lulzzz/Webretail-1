@@ -61,7 +61,7 @@ export class MovementsComponent implements OnInit {
         this.buttons = [
             { label: 'Document', icon: 'fa-print', command: (event) => this.openClick('document/') },
             { label: 'Barcode', icon: 'fa-barcode', command: (event) => this.openClick('barcode/') },
-            { label: 'Create copy', icon: 'fa-clone', command: (event) => { alert('Create copy'); } }
+            { label: 'Create copy', icon: 'fa-clone', command: (event) => this.cloneClick() }
         ];
 
         this.movementService
@@ -129,6 +129,9 @@ export class MovementsComponent implements OnInit {
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
     get getStatus() : SelectItem[] {
+        if (this.selected.movementId == 0) {
+            return this.status.slice(0, 1);
+        }
         let index = this.status.findIndex(p => p.label === this.selected.movementStatus);
         return this.status.slice(index, 5);
     }
@@ -136,7 +139,7 @@ export class MovementsComponent implements OnInit {
     addClick() {
         this.selected = new Movement();
         this.currentStatus = this.selected.movementStatus;
-        this.selected.movementNumber = this.items.length > 0 ? Math.max.apply(this, this.items.map(p => p.movementNumber)) + 1 : 1000;
+        //this.selected.movementNumber = this.items.length > 0 ? Math.max.apply(this, this.items.map(p => p.movementNumber)) + 1 : 1000;
         if (this.stores.length > 0) {
             this.selected.store = this.stores[0].value;
         }
@@ -172,8 +175,8 @@ export class MovementsComponent implements OnInit {
         if (this.isNew) {
             this.movementService.create(this.selected)
                 .subscribe(result => {
-                    this.items.push(result);
-                    this.closeClick();
+                    this.selected = result;
+                    this.openClick();
                 }, onerror => alert(onerror._body));
         } else {
             this.movementService.update(this.selected.movementId, this.selected)
@@ -199,6 +202,24 @@ export class MovementsComponent implements OnInit {
                         this.items.splice(this.selectedIndex, 1);
                         this.totalRecords = this.items.length;
                         this.closeClick();
+                    }, onerror => alert(onerror._body));
+            }
+        });
+    }
+
+    cloneClick() {
+        if (!this.selected) {
+            return;
+        }
+        this.confirmationService.confirm({
+            header: 'Confirmation copy',
+            message: 'Are you sure that you want to create a copy of this movement?',
+            accept: () => {
+                this.movementService.clone(this.selected.movementId)
+                    .subscribe(result => {
+                        this.selected = result;
+                        this.items.push(this.selected);
+                        this.editClick();
                     }, onerror => alert(onerror._body));
             }
         });

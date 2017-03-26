@@ -69,7 +69,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="number">Number</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="number" [(ngModel)]="selected.movementNumber"/>
+                        <input pInputText formControlName="number" style="width: 50%" [(ngModel)]="selected.movementNumber"/> * leave 0 for automatic numeration
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['number'].valid&&dataform.controls['number'].dirty">
                             <i class="fa fa-close"></i> Number is required
                         </div>

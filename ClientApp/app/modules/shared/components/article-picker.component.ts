@@ -92,7 +92,7 @@ export class ArticlePickerComponent {
 
     getArticles() {
         // from server
-        this.productService.getArticles(this.selected.productId)
+        this.productService.getArticles(this.selected.productId, '0')
             .subscribe(result => {
                 this.articleForm = result;
             }, onerror => alert(onerror._body));
