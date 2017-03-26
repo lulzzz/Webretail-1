@@ -8,6 +8,12 @@
 
 import StORM
 
+enum ActionType {
+	case Booking
+	case Unbooking
+	case Stoking
+}
+
 class MovementRepository : MovementProtocol {
     
     init() {
@@ -69,18 +75,25 @@ class MovementRepository : MovementProtocol {
             throw StORMError.noRecordFound
         }
         
-        current.causalId = item.causalId
-        current.storeId = item.storeId
-		current.movementDate = item.movementDate
-		current.movementDesc = item.movementDesc
-        current.movementNote = item.movementNote
-		if current.movementStatus == "New" && item.movementStatus == "Processing" {
-			try commit(movement: current)
+		if item.movementStatus == "New" {
+			current.causalId = item.causalId
+			current.storeId = item.storeId
+			current.customerId = item.customerId
+			current.movementNumber = item.movementNumber
+			current.movementDate = item.movementDate
 		}
-		if current.movementStatus == "Processing" && item.movementStatus != "Processing" {
-			try rollback(movement: current)
+		else if current.movementStatus == "New" && item.movementStatus == "Processing" {
+			try process(movement: current, actionType: ActionType.Booking)
+		}
+		else if current.movementStatus == "Processing" && item.movementStatus != "Processing" {
+			try process(movement: current, actionType: ActionType.Unbooking)
+		}
+		else if current.movementStatus != "Completed" && item.movementStatus == "Completed" {
+			try process(movement: current, actionType: ActionType.Stoking)
 		}
 		current.movementStatus = item.movementStatus
+		current.movementDesc = item.movementDesc
+		current.movementNote = item.movementNote
 		current.updated = Int.now()
         try current.save()
     }
@@ -91,12 +104,7 @@ class MovementRepository : MovementProtocol {
         try item.delete()
     }
 
-	func commit(movement: Movement) throws {
-		let movement = try get(id: movement.movementId)!
-		if movement.movementStatus != "New" {
-			throw StORMError.error("Movement already committed")
-		}
-		
+	internal func process(movement: Movement, actionType: ActionType) throws {
 		var stock = Stock()
 		let article = MovementArticle()
 		try article.find([("movementId", movement.movementId)])
@@ -119,65 +127,25 @@ class MovementRepository : MovementProtocol {
 			} else {
 				stock = stock.rows().first!
 			}
-
-			if movement._causal.quantity > 0 {
-				stock.quantity += item.quantity
-			} else if movement._causal.quantity < 0 {
-				stock.quantity -= item.quantity
-			}
 			
-			if movement._causal.booked > 0 {
-				stock.booked += item.quantity
-			} else if movement._causal.booked < 0 {
+			switch actionType {
+			case ActionType.Booking:
+				if movement._causal.booked > 0 {
+					stock.booked += item.quantity
+				}
+			case ActionType.Unbooking:
 				stock.booked -= item.quantity
+			default:
+				if movement._causal.quantity > 0 {
+					stock.quantity += item.quantity
+				} else if movement._causal.quantity < 0 {
+					stock.quantity -= item.quantity
+				}
 			}
 			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
 		}
 	}
 	
-	func rollback(movement: Movement) throws {
-		if movement.movementStatus != "Processing" {
-			throw StORMError.error("Movement not committed")
-		}
-		
-		var stock = Stock()
-		let article = MovementArticle()
-		try article.find([("movementId", movement.movementId)])
-		for item in article.rows() {
-			
-			let articles = item.product["articles"] as! [[String : Any]];
-			let articleId = item.getJSONValue(named: "articleId", from: articles[0], defaultValue: 0)
-			
-			let cursor = StORMCursor(limit: 1, offset: 0)
-			try stock.select(
-				whereclause: "articleId = $1 AND stockId = $2",
-				params: [ articleId, movement.storeId ],
-				orderby: [],
-				cursor: cursor)
-			
-			if (stock.rows().count == 0) {
-				stock.storeId = movement.storeId
-				stock.articleId = articleId
-				try stock.save()
-			} else {
-				stock = stock.rows().first!
-			}
-			
-			if movement._causal.quantity > 0 {
-				stock.quantity -= item.quantity
-			} else if movement._causal.quantity < 0 {
-				stock.quantity += item.quantity
-			}
-			
-			if movement._causal.booked > 0 {
-				stock.booked -= item.quantity
-			} else if movement._causal.booked < 0 {
-				stock.booked += item.quantity
-			}
-			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
-		}
-	}
-
 	func clone(sourceId: Int) throws -> Movement {
 		let item = try self.get(id: sourceId)!
 		item.movementId = 0

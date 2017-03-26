@@ -32,17 +32,18 @@
             </template>
         </p-pickList>
     </p-panel>
-</div>
-
-<div class="container-fluid">
  
-    <h2>Articles</h2>
-    <p>Items: {{totalRecords}}</p>
- 
-    <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">    
-        <tr> 
-            <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
-        </tr> 
+    <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">
+        <thead>
+            <tr> 
+                <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
+            </tr>
+        </thead>
+        <tfoot>
+            <tr> 
+                <td style="background-color: whitesmoke">Items: <strong>{{totalRecords}}</strong></td> 
+            </tr>
+        </tfoot>
         <tbody> 
             <tr *ngFor="let item of articleForm.body"> 
                 <td *ngFor="let col of item" align="center">

@@ -55,6 +55,7 @@ export class MovementsComponent implements OnInit {
             'number': new FormControl('', Validators.required),
             'date': new FormControl('', Validators.required),
             'status': new FormControl('', Validators.required),
+            'description': new FormControl('', Validators.nullValidator),
             'note': new FormControl('', Validators.nullValidator)
         });
 

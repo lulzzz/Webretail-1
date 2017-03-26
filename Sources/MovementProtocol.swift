@@ -20,9 +20,5 @@ protocol MovementProtocol {
     
     func delete(id: Int) throws
 
-	func commit(movement: Movement) throws
-
-	func rollback(movement: Movement) throws
-
 	func clone(sourceId: Int) throws -> Movement
 }
