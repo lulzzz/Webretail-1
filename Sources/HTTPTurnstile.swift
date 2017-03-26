@@ -7,11 +7,11 @@
 //
 
 import PerfectHTTP
+import PerfectLogger
 import Turnstile
 import Foundation
 
 extension HTTPResponse {
-    
     /// Extends the HTTPRequest with redirect.
     public func redirect(path: String) {
         self.status = .found
@@ -19,9 +19,10 @@ extension HTTPResponse {
         self.completed()
     }
     
-    public func badRequest(error: Error) {
-        self.status = .badRequest
-        self.appendBody(string: "\(error)")
+    public func badRequest(error: String) {
+		LogFile.error(error)
+		self.status = .badRequest
+        self.appendBody(string: error)
         self.completed()
     }
 }

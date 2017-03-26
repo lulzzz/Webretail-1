@@ -11,7 +11,7 @@ import StORM
 class ProductRepository : ProductProtocol {
     
     init() {
-        try?  Product().setup()
+        try? Product().setup()
         try? ProductCategory().setup()
         try? ProductAttribute().setup()
         try? ProductAttributeValue().setup()

@@ -7,7 +7,6 @@
 //
 
 import PerfectHTTP
-import PerfectLogger
 
 class CausalController {
     
@@ -37,8 +36,7 @@ class CausalController {
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -51,8 +49,7 @@ class CausalController {
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -67,8 +64,7 @@ class CausalController {
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -84,8 +80,7 @@ class CausalController {
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -97,8 +92,7 @@ class CausalController {
             try self.repository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
 }

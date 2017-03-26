@@ -17,4 +17,6 @@ protocol MovementArticleProtocol {
     func update(id: Int, item: MovementArticle) throws
     
     func delete(id: Int) throws
+
+	func clone(sourceMovementId: Int, targetMovementId: Int) throws
 }

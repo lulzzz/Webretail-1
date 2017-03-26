@@ -7,7 +7,6 @@
 //
 
 import PerfectHTTP
-import PerfectLogger
 
 class ArticleController {
     
@@ -42,8 +41,7 @@ class ArticleController {
             try response.setBody(json: count)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -55,8 +53,7 @@ class ArticleController {
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -69,8 +66,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -83,8 +79,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -99,8 +94,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -116,8 +110,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -129,8 +122,7 @@ class ArticleController {
             try self.repository.delete(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -145,8 +137,7 @@ class ArticleController {
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
@@ -158,8 +149,7 @@ class ArticleController {
             try self.repository.removeAttributeValue(id: id.toInt()!)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
 }

@@ -55,4 +55,13 @@ class MovementArticleRepository : MovementArticleProtocol {
         item.movementArticleId = id
         try item.delete()
     }
+	
+	func clone(sourceMovementId: Int, targetMovementId: Int) throws {
+		let items = try self.get(movementId: sourceMovementId)
+		for item in items {
+			item.movementArticleId = 0
+			item.movementId = targetMovementId
+			try self.add(item: item)
+		}
+	}
 }

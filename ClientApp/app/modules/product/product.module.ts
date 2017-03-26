@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     DataTableModule, SharedModule, PaginatorModule,
     MultiSelectModule, DropdownModule, SliderModule,
-    ConfirmDialogModule, ConfirmationService, BlockUIModule, ToolbarModule,
+    ConfirmDialogModule, ConfirmationService, ToolbarModule,
     TreeModule, ButtonModule, InputTextModule, InputSwitchModule,
     PanelModule, SplitButtonModule, PickListModule, GrowlModule
 } from 'primeng/primeng';
@@ -22,7 +22,7 @@ import { SharedComponentModule } from './../../modules/shared/shared-component.m
         TreeModule, ButtonModule,
         InputTextModule, InputSwitchModule,
         PanelModule, SplitButtonModule, PickListModule, GrowlModule,
-        ConfirmDialogModule, BlockUIModule, ToolbarModule,
+        ConfirmDialogModule, ToolbarModule,
         SharedComponentModule.forRoot(),
         CommonModule,
         ProductRoutes

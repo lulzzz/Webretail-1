@@ -57,7 +57,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         });
 
         this.buttons = [
-            { label: 'Build articles', icon: 'fa-database', command: () => this.buildClick() },
+            { label: 'Generate articles', icon: 'fa-database', command: () => this.buildClick() },
             { label: 'Save barcodes', icon: 'fa-barcode', command: () => this.saveClick() }
         ];
     }

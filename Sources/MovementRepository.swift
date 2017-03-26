@@ -14,6 +14,16 @@ class MovementRepository : MovementProtocol {
         try? Movement().setup()
     }
     
+	func getStatus() -> [MovementStatus] {
+		var status = [MovementStatus]()
+		status.append(MovementStatus(value: "New"))
+		status.append(MovementStatus(value: "Processing"))
+		status.append(MovementStatus(value: "Suspended"))
+		status.append(MovementStatus(value: "Canceled"))
+		status.append(MovementStatus(value: "Completed"))
+		return status
+	}
+
 	func getAll() throws -> [Movement] {
         let items = Movement()
 		try items.findAll()
@@ -77,16 +87,6 @@ class MovementRepository : MovementProtocol {
         item.movementId = id
         try item.delete()
     }
-
-	func getStatus() -> [MovementStatus] {
-		var status = [MovementStatus]()
-		status.append(MovementStatus(value: "New"))
-		status.append(MovementStatus(value: "Processing"))
-		status.append(MovementStatus(value: "Suspended"))
-		status.append(MovementStatus(value: "Canceled"))
-		status.append(MovementStatus(value: "Completed"))
-		return status
-	}
 
 	func commit(movement: Movement) throws {
 		let movement = try get(id: movement.movementId)!
@@ -175,6 +175,11 @@ class MovementRepository : MovementProtocol {
 		}
 	}
 
-	func generatePdf(id: Int) {
+	func clone(sourceId: Int) throws -> Movement {
+		let item = try self.get(id: sourceId)!
+		item.movementId = 0
+		item.movementStatus = "New"
+		try self.add(item: item)
+		return item
 	}
 }

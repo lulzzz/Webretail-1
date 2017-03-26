@@ -7,7 +7,6 @@
 //
 
 import PerfectHTTP
-import PerfectLogger
 
 class MovementArticleController {
     
@@ -33,21 +32,19 @@ class MovementArticleController {
     func movementArticlesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]!
         do {
-            let items = try self.movementRepository.get(movementId: id.toInt()!)
+			let id = request.urlVariables["id"]?.toInt()
+            let items = try self.movementRepository.get(movementId: id!)
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
     func movementArticleHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-		let price = request.urlVariables["price"]!
        	do {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = MovementArticle()
@@ -57,48 +54,48 @@ class MovementArticleController {
                 return
             }
 			item.product = try product.getJSONValues()
+
+			let price = request.urlVariables["price"]!
 			if price == "selling" {
 				item.price = product.sellingPrice
 			}
 			if price == "purchase" {
 				item.price = product.purchasePrice
 			}
+			
 			try self.movementRepository.add(item: item)
             try response.setBody(json: item)
             response.completed(status: .created)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
     func movementArticleHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]!
         do {
+			let id = request.urlVariables["id"]?.toInt()
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = MovementArticle()
             item.setJSONValues(json!)
-            try self.movementRepository.update(id: id.toInt()!, item: item)
+            try self.movementRepository.update(id: id!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
     func movementArticleHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let id = request.urlVariables["id"]!
         do {
-            try self.movementRepository.delete(id: id.toInt()!)
+			let id = request.urlVariables["id"]?.toInt()
+            try self.movementRepository.delete(id: id!)
             response.completed(status: .noContent)
         } catch {
-            LogFile.error("\(request.uri) \(request.method): \(error)")
-            response.badRequest(error: error)
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
 }
