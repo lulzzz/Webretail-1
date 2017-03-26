@@ -104,16 +104,15 @@ export class ProductsComponent implements OnInit {
     closeClick() {
         this.displayPanel = false;
         this.selected = null;
-       this.buildFilter(this.products);
+        this.buildFilter(this.products);
     }
 
     saveClick() {
         if (this.isNew) {
             this.productService.create(this.selected)
                 .subscribe(result => {
-                    result.brand = this.selected.brand;
-                    this.products.push(result);
-                    this.closeClick();
+                    this.selected = result;
+                    this.openClick();
                 }, onerror => alert(onerror._body));
         } else {
             this.productService.update(this.selected.productId, this.selected)
