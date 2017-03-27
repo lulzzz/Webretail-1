@@ -19,7 +19,7 @@ module.exports = {
     },
 
     output: {
-        path: __dirname +  '/webroot/',
+        path: __dirname + '/webroot/',
         filename: 'dist/[name].bundle.js',
         chunkFilename: 'dist/[id].chunk.js',
         publicPath: '/'
@@ -33,7 +33,7 @@ module.exports = {
         port: 8888,
         host: 'localhost',
         historyApiFallback: true,
-        contentBase: path.join(__dirname, '/webroot/'),
+        contentBase: path.join(__dirname, 'webroot/'),
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
