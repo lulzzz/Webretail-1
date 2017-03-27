@@ -51,13 +51,6 @@ module.exports = {
                     protocol: 'http:',
                     port: 8080
                 }
-            },
-            '/Media': {
-                target: {
-                    host: "localhost",
-                    protocol: 'http:',
-                    port: 8080
-                }
             }
         }
     },

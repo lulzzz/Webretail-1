@@ -20,7 +20,8 @@ public class AuthenticationController {
         
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
         routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
-        routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
+		routes.add(method: .get, uri: "/api/logout", handler: logoutHandlerGET)
+		routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
         routes.add(method: .get, uri: "/api/authenticated", handler: authenticatedHandlerGET)
 
         routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
@@ -97,10 +98,18 @@ public class AuthenticationController {
         response.completed()
     }
 
-    func registerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+	func logoutHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		request.user.logout()
+		response.setBody(string: "logout")
+		response.completed()
+	}
+
+	func registerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         var resp = [String: String]()
-        
+	
         guard let username = request.param(name: "username"),
             let password = request.param(name: "password") else {
                 resp["error"] = "Missing username or password"
