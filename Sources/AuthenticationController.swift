@@ -101,8 +101,14 @@ public class AuthenticationController {
 	func logoutHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
-		request.user.logout()
-		response.setBody(string: "logout")
+		var resp = [String: String]()
+		resp["logout"] = "ok"
+		do {
+			try response.setBody(json: resp)
+			request.user.logout()
+		} catch {
+			print(error)
+		}
 		response.completed()
 	}
 

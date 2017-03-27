@@ -33,9 +33,7 @@ export class AuthenticationService {
     logout() {
         this.http.get('/api/logout', { headers: Helpers.getHeaders() })
             .map((response) => response.json())
-            .subscribe(result => {
-               this.removeCredentials();
-            }, onerror => this.removeCredentials());
+            .subscribe(result => this.removeCredentials());
     }
 
     grantCredentials(token: string, role: string) {
