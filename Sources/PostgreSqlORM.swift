@@ -37,7 +37,6 @@ open class PostgresSqlORM: PostgresStORM {
 
     /// Table Creation
     /// Requires the connection to be configured, as well as a valid "table" property to have been set in the class
-    @discardableResult
     open override func setup(_ str: String = "") throws {
         LogFile.info("Running setup: \(table())", logFile: "./StORMlog.txt")
         var createStatement = str

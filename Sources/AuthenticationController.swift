@@ -20,7 +20,7 @@ public class AuthenticationController {
         
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
         routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
-		routes.add(method: .get, uri: "/api/logout", handler: logoutHandlerGET)
+		routes.add(method: .post, uri: "/api/logout", handler: logoutHandlerPOST)
 		routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
         routes.add(method: .get, uri: "/api/authenticated", handler: authenticatedHandlerGET)
 
@@ -75,11 +75,11 @@ public class AuthenticationController {
         let credentials = UsernamePassword(username: username, password: password)
         
         do {
-            try request.user.login(credentials: credentials)
+            try request.user.login(credentials: credentials, persist: true)
             guard let uniqueID = request.user.authDetails?.account.uniqueID else {
                 throw AccountTakenError()
             }
-            let token = tokenStore.new(uniqueID)
+			let token = tokenStore.new(uniqueID)
             let user = User()
             try user.get(uniqueID)
             
@@ -98,14 +98,19 @@ public class AuthenticationController {
         response.completed()
     }
 
-	func logoutHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func logoutHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
 		var resp = [String: String]()
-		resp["logout"] = "ok"
 		do {
-			try response.setBody(json: resp)
 			request.user.logout()
+			if let auth = request.header(.authorization)?.replacingOccurrences(of: "Bearer ", with: "") {
+				pturnstile.turnstile.sessionManager.destroySession(identifier: auth)
+			}
+			resp["error"] = "none"
+			resp["logout"] = "completed"
+
+			try response.setBody(json: resp)
 		} catch {
 			print(error)
 		}
@@ -131,7 +136,7 @@ public class AuthenticationController {
         
         do {
             try request.user.register(credentials: credentials)
-            try request.user.login(credentials: credentials)
+            try request.user.login(credentials: credentials, persist: true)
             
             let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
             let token = tokenStore.new(uniqueID)

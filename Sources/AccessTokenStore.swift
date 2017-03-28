@@ -70,14 +70,20 @@ class AccessTokenStore : PostgresSqlORM {
     
     /// Triggers creating a new token.
     public func new(_ u: String) -> String {
-        let rand = URandom()
-        token = rand.secureToken
-        token = token.replacingOccurrences(of: "-", with: "a")
-        userid = u
-        created = Int.now()
-        updated = Int.now()
-        do {
-            try create()
+		do {
+			token = ""
+			try self.find([("userid", u)])
+			if token.isEmpty {
+				let rand = URandom()
+				token = rand.secureToken
+				token = token.replacingOccurrences(of: "-", with: "a")
+				userid = u
+				created = Int.now()
+				try create()
+			} else {
+				updated = Int.now()
+				try save()
+			}
         } catch {
             print(error)
         }

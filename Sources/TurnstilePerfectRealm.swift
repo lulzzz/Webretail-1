@@ -14,7 +14,7 @@ public class TurnstilePerfectRealm {
     public var requestFilter: (HTTPRequestFilter, HTTPFilterPriority)
     public var responseFilter: (HTTPResponseFilter, HTTPFilterPriority)
     
-    private let turnstile: Turnstile
+    public let turnstile: Turnstile
     
     public init(sessionManager: SessionManager = PerfectSessionManager(), realm: Realm = CustomRealm()) {
         turnstile = Turnstile(sessionManager: sessionManager, realm: realm)

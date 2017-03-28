@@ -99,11 +99,12 @@ server.addRoutes(CustomerController().getRoutes())
 
 // Add routes to be checked for auth
 var authenticationConfig = AuthenticationConfig()
+authenticationConfig.include("/api/*}")
 authenticationConfig.exclude("/api/login")
 authenticationConfig.exclude("/api/login/consumer")
 authenticationConfig.exclude("/api/register")
 authenticationConfig.exclude("/api/authenticated")
-authenticationConfig.include("/api/*}")
+authenticationConfig.exclude("/api/logout")
 let authFilter = AuthFilter(authenticationConfig)
 
 // Note that order matters when the filters are of the same priority level
