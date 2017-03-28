@@ -2,13 +2,12 @@
 import { DataTable, SelectItem, MenuItem } from 'primeng/primeng';
 import { Product, ProductCategory, ProductAttributeValue, ArticleForm, ArticleItem } from './models';
 import { Helpers } from './helpers';
-import { BrandService } from './../services/brand.service';
 import { ProductService } from './../services/product.service';
 
 @Component({
     selector: 'article-picker',
     templateUrl: 'article-picker.component.html',
-    providers: [ ProductService, BrandService ],
+    providers: [ ProductService ],
     outputs: ['onPicked']
 })
 
@@ -27,7 +26,7 @@ export class ArticlePickerComponent {
     onPicked = new EventEmitter();
     public isOpen: boolean;
 
-    constructor(private productService: ProductService, private brandService: BrandService) {
+    constructor(private productService: ProductService) {
         this.isOpen = false;
     }
 
@@ -81,17 +80,13 @@ export class ArticlePickerComponent {
     }
 
     onRowExpand(expandedItem: any) {
-        this.productService
-            .getProduct(expandedItem.data.productId)
-            .subscribe(result => {
-                this.selected = result;
-                this.getArticles();
-            }, onerror => alert(onerror._body));
+        this.getArticles(expandedItem.data.productId);
     }
 
-    getArticles() {
+    getArticles(productId: number) {
+        this.articleForm = null;
         // from server
-        this.productService.getArticles(this.selected.productId, '0')
+        this.productService.getArticles(productId, '0')
             .subscribe(result => {
                 this.articleForm = result;
             }, onerror => alert(onerror._body));

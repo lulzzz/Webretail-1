@@ -1,6 +1,6 @@
 ﻿<p-dataTable *ngIf="isOpen" [responsive]="true" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
     selectionMode="single" (onRowSelect)="onRowSelect($event)"
-    expandableRows="true" (onRowExpand)="onRowExpand($event)"
+    rowExpandMode="single" expandableRows="true" (onRowExpand)="onRowExpand($event)"
     [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
     <p-column field="productCode" header="Code" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     <p-column field="productName" header="Name" [sortable]="true" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}">
