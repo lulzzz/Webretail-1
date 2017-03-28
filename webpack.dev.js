@@ -1,114 +1,33 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var helpers = require('./webpack.helpers');
+var webpackMerge = require('webpack-merge');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var commonConfig = require('./webpack.common.js');
+var helpers = require('./helpers');
 
-//const isDevServer = process.argv.find(v => v.includes('webpack-dev-server'));
-
-console.log('@@@@@@@@@ USING DEVELOPMENT @@@@@@@@@@@@@@@');
-module.exports = {
-
-    devtool: 'source-map',
-    performance: {
-        hints: false
-    },
-    entry: {
-        'app': './ClientApp/main.ts'
-    },
-
-    output: {
-        path: __dirname + '/webroot/',
-        filename: 'dist/[name].bundle.js',
-        chunkFilename: 'dist/[id].chunk.js',
-        publicPath: '/'
-    },
-
-    resolve: {
-        extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html']
-    },
-	
-    devServer: {
-        port: 8888,
-        host: 'localhost',
-        historyApiFallback: true,
-        contentBase: path.join(__dirname, 'webroot/'),
-        watchOptions: {
-            aggregateTimeout: 300,
-            poll: 1000
-        },
-        stats: {
-            colors: true
-        },
-        hot: false,
-        inline: false,
-        // Send API requests on localhost to API server get around CORS.
-        proxy: {
-            '/api': {
-                target: {
-                    host: "localhost",
-                    protocol: 'http:',
-                    port: 8080
-                }
+module.exports = webpackMerge(commonConfig, {
+  devtool: 'cheap-module-eval-source-map',
+  
+  output: {
+    path: helpers.root('webroot'),
+    publicPath: 'http://localhost:8080/',
+    filename: 'dist/[name].js',
+    chunkFilename: 'dist/[id].chunk.js'
+  },
+  
+  plugins: [
+    new ExtractTextPlugin('dist/[name].css')
+  ],
+  
+  devServer: {
+    historyApiFallback: true,
+    stats: 'minimal',
+    proxy: {
+        '/api': {
+            target: {
+                host: "localhost",
+                protocol: 'http:',
+                port: 8181
             }
         }
-    },
-
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                loaders: [
-                    'awesome-typescript-loader',
-                    'angular-router-loader',
-                    'angular2-template-loader',        
-                    'source-map-loader',
-                    'tslint-loader'
-                ]
-            },
-            {
-                test: /\.(png|jpg|gif|woff|woff2|ttf|svg|eot)$/,
-                loader: 'file-loader?name=assets/[name]-[hash:6].[ext]'
-            },
-            {
-                test: /favicon.ico$/,
-                loader: 'file-loader?name=/[name].[ext]'
-            },
-            {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader'
-            },
-            {
-                test: /\.scss$/,
-                exclude: /node_modules/,
-                loaders: ['style-loader', 'css-loader', 'sass-loader']
-            },
-            {
-                test: /\.html$/,
-                loader: 'raw-loader'
-            }
-        ],
-        exprContextCritical: false
-    },
-    plugins: [
-        new webpack.optimize.CommonsChunkPlugin({ name: ['app', 'polyfills']}),    
-        new CleanWebpackPlugin(
-            [
-                './webroot/index.html',
-                './webroot/favicon.ico',
-                './webroot/dist',
-                './webroot/assets'
-            ]
-        ),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            inject: 'body',
-            template: 'ClientApp/index.html'
-        }),
-        new CopyWebpackPlugin([
-            { from: './ClientApp/images/*.*', to: 'assets/', flatten: true }
-        ])
-    ]
-};
-
+    }
+  }
+});

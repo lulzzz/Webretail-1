@@ -1,0 +1,81 @@
+﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!causals" src="/assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+    
+    <h1>Causals</h1>
+    
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input #gb type="text" pInputText placeholder="Search" style="width: 180px">
+        </div>
+    </p-toolbar>
+
+    <p-dataTable *ngIf="!displayPanel" [value]="causals" [responsive]="true"
+        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
+        [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5"
+        [globalFilter]="gb" #dt>
+        <p-column field="causalId" header="Id" [style]="{'width':'14%'}" [sortable]="true"></p-column>
+        <p-column field="causalName" header="Name" [sortable]="true"></p-column>
+        <p-column [style]="{'width':'20%','text-align':'center'}" field="quantity" header="Stock" [sortable]="true"></p-column>
+        <p-column [style]="{'width':'20%','text-align':'center'}" field="booked" header="Booked" [sortable]="true"></p-column>
+    </p-dataTable>
+
+    <p-panel *ngIf="displayPanel">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Causal</b></span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
+            </div>
+        </p-header>
+        <form [formGroup]="dataform">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Id</label></div>
+                    <div class="ui-grid-col-8">{{selected.causalId}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="name" [(ngModel)]="selected.causalName"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                            <i class="fa fa-close"></i> Name is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="quantity">Stock</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-selectButton formControlName="quantity" [options]="operators" [(ngModel)]="selected.quantity"></p-selectButton>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['quantity'].valid&&dataform.controls['quantity'].dirty">
+                            <i class="fa fa-close"></i> Stock is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="booked">Booked</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-selectButton formControlName="booked" [options]="operators" [(ngModel)]="selected.booked"></p-selectButton>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['booked'].valid&&dataform.controls['booked'].dirty">
+                            <i class="fa fa-close"></i> Booked is required
+                        </div>
+                </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <button *ngIf="selected.causalId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+                    </div>
+                    <div class="ui-grid-col-8"></div>
+                    <div class="ui-grid-col-4">
+                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </p-panel>
+
+</div>

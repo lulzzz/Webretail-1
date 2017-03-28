@@ -1,0 +1,59 @@
+﻿<p-confirmDialog header="Confirmation delete" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!item" src="/assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+
+    <button pButton type="button" title="Movements" style="position: absolute; top: 84px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+    <h1 style="margin-left: 40px">Movement</h1>
+  
+    <p-toolbar *ngIf="item">
+        <div class="ui-toolbar-group-left">
+            <span><b>n°</b> {{item.movementNumber}}</span> <span><b>date</b>: {{item.movementDate | date: 'yyyy-MM-dd'}}</span>
+            <br/><span><b>status</b>: {{item.movementStatus}}</span>
+        </div>
+        <div class="ui-toolbar-group-right" style="text-align: right">
+            <span><b>causal</b>: {{item.causal.causalName}}</span><br/><span><b>store</b>: {{item.store.storeName}}</span>
+        </div>
+    </p-toolbar>
+
+    <p-dataTable *ngIf="!inputComponent.isOpen" [responsive]="true" [editable]="true" [value]="items | articleFilter:articleValue">
+        <p-header *ngIf="!committed">
+            <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
+            <p-chips [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
+        </p-header>
+        <p-footer>
+            <span style="float: left"><b>{{totalRecords}}</b> rows</span>
+            <span style="float: right"><b>Totals</b> items <b>{{totalItems}}</b> amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
+            <p>&nbsp;</p>
+        </p-footer>
+        <p-column field="barcode" header="Barcode" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="product" header="Product" [editable]="false" [sortable]="true" [filter]="true">
+            <template pTemplate="filter" let-col>
+                <input pInputText [(ngModel)]="articleValue" placeholder="Search" style="width: 100%;margin-top: 4px;" styleClass="ui-column-filter"/>
+            </template>
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.product | articleInfo:data.barcode}}
+            </template>
+        </p-column>
+        <p-column field="quantity" header="Quantity" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+            <template let-col let-data="rowData" pTemplate="editor">
+                <p-spinner [disabled]="committed" [(ngModel)]="data.quantity" [min]="0" (onChange)="onUpdate(data)"></p-spinner>
+            </template>
+        </p-column>
+        <p-column field="price" header="Price" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+            <template let-col let-data="rowData" pTemplate="editor">
+                <p-spinner [disabled]="committed" [(ngModel)]="data.price" [min]="0" (onChange)="onUpdate(data)"></p-spinner>
+            </template>
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.price | currency: 'EUR' : true}}
+            </template>
+        </p-column>
+        <p-column field="amount" header="Amount" [editable]="false" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+            <template let-col let-data="rowData" pTemplate="body">
+                {{data.amount | currency: 'EUR' : true}}
+            </template>
+        </p-column>
+    </p-dataTable>
+
+    <article-picker (onPicked)="pickerClick($event)"></article-picker>
+</div>

@@ -45,9 +45,9 @@ let host 					= "ec2-35-157-208-60.eu-central-1.compute.amazonaws.com"
 PostgresConnector.host		= "webretail.csb42stoatzh.eu-central-1.rds.amazonaws.com"
 server.serverPort 			= 80
 #else
-let host 					= "localhost:8080"
+let host 					= "localhost:8181"
 PostgresConnector.host		= "localhost"
-server.serverPort 			= 8080
+server.serverPort 			= 8181
 #endif
 PostgresConnector.username    = "webretail"
 PostgresConnector.password    = "webretail"

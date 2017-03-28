@@ -1,0 +1,105 @@
+﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!accounts" src="/assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+
+    <h1>Accounts</h1>
+
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input #gb type="text" pInputText placeholder="Search" style="width: 180px">
+        </div>
+    </p-toolbar>
+
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="accounts"
+        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
+        [globalFilter]="gb" #dt>
+        <p-column field="uniqueID" header="Id" [sortable]="true"></p-column>
+        <p-column field="username" header="Username" [sortable]="true"></p-column>
+        <p-column field="firstname" header="Name" [sortable]="true"></p-column>
+        <p-column field="lastname" header="Lastname" [sortable]="true"></p-column>
+        <p-column field="email" header="Email" [sortable]="true"></p-column>
+    </p-dataTable>
+
+    <p-panel *ngIf="displayPanel">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Account</b></span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
+            </div>
+        </p-header>
+        <form [formGroup]="dataform">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Id</label></div>
+                    <div class="ui-grid-col-8">{{selected.uniqueID}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="firstname">Firstname</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="firstname" [(ngModel)]="selected.firstname"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['firstname'].valid&&dataform.controls['firstname'].dirty">
+                            <i class="fa fa-close"></i> Name is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="lastname">Lastname</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="lastname" [(ngModel)]="selected.lastname"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['lastname'].valid&&dataform.controls['lastname'].dirty">
+                            <i class="fa fa-close"></i> Lastname is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="email">Email</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="email" [(ngModel)]="selected.email" type="email"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
+                            <i class="fa fa-close"></i> Email is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="username">Username</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="username" [(ngModel)]="selected.username"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['username'].valid&&dataform.controls['username'].dirty">
+                            <i class="fa fa-close"></i> Username is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="password">Password</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="password" [(ngModel)]="selected.password" type="password"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['password'].valid&&dataform.controls['password'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['password'].errors['required']">Password is required</span>
+                            <span *ngIf="dataform.controls['password'].errors['minlength']">Must be longer than 6 characters</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="isAdmin">Administrator</label></div>
+                    <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="isAdmin" [(ngModel)]="selected.isAdmin"></p-inputSwitch></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <button *ngIf="selected.uniqueID!=''" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+                    </div>
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4">
+                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </p-panel>
+ </div>

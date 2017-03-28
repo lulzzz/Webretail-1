@@ -1,103 +1,39 @@
-var path = require('path');
 var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var helpers = require('./webpack.helpers');
+var webpackMerge = require('webpack-merge');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var commonConfig = require('./webpack.common.js');
+var helpers = require('./helpers');
 
-console.log('@@@@@@@@@ USING PRODUCTION @@@@@@@@@@@@@@@');
+const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
-module.exports = {
+module.exports = webpackMerge(commonConfig, {
+  devtool: 'source-map',
 
-    entry: {
-        'vendor': './ClientApp/vendor.ts',
-        'polyfills': './ClientApp/polyfills.ts',
-        'app': './ClientApp/main-aot.ts' // AoT compilation
-    },
+  output: {
+    path: helpers.root('webroot'),
+    publicPath: '/',
+    filename: 'dist/[name].[hash].js',
+    chunkFilename: 'dist/[id].[hash].chunk.js'
+  },
 
-    output: {
-        path: __dirname + '/webroot/',
-        filename: 'dist/[name].[hash].bundle.js',
-        chunkFilename: 'dist/[id].[hash].chunk.js',
-        publicPath: '/'
-    },
-
-    resolve: {
-        extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html']
-    },
-
-    devServer: {
-        historyApiFallback: true,
-        stats: 'minimal',
-        outputPath: path.join(__dirname, 'webroot/')
-    },
-
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                loaders: [
-                    'awesome-typescript-loader',
-                    'angular-router-loader?aot=true&genDir=aot/'
-                ]
-            },
-            {
-                test: /\.(png|jpg|gif|woff|woff2|ttf|svg|eot)$/,
-                loader: 'file-loader?name=assets/[name]-[hash:6].[ext]'
-            },
-            {
-                test: /favicon.ico$/,
-                loader: 'file-loader?name=/[name].[ext]'
-            },
-            {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader'
-            },
-            {
-                test: /\.scss$/,
-                exclude: /node_modules/,
-                loaders: ['style-loader', 'css-loader', 'sass-loader']
-            },
-            {
-                test: /\.html$/,
-                loader: 'raw-loader'
-            }
-        ],
-        exprContextCritical: false
-    },
-
-    plugins: [
-        new CleanWebpackPlugin(
-            [
-                './webroot/index.html',
-                './webroot/favicon.ico',
-                './webroot/dist',
-                './webroot/assets'
-            ]
-        ),
-        new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            output: {
-                comments: false
-            },
-            sourceMap: false
-        }),
-        new webpack.optimize.CommonsChunkPlugin(
-        {
-            name: ['vendor', 'polyfills']
-        }),
-        new HtmlWebpackPlugin(
-        {
-            filename: 'index.html',
-            inject: 'body',
-            template: 'ClientApp/index.html'
-        }),
-        new CopyWebpackPlugin([
-            { from: './ClientApp/images/*.*', to: 'assets/', flatten: true }
-        ])
-    ]
-};
+  plugins: [
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618
+      mangle: {
+        keep_fnames: true
+      }
+    }),
+    new ExtractTextPlugin('dist/[name].[hash].css'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'ENV': JSON.stringify(ENV)
+      }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      htmlLoader: {
+        minimize: false // workaround for ng2
+      }
+    })
+  ]
+});
 
