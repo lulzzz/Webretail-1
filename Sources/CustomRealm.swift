@@ -34,7 +34,7 @@ open class CustomRealm : Realm {
     open func authenticate(credentials: AccessToken) throws -> Account {
         let account = User()
         let token = AccessTokenStore()
-        print(credentials.string)
+        //print(credentials.string)
         do {
             try token.get(credentials.string)
             if token.check() == false {

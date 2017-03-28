@@ -4,38 +4,71 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "DCD994A20FFF69E73D7DE28EB512BBF004934554" : 9223372036854775807,
+    "6F1260245BD69EFA9A05D126763C86280510C6E1" : 9223372036854775807,
+    "615FD99B652E80AC2E813EEEE7964BA10A9886D5" : 9223372036854775807,
     "A47270401C4E12170692FDEB5A90EE8AC80F500F" : 9223372036854775807,
-    "9197B75B1BC29921D6E3B1CCDC2B258350009F3A" : 9223372036854775807,
-    "E2306DAE0C98D148736A05084B6FAB44F03B4909" : 9223372036854775807,
     "57BE24692F467FFA1EF91B57FC1919A5D9BBBF4F" : 9223372036854775807,
-    "735A06A83BD3E78D8C3B53C09F33A6FB7CEBF8E1" : 9223372036854775807,
-    "C4127C9B9C8FDF608B532AD72407863CE2797629" : 9223372036854775807,
+    "E2306DAE0C98D148736A05084B6FAB44F03B4909" : 9223372036854775807,
+    "A9A67CBB41898084F22D1A92AEF6023DBEEFE6C7" : 9223372036854775807,
+    "85BCF30FFA91EE00CA6E120820040F21F5813686" : 9223372036854775807,
+    "0807368968AD22B966EB2C37D1BD70A25DE4DBD7" : 9223372036854775807,
+    "7E7C1062562B886ABFA1C65C1E929E1339657116" : 9223372036854775807,
+    "DCD994A20FFF69E73D7DE28EB512BBF004934554" : 9223372036854775807,
     "024F03EBC39374C255EF4B6582114D2A31839058" : 9223372036854775807,
-    "9A1954406EDB7889917613180D505A9D1AF9E8C7" : 9223372036854775807,
-    "6F1260245BD69EFA9A05D126763C86280510C6E1" : 9223372036854775807
+    "735A06A83BD3E78D8C3B53C09F33A6FB7CEBF8E1" : 9223372036854775807,
+    "E71C9F673135F52EEF9E6F1B8D0895D4850F2E7F" : 9223372036854775807,
+    "7A6E86399764EA793385C76541C62266A3CFE230" : 9223372036854775807,
+    "3B905509A4DD1F5305D27EF37A9F71F239F93941" : 9223372036854775807,
+    "9197B75B1BC29921D6E3B1CCDC2B258350009F3A" : 9223372036854775807,
+    "C4127C9B9C8FDF608B532AD72407863CE2797629" : 9223372036854775807,
+    "52F974CF368298658E2D7486B02A88D6A4358B85" : 9223372036854775807,
+    "9A1954406EDB7889917613180D505A9D1AF9E8C7" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7B5190DE-9DEA-418E-8F8A-43B6463B6F75",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D1C6E8E2-2244-4FB4-82F6-F778D5B9D6E1",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "DCD994A20FFF69E73D7DE28EB512BBF004934554" : "Webretail\/Packages\/COpenSSL-2.0.4\/",
-    "A47270401C4E12170692FDEB5A90EE8AC80F500F" : "Webretail\/Packages\/StORM-1.0.1\/",
-    "9197B75B1BC29921D6E3B1CCDC2B258350009F3A" : "Webretail\/Packages\/PerfectHTTP-2.1.8\/",
-    "E2306DAE0C98D148736A05084B6FAB44F03B4909" : "Webretail\/Packages\/PerfectLib-2.0.9\/",
+    "6F1260245BD69EFA9A05D126763C86280510C6E1" : "Webretail\/.build\/checkouts\/Perfect-Net.git-3268755499654502659\/",
+    "615FD99B652E80AC2E813EEEE7964BA10A9886D5" : "Webretail\/.build\/checkouts\/Perfect-Thread.git-6541237758607105655\/",
+    "A47270401C4E12170692FDEB5A90EE8AC80F500F" : "Webretail\/.build\/checkouts\/StORM.git-6077292811663054913\/",
     "57BE24692F467FFA1EF91B57FC1919A5D9BBBF4F" : "Webretail\/",
-    "735A06A83BD3E78D8C3B53C09F33A6FB7CEBF8E1" : "Webretail\/Packages\/PerfectLogger-1.0.0\/",
-    "C4127C9B9C8FDF608B532AD72407863CE2797629" : "Webretail\/Packages\/PerfectHTTPServer-2.1.14\/",
-    "024F03EBC39374C255EF4B6582114D2A31839058" : "Webretail\/Packages\/PostgreSQL-2.0.1\/",
-    "9A1954406EDB7889917613180D505A9D1AF9E8C7" : "Webretail\/Packages\/PerfectXML-2.0.4\/",
-    "6F1260245BD69EFA9A05D126763C86280510C6E1" : "Webretail\/Packages\/PerfectNet-2.1.7\/"
+    "E2306DAE0C98D148736A05084B6FAB44F03B4909" : "Webretail\/.build\/checkouts\/PerfectLib.git-3712999737848873669\/",
+    "A9A67CBB41898084F22D1A92AEF6023DBEEFE6C7" : "Webretail\/.build\/checkouts\/SwiftRandom.git--6412955993590123727\/",
+    "85BCF30FFA91EE00CA6E120820040F21F5813686" : "Webretail\/.build\/checkouts\/Postgres-StORM.git--2456018558473457460\/",
+    "0807368968AD22B966EB2C37D1BD70A25DE4DBD7" : "Webretail\/.build\/checkouts\/SwiftString.git-1364241159374428423\/",
+    "7E7C1062562B886ABFA1C65C1E929E1339657116" : "Webretail\/.build\/checkouts\/Turnstile.git-2443676010155639616\/",
+    "DCD994A20FFF69E73D7DE28EB512BBF004934554" : "Webretail\/.build\/checkouts\/Perfect-COpenSSL.git--4744624199947727386\/",
+    "024F03EBC39374C255EF4B6582114D2A31839058" : "Webretail\/.build\/checkouts\/Perfect-PostgreSQL.git--5405562302171386633\/",
+    "735A06A83BD3E78D8C3B53C09F33A6FB7CEBF8E1" : "Webretail\/.build\/checkouts\/Perfect-Logger.git--429101405906730625\/",
+    "E71C9F673135F52EEF9E6F1B8D0895D4850F2E7F" : "Webretail\/.build\/checkouts\/Perfect-Crypto.git--5196635702121641122\/",
+    "7A6E86399764EA793385C76541C62266A3CFE230" : "Webretail\/.build\/checkouts\/SwiftMoment.git--2912679366309029826\/",
+    "3B905509A4DD1F5305D27EF37A9F71F239F93941" : "Webretail\/.build\/checkouts\/Perfect-CURL.git-8858624468322681619\/",
+    "9197B75B1BC29921D6E3B1CCDC2B258350009F3A" : "Webretail\/.build\/checkouts\/Perfect-HTTP.git--6392294032632002019\/",
+    "C4127C9B9C8FDF608B532AD72407863CE2797629" : "Webretail\/.build\/checkouts\/Perfect-HTTPServer.git--6671958091389663080\/",
+    "52F974CF368298658E2D7486B02A88D6A4358B85" : "Webretail\/.build\/checkouts\/Perfect-RequestLogger.git-3102495399181047151\/",
+    "9A1954406EDB7889917613180D505A9D1AF9E8C7" : "Webretail\/.build\/checkouts\/Perfect-XML.git--3069111962689080115\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Webretail",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Webretail.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/Perfect-PostgreSQL.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-PostgreSQL.git--5405562302171386633",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "024F03EBC39374C255EF4B6582114D2A31839058"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/SwiftString.git-1364241159374428423",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0807368968AD22B966EB2C37D1BD70A25DE4DBD7"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-CURL.git-8858624468322681619",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3B905509A4DD1F5305D27EF37A9F71F239F93941"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-RequestLogger.git-3102495399181047151",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "52F974CF368298658E2D7486B02A88D6A4358B85"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gerardogrisolini\/Webretail.git",
@@ -43,44 +76,74 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "57BE24692F467FFA1EF91B57FC1919A5D9BBBF4F"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/Perfect-Net.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-Thread.git-6541237758607105655",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "615FD99B652E80AC2E813EEEE7964BA10A9886D5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-Net.git-3268755499654502659",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6F1260245BD69EFA9A05D126763C86280510C6E1"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/Perfect-Logger.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-Logger.git--429101405906730625",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "735A06A83BD3E78D8C3B53C09F33A6FB7CEBF8E1"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/Perfect-HTTP.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/SwiftMoment.git--2912679366309029826",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7A6E86399764EA793385C76541C62266A3CFE230"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Turnstile.git-2443676010155639616",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7E7C1062562B886ABFA1C65C1E929E1339657116"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Postgres-StORM.git--2456018558473457460",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "85BCF30FFA91EE00CA6E120820040F21F5813686"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-HTTP.git--6392294032632002019",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9197B75B1BC29921D6E3B1CCDC2B258350009F3A"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/Perfect-XML.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-XML.git--3069111962689080115",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9A1954406EDB7889917613180D505A9D1AF9E8C7"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SwiftORM\/StORM.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/StORM.git-6077292811663054913",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A47270401C4E12170692FDEB5A90EE8AC80F500F"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/Perfect-HTTPServer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/SwiftRandom.git--6412955993590123727",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A9A67CBB41898084F22D1A92AEF6023DBEEFE6C7"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-HTTPServer.git--6671958091389663080",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C4127C9B9C8FDF608B532AD72407863CE2797629"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/Perfect-COpenSSL.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-COpenSSL.git--4744624199947727386",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DCD994A20FFF69E73D7DE28EB512BBF004934554"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PerfectlySoft\/PerfectLib.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/PerfectLib.git-3712999737848873669",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E2306DAE0C98D148736A05084B6FAB44F03B4909"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/gerardo\/Projects\/github.com\/Webretail\/.build\/repositories\/Perfect-Crypto.git--5196635702121641122",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E71C9F673135F52EEF9E6F1B8D0895D4850F2E7F"
     }
   ]
 }
