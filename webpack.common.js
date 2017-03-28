@@ -8,9 +8,9 @@ var helpers = require('./helpers');
 module.exports = {
   
   entry: {
-    'polyfills': './src/polyfills.ts',
-    'vendor': './src/vendor.ts',
-    'app': './src/main.ts'
+    'polyfills': './ClientApp/polyfills.ts',
+    'vendor': './ClientApp/vendor.ts',
+    'app': './ClientApp/main.ts'
   },
 
   resolve: {
@@ -24,7 +24,7 @@ module.exports = {
         loaders: [
           {
             loader: 'awesome-typescript-loader',
-            options: { configFileName: helpers.root('src', 'tsconfig.json') }
+            options: { configFileName: helpers.root('ClientApp', 'tsconfig.json') }
           } , 'angular2-template-loader'
         ]
       },
@@ -43,12 +43,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: helpers.root('src', 'app'),
+        exclude: helpers.root('ClientApp', 'app'),
         loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
       },
       {
         test: /\.css$/,
-        include: helpers.root('src', 'app'),
+        include: helpers.root('ClientApp', 'app'),
         loader: 'raw-loader'
       }
     ]
@@ -58,7 +58,7 @@ module.exports = {
     // Workaround for angular/angular#11580
     new webpack.ContextReplacementPlugin(
       /angular(\\|\/)core(\\|\/)@angular/,
-      helpers.root('./src'), // location of your src
+      helpers.root('./ClientApp'), // location of your src
       {} // a map of your routes
     ),
     new webpack.optimize.CommonsChunkPlugin({
@@ -75,10 +75,10 @@ module.exports = {
     new HtmlWebpackPlugin({
         filename: 'index.html',
         inject: 'body',
-        template: 'src/index.html'
+        template: 'ClientApp/index.html'
     }),
     new CopyWebpackPlugin([
-        { from: './src/assets/*.*', to: 'assets/', flatten: true }
+        { from: './ClientApp/assets/*.*', to: 'assets/', flatten: true }
     ])
   ]
 };
