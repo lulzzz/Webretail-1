@@ -21,11 +21,13 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        loaders: [
-          {
-            loader: 'awesome-typescript-loader',
-            options: { configFileName: helpers.root('ClientApp', 'tsconfig.json') }
-          } , 'angular2-template-loader'
+        use: [
+          { loader: "awesome-typescript-loader",
+              options: {
+                configFileName: helpers.root('ClientApp', 'tsconfig.json')
+              }
+          },
+          { loader: "angular2-template-loader" }
         ]
       },
       {
@@ -39,7 +41,11 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+          { loader: "sass-loader" }
+        ]
       },
       {
         test: /\.css$/,
