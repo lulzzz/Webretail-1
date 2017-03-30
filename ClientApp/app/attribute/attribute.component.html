@@ -1,5 +1,5 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
-<img *ngIf="!attributes||selected&&!values" src="/assets/loading.gif" class="loading">
+<img *ngIf="!attributes||selected&&selected.attributeId>0&&!values" src="/assets/loading.gif" class="loading">
 
 <div class="container-fluid">
 
