@@ -7,11 +7,29 @@
 //
 
 import Foundation
+import PostgresStORM
+import StORM
+import TurnstileWeb
+
+let facebook = Facebook(clientID: "1232307486877468", clientSecret: "b852db2dd51e4a9cca80afe812c33a11")
+let google = Google(clientID: "807060073548-m603cvhbmk5e8c633p333hflge1fi8mt.apps.googleusercontent.com", clientSecret: "_qcb-5fEEfDekInFe106Fhhl")
 
 let tokenStore = AccessTokenStore()
 let ioCContainer = IoCContainer()
 
 func setupDatabase() throws {
+	StORMdebug = false
+
+	#if os(Linux)
+		PostgresConnector.host		= "webretail.csb42stoatzh.eu-central-1.rds.amazonaws.com"
+	#else
+		PostgresConnector.host		= "localhost"
+	#endif
+	PostgresConnector.username = "webretail"
+	PostgresConnector.password = "webretail"
+	PostgresConnector.database = "webretail"
+	PostgresConnector.port = 5432
+
 	try tokenStore.setup()
 	let user = User()
 	try user.setup()
