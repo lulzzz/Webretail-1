@@ -22,15 +22,12 @@ public class AngularController {
         routes.add(method: .get, uri: "/attribute", handler: angularHandlerGET)
         routes.add(method: .get, uri: "/product", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/product/{id}", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/product/{id}/stock", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/customer", handler: angularHandlerGET)
         routes.add(method: .get, uri: "/movement", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/movement/{id}", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/movement/document/{id}", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/movement/barcode/{id}", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/customer", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/order", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/order/{id}", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/myorder", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/myorder/{id}", handler: angularHandlerGET)
 		
         return routes
     }

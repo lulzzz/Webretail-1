@@ -8,12 +8,8 @@
 
 import StORM
 
-class CausalRepository : CausalProtocol {
-    
-    init() {
-        try?Causal().setup()
-    }
-    
+struct CausalRepository : CausalProtocol {
+
     func getAll() throws -> [Causal] {
         let items = Causal()
         try items.findAll()

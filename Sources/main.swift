@@ -38,6 +38,8 @@ let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
 // Create HTTP server.
 let server = HTTPServer()
+// Where to serve static files from
+server.documentRoot = "./webroot"
 
 // Database connection and host address
 #if os(Linux)
@@ -54,66 +56,17 @@ PostgresConnector.password    = "webretail"
 PostgresConnector.database    = "webretail"
 PostgresConnector.port        = 5432
 
-// Connect the AccessTokenStore
-let tokenStore = AccessTokenStore()
-try? tokenStore.setup()
+// Setup database
+try setupDatabase();
 
 // Register dependency injection
-let ioCContainer = IoCContainer()
-ioCContainer.register { UserRepository() as UserProtocol }
-ioCContainer.register { CausalRepository() as CausalProtocol }
-ioCContainer.register { StoreRepository() as StoreProtocol }
-ioCContainer.register { BrandRepository() as BrandProtocol }
-ioCContainer.register { CategoryRepository() as CategoryProtocol }
-ioCContainer.register { AttributeRepository() as AttributeProtocol }
-ioCContainer.register { AttributeValueRepository() as AttributeValueProtocol }
-ioCContainer.register { ProductRepository() as ProductProtocol }
-ioCContainer.register { ArticleRepository() as ArticleProtocol }
-ioCContainer.register { MovementRepository() as MovementProtocol }
-ioCContainer.register { MovementArticleRepository() as MovementArticleProtocol }
-ioCContainer.register { CustomerRepository() as CustomerProtocol }
-//ioCContainer.register { PublicationRepository() as PublicationProtocol }
-
+addIoC()
 
 // Register auth routes and handlers
-server.addRoutes(AuthenticationController().getRoutes())
-
-// Register Angular routes and handlers
-server.addRoutes(AngularController().getRoutes())
-
-// Register api routes and handlers
-server.addRoutes(UserController().getRoutes())
-server.addRoutes(CausalController().getRoutes())
-server.addRoutes(StoreController().getRoutes())
-server.addRoutes(BrandController().getRoutes())
-server.addRoutes(CategoryController().getRoutes())
-server.addRoutes(AttributeController().getRoutes())
-server.addRoutes(AttributeValueController().getRoutes())
-server.addRoutes(ProductController().getRoutes())
-server.addRoutes(ArticleController().getRoutes())
-server.addRoutes(MovementController().getRoutes())
-server.addRoutes(MovementArticleController().getRoutes())
-server.addRoutes(CustomerController().getRoutes())
-//server.addRoutes(PublicationController().getRoutes())
-
+addRoutesAndHandlers()
 
 // Add routes to be checked for auth
-var authenticationConfig = AuthenticationConfig()
-authenticationConfig.include("/api/*}")
-authenticationConfig.exclude("/api/login")
-authenticationConfig.exclude("/api/login/consumer")
-authenticationConfig.exclude("/api/register")
-authenticationConfig.exclude("/api/authenticated")
-authenticationConfig.exclude("/api/logout")
-let authFilter = AuthFilter(authenticationConfig)
-
-// Note that order matters when the filters are of the same priority level
-server.setRequestFilters([pturnstile.requestFilter])
-server.setResponseFilters([pturnstile.responseFilter])
-server.setRequestFilters([(authFilter, .high)])
-
-// Where to serve static files from
-server.documentRoot = "./webroot"
+addFilters()
 
 do {
     // Launch the HTTP server.

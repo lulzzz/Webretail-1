@@ -10,13 +10,7 @@ import Foundation
 import StORM
 import TurnstileCrypto
 
-class ArticleRepository : ArticleProtocol {
-    
-    init() {
-        try? Article().setup()
-        try? ArticleAttributeValue().setup()
-        try? Stock().setup()
-	}
+struct ArticleRepository : ArticleProtocol {
 
     func build(productId: Int) throws -> [String:Any] {
         

@@ -8,11 +8,7 @@
 
 import StORM
 
-class AttributeValueRepository : AttributeValueProtocol {
-    
-    init() {
-        try? AttributeValue().setup()
-    }
+struct AttributeValueRepository : AttributeValueProtocol {
 
     func getAll() throws -> [AttributeValue] {
         let items = AttributeValue()

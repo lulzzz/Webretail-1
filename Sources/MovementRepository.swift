@@ -14,12 +14,8 @@ enum ActionType {
 	case Stoking
 }
 
-class MovementRepository : MovementProtocol {
-    
-    init() {
-        try? Movement().setup()
-    }
-    
+struct MovementRepository : MovementProtocol {
+
 	func getStatus() -> [MovementStatus] {
 		var status = [MovementStatus]()
 		status.append(MovementStatus(value: "New"))

@@ -8,11 +8,7 @@
 
 import StORM
 
-class PublicationRepository : PublicationProtocol {
-    
-    init() {
-        try? Publication().setup()
-    }
+struct PublicationRepository : PublicationProtocol {
 
     func getAll() throws -> [Publication] {
         let items = Publication()

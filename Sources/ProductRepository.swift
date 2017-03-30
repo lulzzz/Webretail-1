@@ -8,15 +8,8 @@
 
 import StORM
 
-class ProductRepository : ProductProtocol {
-    
-    init() {
-        try? Product().setup()
-        try? ProductCategory().setup()
-        try? ProductAttribute().setup()
-        try? ProductAttributeValue().setup()
-    }
-    
+struct ProductRepository : ProductProtocol {
+
     func getAll() throws -> [Product] {
         let product = Product()
         try product.findAll()
@@ -109,10 +102,9 @@ class ProductRepository : ProductProtocol {
         item.updated = Int.now()
         try item.save {
             id in item.productId = id as! Int
-			
-			for category in item._categories {
-				try? self.addCategory(item: category)
-			}
+//			for category in item._categories {
+//				try? self.addCategory(item: category)
+//			}
         }
     }
     

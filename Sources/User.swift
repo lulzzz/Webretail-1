@@ -148,6 +148,27 @@ class User : PostgresSqlORM, Account, JSONConvertible {
             return false
         }
     }
+
+	func setAdmin() throws {
+		do {
+			try select(whereclause: "isadmin = $1", params: [true], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
+			
+			if results.rows.count == 0 {
+				if exists("admin") {
+					isAdmin = true
+					try save()
+				}
+				else {
+					firstname = "Administrator"
+					username = "admin"
+					password = "admin"
+					isAdmin = true
+					try make()				}
+			}
+		} catch {
+			print("Set admin error: \(error)")
+		}
+	}
 }
 
 

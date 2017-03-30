@@ -8,12 +8,8 @@
 
 import StORM
 
-class StoreRepository : StoreProtocol {
-    
-    init() {
-        try? Store().setup()
-    }
-    
+struct StoreRepository : StoreProtocol {
+
     func getAll() throws -> [Store] {
         let items = Store()
         try items.findAll()

@@ -9,13 +9,8 @@
 import StORM
 import TurnstileCrypto
 
-class CustomerRepository : CustomerProtocol {
-	
-	init() {
-		let customer = Customer()
-		try? customer.setup()
-	}
-	
+struct CustomerRepository : CustomerProtocol {
+
 	func getAll() throws -> [Customer] {
 		let items = Customer()
 		try items.findAll()

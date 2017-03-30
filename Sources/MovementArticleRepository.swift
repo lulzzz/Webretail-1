@@ -8,12 +8,8 @@
 
 import StORM
 
-class MovementArticleRepository : MovementArticleProtocol {
-    
-    init() {
-        try? MovementArticle().setup()
-    }
-    
+struct MovementArticleRepository : MovementArticleProtocol {
+
     func get(movementId: Int) throws -> [MovementArticle] {
         let items = MovementArticle()
         try items.select(

@@ -8,11 +8,7 @@
 
 import StORM
 
-class CategoryRepository : CategoryProtocol {
-    
-    init() {
-        try? Category().setup()
-    }
+struct CategoryRepository : CategoryProtocol {
 
     func getAll() throws -> [Category] {
         let items = Category()
