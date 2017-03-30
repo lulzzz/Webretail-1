@@ -70,7 +70,7 @@ func addRoutesAndHandlers() {
 	server.addRoutes(CustomerController().getRoutes())
 	server.addRoutes(MovementController().getRoutes())
 	server.addRoutes(MovementArticleController().getRoutes())
-	//server.addRoutes(PublicationController().getRoutes())
+	server.addRoutes(PublicationController().getRoutes())
 }
 
 func addFilters() {
