@@ -18,17 +18,16 @@ let tokenStore = AccessTokenStore()
 let ioCContainer = IoCContainer()
 
 func setupDatabase() throws {
-	StORMdebug = false
-
 	#if os(Linux)
-		PostgresConnector.host		= "webretail.csb42stoatzh.eu-central-1.rds.amazonaws.com"
+		PostgresConnector.host = "webretail.csb42stoatzh.eu-central-1.rds.amazonaws.com"
 	#else
-		PostgresConnector.host		= "localhost"
+		PostgresConnector.host = "localhost"
 	#endif
 	PostgresConnector.username = "webretail"
 	PostgresConnector.password = "webretail"
 	PostgresConnector.database = "webretail"
 	PostgresConnector.port = 5432
+	StORMdebug = false
 
 	try tokenStore.setup()
 	let user = User()
@@ -51,6 +50,8 @@ func setupDatabase() throws {
 	try Customer().setup()
 	try Movement().setup()
 	try MovementArticle().setup()
+	try Discount().setup()
+	try DiscountProduct().setup()
 	try Publication().setup()
 }
 
@@ -67,6 +68,7 @@ func addIoC() {
 	ioCContainer.register { CustomerRepository() as CustomerProtocol }
 	ioCContainer.register { MovementRepository() as MovementProtocol }
 	ioCContainer.register { MovementArticleRepository() as MovementArticleProtocol }
+	ioCContainer.register { DiscountRepository() as DiscountProtocol }
 	ioCContainer.register { PublicationRepository() as PublicationProtocol }
 }
 
@@ -88,6 +90,7 @@ func addRoutesAndHandlers() {
 	server.addRoutes(CustomerController().getRoutes())
 	server.addRoutes(MovementController().getRoutes())
 	server.addRoutes(MovementArticleController().getRoutes())
+	server.addRoutes(DiscountController().getRoutes())
 	server.addRoutes(PublicationController().getRoutes())
 }
 

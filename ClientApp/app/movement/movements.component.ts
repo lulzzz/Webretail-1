@@ -12,8 +12,7 @@ import { Helpers } from './../shared/helpers';
 
 @Component({
     selector: 'movements-component',
-    templateUrl: 'movements.component.html',
-    providers: [ StoreService, CausalService, CustomerService ]
+    templateUrl: 'movements.component.html'
 })
 
 export class MovementsComponent implements OnInit {

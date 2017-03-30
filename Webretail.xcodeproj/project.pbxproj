@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		568BF4891E8D7A380038ED6E /* Discount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568BF4881E8D7A380038ED6E /* Discount.swift */; };
+		568BF48B1E8D7AF60038ED6E /* DiscountProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568BF48A1E8D7AF60038ED6E /* DiscountProduct.swift */; };
+		568BF48D1E8D7D750038ED6E /* DiscountProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568BF48C1E8D7D750038ED6E /* DiscountProtocol.swift */; };
+		568BF48F1E8D7DD40038ED6E /* DiscountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568BF48E1E8D7DD40038ED6E /* DiscountRepository.swift */; };
+		568BF4911E8D7E740038ED6E /* DiscountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568BF4901E8D7E740038ED6E /* DiscountController.swift */; };
 		56C617541E8CDE0B003C90D7 /* Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C617531E8CDE0B003C90D7 /* Setup.swift */; };
 		OBJ_1000 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_924 /* Log.swift */; };
 		OBJ_1001 /* PerfectError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_925 /* PerfectError.swift */; };
@@ -1534,6 +1539,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		568BF4881E8D7A380038ED6E /* Discount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Discount.swift; sourceTree = "<group>"; };
+		568BF48A1E8D7AF60038ED6E /* DiscountProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountProduct.swift; sourceTree = "<group>"; };
+		568BF48C1E8D7D750038ED6E /* DiscountProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountProtocol.swift; sourceTree = "<group>"; };
+		568BF48E1E8D7DD40038ED6E /* DiscountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountRepository.swift; sourceTree = "<group>"; };
+		568BF4901E8D7E740038ED6E /* DiscountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountController.swift; sourceTree = "<group>"; };
 		56C617531E8CDE0B003C90D7 /* Setup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setup.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		OBJ_100 /* OAuth2Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Token.swift; sourceTree = "<group>"; };
@@ -3703,6 +3713,11 @@
 				OBJ_76 /* UserController.swift */,
 				OBJ_77 /* UserProtocol.swift */,
 				OBJ_78 /* UserRepository.swift */,
+				568BF4881E8D7A380038ED6E /* Discount.swift */,
+				568BF48A1E8D7AF60038ED6E /* DiscountProduct.swift */,
+				568BF48C1E8D7D750038ED6E /* DiscountProtocol.swift */,
+				568BF48E1E8D7DD40038ED6E /* DiscountRepository.swift */,
+				568BF4901E8D7E740038ED6E /* DiscountController.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -5440,6 +5455,7 @@
 			files = (
 				OBJ_2027 /* AccessTokenStore.swift in Sources */,
 				OBJ_2028 /* AngularController.swift in Sources */,
+				568BF48B1E8D7AF60038ED6E /* DiscountProduct.swift in Sources */,
 				OBJ_2029 /* Article.swift in Sources */,
 				OBJ_2030 /* ArticleAttributeValue.swift in Sources */,
 				OBJ_2031 /* ArticleController.swift in Sources */,
@@ -5448,17 +5464,20 @@
 				56C617541E8CDE0B003C90D7 /* Setup.swift in Sources */,
 				OBJ_2034 /* Attribute.swift in Sources */,
 				OBJ_2035 /* AttributeController.swift in Sources */,
+				568BF48D1E8D7D750038ED6E /* DiscountProtocol.swift in Sources */,
 				OBJ_2036 /* AttributeProtocol.swift in Sources */,
 				OBJ_2037 /* AttributeRepository.swift in Sources */,
 				OBJ_2038 /* AttributeValue.swift in Sources */,
 				OBJ_2039 /* AttributeValueController.swift in Sources */,
 				OBJ_2040 /* AttributeValueProtocol.swift in Sources */,
 				OBJ_2041 /* AttributeValueRepository.swift in Sources */,
+				568BF4911E8D7E740038ED6E /* DiscountController.swift in Sources */,
 				OBJ_2042 /* AuthenticationConfig.swift in Sources */,
 				OBJ_2043 /* AuthenticationController.swift in Sources */,
 				OBJ_2044 /* AuthFilter.swift in Sources */,
 				OBJ_2045 /* Brand.swift in Sources */,
 				OBJ_2046 /* BrandController.swift in Sources */,
+				568BF4891E8D7A380038ED6E /* Discount.swift in Sources */,
 				OBJ_2047 /* BrandProtocoll.swift in Sources */,
 				OBJ_2048 /* BrandRepository.swift in Sources */,
 				OBJ_2049 /* Category.swift in Sources */,
@@ -5503,6 +5522,7 @@
 				OBJ_2088 /* Store.swift in Sources */,
 				OBJ_2089 /* StoreController.swift in Sources */,
 				OBJ_2090 /* StoreProtocol.swift in Sources */,
+				568BF48F1E8D7DD40038ED6E /* DiscountRepository.swift in Sources */,
 				OBJ_2091 /* StoreRepository.swift in Sources */,
 				OBJ_2092 /* TurnstileFilter.swift in Sources */,
 				OBJ_2093 /* TurnstilePerfectRealm.swift in Sources */,

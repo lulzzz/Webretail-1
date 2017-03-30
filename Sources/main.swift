@@ -29,6 +29,7 @@ let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
 // Create HTTP server.
 let server = HTTPServer()
+
 // Where to serve static files from
 server.documentRoot = "./webroot"
 

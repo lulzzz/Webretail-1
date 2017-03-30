@@ -12,7 +12,7 @@ import {
     TreeModule, ButtonModule, InputTextModule, InputSwitchModule,
     PanelModule, SplitButtonModule, PickListModule, GrowlModule,
     SelectButtonModule, ChipsModule, SpinnerModule, InputTextareaModule,
-    CalendarModule, ContextMenuModule, TooltipModule
+    ContextMenuModule, TooltipModule, CalendarModule
 } from 'primeng/primeng';
 
 import { Configuration } from './app.constants';
@@ -40,6 +40,7 @@ import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { DocumentComponent } from './movement/document.component';
 import { BarcodeComponent } from './movement/barcode.component';
+import { DiscountsComponent } from './discount/discounts.component';
 
 import { AuthenticationService } from './services/authentication.service';
 import { AccountService } from './services/account.service';
@@ -51,6 +52,7 @@ import { CustomerService } from './services/customer.service';
 import { StoreService } from './services/store.service';
 import { ProductService } from './services/product.service';
 import { MovementService } from './services/movement.service';
+import { DiscountService } from './services/discount.service';
 
 import { CategoryFilterPipe } from './pipes/category-filter.pipe';
 import { PriceFilterPipe } from './pipes/price-filter.pipe';
@@ -67,15 +69,20 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         ButtonModule, InputTextModule, InputSwitchModule,
         PanelModule, SplitButtonModule, PickListModule, GrowlModule,
         ConfirmDialogModule, ToolbarModule, SelectButtonModule,
-        ChipsModule, SpinnerModule, InputTextareaModule, CalendarModule,
-        ContextMenuModule, TooltipModule,
+        ChipsModule, SpinnerModule, InputTextareaModule,
+        ContextMenuModule, TooltipModule, CalendarModule,
         AppRoutes
     ],
     declarations: [
+        PriceFilterPipe,
+        ArticleInfoPipe,
+        ArticleFilterPipe,
+        DateFilterPipe,
         AppComponent,
         NavigationComponent,
         FooterComponent,
         ArticlePickerComponent,
+        CategoryFilterPipe,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
@@ -94,11 +101,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         MovementComponent,
         DocumentComponent,
         BarcodeComponent,
-        CategoryFilterPipe,
-        PriceFilterPipe,
-        ArticleInfoPipe,
-        ArticleFilterPipe,
-        DateFilterPipe
+        DiscountsComponent
     ],
     providers: [
         AuthenticationService,
@@ -111,6 +114,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         StoreService,
         ProductService,
         MovementService,
+        DiscountService,
         ConfirmationService,
         Configuration
     ],

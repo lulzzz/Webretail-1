@@ -21,7 +21,7 @@ class ProductController {
         
         routes.add(method: .get, uri: "/api/product", handler: productsHandlerGET)
         routes.add(method: .get, uri: "/api/product/{id}", handler: productHandlerGET)
-        routes.add(method: .post, uri: "/api/product", handler: productHandlerPOST)
+		routes.add(method: .post, uri: "/api/product", handler: productHandlerPOST)
         routes.add(method: .put, uri: "/api/product/{id}", handler: productHandlerPUT)
         routes.add(method: .delete, uri: "/api/product/{id}", handler: productHandlerDELETE)
         routes.add(method: .post, uri: "/api/productcategory", handler: productCategoryHandlerPOST)

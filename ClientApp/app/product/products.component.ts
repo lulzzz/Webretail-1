@@ -10,8 +10,7 @@ import { ProductService } from './../services/product.service';
 
 @Component({
     selector: 'products',
-    templateUrl: 'products.component.html',
-    providers: [BrandService]
+    templateUrl: 'products.component.html'
 })
 
 export class ProductsComponent implements OnInit {

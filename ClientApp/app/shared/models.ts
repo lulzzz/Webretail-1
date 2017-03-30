@@ -214,6 +214,37 @@ export class MovementArticle {
   }
 }
 
+export class Discount {
+  public discountId: number;
+  public discountName: string;
+  public percentage: number;
+  public price: number;
+  public startAt: Date;
+  public finishAt: Date;
+  public updated: Date;
+
+  constructor() {
+    this.discountId = 0;
+    this.discountName = '';
+    this.percentage = 0;
+    this.price = 0;
+    this.updated = new Date();
+  }
+}
+
+export class DiscountProduct {
+  public discountProductId: number;
+  public discountId: number;
+  public productId: number;
+
+  constructor() {
+    this.discountProductId = 0;
+    this.discountId = 0;
+    this.productId = 0;
+  }
+}
+
+
 // Interfaces
 
 export interface Token {

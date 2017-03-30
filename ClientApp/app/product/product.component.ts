@@ -14,8 +14,7 @@ import { AttributeService } from './../services/attribute.service';
 
 @Component({
     selector: 'product',
-    templateUrl: 'product.component.html',
-    providers: [ CategoryService, AttributeService ]
+    templateUrl: 'product.component.html'
 })
 
 export class ProductComponent implements OnInit, OnDestroy {
