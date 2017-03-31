@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './shared/navigation.component';
 import { FooterComponent } from './shared/footer.component';
 import { ArticlePickerComponent } from './shared/article-picker.component';
+import { ProductPickerComponent } from './shared/product-picker.component';
 import { HomeComponent } from './home/home.component';
 
 import { LoginComponent } from './login/login.component';
@@ -75,6 +76,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         AppRoutes
     ],
     declarations: [
+        CategoryFilterPipe,
         PriceFilterPipe,
         ArticleInfoPipe,
         ArticleFilterPipe,
@@ -83,7 +85,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         NavigationComponent,
         FooterComponent,
         ArticlePickerComponent,
-        CategoryFilterPipe,
+        ProductPickerComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
@@ -106,6 +108,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         DiscountComponent
     ],
     providers: [
+        Configuration,
         AuthenticationService,
         AccountService,
         AttributeService,
@@ -117,11 +120,11 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         ProductService,
         MovementService,
         DiscountService,
-        ConfirmationService,
-        Configuration
+        ConfirmationService
     ],
     exports: [
         ArticlePickerComponent,
+        ProductPickerComponent,
         CategoryFilterPipe,
         PriceFilterPipe,
         ArticleInfoPipe,

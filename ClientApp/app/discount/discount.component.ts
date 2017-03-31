@@ -6,7 +6,7 @@ import { AuthenticationService } from './../services/authentication.service';
 import { DiscountService } from './../services/discount.service';
 import { Discount, DiscountProduct } from './../shared/models';
 import { Helpers } from './../shared/helpers';
-import { ArticlePickerComponent } from './../shared/article-picker.component';
+import { ProductPickerComponent } from './../shared/product-picker.component';
 
 @Component({
     selector: 'discount-component',
@@ -14,7 +14,7 @@ import { ArticlePickerComponent } from './../shared/article-picker.component';
 })
 
 export class DiscountComponent implements OnInit, OnDestroy {
-    @ViewChild(ArticlePickerComponent) inputComponent: ArticlePickerComponent;
+    @ViewChild(ProductPickerComponent) inputComponent: ProductPickerComponent;
     private sub: any;
     discountId: number;
     totalRecords = 0;

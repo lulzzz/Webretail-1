@@ -13,7 +13,7 @@
             <span><b>finish</b>: {{item.finishAt | date: 'yyyy-MM-dd'}}</span>
         </div>
         <div class="ui-toolbar-group-right" style="text-align: right">
-            <span><b>percentage</b>: {{item.percentage}} %</span><br/><span><b>price</b>: {{item.price | currency: 'EUR' : true}}</span>
+            <span><b>percentage</b>: {{item.percentage}}%</span><br/><span><b>price</b>: {{item.price | currency: 'EUR' : true}}</span>
         </div>
     </p-toolbar>
 
@@ -36,5 +36,5 @@
         </p-column>
     </p-dataTable>
 
-    <article-picker (onPicked)="pickerClick($event)"></article-picker>
+    <product-picker (onPicked)="pickerClick($event)"></product-picker>
 </div>

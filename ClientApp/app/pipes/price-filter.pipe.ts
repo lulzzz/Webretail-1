@@ -24,7 +24,7 @@ export class PriceFilterPipe implements PipeTransform {
       case 'percentage':
         return value.filter(item => item.percentage <= maxValue);
       default:
-        return value.filter(item => item.sellingPrice <= maxValue);
+        return value.filter(item => (item.discount ? item.discount.price : item.sellingPrice) <= maxValue);
     }
   }
 }

@@ -7,7 +7,6 @@ import { ProductService } from './../services/product.service';
 @Component({
     selector: 'article-picker',
     templateUrl: 'article-picker.component.html',
-    providers: [ ProductService ],
     outputs: ['onPicked']
 })
 

@@ -77,10 +77,10 @@ struct DiscountRepository : DiscountProtocol {
 		try item.save {
 			id in item.discountProductId = id as! Int
 		}
-		let discount = Discount()
-		try discount.get(productId: product.productId)
-		product._discount = discount
-		item.product = try product.getJSONValues()
+//		let discount = Discount()
+//		try discount.get(productId: product.productId)
+//		product._discount = discount
+//		item.product = try product.getJSONValues()
 	}
 	
 	func removeProduct(id: Int) throws {

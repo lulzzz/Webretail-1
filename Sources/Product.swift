@@ -66,7 +66,10 @@ class Product: PostgresSqlORM, JSONConvertible {
 			// get discount
 			let discount = Discount()
 			try discount.get(productId: row.productId)
-			row._discount = discount
+			if discount.discountId > 0 {
+				discount.makeDiscount(sellingPrice: row.sellingPrice)
+				row._discount = discount
+			}
 
             rows.append(row)
         }

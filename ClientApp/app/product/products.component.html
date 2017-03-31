@@ -44,7 +44,14 @@
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000"></p-slider>
             </template>
             <template let-col let-data="rowData" pTemplate="body">
-                {{data.sellingPrice | currency: 'EUR' : true}}
+                <div *ngIf="data.discount;then discount_content else price_content"></div>
+                <ng-template #discount_content>
+                    <span class="percentage">{{data.discount.percentage}}%</span>
+                    <del>{{data.sellingPrice | currency: 'EUR' : true}}</del><br><strong>{{data.discount.price | currency: 'EUR' : true}}</strong>
+                </ng-template>
+                <ng-template #price_content>
+                    {{data.sellingPrice | currency: 'EUR' : true}}
+                </ng-template>
             </template>
         </p-column>
     </p-dataTable>

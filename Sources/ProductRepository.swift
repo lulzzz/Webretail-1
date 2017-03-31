@@ -41,8 +41,11 @@ struct ProductRepository : ProductProtocol {
 		// get discount
 		let discount = Discount()
 		try discount.get(productId: item.productId)
-		item._discount = discount
-
+		if discount.discountId > 0 {
+			discount.makeDiscount(sellingPrice: item.sellingPrice)
+			item._discount = discount
+		}
+		
 		// get attributes
         let productAttribute = ProductAttribute()
         try productAttribute.select(
