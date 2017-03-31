@@ -2,9 +2,14 @@
     selectionMode="multiple" [(selection)]="selected"
     [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
     <p-header>
-        <button pButton type="button" label="Pickup selected products" (click)="pickerClick()" class="ui-button-primary" icon="fa-reply-all"></button>
-        <button pButton type="button" label="Close" (click)="hidePickerClick()" class="ui-button-secondary" icon="fa-close"></button>
+        <div class="ui-helper-clearfix" style="text-align: left">
+            <span style="font-size:20px;display:inline-block;margin-top:3px"><b>Product picker</b></span>
+            <button pButton type="button" label="Close" (click)="hidePickerClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
+        </div>
     </p-header>
+    <p-footer>
+        <button pButton type="button" label="Pickup selected products" (click)="pickerClick()" class="ui-button-primary" icon="fa-reply-all"></button>
+    </p-footer>
     <p-column [style]="{'width':'50px'}" selectionMode="multiple"></p-column>
     <p-column field="productCode" header="Code" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     <p-column field="productName" header="Name" [sortable]="true" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}">

@@ -74,13 +74,13 @@ struct DiscountRepository : DiscountProtocol {
 		item.productId = product.productId
 		item.product = try product.getJSONValues()
 		
+		try item.find([("discountId", item.discountId),("productId", item.productId)])
+		if item.discountProductId > 0 {
+			throw StORMError.error("Cannot insert duplicate key")
+		}
 		try item.save {
 			id in item.discountProductId = id as! Int
 		}
-//		let discount = Discount()
-//		try discount.get(productId: product.productId)
-//		product._discount = discount
-//		item.product = try product.getJSONValues()
 	}
 	
 	func removeProduct(id: Int) throws {
