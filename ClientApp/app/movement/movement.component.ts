@@ -48,7 +48,6 @@ export class MovementComponent implements OnInit, OnDestroy {
             );
             this.movementService.getItemsById(this.movementId)
                 .subscribe(result => {
-                    alert(result);
                     this.items = result;
                     this.updateTotals();
                 }, onerror => alert(onerror._body)

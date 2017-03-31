@@ -38,7 +38,12 @@ struct ProductRepository : ProductProtocol {
         )
         item._categories = try productCategory.rows()
         
-        // get attributes
+		// get discount
+		let discount = Discount()
+		try discount.get(productId: item.productId)
+		item._discount = discount
+
+		// get attributes
         let productAttribute = ProductAttribute()
         try productAttribute.select(
             whereclause: "productId = $1",
@@ -76,7 +81,12 @@ struct ProductRepository : ProductProtocol {
         try brand.get(item.brandId)
         item._brand = brand
         
-        // get categories
+		// get discount
+		let discount = Discount()
+		try discount.get(productId: item.productId)
+		item._discount = discount
+
+		// get categories
         let productCategory = ProductCategory()
         try productCategory.select(
             whereclause: "productId = $1",

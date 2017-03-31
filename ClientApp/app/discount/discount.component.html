@@ -1,0 +1,40 @@
+﻿<p-confirmDialog header="Confirmation delete" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!items" src="/assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+
+    <button pButton type="button" title="Discounts" style="position: absolute; top: 84px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+    <h1 style="margin-left: 40px">Discount</h1>
+  
+    <p-toolbar *ngIf="item">
+        <div class="ui-toolbar-group-left">
+            <span><b>name</b>: {{item.discountName}}</span>
+            <br/><span><b>start</b>: {{item.startAt | date: 'yyyy-MM-dd'}}</span>
+            <span><b>finish</b>: {{item.finishAt | date: 'yyyy-MM-dd'}}</span>
+        </div>
+        <div class="ui-toolbar-group-right" style="text-align: right">
+            <span><b>percentage</b>: {{item.percentage}} %</span><br/><span><b>price</b>: {{item.price | currency: 'EUR' : true}}</span>
+        </div>
+    </p-toolbar>
+
+    <p-dataTable *ngIf="!inputComponent.isOpen" selectionMode="multiple" [(selection)]="itemsSelected" [responsive]="true" [editable]="true" [value]="items">
+        <p-header>
+            <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
+            <p-chips [(ngModel)]="codes" placeholder="code reading" (onAdd)="addCodes()"></p-chips>
+        </p-header>
+        <p-footer>
+            <span style="float: left"><b>{{totalRecords}}</b> rows</span>
+            <button pButton type="button" label="Remove" (click)="removeClick()" [disabled]="!itemsSelected" style="float: right" class="ui-button-secondary" icon="fa-trash"></button>
+            <p>&nbsp;</p>
+        </p-footer>
+        <p-column field="product.productCode" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="product.productName" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="amount" header="Amount" [editable]="false" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+            <template let-col let-data="rowData" pTemplate="body">
+                {{item.price > 0 ? item.price : data.product.sellingPrice * item.percentage / 100 | currency: 'EUR' : true}}
+            </template>
+        </p-column>
+    </p-dataTable>
+
+    <article-picker (onPicked)="pickerClick($event)"></article-picker>
+</div>

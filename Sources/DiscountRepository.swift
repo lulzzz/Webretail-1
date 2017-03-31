@@ -24,25 +24,6 @@ struct DiscountRepository : DiscountProtocol {
 		return items.rows()
 	}
 
-	func get(productId: Int) throws -> Discount? {
-		let item = Discount()
-		var params = [String]()
-		params.append(String(productId))
-		params.append(String(Int.now()))
-		let sql = "SELECT a.* " +
-				  "FROM discount AS a " +
-				  "INNER JOIN discountproduct AS b " +
-				  "WHERE b.productid = $1 AND a.startat < $2 AND a.finishat > $2 " +
-				  "ORDER BY a.discountId " +
-				  "DESC LIMIT 1 OFFSET 0"
-		let current = try item.sqlRows(sql, params: params)
-		if current.count > 0 {
-			item.to(current[0])
-			return item
-		}
-		return nil
-	}
-	
 	func get(id: Int) throws -> Discount? {
 		let item = Discount()
 		try item.get(id)
@@ -79,9 +60,27 @@ struct DiscountRepository : DiscountProtocol {
 	}
 
 	func addProduct(item: DiscountProduct) throws {
+		let product = Product()
+		let productCode = item.getJSONValue(named: "productCode", from: item.product, defaultValue: "")
+		try product.select(whereclause: "productCode = $1 OR productId = $2",
+		                   params: [productCode, item.productId],
+		                   orderby: [],
+		                   cursor: StORMCursor(limit: 1, offset: 0))
+		if product.results.rows.count == 0 {
+			throw StORMError.noRecordFound
+		}
+		product.to(product.results.rows[0])
+		
+		item.productId = product.productId
+		item.product = try product.getJSONValues()
+		
 		try item.save {
 			id in item.discountProductId = id as! Int
 		}
+		let discount = Discount()
+		try discount.get(productId: product.productId)
+		product._discount = discount
+		item.product = try product.getJSONValues()
 	}
 	
 	func removeProduct(id: Int) throws {

@@ -21,7 +21,7 @@ export class DiscountService {
             .map(result => <Discount>result.json());
     }
 
-    getProductsById(id: number): Observable<DiscountProduct[]> {
+    getItemsById(id: number): Observable<DiscountProduct[]> {
         return this.http.get('/api/discount/' + id + '/product', { headers: Helpers.getHeaders() })
             .map(result => <DiscountProduct[]>result.json());
     }

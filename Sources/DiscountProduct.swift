@@ -16,13 +16,15 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 	public var discountProductId : Int = 0
 	public var discountId : Int = 0
 	public var productId : Int = 0
+	public var product : [String:Any] = [String:Any]()
 	
 	open override func table() -> String { return "discountproducts" }
-	open override func tableIndexes() -> [String] { return ["productId"] }
 	
 	open override func to(_ this: StORMRow) {
 		discountProductId = this.data["discountproductid"] as? Int ?? 0
+		discountId = this.data["discountid"] as? Int ?? 0
 		productId = this.data["productid"] as? Int ?? 0
+		product = this.data["product"] as? [String:Any] ?? [String:Any]()
 	}
 	
 	func rows() -> [DiscountProduct] {
@@ -37,7 +39,9 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 	
 	public func setJSONValues(_ values:[String:Any]) {
 		self.discountProductId = getJSONValue(named: "discountProductId", from: values, defaultValue: 0)
+		self.discountId = getJSONValue(named: "discountId", from: values, defaultValue: 0)
 		self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
+		self.product = getJSONValue(named: "product", from: values, defaultValue: [String:Any]())
 	}
 	
 	func jsonEncodedString() throws -> String {
@@ -47,7 +51,9 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 	func getJSONValues() -> [String : Any] {
 		return [
 			"discountProductId": discountProductId,
-			"productId": productId
+			"discountId": discountId,
+			"productId": productId,
+			"product": product
 		]
 	}
 }

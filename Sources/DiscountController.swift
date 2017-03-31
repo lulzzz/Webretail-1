@@ -23,7 +23,6 @@ class DiscountController {
 		routes.add(method: .get, uri: "/api/discount", handler: discountsHandlerGET)
 		routes.add(method: .get, uri: "/api/discount/{id}", handler: discountHandlerGET)
 		routes.add(method: .get, uri: "/api/discount/{id}/product", handler: discountProductHandlerGET)
-		routes.add(method: .get, uri: "/api/product/{id}/discount", handler: productDiscountHandlerGET)
 		routes.add(method: .post, uri: "/api/discount", handler: discountHandlerPOST)
 		routes.add(method: .put, uri: "/api/discount/{id}", handler: discountHandlerPUT)
 		routes.add(method: .delete, uri: "/api/discount/{id}", handler: discountHandlerDELETE)
@@ -64,19 +63,6 @@ class DiscountController {
 		let id = request.urlVariables["id"]!
 		do {
 			let items = try self.repository.getProducts(id: id.toInt()!)
-			try response.setBody(json: items)
-			response.completed(status: .ok)
-		} catch {
-			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-		}
-	}
-
-	func productDiscountHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
-		let id = request.urlVariables["id"]!
-		do {
-			let items = try self.repository.get(productId: id.toInt()!)
 			try response.setBody(json: items)
 			response.completed(status: .ok)
 		} catch {

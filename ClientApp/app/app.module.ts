@@ -41,6 +41,7 @@ import { MovementComponent } from './movement/movement.component';
 import { DocumentComponent } from './movement/document.component';
 import { BarcodeComponent } from './movement/barcode.component';
 import { DiscountsComponent } from './discount/discounts.component';
+import { DiscountComponent } from './discount/discount.component';
 
 import { AuthenticationService } from './services/authentication.service';
 import { AccountService } from './services/account.service';
@@ -101,7 +102,8 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         MovementComponent,
         DocumentComponent,
         BarcodeComponent,
-        DiscountsComponent
+        DiscountsComponent,
+        DiscountComponent
     ],
     providers: [
         AuthenticationService,

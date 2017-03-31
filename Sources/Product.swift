@@ -24,11 +24,12 @@ class Product: PostgresSqlORM, JSONConvertible {
     public var created : Int = Int.now()
     public var updated : Int = Int.now()
     
-    public var _brand: Brand = Brand()
+	public var _brand: Brand = Brand()
     public var _categories: [ProductCategory] = [ProductCategory]()
     public var _attributes: [ProductAttribute] = [ProductAttribute]()
     public var _articles: [Article] = [Article]()
-
+	public var _discount : Discount?
+	
     open override func table() -> String { return "products" }
     open override func tableIndexes() -> [String] { return ["productCode", "productName"] }
 
@@ -61,7 +62,12 @@ class Product: PostgresSqlORM, JSONConvertible {
             let productCategory = ProductCategory()
             try productCategory.find([("productId", row.productId)])
             row._categories = try productCategory.rows()
-            
+			
+			// get discount
+			let discount = Discount()
+			try discount.get(productId: row.productId)
+			row._discount = discount
+
             rows.append(row)
         }
         return rows
@@ -83,11 +89,11 @@ class Product: PostgresSqlORM, JSONConvertible {
 		self._brand = brand
 		self.brandId = brand.brandId
 
-		for category in values["categories"] as! [Any] {
-			let productCategory = ProductCategory()
-			productCategory.setJSONValues(category as! [String: Any])
-			self._categories.append(productCategory)
-		}
+//		for category in values["categories"] as! [Any] {
+//			let productCategory = ProductCategory()
+//			productCategory.setJSONValues(category as! [String: Any])
+//			self._categories.append(productCategory)
+//		}
 	}
 	
     func jsonEncodedString() throws -> String {
@@ -102,6 +108,7 @@ class Product: PostgresSqlORM, JSONConvertible {
             "productUm": productUm,
             "sellingPrice": sellingPrice.roundCurrency(),
             "purchasePrice": purchasePrice.roundCurrency(),
+            "discount": _discount as Any,
             "isActive": isActive,
             "isValid": isValid,
             //"brandId": brandId,

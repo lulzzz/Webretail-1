@@ -73,6 +73,7 @@ export class Product {
   public productUm: string;
   public sellingPrice: number;
   public purchasePrice: number;
+  public discount: Discount;
   public brand: Brand;
   public categories: ProductCategory[];
   public attributes: ProductAttribute[];
@@ -88,6 +89,7 @@ export class Product {
     this.productUm = '';
     this.sellingPrice = 0;
     this.purchasePrice = 0;
+    this.discount = new Discount();
     this.brand = new Brand();
     this.categories = [];
     this.attributes = [];
@@ -235,12 +237,12 @@ export class Discount {
 export class DiscountProduct {
   public discountProductId: number;
   public discountId: number;
-  public productId: number;
+  public product: Product;
 
   constructor() {
     this.discountProductId = 0;
     this.discountId = 0;
-    this.productId = 0;
+    this.product = new Product();
   }
 }
 

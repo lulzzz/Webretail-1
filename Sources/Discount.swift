@@ -68,4 +68,20 @@ class Discount: PostgresSqlORM, JSONConvertible {
 			"updated": updated.formatDate()
 		]
 	}
+	
+	func get(productId: Int) throws {
+		var params = [String]()
+		params.append(String(productId))
+		//params.append(String(Int.now()))
+		let sql = "SELECT a.* " +
+			"FROM discounts AS a " +
+			"INNER JOIN discountproducts AS b ON a.discountId = b.discountId " +
+			"WHERE b.productId = $1 " + // AND a.startat < $2 AND a.finishat > $2 " +
+			"ORDER BY a.discountId " +
+		"DESC LIMIT 1 OFFSET 0"
+		let current = try self.sqlRows(sql, params: params)
+		if current.count > 0 {
+			self.to(current[0])
+		}
+	}
 }

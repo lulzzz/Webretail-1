@@ -12,8 +12,6 @@ protocol DiscountProtocol {
 	
 	func get(id: Int) throws -> Discount?
 	
-	func get(productId: Int) throws -> Discount?
-
 	func getProducts(id: Int) throws -> [DiscountProduct]
 
 	func add(item: Discount) throws
