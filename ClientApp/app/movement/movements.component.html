@@ -20,34 +20,34 @@
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="movementNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
-            <template let-col let-data="rowData" pTemplate="body">
+            <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.movementDate | date:'yyyy-MM-dd'}}
-            </template>            
-            <template pTemplate="filter" let-col>
+            </ng-template>            
+            <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="dateStartValue=null;dateFinishValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
                 <p-calendar [(ngModel)]="dateStartValue" [inputStyle]="{'width':'50%','float':'left'}" dateFormat="yy-mm-dd" placeholder="Start" styleClass="ui-column-filter"></p-calendar>
                 <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'50%','float':'right'}" dateFormat="yy-mm-dd" placeholder="Finish" styleClass="ui-column-filter"></p-calendar>
-            </template>
+            </ng-template>
         </p-column>
         <p-column field="customer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
-            <template pTemplate="filter" let-col>
+            <ng-template pTemplate="filter" let-col>
                 <p-dropdown [options]="customersFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-            </template>
+            </ng-template>
         </p-column>
         <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
-            <template pTemplate="filter" let-col>
+            <ng-template pTemplate="filter" let-col>
                 <p-dropdown [options]="causalsFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-            </template>
+            </ng-template>
         </p-column>
         <p-column field="store.storeName" header="Store" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
-            <template pTemplate="filter" let-col>
+            <ng-template pTemplate="filter" let-col>
                 <p-dropdown [options]="storesFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-            </template>
+            </ng-template>
         </p-column>
         <p-column field="movementStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
-            <template pTemplate="filter" let-col>
+            <ng-template pTemplate="filter" let-col>
                 <p-dropdown [options]="statusFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-            </template>
+            </ng-template>
         </p-column>
     </p-dataTable>
     

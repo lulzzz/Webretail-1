@@ -30,9 +30,9 @@
         <p-column field="product.productCode" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
         <p-column field="product.productName" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
         <p-column field="amount" header="Amount" [editable]="false" [sortable]="true" [filter]="true" filterPlaceholder="Search">
-            <template let-col let-data="rowData" pTemplate="body">
+            <ng-template let-col let-data="rowData" pTemplate="body">
                 {{item.price > 0 ? item.price : data.product.sellingPrice * item.percentage / 100 | currency: 'EUR' : true}}
-            </template>
+            </ng-template>
         </p-column>
     </p-dataTable>
 

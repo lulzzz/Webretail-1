@@ -27,9 +27,9 @@
         </p-header>
         <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" [showTargetControls]="false"
             (onMoveToSource)="removeNodes($event)" (onMoveToTarget)="addNodes($event)">
-            <template let-attr pTemplate="item">
+            <ng-template let-attr pTemplate="item">
                 <span>{{attr.data}}</span> | <span>{{attr.label}}</span>
-            </template>
+            </ng-template>
         </p-pickList>
     </p-panel>
 

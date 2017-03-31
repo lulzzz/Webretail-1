@@ -11,7 +11,7 @@
             <button pButton type="button" label="Edit" title="Edit item" (click)="editClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-edit"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <p-splitButton label="Details" icon="fa-bars" (onClick)="openClick()" [model]="buttons" [disabled]="!selected"></p-splitButton>
+            <button pButton type="button" label="Details" title="Open details" (click)="openClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-bars"></button>
         </div>
     </p-toolbar>
 
@@ -20,40 +20,40 @@
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="discountName" header="Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column header="Start" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
-            <template let-col let-data="rowData" pTemplate="body">
+            <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.startAt | date:'yyyy-MM-dd'}}
-            </template>            
-            <template pTemplate="filter" let-col>
+            </ng-template>            
+            <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="dateStartValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
                 <p-calendar [(ngModel)]="dateStartValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Start" styleClass="ui-column-filter"></p-calendar>
-            </template>
+            </ng-template>
         </p-column>
         <p-column header="Finish" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
-            <template let-col let-data="rowData" pTemplate="body">
+            <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.finishAt | date:'yyyy-MM-dd'}}
-            </template>            
-            <template pTemplate="filter" let-col>
+            </ng-template>            
+            <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="dateFinishValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
                 <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Finish" styleClass="ui-column-filter"></p-calendar>
-            </template>
+            </ng-template>
         </p-column>
         <p-column field="percentage" header="% ({{percentageValue||'No Filter'}})"[sortable]="true" [filter]="true" filterMatchMode="equals">
-            <template pTemplate="filter" let-col>
+            <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="percentageValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="percentageValue" [min]="5" [max]="100" styleClass="ui-column-filter"></p-slider>
-            </template>
-            <template let-col let-data="rowData" pTemplate="body">
+            </ng-template>
+            <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.percentage}} %
-            </template>
+            </ng-template>
         </p-column>
         <p-column field="price" header="Price ({{priceValue||'No Filter'}})"[sortable]="true" [filter]="true" filterMatchMode="equals">
-            <template pTemplate="filter" let-col>
+            <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="priceValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="priceValue" [min]="5" [max]="1000" styleClass="ui-column-filter"></p-slider>
-            </template>
-            <template let-col let-data="rowData" pTemplate="body">
+            </ng-template>
+            <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.price | currency: 'EUR' : true}}
-            </template>
+            </ng-template>
         </p-column>
     </p-dataTable>
     
