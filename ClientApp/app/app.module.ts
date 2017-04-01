@@ -11,7 +11,7 @@ import {
     ConfirmDialogModule, ConfirmationService, ToolbarModule,
     TreeModule, ButtonModule, InputTextModule, InputSwitchModule,
     PanelModule, SplitButtonModule, PickListModule, GrowlModule,
-    SelectButtonModule, ChipsModule, SpinnerModule, InputTextareaModule,
+    SelectButtonModule, ChipsModule, InputTextareaModule,
     ContextMenuModule, TooltipModule, CalendarModule
 } from 'primeng/primeng';
 
@@ -61,6 +61,7 @@ import { PriceFilterPipe } from './pipes/price-filter.pipe';
 import { ArticleInfoPipe } from './pipes/articleinfo.pipe';
 import { ArticleFilterPipe } from './pipes/article-filter.pipe';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
+import { PeriodFilterPipe } from './pipes/period-filter.pipe';
 
 @NgModule({
     imports: [
@@ -71,7 +72,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         ButtonModule, InputTextModule, InputSwitchModule,
         PanelModule, SplitButtonModule, PickListModule, GrowlModule,
         ConfirmDialogModule, ToolbarModule, SelectButtonModule,
-        ChipsModule, SpinnerModule, InputTextareaModule,
+        ChipsModule, InputTextareaModule,
         ContextMenuModule, TooltipModule, CalendarModule,
         AppRoutes
     ],
@@ -81,6 +82,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         ArticleInfoPipe,
         ArticleFilterPipe,
         DateFilterPipe,
+        PeriodFilterPipe,
         AppComponent,
         NavigationComponent,
         FooterComponent,
@@ -129,7 +131,8 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
         PriceFilterPipe,
         ArticleInfoPipe,
         ArticleFilterPipe,
-        DateFilterPipe
+        DateFilterPipe,
+        PeriodFilterPipe
     ],
     bootstrap: [AppComponent],
 })

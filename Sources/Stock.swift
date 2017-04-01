@@ -59,8 +59,8 @@ class Stock: PostgresSqlORM, JSONConvertible {
             "stockId": stockId,
             "storeId": storeId,
             "articleId": articleId,
-            "quantity": quantity,
-            "booked": booked
+            "quantity": quantity.roundCurrency(),
+            "booked": booked.roundCurrency()
         ]
     }
 }

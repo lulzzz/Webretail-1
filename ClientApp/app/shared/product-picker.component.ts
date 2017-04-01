@@ -18,7 +18,6 @@ export class ProductPickerComponent {
     categories: SelectItem[];
     allbrands: SelectItem[];
     brands: SelectItem[];
-    names: SelectItem[];
     categoryValue: string;
     sliderValue: number;
     onPicked = new EventEmitter();
@@ -54,8 +53,6 @@ export class ProductPickerComponent {
     }
 
     buildFilter(items: Product[]) {
-        this.names = items.map((item: Product) => Helpers.newSelectItem(item.productName));
-
         this.brands = [];
         this.brands.push({label: 'All', value: null});
         let filterBrands = Helpers.distinct(items.map((item: Product) => Helpers.newSelectItem(item.brand.brandName)));

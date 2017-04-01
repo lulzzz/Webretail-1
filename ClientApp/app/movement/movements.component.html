@@ -71,7 +71,7 @@
                     <div class="ui-grid-col-8">
                         <input pInputText *ngIf="selected.movementStatus==='New'" formControlName="number" [(ngModel)]="selected.movementNumber" style="width: 50%"/>
                         <input pInputText *ngIf="selected.movementStatus!=='New'" disabled="true" formControlName="number" [(ngModel)]="selected.movementNumber" style="width: 50%"/>
-                        * leave 0 for automatic numeration
+                        0 = auto increment
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['number'].valid&&dataform.controls['number'].dirty">
                             <i class="fa fa-close"></i> Number is required
                         </div>

@@ -61,7 +61,7 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
             "movementId": movementId,
             "barcode": barcode,
             "product": product,
-            "quantity": quantity,
+            "quantity": quantity.roundCurrency(),
             "price": price.roundCurrency(),
             "amount": (quantity * price).roundCurrency()
         ]

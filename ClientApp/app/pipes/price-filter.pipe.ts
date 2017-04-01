@@ -24,6 +24,9 @@ export class PriceFilterPipe implements PipeTransform {
       case 'discount':
         let item = args2;
         return value.filter(data => (item.percentage == 0 ? ((data.product.sellingPrice - item.price) / data.product.sellingPrice * 100.0) : data.product.sellingPrice - (data.product.sellingPrice * item.percentage / 100)) <= maxValue);
+      case 'movement':
+        let maxAmount = args2;
+        return value.filter(data => data.price <= maxValue || data.amount <= maxAmount);
       default:
         return value.filter(item => (item.discount ? item.discount.price : item.sellingPrice) <= maxValue);
     }

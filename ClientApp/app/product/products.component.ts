@@ -21,7 +21,6 @@ export class ProductsComponent implements OnInit {
     allbrands: SelectItem[];
     ums: SelectItem[];
     brands: SelectItem[];
-    names: SelectItem[];
     categoryValue: string;
     sliderValue: number;
     displayPanel: boolean;
@@ -67,8 +66,6 @@ export class ProductsComponent implements OnInit {
     get selectedIndex(): number { return this.products.indexOf(this.selected); }
 
     buildFilter(items: Product[]) {
-        this.names = items.map((item: Product) => Helpers.newSelectItem(item.productName));
-
         this.brands = [];
         this.brands.push({label: 'All', value: null});
         let filterBrands = Helpers.distinct(items.map((item: Product) => Helpers.newSelectItem(item.brand.brandName)));

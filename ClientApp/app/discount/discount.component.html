@@ -39,7 +39,13 @@
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000" styleClass="ui-column-filter"></p-slider>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{(item.percentage == 0 ? ((data.product.sellingPrice - item.price) / data.product.sellingPrice * 100.0) + '%' : data.product.sellingPrice - (data.product.sellingPrice * item.percentage / 100) | currency: 'EUR' : true)}}
+                <div *ngIf="item.percentage===0;then discount_content else price_content"></div>
+                <ng-template #discount_content>
+                    {{(data.product.sellingPrice - item.price) / data.product.sellingPrice * 100.0}}%
+                </ng-template>
+                <ng-template #price_content>
+                    {{data.product.sellingPrice - (data.product.sellingPrice * item.percentage / 100) | currency: 'EUR' : true}}
+                </ng-template>
             </ng-template>
         </p-column>
     </p-dataTable>

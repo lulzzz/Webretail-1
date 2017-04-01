@@ -24,6 +24,8 @@ export class MovementComponent implements OnInit, OnDestroy {
     item: Movement;
     items: MovementArticle[];
     articleValue: string;
+    priceValue: number;
+    amountValue: number;
     committed: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,

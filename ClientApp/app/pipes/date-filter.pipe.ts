@@ -14,10 +14,11 @@ export class DateFilterPipe implements PipeTransform {
     if (arg0 == null) {
       return value;
     }
+
     let dateStart = arg0;
+    let dateFinish = arg1;
 
     if (arg1 != null) {
-      let dateFinish = arg1;
       return value.filter(item => this.getDate(item) >= dateStart && this.getDate(item) <= dateFinish);
     }
 

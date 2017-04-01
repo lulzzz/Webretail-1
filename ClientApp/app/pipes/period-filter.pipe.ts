@@ -11,20 +11,21 @@ export class PeriodFilterPipe implements PipeTransform {
       return;
     }
 
-    if (arg0 == null) {
+    if (arg0 == null && arg1 == null) {
       return value;
     }
+    
     let dateStart = arg0;
+    let dateFinish = arg1;
 
-    if (arg1 != null) {
-      let dateFinish = arg1;
-      return value.filter(item => this.getDate(item) >= dateStart && this.getDate(item) <= dateFinish);
+    if (arg0 != null && arg1 == null) {
+      return value.filter(item => new Date(item.startAt).toISOString() === dateStart.toISOString());
     }
 
-    return value.filter(item => this.getDate(item).toISOString() === dateStart.toISOString());
-  }
+    if (arg0 == null && arg1 != null) {
+      return value.filter(item => new Date(item.finishAt).toISOString() === dateFinish.toISOString());
+    }
 
-  getDate(item: any) : Date {
-    return new Date(item.movementDate);
+    return value.filter(item => new Date(item.startAt) >= dateStart && new Date(item.finishAt) <= dateFinish);
   }
 }
