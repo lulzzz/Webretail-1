@@ -12,7 +12,7 @@ module.exports = webpackMerge(commonConfig, {
   entry: {
     'polyfills': './ClientApp/polyfills.ts',
     'vendor': './ClientApp/vendor.ts',
-    'app': './ClientApp/main.ts'
+    'app': './ClientApp/main-aot.ts'
   },
   
   output: {
@@ -28,7 +28,7 @@ module.exports = webpackMerge(commonConfig, {
         test: /\.ts$/,
         use: [
           { loader: "awesome-typescript-loader" },
-          { loader: "angular2-template-loader" }
+          { loader: "angular2-template-loader?aot=true&genDir=aot/" }
         ]
       }
     ]

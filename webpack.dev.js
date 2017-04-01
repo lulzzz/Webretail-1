@@ -6,11 +6,29 @@ var helpers = require('./helpers');
 module.exports = webpackMerge(commonConfig, {
   devtool: 'cheap-module-eval-source-map',
   
+  entry: {
+    'polyfills': './ClientApp/polyfills.ts',
+    'vendor': './ClientApp/vendor.ts',
+    'app': './ClientApp/main.ts'
+  },
+  
   output: {
     path: helpers.root('webroot'),
     publicPath: 'http://localhost:8080/',
     filename: 'dist/[name].js',
     chunkFilename: 'dist/[id].chunk.js'
+  },
+  
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: [
+          { loader: "awesome-typescript-loader" },
+          { loader: "angular2-template-loader" }
+        ]
+      }
+    ]
   },
   
   plugins: [
