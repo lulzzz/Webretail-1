@@ -23,6 +23,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
     items: DiscountProduct[];
     itemsSelected: DiscountProduct[];
     articleValue: string;
+    sliderValue: number;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
@@ -30,6 +31,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private location: Location) {
         this.codes = [];
+        this.itemsSelected = [];
     }
 
 	ngOnInit() {

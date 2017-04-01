@@ -15,10 +15,19 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue| priceFilter:sliderValue:'discount'"
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue | priceFilter:sliderValue:'discounts'"
         selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="discountName" header="Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column header="Discount ({{sliderValue||'No Filter'}})"[sortable]="true" [filter]="true">
+            <ng-template pTemplate="filter" let-col>
+                <i class="fa fa-close" (click)="sliderValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000" styleClass="ui-column-filter"></p-slider>
+            </ng-template>
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                {{data.percentage > 0 ? data.percentage + '%' : data.price | currency: 'EUR' : true}}
+            </ng-template>
+        </p-column>
         <p-column header="Start" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.startAt | date:'yyyy-MM-dd'}}
@@ -37,30 +46,12 @@
                 <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Finish" styleClass="ui-column-filter"></p-calendar>
             </ng-template>
         </p-column>
-        <p-column field="percentage" header="% ({{percentageValue||'No Filter'}})"[sortable]="true" [filter]="true" filterMatchMode="equals">
-            <ng-template pTemplate="filter" let-col>
-                <i class="fa fa-close" (click)="percentageValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
-                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="percentageValue" [min]="5" [max]="100" styleClass="ui-column-filter"></p-slider>
-            </ng-template>
-            <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.percentage}} %
-            </ng-template>
-        </p-column>
-        <p-column field="price" header="Price ({{priceValue||'No Filter'}})"[sortable]="true" [filter]="true" filterMatchMode="equals">
-            <ng-template pTemplate="filter" let-col>
-                <i class="fa fa-close" (click)="priceValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
-                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="priceValue" [min]="5" [max]="1000" styleClass="ui-column-filter"></p-slider>
-            </ng-template>
-            <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.price | currency: 'EUR' : true}}
-            </ng-template>
-        </p-column>
     </p-dataTable>
     
      <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">
-                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Discount</b></span>
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:4px"><b>Discount</b></span>
                 <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
@@ -98,21 +89,18 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="percentage">Percentage %</label></div>
+                    <div class="ui-grid-col-12"><h4>TYPE OF DISCOUNT</h4></div>
+                </div>
+                <div class="ui-grid-row" *ngIf="selected.price<1">
+                    <div class="ui-grid-col-4"><label for="percentage">percentage %</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="percentage" [(ngModel)]="selected.percentage"/>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['percentage'].valid&&dataform.controls['percentage'].dirty">
-                            <i class="fa fa-close"></i> Percentage is required
-                        </div>
+                        <p-spinner formControlName="percentage" [(ngModel)]="selected.percentage" [min]="0" [max]="100"></p-spinner>
                     </div>
                 </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="price">Price</label></div>
+                <div class="ui-grid-row" *ngIf="selected.percentage<1">
+                    <div class="ui-grid-col-4"><label for="price">fixed-price</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="price" [(ngModel)]="selected.price"/>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['price'].valid&&dataform.controls['price'].dirty">
-                            <i class="fa fa-close"></i> Price is required
-                        </div>
+                        <p-spinner formControlName="price" [(ngModel)]="selected.price" [min]="0" [max]="1000"></p-spinner>
                     </div>
                 </div>
                 <div class="ui-grid-row">

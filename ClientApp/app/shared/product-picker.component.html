@@ -8,7 +8,7 @@
         </div>
     </p-header>
     <p-footer>
-        <button pButton type="button" label="Pickup selected products" (click)="pickerClick()" class="ui-button-primary" icon="fa-reply-all"></button>
+        <button pButton type="button" label="Pickup" (click)="pickerClick()" class="ui-button-primary" icon="fa-reply-all"></button>
     </p-footer>
     <p-column [style]="{'width':'50px'}" selectionMode="multiple"></p-column>
     <p-column field="productCode" header="Code" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
@@ -38,7 +38,7 @@
         <ng-template let-col let-data="rowData" pTemplate="body">
             <div *ngIf="data.discount;then discount_content else price_content"></div>
             <ng-template #discount_content>
-                <span class="percentage">{{data.discount.percentage}}%</span>
+                <span class="percentage">-{{data.discount.percentage}}%</span>
                 <del>{{data.sellingPrice | currency: 'EUR' : true}}</del><br><strong>{{data.discount.price | currency: 'EUR' : true}}</strong>
             </ng-template>
             <ng-template #price_content>

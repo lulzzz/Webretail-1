@@ -64,8 +64,7 @@ class Discount: PostgresSqlORM, JSONConvertible {
 			"percentage": percentage,
 			"price": price.roundCurrency(),
 			"startAt": startAt.formatDate(),
-			"finishAt": finishAt.formatDate(),
-			"updated": updated.formatDate()
+			"finishAt": finishAt.formatDate()
 		]
 	}
 	
@@ -77,8 +76,8 @@ class Discount: PostgresSqlORM, JSONConvertible {
 			"FROM discounts AS a " +
 			"INNER JOIN discountproducts AS b ON a.discountId = b.discountId " +
 			"WHERE b.productId = $1 AND a.startat < $2 AND a.finishat > $2 " +
-			"ORDER BY a.discountId " +
-		"DESC LIMIT 1 OFFSET 0"
+			"ORDER BY a.discountId DESC " +
+			"LIMIT 1 OFFSET 0"
 		let current = try self.sqlRows(sql, params: params)
 		if current.count > 0 {
 			self.to(current[0])
@@ -87,7 +86,7 @@ class Discount: PostgresSqlORM, JSONConvertible {
 	
 	func makeDiscount(sellingPrice: Double) {
 		if self.percentage > 0 {
-			self.price = sellingPrice * Double(self.percentage) / 100
+			self.price = sellingPrice - (sellingPrice * Double(self.percentage) / 100)
 		} else {
 			self.percentage = Int((sellingPrice - self.price) / sellingPrice * 100.0)
 		}

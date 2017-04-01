@@ -20,8 +20,7 @@ export class DiscountsComponent implements OnInit {
 	dataform: FormGroup;
     dateStartValue: Date;
     dateFinishValue: Date;
-    priceValue: number;
-    percentageValue: number;
+    sliderValue: number;
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
@@ -34,8 +33,8 @@ export class DiscountsComponent implements OnInit {
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
-            'percentage': new FormControl('', Validators.required),
-            'price': new FormControl('', Validators.required),
+            'percentage': new FormControl('', Validators.nullValidator),
+            'price': new FormControl('', Validators.nullValidator),
             'start': new FormControl('', Validators.required),
             'finish': new FormControl('', Validators.required)
         });

@@ -13,25 +13,33 @@
             <span><b>finish</b>: {{item.finishAt | date: 'yyyy-MM-dd'}}</span>
         </div>
         <div class="ui-toolbar-group-right" style="text-align: right">
-            <span><b>percentage</b>: {{item.percentage}}%</span><br/><span><b>price</b>: {{item.price | currency: 'EUR' : true}}</span>
+            <br>
+            <span *ngIf="item.percentage>0"><b>percentage</b>: {{item.percentage}}%</span>
+            <span *ngIf="item.price>0"><b>fixed price</b>: {{item.price | currency: 'EUR' : true}}</span>
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!inputComponent.isOpen" selectionMode="multiple" [(selection)]="itemsSelected" [responsive]="true" [editable]="true" [value]="items">
+    <p-dataTable *ngIf="!inputComponent.isOpen" [value]="items | priceFilter:sliderValue:'discount':item" 
+        selectionMode="multiple" [(selection)]="itemsSelected" [responsive]="true">
         <p-header>
             <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
             <p-chips [(ngModel)]="codes" placeholder="code reading" (onAdd)="addCodes()"></p-chips>
         </p-header>
         <p-footer>
-            <span style="float: left"><b>{{totalRecords}}</b> rows</span>
-            <button pButton type="button" label="Remove" (click)="removeClick()" [disabled]="!itemsSelected" style="float: right" class="ui-button-secondary" icon="fa-trash"></button>
+            <button pButton type="button" label="Remove" (click)="removeClick()" [disabled]="itemsSelected.length===0" style="float: left" class="ui-button-secondary" icon="fa-trash"></button>
+            <span style="float: right"><b>{{totalRecords}}</b> rows</span>
             <p>&nbsp;</p>
         </p-footer>
+        <p-column [style]="{'width':'50px'}" selectionMode="multiple"></p-column>
         <p-column field="product.productCode" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
-        <p-column field="product.productName" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
-        <p-column field="amount" header="Amount" [editable]="false" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        <p-column field="product.productName" header="Name" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column header="Discount ({{sliderValue||'No Filter'}})"[sortable]="true" [filter]="true">
+            <ng-template pTemplate="filter" let-col>
+                <i class="fa fa-close" (click)="sliderValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000" styleClass="ui-column-filter"></p-slider>
+            </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{item.price > 0 ? item.price : data.product.sellingPrice * item.percentage / 100 | currency: 'EUR' : true}}
+                {{(item.percentage == 0 ? ((data.product.sellingPrice - item.price) / data.product.sellingPrice * 100.0) + '%' : data.product.sellingPrice - (data.product.sellingPrice * item.percentage / 100) | currency: 'EUR' : true)}}
             </ng-template>
         </p-column>
     </p-dataTable>
