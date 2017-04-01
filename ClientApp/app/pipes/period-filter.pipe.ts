@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'dateFilter'
+  name: 'periodFilter'
 })
 
-export class DateFilterPipe implements PipeTransform {
+export class PeriodFilterPipe implements PipeTransform {
   transform(value: any[], arg0?: Date, arg1?: Date): any {
 
     if (!value) {
