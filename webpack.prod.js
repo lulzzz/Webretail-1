@@ -8,30 +8,12 @@ const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = webpackMerge(commonConfig, {
   devtool: 'source-map',
-
-  entry: {
-    'polyfills': './ClientApp/polyfills.ts',
-    'vendor': './ClientApp/vendor.ts',
-    'app': './ClientApp/main.ts'
-  },
   
   output: {
     path: helpers.root('webroot'),
     publicPath: '/',
     filename: 'dist/[name].[hash].js',
     chunkFilename: 'dist/[id].[hash].chunk.js'
-  },
-
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        use: [
-          { loader: "awesome-typescript-loader" },
-          { loader: "angular2-template-loader" }
-        ]
-      }
-    ]
   },
   
   plugins: [

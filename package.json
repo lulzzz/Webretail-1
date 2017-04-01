@@ -7,19 +7,16 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "ngc": "ngc -p ./ClientApp/tsconfig-aot.json",
     "lint": "tslint ./ClientApp/**/*.ts -t verbose",
     "build": "tsc -p ClientApp/",
     "build:watch": "tsc -p ClientApp/ -w",
     "build:api": "swift build",
     "build:api-production": "swift build --configuration release",
+    "build-production": "NODE_ENV=production webpack",
+    "server": "webpack-dev-server --inline --progress --port 8080",
     "prestart": "npm run build:api",
     "start": "concurrently \".build/debug/Webretail\" \"npm run server\"",
-    "server": "webpack-dev-server --inline --progress --port 8080",
-    "webpack-aot": "NODE_ENV=aot webpack",
-    "webpack-develpment": "NODE_ENV=develpment webpack",
-    "webpack-production": "NODE_ENV=production webpack",
-    "publish": "npm run ngc && npm run webpack-aot"
+    "publish": "npm run build:api-production && npm run build-production"
   },
   "keywords": [],
   "dependencies": {

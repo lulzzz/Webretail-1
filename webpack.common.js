@@ -7,12 +7,29 @@ var helpers = require('./helpers');
 
 module.exports = {
 
+  entry: {
+    'polyfills': './ClientApp/polyfills.ts',
+    'vendor': './ClientApp/vendor.ts',
+    'app': './ClientApp/main.ts'
+  },
+  
   resolve: {
     extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html']
   },
 
   module: {
     rules: [
+      {
+        test: /\.ts$/,
+        use: [
+          { loader: "awesome-typescript-loader",
+              options: {
+                configFileName: helpers.root('ClientApp', 'tsconfig.json')
+              }
+          },
+          { loader: "angular2-template-loader" }
+        ]
+      },
       {
         test: /\.html$/,
         loader: 'html-loader'
@@ -33,12 +50,7 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: helpers.root('ClientApp', 'app'),
-        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
-      },
-      {
-        test: /\.css$/,
-        include: helpers.root('ClientApp', 'app'),
-        loader: 'raw-loader'
+        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader' })
       }
     ]
   },
