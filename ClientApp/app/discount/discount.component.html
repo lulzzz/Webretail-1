@@ -20,7 +20,7 @@
     </p-toolbar>
 
     <p-dataTable *ngIf="!inputComponent.isOpen" [value]="items | priceFilter:sliderValue:'discount':item" 
-        selectionMode="multiple" [(selection)]="itemsSelected" [responsive]="true">
+        selectionMode="multiple" [(selection)]="itemsSelected" [responsive]="true" #dt>
         <p-header>
             <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
             <p-chips [(ngModel)]="codes" placeholder="code reading" (onAdd)="addCodes()"></p-chips>

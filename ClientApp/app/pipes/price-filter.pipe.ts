@@ -11,12 +11,11 @@ export class PriceFilterPipe implements PipeTransform {
       return;
     }
 
-    if (args0 == null) {
-      return value;
-    }
+    let type = args1;
+    if (type == 'movement' && args0 == null && args2 == null) { return value; }
+    else if (args0 == null) { return value; }
 
     let maxValue = args0;
-    let type = args1;
 
     switch (type) {
       case 'discounts':
@@ -25,8 +24,14 @@ export class PriceFilterPipe implements PipeTransform {
         let item = args2;
         return value.filter(data => (item.percentage == 0 ? ((data.product.sellingPrice - item.price) / data.product.sellingPrice * 100.0) : data.product.sellingPrice - (data.product.sellingPrice * item.percentage / 100)) <= maxValue);
       case 'movement':
+        if (args2 == null) {
+          return value.filter(data => data.price <= maxValue);
+        }
         let maxAmount = args2;
-        return value.filter(data => data.price <= maxValue || data.amount <= maxAmount);
+        if (args0 == null) {
+          return value.filter(data => data.amount <= maxAmount);
+        }
+        return value.filter(data => data.price <= maxValue && data.amount <= maxAmount);
       default:
         return value.filter(item => (item.discount ? item.discount.price : item.sellingPrice) <= maxValue);
     }
