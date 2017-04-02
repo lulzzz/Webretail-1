@@ -12,14 +12,14 @@ struct CategoryRepository : CategoryProtocol {
 
     func getAll() throws -> [Category] {
         let items = Category()
-        try items.findAll()
+        try items.query()
         
         return items.rows()
     }
     
     func get(id: Int) throws -> Category? {
         let item = Category()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }

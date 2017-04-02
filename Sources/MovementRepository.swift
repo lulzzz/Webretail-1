@@ -26,31 +26,42 @@ struct MovementRepository : MovementProtocol {
 		return status
 	}
 
+	internal func getJoins() -> [StORMDataSourceJoin] {
+		var storeJoin = StORMDataSourceJoin()
+		storeJoin.table = "stores"
+		storeJoin.direction = StORMJoinType.INNER
+		storeJoin.onCondition = "movements.storeId = stores.storeId"
+		
+		var causalJoin = StORMDataSourceJoin()
+		causalJoin.table = "causals"
+		causalJoin.direction = StORMJoinType.INNER
+		causalJoin.onCondition = "movements.causalId = causals.causalId"
+		
+		var customerJoin = StORMDataSourceJoin()
+		customerJoin.table = "customers"
+		customerJoin.direction = StORMJoinType.INNER
+		customerJoin.onCondition = "movements.customerId = customers.customerId"
+		
+		return [storeJoin, causalJoin, customerJoin]
+	}
+	
 	func getAll() throws -> [Movement] {
         let items = Movement()
-		try items.findAll()
+		try items.query(
+			orderby: ["movements.movementId DESC"],
+			joins: self.getJoins()
+		)
 		
         return try items.rows()
     }
     
     func get(id: Int) throws -> Movement? {
         let item = Movement()
-        try item.get(id)
-        
-		// get store
-		let store = Store()
-		try store.get(item.storeId)
-		item._store = store
-		
-		// get causal
-		let causal = Causal()
-		try causal.get(item.causalId)
-		item._causal = causal
-
-		// get customer
-		let customer = Customer()
-		try customer.get(item.customerId)
-		item._customer = customer
+		try item.query(
+			whereclause: "movements.movementId = $1",
+			params: [String(id)],
+			joins: self.getJoins()
+		)
 
 		return item
     }
@@ -103,18 +114,16 @@ struct MovementRepository : MovementProtocol {
 	internal func process(movement: Movement, actionType: ActionType) throws {
 		var stock = Stock()
 		let article = MovementArticle()
-		try article.find([("movementId", movement.movementId)])
+		try article.query([("movementId", movement.movementId)])
 		for item in article.rows() {
 			
 			let articles = item.product["articles"] as! [[String : Any]];
 			let articleId = item.getJSONValue(named: "articleId", from: articles[0], defaultValue: 0)
 			
-			let cursor = StORMCursor(limit: 1, offset: 0)
-			try stock.select(
+			try stock.query(
 				whereclause: "articleId = $1 AND storeId = $2",
 				params: [ articleId, movement.storeId ],
-				orderby: [],
-				cursor: cursor)
+				cursor: StORMCursor(limit: 1, offset: 0))
 			
 			if (stock.rows().count == 0) {
 				stock.storeId = movement.storeId

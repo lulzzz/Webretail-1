@@ -12,7 +12,7 @@ struct MovementArticleRepository : MovementArticleProtocol {
 
     func get(movementId: Int) throws -> [MovementArticle] {
         let items = MovementArticle()
-        try items.select(
+        try items.query(
             whereclause: "movementId = $1",
             params: [movementId],
             orderby: ["movementArticleId"]
@@ -23,7 +23,7 @@ struct MovementArticleRepository : MovementArticleProtocol {
     
     func get(id: Int) throws -> MovementArticle? {
         let item = MovementArticle()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }

@@ -12,21 +12,21 @@ struct DiscountRepository : DiscountProtocol {
 	
 	func getAll() throws -> [Discount] {
 		let items = Discount()
-		try items.findAll()
+		try items.query()
 		
 		return items.rows()
 	}
 	
 	func getProducts(id: Int) throws -> [DiscountProduct] {
 		let items = DiscountProduct()
-		try items.find([("discountId", id)])
+		try items.query([("discountId", id)])
 		
 		return items.rows()
 	}
 
 	func get(id: Int) throws -> Discount? {
 		let item = Discount()
-		try item.get(id)
+		try item.query(id)
 		
 		return item
 	}
@@ -62,10 +62,9 @@ struct DiscountRepository : DiscountProtocol {
 	func addProduct(item: DiscountProduct) throws {
 		let product = Product()
 		let productCode = item.getJSONValue(named: "productCode", from: item.product, defaultValue: "")
-		try product.select(whereclause: "productCode = $1 OR productId = $2",
-		                   params: [productCode, item.productId],
-		                   orderby: [],
-		                   cursor: StORMCursor(limit: 1, offset: 0))
+		try product.query(whereclause: "productCode = $1 OR productId = $2",
+						  params: [productCode, item.productId],
+						  cursor: StORMCursor(limit: 1, offset: 0))
 		if product.results.rows.count == 0 {
 			throw StORMError.noRecordFound
 		}
@@ -74,7 +73,7 @@ struct DiscountRepository : DiscountProtocol {
 		item.productId = product.productId
 		item.product = try product.getJSONValues()
 		
-		try item.find([("discountId", item.discountId),("productId", item.productId)])
+		try item.query([("discountId", item.discountId),("productId", item.productId)])
 		if item.discountProductId > 0 {
 			throw StORMError.error("Cannot insert duplicate key")
 		}

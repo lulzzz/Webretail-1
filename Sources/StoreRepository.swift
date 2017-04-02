@@ -12,14 +12,14 @@ struct StoreRepository : StoreProtocol {
 
     func getAll() throws -> [Store] {
         let items = Store()
-        try items.findAll()
+        try items.query()
         
         return items.rows()
     }
     
     func get(id: Int) throws -> Store? {
         let item = Store()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }

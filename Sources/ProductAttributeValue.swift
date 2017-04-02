@@ -31,12 +31,8 @@ class ProductAttributeValue: PostgresSqlORM, JSONConvertible {
         for i in 0..<self.results.rows.count {
             let row = ProductAttributeValue()
             row.to(self.results.rows[i])
-
-            // get attributeValue
-            let attributeValue = AttributeValue()
-            try attributeValue.get(row.attributeValueId)
-            row._attributeValue = attributeValue
-
+            row._attributeValue.to(self.results.rows[i])
+  
             rows.append(row)
         }
         return rows

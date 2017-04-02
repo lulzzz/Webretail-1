@@ -15,14 +15,14 @@ struct UserRepository : UserProtocol {
 	
    	func getAll() throws -> [User] {
         let items = User()
-        try items.findAll()
+        try items.query()
         
         return items.rows()
     }
     
     func get(id: String) throws -> User? {
         let item = User()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }

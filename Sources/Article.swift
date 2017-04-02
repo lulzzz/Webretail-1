@@ -45,7 +45,7 @@ class Article: PostgresSqlORM, JSONConvertible {
 
             // get attributeValues
             let attributeValue = ArticleAttributeValue()
-            try attributeValue.select(
+            try attributeValue.query(
                 whereclause: "articleId = $1",
                 params: [row.articleId],
                 orderby: ["articleAttributeValueId"]
@@ -55,10 +55,9 @@ class Article: PostgresSqlORM, JSONConvertible {
 			let stock = Stock()
 			var stocks = [Stock]()
            	if _storeIds.isEmpty || _storeIds == "0" {
-				try stock.select(
+				try stock.query(
 					whereclause: "articleId = $1",
-					params: [row.articleId],
-					orderby: []
+					params: [row.articleId]
 				)
 				stocks.append(contentsOf: stock.rows())
 			} else {

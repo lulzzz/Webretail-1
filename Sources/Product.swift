@@ -45,6 +45,7 @@ class Product: PostgresSqlORM, JSONConvertible {
         isValid = this.data["isvalid"] as? Bool ?? false
         created = this.data["created"] as? Int ?? 0
         updated = this.data["updated"] as? Int ?? 0
+		_brand.to(this)
     }
     
     func rows() throws -> [Product] {
@@ -52,26 +53,11 @@ class Product: PostgresSqlORM, JSONConvertible {
         for i in 0..<self.results.rows.count {
             let row = Product()
             row.to(self.results.rows[i])
-
-            // get brand
-            let brand = Brand()
-            brand.to(self.results.rows[i])
-            row._brand = brand
-
-            // get categories
-            let productCategory = ProductCategory()
-            try productCategory.find([("productId", row.productId)])
-            row._categories = try productCategory.rows()
 			
-			// get discount
-			let discount = Discount()
-			try discount.get(productId: row.productId)
-			if discount.discountId > 0 {
-				discount.makeDiscount(sellingPrice: row.sellingPrice)
-				row._discount = discount
-			}
+            try row.makeDiscount();
+			try row.makeCategories();
 
-            rows.append(row)
+			rows.append(row)
         }
         return rows
     }
@@ -83,20 +69,10 @@ class Product: PostgresSqlORM, JSONConvertible {
         self.productUm = getJSONValue(named: "productUm", from: values, defaultValue: "")
         self.sellingPrice = getJSONValue(named: "sellingPrice", from: values, defaultValue: 0.0)
         self.purchasePrice = getJSONValue(named: "purchasePrice", from: values, defaultValue: 0.0)
-        self.productUm = getJSONValue(named: "productUm", from: values, defaultValue: "")
         self.isActive = getJSONValue(named: "isActive", from: values, defaultValue: false)
         self.isValid = getJSONValue(named: "isValid", from: values, defaultValue: false)
-
-		let brand = Brand()
-		brand.setJSONValues(values["brand"] as! [String : Any])
-		self._brand = brand
-		self.brandId = brand.brandId
-
-//		for category in values["categories"] as! [Any] {
-//			let productCategory = ProductCategory()
-//			productCategory.setJSONValues(category as! [String: Any])
-//			self._categories.append(productCategory)
-//		}
+		self._brand.setJSONValues(values["brand"] as! [String : Any])
+		self.brandId = self._brand.brandId
 	}
 	
     func jsonEncodedString() throws -> String {
@@ -116,11 +92,61 @@ class Product: PostgresSqlORM, JSONConvertible {
             "isValid": isValid,
             //"brandId": brandId,
             "brand": _brand,
-            //"category": _categories.map { $0._category.categoryName }.joined(separator: ", "),
             "categories": _categories,
             "attributes": _attributes,
             "articles": _articles,
             "updated": updated.formatDate()
         ]
     }
+	
+	func makeDiscount() throws {
+		let discount = Discount()
+		try discount.get(productId: self.productId)
+		if discount.discountId > 0 {
+			discount.makeDiscount(sellingPrice: self.sellingPrice)
+			self._discount = discount
+		}
+	}
+
+	func makeCategories() throws {
+		var categoryJoin = StORMDataSourceJoin()
+		categoryJoin.table = "categories"
+		categoryJoin.direction = StORMJoinType.INNER
+		categoryJoin.onCondition = "productcategories.categoryId = categories.categoryId"
+		
+		let productCategory = ProductCategory()
+		try productCategory.query(
+			whereclause: "categories.productId = $1",
+			params: [self.productId],
+			orderby: ["categories.categoryId"],
+			joins: [categoryJoin]
+		)
+		self._categories = try productCategory.rows()
+	}
+
+	func makeAttributes() throws {
+		var attributeJoin = StORMDataSourceJoin()
+		attributeJoin.table = "attributes"
+		attributeJoin.direction = StORMJoinType.INNER
+		attributeJoin.onCondition = "productattributes.attributeId = attributes.attributeId"
+		
+		let productAttribute = ProductAttribute()
+		try productAttribute.query(
+			whereclause: "productattributes.productId = $1",
+			params: [self.productId],
+			orderby: ["productattributes.productAttributeId"],
+			joins: [attributeJoin]
+		)
+		self._attributes = try productAttribute.rows()
+	}
+
+	func makeArticles() throws {
+		let article = Article()
+		try article.query(
+			whereclause: "productId = $1",
+			params: [self.productId],
+			orderby: ["articleId"]
+		)
+		self._articles = try article.rows()
+	}
 }

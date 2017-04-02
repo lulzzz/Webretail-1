@@ -12,14 +12,14 @@ struct CausalRepository : CausalProtocol {
 
     func getAll() throws -> [Causal] {
         let items = Causal()
-        try items.findAll()
+        try items.query()
         
         return items.rows()
     }
     
     func get(id: Int) throws -> Causal? {
         let item = Causal()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }

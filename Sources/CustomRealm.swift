@@ -60,7 +60,7 @@ open class CustomRealm : Realm {
     
     private func authenticate(credentials: ConsumerAccount) throws -> Account {
         let account = User()
-        try account.find([("\(credentials.consumer)ID", credentials.uniqueID)])
+        try account.query([("\(credentials.consumer)ID", credentials.uniqueID)])
         if !account.uniqueID.isEmpty {
             return account
         } else {
@@ -87,7 +87,7 @@ open class CustomRealm : Realm {
                 throw AccountTakenError()
             }
         case let credentials as ConsumerAccount:
-            try account.find([("\(credentials.consumer)ID", credentials.uniqueID)])
+            try account.query([("\(credentials.consumer)ID", credentials.uniqueID)])
             guard account.uniqueID.isEmpty else {
                 throw AccountTakenError()
             }

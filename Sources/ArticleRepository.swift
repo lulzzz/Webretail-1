@@ -24,7 +24,7 @@ struct ArticleRepository : ArticleProtocol {
         
         // Get product attributes
         let productAttribute = ProductAttribute()
-        try productAttribute.select(
+        try productAttribute.query(
             whereclause: "productId = $1",
             params: [productId],
             orderby: ["productAttributeId"]
@@ -51,8 +51,7 @@ struct ArticleRepository : ArticleProtocol {
         
         // TODO: fix barcode counter
         var barcode: Int = 1000000000001
-        let cursor = StORMCursor(limit: 1, offset: 0)
-        try article.select(whereclause: "", params: [], orderby: ["barcode DESC"], cursor: cursor)
+        try article.query(orderby: ["barcode DESC"], cursor: StORMCursor(limit: 1, offset: 0))
         let rows = try article.rows();
         if (rows.count > 0) {
             barcode = Int(rows[0].barcode)!
@@ -163,7 +162,7 @@ struct ArticleRepository : ArticleProtocol {
     
     func getAll() throws -> [Article] {
         let items = Article()
-        try items.findAll()
+        try items.query()
         
         return try items.rows()
     }
@@ -171,14 +170,14 @@ struct ArticleRepository : ArticleProtocol {
 	func get(productId: Int, storeIds: String) throws -> [Article] {
         let items = Article()
 		items._storeIds = storeIds
-        try items.find([("productId", productId)])
+        try items.query([("productId", productId)])
         
         return try items.rows()
     }
 
     func get(id: Int) throws -> Article? {
         let item = Article()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }
@@ -189,7 +188,7 @@ struct ArticleRepository : ArticleProtocol {
 		
 		var productAttributeValues = [ProductAttributeValue]()
 		let productAttribute = ProductAttribute()
-		try productAttribute.find([("productId", productId)])
+		try productAttribute.query([("productId", productId)])
 		let attributes = try productAttribute.rows();
 		let lenght = attributes.count - 1;
 		if (lenght > 0) {

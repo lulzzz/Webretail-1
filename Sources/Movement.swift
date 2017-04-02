@@ -52,6 +52,9 @@ class Movement: PostgresSqlORM, JSONConvertible {
         movementNote = this.data["movementnote"] as? String  ?? ""
 		movementStatus = this.data["movementstatus"] as? String ?? ""
 		updated = this.data["updated"] as? Int ?? 0
+		_store.to(this)
+		_causal.to(this)
+		_customer.to(this)
     }
     
     func rows() throws -> [Movement] {
@@ -59,22 +62,6 @@ class Movement: PostgresSqlORM, JSONConvertible {
         for i in 0..<self.results.rows.count {
             let row = Movement()
             row.to(self.results.rows[i])
-
-            // get store
-            let store = Store()
-            try store.get(row.storeId)
-            row._store = store
-
-            // get causal
-            let causal = Causal()
-            try causal.get(row.causalId)
-            row._causal = causal
-
-			// get customer
-			let customer = Customer()
-			try customer.get(row.customerId)
-			row._customer = customer
-
 			rows.append(row)
         }
         return rows

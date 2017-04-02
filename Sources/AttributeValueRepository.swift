@@ -12,14 +12,14 @@ struct AttributeValueRepository : AttributeValueProtocol {
 
     func getAll() throws -> [AttributeValue] {
         let items = AttributeValue()
-        try items.findAll()
+        try items.query()
         
         return items.rows()
     }
     
     func get(id: Int) throws -> AttributeValue? {
         let item = AttributeValue()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }

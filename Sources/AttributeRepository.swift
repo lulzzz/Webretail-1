@@ -12,21 +12,21 @@ struct AttributeRepository : AttributeProtocol {
 
     func getAll() throws -> [Attribute] {
         let items = Attribute()
-        try items.findAll()
+        try items.query()
         
         return items.rows()
     }
     
     func get(id: Int) throws -> Attribute? {
         let item = Attribute()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }
     
     func getValues(id: Int) throws -> [AttributeValue] {
         let items = AttributeValue()
-        try items.find([("attributeId", id)])
+        try items.query([("attributeId", id)])
         
         return items.rows()
     }

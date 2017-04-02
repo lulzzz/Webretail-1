@@ -31,13 +31,9 @@ class ProductCategory: PostgresSqlORM, JSONConvertible {
         for i in 0..<self.results.rows.count {
             let row = ProductCategory()
             row.to(self.results.rows[i])
-            
-            // get value
-            let category = Category()
-            try category.get(row.categoryId)
-            row._category = category
-            
-            rows.append(row)
+			row._category.to(self.results.rows[i])
+			
+			rows.append(row)
         }
         return rows
     }

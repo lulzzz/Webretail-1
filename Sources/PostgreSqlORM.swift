@@ -98,11 +98,47 @@ open class PostgresSqlORM: PostgresStORM {
         }
     }
 
+	func query() throws {
+		do {
+			try query(cursor: StORMCursor(limit: 9999999,offset: 0))
+		} catch {
+			throw StORMError.error("\(error)")
+		}
+	}
+	
+	public func query(_ id: Any) throws {
+		let (idname, _) = firstAsKey()
+		do {
+			try query(whereclause: "\(idname.lowercased()) = $1", params: [id])
+		} catch {
+			LogFile.error("Error: \(error)", logFile: "./StORMlog.txt")
+			throw error
+		}
+	}
+	
+	public func query(_ data: [(String, Any)]) throws {
+		let (idname, _) = firstAsKey()
+		
+		var paramsString = [String]()
+		var set = [String]()
+		for i in 0..<data.count {
+			paramsString.append("\(data[i].1)")
+			set.append("\(data[i].0.lowercased()) = $\(i+1)")
+		}
+		
+		do {
+			try query(whereclause: set.joined(separator: " AND "), params: paramsString, orderby: [idname])
+		} catch {
+			LogFile.error("Error: \(error)", logFile: "./StORMlog.txt")
+			throw error
+		}
+	}
+	
 	public func query(
-		columns:		[String],
-		whereclause:	String,
-		params:			[Any],
-		orderby:		[String],
+		columns:		[String] = [],
+		whereclause:	String = "",
+		params:			[Any] = [],
+		orderby:		[String] = [],
 		cursor:			StORMCursor = StORMCursor(),
 		joins:			[StORMDataSourceJoin] = [],
 		having:			[String] = [],

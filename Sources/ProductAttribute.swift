@@ -32,20 +32,9 @@ class ProductAttribute: PostgresSqlORM, JSONConvertible {
         for i in 0..<self.results.rows.count {
             let row = ProductAttribute()
             row.to(self.results.rows[i])
-
-            // get attribute
-            let attribute = Attribute()
-            try attribute.get(row.attributeId)
-            row._attribute = attribute
-
-            // get attributeValues
-            let attributeValue = ProductAttributeValue()
-            try attributeValue.select(
-                whereclause: "productAttributeId = $1",
-                params: [row.productAttributeId],
-                orderby: ["attributeValueId"]
-            )
-            row._attributeValues = try attributeValue.rows()
+			row._attribute.to(self.results.rows[i])
+			try self.makeAttributeValues();
+			
             rows.append(row)
         }
         return rows
@@ -70,4 +59,20 @@ class ProductAttribute: PostgresSqlORM, JSONConvertible {
             "attributeValues": _attributeValues
         ]
     }
+	
+	func makeAttributeValues() throws {
+		var valueJoin = StORMDataSourceJoin()
+		valueJoin.table = "attributevalues"
+		valueJoin.direction = StORMJoinType.INNER
+		valueJoin.onCondition = "productattributevalues.attributeValueId = attributevalues.attributeValueId"
+		
+		let attributeValue = ProductAttributeValue()
+		try attributeValue.query(
+			whereclause: "productattributevalues.productAttributeId = $1",
+			params: [self.productAttributeId],
+			orderby: ["productattributevalues.attributeValueId"],
+			joins: [valueJoin]
+		)
+		self._attributeValues = try attributeValue.rows()
+	}
 }

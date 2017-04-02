@@ -10,119 +10,58 @@ import StORM
 
 struct ProductRepository : ProductProtocol {
 
-    func getAll() throws -> [Product] {
-        let product = Product()
-		
+	internal func getJoins() -> [StORMDataSourceJoin] {
 		var brandJoin = StORMDataSourceJoin()
 		brandJoin.table = "brands"
 		brandJoin.direction = StORMJoinType.INNER
 		brandJoin.onCondition = "products.brandId = brands.brandId"
-
-		try product.query(
-			columns: [],
-			whereclause: "",
-			params: [],
+		return [brandJoin]
+	}
+		
+	func getAll() throws -> [Product] {
+        let items = Product()
+		try items.query(
 			orderby: ["products.productId"],
-			joins: [ brandJoin ]
+			joins: self.getJoins()
 		)
 
-        return try product.rows()
+        return try items.rows()
     }
-    
-    func get(id: Int) throws -> Product? {
+	
+    func getProduct(id: Int) throws -> Product? {
         let item = Product()
-        try item.get(id)
+		try item.query(
+			whereclause: "products.productId = $1",
+			params: [String(id)],
+			joins: self.getJoins()
+		)
+		
         if item.productId == 0 {
             return nil
         }
         
-        // get brand
-        let brand = Brand()
-        try brand.get(item.brandId)
-        item._brand = brand
-        
-        // get categories
-        let productCategory = ProductCategory()
-        try productCategory.select(
-            whereclause: "productId = $1",
-            params: [id],
-            orderby: ["categoryId"]
-        )
-        item._categories = try productCategory.rows()
-        
-		// get discount
-		let discount = Discount()
-		try discount.get(productId: item.productId)
-		if discount.discountId > 0 {
-			discount.makeDiscount(sellingPrice: item.sellingPrice)
-			item._discount = discount
-		}
-		
-		// get attributes
-        let productAttribute = ProductAttribute()
-        try productAttribute.select(
-            whereclause: "productId = $1",
-            params: [id],
-            orderby: ["productAttributeId"]
-        )
-        item._attributes = try productAttribute.rows()
-        
-        // get articles
-        let article = Article()
-        try article.select(
-            whereclause: "productId = $1",
-            params: [id],
-            orderby: ["articleId"]
-        )
-        item._articles = try article.rows()
+		try item.makeDiscount()
+		try item.makeCategories()
+		try item.makeAttributes()
 
         return item
     }
     
-    func get(barcode: String) throws -> Product? {
+	func get(id: Int) throws -> Product? {
+		let item = try getProduct(id: id)
+		try item?.makeArticles()
+		
+		return item
+	}
+
+	func get(barcode: String) throws -> Product? {
         let article = Article()
-        try article.find([("barcode", barcode)])
+        try article.query([("barcode", barcode)])
         if article.articleId == 0 {
             return nil
         }
        
-        // get product
-        let item = Product()
-        try item.get(article.productId)
-        item._articles = try article.rows()
-       
-        // get brand
-        let brand = Brand()
-        try brand.get(item.brandId)
-        item._brand = brand
-        
-		// get discount
-		let discount = Discount()
-		try discount.get(productId: item.productId)
-		if discount.discountId > 0 {
-			discount.makeDiscount(sellingPrice: item.sellingPrice)
-			item._discount = discount
-		}
-
-		// get categories
-        let productCategory = ProductCategory()
-        try productCategory.select(
-            whereclause: "productId = $1",
-            params: [article.productId],
-            orderby: ["categoryId"]
-        )
-        item._categories = try productCategory.rows()
-        
-        // get attributes
-        let productAttribute = ProductAttribute()
-        try productAttribute.select(
-            whereclause: "productId = $1",
-            params: [article.productId],
-            orderby: ["productAttributeId"]
-        )
-        item._attributes = try productAttribute.rows()
-        
-        return item
+        return try getProduct(id: article.productId)
     }
 
     func add(item: Product) throws {
@@ -130,9 +69,6 @@ struct ProductRepository : ProductProtocol {
         item.updated = Int.now()
         try item.save {
             id in item.productId = id as! Int
-//			for category in item._categories {
-//				try? self.addCategory(item: category)
-//			}
         }
     }
     
@@ -167,16 +103,16 @@ struct ProductRepository : ProductProtocol {
     }
     
 	func removeCategory(item: ProductCategory) throws {
-		try item.find([
+		try item.query([
 			("productId", item.productId),
 			("categoryId", item.categoryId)
-			])
+		])
 		try item.delete()
    }
 	
 	func removeCategories(productId: Int) throws {
 		let productCategory = ProductCategory()
-		try productCategory.find([("productId", productId)])
+		try productCategory.query([("productId", productId)])
 		for row in try productCategory.rows() {
 			try row.delete()
 		}
@@ -190,7 +126,7 @@ struct ProductRepository : ProductProtocol {
     }
     
     func removeAttribute(item: ProductAttribute) throws {
-        try item.find([
+        try item.query([
             ("productId", item.productId),
             ("attributeId", item.attributeId)
         ])
@@ -206,7 +142,7 @@ struct ProductRepository : ProductProtocol {
     }
     
     func removeAttributeValue(item: ProductAttributeValue) throws {
-        try item.find([
+        try item.query([
             ("productAttributeId", item.productAttributeId),
             ("attributeValueId", item.attributeValueId)
         ])

@@ -12,14 +12,14 @@ struct BrandRepository : BrandProtocol {
 
     func getAll() throws -> [Brand] {
         let items = Brand()
-        try items.findAll()
+        try items.query()
         
         return items.rows()
     }
     
     func get(id: Int) throws -> Brand? {
         let item = Brand()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }

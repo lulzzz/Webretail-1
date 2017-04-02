@@ -12,14 +12,14 @@ struct PublicationRepository : PublicationProtocol {
 
     func getAll() throws -> [Publication] {
         let items = Publication()
-        try items.findAll()
+        try items.query()
         
         return items.rows()
     }
     
     func get(id: Int) throws -> Publication? {
         let item = Publication()
-        try item.get(id)
+        try item.query(id)
         
         return item
     }

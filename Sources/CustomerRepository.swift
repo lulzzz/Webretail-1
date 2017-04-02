@@ -13,14 +13,14 @@ struct CustomerRepository : CustomerProtocol {
 
 	func getAll() throws -> [Customer] {
 		let items = Customer()
-		try items.findAll()
+		try items.query()
 		
 		return items.rows()
 	}
 	
 	func get(id: Int) throws -> Customer? {
 		let item = Customer()
-		try item.get(id)
+		try item.query(id)
 		
 		return item
 	}
