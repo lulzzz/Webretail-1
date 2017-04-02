@@ -109,7 +109,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="selling">Selling Price</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="selling" [(ngModel)]="selected.sellingPrice"/>
+                        <input pInputText type="number" min="0" formControlName="selling" [(ngModel)]="selected.sellingPrice"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['selling'].valid&&dataform.controls['selling'].dirty">
                             <i class="fa fa-close"></i> Selling Price is required
                         </div>
@@ -118,7 +118,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="purchase">Purchase Price</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="purchase" [(ngModel)]="selected.purchasePrice"/>
+                        <input pInputText type="number" min="0" formControlName="purchase" [(ngModel)]="selected.purchasePrice"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['purchase'].valid&&dataform.controls['purchase'].dirty">
                             <i class="fa fa-close"></i> Purchase Price is required
                         </div>
