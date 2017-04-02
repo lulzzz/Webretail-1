@@ -35,7 +35,6 @@ struct ProductRepository : ProductProtocol {
 			params: [String(id)],
 			joins: self.getJoins()
 		)
-		
         if item.productId == 0 {
             return nil
         }
@@ -60,8 +59,11 @@ struct ProductRepository : ProductProtocol {
         if article.articleId == 0 {
             return nil
         }
-       
-        return try getProduct(id: article.productId)
+
+		let item = try getProduct(id: article.productId)
+		try item?.makeArticles()
+		
+		return item
     }
 
     func add(item: Product) throws {
