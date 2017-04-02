@@ -22,8 +22,8 @@ struct UserRepository : UserProtocol {
     
     func get(id: String) throws -> User? {
         let item = User()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     

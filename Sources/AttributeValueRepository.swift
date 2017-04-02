@@ -19,8 +19,8 @@ struct AttributeValueRepository : AttributeValueProtocol {
     
     func get(id: Int) throws -> AttributeValue? {
         let item = AttributeValue()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     

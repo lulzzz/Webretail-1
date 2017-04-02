@@ -114,7 +114,7 @@ struct MovementRepository : MovementProtocol {
 	internal func process(movement: Movement, actionType: ActionType) throws {
 		var stock = Stock()
 		let article = MovementArticle()
-		try article.query([("movementId", movement.movementId)])
+		try article.query(data: [("movementId", movement.movementId)])
 		for item in article.rows() {
 			
 			let articles = item.product["articles"] as! [[String : Any]];

@@ -19,8 +19,8 @@ struct CategoryRepository : CategoryProtocol {
     
     func get(id: Int) throws -> Category? {
         let item = Category()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     

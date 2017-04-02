@@ -56,7 +56,7 @@ struct ProductRepository : ProductProtocol {
 
 	func get(barcode: String) throws -> Product? {
         let article = Article()
-        try article.query([("barcode", barcode)])
+		try article.query(data: [("barcode", barcode)])
         if article.articleId == 0 {
             return nil
         }
@@ -103,7 +103,7 @@ struct ProductRepository : ProductProtocol {
     }
     
 	func removeCategory(item: ProductCategory) throws {
-		try item.query([
+		try item.query(data: [
 			("productId", item.productId),
 			("categoryId", item.categoryId)
 		])
@@ -112,7 +112,7 @@ struct ProductRepository : ProductProtocol {
 	
 	func removeCategories(productId: Int) throws {
 		let productCategory = ProductCategory()
-		try productCategory.query([("productId", productId)])
+		try productCategory.query(data: [("productId", productId)])
 		for row in try productCategory.rows() {
 			try row.delete()
 		}
@@ -126,7 +126,7 @@ struct ProductRepository : ProductProtocol {
     }
     
     func removeAttribute(item: ProductAttribute) throws {
-        try item.query([
+        try item.query(data: [
             ("productId", item.productId),
             ("attributeId", item.attributeId)
         ])
@@ -142,7 +142,7 @@ struct ProductRepository : ProductProtocol {
     }
     
     func removeAttributeValue(item: ProductAttributeValue) throws {
-        try item.query([
+        try item.query(data: [
             ("productAttributeId", item.productAttributeId),
             ("attributeValueId", item.attributeValueId)
         ])

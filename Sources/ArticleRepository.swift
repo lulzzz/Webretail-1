@@ -170,15 +170,15 @@ struct ArticleRepository : ArticleProtocol {
 	func get(productId: Int, storeIds: String) throws -> [Article] {
         let items = Article()
 		items._storeIds = storeIds
-        try items.query([("productId", productId)])
+        try items.query(data: [("productId", productId)])
         
         return try items.rows()
     }
 
     func get(id: Int) throws -> Article? {
         let item = Article()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     
@@ -188,7 +188,7 @@ struct ArticleRepository : ArticleProtocol {
 		
 		var productAttributeValues = [ProductAttributeValue]()
 		let productAttribute = ProductAttribute()
-		try productAttribute.query([("productId", productId)])
+		try productAttribute.query(data: [("productId", productId)])
 		let attributes = try productAttribute.rows();
 		let lenght = attributes.count - 1;
 		if (lenght > 0) {

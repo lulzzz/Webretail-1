@@ -25,6 +25,7 @@ class ProductAttribute: PostgresSqlORM, JSONConvertible {
         productAttributeId	= this.data["productattributeid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0
         attributeId = this.data["attributeid"] as? Int ?? 0
+		_attribute.to(this)
     }
     
     func rows() throws -> [ProductAttribute] {
@@ -32,8 +33,7 @@ class ProductAttribute: PostgresSqlORM, JSONConvertible {
         for i in 0..<self.results.rows.count {
             let row = ProductAttribute()
             row.to(self.results.rows[i])
-			row._attribute.to(self.results.rows[i])
-			try self.makeAttributeValues();
+			try row.makeAttributeValues();
 			
             rows.append(row)
         }

@@ -23,8 +23,8 @@ struct MovementArticleRepository : MovementArticleProtocol {
     
     func get(id: Int) throws -> MovementArticle? {
         let item = MovementArticle()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     

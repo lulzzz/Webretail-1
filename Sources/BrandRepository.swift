@@ -19,8 +19,8 @@ struct BrandRepository : BrandProtocol {
     
     func get(id: Int) throws -> Brand? {
         let item = Brand()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     

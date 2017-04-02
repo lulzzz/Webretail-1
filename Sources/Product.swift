@@ -116,7 +116,7 @@ class Product: PostgresSqlORM, JSONConvertible {
 		
 		let productCategory = ProductCategory()
 		try productCategory.query(
-			whereclause: "categories.productId = $1",
+			whereclause: "productcategories.productId = $1",
 			params: [self.productId],
 			orderby: ["categories.categoryId"],
 			joins: [categoryJoin]

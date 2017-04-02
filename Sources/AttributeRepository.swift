@@ -19,14 +19,14 @@ struct AttributeRepository : AttributeProtocol {
     
     func get(id: Int) throws -> Attribute? {
         let item = Attribute()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     
     func getValues(id: Int) throws -> [AttributeValue] {
         let items = AttributeValue()
-        try items.query([("attributeId", id)])
+        try items.query(data: [("attributeId", id)])
         
         return items.rows()
     }

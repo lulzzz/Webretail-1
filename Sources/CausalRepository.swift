@@ -19,8 +19,8 @@ struct CausalRepository : CausalProtocol {
     
     func get(id: Int) throws -> Causal? {
         let item = Causal()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     

@@ -106,7 +106,7 @@ open class PostgresSqlORM: PostgresStORM {
 		}
 	}
 	
-	public func query(_ id: Any) throws {
+	public func query(id: Any) throws {
 		let (idname, _) = firstAsKey()
 		do {
 			try query(whereclause: "\(idname.lowercased()) = $1", params: [id])
@@ -116,7 +116,7 @@ open class PostgresSqlORM: PostgresStORM {
 		}
 	}
 	
-	public func query(_ data: [(String, Any)]) throws {
+	public func query(data: [(String, Any)]) throws {
 		let (idname, _) = firstAsKey()
 		
 		var paramsString = [String]()

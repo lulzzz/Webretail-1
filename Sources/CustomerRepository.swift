@@ -20,7 +20,7 @@ struct CustomerRepository : CustomerProtocol {
 	
 	func get(id: Int) throws -> Customer? {
 		let item = Customer()
-		try item.query(id)
+		try item.query(id: id)
 		
 		return item
 	}

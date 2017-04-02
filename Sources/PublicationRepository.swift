@@ -19,8 +19,8 @@ struct PublicationRepository : PublicationProtocol {
     
     func get(id: Int) throws -> Publication? {
         let item = Publication()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     

@@ -19,8 +19,8 @@ struct StoreRepository : StoreProtocol {
     
     func get(id: Int) throws -> Store? {
         let item = Store()
-        try item.query(id)
-        
+		try item.query(id: id)
+		
         return item
     }
     
