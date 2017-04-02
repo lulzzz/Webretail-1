@@ -69,19 +69,33 @@ class Discount: PostgresSqlORM, JSONConvertible {
 	}
 	
 	func get(productId: Int) throws {
-		var params = [String]()
-		params.append(String(productId))
-		params.append(String(Int.now()))
-		let sql = "SELECT a.* " +
-			"FROM discounts AS a " +
-			"INNER JOIN discountproducts AS b ON a.discountId = b.discountId " +
-			"WHERE b.productId = $1 AND a.startat < $2 AND a.finishat > $2 " +
-			"ORDER BY a.discountId DESC " +
-			"LIMIT 1 OFFSET 0"
-		let current = try self.sqlRows(sql, params: params)
-		if current.count > 0 {
-			self.to(current[0])
-		}
+		var join = StORMDataSourceJoin()
+		join.table = "discountproducts"
+		join.direction = StORMJoinType.INNER
+		join.onCondition = "discounts.discountId = discountproducts.discountId"
+		
+		try self.query(
+			columns: [],
+			whereclause: "discountproducts.productId = $1 AND discounts.startAt < $2 AND discounts.finishAt > $2",
+			params: [String(productId), String(Int.now())],
+			orderby: ["discounts.discountId DESC"],
+			cursor: StORMCursor(limit: 1, offset: 0),
+			joins: [ join ]
+		)
+
+//		var params = [String]()
+//		params.append(String(productId))
+//		params.append(String(Int.now()))
+//		let sql = "SELECT a.* " +
+//			"FROM discounts AS a " +
+//			"INNER JOIN discountproducts AS b ON a.discountId = b.discountId " +
+//			"WHERE b.productId = $1 AND a.startat < $2 AND a.finishat > $2 " +
+//			"ORDER BY a.discountId DESC " +
+//			"LIMIT 1 OFFSET 0"
+//		let current = try self.sqlRows(sql, params: params)
+//		if current.count > 0 {
+//			self.to(current[0])
+//		}
 	}
 	
 	func makeDiscount(sellingPrice: Double) {

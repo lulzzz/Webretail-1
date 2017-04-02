@@ -55,7 +55,7 @@ class Product: PostgresSqlORM, JSONConvertible {
 
             // get brand
             let brand = Brand()
-            try brand.get(row.brandId)
+            brand.to(self.results.rows[i])
             row._brand = brand
 
             // get categories

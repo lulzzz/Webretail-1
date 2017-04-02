@@ -97,4 +97,75 @@ open class PostgresSqlORM: PostgresStORM {
             throw StORMError.error("\(error)")
         }
     }
+
+	public func query(
+		columns:		[String],
+		whereclause:	String,
+		params:			[Any],
+		orderby:		[String],
+		cursor:			StORMCursor = StORMCursor(),
+		joins:			[StORMDataSourceJoin] = [],
+		having:			[String] = [],
+		groupBy:		[String] = []
+		) throws {
+		
+		var clauseSelect = ""
+		var clauseWhere = ""
+		var clauseOrder = ""
+		var clauseJoin = ""
+
+		if columns.count > 0 {
+			clauseSelect = columns.joined(separator: ",")
+		} else {
+			var keys = [String]()
+//			for i in cols() {
+//				keys.append(i.0)
+//			}
+			keys.append(self.table() + ".*")
+			for join in joins {
+				keys.append(join.table + ".*")
+				
+				clauseJoin += " \(join.direction) JOIN \(join.table) ON \(join.onCondition)"
+			}
+			clauseSelect = keys.joined(separator: ",")
+		}
+		
+		if whereclause.characters.count > 0 {
+			clauseWhere = "WHERE \(whereclause)"
+		}
+		
+		var paramsString = [String]()
+		for i in 0..<params.count {
+			paramsString.append(String(describing: params[i]))
+		}
+		if orderby.count > 0 {
+			let colsjoined = orderby.joined(separator: ",")
+			clauseOrder = "ORDER BY \(colsjoined)"
+		}
+		do {
+			// SELECT ASSEMBLE
+			var str = "SELECT \(clauseSelect.lowercased()) FROM \(table())\(clauseJoin) \(clauseWhere) \(clauseOrder)"
+
+			// TODO: Add having, groupby
+			
+			if cursor.limit > 0 {
+				str += " LIMIT \(cursor.limit)"
+			}
+			if cursor.offset > 0 {
+				str += " OFFSET \(cursor.offset)"
+			}
+			
+			// save results into ResultSet
+			results.rows = try self.sqlRows(str, params: paramsString)
+			
+			// if just one row returned, act like a "GET"
+			if results.rows.count == 1 { makeRow() }
+			
+			//return results
+		} catch {
+			LogFile.error("Error msg: \(error)", logFile: "./StORMlog.txt")
+			self.error = StORMError.error("\(error)")
+			throw error
+		}
+	}
 }

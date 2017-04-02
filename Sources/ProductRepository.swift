@@ -12,7 +12,19 @@ struct ProductRepository : ProductProtocol {
 
     func getAll() throws -> [Product] {
         let product = Product()
-        try product.findAll()
+		
+		var brandJoin = StORMDataSourceJoin()
+		brandJoin.table = "brands"
+		brandJoin.direction = StORMJoinType.INNER
+		brandJoin.onCondition = "products.brandId = brands.brandId"
+
+		try product.query(
+			columns: [],
+			whereclause: "",
+			params: [],
+			orderby: ["products.productId"],
+			joins: [ brandJoin ]
+		)
 
         return try product.rows()
     }

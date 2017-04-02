@@ -13,7 +13,7 @@ import PerfectLib
 class Brand: PostgresSqlORM, JSONConvertible {
     
     public var brandId : Int = 0
-    public var brandName	 : String = ""
+    public var brandName : String = ""
     public var created : Int = Int.now()
     public var updated : Int = Int.now()
     
