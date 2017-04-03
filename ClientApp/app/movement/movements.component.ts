@@ -34,7 +34,7 @@ export class MovementsComponent implements OnInit {
     newNumber: number;
     dateStartValue: Date;
     dateFinishValue: Date;
-
+    
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
                 private storeService: StoreService,
@@ -48,13 +48,13 @@ export class MovementsComponent implements OnInit {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
+            'number': new FormControl('', Validators.required),
+            'date': new FormControl('', Validators.required),
+            'description': new FormControl('', Validators.nullValidator),
             'store': new FormControl('', Validators.required),
             'causal': new FormControl('', Validators.required),
-            'customer': new FormControl('', Validators.required),
-            'number': new FormControl('', Validators.required),
-            'date': new FormControl('', Validators.nullValidator),
+            'customer': new FormControl('', Validators.nullValidator),
             'status': new FormControl('', Validators.required),
-            'description': new FormControl('', Validators.nullValidator),
             'note': new FormControl('', Validators.nullValidator)
         });
 
@@ -97,7 +97,9 @@ export class MovementsComponent implements OnInit {
         this.customerService
             .getAll()
             .subscribe(result => {
-                this.customers = result.map(p => Helpers.newSelectItem(p, p.customerName));
+                this.customers = [];
+                this.customers.push({label: '', value: null});
+                this.customers = this.customers.concat(result.map(p => Helpers.newSelectItem(p, p.customerName)));
             }
         );
     }

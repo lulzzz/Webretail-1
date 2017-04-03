@@ -169,11 +169,26 @@ export class Customer {
   }
 }
 
+export class Receipt {
+  public receiptId: number;
+  public receiptIdentifier: string;
+  public receiptNumber: number;
+  public receiptDate: Date;
+
+  constructor() {
+    this.receiptId = 0;
+    this.receiptIdentifier = '';
+    this.receiptNumber = 0;
+    this.receiptDate = new Date();
+  }
+}
+
 export class Movement {
   public movementId: number;
   public store: Store;
   public causal: Causal;
   public customer: Customer;
+  public receipt: Receipt;
   public movementNumber: number;
   public movementDate: Date;
   public movementDesc: string;
@@ -186,6 +201,7 @@ export class Movement {
     this.store = new Store();
     this.causal = new Causal();
     this.customer = new Customer();
+    this.receipt = new Receipt();
     this.movementNumber = 0;
     this.movementDate = new Date();
     this.movementDesc = '';

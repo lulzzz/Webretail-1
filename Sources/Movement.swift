@@ -25,36 +25,31 @@ struct MovementStatus: JSONConvertible {
 class Movement: PostgresSqlORM, JSONConvertible {
     
     public var movementId : Int = 0
-    public var storeId : Int = 0
-    public var causalId : Int = 0
-	public var customerId : Int = 0
 	public var movementNumber : Int = 0
 	public var movementDate : Int = Int.now()
 	public var movementDesc : String = ""
     public var movementNote : String = ""
 	public var movementStatus : String = ""
+	public var store : [String:Any] = [String:Any]()
+	public var causal : [String:Any] = [String:Any]()
+	public var customer : [String:Any] = [String:Any]()
+	public var receipt : [String:Any] = [String:Any]()
 	public var updated : Int = Int.now()
-    
-    public var _store : Store = Store()
-    public var _causal : Causal = Causal()
-	public var _customer : Customer = Customer()
 	
     open override func table() -> String { return "movements" }
     
     open override func to(_ this: StORMRow) {
         movementId = this.data["movementid"] as? Int ?? 0
-        storeId = this.data["storeid"] as? Int ?? 0
-        causalId = this.data["causalid"] as? Int ?? 0
-		customerId = this.data["customerid"] as? Int ?? 0
 		movementNumber = this.data["movementnumber"] as? Int ?? 0
 		movementDate = this.data["movementdate"] as? Int ?? 0
 		movementDesc = this.data["movementdesc"] as? String  ?? ""
         movementNote = this.data["movementnote"] as? String  ?? ""
 		movementStatus = this.data["movementstatus"] as? String ?? ""
+		store = this.data["store"] as? [String:Any] ?? [String:Any]()
+		causal = this.data["causal"] as? [String:Any] ?? [String:Any]()
+		customer = this.data["customer"] as? [String:Any] ?? [String:Any]()
+		receipt = this.data["receipt"] as? [String:Any] ?? [String:Any]()
 		updated = this.data["updated"] as? Int ?? 0
-		_store.to(this)
-		_causal.to(this)
-		_customer.to(this)
     }
     
     func rows() throws -> [Movement] {
@@ -68,26 +63,18 @@ class Movement: PostgresSqlORM, JSONConvertible {
     }
     
     public func setJSONValues(_ values:[String:Any]) {
-        self.movementId =  getJSONValue(named: "movementId", from: values, defaultValue: 0)
-        let store = Store()
-        store.setJSONValues(getJSONValue(named: "store", from: values, defaultValue: [String:Any]()))
-        self._store = store
-        self.storeId =  store.storeId
-        let causal = Causal()
-        causal.setJSONValues(getJSONValue(named: "causal", from: values, defaultValue: [String:Any]()))
-        self._causal = causal
-        self.causalId =  causal.causalId
-		let customer = Customer()
-		customer.setJSONValues(getJSONValue(named: "customer", from: values, defaultValue: [String:Any]()))
-		self._customer = customer
-		self.customerId =  customer.customerId
+        self.movementId = getJSONValue(named: "movementId", from: values, defaultValue: 0)
 		self.movementNumber = getJSONValue(named: "movementNumber", from: values, defaultValue: 0)
 		self.movementDate = getJSONValue(named: "movementDate", from: values, defaultValue: "").DateToInt()
         self.movementDesc = getJSONValue(named: "movementDesc", from: values, defaultValue: "")
         self.movementNote = getJSONValue(named: "movementNote", from: values, defaultValue: "")
 		self.movementStatus = getJSONValue(named: "movementStatus", from: values, defaultValue: "")
-    }
-    
+		self.store = getJSONValue(named: "store", from: values, defaultValue: [String:Any]())
+		self.causal = getJSONValue(named: "causal", from: values, defaultValue: [String:Any]())
+		self.customer = getJSONValue(named: "customer", from: values, defaultValue: [String:Any]())
+		self.receipt = getJSONValue(named: "receipt", from: values, defaultValue: [String:Any]())
+	}
+	
     func jsonEncodedString() throws -> String {
         return try self.getJSONValues().jsonEncodedString()
     }
@@ -95,14 +82,15 @@ class Movement: PostgresSqlORM, JSONConvertible {
     func getJSONValues() -> [String : Any] {
         return [
             "movementId": movementId,
-            "store": _store,
-            "causal": _causal,
-            "customer": _customer,
             "movementNumber": movementNumber,
             "movementDate": movementDate.formatDate(),
             "movementDesc": movementDesc,
             "movementNote": movementNote,
             "movementStatus": movementStatus,
+            "store": store,
+            "causal": causal,
+            "customer": customer,
+            "receipt": receipt,
             "updated": updated.formatDate()
         ]
     }

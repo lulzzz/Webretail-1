@@ -69,9 +69,14 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="number">Number</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText *ngIf="selected.movementStatus==='New'" formControlName="number" [(ngModel)]="selected.movementNumber" style="width: 50%"/>
-                        <input pInputText *ngIf="selected.movementStatus!=='New'" disabled="true" formControlName="number" [(ngModel)]="selected.movementNumber" style="width: 50%"/>
-                        0 = auto increment
+                        <div *ngIf="selected.movementStatus==='New';then new_number else current_number"></div>
+                        <ng-template #new_number>
+                           <input pInputText type="number" formControlName="number" [(ngModel)]="selected.movementNumber" style="width: 50%"/>
+                            0 = auto increment
+                        </ng-template>
+                        <ng-template #current_number>
+                            <input pInputText disabled="true" formControlName="number" [(ngModel)]="selected.movementNumber" style="width: 50%"/>
+                        </ng-template>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['number'].valid&&dataform.controls['number'].dirty">
                             <i class="fa fa-close"></i> Number is required
                         </div>
@@ -87,13 +92,15 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="customer">Customer</label></div>
+                    <div class="ui-grid-col-4"><label for="description">Description</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.customer" [disabled]="selected.movementStatus!=='New'" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['customer'].valid&&dataform.controls['customer'].dirty">
-                            <i class="fa fa-close"></i>
-                            <span *ngIf="dataform.controls['store'].errors['required']">Customer is required</span>
-                        </div>
+                        <div *ngIf="selected.movementStatus==='New';then new_content else content"></div>
+                        <ng-template #new_content>
+                            <input pInputText type="text" formControlName="description" [(ngModel)]="selected.movementDesc"/>
+                        </ng-template>
+                        <ng-template #content>
+                            <input pInputText disabled="true" formControlName="description" [(ngModel)]="selected.movementDesc"/>
+                        </ng-template>
                     </div>
                 </div>
                 <div class="ui-grid-row">
@@ -117,18 +124,21 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="customer">Customer</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.customer" [disabled]="selected.movementStatus!=='New'" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
+                </div>
+                <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="status">Status</label></div>
                     <div class="ui-grid-col-8">
                         <p-dropdown [options]="getStatus" formControlName="status" [(ngModel)]="selected.movementStatus" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['status'].valid&&dataform.controls['status'].dirty">
                             <i class="fa fa-close"></i> Status is required
                         </div>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="description">Description</label></div>
-                    <div class="ui-grid-col-8">
-                        <input pInputText formControlName="description" [(ngModel)]="selected.movementDesc"/>
                     </div>
                 </div>
                 <div class="ui-grid-row">

@@ -25,43 +25,17 @@ struct MovementRepository : MovementProtocol {
 		status.append(MovementStatus(value: "Completed"))
 		return status
 	}
-
-	internal func getJoins() -> [StORMDataSourceJoin] {
-		var storeJoin = StORMDataSourceJoin()
-		storeJoin.table = "stores"
-		storeJoin.direction = StORMJoinType.INNER
-		storeJoin.onCondition = "movements.storeId = stores.storeId"
-		
-		var causalJoin = StORMDataSourceJoin()
-		causalJoin.table = "causals"
-		causalJoin.direction = StORMJoinType.INNER
-		causalJoin.onCondition = "movements.causalId = causals.causalId"
-		
-		var customerJoin = StORMDataSourceJoin()
-		customerJoin.table = "customers"
-		customerJoin.direction = StORMJoinType.INNER
-		customerJoin.onCondition = "movements.customerId = customers.customerId"
-		
-		return [storeJoin, causalJoin, customerJoin]
-	}
 	
 	func getAll() throws -> [Movement] {
         let items = Movement()
-		try items.query(
-			orderby: ["movements.movementId DESC"],
-			joins: self.getJoins()
-		)
+		try items.query()
 		
         return try items.rows()
     }
     
     func get(id: Int) throws -> Movement? {
         let item = Movement()
-		try item.query(
-			whereclause: "movements.movementId = $1",
-			params: [String(id)],
-			joins: self.getJoins()
-		)
+		try item.query(id: id)
 
 		return item
     }
@@ -83,11 +57,13 @@ struct MovementRepository : MovementProtocol {
         }
         
 		if item.movementStatus == "New" {
-			current.causalId = item.causalId
-			current.storeId = item.storeId
-			current.customerId = item.customerId
 			current.movementNumber = item.movementNumber
 			current.movementDate = item.movementDate
+			current.movementDesc = item.movementDesc
+			current.causal = item.causal
+			current.store = item.store
+			current.customer = item.customer
+			current.receipt = item.receipt
 		}
 		else if current.movementStatus == "New" && item.movementStatus == "Processing" {
 			try process(movement: current, actionType: ActionType.Booking)
@@ -99,7 +75,6 @@ struct MovementRepository : MovementProtocol {
 			try process(movement: current, actionType: ActionType.Stoking)
 		}
 		current.movementStatus = item.movementStatus
-		current.movementDesc = item.movementDesc
 		current.movementNote = item.movementNote
 		current.updated = Int.now()
         try current.save()
@@ -112,6 +87,11 @@ struct MovementRepository : MovementProtocol {
     }
 
 	internal func process(movement: Movement, actionType: ActionType) throws {
+		
+		let storeId = movement.getJSONValue(named: "storeId", from: movement.store, defaultValue: 0)
+		let quantity = movement.getJSONValue(named: "quantity", from: movement.causal, defaultValue: 0)
+		let booked = movement.getJSONValue(named: "booked", from: movement.causal, defaultValue: 0)
+
 		var stock = Stock()
 		let article = MovementArticle()
 		try article.query(data: [("movementId", movement.movementId)])
@@ -122,11 +102,11 @@ struct MovementRepository : MovementProtocol {
 			
 			try stock.query(
 				whereclause: "articleId = $1 AND storeId = $2",
-				params: [ articleId, movement.storeId ],
+				params: [ articleId, storeId ],
 				cursor: StORMCursor(limit: 1, offset: 0))
 			
 			if (stock.rows().count == 0) {
-				stock.storeId = movement.storeId
+				stock.storeId = storeId
 				stock.articleId = articleId
 				try stock.save()
 			} else {
@@ -135,15 +115,15 @@ struct MovementRepository : MovementProtocol {
 			
 			switch actionType {
 			case ActionType.Booking:
-				if movement._causal.booked > 0 {
+				if booked > 0 {
 					stock.booked += item.quantity
 				}
 			case ActionType.Unbooking:
 				stock.booked -= item.quantity
 			default:
-				if movement._causal.quantity > 0 {
+				if quantity > 0 {
 					stock.quantity += item.quantity
-				} else if movement._causal.quantity < 0 {
+				} else if quantity < 0 {
 					stock.quantity -= item.quantity
 				}
 			}
