@@ -164,7 +164,9 @@ export class MovementsComponent implements OnInit {
             return;
         }
         this.currentStatus = this.selected.movementStatus;
-        this.selected.movementDate = new Date(this.selected.movementDate);
+        alert(this.selected.movementDate);
+        //this.selected.movementDate = new Date(this.selected.movementDate);
+        //alert(this.selected.movementDate);
         this.selected.movementUser = localStorage.getItem('uniqueID');
         this.selected.movementDevice = this.selected.movementUser;
         this.displayPanel = true;

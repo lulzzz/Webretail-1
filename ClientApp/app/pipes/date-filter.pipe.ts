@@ -22,10 +22,11 @@ export class DateFilterPipe implements PipeTransform {
       return value.filter(item => this.getDate(item) >= dateStart && this.getDate(item) <= dateFinish);
     }
 
-    return value.filter(item => this.getDate(item).toISOString() === dateStart.toISOString());
+    return value.filter(item => this.getDate(item).toISOString() == dateStart.toISOString());
   }
 
   getDate(item: any) : Date {
-    return new Date(item.movementDate);
+    //alert(new Date());
+    return new Date(item.movementDate.substring(0,10));
   }
 }

@@ -86,7 +86,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
         return [
             "movementId": movementId,
             "movementNumber": movementNumber,
-            "movementDate": movementDate.formatDate(),
+            "movementDate": movementDate.formatDate(format: "yyyy-MM-dd"),
             "movementDesc": movementDesc,
             "movementNote": movementNote,
             "movementStatus": movementStatus,
