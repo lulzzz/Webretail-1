@@ -29,11 +29,6 @@
                 <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'50%','float':'right'}" dateFormat="yy-mm-dd" placeholder="Finish" styleClass="ui-column-filter"></p-calendar>
             </ng-template>
         </p-column>
-        <p-column field="customer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
-            <ng-template pTemplate="filter" let-col>
-                <p-dropdown [options]="customersFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-            </ng-template>
-        </p-column>
         <p-column field="causal.causalName" header="Causal" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <ng-template pTemplate="filter" let-col>
                 <p-dropdown [options]="causalsFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
@@ -42,6 +37,11 @@
         <p-column field="store.storeName" header="Store" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <ng-template pTemplate="filter" let-col>
                 <p-dropdown [options]="storesFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </ng-template>
+        </p-column>
+        <p-column field="customer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+            <ng-template pTemplate="filter" let-col>
+                <p-dropdown [options]="customersFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </ng-template>
         </p-column>
         <p-column field="movementStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
@@ -65,6 +65,17 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label>Id</label></div>
                     <div class="ui-grid-col-8">{{selected.movementId}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>User</label></div>
+                    <div class="ui-grid-col-8">{{selected.movementUser}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Device</label></div>
+                    <div class="ui-grid-col-8">{{selected.movementDevice}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="number">Number</label></div>
@@ -102,6 +113,9 @@
                             <input pInputText disabled="true" formControlName="description" [(ngModel)]="selected.movementDesc"/>
                         </ng-template>
                     </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="causal">Causal</label></div>

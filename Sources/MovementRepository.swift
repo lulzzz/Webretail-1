@@ -60,10 +60,11 @@ struct MovementRepository : MovementProtocol {
 			current.movementNumber = item.movementNumber
 			current.movementDate = item.movementDate
 			current.movementDesc = item.movementDesc
+			current.movementUser = item.movementUser
+			current.movementDevice = item.movementDevice
 			current.causal = item.causal
 			current.store = item.store
 			current.customer = item.customer
-			current.receipt = item.receipt
 		}
 		else if current.movementStatus == "New" && item.movementStatus == "Processing" {
 			try process(movement: current, actionType: ActionType.Booking)

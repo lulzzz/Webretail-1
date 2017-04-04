@@ -140,8 +140,10 @@ export class MovementsComponent implements OnInit {
 
     addClick() {
         this.selected = new Movement();
-        this.currentStatus = this.selected.movementStatus;
         //this.selected.movementNumber = this.items.length > 0 ? Math.max.apply(this, this.items.map(p => p.movementNumber)) + 1 : 1000;
+        this.currentStatus = this.selected.movementStatus;
+        this.selected.movementUser = localStorage.getItem('uniqueID');
+        this.selected.movementDevice = this.selected.movementUser;
         if (this.stores.length > 0) {
             this.selected.store = this.stores[0].value;
         }
@@ -163,6 +165,8 @@ export class MovementsComponent implements OnInit {
         }
         this.currentStatus = this.selected.movementStatus;
         this.selected.movementDate = new Date(this.selected.movementDate);
+        this.selected.movementUser = localStorage.getItem('uniqueID');
+        this.selected.movementDevice = this.selected.movementUser;
         this.displayPanel = true;
     }
 

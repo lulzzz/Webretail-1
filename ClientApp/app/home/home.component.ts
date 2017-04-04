@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit  {
                     this.authenticationService.loginConsumer(consumer, uniqueID)
                         .subscribe(res => {
                             this.token = res.token;
-                            this.authenticationService.grantCredentials(res.token, res.role);
+                            this.authenticationService.grantCredentials(res);
                         });
                 }
             })

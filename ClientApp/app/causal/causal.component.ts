@@ -35,7 +35,8 @@ export class CausalComponent implements OnInit {
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
             'quantity': new FormControl('', Validators.required),
-            'booked': new FormControl('', Validators.required)
+            'booked': new FormControl('', Validators.required),
+            'pos': new FormControl('', Validators.required)
         });
 
         this.causalService

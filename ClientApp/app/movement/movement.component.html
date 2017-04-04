@@ -37,7 +37,7 @@
         </p-column>
         <p-column field="quantity" header="Quantity" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
             <ng-template let-col let-data="rowData" pTemplate="editor">
-                <input pInputText type="number" min="0" [disabled]="committed" [(ngModel)]="data.quantity" (change)="onUpdate(data)"/>
+                <input pInputText type="number" [disabled]="committed" [(ngModel)]="data.quantity" (change)="onUpdate(data)"/>
            </ng-template>
         </p-column>
         <p-column header="Price ({{priceValue||'No Filter'}})" [editable]="true" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">

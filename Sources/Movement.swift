@@ -22,18 +22,19 @@ struct MovementStatus: JSONConvertible {
 	}
 }
 
-class Movement: PostgresSqlORM, JSONConvertible {
-    
-    public var movementId : Int = 0
+class Movement: PostgresSqlORM, JSONConvertible {    
+	
+	public var movementId : Int = 0
 	public var movementNumber : Int = 0
 	public var movementDate : Int = Int.now()
 	public var movementDesc : String = ""
     public var movementNote : String = ""
 	public var movementStatus : String = ""
+	public var movementUser : String = ""
+	public var movementDevice : String = ""
 	public var store : [String:Any] = [String:Any]()
 	public var causal : [String:Any] = [String:Any]()
 	public var customer : [String:Any] = [String:Any]()
-	public var receipt : [String:Any] = [String:Any]()
 	public var updated : Int = Int.now()
 	
     open override func table() -> String { return "movements" }
@@ -45,10 +46,11 @@ class Movement: PostgresSqlORM, JSONConvertible {
 		movementDesc = this.data["movementdesc"] as? String  ?? ""
         movementNote = this.data["movementnote"] as? String  ?? ""
 		movementStatus = this.data["movementstatus"] as? String ?? ""
+		movementUser = this.data["movementuser"] as? String  ?? ""
+		movementDevice = this.data["movementdevice"] as? String  ?? ""
 		store = this.data["store"] as? [String:Any] ?? [String:Any]()
 		causal = this.data["causal"] as? [String:Any] ?? [String:Any]()
 		customer = this.data["customer"] as? [String:Any] ?? [String:Any]()
-		receipt = this.data["receipt"] as? [String:Any] ?? [String:Any]()
 		updated = this.data["updated"] as? Int ?? 0
     }
     
@@ -69,10 +71,11 @@ class Movement: PostgresSqlORM, JSONConvertible {
         self.movementDesc = getJSONValue(named: "movementDesc", from: values, defaultValue: "")
         self.movementNote = getJSONValue(named: "movementNote", from: values, defaultValue: "")
 		self.movementStatus = getJSONValue(named: "movementStatus", from: values, defaultValue: "")
+		self.movementUser = getJSONValue(named: "movementUser", from: values, defaultValue: "")
+		self.movementDevice = getJSONValue(named: "movementDevice", from: values, defaultValue: "")
 		self.store = getJSONValue(named: "store", from: values, defaultValue: [String:Any]())
 		self.causal = getJSONValue(named: "causal", from: values, defaultValue: [String:Any]())
 		self.customer = getJSONValue(named: "customer", from: values, defaultValue: [String:Any]())
-		self.receipt = getJSONValue(named: "receipt", from: values, defaultValue: [String:Any]())
 	}
 	
     func jsonEncodedString() throws -> String {
@@ -87,17 +90,27 @@ class Movement: PostgresSqlORM, JSONConvertible {
             "movementDesc": movementDesc,
             "movementNote": movementNote,
             "movementStatus": movementStatus,
+            "movementUser": movementUser,
+            "movementDevice": movementDevice,
             "store": store,
             "causal": causal,
             "customer": customer,
-            "receipt": receipt,
             "updated": updated.formatDate()
         ]
     }
 
 	func newNumber() throws {
-		let getCount = try self.sqlRows("SELECT MAX(movementnumber) AS counter FROM \(table())", params: [])
-		self.movementNumber = 1
-		self.movementNumber += getCount.first?.data["counter"] as? Int ?? 1000
+		self.movementNumber = 1000
+		var params = [String]()
+		let pos = getJSONValue(named: "pos", from: self.causal, defaultValue: false)
+		var sql = "SELECT MAX(movementnumber) AS counter FROM \(table())";
+		if pos {
+			self.movementNumber = 1
+			sql += " WHERE movementDevice = $1 AND to_char(to_timestamp(movementDate + extract(epoch from timestamp '2001-01-01 00:00:00')), 'YYYY-MM-DD') = $2";
+			params.append(movementDevice)
+			params.append(movementDate.formatDate(format: "yyyy-MM-dd"))
+		}
+		let getCount = try self.sqlRows(sql, params: params)
+		self.movementNumber += getCount.first?.data["counter"] as? Int ?? 0
 	}
 }

@@ -116,14 +116,8 @@ export class MovementComponent implements OnInit, OnDestroy {
     }
 
     onUpdate(data: MovementArticle) {
-        if (data.quantity > 0) {
-            this.movementService
-                .updateItem(data.movementArticleId, data)
-                .subscribe(result => {
-                    data.amount = result.amount;
-                    this.updateTotals();
-                }, onerror => alert(onerror._body));
-        } else {
+        if (data.quantity === 0) {
+            data.amount = 0;
             this.confirmationService.confirm({
                 message: 'Are you sure that you want to delete this item?',
                 accept: () => {
@@ -135,6 +129,13 @@ export class MovementComponent implements OnInit, OnDestroy {
                         }, onerror => alert(onerror._body));
                 }
             });
+        } else {
+            this.movementService
+                .updateItem(data.movementArticleId, data)
+                .subscribe(result => {
+                    data.amount = result.amount;
+                    this.updateTotals();
+                }, onerror => alert(onerror._body));
         }
     }
 }

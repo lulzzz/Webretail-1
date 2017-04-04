@@ -36,13 +36,15 @@ export class AuthenticationService {
             .subscribe(result => this.removeCredentials());
     }
 
-    grantCredentials(token: string, role: string) {
-        localStorage.setItem('token', token);
-        localStorage.setItem('role', role);
+    grantCredentials(data: any) {
+        localStorage.setItem('uniqueID', data.uniqueID);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
         this.router.navigate(['home']);
     }
 
     removeCredentials() {
+        localStorage.removeItem('uniqueID');
         localStorage.removeItem('token');
         localStorage.removeItem('role');
         this.router.navigate(['login']);

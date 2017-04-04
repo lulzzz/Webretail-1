@@ -49,7 +49,7 @@ public class AuthenticationController {
                 resp["authenticated"] = true
                 resp["uniqueID"] = request.user.authDetails?.account.uniqueID
                 resp["role"] = user.isAdmin ? "Admin" : "User"
-            }
+			}
             try response.setBody(json: resp)
         } catch {
             print(error)
@@ -86,6 +86,7 @@ public class AuthenticationController {
             resp["error"] = "none"
             resp["login"] = "ok"
             resp["token"] = token
+			resp["uniqueID"] = uniqueID
             resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch {
             resp["error"] = "Invalid username or password"
@@ -147,6 +148,7 @@ public class AuthenticationController {
             resp["error"] = "none"
             resp["login"] = "ok"
             resp["token"] = token
+			resp["uniqueID"] = uniqueID
             resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch let e as TurnstileError {
             resp["error"] = e.description
@@ -275,6 +277,7 @@ public class AuthenticationController {
             resp["error"] = "none"
             resp["login"] = "ok"
             resp["token"] = token
+			resp["uniqueID"] = uniqueID
             resp["role"] = user.isAdmin ? "Admin" : "User"
         } catch {
             resp["error"] = "Invalid uniqueID"
