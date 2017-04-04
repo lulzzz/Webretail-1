@@ -89,7 +89,6 @@ export class Product {
     this.productUm = '';
     this.productSellingPrice = 0;
     this.productPurchasePrice = 0;
-    this.brand = new Brand();
     this.categories = [];
     this.attributes = [];
     this.articles = [];
@@ -187,9 +186,6 @@ export class Movement {
 
   constructor() {
     this.movementId = 0;
-    this.movementStore = new Store();
-    this.movementCausal = new Causal();
-    this.movementCustomer = new Customer();
     this.movementNumber = 0;
     this.movementDate = new Date();
     this.movementDesc = '';
