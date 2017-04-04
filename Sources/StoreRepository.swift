@@ -25,8 +25,8 @@ struct StoreRepository : StoreProtocol {
     }
     
     func add(item: Store) throws {
-        item.created = Int.now()
-        item.updated = Int.now()
+        item.storeCreated = Int.now()
+        item.storeUpdated = Int.now()
         try item.save {
             id in item.storeId = id as! Int
         }
@@ -43,7 +43,7 @@ struct StoreRepository : StoreProtocol {
         current.storeCity = item.storeCity
         current.storeCountry = item.storeCountry
         current.storeZip = item.storeZip
-        current.updated = Int.now()
+        current.storeUpdated = Int.now()
         try current.save()
     }
     

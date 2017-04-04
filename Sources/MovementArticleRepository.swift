@@ -29,7 +29,7 @@ struct MovementArticleRepository : MovementArticleProtocol {
     }
     
     func add(item: MovementArticle) throws {
-        item.updated = Int.now()
+        item.movementArticleUpdated = Int.now()
         try item.save {
             id in item.movementArticleId = id as! Int
         }
@@ -41,8 +41,8 @@ struct MovementArticleRepository : MovementArticleProtocol {
             throw StORMError.noRecordFound
         }
         
-        current.quantity = item.quantity
-        current.updated = Int.now()
+        current.movementArticleQuantity = item.movementArticleQuantity
+        current.movementArticleUpdated = Int.now()
         try current.save()
     }
     

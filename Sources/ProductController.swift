@@ -83,7 +83,7 @@ class ProductController {
             let item = Product()
             item.setJSONValues(json!)
             try self.repository.update(id: id!, item: item)
-            try response.setBody(json: id)
+            try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")

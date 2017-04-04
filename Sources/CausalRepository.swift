@@ -25,8 +25,8 @@ struct CausalRepository : CausalProtocol {
     }
     
     func add(item: Causal) throws {
-        item.created = Int.now()
-        item.updated = Int.now()
+        item.causalCreated = Int.now()
+        item.causalUpdated = Int.now()
         try item.save {
             id in item.causalId = id as! Int
         }
@@ -39,9 +39,10 @@ struct CausalRepository : CausalProtocol {
         }
         
         current.causalName = item.causalName
-        current.quantity = item.quantity
-        current.booked = item.booked
-        current.updated = Int.now()
+        current.causalQuantity = item.causalQuantity
+        current.causalBooked = item.causalBooked
+		current.causalIsPos = item.causalIsPos
+		current.causalUpdated = Int.now()
         try current.save()
     }
     

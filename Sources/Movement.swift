@@ -32,10 +32,10 @@ class Movement: PostgresSqlORM, JSONConvertible {
 	public var movementStatus : String = ""
 	public var movementUser : String = ""
 	public var movementDevice : String = ""
-	public var store : [String:Any] = [String:Any]()
-	public var causal : [String:Any] = [String:Any]()
-	public var customer : [String:Any] = [String:Any]()
-	public var updated : Int = Int.now()
+	public var movementStore : [String:Any] = [String:Any]()
+	public var movementCausal : [String:Any] = [String:Any]()
+	public var movementCustomer : [String:Any] = [String:Any]()
+	public var movementUpdated : Int = Int.now()
 	
     open override func table() -> String { return "movements" }
     
@@ -48,10 +48,10 @@ class Movement: PostgresSqlORM, JSONConvertible {
 		movementStatus = this.data["movementstatus"] as? String ?? ""
 		movementUser = this.data["movementuser"] as? String  ?? ""
 		movementDevice = this.data["movementdevice"] as? String  ?? ""
-		store = this.data["store"] as? [String:Any] ?? [String:Any]()
-		causal = this.data["causal"] as? [String:Any] ?? [String:Any]()
-		customer = this.data["customer"] as? [String:Any] ?? [String:Any]()
-		updated = this.data["updated"] as? Int ?? 0
+		movementStore = this.data["movementstore"] as? [String:Any] ?? [String:Any]()
+		movementCausal = this.data["movementcausal"] as? [String:Any] ?? [String:Any]()
+		movementCustomer = this.data["movementcustomer"] as? [String:Any] ?? [String:Any]()
+		movementUpdated = this.data["movementupdated"] as? Int ?? 0
     }
     
     func rows() throws -> [Movement] {
@@ -73,9 +73,9 @@ class Movement: PostgresSqlORM, JSONConvertible {
 		self.movementStatus = getJSONValue(named: "movementStatus", from: values, defaultValue: "")
 		self.movementUser = getJSONValue(named: "movementUser", from: values, defaultValue: "")
 		self.movementDevice = getJSONValue(named: "movementDevice", from: values, defaultValue: "")
-		self.store = getJSONValue(named: "store", from: values, defaultValue: [String:Any]())
-		self.causal = getJSONValue(named: "causal", from: values, defaultValue: [String:Any]())
-		self.customer = getJSONValue(named: "customer", from: values, defaultValue: [String:Any]())
+		self.movementStore = getJSONValue(named: "movementStore", from: values, defaultValue: [String:Any]())
+		self.movementCausal = getJSONValue(named: "movementCausal", from: values, defaultValue: [String:Any]())
+		self.movementCustomer = getJSONValue(named: "movementCustomer", from: values, defaultValue: [String:Any]())
 	}
 	
     func jsonEncodedString() throws -> String {
@@ -86,23 +86,23 @@ class Movement: PostgresSqlORM, JSONConvertible {
         return [
             "movementId": movementId,
             "movementNumber": movementNumber,
-            "movementDate": movementDate.formatDate(format: "yyyy-MM-dd"),
+            "movementDate": movementDate.formatDateShort(),
             "movementDesc": movementDesc,
             "movementNote": movementNote,
             "movementStatus": movementStatus,
             "movementUser": movementUser,
             "movementDevice": movementDevice,
-            "store": store,
-            "causal": causal,
-            "customer": customer,
-            "updated": updated.formatDate()
+            "movementStore": movementStore,
+            "movementCausal": movementCausal,
+            "movementCustomer": movementCustomer,
+            "movementUpdated": movementUpdated.formatDate()
         ]
     }
 
 	func newNumber() throws {
 		self.movementNumber = 1000
 		var params = [String]()
-		let pos = getJSONValue(named: "pos", from: self.causal, defaultValue: false)
+		let pos = getJSONValue(named: "causalIsPos", from: self.movementCausal, defaultValue: false)
 		var sql = "SELECT MAX(movementnumber) AS counter FROM \(table())";
 		if pos {
 			self.movementNumber = 1

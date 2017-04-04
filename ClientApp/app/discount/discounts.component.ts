@@ -61,8 +61,6 @@ export class DiscountsComponent implements OnInit {
         if (!this.selected) {
             return;
         }
-        this.selected.startAt = new Date(this.selected.startAt);
-        this.selected.finishAt = new Date(this.selected.finishAt);
         this.displayPanel = true;
     }
 
@@ -81,6 +79,7 @@ export class DiscountsComponent implements OnInit {
         } else {
             this.discountService.update(this.selected.discountId, this.selected)
                 .subscribe(result => {
+                    this.items[this.selectedIndex] = result;
                     this.closeClick();
                 }, onerror => {
                     alert(onerror._body);

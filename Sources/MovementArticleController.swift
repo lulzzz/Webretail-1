@@ -49,18 +49,18 @@ class MovementArticleController {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = MovementArticle()
             item.setJSONValues(json!)
-            guard let product = try self.productRepository.get(barcode: item.barcode) else {
+            guard let product = try self.productRepository.get(barcode: item.movementArticleBarcode) else {
                 response.completed(status: .notFound)
                 return
             }
-			item.product = try product.getJSONValues()
+			item.movementArticleProduct = try product.getJSONValues()
 
 			let price = request.urlVariables["price"]!
 			if price == "selling" {
-				item.price = product._discount != nil ? product._discount!.price : product.sellingPrice
+				item.movementArticlePrice = product._discount != nil ? product._discount!.discountPrice : product.productPurchasePrice
 			}
 			if price == "purchase" {
-				item.price = product.purchasePrice
+				item.movementArticlePrice = product.productPurchasePrice
 			}
 			
 			try self.movementRepository.add(item: item)

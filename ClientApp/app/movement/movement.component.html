@@ -12,7 +12,7 @@
             <br/><span><b>status</b>: {{item.movementStatus}}</span>
         </div>
         <div class="ui-toolbar-group-right" style="text-align: right">
-            <span><b>causal</b>: {{item.causal.causalName}}</span><br/><span><b>store</b>: {{item.store.storeName}}</span>
+            <span><b>causal</b>: {{item.movementCausal.causalName}}</span><br/><span><b>store</b>: {{item.movementStore.storeName}}</span>
         </div>
     </p-toolbar>
 
@@ -26,18 +26,18 @@
             <span style="float: right">items <b>{{totalItems}}</b> amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
             <p>&nbsp;</p>
         </p-footer>
-        <p-column field="barcode" header="Barcode" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
-        <p-column field="product" header="Product" [editable]="false" [sortable]="true" [filter]="true">
+        <p-column field="movementArticleBarcode" header="Barcode" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="movementArticleProduct" header="Product" [editable]="false" [sortable]="true" [filter]="true">
             <ng-template pTemplate="filter" let-col>
                 <input pInputText [(ngModel)]="articleValue" placeholder="Search" style="width: 100%;margin-top: 4px;" styleClass="ui-column-filter"/>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.product | articleInfo:data.barcode}}
+                {{data.movementArticleProduct | articleInfo:data.movementArticleBarcode}}
             </ng-template>
         </p-column>
-        <p-column field="quantity" header="Quantity" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        <p-column field="movementArticleQuantity" header="Quantity" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
             <ng-template let-col let-data="rowData" pTemplate="editor">
-                <input pInputText type="number" [disabled]="committed" [(ngModel)]="data.quantity" (change)="onUpdate(data)"/>
+                <input pInputText type="number" [disabled]="committed" [(ngModel)]="data.movementArticleQuantity" (change)="onUpdate(data)"/>
            </ng-template>
         </p-column>
         <p-column header="Price ({{priceValue||'No Filter'}})" [editable]="true" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
@@ -46,10 +46,10 @@
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="priceValue" [min]="5" [max]="1000"></p-slider>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="editor">
-                <input pInputText type="number" min="0" [disabled]="committed" [(ngModel)]="data.price" (change)="onUpdate(data)"/>
+                <input pInputText type="number" min="0" [disabled]="committed" [(ngModel)]="data.movementArticlePrice" (change)="onUpdate(data)"/>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.price | currency: 'EUR' : true}}
+                {{data.movementArticlePrice | currency: 'EUR' : true}}
             </ng-template>
         </p-column>
         <p-column header="Amount ({{amountValue||'No Filter'}})" [editable]="false" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
@@ -58,7 +58,7 @@
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="amountValue" [min]="5" [max]="1000"></p-slider>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.amount | currency: 'EUR' : true}}
+                {{data.movementArticleAmount | currency: 'EUR' : true}}
             </ng-template>
         </p-column>
     </p-dataTable>

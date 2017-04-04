@@ -14,11 +14,11 @@ class Causal: PostgresSqlORM, JSONConvertible {
     
     public var causalId : Int = 0
     public var causalName : String = ""
-    public var quantity : Int = 0
-    public var booked  : Int = 0
-	public var pos : Bool = false
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
+    public var causalQuantity : Int = 0
+    public var causalBooked  : Int = 0
+	public var causalIsPos : Bool = false
+    public var causalCreated : Int = Int.now()
+    public var causalUpdated : Int = Int.now()
     
     open override func table() -> String { return "causals" }
     open override func tableIndexes() -> [String] { return ["causalName"] }
@@ -26,11 +26,11 @@ class Causal: PostgresSqlORM, JSONConvertible {
     open override func to(_ this: StORMRow) {
         causalId  = this.data["causalid"] as? Int ?? 0
         causalName = this.data["causalname"] as? String ?? ""
-        quantity = this.data["quantity"] as? Int ?? 0
-        booked = this.data["booked"] as? Int ?? 0
-		pos = this.data["pos"] as? Bool ?? false
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+        causalQuantity = this.data["causalquantity"] as? Int ?? 0
+        causalBooked = this.data["causalbooked"] as? Int ?? 0
+		causalIsPos = this.data["causalispos"] as? Bool ?? false
+        causalCreated = this.data["causalcreated"] as? Int ?? 0
+        causalUpdated = this.data["causalupdated"] as? Int ?? 0
     }
     
     func rows() -> [Causal] {
@@ -46,9 +46,9 @@ class Causal: PostgresSqlORM, JSONConvertible {
     public func setJSONValues(_ values:[String:Any]) {
         self.causalId = getJSONValue(named: "causalId", from: values, defaultValue: 0)
         self.causalName = getJSONValue(named: "causalName", from: values, defaultValue: "")
-        self.quantity = getJSONValue(named: "quantity", from: values, defaultValue: 0)
-        self.booked = getJSONValue(named: "booked",  from: values, defaultValue: 0)
-		self.pos = getJSONValue(named: "pos", from: values, defaultValue: false)
+        self.causalQuantity = getJSONValue(named: "causalQuantity", from: values, defaultValue: 0)
+        self.causalBooked = getJSONValue(named: "causalBooked",  from: values, defaultValue: 0)
+		self.causalIsPos = getJSONValue(named: "causalIsPos", from: values, defaultValue: false)
     }
     
     func jsonEncodedString() throws -> String {
@@ -59,9 +59,9 @@ class Causal: PostgresSqlORM, JSONConvertible {
         return [
             "causalId": causalId,
             "causalName": causalName,
-            "quantity": quantity,
-            "booked": booked,
-            "pos": pos
+            "causalQuantity": causalQuantity,
+            "causalBooked": causalBooked,
+            "causalIsPos": causalIsPos
         ]
     }
 }

@@ -67,7 +67,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
         this.codes.forEach(code => {
             var item = new DiscountProduct();
             item.discountId = this.discountId;
-            item.product.productCode = code;
+            item.discountProduct.productCode = code;
             this.discountService
                 .addProduct(item)
                 .subscribe(result => {

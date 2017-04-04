@@ -12,8 +12,6 @@ import TurnstileCrypto
 
 /// The "Turnstile Realm" that holds the main routing functionality for request filters
 open class CustomRealm : Realm {
-    
-    public var random: Random = URandom()
 
     /// Used when a "Credentials" onject is passed to the authenticate function. Returns an Account object.
     open func authenticate(credentials: Credentials) throws -> Account {
@@ -73,6 +71,7 @@ open class CustomRealm : Realm {
         
         let account = User()
         let newAccount = User()
+		let random: Random = URandom()
         newAccount.id(String(random.secureToken))
         
         switch credentials {

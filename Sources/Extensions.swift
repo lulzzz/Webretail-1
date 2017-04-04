@@ -14,15 +14,18 @@ extension Int {
     static func now() -> Int {
         return Int(Date.timeIntervalSinceReferenceDate)
     }
-    
+	
+	func formatDateShort() -> String {
+		return formatDate(format: "yyyy-MM-dd")
+	}
+	
     func formatDate(format: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") -> String {
         if self == 0 { return "" }
         let date = Date(timeIntervalSinceReferenceDate: TimeInterval(self))
         let formatter = DateFormatter()
         formatter.dateFormat = format
-		formatter.timeZone = TimeZone.current
-		
-        return formatter.string(from: date)
+		formatter.timeZone = TimeZone(abbreviation: "UTC")
+		return formatter.string(from: date)
     }
 }
 
@@ -47,24 +50,13 @@ extension Double {
 extension String {
 	func DateToInt() -> Int {
 		let formatter = DateFormatter()
-		formatter.dateFormat = "yyyy-MM-dd"
-		formatter.timeZone = TimeZone.current
+		formatter.dateFormat = self.length > 10 ? "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" : "yyyy-MM-dd"
+		formatter.timeZone = TimeZone(abbreviation: "UTC")
 		let date = formatter.date(from: self)!
 		
 		return Int(date.timeIntervalSinceReferenceDate)
 	}
 }
-
-//extension Sequence {
-//	func categorise<U : Hashable>(_ key: (Iterator.Element) -> U) -> [U:[Iterator.Element]] {
-//		var dict: [U:[Iterator.Element]] = [:]
-//		for el in self {
-//			let key = key(el)
-//			if case nil = dict[key]?.append(el) { dict[key] = [el] }
-//		}
-//		return dict
-//	}
-//}
 
 extension Sequence {
 	func groupBy<G: Hashable>(closure: (Iterator.Element)->G) -> [G: [Iterator.Element]] {

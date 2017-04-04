@@ -107,17 +107,17 @@ export class MovementsComponent implements OnInit {
     buildFilter(items: Movement[]) {
         this.storesFiltered = [];
         this.storesFiltered.push({label: 'All', value: null});
-        let filterStores = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.store.storeName)));
+        let filterStores = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStore.storeName)));
         this.storesFiltered = this.storesFiltered.concat(filterStores);
 
         this.causalsFiltered = [];
         this.causalsFiltered.push({label: 'All', value: null});
-        let filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.causal.causalName)));
+        let filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCausal.causalName)));
         this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
 
         this.customersFiltered = [];
         this.customersFiltered.push({label: 'All', value: null});
-        let filterCustomer = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.customer.customerName)));
+        let filterCustomer = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCustomer.customerName)));
         this.customersFiltered = this.customersFiltered.concat(filterCustomer);
 
         this.statusFiltered = [];
@@ -145,13 +145,13 @@ export class MovementsComponent implements OnInit {
         this.selected.movementUser = localStorage.getItem('uniqueID');
         this.selected.movementDevice = this.selected.movementUser;
         if (this.stores.length > 0) {
-            this.selected.store = this.stores[0].value;
+            this.selected.movementStore = this.stores[0].value;
         }
         if (this.causals.length > 0) {
-            this.selected.causal = this.causals[0].value;
+            this.selected.movementCausal = this.causals[0].value;
         }
         if (this.customers.length > 0) {
-            this.selected.customer = this.customers[0].value;
+            this.selected.movementCustomer = this.customers[0].value;
         }
         if (this.status.length > 0) {
             this.selected.movementStatus = this.status[0].value;
@@ -164,9 +164,6 @@ export class MovementsComponent implements OnInit {
             return;
         }
         this.currentStatus = this.selected.movementStatus;
-        alert(this.selected.movementDate);
-        //this.selected.movementDate = new Date(this.selected.movementDate);
-        //alert(this.selected.movementDate);
         this.selected.movementUser = localStorage.getItem('uniqueID');
         this.selected.movementDevice = this.selected.movementUser;
         this.displayPanel = true;
@@ -189,6 +186,7 @@ export class MovementsComponent implements OnInit {
         } else {
             this.movementService.update(this.selected.movementId, this.selected)
                 .subscribe(result => {
+                    this.items[this.selectedIndex] = result;
                     this.closeClick();
                 }, onerror => {
                     this.selected.movementStatus = this.currentStatus;

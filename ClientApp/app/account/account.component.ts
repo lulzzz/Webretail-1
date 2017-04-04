@@ -73,7 +73,6 @@ export class AccountComponent implements OnInit {
             this.accountService
                 .update(this.selected.uniqueID, this.selected)
                 .subscribe(result => {
-                    this.accounts[this.selectedIndex] = this.selected;
                     this.closeClick();
                 }, onerror => alert(onerror._body));
         }

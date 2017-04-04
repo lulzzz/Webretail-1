@@ -9,13 +9,13 @@
     <p-toolbar *ngIf="item">
         <div class="ui-toolbar-group-left">
             <span><b>name</b>: {{item.discountName}}</span>
-            <br/><span><b>start</b>: {{item.startAt | date: 'yyyy-MM-dd'}}</span>
-            <span><b>finish</b>: {{item.finishAt | date: 'yyyy-MM-dd'}}</span>
+            <br/><span><b>start</b>: {{item.discountStartAt | date: 'yyyy-MM-dd'}}</span>
+            <span><b>finish</b>: {{item.discountFinishAt | date: 'yyyy-MM-dd'}}</span>
         </div>
         <div class="ui-toolbar-group-right" style="text-align: right">
             <br>
-            <span *ngIf="item.percentage>0"><b>percentage</b>: {{item.percentage}}%</span>
-            <span *ngIf="item.price>0"><b>fixed price</b>: {{item.price | currency: 'EUR' : true}}</span>
+            <span *ngIf="item.discountPercentage>0"><b>percentage</b>: {{item.discountPercentage}}%</span>
+            <span *ngIf="item.discountPrice>0"><b>fixed price</b>: {{item.discountPrice | currency: 'EUR' : true}}</span>
         </div>
     </p-toolbar>
 
@@ -31,20 +31,20 @@
             <p>&nbsp;</p>
         </p-footer>
         <p-column [style]="{'width':'50px'}" selectionMode="multiple"></p-column>
-        <p-column field="product.productCode" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
-        <p-column field="product.productName" header="Name" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="discountProduct.productCode" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="discountProduct.productName" header="Name" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
         <p-column header="Discount ({{sliderValue||'No Filter'}})"[sortable]="true" [filter]="true">
             <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="sliderValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000" styleClass="ui-column-filter"></p-slider>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                <div *ngIf="item.percentage===0;then discount_content else price_content"></div>
+                <div *ngIf="item.discountPercentage===0;then discount_content else price_content"></div>
                 <ng-template #discount_content>
-                    {{(data.product.sellingPrice - item.price) / data.product.sellingPrice * 100.0}}%
+                    {{(data.discountProduct.productSellingPrice - item.discountPrice) / data.discountProduct.productSellingPrice * 100.0}}%
                 </ng-template>
                 <ng-template #price_content>
-                    {{data.product.sellingPrice - (data.product.sellingPrice * item.percentage / 100) | currency: 'EUR' : true}}
+                    {{data.discountProduct.productSellingPrice - (data.discountProduct.productSellingPrice * item.discountPercentage / 100) | currency: 'EUR' : true}}
                 </ng-template>
             </ng-template>
         </p-column>

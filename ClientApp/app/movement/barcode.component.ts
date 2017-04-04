@@ -33,7 +33,7 @@ export class BarcodeComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     this.items = [];
                     result.forEach(element => {
-                        for (let i = 0; i < element.quantity; i++) {
+                        for (let i = 0; i < element.movementArticleQuantity; i++) {
                             this.items.push(element);
                         }
                     });

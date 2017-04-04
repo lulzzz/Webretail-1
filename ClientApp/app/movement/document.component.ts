@@ -17,7 +17,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     totalItems = 0;
     amount = 0.0;
     total = 0.0;
-    item: Movement;
+    movement: Movement;
     groups: any[];
 
     constructor(private activatedRoute: ActivatedRoute,
@@ -35,7 +35,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
             this.movementService.getById(this.movementId)
                 .subscribe(result => {
-                    this.item = result;
+                    this.movement = result;
                 }, onerror => alert(onerror._body)
             );
 
@@ -63,8 +63,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
                     }
                     this.groups.push(array);
 
-                    this.totalItems = result.map(p => p.quantity).reduce((sum, current) => sum + current);
-                    this.total = result.map(p => p.amount).reduce((sum, current) => sum + current);
+                    this.totalItems = result.map(p => p.movementArticleQuantity).reduce((sum, current) => sum + current);
+                    this.total = result.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
                     this.amount = this.total * 100 / 122;
                 }, onerror => alert(onerror._body)
             );

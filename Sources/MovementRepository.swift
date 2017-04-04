@@ -44,7 +44,7 @@ struct MovementRepository : MovementProtocol {
 		if item.movementNumber == 0 {
 			try item.newNumber()
 		}
-        item.updated = Int.now()
+        item.movementUpdated = Int.now()
         try item.save {
             id in item.movementId = id as! Int
         }
@@ -56,15 +56,16 @@ struct MovementRepository : MovementProtocol {
             throw StORMError.noRecordFound
         }
         
+		item.movementUpdated = Int.now()
 		if item.movementStatus == "New" {
 			current.movementNumber = item.movementNumber
 			current.movementDate = item.movementDate
 			current.movementDesc = item.movementDesc
 			current.movementUser = item.movementUser
 			current.movementDevice = item.movementDevice
-			current.causal = item.causal
-			current.store = item.store
-			current.customer = item.customer
+			current.movementCausal = item.movementCausal
+			current.movementStore = item.movementStore
+			current.movementCustomer = item.movementCustomer
 		}
 		else if current.movementStatus == "New" && item.movementStatus == "Processing" {
 			try process(movement: current, actionType: ActionType.Booking)
@@ -77,7 +78,7 @@ struct MovementRepository : MovementProtocol {
 		}
 		current.movementStatus = item.movementStatus
 		current.movementNote = item.movementNote
-		current.updated = Int.now()
+		current.movementUpdated = item.movementUpdated
         try current.save()
     }
     
@@ -89,16 +90,16 @@ struct MovementRepository : MovementProtocol {
 
 	internal func process(movement: Movement, actionType: ActionType) throws {
 		
-		let storeId = movement.getJSONValue(named: "storeId", from: movement.store, defaultValue: 0)
-		let quantity = movement.getJSONValue(named: "quantity", from: movement.causal, defaultValue: 0)
-		let booked = movement.getJSONValue(named: "booked", from: movement.causal, defaultValue: 0)
+		let storeId = movement.getJSONValue(named: "storeId", from: movement.movementStore, defaultValue: 0)
+		let quantity = movement.getJSONValue(named: "causalQuantity", from: movement.movementCausal, defaultValue: 0)
+		let booked = movement.getJSONValue(named: "causalBooked", from: movement.movementCausal, defaultValue: 0)
 
 		var stock = Stock()
 		let article = MovementArticle()
 		try article.query(data: [("movementId", movement.movementId)])
 		for item in article.rows() {
 			
-			let articles = item.product["articles"] as! [[String : Any]];
+			let articles = item.movementArticleProduct["articles"] as! [[String : Any]];
 			let articleId = item.getJSONValue(named: "articleId", from: articles[0], defaultValue: 0)
 			
 			try stock.query(
@@ -117,15 +118,15 @@ struct MovementRepository : MovementProtocol {
 			switch actionType {
 			case ActionType.Booking:
 				if booked > 0 {
-					stock.booked += item.quantity
+					stock.stockBooked += item.movementArticleQuantity
 				}
 			case ActionType.Unbooking:
-				stock.booked -= item.quantity
+				stock.stockBooked -= item.movementArticleQuantity
 			default:
 				if quantity > 0 {
-					stock.quantity += item.quantity
+					stock.stockQuantity += item.movementArticleQuantity
 				} else if quantity < 0 {
-					stock.quantity -= item.quantity
+					stock.stockQuantity -= item.movementArticleQuantity
 				}
 			}
 			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)

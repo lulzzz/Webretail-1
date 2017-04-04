@@ -32,8 +32,8 @@ struct AttributeRepository : AttributeProtocol {
     }
     
     func add(item: Attribute) throws {
-        item.created = Int.now()
-        item.updated = Int.now()
+        item.attributeCreated = Int.now()
+        item.attributeUpdated = Int.now()
         try item.save {
             id in item.attributeId = id as! Int
         }
@@ -46,7 +46,7 @@ struct AttributeRepository : AttributeProtocol {
         }
         
         current.attributeName = item.attributeName
-        current.updated = Int.now()
+        current.attributeUpdated = Int.now()
         try current.save()
     }
     

@@ -17,12 +17,12 @@ class Product: PostgresSqlORM, JSONConvertible {
     public var productCode : String = ""
     public var productName : String = ""
     public var productUm : String = ""
-    public var sellingPrice : Double = 0
-    public var purchasePrice : Double = 0
-    public var isActive : Bool = false
-    public var isValid : Bool = false
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
+    public var productSellingPrice : Double = 0
+    public var productPurchasePrice : Double = 0
+    public var productIsActive : Bool = false
+    public var productIsValid : Bool = false
+    public var productCreated : Int = Int.now()
+    public var productUpdated : Int = Int.now()
     
 	public var _brand: Brand = Brand()
     public var _categories: [ProductCategory] = [ProductCategory]()
@@ -39,12 +39,12 @@ class Product: PostgresSqlORM, JSONConvertible {
         productCode = this.data["productcode"] as? String ?? ""
         productName = this.data["productname"] as? String ?? ""
         productUm = this.data["productum"] as? String ?? ""
-        sellingPrice = Double(this.data["sellingprice"] as? Float ?? 0)
-        purchasePrice = Double(this.data["purchaseprice"] as? Float ?? 0)
-        isActive = this.data["isactive"] as? Bool ?? false
-        isValid = this.data["isvalid"] as? Bool ?? false
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+        productSellingPrice = Double(this.data["productsellingprice"] as? Float ?? 0)
+        productPurchasePrice = Double(this.data["productpurchaseprice"] as? Float ?? 0)
+        productIsActive = this.data["productisactive"] as? Bool ?? false
+        productIsValid = this.data["productisvalid"] as? Bool ?? false
+        productCreated = this.data["productcreated"] as? Int ?? 0
+        productUpdated = this.data["productupdated"] as? Int ?? 0
 		_brand.to(this)
     }
     
@@ -67,10 +67,10 @@ class Product: PostgresSqlORM, JSONConvertible {
         self.productCode = getJSONValue(named: "productCode", from: values, defaultValue: "")
         self.productName = getJSONValue(named: "productName", from: values, defaultValue: "")
         self.productUm = getJSONValue(named: "productUm", from: values, defaultValue: "")
-        self.sellingPrice = getJSONValue(named: "sellingPrice", from: values, defaultValue: 0.0)
-        self.purchasePrice = getJSONValue(named: "purchasePrice", from: values, defaultValue: 0.0)
-        self.isActive = getJSONValue(named: "isActive", from: values, defaultValue: false)
-        self.isValid = getJSONValue(named: "isValid", from: values, defaultValue: false)
+        self.productSellingPrice = getJSONValue(named: "productSellingPrice", from: values, defaultValue: 0.0)
+        self.productPurchasePrice = getJSONValue(named: "productPurchasePrice", from: values, defaultValue: 0.0)
+        self.productIsActive = getJSONValue(named: "productIsActive", from: values, defaultValue: false)
+        self.productIsValid = getJSONValue(named: "productIsValid", from: values, defaultValue: false)
 		self._brand.setJSONValues(values["brand"] as! [String : Any])
 		self.brandId = self._brand.brandId
 	}
@@ -85,17 +85,16 @@ class Product: PostgresSqlORM, JSONConvertible {
             "productCode": productCode,
             "productName": productName,
             "productUm": productUm,
-            "sellingPrice": sellingPrice.roundCurrency(),
-            "purchasePrice": purchasePrice.roundCurrency(),
-            "discount": _discount as Any,
-            "isActive": isActive,
-            "isValid": isValid,
-            //"brandId": brandId,
+            "productSellingPrice": productSellingPrice.roundCurrency(),
+            "productPurchasePrice": productPurchasePrice.roundCurrency(),
+            "productIsActive": productIsActive,
+            "productIsValid": productIsValid,
             "brand": _brand,
             "categories": _categories,
             "attributes": _attributes,
             "articles": _articles,
-            "updated": updated.formatDate()
+            "discount": _discount as Any,
+            "productUpdated": productUpdated.formatDate()
         ]
     }
 	
@@ -103,7 +102,7 @@ class Product: PostgresSqlORM, JSONConvertible {
 		let discount = Discount()
 		try discount.get(productId: self.productId)
 		if discount.discountId > 0 {
-			discount.makeDiscount(sellingPrice: self.sellingPrice)
+			discount.makeDiscount(sellingPrice: self.productSellingPrice)
 			self._discount = discount
 		}
 	}

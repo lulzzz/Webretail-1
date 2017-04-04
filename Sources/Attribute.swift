@@ -14,8 +14,8 @@ class Attribute: PostgresSqlORM, JSONConvertible {
     
     public var attributeId	: Int = 0
     public var attributeName : String = ""
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
+    public var attributeCreated : Int = Int.now()
+    public var attributeUpdated : Int = Int.now()
     
     open override func table() -> String { return "attributes" }
     open override func tableIndexes() -> [String] { return ["attributeName"] }
@@ -23,8 +23,8 @@ class Attribute: PostgresSqlORM, JSONConvertible {
     open override func to(_ this: StORMRow) {
         attributeId = this.data["attributeid"] as? Int ?? 0
         attributeName = this.data["attributename"] as? String ?? ""
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+        attributeCreated = this.data["attributecreated"] as? Int ?? 0
+        attributeUpdated = this.data["attributeupdated"] as? Int ?? 0
     }
     
     func rows() -> [Attribute] {

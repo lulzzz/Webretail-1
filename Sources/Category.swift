@@ -14,9 +14,9 @@ class Category: PostgresSqlORM, JSONConvertible {
     
     public var categoryId : Int = 0
     public var categoryName : String = ""
-    public var isPrimary : Bool = false
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
+    public var categoryIsPrimary : Bool = false
+    public var categoryCreated : Int = Int.now()
+    public var categoryUpdated : Int = Int.now()
     
     open override func table() -> String { return "categories" }
     open override func tableIndexes() -> [String] { return ["categoryName"] }
@@ -24,9 +24,9 @@ class Category: PostgresSqlORM, JSONConvertible {
     open override func to(_ this: StORMRow) {
         categoryId = this.data["categoryid"] as? Int ?? 0
         categoryName = this.data["categoryname"] as? String  ?? ""
-        isPrimary = this.data["isprimary"] as? Bool ?? false
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+        categoryIsPrimary = this.data["categoryisprimary"] as? Bool ?? false
+        categoryCreated = this.data["categorycreated"] as? Int ?? 0
+        categoryUpdated = this.data["categoryupdated"] as? Int ?? 0
     }
     
     func rows() -> [Category] {
@@ -42,7 +42,7 @@ class Category: PostgresSqlORM, JSONConvertible {
     public func setJSONValues(_ values:[String:Any]) {
         self.categoryId = getJSONValue(named: "categoryId", from: values, defaultValue: 0)
         self.categoryName = getJSONValue(named: "categoryName", from: values, defaultValue: "")
-        self.isPrimary = getJSONValue(named: "isPrimary", from: values, defaultValue: false)
+        self.categoryIsPrimary = getJSONValue(named: "categoryIsPrimary", from: values, defaultValue: false)
     }
 
     func jsonEncodedString() throws -> String {
@@ -53,7 +53,7 @@ class Category: PostgresSqlORM, JSONConvertible {
         return [
             "categoryId": categoryId,
             "categoryName": categoryName,
-            "isPrimary": isPrimary
+            "categoryIsPrimary": categoryIsPrimary
         ]
     }
 }

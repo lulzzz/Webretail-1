@@ -14,8 +14,8 @@ class Brand: PostgresSqlORM, JSONConvertible {
     
     public var brandId : Int = 0
     public var brandName : String = ""
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
+    public var brandCreated : Int = Int.now()
+    public var brandUpdated : Int = Int.now()
     
     open override func table() -> String { return "brands" }
     open override func tableIndexes() -> [String] { return ["brandName"] }
@@ -23,8 +23,8 @@ class Brand: PostgresSqlORM, JSONConvertible {
     open override func to(_ this: StORMRow) {
         brandId = this.data["brandid"] as? Int ?? 0
         brandName = this.data["brandname"] as? String ?? ""
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+        brandCreated = this.data["brandcreated"] as? Int ?? 0
+        brandUpdated = this.data["brandupdated"] as? Int ?? 0
     }
     
     func rows() -> [Brand] {

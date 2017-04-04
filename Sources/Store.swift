@@ -18,8 +18,8 @@ class Store: PostgresSqlORM, JSONConvertible {
     public var storeCity : String = ""
     public var storeCountry	: String = ""
     public var storeZip	: String = ""
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
+    public var storeCreated : Int = Int.now()
+    public var storeUpdated : Int = Int.now()
     
     open override func table() -> String { return "stores" }
     open override func tableIndexes() -> [String] { return ["storeName"] }
@@ -31,8 +31,8 @@ class Store: PostgresSqlORM, JSONConvertible {
         storeCity = this.data["storecity"] as? String ?? ""
         storeCountry = this.data["storecountry"] as? String ?? ""
         storeZip = this.data["storezip"] as? String ?? ""
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+        storeCreated = this.data["storecreated"] as? Int ?? 0
+        storeUpdated = this.data["storeupdated"] as? Int ?? 0
     }
     
     func rows() -> [Store] {

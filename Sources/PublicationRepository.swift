@@ -36,10 +36,11 @@ struct PublicationRepository : PublicationProtocol {
             throw StORMError.noRecordFound
         }
         
-        current.featured = item.featured
-        current.startAt = item.startAt
-        current.finishAt = item.finishAt
-        try current.save()
+        current.publicationFeatured = item.publicationFeatured
+        current.publicationStartAt = item.publicationStartAt
+        current.publicationFinishAt = item.publicationFinishAt
+		current.publicationUpdated = Int.now()
+		try current.save()
     }
     
     func delete(id: Int) throws {

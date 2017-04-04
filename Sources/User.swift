@@ -159,6 +159,8 @@ class User : PostgresSqlORM, Account, JSONConvertible {
 					try save()
 				}
 				else {
+					let random: Random = URandom()
+					uniqueID = random.secureToken
 					firstname = "Administrator"
 					username = "admin"
 					password = "admin"

@@ -14,22 +14,22 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
     
     public var movementArticleId : Int = 0
     public var movementId : Int = 0
-    public var barcode : String = ""
-    public var product : [String:Any] = [String:Any]()
-    public var quantity : Double = 0
-	public var price : Double = 0
-	public var updated : Int = Int.now()
+    public var movementArticleBarcode : String = ""
+    public var movementArticleProduct : [String:Any] = [String:Any]()
+    public var movementArticleQuantity : Double = 0
+	public var movementArticlePrice : Double = 0
+	public var movementArticleUpdated : Int = Int.now()
 	
     open override func table() -> String { return "movementarticles" }
       
     open override func to(_ this: StORMRow) {
         movementArticleId = this.data["movementarticleid"] as? Int ?? 0
         movementId = this.data["movementid"] as? Int ?? 0
-        barcode = this.data["barcode"] as? String ?? ""
-        product = this.data["product"] as? [String:Any] ?? [String:Any]()
-        quantity = Double(this.data["quantity"] as? Float ?? 0)
-		price = Double(this.data["price"] as? Float ?? 0)
-		updated = this.data["updated"] as? Int ?? 0
+        movementArticleBarcode = this.data["movementarticlebarcode"] as? String ?? ""
+        movementArticleProduct = this.data["movementarticleproduct"] as? [String:Any] ?? [String:Any]()
+        movementArticleQuantity = Double(this.data["movementarticlequantity"] as? Float ?? 0)
+		movementArticlePrice = Double(this.data["movementarticleprice"] as? Float ?? 0)
+		movementArticleUpdated = this.data["movementarticleupdated"] as? Int ?? 0
     }
     
     func rows() -> [MovementArticle] {
@@ -45,10 +45,10 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
     public func setJSONValues(_ values:[String:Any]) {
         self.movementArticleId = getJSONValue(named: "movementArticleId", from: values, defaultValue: 0)
         self.movementId = getJSONValue(named: "movementId", from: values, defaultValue: 0)
-        self.barcode = getJSONValue(named: "barcode", from: values, defaultValue: "")
-        self.product = getJSONValue(named: "product", from: values, defaultValue: [String:Any]())
-        self.quantity = getJSONValue(named: "quantity", from: values, defaultValue: 1.0)
-		self.price = getJSONValue(named: "price", from: values, defaultValue: 0.0)
+        self.movementArticleBarcode = getJSONValue(named: "movementArticleBarcode", from: values, defaultValue: "")
+        self.movementArticleProduct = getJSONValue(named: "movementArticleProduct", from: values, defaultValue: [String:Any]())
+        self.movementArticleQuantity = getJSONValue(named: "movementArticleQuantity", from: values, defaultValue: 1.0)
+		self.movementArticlePrice = getJSONValue(named: "movementArticlePrice", from: values, defaultValue: 0.0)
     }
 	
     func jsonEncodedString() throws -> String {
@@ -59,11 +59,11 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         return [
             "movementArticleId": movementArticleId,
             "movementId": movementId,
-            "barcode": barcode,
-            "product": product,
-            "quantity": quantity.roundCurrency(),
-            "price": price.roundCurrency(),
-            "amount": (quantity * price).roundCurrency()
+            "movementArticleBarcode": movementArticleBarcode,
+            "movementArticleProduct": movementArticleProduct,
+            "movementArticleQuantity": movementArticleQuantity.roundCurrency(),
+            "movementArticlePrice": movementArticlePrice.roundCurrency(),
+            "movementArticleAmount": (movementArticleQuantity * movementArticlePrice).roundCurrency()
         ]
     }
 }

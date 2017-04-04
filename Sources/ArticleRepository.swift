@@ -43,22 +43,22 @@ struct ArticleRepository : ArticleProtocol {
         let lastIndex = indexes.count - 1
         
         // Invalidate product and articles
-        product.isValid = false
-        product.updated = Int.now()
+        product.productIsValid = false
+        product.productUpdated = Int.now()
         try product.save()
 
         let article = Article()
         
         // TODO: fix barcode counter
         var barcode: Int = 1000000000001
-        try article.query(orderby: ["barcode DESC"], cursor: StORMCursor(limit: 1, offset: 0))
+        try article.query(orderby: ["articleBarcode DESC"], cursor: StORMCursor(limit: 1, offset: 0))
         let rows = try article.rows();
         if (rows.count > 0) {
-            barcode = Int(rows[0].barcode)!
+            barcode = Int(rows[0].articleBarcode)!
         }
         
         try article.update(
-            cols: ["isValid"],
+            cols: ["articleIsValid"],
             params: [false],
             idName: "productId",
             idValue: productId
@@ -90,7 +90,7 @@ struct ArticleRepository : ArticleProtocol {
             let current = try newArticle.sqlRows(sql, params: params)
             if current.count > 0 {
                 newArticle.to(current[0])
-                newArticle.isValid = true;
+                newArticle.articleIsValid = true;
                 try newArticle.save()
                 countUpdated += 1
             }
@@ -98,8 +98,8 @@ struct ArticleRepository : ArticleProtocol {
                 // Add article
                 newArticle.productId = productId
                 barcode += 1
-                newArticle.barcode = String(barcode)
-                newArticle.isValid = true;
+                newArticle.articleBarcode = String(barcode)
+                newArticle.articleIsValid = true;
                 try add(item: newArticle)
                 
                 // Add article attribute values
@@ -131,7 +131,7 @@ struct ArticleRepository : ArticleProtocol {
         // Clean articles
         var articles = try get(productId: productId, storeIds: "0")
         for (i, item) in articles.enumerated() {
-            if !item.isValid {
+            if !item.articleIsValid {
                 try item.delete()
                 articles.remove(at: i - countDeleted)
                 countDeleted += 1
@@ -148,8 +148,8 @@ struct ArticleRepository : ArticleProtocol {
         }
 
         // Commit update product
-        product.isValid = true
-        product.updated = Int.now()
+        product.productIsValid = true
+        product.productUpdated = Int.now()
         try product.save()
         
         var result = [String: Any]()
@@ -215,7 +215,7 @@ struct ArticleRepository : ArticleProtocol {
 			for article in group.value {
 				let articleItem = ArticleItem(
 					id: article.articleId,
-					value: article.barcode,
+					value: article.articleBarcode,
 					stock: article._quantity,
 					booked: article._booked,
 					data: 0.0
@@ -247,8 +247,8 @@ struct ArticleRepository : ArticleProtocol {
 	}
 	
 	func add(item: Article) throws {
-        item.created = Int.now()
-        item.updated = Int.now()
+        item.articleCreated = Int.now()
+        item.articleUpdated = Int.now()
         try item.save {
             id in item.articleId = id as! Int
         }
@@ -259,8 +259,8 @@ struct ArticleRepository : ArticleProtocol {
             throw StORMError.noRecordFound
         }
         
-        current.barcode = item.barcode
-        current.updated = Int.now()
+        current.articleBarcode = item.articleBarcode
+        current.articleUpdated = Int.now()
         try current.save()
     }
     

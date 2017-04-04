@@ -26,8 +26,8 @@ struct CustomerRepository : CustomerProtocol {
 	}
 	
 	func add(item: Customer) throws {
-		item.created = Int.now()
-		item.updated = Int.now()
+		item.customerCreated = Int.now()
+		item.customerUpdated = Int.now()
 		try item.save {
 			id in item.customerId = id as! Int
 		}
@@ -48,7 +48,7 @@ struct CustomerRepository : CustomerProtocol {
 		current.customerCountry = item.customerCountry
 		current.customerFiscalCode = item.customerFiscalCode
 		current.customerVatNumber = item.customerVatNumber
-		current.updated = Int.now()
+		current.customerUpdated = Int.now()
 		try current.save()
 	}
 	

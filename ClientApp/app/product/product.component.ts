@@ -330,12 +330,12 @@ export class ProductComponent implements OnInit, OnDestroy {
                     if (p.id > 0) {
                         let article = new Article();
                         article.articleId = p.id;
-                        article.barcode = p.value;
+                        article.articleBarcode = p.value;
                         this.productService
                             .updateArticle(p.id, article)
                             .subscribe(result => {
                                 count++;
-                                if (result.barcode === barcode) {
+                                if (result.articleBarcode === barcode) {
                                     this.isBusy = false;
                                     this.msgs.push({
                                         severity: 'success',

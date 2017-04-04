@@ -25,12 +25,12 @@
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000" styleClass="ui-column-filter"></p-slider>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.percentage > 0 ? data.percentage + '%' : data.price | currency: 'EUR' : true}}
+                {{data.discountPercentage > 0 ? data.discountPercentage + '%' : data.discountPrice | currency: 'EUR' : true}}
             </ng-template>
         </p-column>
         <p-column header="Start" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.startAt | date:'yyyy-MM-dd'}}
+                {{data.discountStartAt | date:'yyyy-MM-dd'}}
             </ng-template>            
             <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="dateStartValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
@@ -39,7 +39,7 @@
         </p-column>
         <p-column header="Finish" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.finishAt | date:'yyyy-MM-dd'}}
+                {{data.discountFinishAt | date:'yyyy-MM-dd'}}
             </ng-template>            
             <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="dateFinishValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
@@ -73,7 +73,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="date">Start</label></div>
                     <div class="ui-grid-col-8">
-                        <p-calendar formControlName="start" [(ngModel)]="selected.startAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        <p-calendar formControlName="start" [(ngModel)]="selected.discountStartAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['start'].valid&&dataform.controls['start'].dirty">
                             <i class="fa fa-close"></i> Start date is required
                         </div>
@@ -82,7 +82,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="date">Finish</label></div>
                     <div class="ui-grid-col-8">
-                        <p-calendar formControlName="finish" [(ngModel)]="selected.finishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        <p-calendar formControlName="finish" [(ngModel)]="selected.discountFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['finish'].valid&&dataform.controls['finish'].dirty">
                             <i class="fa fa-close"></i> Finish date is required
                         </div>
@@ -91,16 +91,16 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-12"><h4>TYPE OF DISCOUNT</h4></div>
                 </div>
-                <div class="ui-grid-row" *ngIf="selected.price<1">
+                <div class="ui-grid-row" *ngIf="selected.discountPrice<1">
                     <div class="ui-grid-col-4"><label for="percentage">percentage %</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText type="number" formControlName="percentage" [(ngModel)]="selected.percentage" min="0" max="100"/>
+                        <input pInputText type="number" formControlName="percentage" [(ngModel)]="selected.discountPercentage" min="0" max="100"/>
                     </div>
                 </div>
-                <div class="ui-grid-row" *ngIf="selected.percentage<1">
+                <div class="ui-grid-row" *ngIf="selected.discountPercentage<1">
                     <div class="ui-grid-col-4"><label for="price">fixed-price</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText type="number" formControlName="price" [(ngModel)]="selected.price" min="0"/>
+                        <input pInputText type="number" formControlName="price" [(ngModel)]="selected.discountPrice" min="0"/>
                     </div>
                 </div>
                 <div class="ui-grid-row">

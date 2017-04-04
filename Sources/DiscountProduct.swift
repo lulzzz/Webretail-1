@@ -16,7 +16,7 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 	public var discountProductId : Int = 0
 	public var discountId : Int = 0
 	public var productId : Int = 0
-	public var product : [String:Any] = [String:Any]()
+	public var discountProduct : [String:Any] = [String:Any]()
 	
 	open override func table() -> String { return "discountproducts" }
 	
@@ -24,7 +24,7 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 		discountProductId = this.data["discountproductid"] as? Int ?? 0
 		discountId = this.data["discountid"] as? Int ?? 0
 		productId = this.data["productid"] as? Int ?? 0
-		product = this.data["product"] as? [String:Any] ?? [String:Any]()
+		discountProduct = this.data["discountproduct"] as? [String:Any] ?? [String:Any]()
 	}
 	
 	func rows() -> [DiscountProduct] {
@@ -41,7 +41,7 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 		self.discountProductId = getJSONValue(named: "discountProductId", from: values, defaultValue: 0)
 		self.discountId = getJSONValue(named: "discountId", from: values, defaultValue: 0)
 		self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
-		self.product = getJSONValue(named: "product", from: values, defaultValue: [String:Any]())
+		self.discountProduct = getJSONValue(named: "discountProduct", from: values, defaultValue: [String:Any]())
 	}
 	
 	func jsonEncodedString() throws -> String {
@@ -52,8 +52,7 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 		return [
 			"discountProductId": discountProductId,
 			"discountId": discountId,
-			"productId": productId,
-			"product": product
+			"discountProduct": discountProduct
 		]
 	}
 }

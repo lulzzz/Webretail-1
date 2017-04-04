@@ -1,4 +1,4 @@
-﻿<img *ngIf="!item||!groups" src="/assets/loading.gif" class="loading">
+﻿<img *ngIf="!movement||!groups" src="/assets/loading.gif" class="loading">
 
 <div class="container-fluid">
 
@@ -8,41 +8,41 @@
     </div>
 
     <div *ngFor="let items of groups">          
-        <table *ngIf="item" class="table">    
+        <table *ngIf="movement" class="table">    
             <thead>
                 <tr> 
                     <td colspan="5"><img title="Close" src="/assets/ci.jpg" style="width: 100%;margin: 10px 0;"></td> 
                 </tr> 
                 <tr> 
                     <td><strong>Number</strong></td> 
-                    <td align="right">{{item.movementNumber}}</td>
+                    <td align="right">{{movement.movementNumber}}</td>
                     <td style="width: 20%">&nbsp;</td>
                     <td><strong>Store</strong></td> 
-                    <td align="right">{{item.store.storeName}}</td> 
+                    <td align="right">{{movement.movementStore.storeName}}</td> 
                 </tr> 
                 <tr> 
                     <td><strong>Date</strong></td> 
-                    <td align="right">{{item.movementDate | date: 'yyyy-MM-dd'}}</td>
+                    <td align="right">{{movement.movementDate | date: 'yyyy-MM-dd'}}</td>
                     <td style="width: 20%">&nbsp;</td>
                     <td><strong>Causal</strong></td> 
-                    <td align="right">{{item.causal.causalName}}</td> 
+                    <td align="right">{{movement.movementCausal.causalName}}</td> 
                 </tr> 
                 <tr> 
                     <td><strong>Status</strong></td> 
-                    <td align="right">{{item.movementStatus}}</td>
+                    <td align="right">{{movement.movementStatus}}</td>
                     <td style="width: 20%">&nbsp;</td>
                     <td><strong>Customer</strong></td> 
                     <td rowspan="3" align="right">
-                        {{item.customer.customerName}}
-                        <br/>{{item.customer.customerAddress}}
-                        <br/>{{item.customer.customerCity}}
+                        {{movement.movementCustomer.customerName}}
+                        <br/>{{movement.movementCustomer.customerAddress}}
+                        <br/>{{movement.movementCustomer.customerCity}}
                     </td> 
                 </tr> 
                 <tr> 
                     <td colspan="4"><strong>Note</strong></td> 
                 </tr> 
                 <tr> 
-                    <td colspan="4">{{item.movementNote}}</td>
+                    <td colspan="4">{{movement.movementNote}}</td>
                 </tr>
             </thead>
         </table>
@@ -74,11 +74,11 @@
             </tfoot>
             <tbody> 
                 <tr *ngFor="let item of items" style="height: 39px"> 
-                    <td><span>{{item.barcode}}</span></td> 
-                    <td><span>{{item.product | articleInfo:item.barcode}}</span></td> 
-                    <td align="center"><span>{{item.barcode ? item.quantity : ''}}</span></td> 
-                    <td align="right"><span>{{!item.barcode ? '' : item.price | currency: 'EUR' : true}}</span></td> 
-                    <td align="right"><span>{{!item.barcode ? '' : item.amount | currency: 'EUR' : true}}</span></td> 
+                    <td><span>{{item.movementArticleBarcode}}</span></td> 
+                    <td><span>{{item.movementArticleProduct | articleInfo:item.movementArticleBarcode}}</span></td> 
+                    <td align="center"><span>{{item.movementArticleBarcode ? item.movementArticleQuantity : ''}}</span></td> 
+                    <td align="right"><span>{{!item.movementArticleBarcode ? '' : item.movementArticlePrice | currency: 'EUR' : true}}</span></td> 
+                    <td align="right"><span>{{!item.movementArticleBarcode ? '' : item.movementArticleAmount | currency: 'EUR' : true}}</span></td> 
                 </tr> 
             </tbody>
         </table>

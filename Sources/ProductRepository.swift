@@ -55,7 +55,7 @@ struct ProductRepository : ProductProtocol {
 
 	func get(barcode: String) throws -> Product? {
         let article = Article()
-		try article.query(data: [("barcode", barcode)])
+		try article.query(data: [("articleBarcode", barcode)])
         if article.articleId == 0 {
             return nil
         }
@@ -67,8 +67,8 @@ struct ProductRepository : ProductProtocol {
     }
 
     func add(item: Product) throws {
-        item.created = Int.now()
-        item.updated = Int.now()
+        item.productCreated = Int.now()
+        item.productUpdated = Int.now()
         try item.save {
             id in item.productId = id as! Int
         }
@@ -79,16 +79,16 @@ struct ProductRepository : ProductProtocol {
         guard let current = try get(id: id) else {
             throw StORMError.noRecordFound
         }
-        
+		
+        item.productUpdated = Int.now()
         current.productCode = item.productCode
         current.productName = item.productName
         current.productUm = item.productUm
-        current.sellingPrice = item.sellingPrice
-        current.purchasePrice = item.purchasePrice
-        current.productCode = item.productCode
-        current.isActive = item.isActive
+        current.productSellingPrice = item.productSellingPrice
+        current.productPurchasePrice = item.productPurchasePrice
+        current.productIsActive = item.productIsActive
         current.brandId = item.brandId
-		current.updated = Int.now()
+		current.productUpdated = item.productUpdated
 		try current.save()
     }
     
@@ -154,8 +154,8 @@ struct ProductRepository : ProductProtocol {
     
     internal func setValid(productId: Int, valid: Bool) throws {
         let product = try get(id: productId)!
-        if product.isValid != valid {
-            product.isValid = valid
+        if product.productIsValid != valid {
+            product.productIsValid = valid
             try update(id: productId, item: product)
         }
     }

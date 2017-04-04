@@ -113,6 +113,7 @@ export class ProductsComponent implements OnInit {
         } else {
             this.productService.update(this.selected.productId, this.selected)
                 .subscribe(result => {
+                    this.products[this.selectedIndex] = result;
                     this.closeClick();
                 }, onerror => alert(onerror._body));
         }

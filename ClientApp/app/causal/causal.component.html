@@ -21,9 +21,9 @@
         [globalFilter]="gb" #dt>
         <p-column field="causalId" header="Id" [sortable]="true"></p-column>
         <p-column field="causalName" header="Name" [sortable]="true"></p-column>
-        <p-column field="quantity" header="Stock" [sortable]="true"></p-column>
-        <p-column field="booked" header="Booked" [sortable]="true"></p-column>
-        <p-column field="pos" header="Pos" [sortable]="true"></p-column>
+        <p-column field="causalQuantity" header="Stock" [sortable]="true"></p-column>
+        <p-column field="causalBooked" header="Booked" [sortable]="true"></p-column>
+        <p-column field="causalIsPos" header="Pos" [sortable]="true"></p-column>
     </p-dataTable>
 
     <p-panel *ngIf="displayPanel">
@@ -51,7 +51,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="quantity">Stock</label></div>
                     <div class="ui-grid-col-8">
-                        <p-selectButton formControlName="quantity" [options]="operators" [(ngModel)]="selected.quantity"></p-selectButton>
+                        <p-selectButton formControlName="quantity" [options]="operators" [(ngModel)]="selected.causalQuantity"></p-selectButton>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['quantity'].valid&&dataform.controls['quantity'].dirty">
                             <i class="fa fa-close"></i> Stock is required
                         </div>
@@ -60,7 +60,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="booked">Booked</label></div>
                     <div class="ui-grid-col-8">
-                        <p-selectButton formControlName="booked" [options]="operators" [(ngModel)]="selected.booked"></p-selectButton>
+                        <p-selectButton formControlName="booked" [options]="operators" [(ngModel)]="selected.causalBooked"></p-selectButton>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['booked'].valid&&dataform.controls['booked'].dirty">
                             <i class="fa fa-close"></i> Booked is required
                         </div>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="pos">Pos</label></div>
-                    <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="pos" [(ngModel)]="selected.pos"></p-inputSwitch></div>
+                    <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="pos" [(ngModel)]="selected.causalIsPos"></p-inputSwitch></div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">

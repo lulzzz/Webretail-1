@@ -13,22 +13,22 @@ import PerfectLib
 class AttributeValue: PostgresSqlORM, JSONConvertible {
     
     public var attributeValueId : Int = 0
+	public var attributeId : Int = 0
     public var attributeValueCode	: String = ""
     public var attributeValueName : String = ""
-    public var attributeId : Int = 0
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
+    public var attributeValueCreated : Int = Int.now()
+    public var attributeValueUpdated : Int = Int.now()
     
     open override func table() -> String { return "attributevalues" }
     open override func tableIndexes() -> [String] { return ["attributeValueCode", "attributeValueName"] }
 
     open override func to(_ this: StORMRow) {
         attributeValueId	= this.data["attributevalueid"] as? Int ?? 0
+		attributeId = this.data["attributeid"] as? Int ?? 0
         attributeValueCode = this.data["attributevaluecode"] as? String ?? ""
         attributeValueName = this.data["attributevaluename"] as? String ?? ""
-        attributeId = this.data["attributeid"] as? Int ?? 0
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+        attributeValueCreated = this.data["attributevaluecreated"] as? Int ?? 0
+        attributeValueUpdated = this.data["attributevalueupdated"] as? Int ?? 0
     }
     
     func rows() -> [AttributeValue] {
@@ -43,9 +43,9 @@ class AttributeValue: PostgresSqlORM, JSONConvertible {
     
     public func setJSONValues(_ values:[String:Any]) {
         self.attributeValueId = getJSONValue(named: "attributeValueId", from: values, defaultValue: 0)
+		self.attributeId = getJSONValue(named: "attributeId", from: values, defaultValue: 0)
         self.attributeValueCode = getJSONValue(named: "attributeValueCode", from: values, defaultValue: "")
         self.attributeValueName = getJSONValue(named: "attributeValueName", from: values, defaultValue: "")
-        self.attributeId = getJSONValue(named: "attributeId", from: values, defaultValue: 0)
     }
 
     func jsonEncodedString() throws -> String {
@@ -55,9 +55,9 @@ class AttributeValue: PostgresSqlORM, JSONConvertible {
     func getJSONValues() -> [String : Any] {
         return [
             "attributeValueId": attributeValueId,
+            "attributeId": attributeId,
             "attributeValueCode": attributeValueCode,
-            "attributeValueName": attributeValueName,
-            "attributeId": attributeId
+            "attributeValueName": attributeValueName
         ]
     }
 }

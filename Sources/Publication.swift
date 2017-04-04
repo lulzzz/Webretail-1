@@ -14,22 +14,22 @@ class Publication: PostgresSqlORM, JSONConvertible {
     
     public var publicationId : Int = 0
     public var productId : Int = 0
-    public var featured : Bool = false
-	public var isValid : Bool = false
-    public var startAt : Int = Int.now()
-    public var finishAt : Int = Int.now()
-	public var updated : Int = Int.now()
+    public var publicationFeatured : Bool = false
+	public var publicationIsValid : Bool = false
+    public var publicationStartAt : Int = Int.now()
+    public var publicationFinishAt : Int = Int.now()
+	public var publicationUpdated : Int = Int.now()
 	
     open override func table() -> String { return "publications" }
     
     open override func to(_ this: StORMRow) {
         publicationId = this.data["publicationid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0
-		featured = this.data["featured"] as? Bool ?? false
-		isValid = this.data["isvalid"] as? Bool ?? false
-		startAt = this.data["startat"] as? Int ?? 0
-        finishAt = this.data["finishat"] as? Int ?? 0
-		updated = this.data["updated"] as? Int ?? 0
+		publicationFeatured = this.data["publicationfeatured"] as? Bool ?? false
+		publicationIsValid = this.data["publicationisvalid"] as? Bool ?? false
+		publicationStartAt = this.data["publicationstartat"] as? Int ?? 0
+        publicationFinishAt = this.data["publicationfinishat"] as? Int ?? 0
+		publicationUpdated = this.data["publicationupdated"] as? Int ?? 0
     }
     
     func rows() -> [Publication] {
@@ -45,10 +45,10 @@ class Publication: PostgresSqlORM, JSONConvertible {
     public func setJSONValues(_ values:[String:Any]) {
         self.publicationId = getJSONValue(named: "publicationId", from: values, defaultValue: 0)
         self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.featured = getJSONValue(named: "featured", from: values, defaultValue: false)
-		self.isValid = getJSONValue(named: "isValid", from: values, defaultValue: false)
-		self.startAt = getJSONValue(named: "startAt", from: values, defaultValue: 0)
-        self.finishAt = getJSONValue(named: "finishAt", from: values, defaultValue: 0)
+        self.publicationFeatured = getJSONValue(named: "publicationFeatured", from: values, defaultValue: false)
+		self.publicationIsValid = getJSONValue(named: "publicationIsValid", from: values, defaultValue: false)
+		self.publicationStartAt = getJSONValue(named: "publicationStartAt", from: values, defaultValue: 0)
+        self.publicationFinishAt = getJSONValue(named: "publicationFinishAt", from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {
@@ -59,11 +59,11 @@ class Publication: PostgresSqlORM, JSONConvertible {
         return [
             "publicationId": publicationId,
             "productId": productId,
-            "featured": featured,
-            "isValid": isValid,
-            "startAt": startAt.formatDate(),
-            "finishAt": finishAt.formatDate(),
-            "updated": updated.formatDate()
+            "publicationFeatured": publicationFeatured,
+            "publicationIsValid": publicationIsValid,
+            "publicationStartAt": publicationStartAt.formatDate(),
+            "publicationFinishAt": publicationFinishAt.formatDate(),
+            "publicationUpdated": publicationUpdated.formatDate()
         ]
     }
 }

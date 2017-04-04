@@ -14,10 +14,10 @@ class Article: PostgresSqlORM, JSONConvertible {
     
     public var articleId	: Int = 0
     public var productId : Int = 0
-    public var barcode : String = ""
-    public var isValid : Bool = false
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
+    public var articleBarcode : String = ""
+    public var articleIsValid : Bool = false
+    public var articleCreated : Int = Int.now()
+    public var articleUpdated : Int = Int.now()
 
 	public var _storeIds : String = ""
     public var _quantity : Double = 0
@@ -26,15 +26,15 @@ class Article: PostgresSqlORM, JSONConvertible {
 
     
     open override func table() -> String { return "articles" }
-    open override func tableIndexes() -> [String] { return ["barcode"] }
+    open override func tableIndexes() -> [String] { return ["articleBarcode"] }
    
     open override func to(_ this: StORMRow) {
         articleId = this.data["articleid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0
-        barcode = this.data["barcode"] as? String ?? ""
-        isValid = this.data["isvalid"] as? Bool ?? false
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+        articleBarcode = this.data["articlebarcode"] as? String ?? ""
+        articleIsValid = this.data["articleisvalid"] as? Bool ?? false
+        articleCreated = this.data["articlecreated"] as? Int ?? 0
+        articleUpdated = this.data["articleupdated"] as? Int ?? 0
     }
     
     func rows() throws -> [Article] {
@@ -70,8 +70,8 @@ class Article: PostgresSqlORM, JSONConvertible {
 					stocks.append(stock)
 				}
 			}
-			row._quantity = stocks.reduce(0) { $0 + $1.quantity }
-			row._booked = stocks.reduce(0) { $0 + $1.booked }
+			row._quantity = stocks.reduce(0) { $0 + $1.stockQuantity }
+			row._booked = stocks.reduce(0) { $0 + $1.stockBooked }
 			
             rows.append(row)
         }
@@ -81,7 +81,7 @@ class Article: PostgresSqlORM, JSONConvertible {
     public func setJSONValues(_ values:[String:Any]) {
         self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
         self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.barcode = getJSONValue(named: "barcode", from: values, defaultValue: "")
+        self.articleBarcode = getJSONValue(named: "articleBarcode", from: values, defaultValue: "")
     }
     
     func jsonEncodedString() throws -> String {
@@ -92,7 +92,7 @@ class Article: PostgresSqlORM, JSONConvertible {
         return [
             "articleId": articleId,
             //"productId": productId,
-            "barcode": barcode,
+            "articleBarcode": articleBarcode,
             "quantity": _quantity,
             "booked": _booked,
             "attributeValues": _attributeValues

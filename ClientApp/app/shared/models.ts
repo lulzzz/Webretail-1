@@ -57,12 +57,12 @@ export class Brand {
 export class Category {
   public categoryId: number;
   public categoryName: string;
-  public isPrimary: boolean;
+  public categoryIsPrimary: boolean;
 
   constructor(categoryId: number, categoryName: string) {
     this.categoryId = categoryId;
     this.categoryName = categoryName;
-    this.isPrimary = false;
+    this.categoryIsPrimary = false;
   }
 }
 
@@ -71,44 +71,44 @@ export class Product {
   public productCode: string;
   public productName: string;
   public productUm: string;
-  public sellingPrice: number;
-  public purchasePrice: number;
+  public productSellingPrice: number;
+  public productPurchasePrice: number;
   public discount?: Discount;
   public brand: Brand;
   public categories: ProductCategory[];
   public attributes: ProductAttribute[];
   public articles: Article[];
-  public isActive: boolean;
-  public created: Date;
-  public updated: Date;
+  public productIsActive: boolean;
+  public productCreated: Date;
+  public productUpdated: Date;
 
   constructor() {
     this.productId = 0;
     this.productCode = '';
     this.productName = '';
     this.productUm = '';
-    this.sellingPrice = 0;
-    this.purchasePrice = 0;
+    this.productSellingPrice = 0;
+    this.productPurchasePrice = 0;
     this.brand = new Brand();
     this.categories = [];
     this.attributes = [];
     this.articles = [];
-    this.isActive = false;
-    this.created = new Date();
-    this.updated = new Date();
+    this.productIsActive = false;
+    this.productCreated = new Date();
+    this.productUpdated = new Date();
   }
 }
 
 export class Article {
   public articleId: number;
-  public barcode: string;
+  public articleBarcode: string;
   public quantity: number;
   public booked: number;
   public attributeValues: ArticleAttributeValue[];
 
   constructor() {
     this.articleId = 0;
-    this.barcode = '';
+    this.articleBarcode = '';
     this.quantity = 0;
     this.booked = 0;
     this.attributeValues = [];
@@ -132,16 +132,16 @@ export class AttributeValue {
 export class Causal {
   public causalId: number;
   public causalName: string;
-  public quantity: number;
-  public booked: number;
-  public pos: boolean;
+  public causalQuantity: number;
+  public causalBooked: number;
+  public causalIsPos: boolean;
 
   constructor() {
     this.causalId = 0;
     this.causalName = '';
-    this.quantity = 0;
-    this.booked = 0;
-    this.pos = false;
+    this.causalQuantity = 0;
+    this.causalBooked = 0;
+    this.causalIsPos = false;
   }
 }
 
@@ -173,23 +173,23 @@ export class Customer {
 
 export class Movement {
   public movementId: number;
-  public store: Store;
-  public causal: Causal;
-  public customer: Customer;
   public movementNumber: number;
   public movementDate: Date;
   public movementDesc: string;
+  public movementStore: Store;
+  public movementCausal: Causal;
+  public movementCustomer: Customer;
   public movementNote: string;
   public movementStatus: string;
   public movementUser: string;
   public movementDevice: string;
-  public updated: Date;
+  public movementUpdated: Date;
 
   constructor() {
     this.movementId = 0;
-    this.store = new Store();
-    this.causal = new Causal();
-    this.customer = new Customer();
+    this.movementStore = new Store();
+    this.movementCausal = new Causal();
+    this.movementCustomer = new Customer();
     this.movementNumber = 0;
     this.movementDate = new Date();
     this.movementDesc = '';
@@ -197,57 +197,57 @@ export class Movement {
     this.movementStatus = 'New';
     this.movementUser = '';
     this.movementDevice = '';
-    this.updated = new Date();
+    this.movementUpdated = new Date();
   }
 }
 
 export class MovementArticle {
   public movementArticleId: number;
   public movementId: number;
-  public barcode: string;
-  public product: Product;
-  public quantity: number;
-  public price: number;
-  public amount: number;
+  public movementArticleBarcode: string;
+  public movementArticleProduct: Product;
+  public movementArticleQuantity: number;
+  public movementArticlePrice: number;
+  public movementArticleAmount: number;
 
   constructor() {
     this.movementArticleId = 0;
     this.movementId = 0;
-    this.barcode = '';
-    this.product = new Product();
-    this.quantity = 1.0;
-    this.price = 0.0;
-    this.amount = 0.0;
+    this.movementArticleBarcode = '';
+    this.movementArticleProduct = new Product();
+    this.movementArticleQuantity = 1.0;
+    this.movementArticlePrice = 0.0;
+    this.movementArticleAmount = 0.0;
   }
 }
 
 export class Discount {
   public discountId: number;
   public discountName: string;
-  public percentage: number;
-  public price: number;
-  public startAt: Date;
-  public finishAt: Date;
-  public updated: Date;
+  public discountPercentage: number;
+  public discountPrice: number;
+  public discountStartAt: Date;
+  public discountFinishAt: Date;
+  public discountUpdated: Date;
 
   constructor() {
     this.discountId = 0;
     this.discountName = '';
-    this.percentage = 0;
-    this.price = 0;
-    this.updated = new Date();
+    this.discountPercentage = 0;
+    this.discountPrice = 0;
+    this.discountUpdated = new Date();
   }
 }
 
 export class DiscountProduct {
   public discountProductId: number;
   public discountId: number;
-  public product: Product;
+  public discountProduct: Product;
 
   constructor() {
     this.discountProductId = 0;
     this.discountId = 0;
-    this.product = new Product();
+    this.discountProduct = new Product();
   }
 }
 

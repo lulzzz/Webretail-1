@@ -71,8 +71,8 @@ export class MovementComponent implements OnInit, OnDestroy {
             return;
         }
         this.totalRecords = this.items.length;
-        this.totalItems = this.items.map(p => p.quantity).reduce((sum, current) => sum + current);
-        this.totalAmount = this.items.map(p => p.amount).reduce((sum, current) => sum + current);
+        this.totalItems = this.items.map(p => p.movementArticleQuantity).reduce((sum, current) => sum + current);
+        this.totalAmount = this.items.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
     }
 
     addBarcode() {
@@ -80,23 +80,23 @@ export class MovementComponent implements OnInit, OnDestroy {
             let array = data.split('#');
             let barcode = array[0];
             let quantity = array.length === 2 ? Number(array[1]) : 1.0;
-            let item = this.items.find(p => p.barcode === barcode);
-            if (item) {
-                item.quantity += quantity;
+            let newItem = this.items.find(p => p.movementArticleBarcode === barcode);
+            if (newItem) {
+                newItem.movementArticleQuantity += quantity;
                 this.movementService
-                    .updateItem(item.movementArticleId, item)
+                    .updateItem(newItem.movementArticleId, newItem)
                     .subscribe(result => {
                         this.barcodes.splice(this.barcodes.indexOf(data), 1);
                         this.updateTotals();
                     }, onerror => alert(onerror._body));
             } else {
-                item = new MovementArticle();
-                item.movementId = this.movementId;
-                item.barcode = barcode;
-                item.quantity = quantity;
-                let price = this.item.causal.quantity > 0 ? 'purchase' : this.item.causal.quantity < 0 ? 'selling' : 'none';
+                newItem = new MovementArticle();
+                newItem.movementId = this.movementId;
+                newItem.movementArticleBarcode = barcode;
+                newItem.movementArticleQuantity = quantity;
+                let price = this.item.movementCausal.causalQuantity > 0 ? 'purchase' : this.item.movementCausal.causalQuantity < 0 ? 'selling' : 'none';               
                 this.movementService
-                    .createItem(item, price)
+                    .createItem(newItem, price)
                     .subscribe(result => {
                         this.items.push(result);
                         this.barcodes.splice(this.barcodes.indexOf(data), 1);
@@ -116,8 +116,8 @@ export class MovementComponent implements OnInit, OnDestroy {
     }
 
     onUpdate(data: MovementArticle) {
-        if (data.quantity === 0) {
-            data.amount = 0;
+        if (data.movementArticleQuantity === 0) {
+            data.movementArticleAmount = 0;
             this.confirmationService.confirm({
                 message: 'Are you sure that you want to delete this item?',
                 accept: () => {
@@ -133,7 +133,7 @@ export class MovementComponent implements OnInit, OnDestroy {
             this.movementService
                 .updateItem(data.movementArticleId, data)
                 .subscribe(result => {
-                    data.amount = result.amount;
+                    data.movementArticleAmount = result.movementArticleAmount;
                     this.updateTotals();
                 }, onerror => alert(onerror._body));
         }

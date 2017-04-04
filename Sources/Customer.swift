@@ -22,8 +22,8 @@ class Customer: PostgresSqlORM, JSONConvertible {
 	public var customerCountry : String = ""
 	public var customerFiscalCode : String = ""
 	public var customerVatNumber : String = ""
-	public var created : Int = Int.now()
-	public var updated : Int = Int.now()
+	public var customerCreated : Int = Int.now()
+	public var customerUpdated : Int = Int.now()
 	
 	open override func table() -> String { return "customers" }
 	open override func tableIndexes() -> [String] { return ["customerName", "customerEmail"] }
@@ -39,8 +39,8 @@ class Customer: PostgresSqlORM, JSONConvertible {
 		customerCountry = this.data["customercountry"] as? String ?? ""
 		customerFiscalCode = this.data["customerfiscalcode"] as? String ?? ""
 		customerVatNumber = this.data["customervatnumber"] as? String ?? ""
-		created = this.data["created"] as? Int ?? 0
-		updated = this.data["updated"] as? Int ?? 0
+		customerCreated = this.data["customercreated"] as? Int ?? 0
+		customerUpdated = this.data["customerupdated"] as? Int ?? 0
 	}
 	
 	func rows() -> [Customer] {
@@ -82,8 +82,7 @@ class Customer: PostgresSqlORM, JSONConvertible {
 			"customerCountry": customerCountry,
 			"customerFiscalCode": customerFiscalCode,
 			"customerVatNumber": customerVatNumber,
-			"created": created.formatDate(),
-			"updated": updated.formatDate()
+			"customerUpdated": customerUpdated.formatDate()
 		]
 	}
 }

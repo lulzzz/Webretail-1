@@ -14,11 +14,11 @@ class Stock: PostgresSqlORM, JSONConvertible {
     
     public var stockId : Int = 0
     public var storeId : Int = 0
-    public var articleId	: Int = 0
-    public var quantity : Double = 0
-    public var booked : Double = 0
-    public var created : Int = Int.now()
-    public var updated : Int = Int.now()
+    public var articleId : Int = 0
+    public var stockQuantity : Double = 0
+    public var stockBooked : Double = 0
+    public var stockCreated : Int = Int.now()
+    public var stockUpdated : Int = Int.now()
     
     open override func table() -> String { return "stocks" }
     
@@ -26,10 +26,10 @@ class Stock: PostgresSqlORM, JSONConvertible {
         stockId = this.data["stockid"] as? Int ?? 0
         storeId = this.data["storeid"] as? Int ?? 0
         articleId = this.data["articleid"] as? Int ?? 0
-        quantity = Double(this.data["quantity"] as? Float ?? 0)
-        booked = Double(this.data["booked"] as? Float ?? 0)
-        created = this.data["created"] as? Int ?? 0
-        updated = this.data["updated"] as? Int ?? 0
+        stockQuantity = Double(this.data["stockquantity"] as? Float ?? 0)
+        stockBooked = Double(this.data["stockbooked"] as? Float ?? 0)
+        stockCreated = this.data["stockcreated"] as? Int ?? 0
+        stockUpdated = this.data["stockupdated"] as? Int ?? 0
     }
     
     func rows() -> [Stock] {
@@ -46,8 +46,8 @@ class Stock: PostgresSqlORM, JSONConvertible {
         self.stockId = getJSONValue(named: "stockId", from: values, defaultValue: 0)
         self.storeId = getJSONValue(named: "storeId", from: values, defaultValue: 0)
         self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
-        self.quantity = getJSONValue(named: "quantity", from: values, defaultValue: 0)
-        self.booked = getJSONValue(named: "booked", from: values, defaultValue: 0)
+        self.stockQuantity = getJSONValue(named: "stockQuantity", from: values, defaultValue: 0)
+        self.stockBooked = getJSONValue(named: "stockBooked", from: values, defaultValue: 0)
     }
     
     func jsonEncodedString() throws -> String {
@@ -59,8 +59,8 @@ class Stock: PostgresSqlORM, JSONConvertible {
             "stockId": stockId,
             "storeId": storeId,
             "articleId": articleId,
-            "quantity": quantity.roundCurrency(),
-            "booked": booked.roundCurrency()
+            "stockQuantity": stockQuantity.roundCurrency(),
+            "stockBooked": stockBooked.roundCurrency()
         ]
     }
 }

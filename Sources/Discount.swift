@@ -15,11 +15,11 @@ class Discount: PostgresSqlORM, JSONConvertible {
 	
 	public var discountId : Int = 0
 	public var discountName : String = ""
-	public var percentage : Int = 0
-	public var price : Double = 0
-	public var startAt : Int = Int.now()
-	public var finishAt : Int = Int.now()
-	public var updated : Int = Int.now()
+	public var discountPercentage : Int = 0
+	public var discountPrice : Double = 0
+	public var discountStartAt : Int = Int.now()
+	public var discountFinishAt : Int = Int.now()
+	public var discountUpdated : Int = Int.now()
 	
 	open override func table() -> String { return "discounts" }
 	open override func tableIndexes() -> [String] { return ["discountName"] }
@@ -27,11 +27,11 @@ class Discount: PostgresSqlORM, JSONConvertible {
 	open override func to(_ this: StORMRow) {
 		discountId = this.data["discountid"] as? Int ?? 0
 		discountName = this.data["discountname"] as? String ?? ""
-		percentage = this.data["percentage"] as? Int ?? 0
-		price = Double(this.data["price"] as? Float ?? 0)
-		startAt = this.data["startat"] as? Int ?? 0
-		finishAt = this.data["finishat"] as? Int ?? 0
-		updated = this.data["updated"] as? Int ?? 0
+		discountPercentage = this.data["discountpercentage"] as? Int ?? 0
+		discountPrice = Double(this.data["discountprice"] as? Float ?? 0)
+		discountStartAt = this.data["discountstartat"] as? Int ?? 0
+		discountFinishAt = this.data["discountfinishat"] as? Int ?? 0
+		discountUpdated = this.data["discountupdated"] as? Int ?? 0
 	}
 	
 	func rows() -> [Discount] {
@@ -47,10 +47,10 @@ class Discount: PostgresSqlORM, JSONConvertible {
 	public func setJSONValues(_ values:[String:Any]) {
 		self.discountId = getJSONValue(named: "discountId", from: values, defaultValue: 0)
 		self.discountName = getJSONValue(named: "discountName", from: values, defaultValue: "")
-		self.percentage = getJSONValue(named: "percentage", from: values, defaultValue: 0)
-		self.price = getJSONValue(named: "price", from: values, defaultValue: 0.0)
-		self.startAt = getJSONValue(named: "startAt", from: values, defaultValue: "").DateToInt()
-		self.finishAt = getJSONValue(named: "finishAt", from: values, defaultValue: "").DateToInt()
+		self.discountPercentage = getJSONValue(named: "discountPercentage", from: values, defaultValue: 0)
+		self.discountPrice = getJSONValue(named: "discountPrice", from: values, defaultValue: 0.0)
+		self.discountStartAt = getJSONValue(named: "discountStartAt", from: values, defaultValue: "").DateToInt()
+		self.discountFinishAt = getJSONValue(named: "discountFinishAt", from: values, defaultValue: "").DateToInt()
 	}
 	
 	func jsonEncodedString() throws -> String {
@@ -61,10 +61,11 @@ class Discount: PostgresSqlORM, JSONConvertible {
 		return [
 			"discountId": discountId,
 			"discountName": discountName,
-			"percentage": percentage,
-			"price": price.roundCurrency(),
-			"startAt": startAt.formatDate(),
-			"finishAt": finishAt.formatDate()
+			"discountPercentage": discountPercentage,
+			"discountPrice": discountPrice.roundCurrency(),
+			"discountStartAt": discountStartAt.formatDateShort(),
+			"discountFinishAt": discountFinishAt.formatDateShort(),
+			"discountUpdated": discountUpdated.formatDate()
 		]
 	}
 	
@@ -76,7 +77,7 @@ class Discount: PostgresSqlORM, JSONConvertible {
 		
 		try self.query(
 			columns: [],
-			whereclause: "discountproducts.productId = $1 AND discounts.startAt < $2 AND discounts.finishAt > $2",
+			whereclause: "discountproducts.productId = $1 AND discounts.discountStartAt < $2 AND discounts.discountFinishAt > $2",
 			params: [String(productId), String(Int.now())],
 			orderby: ["discounts.discountId DESC"],
 			cursor: StORMCursor(limit: 1, offset: 0),
@@ -99,10 +100,10 @@ class Discount: PostgresSqlORM, JSONConvertible {
 	}
 	
 	func makeDiscount(sellingPrice: Double) {
-		if self.percentage > 0 {
-			self.price = sellingPrice - (sellingPrice * Double(self.percentage) / 100)
+		if self.discountPercentage > 0 {
+			self.discountPrice = sellingPrice - (sellingPrice * Double(self.discountPercentage) / 100)
 		} else {
-			self.percentage = Int((sellingPrice - self.price) / sellingPrice * 100.0)
+			self.discountPercentage = Int((sellingPrice - self.discountPrice) / sellingPrice * 100.0)
 		}
 	}
 }

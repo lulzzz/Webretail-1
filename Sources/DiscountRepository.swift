@@ -32,7 +32,7 @@ struct DiscountRepository : DiscountProtocol {
 	}
 	
 	func add(item: Discount) throws {
-		item.updated = Int.now()
+		item.discountUpdated = Int.now()
 		try item.save {
 			id in item.discountId = id as! Int
 		}
@@ -44,12 +44,13 @@ struct DiscountRepository : DiscountProtocol {
 			throw StORMError.noRecordFound
 		}
 		
+		item.discountUpdated = Int.now()
 		current.discountName = item.discountName
-		current.percentage = item.percentage
-		current.price = item.price
-		current.startAt = item.startAt
-		current.finishAt = item.finishAt
-		item.updated = Int.now()
+		current.discountPercentage = item.discountPercentage
+		current.discountPrice = item.discountPrice
+		current.discountStartAt = item.discountStartAt
+		current.discountFinishAt = item.discountFinishAt
+		current.discountUpdated = item.discountUpdated
 		try current.save()
 	}
 	
@@ -61,7 +62,7 @@ struct DiscountRepository : DiscountProtocol {
 
 	func addProduct(item: DiscountProduct) throws {
 		let product = Product()
-		let productCode = item.getJSONValue(named: "productCode", from: item.product, defaultValue: "")
+		let productCode = item.getJSONValue(named: "productCode", from: item.discountProduct, defaultValue: "")
 		try product.query(whereclause: "productCode = $1 OR productId = $2",
 						  params: [productCode, item.productId],
 						  cursor: StORMCursor(limit: 1, offset: 0))
@@ -71,7 +72,7 @@ struct DiscountRepository : DiscountProtocol {
 		product.to(product.results.rows[0])
 		
 		item.productId = product.productId
-		item.product = try product.getJSONValues()
+		item.discountProduct = try product.getJSONValues()
 		
 		try item.query(data: [("discountId", item.discountId),("productId", item.productId)])
 		if item.discountProductId > 0 {

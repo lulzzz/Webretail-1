@@ -25,8 +25,8 @@ struct CategoryRepository : CategoryProtocol {
     }
     
     func add(item: Category) throws {
-        item.created = Int.now()
-        item.updated = Int.now()
+        item.categoryCreated = Int.now()
+        item.categoryUpdated = Int.now()
         try item.save {
             id in item.categoryId = id as! Int
         }
@@ -39,8 +39,8 @@ struct CategoryRepository : CategoryProtocol {
         }
         
         current.categoryName = item.categoryName
-        current.isPrimary = item.isPrimary
-        current.updated = Int.now()
+        current.categoryIsPrimary = item.categoryIsPrimary
+        current.categoryUpdated = Int.now()
         try current.save()
     }
     

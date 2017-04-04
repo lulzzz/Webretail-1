@@ -25,8 +25,8 @@ struct BrandRepository : BrandProtocol {
     }
     
     func add(item: Brand) throws {
-        item.created = Int.now()
-        item.updated = Int.now()
+        item.brandCreated = Int.now()
+        item.brandUpdated = Int.now()
         try item.save {
             id in item.brandId = id as! Int
         }
@@ -39,7 +39,7 @@ struct BrandRepository : BrandProtocol {
         }
         
         current.brandName = item.brandName
-        current.updated = Int.now()
+        current.brandUpdated = Int.now()
         try current.save()
     }
     
