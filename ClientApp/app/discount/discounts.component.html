@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="date">Start</label></div>
+                    <div class="ui-grid-col-4"><label for="start">Start</label></div>
                     <div class="ui-grid-col-8">
                         <p-calendar formControlName="start" [(ngModel)]="selected.discountStartAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['start'].valid&&dataform.controls['start'].dirty">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="date">Finish</label></div>
+                    <div class="ui-grid-col-4"><label for="finish">Finish</label></div>
                     <div class="ui-grid-col-8">
                         <p-calendar formControlName="finish" [(ngModel)]="selected.discountFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['finish'].valid&&dataform.controls['finish'].dirty">

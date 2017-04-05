@@ -1,0 +1,93 @@
+﻿<p-confirmDialog icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!items" src="/assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+
+    <h1>Invoices</h1>
+    
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" label="Edit" title="Edit item" (click)="editClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-edit"></button>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <button pButton type="button" label="Details" title="Open details" (click)="openClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-bars"></button>
+        </div>
+    </p-toolbar>
+
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items"
+        selectionMode="single" [(selection)]="selected"
+        [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
+        <p-column field="invoiceNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                {{data.invoiceDate | date:'yyyy-MM-dd'}}
+            </ng-template>            
+            <ng-template pTemplate="filter" let-col>
+                <i class="fa fa-close" (click)="dateValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-calendar [(ngModel)]="dateValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Start" styleClass="ui-column-filter"></p-calendar>
+            </ng-template>
+        </p-column>
+        <p-column field="invoiceCustomer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+            <ng-template pTemplate="filter" let-col>
+                <p-dropdown [options]="customersFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </ng-template>
+        </p-column>
+     </p-dataTable>
+    
+     <p-panel *ngIf="displayPanel">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:4px"><b>Invoice</b></span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
+            </div>
+        </p-header>
+        <form [formGroup]="dataform">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px" *ngIf="selected">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Id</label></div>
+                    <div class="ui-grid-col-8">{{selected.invoiceId}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="number">Number</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="number" [(ngModel)]="selected.invoiceNumber"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['number'].valid&&dataform.controls['number'].dirty">
+                            <i class="fa fa-close"></i> Number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="date">Date</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-calendar formControlName="date" [(ngModel)]="selected.invoiceDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['date'].valid&&dataform.controls['date'].dirty">
+                            <i class="fa fa-close"></i> Date is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="customer">Customer</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.invoiceCustomer" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="note">Note</label></div>
+                    <div class="ui-grid-col-8">
+                        <textarea pInputTextarea formControlName="note" [(ngModel)]="selected.invoiceNote" style="width: 100%"></textarea>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <button *ngIf="selected.invoiceId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+                    </div>
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4">
+                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </p-panel>
+</div>

@@ -25,6 +25,7 @@ struct MovementStatus: JSONConvertible {
 class Movement: PostgresSqlORM, JSONConvertible {    
 	
 	public var movementId : Int = 0
+	public var invoiceId : Int = 0
 	public var movementNumber : Int = 0
 	public var movementDate : Int = Int.now()
 	public var movementDesc : String = ""

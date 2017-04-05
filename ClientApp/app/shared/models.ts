@@ -172,6 +172,7 @@ export class Customer {
 
 export class Movement {
   public movementId: number;
+  public invoiceId: number;
   public movementNumber: number;
   public movementDate: Date;
   public movementDesc: string;
@@ -215,6 +216,15 @@ export class MovementArticle {
     this.movementArticlePrice = 0.0;
     this.movementArticleAmount = 0.0;
   }
+}
+
+export class Invoice {
+  public invoiceId: number;
+  public invoiceNumber: number;
+  public invoiceDate: Date;
+  public invoiceCustomer: Customer;
+  public invoiceNote: string;
+  public invoiceUpdate: Date;
 }
 
 export class Discount {
