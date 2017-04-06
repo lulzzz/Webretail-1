@@ -9,11 +9,11 @@
     <p-toolbar *ngIf="item">
         <div class="ui-toolbar-group-left">
             <span><b>number</b>: {{item.invoiceNumber}}</span>
-            <br/><span><b>start</b>: {{item.invoiceDate | date: 'yyyy-MM-dd'}}</span>
+            <br/><span><b>date</b>: {{item.invoiceDate | date: 'yyyy-MM-dd'}}</span>
         </div>
         <div class="ui-toolbar-group-right" style="text-align: right">
             <br>
-            <span><b>customer</b>: {{item.invoiceCustomer.name}}</span>
+            <span><b>customer</b>: {{item.invoiceCustomer.customerName}}</span>
         </div>
     </p-toolbar>
 
@@ -21,7 +21,7 @@
         selectionMode="multiple" [(selection)]="itemsSelected" [responsive]="true" #dt>
         <p-header>
             <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Movement picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
-            <p-chips [(ngModel)]="codes" placeholder="number reading" (onAdd)="addCodes()"></p-chips>
+            <p-chips [(ngModel)]="codes" placeholder="movementId reading" (onAdd)="addCodes()"></p-chips>
         </p-header>
         <p-footer>
             <button pButton type="button" label="Remove" (click)="removeClick()" [disabled]="itemsSelected.length===0" style="float: left" class="ui-button-secondary" icon="fa-trash"></button>
@@ -29,18 +29,18 @@
             <p>&nbsp;</p>
         </p-footer>
         <p-column [style]="{'width':'50px'}" selectionMode="multiple"></p-column>
-        <p-column field="invoiceProduct.productCode" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
-        <p-column field="invoiceProduct.productName" header="Name" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="movementProduct.productCode" header="Code" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+        <p-column field="movementProduct.productName" header="Name" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
         <p-column header="Discount ({{sliderValue||'No Filter'}})"[sortable]="true" [filter]="true">
             <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="sliderValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000" styleClass="ui-column-filter"></p-slider>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{(data.invoiceProduct.discount ? data.invoiceProduct.discount.discountPrice : data.invoiceProduct.productSellingPrice) | currency: 'EUR' : true}}
+                {{(data.movementProduct.discount ? data.movementProduct.discount.discountPrice : data.movementProduct.productSellingPrice) | currency: 'EUR' : true}}
             </ng-template>
         </p-column>
     </p-dataTable>
 
-    <product-picker (onPicked)="pickerClick($event)"></product-picker>
+    <movement-picker (onPicked)="pickerClick($event)"></movement-picker>
 </div>

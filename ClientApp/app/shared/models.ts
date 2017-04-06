@@ -225,6 +225,14 @@ export class Invoice {
   public invoiceCustomer: Customer;
   public invoiceNote: string;
   public invoiceUpdate: Date;
+
+  constructor() {
+    this.invoiceId = 0;
+    this.invoiceNumber = 0;
+    this.invoiceDate = new Date();
+    this.invoiceNote = '';
+    this.invoiceUpdate = new Date();
+  }
 }
 
 export class Discount {

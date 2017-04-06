@@ -12,7 +12,9 @@ protocol MovementProtocol {
 
 	func getAll() throws -> [Movement]
     
-    func get(id: Int) throws -> Movement?
+	func get(customerId: Int) throws -> [Movement]
+
+	func get(id: Int) throws -> Movement?
     
     func add(item: Movement) throws
     

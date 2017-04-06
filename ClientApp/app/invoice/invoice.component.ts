@@ -6,7 +6,7 @@ import { AuthenticationService } from './../services/authentication.service';
 import { InvoiceService } from './../services/invoice.service';
 import { Invoice, MovementArticle } from './../shared/models';
 import { Helpers } from './../shared/helpers';
-import { ProductPickerComponent } from './../shared/product-picker.component';
+import { MovementPickerComponent } from './../shared/movement-picker.component';
 
 @Component({
     selector: 'invoice-component',
@@ -14,9 +14,9 @@ import { ProductPickerComponent } from './../shared/product-picker.component';
 })
 
 export class InvoiceComponent implements OnInit, OnDestroy {
-    @ViewChild(ProductPickerComponent) inputComponent: ProductPickerComponent;
+    @ViewChild(MovementPickerComponent) inputComponent: MovementPickerComponent;
     private sub: any;
-    discountId: number;
+    invoiceId: number;
     totalRecords = 0;
     codes: string[];
     item: Invoice;
@@ -39,17 +39,17 @@ export class InvoiceComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            this.discountId = params['id'];
-            this.invoiceService.getById(this.discountId)
+            this.invoiceId = params['id'];
+            this.invoiceService.getById(this.invoiceId)
                 .subscribe(result => {
                     this.item = result;
-                    // this.invoiceService.getItemsById(this.discountId)
-                    //     .subscribe(result => {
-                    //         this.items = result;
-                    //         this.totalRecords = this.items.length;
-                    //     }, onerror => alert(onerror._body));
                 }, onerror => alert(onerror._body)
             );
+            this.invoiceService.getMovementsById(this.invoiceId)
+                .subscribe(result => {
+                    this.items = result;
+                    this.totalRecords = this.items.length;
+                }, onerror => alert(onerror._body));
         });
     }
 
@@ -65,7 +65,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     addCodes() {
         this.codes.forEach(code => {
             this.invoiceService
-                .addMovement(0, 1)
+                .addMovement(0, this.invoiceId)
                 .subscribe(result => {
                     this.items.push(result);
                     this.codes.splice(this.codes.indexOf(code), 1);

@@ -57,10 +57,10 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 		return [
 			"invoiceId": invoiceId,
 			"invoiceNumber": invoiceNumber,
-			"invoiceDate": invoiceDate,
+			"invoiceDate": invoiceDate.formatDateShort(),
 			"invoiceCustomer": invoiceCustomer,
 			"invoiceNote": invoiceNote,
-			"invoiceUpdated": invoiceUpdated.formatDateShort()
+			"invoiceUpdated": invoiceUpdated.formatDate()
 		]
 	}
 	

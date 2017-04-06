@@ -24,6 +24,7 @@ class InvoiceController {
 		routes.add(method: .post, uri: "/api/invoice", handler: invoiceHandlerPOST)
 		routes.add(method: .put, uri: "/api/invoice/{id}", handler: invoiceHandlerPUT)
 		routes.add(method: .delete, uri: "/api/invoice/{id}", handler: invoiceHandlerDELETE)
+		routes.add(method: .get, uri: "/api/invoicemovement/{id}", handler: invoiceMovementHandlerGET)
 		routes.add(method: .post, uri: "/api/invoicemovement/{id}/{invoiceId}", handler: invoiceMovementHandlerPOST)
 		routes.add(method: .delete, uri: "/api/invoicemovement/{id}", handler: invoiceMovementHandlerDELETE)
 		
@@ -93,6 +94,19 @@ class InvoiceController {
 		do {
 			try self.repository.delete(id: id.toInt()!)
 			response.completed(status: .noContent)
+		} catch {
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+		}
+	}
+	
+	func invoiceMovementHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		let id = request.urlVariables["id"]!
+		do {
+			let items = try self.repository.getMovements(invoiceId: id.toInt()!)
+			try response.setBody(json: items)
+			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
 		}

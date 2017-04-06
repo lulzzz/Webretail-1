@@ -2,7 +2,7 @@
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Invoice } from '../shared/models';
+import { Invoice, MovementArticle } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -34,6 +34,11 @@ export class InvoiceService {
     delete(id: number) : Observable<any> {
         return this.http.delete('/api/invoice/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());
+    }
+
+    getMovementsById(id: number) : Observable<MovementArticle[]> {
+        return this.http.get('/api/invoicemovement/' + id, { headers: Helpers.getHeaders() })
+            .map(result => <MovementArticle[]>result.json());
     }
 
     addMovement(id: number, invoiceId: number) : Observable<any> {

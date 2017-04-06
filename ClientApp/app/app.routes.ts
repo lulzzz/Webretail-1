@@ -19,6 +19,8 @@ import { DocumentComponent } from './movement/document.component';
 import { BarcodeComponent } from './movement/barcode.component';
 import { DiscountsComponent } from './discount/discounts.component';
 import { DiscountComponent } from './discount/discount.component';
+import { InvoicesComponent } from './invoice/invoices.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -41,7 +43,9 @@ export const routes: Routes = [
     { path: 'movement/document/:id', component: DocumentComponent },
     { path: 'movement/barcode/:id', component: BarcodeComponent },
     { path: 'discount', component: DiscountsComponent },
-    { path: 'discount/:id', component: DiscountComponent }
+    { path: 'discount/:id', component: DiscountComponent },
+    { path: 'invoice', component: InvoicesComponent },
+    { path: 'invoice/:id', component: InvoiceComponent }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);

@@ -24,6 +24,7 @@ class MovementController {
 		routes.add(method: .get, uri: "/api/movementstatus", handler: movementStatusHandlerGET)
         routes.add(method: .get, uri: "/api/movement", handler: movementsHandlerGET)
 		routes.add(method: .get, uri: "/api/movement/{id}", handler: movementHandlerGET)
+		routes.add(method: .get, uri: "/api/movementcustomer/{id}", handler: movementCustomerHandlerGET)
         routes.add(method: .post, uri: "/api/movement", handler: movementHandlerPOST)
 		routes.add(method: .post, uri: "/api/movement/{id}", handler: movementCloneHandlerPOST)
         routes.add(method: .put, uri: "/api/movement/{id}", handler: movementHandlerPUT)
@@ -69,7 +70,20 @@ class MovementController {
         }
     }
     
-    func movementHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+	func movementCustomerHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		do {
+			let id = request.urlVariables["id"]!.toInt()
+			let items = try self.repository.get(customerId: id!)
+			try response.setBody(json: items)
+			response.completed(status: .ok)
+		} catch {
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+		}
+	}
+	
+	func movementHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {

@@ -40,7 +40,16 @@ struct MovementRepository : MovementProtocol {
 		return item
     }
 		
-    func add(item: Movement) throws {
+	func get(customerId: Int) throws -> [Movement] {
+		let items = Movement()
+		try items.query(whereclause: "movementCustomer.customerId = $1 AND invoiceId = 0",
+		                params: [customerId],
+		                orderby: ["movementId"])
+		
+		return try items.rows()
+	}
+	
+	func add(item: Movement) throws {
 		if item.movementNumber == 0 {
 			try item.newNumber()
 		}

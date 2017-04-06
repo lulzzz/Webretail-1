@@ -1,6 +1,6 @@
 ﻿import { Component, Input, EventEmitter, ViewChild } from '@angular/core';
 import { DataTable, SelectItem, MenuItem } from 'primeng/primeng';
-import { Product, ProductCategory, ProductAttributeValue, ArticleForm, ArticleItem } from './models';
+import { Product, ProductCategory } from './models';
 import { Helpers } from './helpers';
 import { ProductService } from './../services/product.service';
 

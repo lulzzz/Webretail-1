@@ -4,6 +4,7 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
 import { AuthenticationService } from './../services/authentication.service';
 import { InvoiceService } from './../services/invoice.service';
+import { CustomerService } from './../services/customer.service';
 import { Invoice } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
@@ -16,6 +17,8 @@ export class InvoicesComponent implements OnInit {
     totalRecords = 0;
     items: Invoice[];
 	selected: Invoice;
+    customers: SelectItem[];
+    customersFiltered: SelectItem[];
     displayPanel: boolean;
 	dataform: FormGroup;
     dateValue: Date;
@@ -23,6 +26,7 @@ export class InvoicesComponent implements OnInit {
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
                 private invoiceService: InvoiceService,
+                private customerService: CustomerService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) { }
 
@@ -41,11 +45,24 @@ export class InvoicesComponent implements OnInit {
             .subscribe(result => {
                 this.items = result;
                 this.totalRecords = this.items.length;
+                this.customersFiltered = [];
+                this.customersFiltered.push({label: 'All', value: null});
+                let filterCustomer = Helpers.distinct(result.map((item: Invoice) => Helpers.newSelectItem(item.invoiceCustomer.customerName)));
+                this.customersFiltered = this.customersFiltered.concat(filterCustomer);
              }
+        );
+
+        this.customerService
+            .getAll()
+            .subscribe(result => {
+                this.customers = [];
+                this.customers.push({label: '', value: null});
+                this.customers = this.customers.concat(result.map(p => Helpers.newSelectItem(p, p.customerName)));
+            }
         );
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.invoiceId == 0; }
+    get isNew() : boolean { return this.selected.invoiceId == 0; }
 
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 

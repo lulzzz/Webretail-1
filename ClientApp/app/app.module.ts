@@ -22,6 +22,7 @@ import { NavigationComponent } from './shared/navigation.component';
 import { FooterComponent } from './shared/footer.component';
 import { ArticlePickerComponent } from './shared/article-picker.component';
 import { ProductPickerComponent } from './shared/product-picker.component';
+import { MovementPickerComponent } from './shared/movement-picker.component';
 import { HomeComponent } from './home/home.component';
 
 import { LoginComponent } from './login/login.component';
@@ -43,6 +44,8 @@ import { DocumentComponent } from './movement/document.component';
 import { BarcodeComponent } from './movement/barcode.component';
 import { DiscountsComponent } from './discount/discounts.component';
 import { DiscountComponent } from './discount/discount.component';
+import { InvoicesComponent } from './invoice/invoices.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 import { AuthenticationService } from './services/authentication.service';
 import { AccountService } from './services/account.service';
@@ -55,6 +58,7 @@ import { StoreService } from './services/store.service';
 import { ProductService } from './services/product.service';
 import { MovementService } from './services/movement.service';
 import { DiscountService } from './services/discount.service';
+import { InvoiceService } from './services/invoice.service';
 
 import { CategoryFilterPipe } from './pipes/category-filter.pipe';
 import { PriceFilterPipe } from './pipes/price-filter.pipe';
@@ -88,6 +92,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         FooterComponent,
         ArticlePickerComponent,
         ProductPickerComponent,
+        MovementPickerComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
@@ -107,7 +112,9 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         DocumentComponent,
         BarcodeComponent,
         DiscountsComponent,
-        DiscountComponent
+        DiscountComponent,
+        InvoicesComponent,
+        InvoiceComponent
     ],
     providers: [
         Configuration,
@@ -122,11 +129,13 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ProductService,
         MovementService,
         DiscountService,
+        InvoiceService,
         ConfirmationService
     ],
     exports: [
         ArticlePickerComponent,
         ProductPickerComponent,
+        MovementPickerComponent,
         CategoryFilterPipe,
         PriceFilterPipe,
         ArticleInfoPipe,

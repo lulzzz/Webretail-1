@@ -25,7 +25,7 @@
             </ng-template>            
             <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="dateValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
-                <p-calendar [(ngModel)]="dateValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Start" styleClass="ui-column-filter"></p-calendar>
+                <p-calendar [(ngModel)]="dateValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Date" styleClass="ui-column-filter"></p-calendar>
             </ng-template>
         </p-column>
         <p-column field="invoiceCustomer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">

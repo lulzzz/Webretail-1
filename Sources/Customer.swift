@@ -32,7 +32,7 @@ class Customer: PostgresSqlORM, JSONConvertible {
 		customerId = this.data["customerid"] as? Int ?? 0
 		customerName = this.data["customername"] as? String ?? ""
 		customerEmail = this.data["customeremail"] as? String ?? ""
-		customerPhone = this.data["customerPhone"] as? String ?? ""
+		customerPhone = this.data["customerphone"] as? String ?? ""
 		customerAddress = this.data["customeraddress"] as? String ?? ""
 		customerCity = this.data["customercity"] as? String ?? ""
 		customerZip = this.data["customerzip"] as? String ?? ""
