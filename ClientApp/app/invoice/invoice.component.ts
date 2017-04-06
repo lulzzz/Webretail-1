@@ -1,10 +1,10 @@
-﻿import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { AuthenticationService } from './../services/authentication.service';
 import { InvoiceService } from './../services/invoice.service';
-import { Invoice, MovementArticle } from './../shared/models';
+import { Invoice, Movement } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 import { MovementPickerComponent } from './../shared/movement-picker.component';
 
@@ -20,10 +20,14 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     totalRecords = 0;
     codes: string[];
     item: Invoice;
-    items: MovementArticle[];
-    itemsSelected: MovementArticle[];
-    articleValue: string;
-    sliderValue: number;
+    items: Movement[];
+    itemsSelected: Movement[];
+    stores: SelectItem[];
+    storesFiltered: SelectItem[];
+    causals: SelectItem[];
+    causalsFiltered: SelectItem[];
+    dateStartValue: Date;
+    dateFinishValue: Date;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
@@ -49,6 +53,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     this.items = result;
                     this.totalRecords = this.items.length;
+                    this.buildFilter(this.items);
                 }, onerror => alert(onerror._body));
         });
     }
@@ -62,25 +67,34 @@ export class InvoiceComponent implements OnInit, OnDestroy {
         this.location.back();
     }
 
-    addCodes() {
-        this.codes.forEach(code => {
-            this.invoiceService
-                .addMovement(0, this.invoiceId)
-                .subscribe(result => {
-                    this.items.push(result);
-                    this.codes.splice(this.codes.indexOf(code), 1);
-                    this.totalRecords = this.items.length;
-                }, onerror => alert(onerror._body));
-        });
+    buildFilter(items: Movement[]) {
+        this.storesFiltered = [];
+        this.storesFiltered.push({label: 'All', value: null});
+        let filterStores = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStore.storeName)));
+        this.storesFiltered = this.storesFiltered.concat(filterStores);
+
+        this.causalsFiltered = [];
+        this.causalsFiltered.push({label: 'All', value: null});
+        let filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCausal.causalName)));
+        this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
     }
 
     showPickerClick() {
-        this.inputComponent.loadData();
+        this.inputComponent.loadData(this.item.invoiceCustomer.customerId);
     }
 
     pickerClick(event: any) {
-        this.codes = this.codes.concat(event);
-        this.addCodes();
+        event.forEach(id => {
+            this.invoiceService
+                .addMovement(this.invoiceId, Number(id))
+                .subscribe(result => {
+                    this.invoiceService.getMovementsById(this.invoiceId)
+                                       .subscribe(result => { 
+                                           this.items = result;
+                                           this.totalRecords = this.items.length; 
+                                       });
+                }, onerror => alert(onerror._body));
+        });
     }
 
     removeClick() {

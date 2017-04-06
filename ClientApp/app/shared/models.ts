@@ -301,7 +301,7 @@ export interface ArticleAttributeValue {
   //attributeValue: AttributeValue;
 }
 
-export interface MovementStatus {
+export interface MovementData {
 	value: string;
 }
 

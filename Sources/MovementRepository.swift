@@ -42,7 +42,7 @@ struct MovementRepository : MovementProtocol {
 		
 	func get(customerId: Int) throws -> [Movement] {
 		let items = Movement()
-		try items.query(whereclause: "movementCustomer.customerId = $1 AND invoiceId = 0",
+		try items.query(whereclause: "movementCustomer ->> 'customerId' = $1 AND invoiceId = 0 AND movementStatus = 'Completed'",
 		                params: [customerId],
 		                orderby: ["movementId"])
 		

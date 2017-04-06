@@ -13,7 +13,6 @@ import { MovementService } from './../services/movement.service';
 export class MovementPickerComponent {
     @ViewChild('dt') datatable: DataTable;
     totalRecords = 0;
-    customerId = 0;
     movements: Movement[];
 	selected: Movement[];
     stores: SelectItem[];
@@ -29,11 +28,11 @@ export class MovementPickerComponent {
         this.isOpen = false;
     }
 
-    public loadData() {
+    public loadData(customerId: number) {
         this.isOpen = true;
         if (!this.movements) {
             this.movementService
-                .getByCustomerId(this.customerId)
+                .getByCustomerId(customerId)
                 .subscribe(result => {
                     this.movements = result;
                     this.totalRecords = this.movements.length;

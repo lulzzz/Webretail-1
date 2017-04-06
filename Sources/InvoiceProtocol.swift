@@ -12,7 +12,7 @@ protocol InvoiceProtocol {
 	
 	func get(id: Int) throws -> Invoice?
 	
-	func getMovements(invoiceId: Int) throws -> [MovementArticle]
+	func getMovements(invoiceId: Int) throws -> [Movement]
 
 	func add(item: Invoice) throws
 	
@@ -20,7 +20,7 @@ protocol InvoiceProtocol {
 	
 	func delete(id: Int) throws
 	
-	func addMovement(id: Int, invoiceId: Int) throws
+	func addMovement(invoiceId: Int, id: Int) throws
 	
 	func removeMovement(id: Int) throws
 }

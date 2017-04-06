@@ -24,21 +24,11 @@ struct InvoiceRepository : InvoiceProtocol {
 		return item
 	}
 	
-	func getMovements(invoiceId: Int) throws -> [MovementArticle] {
-		let items = MovementArticle()
-
-		var join = StORMDataSourceJoin()
-		join.table = "movements"
-		join.direction = StORMJoinType.RIGHT
-		join.onCondition = "movementarticles.movementId = movements.movementId"
-
-		try items.query(
-			whereclause: "movements.invoiceId = $1",
-			params: [String(invoiceId)],
-			joins: [join]
-		)
+	func getMovements(invoiceId: Int) throws -> [Movement] {
+		let items = Movement()
+		try items.query(data: [("invoiceId", invoiceId)])
 		
-		return items.rows()
+		return try items.rows()
 	}
 	
 	func add(item: Invoice) throws {
@@ -69,7 +59,7 @@ struct InvoiceRepository : InvoiceProtocol {
 		try item.delete()
 	}
 	
-	func addMovement(id: Int, invoiceId: Int) throws {
+	func addMovement(invoiceId: Int, id: Int) throws {
 		let item = Movement()
 		try item.query(id: id)
 		item.invoiceId = invoiceId
