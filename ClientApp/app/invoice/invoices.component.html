@@ -15,7 +15,7 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items"
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue"
         selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="invoiceNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
@@ -24,8 +24,9 @@
                 {{data.invoiceDate | date:'yyyy-MM-dd'}}
             </ng-template>            
             <ng-template pTemplate="filter" let-col>
-                <i class="fa fa-close" (click)="dateValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
-                <p-calendar [(ngModel)]="dateValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Date" styleClass="ui-column-filter"></p-calendar>
+                <i class="fa fa-close" (click)="dateStartValue=null;dateFinishValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-calendar [(ngModel)]="dateStartValue" [inputStyle]="{'width':'50%','float':'left'}" dateFormat="yy-mm-dd" placeholder="Start" styleClass="ui-column-filter"></p-calendar>
+                <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'50%','float':'right'}" dateFormat="yy-mm-dd" placeholder="Finish" styleClass="ui-column-filter"></p-calendar>
             </ng-template>
         </p-column>
         <p-column field="invoiceCustomer.customerName" header="Customer" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">

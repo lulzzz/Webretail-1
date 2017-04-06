@@ -26,7 +26,6 @@ export class DateFilterPipe implements PipeTransform {
   }
 
   getDate(item: any) : Date {
-    //alert(new Date());
-    return new Date(item.movementDate.substring(0,10));
+    return new Date(item.movementDate ? item.movementDate.substring(0,10) : item.invoiceDate.substring(0,10));
   }
 }

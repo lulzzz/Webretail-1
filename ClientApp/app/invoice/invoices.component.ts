@@ -21,7 +21,8 @@ export class InvoicesComponent implements OnInit {
     customersFiltered: SelectItem[];
     displayPanel: boolean;
 	dataform: FormGroup;
-    dateValue: Date;
+    dateStartValue: Date;
+    dateFinishValue: Date;
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
