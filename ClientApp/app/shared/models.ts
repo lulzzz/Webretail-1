@@ -225,6 +225,7 @@ export class Invoice {
   public invoiceNumber: number;
   public invoiceDate: Date;
   public invoiceCustomer: Customer;
+  public invoicePayment: string;
   public invoiceNote: string;
   public invoiceAmount: number;
   public invoiceUpdate: Date;
@@ -233,6 +234,7 @@ export class Invoice {
     this.invoiceId = 0;
     this.invoiceNumber = 0;
     this.invoiceDate = new Date();
+    this.invoicePayment = '';
     this.invoiceNote = '';
     this.invoiceAmount = 0.0;
     this.invoiceUpdate = new Date();
@@ -305,7 +307,7 @@ export interface ArticleAttributeValue {
   //attributeValue: AttributeValue;
 }
 
-export interface MovementData {
+export interface ItemValue {
 	value: string;
 }
 

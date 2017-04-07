@@ -1,4 +1,4 @@
-﻿<img *ngIf="!movement||!groups" src="/assets/loading.gif" class="loading">
+﻿<img *ngIf="!invoice||!groups" src="/assets/loading.gif" class="loading">
 
 <div class="container-fluid">
 
@@ -8,47 +8,41 @@
     </div>
 
     <div *ngFor="let items of groups">          
-        <table *ngIf="movement" class="table">    
+        <table *ngIf="invoice" class="table">    
             <thead>
                 <tr> 
                     <td colspan="5"><img title="Close" src="/assets/ci.jpg" style="width: 100%;margin: 10px 0;"></td> 
                 </tr> 
                 <tr> 
-                    <td><strong>Number</strong></td> 
-                    <td align="right">{{movement.movementNumber}}</td>
+                    <td><strong>Invoice n°</strong></td> 
+                    <td align="right">{{invoice.invoiceNumber}}</td>
                     <td style="width: 20%">&nbsp;</td>
-                    <td><strong>Store</strong></td> 
-                    <td align="right">{{movement.movementStore.storeName}}</td> 
+                    <td><strong>Payment</strong></td> 
+                    <td align="right">{{invoice.invoicePayment}}</td> 
                 </tr> 
                 <tr> 
                     <td><strong>Date</strong></td> 
-                    <td align="right">{{movement.movementDate | date: 'yyyy-MM-dd'}}</td>
+                    <td align="right">{{invoice.invoiceDate | date: 'yyyy-MM-dd'}}</td>
                     <td style="width: 20%">&nbsp;</td>
-                    <td><strong>Causal</strong></td> 
-                    <td align="right">{{movement.movementCausal.causalName}}</td> 
-                </tr> 
-                <tr> 
-                    <td><strong>Status</strong></td> 
-                    <td align="right">{{movement.movementStatus}}</td>
-                    <td style="width: 20%">&nbsp;</td>
-                    <td><strong>Customer</strong></td> 
+                    <td><strong>Customer</strong></td>
                     <td rowspan="3" align="right">
-                        {{movement.movementCustomer.customerName}}
-                        <br/>{{movement.movementCustomer.customerAddress}}
-                        <br/>{{movement.movementCustomer.customerCity}}
+                        {{invoice.invoiceCustomer.customerName}}
+                        <br/>{{invoice.invoiceCustomer.customerAddress}}
+                        <br/>{{invoice.invoiceCustomer.customerCity}}
+                        <br/>{{invoice.invoiceCustomer.customerVatNumber !== '' ? invoice.invoiceCustomer.customerVatNumber : invoice.invoiceCustomer.customerFiscalCode}}
                     </td> 
                 </tr> 
                 <tr> 
                     <td colspan="4"><strong>Note</strong></td> 
                 </tr> 
                 <tr> 
-                    <td colspan="4">{{movement.movementNote}}</td>
+                    <td colspan="4">{{invoice.invoiceNote}}</td>
                 </tr>
             </thead>
         </table>
 
         <table class="table" cellpadding="2" cellspacing="2">    
-            <thead *ngIf="item">
+            <thead *ngIf="items">
                 <tr style="background-color: whitesmoke"> 
                     <td><strong>Barcode</strong></td> 
                     <td><strong>Product</strong></td> 

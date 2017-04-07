@@ -39,7 +39,7 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
                 }, onerror => alert(onerror._body)
             );
 
-            this.invoiceService.getMovementsById(this.invoiceId)
+            this.invoiceService.getMovementArticlesById(this.invoiceId)
                 .subscribe(result => {
                     // let items: MovementArticle[] = [];
                     // for (let i = 0; i < 30; i++) {

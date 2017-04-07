@@ -10,7 +10,7 @@ import StORM
 import PostgresStORM
 import PerfectLib
 
-struct MovementStatus: JSONConvertible {
+struct ItemValue: JSONConvertible {
 	public var value: String
 	
 	func getJSONValues() -> [String : Any] {
@@ -36,10 +36,11 @@ class Movement: PostgresSqlORM, JSONConvertible {
 	public var movementStore : [String:Any] = [String:Any]()
 	public var movementCausal : [String:Any] = [String:Any]()
 	public var movementCustomer : [String:Any] = [String:Any]()
-	public var movementAmount : Double = 0
 	public var movementUpdated : Int = Int.now()
 	
-    open override func table() -> String { return "movements" }
+	public var _amount : Double = 0
+
+	open override func table() -> String { return "movements" }
     
     open override func to(_ this: StORMRow) {
         movementId = this.data["movementid"] as? Int ?? 0
@@ -64,7 +65,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
 			
 			let sql = "SELECT SUM(movementArticleQuantity * movementArticlePrice) AS amount FROM movementArticles WHERE movementId = $1";
 			let getCount = try self.sqlRows(sql, params: [String(row.movementId)])
-			row.movementAmount = Double(getCount.first?.data["amount"] as? Float ?? 0)
+			row._amount = Double(getCount.first?.data["amount"] as? Float ?? 0)
 			
 			rows.append(row)
         }
@@ -102,7 +103,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
             "movementStore": movementStore,
             "movementCausal": movementCausal,
             "movementCustomer": movementCustomer,
-            "movementAmount": movementAmount.roundCurrency(),
+            "movementAmount": _amount.roundCurrency(),
             "movementUpdated": movementUpdated.formatDate()
         ]
     }

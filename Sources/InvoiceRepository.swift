@@ -10,6 +10,15 @@ import StORM
 
 struct InvoiceRepository : InvoiceProtocol {
 	
+	func getPayments() -> [ItemValue] {
+		var status = [ItemValue]()
+		status.append(ItemValue(value: "Cash"))
+		status.append(ItemValue(value: "Credit card"))
+		status.append(ItemValue(value: "Bank transfer"))
+		status.append(ItemValue(value: "Check"))
+		return status
+	}
+
 	func getAll() throws -> [Invoice] {
 		let items = Invoice()
 		try items.query()
@@ -34,10 +43,10 @@ struct InvoiceRepository : InvoiceProtocol {
 	func getMovementArticles(invoiceId: Int) throws -> [MovementArticle] {
 		let items = MovementArticle()
 		
-		var join = StORMDataSourceJoin();
-		join.table = "movements"
-		join.direction = StORMJoinType.INNER
-		join.onCondition = "movementarticles.movementId = movements.movementId"
+		let join = StORMDataSourceJoin(
+			table: "movements",
+			onCondition:"movementarticles.movementId = movements.movementId",
+			direction: StORMJoinType.INNER);
 
 		try items.query(whereclause: "movements.invoiceId = $1",
 		                params: [String(invoiceId)],
@@ -47,6 +56,9 @@ struct InvoiceRepository : InvoiceProtocol {
 	}
 
 	func add(item: Invoice) throws {
+		if item.invoiceNumber == 0 {
+			try item.makeNumber()
+		}
 		item.invoiceUpdated = Int.now()
 		try item.save {
 			id in item.invoiceId = id as! Int
@@ -69,22 +81,21 @@ struct InvoiceRepository : InvoiceProtocol {
 	}
 	
 	func delete(id: Int) throws {
+		let movement = Movement()
+		try movement.update(data: [("invoiceId", 0)], idName:"invoiceId", idValue: id)
+
 		let item = Invoice()
 		item.invoiceId = id
 		try item.delete()
 	}
 	
 	func addMovement(invoiceId: Int, id: Int) throws {
-		let item = Movement()
-		try item.query(id: id)
-		item.invoiceId = invoiceId
-		try item.save()
+		let movement = Movement()
+		try movement.update(data: [("invoiceId", invoiceId)], idName:"movementId", idValue: id)
 	}
 	
 	func removeMovement(id: Int) throws {
-		let item = Movement()
-		try item.query(id: id)
-		item.invoiceId = 0
-		try item.save()
+		let movement = Movement()
+		try movement.update(data: [("invoiceId", 0)], idName:"movementId", idValue: id)
 	}
 }

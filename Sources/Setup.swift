@@ -27,7 +27,7 @@ func setupDatabase() throws {
 	PostgresConnector.password = "webretail"
 	PostgresConnector.database = "webretail"
 	PostgresConnector.port = 5432
-	StORMdebug = true
+	StORMdebug = false
 
 	try tokenStore.setup()
 	let user = User()

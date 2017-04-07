@@ -16,7 +16,7 @@
     </p-toolbar>
 
     <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue | priceFilter:amountValue:'invoices'"
-        selectionMode="single" [(selection)]="selected"
+        selectionMode="single" [(selection)]="selected" [contextMenu]="bts"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="invoiceNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
@@ -63,7 +63,8 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="number">Number</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="number" [(ngModel)]="selected.invoiceNumber"/>
+                        <input pInputText type="number" formControlName="number" [(ngModel)]="selected.invoiceNumber" style="width: 50%"/>
+                        0 = auto increment
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['number'].valid&&dataform.controls['number'].dirty">
                             <i class="fa fa-close"></i> Number is required
                         </div>
@@ -82,6 +83,12 @@
                     <div class="ui-grid-col-4"><label for="customer">Customer</label></div>
                     <div class="ui-grid-col-8">
                         <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.invoiceCustomer" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="payment">Payment</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-dropdown [options]="payments" formControlName="payment" [(ngModel)]="selected.invoicePayment" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                     </div>
                 </div>
                 <div class="ui-grid-row">

@@ -2,13 +2,18 @@
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Invoice, Movement, MovementData } from '../shared/models';
+import { Invoice, Movement, MovementArticle, ItemValue } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
 export class InvoiceService {
 
     constructor(private http: Http) {
+    }
+
+    getPayments(): Observable<ItemValue[]> {
+        return this.http.get('/api/invoicepayment', { headers: Helpers.getHeaders() })
+            .map(result => <ItemValue[]>result.json());
     }
 
     getAll(): Observable<Invoice[]> {
@@ -41,8 +46,13 @@ export class InvoiceService {
             .map(result => <Movement[]>result.json());
     }
 
+    getMovementArticlesById(id: number) : Observable<MovementArticle[]> {
+        return this.http.get('/api/invoicemovementarticle/' + id, { headers: Helpers.getHeaders() })
+            .map(result => <MovementArticle[]>result.json());
+    }
+
     addMovement(id: number, movementId: number) : Observable<any> {
-        let json = <MovementData>{ value: movementId.toString() };
+        let json = <ItemValue>{ value: movementId.toString() };
         return this.http.post('/api/invoicemovement/' + id, json, 
             { headers: Helpers.getHeaders() }).map(result => result.json());
     }

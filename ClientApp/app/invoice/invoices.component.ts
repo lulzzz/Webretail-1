@@ -19,6 +19,7 @@ export class InvoicesComponent implements OnInit {
 	selected: Invoice;
     customers: SelectItem[];
     customersFiltered: SelectItem[];
+    payments: SelectItem[];
     buttons: MenuItem[];
     displayPanel: boolean;
 	dataform: FormGroup;
@@ -40,6 +41,7 @@ export class InvoicesComponent implements OnInit {
             'number': new FormControl('', Validators.required),
             'date': new FormControl('', Validators.required),
             'customer': new FormControl('', Validators.required),
+            'payment': new FormControl('', Validators.required),
             'note': new FormControl('', Validators.nullValidator)
         });
 
@@ -64,6 +66,13 @@ export class InvoicesComponent implements OnInit {
             }
         );
 
+        this.invoiceService
+            .getPayments()
+            .subscribe(result => {
+                this.payments = result.map(p => Helpers.newSelectItem(p, p.value));
+            }
+        );
+
         this.buttons = [
             { label: 'Document', icon: 'fa-print', command: (event) => this.openClick('document/') }
         ];
@@ -75,6 +84,7 @@ export class InvoicesComponent implements OnInit {
 
     addClick() {
         this.selected = new Invoice();
+        this.selected.invoicePayment = this.payments[0].value;
         this.displayPanel = true;
     }
 

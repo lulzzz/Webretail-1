@@ -16,13 +16,13 @@ enum ActionType {
 
 struct MovementRepository : MovementProtocol {
 
-	func getStatus() -> [MovementStatus] {
-		var status = [MovementStatus]()
-		status.append(MovementStatus(value: "New"))
-		status.append(MovementStatus(value: "Processing"))
-		status.append(MovementStatus(value: "Suspended"))
-		status.append(MovementStatus(value: "Canceled"))
-		status.append(MovementStatus(value: "Completed"))
+	func getStatus() -> [ItemValue] {
+		var status = [ItemValue]()
+		status.append(ItemValue(value: "New"))
+		status.append(ItemValue(value: "Processing"))
+		status.append(ItemValue(value: "Suspended"))
+		status.append(ItemValue(value: "Canceled"))
+		status.append(ItemValue(value: "Completed"))
 		return status
 	}
 	

@@ -8,6 +8,8 @@
 
 protocol InvoiceProtocol {
 	
+	func getPayments() -> [ItemValue]
+	
 	func getAll() throws -> [Invoice]
 	
 	func get(id: Int) throws -> Invoice?

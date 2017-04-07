@@ -8,7 +8,7 @@
 
 protocol MovementProtocol {
     
-	func getStatus() -> [MovementStatus]
+	func getStatus() -> [ItemValue]
 
 	func getAll() throws -> [Movement]
     

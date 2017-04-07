@@ -19,6 +19,7 @@ class InvoiceController {
 	func getRoutes() -> Routes {
 		var routes = Routes()
 		
+		routes.add(method: .get, uri: "/api/invoicepayment", handler: invoicePaymentsHandlerGET)
 		routes.add(method: .get, uri: "/api/invoice", handler: invoicesHandlerGET)
 		routes.add(method: .get, uri: "/api/invoice/{id}", handler: invoiceHandlerGET)
 		routes.add(method: .post, uri: "/api/invoice", handler: invoiceHandlerPOST)
@@ -30,6 +31,18 @@ class InvoiceController {
 		routes.add(method: .delete, uri: "/api/invoicemovement/{id}", handler: invoiceMovementHandlerDELETE)
 		
 		return routes
+	}
+	
+	func invoicePaymentsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		do {
+			let items = self.repository.getPayments()
+			try response.setBody(json: items)
+			response.completed(status: .ok)
+		} catch {
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+		}
 	}
 	
 	func invoicesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {

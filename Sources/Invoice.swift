@@ -17,6 +17,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 	public var invoiceNumber : Int = 0
 	public var invoiceDate : Int = Int.now()
 	public var invoiceCustomer : [String:Any] = [String:Any]()
+	public var invoicePayment : String = ""
 	public var invoiceNote : String = ""
 	public var invoiceAmount : Double = 0
 	public var invoiceUpdated : Int = Int.now()
@@ -28,6 +29,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 		invoiceNumber = this.data["invoicenumber"] as? Int ?? 0
 		invoiceDate = this.data["invoicedate"] as? Int ?? 0
 		invoiceCustomer = this.data["invoicecustomer"] as? [String:Any] ?? [String:Any]()
+		invoicePayment = this.data["invoicepayment"] as? String ?? ""
 		invoiceNote = this.data["invoicenote"] as? String ?? ""
 		invoiceUpdated = this.data["invoiceupdated"] as? Int ?? 0
 	}
@@ -55,6 +57,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 		self.invoiceNumber = getJSONValue(named: "invoiceNumber", from: values, defaultValue: 0)
 		self.invoiceDate = getJSONValue(named: "invoiceDate", from: values, defaultValue: "").DateToInt()
 		self.invoiceCustomer = getJSONValue(named: "invoiceCustomer", from: values, defaultValue: [String:Any]())
+		self.invoicePayment = getJSONValue(named: "invoicePayment", from: values, defaultValue: "")
 		self.invoiceNote = getJSONValue(named: "invoiceNote", from: values, defaultValue: "")
 	}
 	
@@ -68,6 +71,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 			"invoiceNumber": invoiceNumber,
 			"invoiceDate": invoiceDate.formatDateShort(),
 			"invoiceCustomer": invoiceCustomer,
+			"invoicePayment": invoicePayment,
 			"invoiceNote": invoiceNote,
 			"invoiceAmount": invoiceAmount.roundCurrency(),
 			"invoiceUpdated": invoiceUpdated.formatDate()
@@ -90,7 +94,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 		
 		self.invoiceNumber = 1
 		let sql = "SELECT MAX(invoicenumber) AS counter FROM \(table()) WHERE invoicedate > $1";
-		let getCount = try self.sqlRows(sql, params: [String(describing: date?.timeIntervalSinceReferenceDate)])
+		let getCount = try self.sqlRows(sql, params: [String(describing: Int((date?.timeIntervalSinceReferenceDate)!))])
 		self.invoiceNumber += getCount.first?.data["counter"] as? Int ?? 0
 	}
 }
