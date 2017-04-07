@@ -18,6 +18,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     private sub: any;
     invoiceId: number;
     totalRecords = 0;
+    totalAmount = 0.0;
     codes: string[];
     item: Invoice;
     items: Movement[];
@@ -28,6 +29,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     causalsFiltered: SelectItem[];
     dateStartValue: Date;
     dateFinishValue: Date;
+    amountValue: number;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
@@ -52,7 +54,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
             this.invoiceService.getMovementsById(this.invoiceId)
                 .subscribe(result => {
                     this.items = result;
-                    this.totalRecords = this.items.length;
+                    this.updateTotals();
                     this.buildFilter(this.items);
                 }, onerror => alert(onerror._body));
         });
@@ -90,8 +92,8 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     this.invoiceService.getMovementsById(this.invoiceId)
                                        .subscribe(result => { 
-                                           this.items = result;
-                                           this.totalRecords = this.items.length; 
+                                            this.items = result;
+                                            this.updateTotals();
                                        });
                 }, onerror => alert(onerror._body));
         });
@@ -106,10 +108,18 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                         .removeMovement(p.movementId)
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(p), 1);
-                            this.totalRecords = this.items.length;
+                            this.updateTotals();
                         }, onerror => alert(onerror._body));
                 });
             }
         });
+    }
+
+    updateTotals() {
+        if (!this.items || this.items.length === 0) {
+            return;
+        }
+        this.totalRecords = this.items.length;
+        this.totalAmount = this.items.map(p => p.movementAmount).reduce((sum, current) => sum + current);
     }
 }

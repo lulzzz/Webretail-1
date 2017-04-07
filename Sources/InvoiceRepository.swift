@@ -14,7 +14,7 @@ struct InvoiceRepository : InvoiceProtocol {
 		let items = Invoice()
 		try items.query()
 		
-		return items.rows()
+		return try items.rows()
 	}
 	
 	func get(id: Int) throws -> Invoice? {

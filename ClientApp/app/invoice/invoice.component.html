@@ -17,15 +17,16 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!inputComponent.isOpen" [value]="items | dateFilter:dateStartValue:dateFinishValue" 
+    <p-dataTable *ngIf="!inputComponent.isOpen" [value]="items | dateFilter:dateStartValue:dateFinishValue | priceFilter:amountValue:'movements'" 
         selectionMode="multiple" [(selection)]="itemsSelected" [responsive]="true" #dt>
         <p-header>
-            <button pButton label="Movement picker" style="position: absolute;left: 10px; top: 10px;" type="button" title="Movement picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
+            <button pButton type="button" label="Remove" (click)="removeClick()" [disabled]="itemsSelected.length===0" style="float: left" class="ui-button-secondary" icon="fa-trash"></button>
+            <button pButton label="Movement picker" style="float: right" type="button" title="Movement picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
             <p>&nbsp;</p>
         </p-header>
         <p-footer>
-            <button pButton type="button" label="Remove" (click)="removeClick()" [disabled]="itemsSelected.length===0" style="float: left" class="ui-button-secondary" icon="fa-trash"></button>
-            <span style="float: right"><b>{{totalRecords}}</b> rows</span>
+            <span style="float: left"><b>{{totalRecords}}</b> rows</span>
+            <span style="float: right">amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
             <p>&nbsp;</p>
         </p-footer>
         <p-column [style]="{'width':'50px'}" selectionMode="multiple"></p-column>
@@ -48,6 +49,15 @@
         <p-column field="movementStore.storeName" header="Store" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <ng-template pTemplate="filter" let-col>
                 <p-dropdown [options]="storesFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </ng-template>
+        </p-column>
+        <p-column header="Amount ({{amountValue||'No Filter'}})" [editable]="false" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
+            <ng-template pTemplate="filter" let-col>
+                <i class="fa fa-close" (click)="amountValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="amountValue" [min]="5" [max]="1000"></p-slider>
+            </ng-template>
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                {{data.movementAmount | currency: 'EUR' : true}}
             </ng-template>
         </p-column>
     </p-dataTable>

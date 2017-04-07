@@ -36,6 +36,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
 	public var movementStore : [String:Any] = [String:Any]()
 	public var movementCausal : [String:Any] = [String:Any]()
 	public var movementCustomer : [String:Any] = [String:Any]()
+	public var movementAmount : Double = 0
 	public var movementUpdated : Int = Int.now()
 	
     open override func table() -> String { return "movements" }
@@ -60,6 +61,11 @@ class Movement: PostgresSqlORM, JSONConvertible {
         for i in 0..<self.results.rows.count {
             let row = Movement()
             row.to(self.results.rows[i])
+			
+			let sql = "SELECT SUM(movementArticleQuantity * movementArticlePrice) AS amount FROM movementArticles WHERE movementId = $1";
+			let getCount = try self.sqlRows(sql, params: [String(row.movementId)])
+			row.movementAmount = Double(getCount.first?.data["amount"] as? Float ?? 0)
+			
 			rows.append(row)
         }
         return rows
@@ -96,6 +102,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
             "movementStore": movementStore,
             "movementCausal": movementCausal,
             "movementCustomer": movementCustomer,
+            "movementAmount": movementAmount.roundCurrency(),
             "movementUpdated": movementUpdated.formatDate()
         ]
     }

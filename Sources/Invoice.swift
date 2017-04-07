@@ -18,6 +18,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 	public var invoiceDate : Int = Int.now()
 	public var invoiceCustomer : [String:Any] = [String:Any]()
 	public var invoiceNote : String = ""
+	public var invoiceAmount : Double = 0
 	public var invoiceUpdated : Int = Int.now()
 	
 	open override func table() -> String { return "invoices" }
@@ -31,11 +32,19 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 		invoiceUpdated = this.data["invoiceupdated"] as? Int ?? 0
 	}
 	
-	func rows() -> [Invoice] {
+	func rows() throws -> [Invoice] {
 		var rows = [Invoice]()
 		for i in 0..<self.results.rows.count {
 			let row = Invoice()
 			row.to(self.results.rows[i])
+
+			let sql = "SELECT SUM(a.movementArticleQuantity * a.movementArticlePrice) AS amount " +
+				"FROM movementArticles AS a " +
+				"INNER JOIN movements AS b ON a.movementId = b.movementId " +
+				"WHERE b.invoiceId = $1"
+			let getCount = try self.sqlRows(sql, params: [String(row.invoiceId)])
+			row.invoiceAmount = Double(getCount.first?.data["amount"] as? Float ?? 0)
+
 			rows.append(row)
 		}
 		return rows
@@ -60,6 +69,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 			"invoiceDate": invoiceDate.formatDateShort(),
 			"invoiceCustomer": invoiceCustomer,
 			"invoiceNote": invoiceNote,
+			"invoiceAmount": invoiceAmount.roundCurrency(),
 			"invoiceUpdated": invoiceUpdated.formatDate()
 		]
 	}

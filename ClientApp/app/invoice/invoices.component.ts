@@ -23,6 +23,7 @@ export class InvoicesComponent implements OnInit {
 	dataform: FormGroup;
     dateStartValue: Date;
     dateFinishValue: Date;
+    amountValue: number;
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,

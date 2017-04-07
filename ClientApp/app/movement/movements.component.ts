@@ -34,6 +34,7 @@ export class MovementsComponent implements OnInit {
     newNumber: number;
     dateStartValue: Date;
     dateFinishValue: Date;
+    amountValue: number;
     
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,

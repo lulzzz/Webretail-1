@@ -19,21 +19,25 @@ export class PriceFilterPipe implements PipeTransform {
 
     switch (type) {
       case 'discounts':
-        return value.filter(item => (item.percentage > 0 ? item.percentage : item.price) <= maxValue);
+        return value.filter(item => (item.discountPercentage > 0 ? item.discountPercentage : item.discountPrice) <= maxValue);
       case 'discount':
         let item = args2;
-        return value.filter(data => (item.percentage == 0 ? ((data.product.sellingPrice - item.price) / data.product.sellingPrice * 100.0) : data.product.sellingPrice - (data.product.sellingPrice * item.percentage / 100)) <= maxValue);
+        return value.filter(data => (item.discountPercentage == 0 ? ((data.discountProduct.productSellingPrice - item.discountPrice) / data.discountProduct.productSellingPrice * 100.0) : data.discountProduct.productSellingPrice - (data.discountProduct.productSellingPrice * item.discountPercentage / 100)) <= maxValue);
+      case 'movements':
+        return value.filter(data => data.movementAmount <= maxValue);
       case 'movement':
-        if (args2 == null) {
-          return value.filter(data => data.price <= maxValue);
-        }
         let maxAmount = args2;
-        if (args0 == null) {
-          return value.filter(data => data.amount <= maxAmount);
+        if (args2 == null) {
+          return value.filter(data => data.movementArticlePrice <= maxValue);
         }
-        return value.filter(data => data.price <= maxValue && data.amount <= maxAmount);
+        if (args0 == null) {
+          return value.filter(data => data.movementArticleAmount <= maxAmount);
+        }
+        return value.filter(data => data.movementArticlePrice <= maxValue && data.movementArticleAmount <= maxAmount);
+      case 'invoices':
+        return value.filter(data => data.invoiceAmount <= maxValue);
       default:
-        return value.filter(item => (item.discount ? item.discount.price : item.sellingPrice) <= maxValue);
+        return value.filter(item => (item.discount ? item.discount.discountPrice : item.productSellingPrice) <= maxValue);
     }
   }
 }

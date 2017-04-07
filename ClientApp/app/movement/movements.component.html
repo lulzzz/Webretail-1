@@ -15,7 +15,7 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue"
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue | priceFilter:amountValue:'movements'"
         selectionMode="single" [(selection)]="selected" [contextMenu]="bts"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="movementNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
@@ -47,6 +47,15 @@
         <p-column field="movementStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <ng-template pTemplate="filter" let-col>
                 <p-dropdown [options]="statusFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+            </ng-template>
+        </p-column>
+        <p-column header="Amount ({{amountValue||'No Filter'}})" [editable]="false" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
+            <ng-template pTemplate="filter" let-col>
+                <i class="fa fa-close" (click)="amountValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="amountValue" [min]="5" [max]="1000"></p-slider>
+            </ng-template>
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                {{data.movementAmount | currency: 'EUR' : true}}
             </ng-template>
         </p-column>
     </p-dataTable>

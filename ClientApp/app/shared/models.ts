@@ -183,6 +183,7 @@ export class Movement {
   public movementStatus: string;
   public movementUser: string;
   public movementDevice: string;
+  public movementAmount: number;
   public movementUpdated: Date;
 
   constructor() {
@@ -194,6 +195,7 @@ export class Movement {
     this.movementStatus = 'New';
     this.movementUser = '';
     this.movementDevice = '';
+    this.movementAmount = 0.0;
     this.movementUpdated = new Date();
   }
 }
@@ -224,6 +226,7 @@ export class Invoice {
   public invoiceDate: Date;
   public invoiceCustomer: Customer;
   public invoiceNote: string;
+  public invoiceAmount: number;
   public invoiceUpdate: Date;
 
   constructor() {
@@ -231,6 +234,7 @@ export class Invoice {
     this.invoiceNumber = 0;
     this.invoiceDate = new Date();
     this.invoiceNote = '';
+    this.invoiceAmount = 0.0;
     this.invoiceUpdate = new Date();
   }
 }
