@@ -19,6 +19,7 @@ export class InvoicesComponent implements OnInit {
 	selected: Invoice;
     customers: SelectItem[];
     customersFiltered: SelectItem[];
+    buttons: MenuItem[];
     displayPanel: boolean;
 	dataform: FormGroup;
     dateStartValue: Date;
@@ -62,6 +63,10 @@ export class InvoicesComponent implements OnInit {
                 this.customers = this.customers.concat(result.map(p => Helpers.newSelectItem(p, p.customerName)));
             }
         );
+
+        this.buttons = [
+            { label: 'Document', icon: 'fa-print', command: (event) => this.openClick('document/') }
+        ];
     }
 
     get isNew() : boolean { return this.selected.invoiceId == 0; }

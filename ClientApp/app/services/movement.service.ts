@@ -66,15 +66,15 @@ export class MovementService {
             .map(result => result.json());
     }
 
-    commit(movementId: number) : Observable<any> {
-        return this.http.get('/api/movement/' + movementId + '/commit', { headers: Helpers.getHeaders() })
-            .map(result => result.json());
-    }
+    // commit(movementId: number) : Observable<any> {
+    //     return this.http.get('/api/movement/' + movementId + '/commit', { headers: Helpers.getHeaders() })
+    //         .map(result => result.json());
+    // }
 
-    roolback(movementId: number) : Observable<any> {
-        return this.http.get('/api/movement/' + movementId + '/roolback', { headers: Helpers.getHeaders() })
-            .map(result => result.json());
-    }
+    // roolback(movementId: number) : Observable<any> {
+    //     return this.http.get('/api/movement/' + movementId + '/roolback', { headers: Helpers.getHeaders() })
+    //         .map(result => result.json());
+    // }
 
     getStatus(): Observable<MovementData[]> {
         return this.http.get('/api/movementstatus', { headers: Helpers.getHeaders() })

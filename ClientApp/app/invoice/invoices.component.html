@@ -11,8 +11,8 @@
             <button pButton type="button" label="Edit" title="Edit item" (click)="editClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-edit"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" label="Details" title="Open details" (click)="openClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-bars"></button>
-        </div>
+            <p-splitButton label="Details" icon="fa-bars" (onClick)="openClick()" [model]="buttons" [disabled]="!selected"></p-splitButton>
+       </div>
     </p-toolbar>
 
     <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue | priceFilter:amountValue:'invoices'"
@@ -45,6 +45,8 @@
         </p-column>
      </p-dataTable>
     
+     <p-contextMenu #bts [model]="buttons"></p-contextMenu>
+
      <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">

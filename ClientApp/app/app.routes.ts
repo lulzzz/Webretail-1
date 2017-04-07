@@ -21,6 +21,7 @@ import { DiscountsComponent } from './discount/discounts.component';
 import { DiscountComponent } from './discount/discount.component';
 import { InvoicesComponent } from './invoice/invoices.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { InvoiceDocumentComponent } from './invoice/invoicedocument.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -45,7 +46,8 @@ export const routes: Routes = [
     { path: 'discount', component: DiscountsComponent },
     { path: 'discount/:id', component: DiscountComponent },
     { path: 'invoice', component: InvoicesComponent },
-    { path: 'invoice/:id', component: InvoiceComponent }
+    { path: 'invoice/:id', component: InvoiceComponent },
+    { path: 'invoice/document/:id', component: InvoiceDocumentComponent }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);

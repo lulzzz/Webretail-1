@@ -31,6 +31,21 @@ struct InvoiceRepository : InvoiceProtocol {
 		return try items.rows()
 	}
 	
+	func getMovementArticles(invoiceId: Int) throws -> [MovementArticle] {
+		let items = MovementArticle()
+		
+		var join = StORMDataSourceJoin();
+		join.table = "movements"
+		join.direction = StORMJoinType.INNER
+		join.onCondition = "movementarticles.movementId = movements.movementId"
+
+		try items.query(whereclause: "movements.invoiceId = $1",
+		                params: [String(invoiceId)],
+		                joins: [join])
+		
+		return items.rows()
+	}
+
 	func add(item: Invoice) throws {
 		item.invoiceUpdated = Int.now()
 		try item.save {

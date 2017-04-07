@@ -46,6 +46,7 @@ import { DiscountsComponent } from './discount/discounts.component';
 import { DiscountComponent } from './discount/discount.component';
 import { InvoicesComponent } from './invoice/invoices.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { InvoiceDocumentComponent } from './invoice/invoicedocument.component';
 
 import { AuthenticationService } from './services/authentication.service';
 import { AccountService } from './services/account.service';
@@ -114,7 +115,8 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         DiscountsComponent,
         DiscountComponent,
         InvoicesComponent,
-        InvoiceComponent
+        InvoiceComponent,
+        InvoiceDocumentComponent
     ],
     providers: [
         Configuration,

@@ -14,6 +14,8 @@ protocol InvoiceProtocol {
 	
 	func getMovements(invoiceId: Int) throws -> [Movement]
 
+	func getMovementArticles(invoiceId: Int) throws -> [MovementArticle]
+	
 	func add(item: Invoice) throws
 	
 	func update(id: Int, item: Invoice) throws
