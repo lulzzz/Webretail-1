@@ -23,11 +23,17 @@ struct ArticleRepository : ArticleProtocol {
         try product.get(productId)
         
         // Get product attributes
-        let productAttribute = ProductAttribute()
+		var join = StORMDataSourceJoin()
+		join.table = "attributes"
+		join.direction = StORMJoinType.INNER
+		join.onCondition = "productattributes.attributeId = attributes.attributeId"
+
+		let productAttribute = ProductAttribute()
         try productAttribute.query(
-            whereclause: "productId = $1",
+            whereclause: "productattributes.productId = $1",
             params: [productId],
-            orderby: ["productAttributeId"]
+            orderby: ["productattributes.productAttributeId"],
+            joins: [join]
         )
         let productAttributes = try productAttribute.rows()
         
@@ -187,9 +193,20 @@ struct ArticleRepository : ArticleProtocol {
 		var body = [[ArticleItem]]()
 		
 		var productAttributeValues = [ProductAttributeValue]()
+		var join = StORMDataSourceJoin()
+		join.table = "attributes"
+		join.direction = StORMJoinType.INNER
+		join.onCondition = "productattributes.attributeId = attributes.attributeId"
+		
 		let productAttribute = ProductAttribute()
-		try productAttribute.query(data: [("productId", productId)])
+		try productAttribute.query(
+			whereclause: "productattributes.productId = $1",
+			params: [productId],
+			orderby: ["productattributes.productAttributeId"],
+			joins: [join]
+		)
 		let attributes = try productAttribute.rows();
+		
 		let lenght = attributes.count - 1;
 		if (lenght > 0) {
 			for attribute in attributes {
