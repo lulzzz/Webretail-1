@@ -55,6 +55,7 @@ export class MovementsComponent implements OnInit {
             'store': new FormControl('', Validators.required),
             'causal': new FormControl('', Validators.required),
             'customer': new FormControl('', Validators.nullValidator),
+            'device': new FormControl('', Validators.nullValidator),
             'status': new FormControl('', Validators.required),
             'note': new FormControl('', Validators.nullValidator)
         });
@@ -144,7 +145,7 @@ export class MovementsComponent implements OnInit {
         //this.selected.movementNumber = this.items.length > 0 ? Math.max.apply(this, this.items.map(p => p.movementNumber)) + 1 : 1000;
         this.currentStatus = this.selected.movementStatus;
         this.selected.movementUser = localStorage.getItem('uniqueID');
-        this.selected.movementDevice = this.selected.movementUser;
+        this.selected.movementDevice = localStorage.getItem('deviceID');
         if (this.stores.length > 0) {
             this.selected.movementStore = this.stores[0].value;
         }
@@ -165,8 +166,6 @@ export class MovementsComponent implements OnInit {
             return;
         }
         this.currentStatus = this.selected.movementStatus;
-        this.selected.movementUser = localStorage.getItem('uniqueID');
-        this.selected.movementDevice = this.selected.movementUser;
         this.displayPanel = true;
     }
 
@@ -178,6 +177,7 @@ export class MovementsComponent implements OnInit {
     }
 
     saveClick() {
+        localStorage.setItem("deviceID", this.selected.movementDevice);
         if (this.isNew) {
             this.movementService.create(this.selected)
                 .subscribe(result => {
