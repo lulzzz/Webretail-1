@@ -120,7 +120,7 @@ struct MovementRepository : MovementProtocol {
 
 		var stock = Stock()
 		let article = MovementArticle()
-		try article.query(whereclause: "movementId",
+		try article.query(whereclause: "movementId = $1",
 		                  params: [movement.movementId],
 		                  cursor: StORMCursor(limit: 1000, offset: 0))
 		for item in article.rows() {
