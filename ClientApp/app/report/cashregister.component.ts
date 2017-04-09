@@ -24,7 +24,7 @@ export class CashRegisterComponent implements OnInit {
         this.authenticationService.checkCredentials(false);
 
         this.movementService
-            .getAll()
+            .getReceipted()
             .subscribe(result => {
                 this.movemets = result;
                 this.dateStartValue = new Date();

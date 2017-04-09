@@ -72,7 +72,9 @@ class AccessTokenStore : PostgresSqlORM {
     public func new(_ u: String) -> String {
 		do {
 			token = ""
-			try self.query(data: [("userid", u)])
+			try self.query(whereclause: "userid = $1",
+						   params: [u],
+						   cursor: StORMCursor(limit: 1, offset: 0))
 			if token.isEmpty {
 				let rand = URandom()
 				token = rand.secureToken

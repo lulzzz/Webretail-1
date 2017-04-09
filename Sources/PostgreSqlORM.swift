@@ -116,24 +116,6 @@ open class PostgresSqlORM: PostgresStORM {
 		}
 	}
 	
-	public func query(data: [(String, Any)]) throws {
-		let (idname, _) = firstAsKey()
-		
-		var paramsString = [String]()
-		var set = [String]()
-		for i in 0..<data.count {
-			paramsString.append("\(data[i].1)")
-			set.append("\(data[i].0.lowercased()) = $\(i+1)")
-		}
-		
-		do {
-			try query(whereclause: set.joined(separator: " AND "), params: paramsString, orderby: [idname])
-		} catch {
-			LogFile.error("Error: \(error)", logFile: "./StORMlog.txt")
-			throw error
-		}
-	}
-	
 	public func query(
 		columns:		[String] = [],
 		whereclause:	String = "",
@@ -154,9 +136,6 @@ open class PostgresSqlORM: PostgresStORM {
 			clauseSelect = columns.joined(separator: ",")
 		} else {
 			var keys = [String]()
-//			for i in cols() {
-//				keys.append(i.0)
-//			}
 			keys.append(self.table() + ".*")
 			for join in joins {
 				keys.append(join.table + ".*")

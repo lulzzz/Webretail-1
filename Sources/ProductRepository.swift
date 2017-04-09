@@ -55,7 +55,9 @@ struct ProductRepository : ProductProtocol {
 
 	func get(barcode: String) throws -> Product? {
         let article = Article()
-		try article.query(data: [("articleBarcode", barcode)])
+		try article.query(whereclause: "articleBarcode = $1",
+		                  params: [barcode],
+		                  cursor: StORMCursor(limit: 1, offset: 0))
         if article.articleId == 0 {
             return nil
         }
@@ -105,16 +107,17 @@ struct ProductRepository : ProductProtocol {
     }
     
 	func removeCategory(item: ProductCategory) throws {
-		try item.query(data: [
-			("productId", item.productId),
-			("categoryId", item.categoryId)
-		])
+		try item.query(whereclause: "productId = $1 AND categoryId = $2",
+		               params: [item.productId, item.categoryId],
+		               cursor: StORMCursor(limit: 1, offset: 0))
 		try item.delete()
    }
 	
 	func removeCategories(productId: Int) throws {
 		let productCategory = ProductCategory()
-		try productCategory.query(data: [("productId", productId)])
+		try productCategory.query(whereclause: "productId = $1",
+								  params: [productId],
+								  cursor: StORMCursor(limit: 1, offset: 0))
 		for row in try productCategory.rows() {
 			try row.delete()
 		}
@@ -128,10 +131,9 @@ struct ProductRepository : ProductProtocol {
     }
     
     func removeAttribute(item: ProductAttribute) throws {
-        try item.query(data: [
-            ("productId", item.productId),
-            ("attributeId", item.attributeId)
-        ])
+		try item.query(whereclause: "productId = $1 AND attributeId = $2",
+		               params: [item.productId, item.attributeId],
+		               cursor: StORMCursor(limit: 1, offset: 0))
         try item.delete()
         try setValid(productId: item.productId, valid: false)
     }
@@ -144,10 +146,9 @@ struct ProductRepository : ProductProtocol {
     }
     
     func removeAttributeValue(item: ProductAttributeValue) throws {
-        try item.query(data: [
-            ("productAttributeId", item.productAttributeId),
-            ("attributeValueId", item.attributeValueId)
-        ])
+		try item.query(whereclause: "productAttributeId = $1 AND attributeValueId = $2",
+		               params: [item.productAttributeId, item.attributeValueId],
+		               cursor: StORMCursor(limit: 1, offset: 0))
         try item.delete()
         try setValid(productAttributeId: item.productAttributeId, valid: false)
     }

@@ -23,6 +23,8 @@ class MovementController {
         
 		routes.add(method: .get, uri: "/api/movementstatus", handler: movementStatusHandlerGET)
         routes.add(method: .get, uri: "/api/movement", handler: movementsHandlerGET)
+		routes.add(method: .get, uri: "/api/movementinvoiced", handler: movementsInvoicedHandlerGET)
+		routes.add(method: .get, uri: "/api/movementreceipted", handler: movementsReceiptedHandlerGET)
 		routes.add(method: .get, uri: "/api/movement/{id}", handler: movementHandlerGET)
 		routes.add(method: .get, uri: "/api/movementcustomer/{id}", handler: movementCustomerHandlerGET)
         routes.add(method: .post, uri: "/api/movement", handler: movementHandlerPOST)
@@ -57,6 +59,30 @@ class MovementController {
         }
     }
 
+	func movementsInvoicedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		do {
+			let items = try self.repository.getInvoiced()
+			try response.setBody(json: items)
+			response.completed(status: .ok)
+		} catch {
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+		}
+	}
+	
+	func movementsReceiptedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		do {
+			let items = try self.repository.getReceipted()
+			try response.setBody(json: items)
+			response.completed(status: .ok)
+		} catch {
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+		}
+	}
+	
 	func movementHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         

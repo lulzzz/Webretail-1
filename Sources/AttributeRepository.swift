@@ -26,8 +26,10 @@ struct AttributeRepository : AttributeProtocol {
     
     func getValues(id: Int) throws -> [AttributeValue] {
         let items = AttributeValue()
-        try items.query(data: [("attributeId", id)])
-        
+        try items.query(whereclause: "attributeId = $1",
+		                params: [id],
+		                cursor: StORMCursor(limit: 10000, offset: 0))
+		
         return items.rows()
     }
     

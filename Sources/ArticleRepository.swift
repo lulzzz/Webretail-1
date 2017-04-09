@@ -176,8 +176,10 @@ struct ArticleRepository : ArticleProtocol {
 	func get(productId: Int, storeIds: String) throws -> [Article] {
         let items = Article()
 		items._storeIds = storeIds
-        try items.query(data: [("productId", productId)])
-        
+		try items.query(whereclause: "productId = $1",
+						params: [productId],
+						cursor: StORMCursor(limit: 10000, offset: 0))
+		
         return try items.rows()
     }
 

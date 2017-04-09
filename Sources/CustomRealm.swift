@@ -9,6 +9,7 @@
 import Foundation
 import Turnstile
 import TurnstileCrypto
+import StORM
 
 /// The "Turnstile Realm" that holds the main routing functionality for request filters
 open class CustomRealm : Realm {
@@ -58,7 +59,9 @@ open class CustomRealm : Realm {
     
     private func authenticate(credentials: ConsumerAccount) throws -> Account {
         let account = User()
-        try account.query(data: [("\(credentials.consumer)ID", credentials.uniqueID)])
+        try account.query(whereclause: "\(credentials.consumer)ID = $1",
+						  params: [credentials.uniqueID],
+		                  cursor: StORMCursor(limit: 1, offset: 0))
         if !account.uniqueID.isEmpty {
             return account
         } else {
@@ -86,7 +89,9 @@ open class CustomRealm : Realm {
                 throw AccountTakenError()
             }
         case let credentials as ConsumerAccount:
-            try account.query(data: [("\(credentials.consumer)ID", credentials.uniqueID)])
+			try account.query(whereclause: "\(credentials.consumer)ID = $1",
+			               	  params: [credentials.uniqueID],
+			               	  cursor: StORMCursor(limit: 1, offset: 0))
             guard account.uniqueID.isEmpty else {
                 throw AccountTakenError()
             }

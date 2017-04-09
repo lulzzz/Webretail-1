@@ -16,6 +16,16 @@ export class MovementService {
             .map(result => <Movement[]>result.json());
     }
 
+    getInvoiced(): Observable<Movement[]> {
+        return this.http.get('/api/movementinvoiced', { headers: Helpers.getHeaders() })
+            .map(result => <Movement[]>result.json());
+    }
+
+    getReceipted(): Observable<Movement[]> {
+        return this.http.get('/api/movementreceipted', { headers: Helpers.getHeaders() })
+            .map(result => <Movement[]>result.json());
+    }
+
     getById(id: number) : Observable<Movement> {
         return this.http.get('/api/movement/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Movement>result.json());

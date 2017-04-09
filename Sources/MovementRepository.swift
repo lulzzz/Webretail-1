@@ -33,7 +33,22 @@ struct MovementRepository : MovementProtocol {
         return try items.rows()
     }
     
-    func get(id: Int) throws -> Movement? {
+	func getInvoiced() throws -> [Movement] {
+		let items = Movement()
+		try items.query(whereclause: "invoiceId <> 0")
+		
+		return try items.rows()
+	}
+
+	func getReceipted() throws -> [Movement] {
+		let items = Movement()
+		try items.query(whereclause: "movementCausal ->> 'causalIsPos' = true",
+		                orderby: ["movementDevice, movementDate, movementNumber"])
+		
+		return try items.rows()
+	}
+
+	func get(id: Int) throws -> Movement? {
         let item = Movement()
 		try item.query(id: id)
 
@@ -105,7 +120,9 @@ struct MovementRepository : MovementProtocol {
 
 		var stock = Stock()
 		let article = MovementArticle()
-		try article.query(data: [("movementId", movement.movementId)])
+		try article.query(whereclause: "movementId",
+		                  params: [movement.movementId],
+		                  cursor: StORMCursor(limit: 1000, offset: 0))
 		for item in article.rows() {
 			
 			let articles = item.movementArticleProduct["articles"] as! [[String : Any]];
