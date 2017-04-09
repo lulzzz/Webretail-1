@@ -178,6 +178,7 @@ struct ArticleRepository : ArticleProtocol {
 		items._storeIds = storeIds
 		try items.query(whereclause: "productId = $1",
 						params: [productId],
+						orderby: ["articleId"],
 						cursor: StORMCursor(limit: 10000, offset: 0))
 		
         return try items.rows()
