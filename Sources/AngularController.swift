@@ -28,6 +28,12 @@ public class AngularController {
 		routes.add(method: .get, uri: "/movement/{id}", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/movement/document/{id}", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/movement/barcode/{id}", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/discount", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/discount/:id", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/invoice", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/invoice/:id", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/invoice/document/:id", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/report/cashregister", handler: angularHandlerGET)
 		
         return routes
     }
