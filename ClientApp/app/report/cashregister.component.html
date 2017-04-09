@@ -1,0 +1,25 @@
+﻿<img *ngIf="!items" src="/assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+
+    <h1>Cash Register</h1>
+
+    <p-dataTable [value]="items" sortField="movementDevice" 
+        rowGroupMode="subheader" groupField="movementDevice" expandableRowGroups="true" [sortableRowGroup]="false"
+        [responsive]="true">
+        <p-footer><b>{{totalItems}}</b> receipts</p-footer>
+        <ng-template pTemplate="rowgroupheader" let-rowData>{{rowData['movementDevice']}}</ng-template>
+        <p-column field="movementNumber" header="Number"></p-column>
+        <p-column field="movementDate" header="Date"></p-column>
+        <p-column field="movementAmount" header="Amount">
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                <span>{{data[col.field] | currency: 'EUR' : true}}</span>
+            </ng-template>
+        </p-column>
+        <ng-template pTemplate="rowgroupfooter" let-data>
+            <td colspan="2" style="text-align:right">Total Amount</td>
+            <td>{{calculateGroupTotal(data['movementDevice']) | currency: 'EUR' : true }}</td>
+        </ng-template>
+    </p-dataTable>
+
+</div>
