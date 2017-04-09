@@ -148,4 +148,13 @@ class Product: PostgresSqlORM, JSONConvertible {
 		)
 		self._articles = try article.rows()
 	}
+
+	func makeArticle(barcode: String) throws {
+		let article = Article()
+		try article.query(
+			whereclause: "productId = $1 AND articleBarcode = $2",
+			params: [self.productId, barcode]
+		)
+		self._articles = [article]
+	}
 }

@@ -63,7 +63,7 @@ struct ProductRepository : ProductProtocol {
         }
 
 		let item = try getProduct(id: article.productId)
-		try item?.makeArticles()
+		try item?.makeArticle(barcode: barcode)
 		
 		return item
     }
