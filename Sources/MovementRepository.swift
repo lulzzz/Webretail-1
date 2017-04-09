@@ -136,7 +136,9 @@ struct MovementRepository : MovementProtocol {
 			if (stock.stockId == 0) {
 				stock.storeId = storeId
 				stock.articleId = articleId
-				try stock.save()
+				try stock.save {
+					id in stock.stockId = id as! Int
+				}
 			}
 			
 			switch actionType {
