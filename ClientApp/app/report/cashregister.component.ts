@@ -1,7 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, Input } from '@angular/core';
 import { AuthenticationService } from './../services/authentication.service';
 import { MovementService } from './../services/movement.service';
 import { Movement } from './../shared/models';
+import { DateFilterPipe } from './../pipes/date-filter.pipe';
 
 @Component({
     selector: 'cashregister-component',
@@ -10,7 +11,11 @@ import { Movement } from './../shared/models';
 
 export class CashRegisterComponent implements OnInit {
     totalItems = 0;
+    totalAmount = 0.0;
+    movemets: Movement[];
     items: Movement[];
+    private _dateStartValue: Date;
+    private _dateFinishValue: Date;
 
     constructor(private authenticationService: AuthenticationService,
                 private movementService: MovementService) { }
@@ -21,10 +26,26 @@ export class CashRegisterComponent implements OnInit {
         this.movementService
             .getAll()
             .subscribe(result => {
-                this.items = result;
-                this.totalItems = this.items.length;
+                this.movemets = result;
+                this.dateStartValue = new Date();
             }, onerror => alert(onerror._body)
         );
+    }
+
+    @Input() set dateStartValue(value: Date) {
+        this._dateStartValue = value;
+        this.updateTotals();
+    }
+    get dateStartValue(): Date {
+        return this._dateStartValue;
+    }
+
+    @Input() set dateFinishValue(value: Date) {
+        this._dateFinishValue = value;
+        this.updateTotals();
+    }
+    get dateFinishValue(): Date {
+        return this._dateFinishValue;
     }
 
     calculateGroupTotal(device: string) {
@@ -37,5 +58,13 @@ export class CashRegisterComponent implements OnInit {
             }
         }
         return total;
+    }
+
+    updateTotals() {
+        this.items = new DateFilterPipe().transform(this.movemets, this.dateStartValue, this.dateFinishValue);
+        this.totalItems = this.items.length;
+        if (this.totalItems > 0) {
+            this.totalAmount = this.items.map(p => p.movementAmount).reduce((sum, current) => sum + current);
+        }
     }
 }

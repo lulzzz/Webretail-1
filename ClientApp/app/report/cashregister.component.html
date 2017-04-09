@@ -4,21 +4,32 @@
 
     <h1>Cash Register</h1>
 
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <p-calendar [(ngModel)]="dateStartValue" [inputStyle]="{'width':'120px'}" dateFormat="yy-mm-dd" placeholder="Start" [showIcon]="true"></p-calendar>
+            <p-calendar [(ngModel)]="dateFinishValue" [inputStyle]="{'width':'120px','margin-left':'30px'}" dateFormat="yy-mm-dd" placeholder="Finish" [showIcon]="true"></p-calendar>
+        </div>
+    </p-toolbar>
+
     <p-dataTable [value]="items" sortField="movementDevice" 
         rowGroupMode="subheader" groupField="movementDevice" expandableRowGroups="true" [sortableRowGroup]="false"
         [responsive]="true">
-        <p-footer><b>{{totalItems}}</b> receipts</p-footer>
+        <p-footer>
+            <span style="float: left"><b>{{totalItems}}</b> receipts</span>
+            <span style="float: right">Total amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
+            <p>&nbsp;</p>
+        </p-footer>
         <ng-template pTemplate="rowgroupheader" let-rowData>{{rowData['movementDevice']}}</ng-template>
-        <p-column field="movementNumber" header="Number"></p-column>
-        <p-column field="movementDate" header="Date"></p-column>
-        <p-column field="movementAmount" header="Amount">
+        <p-column field="movementNumber" header="Number" [sortable]="true"></p-column>
+        <p-column field="movementDate" header="Date" [sortable]="true"></p-column>
+        <p-column field="movementAmount" header="Amount" [sortable]="true">
             <ng-template let-col let-data="rowData" pTemplate="body">
                 <span>{{data[col.field] | currency: 'EUR' : true}}</span>
             </ng-template>
         </p-column>
         <ng-template pTemplate="rowgroupfooter" let-data>
-            <td colspan="2" style="text-align:right">Total Amount</td>
-            <td>{{calculateGroupTotal(data['movementDevice']) | currency: 'EUR' : true }}</td>
+            <td colspan="2" style="text-align:right">Subtotal amount</td>
+            <td><b>{{calculateGroupTotal(data['movementDevice']) | currency: 'EUR' : true }}</b></td>
         </ng-template>
     </p-dataTable>
 
