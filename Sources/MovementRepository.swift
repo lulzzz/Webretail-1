@@ -118,7 +118,6 @@ struct MovementRepository : MovementProtocol {
 		let quantity = movement.getJSONValue(named: "causalQuantity", from: movement.movementCausal, defaultValue: 0)
 		let booked = movement.getJSONValue(named: "causalBooked", from: movement.movementCausal, defaultValue: 0)
 
-		var stock = Stock()
 		let article = MovementArticle()
 		try article.query(whereclause: "movementId = $1",
 		                  params: [movement.movementId],
@@ -128,6 +127,7 @@ struct MovementRepository : MovementProtocol {
 			let articles = item.movementArticleProduct["articles"] as! [[String : Any]];
 			let articleId = item.getJSONValue(named: "articleId", from: articles[0], defaultValue: 0)
 			
+			let stock = Stock()
 			try stock.query(
 				whereclause: "articleId = $1 AND storeId = $2",
 				params: [ articleId, storeId ],
@@ -137,8 +137,6 @@ struct MovementRepository : MovementProtocol {
 				stock.storeId = storeId
 				stock.articleId = articleId
 				try stock.save()
-			} else {
-				stock = stock.rows().first!
 			}
 			
 			switch actionType {
