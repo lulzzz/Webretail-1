@@ -35,14 +35,15 @@ struct MovementRepository : MovementProtocol {
     
 	func getInvoiced() throws -> [Movement] {
 		let items = Movement()
-		try items.query(whereclause: "invoiceId <> 0")
+		try items.query(whereclause: "invoiceId <> $1", params: [0])
 		
 		return try items.rows()
 	}
 
 	func getReceipted() throws -> [Movement] {
 		let items = Movement()
-		try items.query(whereclause: "movementCausal ->> 'causalIsPos' = true",
+		try items.query(whereclause: "movementCausal ->> 'causalIsPos' = $1",
+		                params: [true],
 		                orderby: ["movementDevice, movementDate, movementNumber"])
 		
 		return try items.rows()
@@ -57,8 +58,8 @@ struct MovementRepository : MovementProtocol {
 		
 	func get(customerId: Int) throws -> [Movement] {
 		let items = Movement()
-		try items.query(whereclause: "movementCustomer ->> 'customerId' = $1 AND invoiceId = 0 AND movementStatus = 'Completed'",
-		                params: [customerId],
+		try items.query(whereclause: "movementCustomer ->> 'customerId' = $1 AND invoiceId = $2 AND movementStatus = $3",
+		                params: [customerId, 0, "Completed"],
 		                orderby: ["movementId"])
 		
 		return try items.rows()
