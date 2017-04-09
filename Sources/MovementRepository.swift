@@ -94,11 +94,11 @@ struct MovementRepository : MovementProtocol {
 		else if current.movementStatus == "New" && item.movementStatus == "Processing" {
 			try process(movement: current, actionType: ActionType.Booking)
 		}
-		else if current.movementStatus == "Processing" && item.movementStatus != "Processing" {
-			try process(movement: current, actionType: ActionType.Unbooking)
-		}
 		else if current.movementStatus != "Completed" && item.movementStatus == "Completed" {
 			try process(movement: current, actionType: ActionType.Stoking)
+		}
+		else if current.movementStatus == "Processing" && item.movementStatus != "Processing" {
+			try process(movement: current, actionType: ActionType.Unbooking)
 		}
 		current.movementStatus = item.movementStatus
 		current.movementNote = item.movementNote
@@ -147,7 +147,9 @@ struct MovementRepository : MovementProtocol {
 					stock.stockBooked += item.movementArticleQuantity
 				}
 			case ActionType.Unbooking:
-				stock.stockBooked -= item.movementArticleQuantity
+				if booked > 0 {
+					stock.stockBooked -= item.movementArticleQuantity
+				}
 			default:
 				if quantity > 0 {
 					stock.stockQuantity += item.movementArticleQuantity
