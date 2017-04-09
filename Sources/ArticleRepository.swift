@@ -229,7 +229,8 @@ struct ArticleRepository : ArticleProtocol {
 				a,b in "\(a)#\(b.attributeValueId)"
 			}
 		}
-		for group in grouped {
+		
+		for group in grouped.sorted(by: { $0.key < $1.key }) {
 			var row = [ArticleItem]()
 			var isFirst = true;
 			for article in group.value {
