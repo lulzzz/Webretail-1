@@ -147,6 +147,7 @@ class MovementController {
             let item = Movement()
             item.setJSONValues(json!)
             try self.repository.update(id: id!, item: item)
+			item._amount = item.getJSONValue(named: "movementAmount", from: json!, defaultValue: 0.0)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {

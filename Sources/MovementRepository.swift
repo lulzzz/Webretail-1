@@ -133,7 +133,7 @@ struct MovementRepository : MovementProtocol {
 				params: [ articleId, storeId ],
 				cursor: StORMCursor(limit: 1, offset: 0))
 			
-			if (stock.rows().count == 0) {
+			if (stock.stockId == 0) {
 				stock.storeId = storeId
 				stock.articleId = articleId
 				try stock.save()
