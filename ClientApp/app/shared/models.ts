@@ -1,5 +1,44 @@
 // Classes
 
+export class Company {
+  public companyName: string;
+  public companyDesc: string;
+  public companyWebsite: string;
+  public companyEmail: string;
+  public companyPhone: string;
+  public companyAddress: string;
+  public companyCity: string;
+  public companyZip: string;
+  public companyCountry: string;
+  public companyFiscalCode: string;
+  public companyVatNumber: string;
+	public smtpServer: string = ""
+	public smtpPort: number = 0
+	public smtpSsl: boolean = false
+	public smtpUsername: string = ""
+	public smtpPassword: string = ""
+
+
+  constructor() {
+    this.companyName = '';
+    this.companyDesc = '';
+    this.companyWebsite = '';
+    this.companyEmail = '';
+    this.companyPhone = '';
+    this.companyAddress = '';
+    this.companyCity = '';
+    this.companyZip = '';
+    this.companyCountry = '';
+    this.companyFiscalCode = '';
+    this.companyVatNumber = '';
+	  this.smtpServer = '';
+	  this.smtpPort = 0;
+	  this.smtpSsl = false;
+	  this.smtpUsername = '';
+	  this.smtpPassword = '';
+  }
+}
+
 export class Login {
   constructor(
     public username: string,

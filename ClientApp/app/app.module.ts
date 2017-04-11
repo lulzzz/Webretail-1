@@ -24,7 +24,7 @@ import { ArticlePickerComponent } from './shared/article-picker.component';
 import { ProductPickerComponent } from './shared/product-picker.component';
 import { MovementPickerComponent } from './shared/movement-picker.component';
 import { HomeComponent } from './home/home.component';
-
+import { CompanyComponent } from './company/company.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 import { AccountComponent } from './account/account.component';
@@ -51,6 +51,7 @@ import { CashRegisterComponent } from './cashregister/cashregister.component';
 import { ReportCashRegisterComponent } from './report/cashregister.component';
 
 import { AuthenticationService } from './services/authentication.service';
+import { CompanyService } from './services/company.service';
 import { AccountService } from './services/account.service';
 import { AttributeService } from './services/attribute.service';
 import { BrandService } from './services/brand.service';
@@ -98,6 +99,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ProductPickerComponent,
         MovementPickerComponent,
         HomeComponent,
+        CompanyComponent,
         LoginComponent,
         RegisterComponent,
         AccountComponent,
@@ -126,6 +128,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
     providers: [
         Configuration,
         AuthenticationService,
+        CompanyService,
         AccountService,
         AttributeService,
         BrandService,

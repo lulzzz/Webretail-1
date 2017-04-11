@@ -6,4 +6,9 @@
 //
 //
 
-import Foundation
+protocol CompanyProtocol {
+	
+	func get() throws -> Company?
+
+	func update(item: Company) throws
+}

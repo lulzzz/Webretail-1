@@ -66,6 +66,7 @@ export class CashRegisterComponent implements OnInit {
 
     closeClick() {
         if (this.dataform.controls.join.value === true) {
+            alert(this.dataform.controls.join.value);
             localStorage.setItem("cashRegister", JSON.stringify(this.selected));
         }
         this.displayPanel = false;

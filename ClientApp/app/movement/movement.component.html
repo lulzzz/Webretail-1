@@ -1,4 +1,4 @@
-﻿<p-confirmDialog header="Confirmation delete" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+﻿<p-confirmDialog header="Confirmation" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
 <img *ngIf="!items" src="/assets/loading.gif" class="loading">
 
 <div class="container-fluid">
@@ -9,10 +9,12 @@
     <p-toolbar *ngIf="item">
         <div class="ui-toolbar-group-left">
             <span><b>n°</b> {{item.movementNumber}}</span> <span><b>date</b>: {{item.movementDate | date: 'yyyy-MM-dd'}}</span>
-            <br/><span><b>status</b>: {{item.movementStatus}}</span>
+            <br/><span><b>causal</b>: {{item.movementCausal.causalName}}</span>
+            <br/><span><b>store</b>: {{item.movementStore.storeName}}</span>
         </div>
         <div class="ui-toolbar-group-right" style="text-align: right">
-            <span><b>causal</b>: {{item.movementCausal.causalName}}</span><br/><span><b>store</b>: {{item.movementStore.storeName}}</span>
+            <span><b>status</b>: {{item.movementStatus}}</span>
+            <br/><button *ngIf="item.movementStatus!=='Completed'" type="button" pButton icon="fa-save" class="ui-button-success" (click)="completedClick()" label="Completed" style="margin-top: 10px"></button>
         </div>
     </p-toolbar>
 

@@ -6,4 +6,19 @@
 //
 //
 
-import Foundation
+import StORM
+import TurnstileCrypto
+
+struct CompanyRepository : CompanyProtocol {
+		
+	func get() throws -> Company? {
+		let item = Company()
+		try item.query()
+		
+		return item
+	}
+	
+	func update(item: Company) throws {
+		try item.save()
+	}
+}

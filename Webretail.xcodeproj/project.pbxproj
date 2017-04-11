@@ -15,6 +15,10 @@
 		56B7F84E1E958881004D5306 /* InvoiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B7F84D1E958881004D5306 /* InvoiceProtocol.swift */; };
 		56B7F8501E95899E004D5306 /* InvoiceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B7F84F1E95899E004D5306 /* InvoiceRepository.swift */; };
 		56B7F8521E958DC4004D5306 /* InvoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B7F8511E958DC4004D5306 /* InvoiceController.swift */; };
+		56D3A1561E9D6FAB00E10048 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D3A1551E9D6FAB00E10048 /* Company.swift */; };
+		56D3A1581E9D790800E10048 /* CompanyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D3A1571E9D790800E10048 /* CompanyProtocol.swift */; };
+		56D3A15A1E9D794100E10048 /* CompanyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D3A1591E9D794100E10048 /* CompanyRepository.swift */; };
+		56D3A15C1E9D7ADA00E10048 /* CompanyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D3A15B1E9D7ADA00E10048 /* CompanyController.swift */; };
 		OBJ_1005 /* Bytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_928 /* Bytes.swift */; };
 		OBJ_1006 /* Dir.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_929 /* Dir.swift */; };
 		OBJ_1007 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_930 /* File.swift */; };
@@ -1555,6 +1559,10 @@
 		56B7F84D1E958881004D5306 /* InvoiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvoiceProtocol.swift; sourceTree = "<group>"; };
 		56B7F84F1E95899E004D5306 /* InvoiceRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvoiceRepository.swift; sourceTree = "<group>"; };
 		56B7F8511E958DC4004D5306 /* InvoiceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvoiceController.swift; sourceTree = "<group>"; };
+		56D3A1551E9D6FAB00E10048 /* Company.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
+		56D3A1571E9D790800E10048 /* CompanyProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyProtocol.swift; sourceTree = "<group>"; };
+		56D3A1591E9D794100E10048 /* CompanyRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyRepository.swift; sourceTree = "<group>"; };
+		56D3A15B1E9D7ADA00E10048 /* CompanyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyController.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		OBJ_101 /* OAuthDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthDelegator.swift; sourceTree = "<group>"; };
 		OBJ_102 /* OAuthEcho.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthEcho.swift; sourceTree = "<group>"; };
@@ -2726,6 +2734,7 @@
 				5614929B1E9CE3970025BCE9 /* CashRegisterController.swift */,
 				OBJ_31 /* CategoryController.swift */,
 				OBJ_35 /* CausalController.swift */,
+				56D3A15B1E9D7ADA00E10048 /* CompanyController.swift */,
 				OBJ_39 /* CustomerController.swift */,
 				OBJ_44 /* DiscountController.swift */,
 				56B7F8511E958DC4004D5306 /* InvoiceController.swift */,
@@ -2750,6 +2759,7 @@
 				561492971E9CE1AA0025BCE9 /* CashRegisterProtocol.swift */,
 				OBJ_32 /* CategoryProtocol.swift */,
 				OBJ_36 /* CausalProtocol.swift */,
+				56D3A1571E9D790800E10048 /* CompanyProtocol.swift */,
 				OBJ_40 /* CustomerProtocol.swift */,
 				OBJ_46 /* DiscountProtocol.swift */,
 				56B7F84D1E958881004D5306 /* InvoiceProtocol.swift */,
@@ -2772,6 +2782,7 @@
 				561492991E9CE1D50025BCE9 /* CashRegisterRepository.swift */,
 				OBJ_33 /* CatgoryRepository.swift */,
 				OBJ_37 /* CausalRepository.swift */,
+				56D3A1591E9D794100E10048 /* CompanyRepository.swift */,
 				OBJ_41 /* CustomerRepository.swift */,
 				OBJ_47 /* DiscountRepository.swift */,
 				56B7F84F1E95899E004D5306 /* InvoiceRepository.swift */,
@@ -2811,6 +2822,7 @@
 				561492951E9CDFA00025BCE9 /* CashRegister.swift */,
 				OBJ_30 /* Category.swift */,
 				OBJ_34 /* Causal.swift */,
+				56D3A1551E9D6FAB00E10048 /* Company.swift */,
 				OBJ_38 /* Customer.swift */,
 				OBJ_43 /* Discount.swift */,
 				OBJ_45 /* DiscountProduct.swift */,
@@ -5544,6 +5556,7 @@
 				OBJ_2075 /* ArticleRepository.swift in Sources */,
 				OBJ_2076 /* Attribute.swift in Sources */,
 				OBJ_2077 /* AttributeController.swift in Sources */,
+				56D3A15C1E9D7ADA00E10048 /* CompanyController.swift in Sources */,
 				OBJ_2078 /* AttributeProtocol.swift in Sources */,
 				OBJ_2079 /* AttributeRepository.swift in Sources */,
 				OBJ_2080 /* AttributeValue.swift in Sources */,
@@ -5554,6 +5567,7 @@
 				OBJ_2085 /* AuthenticationController.swift in Sources */,
 				OBJ_2086 /* AuthFilter.swift in Sources */,
 				OBJ_2087 /* Brand.swift in Sources */,
+				56D3A1581E9D790800E10048 /* CompanyProtocol.swift in Sources */,
 				56B7F84C1E957533004D5306 /* Invoice.swift in Sources */,
 				OBJ_2088 /* BrandController.swift in Sources */,
 				OBJ_2089 /* BrandProtocoll.swift in Sources */,
@@ -5569,6 +5583,7 @@
 				OBJ_2097 /* CausalProtocol.swift in Sources */,
 				561492961E9CDFA00025BCE9 /* CashRegister.swift in Sources */,
 				OBJ_2098 /* CausalRepository.swift in Sources */,
+				56D3A1561E9D6FAB00E10048 /* Company.swift in Sources */,
 				OBJ_2099 /* Customer.swift in Sources */,
 				OBJ_2100 /* CustomerController.swift in Sources */,
 				OBJ_2101 /* CustomerProtocol.swift in Sources */,
@@ -5581,6 +5596,7 @@
 				OBJ_2108 /* DiscountRepository.swift in Sources */,
 				OBJ_2109 /* Extensions.swift in Sources */,
 				OBJ_2110 /* HTTPTurnstile.swift in Sources */,
+				56D3A15A1E9D794100E10048 /* CompanyRepository.swift in Sources */,
 				OBJ_2111 /* IoCContainer.swift in Sources */,
 				OBJ_2112 /* main.swift in Sources */,
 				OBJ_2113 /* Movement.swift in Sources */,

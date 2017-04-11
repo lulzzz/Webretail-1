@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, Paginator } from 'primeng/primeng';
 import { AuthenticationService } from './../services/authentication.service';
@@ -12,7 +12,6 @@ import { Helpers } from './../shared/helpers';
 })
 
 export class CustomerComponent implements OnInit {
-    @ViewChild('dt') public paginator: Paginator;
     totalRecords = 0;
     customers: Customer[];
 	selected: Customer;

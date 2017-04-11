@@ -29,6 +29,7 @@ func setupDatabase() throws {
 	PostgresConnector.port = 5432
 	StORMdebug = false
 
+	try Company().setup()
 	try tokenStore.setup()
 	let user = User()
 	try user.setup()
@@ -58,6 +59,7 @@ func setupDatabase() throws {
 }
 
 func addIoC() {
+	ioCContainer.register { CompanyRepository() as CompanyProtocol }
 	ioCContainer.register { UserRepository() as UserProtocol }
 	ioCContainer.register { CausalRepository() as CausalProtocol }
 	ioCContainer.register { StoreRepository() as StoreProtocol }
@@ -81,6 +83,7 @@ func addRoutesAndHandlers() {
 	server.addRoutes(AngularController().getRoutes())
 	
 	// Register api routes and handlers
+	server.addRoutes(CompanyController().getRoutes())
 	server.addRoutes(AuthenticationController().getRoutes())
 	server.addRoutes(UserController().getRoutes())
 	server.addRoutes(CausalController().getRoutes())

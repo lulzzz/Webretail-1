@@ -138,4 +138,18 @@ export class MovementComponent implements OnInit, OnDestroy {
                 }, onerror => alert(onerror._body));
         }
     }
+
+    completedClick() {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to complete this movement?',
+            accept: () => {
+                this.item.movementStatus = 'Completed';
+                this.movementService.update(this.item.movementId, this.item)
+                    .subscribe(result => {
+                        this.cancelClick();
+                    }, onerror => alert(onerror._body)
+                );
+            }
+        });
+    }
 }

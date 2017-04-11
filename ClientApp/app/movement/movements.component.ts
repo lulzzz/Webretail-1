@@ -19,6 +19,7 @@ export class MovementsComponent implements OnInit {
     totalRecords = 0;
     items: Movement[];
 	selected: Movement;
+    cashRegister: CashRegister;
     cashregisters: SelectItem[];
     stores: SelectItem[];
     storesFiltered: SelectItem[];
@@ -108,6 +109,11 @@ export class MovementsComponent implements OnInit {
                 this.customers = this.customers.concat(result.map(p => Helpers.newSelectItem(p, p.customerName)));
             }
         );
+
+        let jsonObj: any = JSON.parse(localStorage.getItem('cashRegister'));
+        if (jsonObj !== null) {
+            this.cashRegister = <CashRegister>jsonObj;
+        }
     }
 
     buildFilter(items: Movement[]) {
@@ -152,7 +158,8 @@ export class MovementsComponent implements OnInit {
             this.selected.movementStore = this.stores[0].value;
         }
         if (this.causals.length > 0) {
-            this.selected.movementCausal = this.causals[0].value;
+            this.selected.movementCausal = this.cashRegister ? this.causals.find(p => p.value.causalIsPos).value : this.causals[0].value;
+            this.onCausalChange(null);
         }
         if (this.customers.length > 0) {
             this.selected.movementCustomer = this.customers[0].value;
@@ -164,13 +171,11 @@ export class MovementsComponent implements OnInit {
     }
 
     onCausalChange(event: any) {
-        if (this.selected.movementCausal.causalIsPos) {
-            let jsonObj: any = JSON.parse(localStorage.getItem('cashRegister'));
-            if (jsonObj !== null) {
-                let cashRegister: CashRegister = <CashRegister>jsonObj;
-                this.selected.movementDevice = cashRegister.cashRegisterName;
-                this.selected.movementStore = cashRegister.store;
-            }
+        if (this.selected.movementCausal.causalIsPos && this.cashRegister !== null) {
+            this.selected.movementDevice = this.cashRegister.cashRegisterName;
+            this.selected.movementStore = this.cashRegister.store;
+        } else {
+            this.selected.movementDevice = '';
         }
     }
 

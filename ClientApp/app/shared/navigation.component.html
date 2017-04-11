@@ -55,8 +55,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li *ngIf="!isAdmin"><a [routerLink]="['/account/myinfo']"><i class="glyphicon glyphicon-user"></i>Account</a></li>
+                        <li *ngIf="isAdmin"><a [routerLink]="['/company']"><i class="glyphicon glyphicon-home"></i>Company</a></li>
                         <li *ngIf="isAdmin"><a [routerLink]="['/account']"><i class="glyphicon glyphicon-user"></i>Accounts</a></li>
-                        <li><a [routerLink]="['/store']"><i class="glyphicon glyphicon-home"></i>Stores</a></li>
+                        <li><a [routerLink]="['/store']"><i class="glyphicon glyphicon-inbox"></i>Stores</a></li>
                         <li><a [routerLink]="['/cashregister']"><i class="glyphicon glyphicon-piggy-bank"></i>Cash register</a></li>
                     </ul>
                 </li>
