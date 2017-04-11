@@ -7,7 +7,7 @@ import { StoreService } from './../services/store.service';
 import { CausalService } from './../services/causal.service';
 import { CustomerService } from './../services/customer.service';
 import { MovementService } from './../services/movement.service';
-import { Movement } from './../shared/models';
+import { Movement, CashRegister } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
@@ -19,6 +19,7 @@ export class MovementsComponent implements OnInit {
     totalRecords = 0;
     items: Movement[];
 	selected: Movement;
+    cashregisters: SelectItem[];
     stores: SelectItem[];
     storesFiltered: SelectItem[];
     causals: SelectItem[];
@@ -93,6 +94,9 @@ export class MovementsComponent implements OnInit {
             .getAll()
             .subscribe(result => {
                 this.causals = result.map(p => Helpers.newSelectItem(p, p.causalName));
+                if (localStorage.getItem("deviceID") === null) {
+                    this.causals = this.causals.filter(p => p.value.causalIsPos === false);
+                }
             }
         );
 
@@ -142,10 +146,8 @@ export class MovementsComponent implements OnInit {
 
     addClick() {
         this.selected = new Movement();
-        //this.selected.movementNumber = this.items.length > 0 ? Math.max.apply(this, this.items.map(p => p.movementNumber)) + 1 : 1000;
         this.currentStatus = this.selected.movementStatus;
         this.selected.movementUser = localStorage.getItem('uniqueID');
-        this.selected.movementDevice = localStorage.getItem('deviceID');
         if (this.stores.length > 0) {
             this.selected.movementStore = this.stores[0].value;
         }
@@ -159,6 +161,17 @@ export class MovementsComponent implements OnInit {
             this.selected.movementStatus = this.status[0].value;
         }
         this.displayPanel = true;
+    }
+
+    onCausalChange(event: any) {
+        if (this.selected.movementCausal.causalIsPos) {
+            let jsonObj: any = JSON.parse(localStorage.getItem('cashRegister'));
+            if (jsonObj !== null) {
+                let cashRegister: CashRegister = <CashRegister>jsonObj;
+                this.selected.movementDevice = cashRegister.cashRegisterName;
+                this.selected.movementStore = cashRegister.store;
+            }
+        }
     }
 
     editClick() {
@@ -177,7 +190,6 @@ export class MovementsComponent implements OnInit {
     }
 
     saveClick() {
-        localStorage.setItem("deviceID", this.selected.movementDevice);
         if (this.isNew) {
             this.movementService.create(this.selected)
                 .subscribe(result => {

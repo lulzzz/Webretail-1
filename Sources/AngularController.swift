@@ -33,6 +33,7 @@ public class AngularController {
 		routes.add(method: .get, uri: "/invoice", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/invoice/:id", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/invoice/document/:id", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/cashregister", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/report/cashregister", handler: angularHandlerGET)
 		
         return routes

@@ -7,7 +7,6 @@
 //
 
 import StORM
-import PostgresStORM
 import PerfectLib
 
 class Article: PostgresSqlORM, JSONConvertible {

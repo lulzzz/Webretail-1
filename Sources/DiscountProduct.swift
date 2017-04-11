@@ -8,7 +8,6 @@
 
 
 import StORM
-import PostgresStORM
 import PerfectLib
 
 class DiscountProduct: PostgresSqlORM, JSONConvertible {

@@ -271,6 +271,19 @@ export class DiscountProduct {
   }
 }
 
+export class CashRegister {
+  public cashRegisterId: number;
+  public cashRegisterName: string;
+  public store: Store;
+  public cashRegisterUpdated: Date;
+
+  constructor() {
+    this.cashRegisterId = 0;
+    this.cashRegisterName = '';
+    this.store = new Store();
+    this.cashRegisterUpdated = new Date();
+  }
+}
 
 // Interfaces
 

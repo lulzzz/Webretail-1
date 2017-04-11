@@ -7,7 +7,6 @@
 //
 
 import StORM
-import PostgresStORM
 import PerfectLib
 
 class Causal: PostgresSqlORM, JSONConvertible {

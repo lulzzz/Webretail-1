@@ -115,10 +115,14 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-12"><hr></div>
                 </div>
+                <div *ngIf="selected.movementCausal.causalIsPos" class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="device">Cash register</label></div>
+                    <div class="ui-grid-col-8">{{selected.movementDevice}}</div>
+                </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="causal">Causal</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="causals" formControlName="causal" [(ngModel)]="selected.movementCausal" [disabled]="selected.movementStatus!=='New'" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="causals" formControlName="causal" [(ngModel)]="selected.movementCausal" [disabled]="selected.movementStatus!=='New'" (onChange)="onCausalChange($event)" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['causal'].valid&&dataform.controls['causal'].dirty">
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['causal'].errors['required']">Causal is required</span>
@@ -139,15 +143,6 @@
                     <div class="ui-grid-col-4"><label for="customer">Customer</label></div>
                     <div class="ui-grid-col-8">
                         <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.movementCustomer" [disabled]="selected.movementStatus!=='New'" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-12"><hr></div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="device">Cash register</label></div>
-                    <div class="ui-grid-col-8">
-                        <input pInputText type="text" formControlName="device" [(ngModel)]="selected.movementDevice"/>
                     </div>
                 </div>
                 <div class="ui-grid-row">

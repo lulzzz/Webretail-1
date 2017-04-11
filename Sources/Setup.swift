@@ -47,6 +47,7 @@ func setupDatabase() throws {
 	try Article().setup()
 	try ArticleAttributeValue().setup()
 	try Stock().setup()
+	try CashRegister().setup()
 	try Customer().setup()
 	try Invoice().setup()
 	try Movement().setup()
@@ -60,6 +61,7 @@ func addIoC() {
 	ioCContainer.register { UserRepository() as UserProtocol }
 	ioCContainer.register { CausalRepository() as CausalProtocol }
 	ioCContainer.register { StoreRepository() as StoreProtocol }
+	ioCContainer.register { CashRegisterRepository() as CashRegisterProtocol }
 	ioCContainer.register { BrandRepository() as BrandProtocol }
 	ioCContainer.register { CategoryRepository() as CategoryProtocol }
 	ioCContainer.register { AttributeRepository() as AttributeProtocol }
@@ -83,6 +85,7 @@ func addRoutesAndHandlers() {
 	server.addRoutes(UserController().getRoutes())
 	server.addRoutes(CausalController().getRoutes())
 	server.addRoutes(StoreController().getRoutes())
+	server.addRoutes(CashRegisterController().getRoutes())
 	server.addRoutes(BrandController().getRoutes())
 	server.addRoutes(CategoryController().getRoutes())
 	server.addRoutes(AttributeController().getRoutes())

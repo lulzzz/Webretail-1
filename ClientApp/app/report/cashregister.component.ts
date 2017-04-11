@@ -5,11 +5,11 @@ import { Movement } from './../shared/models';
 import { DateFilterPipe } from './../pipes/date-filter.pipe';
 
 @Component({
-    selector: 'cashregister-component',
+    selector: 'reportcashregister-component',
     templateUrl: 'cashregister.component.html'
 })
 
-export class CashRegisterComponent implements OnInit {
+export class ReportCashRegisterComponent implements OnInit {
     totalItems = 0;
     totalAmount = 0.0;
     movemets: Movement[];

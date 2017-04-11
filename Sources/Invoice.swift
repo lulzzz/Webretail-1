@@ -8,7 +8,6 @@
 
 import Foundation
 import StORM
-import PostgresStORM
 import PerfectLib
 
 class Invoice: PostgresSqlORM, JSONConvertible {

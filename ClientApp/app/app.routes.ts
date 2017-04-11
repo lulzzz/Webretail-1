@@ -22,7 +22,8 @@ import { DiscountComponent } from './discount/discount.component';
 import { InvoicesComponent } from './invoice/invoices.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { InvoiceDocumentComponent } from './invoice/invoicedocument.component';
-import { CashRegisterComponent } from './report/cashregister.component';
+import { CashRegisterComponent } from './cashregister/cashregister.component';
+import { ReportCashRegisterComponent } from './report/cashregister.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -49,7 +50,8 @@ export const routes: Routes = [
     { path: 'invoice', component: InvoicesComponent },
     { path: 'invoice/:id', component: InvoiceComponent },
     { path: 'invoice/document/:id', component: InvoiceDocumentComponent },
-    { path: 'report/cashregister', component: CashRegisterComponent }
+    { path: 'cashregister', component: CashRegisterComponent },
+    { path: 'report/cashregister', component: ReportCashRegisterComponent }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);
