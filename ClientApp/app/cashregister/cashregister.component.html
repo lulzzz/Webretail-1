@@ -19,13 +19,9 @@
         selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
         [globalFilter]="gb" #dt>
-        <p-column field="cashRegisterId" header="Id" [style]="{'width':'100px'}" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="cashRegisterName" header="Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="store.storeName" header="Store" [sortable]="true" [filter]="true" filterMatchMode="equals" [style]="{'overflow':'visible'}" >
-            <ng-template pTemplate="filter" let-col>
-                <p-dropdown [options]="stores" [filter]="true" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
-            </ng-template>
-        </p-column>     
+        <p-column field="cashRegisterId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+        <p-column field="cashRegisterName" header="Name" [sortable]="true"></p-column>
+        <p-column field="store.storeName" header="Store" [sortable]="true"></p-column>     
     </p-dataTable>
 
     <p-panel *ngIf="displayPanel">
@@ -53,12 +49,16 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="store">Store</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="allstores" formControlName="store" [(ngModel)]="selected.store" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="stores" formControlName="store" [(ngModel)]="selected.store" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['store'].valid&&dataform.controls['store'].dirty">
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['brand'].errors['required']">Store is required</span>
                         </div>
                     </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="isPrimary">Join with this device</label></div>
+                    <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="join"></p-inputSwitch></div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">

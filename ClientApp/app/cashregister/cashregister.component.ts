@@ -17,10 +17,9 @@ export class CashRegisterComponent implements OnInit {
     items: CashRegister[];
 	selected: CashRegister;
     stores: SelectItem[];
-    allstores: SelectItem[];
     displayPanel: boolean;
 	dataform: FormGroup;
-
+    
     constructor(private authenticationService: AuthenticationService,
                 private cashRegisterService: CashRegisterService,
                 private storeService: StoreService,
@@ -32,7 +31,8 @@ export class CashRegisterComponent implements OnInit {
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
-            'store': new FormControl('', Validators.required)
+            'store': new FormControl('', Validators.required),
+            'join': new FormControl('', Validators.required)
         });
 
         this.cashRegisterService
@@ -40,17 +40,12 @@ export class CashRegisterComponent implements OnInit {
             .subscribe(result => {
                 this.items = result;
                 this.totalRecords = this.items.length;
-
-                this.stores = [];
-                this.stores.push({label: 'All', value: null});
-                let filterStores = Helpers.distinct(this.items.map((item: CashRegister) => Helpers.newSelectItem(item.store.storeName)));
-                this.stores = this.stores.concat(filterStores);
             }, onerror => alert(onerror._body)
         );
 
         this.storeService.getAll()
             .subscribe(result => {
-                this.allstores = result.map(p => Helpers.newSelectItem(p, p.storeName));
+                this.stores = result.map(p => Helpers.newSelectItem(p, p.storeName));
             }, onerror => alert(onerror._body)
         );
     }
@@ -61,7 +56,7 @@ export class CashRegisterComponent implements OnInit {
 
     addClick() {
         this.selected = new CashRegister();
-        this.selected.store = this.allstores.length > 0 ? this.allstores[0].value : null;
+        this.selected.store = this.stores.length > 0 ? this.stores[0].value : null;
         this.displayPanel = true;
     }
 
@@ -70,6 +65,9 @@ export class CashRegisterComponent implements OnInit {
     }
 
     closeClick() {
+        if (this.dataform.controls.join.value === true) {
+            localStorage.setItem("cashRegister", JSON.stringify(this.selected));
+        }
         this.displayPanel = false;
         this.selected = null;
     }
