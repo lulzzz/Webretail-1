@@ -76,6 +76,7 @@ struct InvoiceRepository : InvoiceProtocol {
 		item.invoiceUpdated = Int.now()
 		current.invoiceNumber = item.invoiceNumber
 		current.invoiceDate = item.invoiceDate
+		current.invoicePayment = item.invoicePayment
 		current.invoiceCustomer = item.invoiceCustomer
 		current.invoiceNote = item.invoiceNote
 		current.invoiceUpdated = item.invoiceUpdated

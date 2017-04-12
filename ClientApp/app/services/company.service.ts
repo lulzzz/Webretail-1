@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Company } from '../shared/models';
+import { Company, Email } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -24,5 +24,10 @@ export class CompanyService {
     update(model: Company) : Observable<Company> {
         return this.http.put('/api/company', model, { headers: Helpers.getHeaders() })
             .map(result => <Company>result.json());
+    }
+
+    sendMail(model: Email) : Observable<Email> {
+        return this.http.post('/api/email', model, { headers: Helpers.getHeaders() })
+            .map(result => <Email>result.json());
     }
 }

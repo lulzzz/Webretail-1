@@ -1,10 +1,11 @@
-﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthenticationService } from './../services/authentication.service';
 import { MovementService } from './../services/movement.service';
-import { Movement, MovementArticle } from './../shared/models';
-import { Helpers } from './../shared/helpers';
+import { CompanyService } from './../services/company.service';
+import { Movement, MovementArticle, Company, Email } from './../shared/models';
 
 @Component({
     selector: 'document-component',
@@ -12,6 +13,7 @@ import { Helpers } from './../shared/helpers';
 })
 
 export class DocumentComponent implements OnInit, OnDestroy {
+    @ViewChild('doc') doc: ElementRef; 
     private sub: any;
     movementId: number;
     totalItems = 0;
@@ -20,10 +22,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
     movement: Movement;
     groups: any[];
 
-    constructor(private activatedRoute: ActivatedRoute,
+    constructor(@Inject(DOCUMENT) private document: any,
+                private location: Location,
+                private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
-                private movementService: MovementService,
-                private location: Location) {
+                private companyService: CompanyService,
+                private movementService: MovementService) {
     }
 
 	ngOnInit() {
@@ -82,5 +86,18 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
     printClick() {
         window.print();
+    }
+
+    sendMailClick() {
+        let email = new Email()
+        email.address = this.movement.movementCustomer.customerEmail;
+        email.subject = "Document n° " + this.movement.movementNumber;
+        email.content = this.doc.nativeElement.innerHTML;
+
+        this.companyService.sendMail(email)
+            .subscribe(
+                result => alert(result.content),
+                onerror => alert(onerror._body)
+            );
     }
 }

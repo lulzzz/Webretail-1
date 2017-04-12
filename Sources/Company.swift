@@ -23,9 +23,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 	public var companyCity : String = ""
 	public var companyCountry : String = ""
 	public var companyZip : String = ""
-	
-	public var smtpServer : String = ""
-	public var smtpPort : Int = 0
+	public var smtpHost : String = ""
 	public var smtpSsl : Bool = false
 	public var smtpUsername : String = ""
 	public var smtpPassword : String = ""
@@ -46,8 +44,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 		companyZip = this.data["companyzip"] as? String ?? ""
 		companyCountry = this.data["companycountry"] as? String ?? ""
 
-		smtpServer = this.data["smtpserver"] as? String ?? ""
-		smtpPort = this.data["smtpport"] as? Int ?? 0
+		smtpHost = this.data["smtphost"] as? String ?? ""
 		smtpSsl = this.data["smtpssl"] as? Bool ?? false
 		smtpUsername = this.data["smtpusername"] as? String ?? ""
 		smtpPassword = this.data["smtppassword"] as? String ?? ""
@@ -76,9 +73,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 		self.companyCity = getJSONValue(named: "companyCity", from: values, defaultValue: "")
 		self.companyZip = getJSONValue(named: "companyZip", from: values, defaultValue: "")
 		self.companyCountry = getJSONValue(named: "companyCountry", from: values, defaultValue: "")
-
-		self.smtpServer = getJSONValue(named: "smtpServer", from: values, defaultValue: "")
-		self.smtpPort = getJSONValue(named: "smtpPort", from: values, defaultValue: 0)
+		self.smtpHost = getJSONValue(named: "smtpHost", from: values, defaultValue: "")
 		self.smtpSsl = getJSONValue(named: "smtpSsl", from: values, defaultValue: false)
 		self.smtpUsername = getJSONValue(named: "smtpUsername", from: values, defaultValue: "")
 		self.smtpPassword = getJSONValue(named: "smtpPassword", from: values, defaultValue: "")
@@ -102,9 +97,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 			"companyCity": companyCity,
 			"companyZip": companyZip,
 			"companyCountry": companyCountry,
-			
-			"smtpServer": smtpServer,
-			"smtpPort": smtpPort,
+			"smtpHost": smtpHost,
 			"smtpSsl": smtpSsl,
 			"smtpUsername": smtpUsername,
 			"smtpPassword": smtpPassword

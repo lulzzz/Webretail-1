@@ -8,7 +8,7 @@
 
 import PerfectLib
 
-class EmailMessage: JSONConvertible {
+class Email: JSONConvertible {
 	
 	public var address : String = ""
 	public var subject : String = ""

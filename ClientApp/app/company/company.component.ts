@@ -35,7 +35,6 @@ export class CompanyComponent implements OnInit {
             'fiscalCode': new FormControl('', Validators.required),
             'vatNumber': new FormControl('', Validators.required),
             'host': new FormControl('', Validators.nullValidator),
-            'port': new FormControl('', Validators.nullValidator),
             'ssl': new FormControl('', Validators.nullValidator),
             'username': new FormControl('', Validators.nullValidator),
             'password': new FormControl('', Validators.nullValidator)

@@ -101,19 +101,15 @@
                 <div class="ui-grid-col-12"><h2>Outgoing Mail</h2></div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="host">Host</label></div>
+                <div class="ui-grid-col-4"><label for="host">Ssl</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="host" [(ngModel)]="company.smtpServer"/>
+                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="ssl" [(ngModel)]="company.smtpSsl"></p-inputSwitch>
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="port">Port</label></div>
-                <div class="ui-grid-col-4">
-                    <input pInputText type="number" formControlName="port" [(ngModel)]="company.smtpPort"/>
-                </div>
-                <div class="ui-grid-col-2" style="text-align: right"><label for="ssl">Ssl</label></div>
-                <div class="ui-grid-col-2" style="text-align: right">
-                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="ssl"></p-inputSwitch>
+                <div class="ui-grid-col-4"><label for="host">Host</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="host" [(ngModel)]="company.smtpHost"/>
                 </div>
             </div>
             <div class="ui-grid-row">

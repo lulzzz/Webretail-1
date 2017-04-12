@@ -5,13 +5,14 @@
     <div class="noprint">
         <button pButton type="button" title="Movements" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
         <button pButton type="button" label="Print" title="Print document" (click)="printClick()" class="ui-button-secondary" icon="fa-print"></button>
+        <button pButton type="button" label="Send mail" title="Send mail" (click)="sendMailClick()" class="ui-button-secondary" icon="fa-envelope"></button>
     </div>
 
-    <div *ngFor="let items of groups">          
-        <table *ngIf="movement" class="table">    
+    <div *ngFor="let items of groups" #doc>          
+        <table *ngIf="movement" class="table" style="width: 100%">    
             <thead>
                 <tr> 
-                    <td colspan="5"><img title="Close" src="/assets/ci.jpg" style="width: 100%;margin: 10px 0;"></td> 
+                    <td colspan="5"><img title="Close" src="http://{{document.location.host}}/assets/ci.jpg" style="width: 100%;margin: 10px 0;"></td> 
                 </tr> 
                 <tr> 
                     <td><strong>Number</strong></td> 
@@ -47,7 +48,7 @@
             </thead>
         </table>
 
-        <table class="table" cellpadding="2" cellspacing="2">    
+        <table class="table" cellpadding="2" cellspacing="2" style="width: 100%">    
             <thead *ngIf="item">
                 <tr style="background-color: whitesmoke"> 
                     <td><strong>Barcode</strong></td> 

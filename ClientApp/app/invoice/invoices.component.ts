@@ -69,7 +69,7 @@ export class InvoicesComponent implements OnInit {
         this.invoiceService
             .getPayments()
             .subscribe(result => {
-                this.payments = result.map(p => Helpers.newSelectItem(p, p.value));
+                this.payments = result.map(p => Helpers.newSelectItem(p.value));
             }
         );
 

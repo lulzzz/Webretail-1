@@ -94,6 +94,7 @@ class InvoiceController {
 			let item = Invoice()
 			item.setJSONValues(json!)
 			try self.repository.update(id: id.toInt()!, item: item)
+			item.invoiceAmount = item.getJSONValue(named: "invoiceAmount", from: json!, defaultValue: 0.0)
 			try response.setBody(json: item)
 			response.completed(status: .accepted)
 		} catch {

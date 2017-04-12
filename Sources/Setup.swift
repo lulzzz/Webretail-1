@@ -83,6 +83,7 @@ func addRoutesAndHandlers() {
 	server.addRoutes(AngularController().getRoutes())
 	
 	// Register api routes and handlers
+	server.addRoutes(EmailController().getRoutes())
 	server.addRoutes(CompanyController().getRoutes())
 	server.addRoutes(AuthenticationController().getRoutes())
 	server.addRoutes(UserController().getRoutes())

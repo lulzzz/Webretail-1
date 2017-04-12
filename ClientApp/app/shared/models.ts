@@ -13,8 +13,7 @@ export class Company {
   public companyCountry: string;
   public companyFiscalCode: string;
   public companyVatNumber: string;
-	public smtpServer: string = ""
-	public smtpPort: number = 0
+  public smtpHost: string = ""
 	public smtpSsl: boolean = false
 	public smtpUsername: string = ""
 	public smtpPassword: string = ""
@@ -33,8 +32,7 @@ export class Company {
     this.companyCountry = '';
     this.companyFiscalCode = '';
     this.companyVatNumber = '';
-	  this.smtpServer = '';
-	  this.smtpPort = 0;
+	  this.smtpHost = '';
 	  this.smtpSsl = false;
 	  this.smtpUsername = '';
 	  this.smtpPassword = '';
@@ -323,6 +321,18 @@ export class CashRegister {
     this.cashRegisterName = '';
     this.store = new Store();
     this.cashRegisterUpdated = new Date();
+  }
+}
+
+export class Email {
+  public address: string;
+  public subject: string;
+  public content: string;
+
+  constructor() {
+    this.address = '';
+    this.subject = '';
+    this.content = '';
   }
 }
 
