@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { Message } from 'primeng/primeng';
 import { AuthenticationService } from './../services/authentication.service';
 import { CompanyService } from './../services/company.service';
 import { Company } from './../shared/models';
@@ -10,6 +11,7 @@ import { Company } from './../shared/models';
 })
 
 export class CompanyComponent implements OnInit {
+    msgs: Message[] = [];
     company: Company;
 	dataform: FormGroup;
 
@@ -25,25 +27,42 @@ export class CompanyComponent implements OnInit {
             'desc': new FormControl('', Validators.nullValidator),
             'site': new FormControl('', Validators.nullValidator),
             'email': new FormControl('', Validators.required),
-            'phone': new FormControl('', Validators.nullValidator),
+            'phone': new FormControl('', Validators.required),
             'address': new FormControl('', Validators.required),
             'city': new FormControl('', Validators.required),
             'zip': new FormControl('', Validators.required),
             'country': new FormControl('', Validators.required),
-            'fiscalCode': new FormControl('', Validators.nullValidator),
-            'vatNumber': new FormControl('', Validators.nullValidator)
+            'fiscalCode': new FormControl('', Validators.required),
+            'vatNumber': new FormControl('', Validators.required),
+            'host': new FormControl('', Validators.nullValidator),
+            'port': new FormControl('', Validators.nullValidator),
+            'ssl': new FormControl('', Validators.nullValidator),
+            'username': new FormControl('', Validators.nullValidator),
+            'password': new FormControl('', Validators.nullValidator)
         });
 
         this.companyService.get()
             .subscribe(result => {
                 this.company = result;
-            }, onerror => alert(onerror._body)
+            }, onerror => this.msgs.push({severity: 'error', summary: 'Get company', detail: onerror._body})
         );
     }
 
+    get isNew() : boolean { return this.company == null || this.company.companyId == 0; }
+
     saveClick() {
-        this.companyService
-            .update(this.company)
-            .subscribe(result => {}, onerror => alert(onerror._body));
+        if (this.isNew) {
+            this.companyService
+                .create(this.company)
+                .subscribe(result => {
+                    this.msgs.push({severity: 'success', summary: 'Success', detail: "Company created"});
+                }, onerror => this.msgs.push({severity: 'error', summary: 'Create company', detail: onerror._body}));
+        } else {
+            this.companyService
+                .update(this.company)
+                .subscribe(result => {
+                    this.msgs.push({severity: 'success', summary: 'Success', detail: "Company updated"});
+                }, onerror => this.msgs.push({severity: 'error', summary: 'Update company', detail: onerror._body}));
+        }
     }
 }

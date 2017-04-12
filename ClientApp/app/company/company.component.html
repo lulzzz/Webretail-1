@@ -1,4 +1,5 @@
-﻿<img *ngIf="!company" src="/assets/loading.gif" class="loading">
+﻿<p-growl [value]="msgs"></p-growl>
+<img *ngIf="!company" src="/assets/loading.gif" class="loading">
 
 <div class="container-fluid">
 
@@ -7,16 +8,24 @@
     <form *ngIf="company" [formGroup]="dataform">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Id</label></div>
-                <div class="ui-grid-col-8">{{company.companyId}}</div>
-            </div>
-            <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="name">Name</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="name" [(ngModel)]="company.companyName"/>
                     <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
                         <i class="fa fa-close"></i> Name is required
                     </div>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="desc">Description</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="desc" [(ngModel)]="company.companyDesc"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="site">Website</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="site" [(ngModel)]="company.companyWebsite"/>
                 </div>
             </div>
             <div class="ui-grid-row">
@@ -74,12 +83,49 @@
                 <div class="ui-grid-col-4"><label for="fiscalCode">Fiscal Code</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="fiscalCode" [(ngModel)]="company.companyFiscalCode"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['fiscalCode'].valid&&dataform.controls['fiscalCode'].dirty">
+                        <i class="fa fa-close"></i> Fiscal Code is required
+                    </div>
                 </div>
             </div>
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="vatNumber">VAT number</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="vatNumber" [(ngModel)]="company.companyVatNumber"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['vatNumber'].valid&&dataform.controls['vatNumber'].dirty">
+                        <i class="fa fa-close"></i> VAT number is required
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-12"><h2>Outgoing Mail</h2></div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="host">Host</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="host" [(ngModel)]="company.smtpServer"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="port">Port</label></div>
+                <div class="ui-grid-col-4">
+                    <input pInputText type="number" formControlName="port" [(ngModel)]="company.smtpPort"/>
+                </div>
+                <div class="ui-grid-col-2" style="text-align: right"><label for="ssl">Ssl</label></div>
+                <div class="ui-grid-col-2" style="text-align: right">
+                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="ssl"></p-inputSwitch>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="username">Username</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="username" [(ngModel)]="company.smtpUsername"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="password">Password</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText type="password" formControlName="password" [(ngModel)]="company.smtpPassword"/>
                 </div>
             </div>
             <div class="ui-grid-row">

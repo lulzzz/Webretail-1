@@ -16,6 +16,11 @@ export class CompanyService {
             .map(result => <Company>result.json());
     }
 
+    create(model: Company) : Observable<Company> {
+        return this.http.post('/api/company', model, { headers: Helpers.getHeaders() })
+            .map(result => <Company>result.json());
+    }
+
     update(model: Company) : Observable<Company> {
         return this.http.put('/api/company', model, { headers: Helpers.getHeaders() })
             .map(result => <Company>result.json());

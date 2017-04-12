@@ -20,6 +20,7 @@ class CompanyController {
 		var routes = Routes()
 		
 		routes.add(method: .get, uri: "/api/company", handler: companyHandlerGET)
+		routes.add(method: .post, uri: "/api/company", handler: companyHandlerPOST)
 		routes.add(method: .put, uri: "/api/company", handler: companyHandlerPUT)
 		
 		return routes
@@ -33,6 +34,21 @@ class CompanyController {
 			let item = try self.repository.get()
 			try response.setBody(json: item)
 			response.completed(status: .ok)
+		} catch {
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+		}
+	}
+	
+	func companyHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		do {
+			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+			let item = Company()
+			item.setJSONValues(json!)
+			try self.repository.add(item: item)
+			try response.setBody(json: item)
+			response.completed(status: .accepted)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
 		}

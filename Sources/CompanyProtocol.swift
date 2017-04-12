@@ -10,5 +10,7 @@ protocol CompanyProtocol {
 	
 	func get() throws -> Company?
 
+	func add(item: Company) throws
+	
 	func update(item: Company) throws
 }

@@ -11,6 +11,7 @@ import PerfectLib
 
 class Company: PostgresSqlORM, JSONConvertible {
 	
+	public var companyId : Int = 0
 	public var companyName : String = ""
 	public var companyDesc : String = ""
 	public var companyWebsite : String = ""
@@ -32,6 +33,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 	open override func table() -> String { return "company" }
 	
 	open override func to(_ this: StORMRow) {
+		companyId = this.data["companyid"] as? Int ?? 0
 		companyName = this.data["companyname"] as? String ?? ""
 		companyDesc = this.data["companydesc"] as? String ?? ""
 		companyWebsite = this.data["companywebsite"] as? String ?? ""
@@ -62,6 +64,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 	}
 	
 	public func setJSONValues(_ values:[String:Any]) {
+		self.companyId = getJSONValue(named: "companyId", from: values, defaultValue: 0)
 		self.companyName = getJSONValue(named: "companyName", from: values, defaultValue: "")
 		self.companyDesc = getJSONValue(named: "companyDesc", from: values, defaultValue: "")
 		self.companyWebsite = getJSONValue(named: "companyWebsite", from: values, defaultValue: "")
@@ -87,6 +90,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 	
 	func getJSONValues() -> [String : Any] {
 		return [
+			"companyId": companyId,
 			"companyName": companyName,
 			"companyDesc": companyDesc,
 			"companyWebsite": companyWebsite,

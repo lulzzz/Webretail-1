@@ -1,6 +1,7 @@
 // Classes
 
 export class Company {
+  public companyId: number;
   public companyName: string;
   public companyDesc: string;
   public companyWebsite: string;
@@ -20,6 +21,7 @@ export class Company {
 
 
   constructor() {
+    this.companyId = 0;
     this.companyName = '';
     this.companyDesc = '';
     this.companyWebsite = '';
