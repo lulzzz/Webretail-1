@@ -64,7 +64,8 @@ class Store: PostgresSqlORM, JSONConvertible {
             "storeAddress":	storeAddress,
             "storeCity": storeCity,
             "storeCountry": storeCountry,
-            "storeZip": storeZip
+            "storeZip": storeZip,
+            "updatedAt": storeUpdated
         ]
     }
 }

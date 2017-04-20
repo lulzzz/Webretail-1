@@ -81,7 +81,7 @@ class Customer: PostgresSqlORM, JSONConvertible {
 			"customerCountry": customerCountry,
 			"customerFiscalCode": customerFiscalCode,
 			"customerVatNumber": customerVatNumber,
-			"customerUpdated": customerUpdated.formatDate()
+			"updatedAt": customerUpdated
 		]
 	}
 }

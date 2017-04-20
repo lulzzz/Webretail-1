@@ -60,7 +60,8 @@ class Causal: PostgresSqlORM, JSONConvertible {
             "causalName": causalName,
             "causalQuantity": causalQuantity,
             "causalBooked": causalBooked,
-            "causalIsPos": causalIsPos
+            "causalIsPos": causalIsPos,
+            "updatedAt": causalUpdated
         ]
     }
 }

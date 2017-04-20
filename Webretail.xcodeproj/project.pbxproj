@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		563359E21E9E220400625C4F /* Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563359E11E9E220400625C4F /* Email.swift */; };
+		56B868241EA90277009FC003 /* SyncronizeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B868231EA90277009FC003 /* SyncronizeProtocol.swift */; };
+		56B868261EA9034C009FC003 /* SyncronizeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B868251EA9034C009FC003 /* SyncronizeRepository.swift */; };
+		56B868281EA90544009FC003 /* SyncronizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B868271EA90544009FC003 /* SyncronizeController.swift */; };
 		OBJ_1003 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_958 /* Random.swift */; };
 		OBJ_1004 /* Randoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_959 /* Randoms.swift */; };
 		OBJ_1005 /* URandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_960 /* URandom.swift */; };
@@ -1619,6 +1622,9 @@
 
 /* Begin PBXFileReference section */
 		563359E11E9E220400625C4F /* Email.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Email.swift; sourceTree = "<group>"; };
+		56B868231EA90277009FC003 /* SyncronizeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncronizeProtocol.swift; sourceTree = "<group>"; };
+		56B868251EA9034C009FC003 /* SyncronizeRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncronizeRepository.swift; sourceTree = "<group>"; };
+		56B868271EA90544009FC003 /* SyncronizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncronizeController.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		OBJ_101 /* webroot */ = {isa = PBXFileReference; lastKnownFileType = folder; path = webroot; sourceTree = SOURCE_ROOT; };
 		OBJ_104 /* SMTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMTP.swift; sourceTree = "<group>"; };
@@ -3834,7 +3840,7 @@
 			path = ".build/checkouts/Perfect-COpenSSL.git--4744624199947727386/COpenSSL";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -3845,7 +3851,6 @@
 				OBJ_102 /* Dependencies */,
 				OBJ_965 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -3942,6 +3947,9 @@
 				OBJ_95 /* UserController.swift */,
 				OBJ_96 /* UserProtocol.swift */,
 				OBJ_97 /* UserRepository.swift */,
+				56B868231EA90277009FC003 /* SyncronizeProtocol.swift */,
+				56B868251EA9034C009FC003 /* SyncronizeRepository.swift */,
+				56B868271EA90544009FC003 /* SyncronizeController.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -4636,7 +4644,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_965 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -5658,6 +5666,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_2071 /* AccessTokenStore.swift in Sources */,
+				56B868241EA90277009FC003 /* SyncronizeProtocol.swift in Sources */,
 				OBJ_2072 /* AngularController.swift in Sources */,
 				OBJ_2073 /* Article.swift in Sources */,
 				OBJ_2074 /* ArticleAttributeValue.swift in Sources */,
@@ -5699,6 +5708,7 @@
 				OBJ_2109 /* Customer.swift in Sources */,
 				OBJ_2110 /* CustomerController.swift in Sources */,
 				OBJ_2111 /* CustomerProtocol.swift in Sources */,
+				56B868281EA90544009FC003 /* SyncronizeController.swift in Sources */,
 				OBJ_2112 /* CustomerRepository.swift in Sources */,
 				OBJ_2113 /* CustomRealm.swift in Sources */,
 				OBJ_2114 /* Discount.swift in Sources */,
@@ -5712,6 +5722,7 @@
 				OBJ_2122 /* Invoice.swift in Sources */,
 				OBJ_2123 /* InvoiceController.swift in Sources */,
 				OBJ_2124 /* InvoiceProtocol.swift in Sources */,
+				56B868261EA9034C009FC003 /* SyncronizeRepository.swift in Sources */,
 				OBJ_2125 /* InvoiceRepository.swift in Sources */,
 				OBJ_2126 /* IoCContainer.swift in Sources */,
 				OBJ_2127 /* main.swift in Sources */,

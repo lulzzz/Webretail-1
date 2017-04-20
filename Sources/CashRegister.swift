@@ -56,7 +56,8 @@ class CashRegister: PostgresSqlORM, JSONConvertible {
 		return [
 			"cashRegisterId": cashRegisterId,
 			"cashRegisterName": cashRegisterName,
-			"store": _store
+			"store": _store,
+			"updatedAt": cashRegisterUpdated
 		]
 	}
 }

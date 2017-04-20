@@ -93,7 +93,7 @@ class Product: PostgresSqlORM, JSONConvertible {
             "attributes": _attributes,
             "articles": _articles,
             "discount": _discount as Any,
-            "productUpdated": productUpdated.formatDate()
+            "updatedAt": productUpdated
         ]
     }
 	
