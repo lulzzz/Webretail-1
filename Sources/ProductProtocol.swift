@@ -8,12 +8,10 @@
 
 protocol ProductProtocol {
     
-    func getAll() throws -> [Product]
+    func getAll(date: Int) throws -> [Product]
     
     func get(id: Int) throws -> Product?
 
-    func get(barcode: String) throws -> Product?
-  
     func add(item: Product) throws
     
     func update(id: Int, item: Product) throws

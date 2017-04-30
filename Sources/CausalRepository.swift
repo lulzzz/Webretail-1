@@ -10,9 +10,9 @@ import StORM
 
 struct CausalRepository : CausalProtocol {
 
-    func getAll() throws -> [Causal] {
+    func getAll(date: Int) throws -> [Causal] {
         let items = Causal()
-        try items.query()
+        try items.query(whereclause: "causalUpdated > $1", params: [date])
         
         return items.rows()
     }

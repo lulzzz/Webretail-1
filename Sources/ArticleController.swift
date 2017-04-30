@@ -88,9 +88,9 @@ class ArticleController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let json = try request.postBodyString?.jsonDecode() as! [String: AnyObject]
             let item = Article()
-            item.setJSONValues(json!)
+            item.setJSONValues(json)
             try self.repository.add(item: item)
             try response.setBody(json: item)
             response.completed(status: .created)
@@ -104,9 +104,9 @@ class ArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let json = try request.postBodyString?.jsonDecode() as! [String: Any]
             let item = Article()
-            item.setJSONValues(json!)
+            item.setJSONValues(json)
             try self.repository.update(id: id.toInt()!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
@@ -131,9 +131,9 @@ class ArticleController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let json = try request.postBodyString?.jsonDecode() as! [String: Any]
             let item = ArticleAttributeValue()
-            item.setJSONValues(json!)
+            item.setJSONValues(json)
             try self.repository.addAttributeValue(item: item)
             try response.setBody(json: item)
             response.completed(status: .created)

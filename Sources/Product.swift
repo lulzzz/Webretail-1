@@ -47,7 +47,7 @@ class Product: PostgresSqlORM, JSONConvertible {
 		_brand.to(this)
     }
     
-    func rows() throws -> [Product] {
+	func rows(barcodes: Bool) throws -> [Product] {
         var rows = [Product]()
         for i in 0..<self.results.rows.count {
             let row = Product()
@@ -55,7 +55,12 @@ class Product: PostgresSqlORM, JSONConvertible {
 			
             try row.makeDiscount();
 			try row.makeCategories();
-
+			
+			if barcodes {
+				try row.makeAttributes();
+				try row.makeArticles();
+			}
+			
 			rows.append(row)
         }
         return rows

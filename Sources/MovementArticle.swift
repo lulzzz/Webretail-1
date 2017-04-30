@@ -45,7 +45,12 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         self.movementArticleId = getJSONValue(named: "movementArticleId", from: values, defaultValue: 0)
         self.movementId = getJSONValue(named: "movementId", from: values, defaultValue: 0)
         self.movementArticleBarcode = getJSONValue(named: "movementArticleBarcode", from: values, defaultValue: "")
-        self.movementArticleProduct = getJSONValue(named: "movementArticleProduct", from: values, defaultValue: [String:Any]())
+		let product = try! self.getProduct(barcode: self.movementArticleBarcode)
+		if product != nil {
+			self.movementArticleProduct = try! product!.getJSONValues()
+		} else {
+			self.movementArticleProduct = getJSONValue(named: "movementArticleProduct", from: values, defaultValue: [String:Any]())
+		}
         self.movementArticleQuantity = getJSONValue(named: "movementArticleQuantity", from: values, defaultValue: 1.0)
 		self.movementArticlePrice = getJSONValue(named: "movementArticlePrice", from: values, defaultValue: 0.0)
     }
@@ -65,4 +70,33 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
             "movementArticleAmount": (movementArticleQuantity * movementArticlePrice).roundCurrency()
         ]
     }
+
+	func getProduct(barcode: String) throws -> Product? {
+		let brandJoin = StORMDataSourceJoin(
+			table: "brands",
+			onCondition: "products.brandId = brands.brandId",
+			direction: StORMJoinType.INNER
+		)
+		let articleJoin = StORMDataSourceJoin(
+			table: "productarticles",
+			onCondition: "products.productId = productarticles.productId",
+			direction: StORMJoinType.INNER
+		)
+		
+		let product = Product()
+		try product.query(whereclause: "productarticles.articleBarcode = $1",
+		                  params: [barcode],
+		                  cursor: StORMCursor(limit: 1, offset: 0),
+		                  joins: [brandJoin, articleJoin])
+		if product.productId == 0 {
+			return nil
+		}
+		
+		try product.makeDiscount()
+		try product.makeCategories()
+		try product.makeAttributes()
+		try product.makeArticle(barcode: barcode)
+		
+		return product
+	}
 }

@@ -20,6 +20,7 @@ class CustomerController {
 		var routes = Routes()
 		
 		routes.add(method: .get, uri: "/api/customer", handler: customersHandlerGET)
+		routes.add(method: .get, uri: "/api/customerfrom/{date}", handler: customersHandlerGET)
 		routes.add(method: .get, uri: "/api/customer/{id}", handler: customerHandlerGET)
 		routes.add(method: .post, uri: "/api/customer", handler: customerHandlerPOST)
 		routes.add(method: .put, uri: "/api/customer/{id}", handler: customerHandlerPUT)
@@ -31,8 +32,9 @@ class CustomerController {
 	func customersHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
+		let date = request.urlVariables["date"]
 		do {
-			let items = try self.repository.getAll()
+			let items = try self.repository.getAll(date: date == nil ? 0 : date!.toInt()!)
 			try response.setBody(json: items)
 			response.completed(status: .ok)
 		} catch {

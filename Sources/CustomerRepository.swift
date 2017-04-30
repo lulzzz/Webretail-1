@@ -11,9 +11,9 @@ import TurnstileCrypto
 
 struct CustomerRepository : CustomerProtocol {
 
-	func getAll() throws -> [Customer] {
+	func getAll(date: Int) throws -> [Customer] {
 		let items = Customer()
-		try items.query()
+		try items.query(whereclause: "customerUpdated > $1", params: [date])
 		
 		return items.rows()
 	}

@@ -8,7 +8,7 @@
 
 protocol CustomerProtocol {
 	
-	func getAll() throws -> [Customer]
+	func getAll(date: Int) throws -> [Customer]
 	
 	func get(id: Int) throws -> Customer?
 	

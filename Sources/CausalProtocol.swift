@@ -8,7 +8,7 @@
 
 protocol CausalProtocol {
     
-    func getAll() throws -> [Causal]
+    func getAll(date: Int) throws -> [Causal]
     
     func get(id: Int) throws -> Causal?
     

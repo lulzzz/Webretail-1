@@ -20,6 +20,7 @@ class ProductController {
         var routes = Routes()
         
         routes.add(method: .get, uri: "/api/product", handler: productsHandlerGET)
+		routes.add(method: .get, uri: "/api/productfrom/{date}", handler: productsHandlerGET)
         routes.add(method: .get, uri: "/api/product/{id}", handler: productHandlerGET)
 		routes.add(method: .post, uri: "/api/product", handler: productHandlerPOST)
         routes.add(method: .put, uri: "/api/product/{id}", handler: productHandlerPUT)
@@ -37,8 +38,9 @@ class ProductController {
     func productsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        do {
-            let items = try self.repository.getAll()
+		let date = request.urlVariables["date"]
+		do {
+			let items = try self.repository.getAll(date: date == nil ? 0 : date!.toInt()!)
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
@@ -63,7 +65,7 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let json = try request.postBodyString?.jsonDecode() as? [String: Any]
             let item = Product()
             item.setJSONValues(json!)
             try self.repository.add(item: item)
@@ -79,7 +81,7 @@ class ProductController {
         
         do {
 			let id = request.urlVariables["id"]?.toInt()
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let json = try request.postBodyString?.jsonDecode() as? [String: Any]
             let item = Product()
             item.setJSONValues(json!)
             try self.repository.update(id: id!, item: item)
@@ -108,7 +110,7 @@ class ProductController {
         do {
             var result = [ProductCategory]()
             
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
             for json in jsons! {
                 let item = ProductCategory()
                 item.setJSONValues(json)
@@ -126,7 +128,7 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
             for json in jsons! {
                 let item = ProductCategory()
                 item.setJSONValues(json)
@@ -145,7 +147,7 @@ class ProductController {
         do {
             var result = [ProductAttribute]()
             
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
             for json in jsons! {
                 let item = ProductAttribute()
                 item.setJSONValues(json)
@@ -163,7 +165,7 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
             for json in jsons! {
                 let item = ProductAttribute()
                 item.setJSONValues(json)
@@ -181,7 +183,7 @@ class ProductController {
         do {
             var result = [ProductAttributeValue]()
             
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
             for json in jsons! {
                 let item = ProductAttributeValue()
                 item.setJSONValues(json)
@@ -199,7 +201,7 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String:Any]]
+            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
             for json in jsons! {
                 let item = ProductAttributeValue()
                 item.setJSONValues(json)

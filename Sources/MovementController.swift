@@ -113,11 +113,21 @@ class MovementController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let json = try request.postBodyString?.jsonDecode() as! [String: Any]
             let item = Movement()
-            item.setJSONValues(json!)
+            item.setJSONValues(json)
             try self.repository.add(item: item)
             try response.setBody(json: item)
+			
+			let rows = json["movementItems"] as? [[String: Any]]
+			if rows != nil {
+				for row in rows! {
+					let newRow = MovementArticle()
+					newRow.setJSONValues(row)
+					newRow.movementId = item.movementId
+				}
+			}
+			
             response.completed(status: .created)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -143,7 +153,7 @@ class MovementController {
         
         do {
 			let id = request.urlVariables["id"]?.toInt()
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let json = try request.postBodyString?.jsonDecode() as? [String: Any]
             let item = Movement()
             item.setJSONValues(json!)
             try self.repository.update(id: id!, item: item)

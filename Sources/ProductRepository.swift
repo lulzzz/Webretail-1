@@ -10,22 +10,23 @@ import StORM
 
 struct ProductRepository : ProductProtocol {
 
-	internal func getJoins() -> [StORMDataSourceJoin] {
-		var brandJoin = StORMDataSourceJoin()
-		brandJoin.table = "brands"
-		brandJoin.direction = StORMJoinType.INNER
-		brandJoin.onCondition = "products.brandId = brands.brandId"
-		return [brandJoin]
+	internal func getJoin() -> StORMDataSourceJoin {
+		return StORMDataSourceJoin(
+			table: "brands",
+			onCondition: "products.brandId = brands.brandId",
+			direction: StORMJoinType.INNER
+		)
 	}
 		
-	func getAll() throws -> [Product] {
+	func getAll(date: Int) throws -> [Product] {
         let items = Product()
 		try items.query(
+			whereclause: "productUpdated > $1", params: [date],
 			orderby: ["products.productId"],
-			joins: self.getJoins()
+			joins: [self.getJoin()]
 		)
 
-        return try items.rows()
+        return try items.rows(barcodes: date > 0)
     }
 	
     func getProduct(id: Int) throws -> Product? {
@@ -33,7 +34,7 @@ struct ProductRepository : ProductProtocol {
 		try item.query(
 			whereclause: "products.productId = $1",
 			params: [String(id)],
-			joins: self.getJoins()
+			joins: [self.getJoin()]
 		)
         if item.productId == 0 {
             return nil
@@ -52,21 +53,6 @@ struct ProductRepository : ProductProtocol {
 		
 		return item
 	}
-
-	func get(barcode: String) throws -> Product? {
-        let article = Article()
-		try article.query(whereclause: "articleBarcode = $1",
-		                  params: [barcode],
-		                  cursor: StORMCursor(limit: 1, offset: 0))
-        if article.articleId == 0 {
-            return nil
-        }
-
-		let item = try getProduct(id: article.productId)
-		try item?.makeArticle(barcode: barcode)
-		
-		return item
-    }
 
     func add(item: Product) throws {
         item.productCreated = Int.now()

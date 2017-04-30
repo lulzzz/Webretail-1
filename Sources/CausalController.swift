@@ -20,6 +20,7 @@ class CausalController {
         var routes = Routes()
         
         routes.add(method: .get, uri: "/api/causal", handler: causalsHandlerGET)
+		routes.add(method: .get, uri: "/api/causalfrom/{date}", handler: causalsHandlerGET)
         routes.add(method: .get, uri: "/api/causal/{id}", handler: causalHandlerGET)
         routes.add(method: .post, uri: "/api/causal", handler: causalHandlerPOST)
         routes.add(method: .put, uri: "/api/causal/{id}", handler: causalHandlerPUT)
@@ -31,8 +32,9 @@ class CausalController {
     func causalsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
+		let date = request.urlVariables["date"]
         do {
-            let items = try self.repository.getAll()
+			let items = try self.repository.getAll(date: date == nil ? 0 : date!.toInt()!)
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {

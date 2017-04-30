@@ -10,19 +10,19 @@ import StORM
 
 struct CashRegisterRepository : CashRegisterProtocol {
 	
-	internal func getJoins() -> [StORMDataSourceJoin] {
-		var join = StORMDataSourceJoin()
-		join.table = "stores"
-		join.direction = StORMJoinType.INNER
-		join.onCondition = "cashregisters.storeId = stores.storeId"
-		return [join]
+	internal func getJoin() -> StORMDataSourceJoin {
+		return StORMDataSourceJoin(
+			table: "stores",
+			onCondition: "cashregisters.storeId = stores.storeId",
+			direction: StORMJoinType.INNER
+		)
 	}
 
 	func getAll() throws -> [CashRegister] {
 		let items = CashRegister()
 		try items.query(
 			orderby: ["cashregisters.cashRegisterId"],
-			joins: self.getJoins()
+			joins: [self.getJoin()]
 		)
 		
 		return items.rows()
@@ -33,7 +33,7 @@ struct CashRegisterRepository : CashRegisterProtocol {
 		try item.query(
 			whereclause: "cashregisters.cashRegisterId = $1",
 			params: [String(id)],
-			joins: self.getJoins()
+			joins: [self.getJoin()]
 		)
 		
 		return item

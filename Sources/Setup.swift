@@ -76,7 +76,6 @@ func addIoC() {
 	ioCContainer.register { DiscountRepository() as DiscountProtocol }
 	ioCContainer.register { InvoiceRepository() as InvoiceProtocol }
 	ioCContainer.register { PublicationRepository() as PublicationProtocol }
-	ioCContainer.register { SyncronizeRepository() as SyncronizeProtocol }
 }
 
 func addRoutesAndHandlers() {
@@ -103,7 +102,6 @@ func addRoutesAndHandlers() {
 	server.addRoutes(DiscountController().getRoutes())
 	server.addRoutes(PublicationController().getRoutes())
 	server.addRoutes(InvoiceController().getRoutes())
-	server.addRoutes(SyncronizeController().getRoutes())
 }
 
 func addFilters() {
