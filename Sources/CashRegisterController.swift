@@ -20,6 +20,7 @@ class CashRegisterController {
 		var routes = Routes()
 		
 		routes.add(method: .get, uri: "/api/cashregister", handler: cashRegistersHandlerGET)
+		routes.add(method: .get, uri: "/api/cashregisterfrom/{date}", handler: cashRegistersHandlerGET)
 		routes.add(method: .get, uri: "/api/cashregister/{id}", handler: cashRegisterHandlerGET)
 		routes.add(method: .post, uri: "/api/cashregister", handler: cashRegisterHandlerPOST)
 		routes.add(method: .put, uri: "/api/cashregister/{id}", handler: cashRegisterHandlerPUT)
@@ -31,8 +32,9 @@ class CashRegisterController {
 	func cashRegistersHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
+		let date = request.urlVariables["date"]
 		do {
-			let items = try self.repository.getAll()
+			let items = try self.repository.getAll(date: date == nil ? 0 : date!.toInt()!)
 			try response.setBody(json: items)
 			response.completed(status: .ok)
 		} catch {

@@ -18,9 +18,10 @@ struct CashRegisterRepository : CashRegisterProtocol {
 		)
 	}
 
-	func getAll() throws -> [CashRegister] {
+	func getAll(date: Int) throws -> [CashRegister] {
 		let items = CashRegister()
 		try items.query(
+			whereclause: "cashRegisterUpdated > $1", params: [date],
 			orderby: ["cashregisters.cashRegisterId"],
 			joins: [self.getJoin()]
 		)

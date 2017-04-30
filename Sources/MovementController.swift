@@ -116,7 +116,7 @@ class MovementController {
             let json = try request.postBodyString?.jsonDecode() as! [String: Any]
             let item = Movement()
             item.setJSONValues(json)
-            try self.repository.add(item: item)
+			try self.repository.add(item: item)
             try response.setBody(json: item)
 			
 			let rows = json["movementItems"] as? [[String: Any]]

@@ -8,7 +8,7 @@
 
 protocol CashRegisterProtocol {
 	
-	func getAll() throws -> [CashRegister]
+	func getAll(date: Int) throws -> [CashRegister]
 	
 	func get(id: Int) throws -> CashRegister?
 	
