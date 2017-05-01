@@ -40,7 +40,7 @@ class ProductController {
         
 		let date = request.urlVariables["date"]
 		do {
-			let items = try self.repository.getAll(date: date == nil ? 1 : date!.toInt()!)
+			let items = try self.repository.getAll(date: date == nil ? 0 : date!.toInt()!)
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
