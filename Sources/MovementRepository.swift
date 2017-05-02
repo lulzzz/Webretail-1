@@ -124,7 +124,7 @@ struct MovementRepository : MovementProtocol {
         try item.delete()
     }
 
-	internal func process(movement: Movement, actionType: ActionType) throws {
+	func process(movement: Movement, actionType: ActionType) throws {
 		
 		let storeId = movement.getJSONValue(named: "storeId", from: movement.movementStore, defaultValue: 0)
 		let quantity = movement.getJSONValue(named: "causalQuantity", from: movement.movementCausal, defaultValue: 0)

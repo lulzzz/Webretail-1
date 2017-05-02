@@ -125,7 +125,11 @@ class MovementController {
 					let newRow = MovementArticle()
 					newRow.setJSONValues(row)
 					newRow.movementId = item.movementId
+					try self.articleRepository.add(item: newRow)
 				}
+			}
+			if item.movementStatus == "Completed" {
+				try self.repository.process(movement: item, actionType: ActionType.Stoking)
 			}
 			
             response.completed(status: .created)

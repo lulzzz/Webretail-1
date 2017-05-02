@@ -159,6 +159,6 @@ class Product: PostgresSqlORM, JSONConvertible {
 			whereclause: "productId = $1 AND articleBarcode = $2",
 			params: [self.productId, barcode]
 		)
-		self._articles = [article]
+		self._articles = try article.rows()
 	}
 }

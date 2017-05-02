@@ -27,4 +27,6 @@ protocol MovementProtocol {
     func delete(id: Int) throws
 
 	func clone(sourceId: Int) throws -> Movement
+	
+	func process(movement: Movement, actionType: ActionType) throws
 }

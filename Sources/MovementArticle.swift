@@ -78,13 +78,13 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
 			direction: StORMJoinType.INNER
 		)
 		let articleJoin = StORMDataSourceJoin(
-			table: "productarticles",
-			onCondition: "products.productId = productarticles.productId",
+			table: "articles",
+			onCondition: "products.productId = articles.productId",
 			direction: StORMJoinType.INNER
 		)
 		
 		let product = Product()
-		try product.query(whereclause: "productarticles.articleBarcode = $1",
+		try product.query(whereclause: "articles.articleBarcode = $1",
 		                  params: [barcode],
 		                  cursor: StORMCursor(limit: 1, offset: 0),
 		                  joins: [brandJoin, articleJoin])
