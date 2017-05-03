@@ -63,6 +63,7 @@ class Customer: PostgresSqlORM, JSONConvertible {
 		self.customerCountry = getJSONValue(named: "customerCountry", from: values, defaultValue: "")
 		self.customerFiscalCode = getJSONValue(named: "customerFiscalCode", from: values, defaultValue: "")
 		self.customerVatNumber = getJSONValue(named: "customerVatNumber", from: values, defaultValue: "")
+		self.customerUpdated = getJSONValue(named: "updatedAt", from: values, defaultValue: 0)
 	}
 	
 	func jsonEncodedString() throws -> String {
