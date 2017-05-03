@@ -75,6 +75,8 @@ struct MovementRepository : MovementProtocol {
 		customer.setJSONValues(item.movementCustomer)
 		if customer.customerId <= 0 {
 			customer.customerId = 0
+			customer.customerCreated = Int.now()
+			customer.customerUpdated = Int.now()
 			try customer.save {
 				id in customer.customerId = id as! Int
 			}
