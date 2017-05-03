@@ -71,20 +71,22 @@ struct MovementRepository : MovementProtocol {
 		}
         item.movementUpdated = Int.now()
 		
-		let customer = Customer()
-		customer.setJSONValues(item.movementCustomer)
-		if customer.customerId <= 0 {
-			customer.customerId = 0
-			customer.customerCreated = customer.customerUpdated
-			try customer.save {
-				id in customer.customerId = id as! Int
-			}
-			item.movementCustomer = customer.getJSONValues()
-		} else if customer.customerUpdated > 0 {
-			let current = Customer()
-			try current.query(id: customer.customerId)
-			if current.customerUpdated < customer.customerUpdated {
-				try customer.save()
+		if !item.movementCustomer.isEmpty {
+			let customer = Customer()
+			customer.setJSONValues(item.movementCustomer)
+			if customer.customerId <= 0 {
+				customer.customerId = 0
+				customer.customerCreated = customer.customerUpdated
+				try customer.save {
+					id in customer.customerId = id as! Int
+				}
+				item.movementCustomer = customer.getJSONValues()
+			} else if customer.customerUpdated > 0 {
+				let current = Customer()
+				try current.query(id: customer.customerId)
+				if current.customerUpdated < customer.customerUpdated {
+					try customer.save()
+				}
 			}
 		}
 		
