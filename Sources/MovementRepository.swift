@@ -80,6 +80,12 @@ struct MovementRepository : MovementProtocol {
 				id in customer.customerId = id as! Int
 			}
 			item.movementCustomer = customer.getJSONValues()
+		} else if customer.customerUpdated > 0 {
+			let current = Customer()
+			try current.query(id: customer.customerId)
+			if current.customerUpdated < customer.customerUpdated {
+				try customer.save()
+			}
 		}
 		
 		try item.save {
