@@ -144,7 +144,6 @@ public class AuthenticationController {
             let user = User()
             try user.get(uniqueID)
             
-            //register
             resp["error"] = "none"
             resp["login"] = "ok"
             resp["token"] = token
@@ -195,7 +194,7 @@ public class AuthenticationController {
         
         do {
             let credentials = try facebook.authenticate(authorizationCodeCallbackURL: uri, state: state) as! FacebookAccount
-            //try request.user.login(credentials: credentials, persist: true)
+            try request.user.register(credentials: credentials)
             response.redirect(path: "/?consumer=facebook&uniqueID=\(credentials.uniqueID)")
         } catch let error {
             let description = (error as? TurnstileError)?.description ?? "Unknown Error"
@@ -233,7 +232,7 @@ public class AuthenticationController {
         
         do {
             let credentials = try google.authenticate(authorizationCodeCallbackURL: uri, state: state) as! GoogleAccount
-            //try request.user.login(credentials: credentials, persist: true)
+            try request.user.register(credentials: credentials)
             response.redirect(path: "/?consumer=google&uniqueID=\(credentials.uniqueID)")
         } catch let error {
             let description = (error as? TurnstileError)?.description ?? "Unknown Error"
@@ -247,7 +246,7 @@ public class AuthenticationController {
         }
     }
 
-    /* Angular2 Login action (POST) */
+    /* Consumer Login action (POST) */
     
     func consumerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")

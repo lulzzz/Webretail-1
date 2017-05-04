@@ -63,9 +63,9 @@ open class CustomRealm : Realm {
 						  params: [credentials.uniqueID],
 		                  cursor: StORMCursor(limit: 1, offset: 0))
         if !account.uniqueID.isEmpty {
-            return account
+			return account
         } else {
-            return try register(credentials: credentials)
+			throw IncorrectCredentialsError()
         }
     }
     
@@ -93,14 +93,13 @@ open class CustomRealm : Realm {
 			               	  params: [credentials.uniqueID],
 			               	  cursor: StORMCursor(limit: 1, offset: 0))
             guard account.uniqueID.isEmpty else {
-                throw AccountTakenError()
+                return account
             }
             newAccount.username = credentials.consumer
-            if credentials.consumer == "facebook" {
-                newAccount.facebookID = credentials.uniqueID
-            }
-            else {
-                newAccount.googleID = credentials.uniqueID
+			if credentials.consumer == "facebook" {
+				newAccount.facebookID = credentials.uniqueID
+			} else {
+				newAccount.googleID = credentials.uniqueID
             }
         default:
             throw UnsupportedCredentialsError()

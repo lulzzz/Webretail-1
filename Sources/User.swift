@@ -32,7 +32,7 @@ class User : PostgresSqlORM, Account, JSONConvertible {
     /// Optional email
     public var email: String = ""
     
-    /// Stored Facebook ID when logging in with Facebook
+	/// Stored Facebook ID when logging in with Facebook
     public var facebookID: String = ""
     
     /// Stored Google ID when logging in with Google
