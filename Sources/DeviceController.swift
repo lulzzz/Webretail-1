@@ -1,5 +1,5 @@
 //
-//  CashRegisterController.swift
+//  DeviceController.swift
 //  Webretail
 //
 //  Created by Gerardo Grisolini on 11/04/17.
@@ -8,28 +8,28 @@
 
 import PerfectHTTP
 
-class CashRegisterController {
+class DeviceController {
 	
-	private let repository: CashRegisterProtocol
+	private let repository: DeviceProtocol
 	
 	init() {
-		self.repository = ioCContainer.resolve() as CashRegisterProtocol
+		self.repository = ioCContainer.resolve() as DeviceProtocol
 	}
 	
 	func getRoutes() -> Routes {
 		var routes = Routes()
 		
-		routes.add(method: .get, uri: "/api/cashregister", handler: cashRegistersHandlerGET)
-		routes.add(method: .get, uri: "/api/cashregisterfrom/{date}", handler: cashRegistersHandlerGET)
-		routes.add(method: .get, uri: "/api/cashregister/{id}", handler: cashRegisterHandlerGET)
-		routes.add(method: .post, uri: "/api/cashregister", handler: cashRegisterHandlerPOST)
-		routes.add(method: .put, uri: "/api/cashregister/{id}", handler: cashRegisterHandlerPUT)
-		routes.add(method: .delete, uri: "/api/cashregister/{id}", handler: cashRegisterHandlerDELETE)
+		routes.add(method: .get, uri: "/api/device", handler: devicesHandlerGET)
+		routes.add(method: .get, uri: "/api/devicefrom/{date}", handler: devicesHandlerGET)
+		routes.add(method: .get, uri: "/api/device/{id}", handler: deviceHandlerGET)
+		routes.add(method: .post, uri: "/api/device", handler: deviceHandlerPOST)
+		routes.add(method: .put, uri: "/api/device/{id}", handler: deviceHandlerPUT)
+		routes.add(method: .delete, uri: "/api/device/{id}", handler: deviceHandlerDELETE)
 		
 		return routes
 	}
 	
-	func cashRegistersHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func devicesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
 		let date = request.urlVariables["date"]
@@ -42,7 +42,7 @@ class CashRegisterController {
 		}
 	}
 	
-	func cashRegisterHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func deviceHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
 		let id = request.urlVariables["id"]!
@@ -55,12 +55,12 @@ class CashRegisterController {
 		}
 	}
 	
-	func cashRegisterHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+	func deviceHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
 			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-			let item = CashRegister()
+			let item = Device()
 			item.setJSONValues(json!)
 			try self.repository.add(item: item)
 			try response.setBody(json: item)
@@ -70,13 +70,13 @@ class CashRegisterController {
 		}
 	}
 	
-	func cashRegisterHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+	func deviceHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
 		let id = request.urlVariables["id"]!
 		do {
 			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-			let item = CashRegister()
+			let item = Device()
 			item.setJSONValues(json!)
 			try self.repository.update(id: id.toInt()!, item: item)
 			try response.setBody(json: item)
@@ -86,7 +86,7 @@ class CashRegisterController {
 		}
 	}
 	
-	func cashRegisterHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+	func deviceHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
 		let id = request.urlVariables["id"]!

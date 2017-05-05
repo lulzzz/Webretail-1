@@ -7,7 +7,7 @@ import { StoreService } from './../services/store.service';
 import { CausalService } from './../services/causal.service';
 import { CustomerService } from './../services/customer.service';
 import { MovementService } from './../services/movement.service';
-import { Movement, CashRegister } from './../shared/models';
+import { Movement, Device } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
@@ -19,7 +19,7 @@ export class MovementsComponent implements OnInit {
     totalRecords = 0;
     items: Movement[];
 	selected: Movement;
-    cashRegister: CashRegister;
+    device: Device;
     cashregisters: SelectItem[];
     stores: SelectItem[];
     storesFiltered: SelectItem[];
@@ -112,7 +112,7 @@ export class MovementsComponent implements OnInit {
 
         let jsonObj: any = JSON.parse(localStorage.getItem('cashRegister'));
         if (jsonObj !== null) {
-            this.cashRegister = <CashRegister>jsonObj;
+            this.device = <Device>jsonObj;
         }
     }
 
@@ -158,7 +158,7 @@ export class MovementsComponent implements OnInit {
             this.selected.movementStore = this.stores[0].value;
         }
         if (this.causals.length > 0) {
-            this.selected.movementCausal = this.cashRegister ? this.causals.find(p => p.value.causalIsPos).value : this.causals[0].value;
+            this.selected.movementCausal = this.device ? this.causals.find(p => p.value.causalIsPos).value : this.causals[0].value;
             this.onCausalChange(null);
         }
         if (this.customers.length > 0) {
@@ -171,9 +171,9 @@ export class MovementsComponent implements OnInit {
     }
 
     onCausalChange(event: any) {
-        if (this.selected.movementCausal.causalIsPos && this.cashRegister !== null) {
-            this.selected.movementDevice = this.cashRegister.cashRegisterName;
-            this.selected.movementStore = this.cashRegister.store;
+        if (this.selected.movementCausal.causalIsPos && this.device !== null) {
+            this.selected.movementDevice = this.device.deviceName;
+            this.selected.movementStore = this.device.store;
         } else {
             this.selected.movementDevice = '';
         }

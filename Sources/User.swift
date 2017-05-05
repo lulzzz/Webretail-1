@@ -44,7 +44,7 @@ class User : PostgresSqlORM, Account, JSONConvertible {
     
     /// The table to store the data
     override open func table() -> String { return "users" }
-    open override func tableIndexes() -> [String] { return ["username", "email"] }
+    open override func tableIndexes() -> [String] { return ["uniqueID", "username", "email"] }
     
     /// Set incoming data from database to object
     override open func to(_ this: StORMRow) {

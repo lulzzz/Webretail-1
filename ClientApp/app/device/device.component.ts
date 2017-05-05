@@ -2,26 +2,26 @@
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { AuthenticationService } from './../services/authentication.service';
-import { CashRegisterService } from './../services/cashregister.service';
+import { DeviceService } from './../services/device.service';
 import { StoreService } from './../services/store.service';
-import { CashRegister } from './../shared/models';
+import { Device } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'cashregister-component',
-    templateUrl: 'cashregister.component.html'
+    selector: 'device-component',
+    templateUrl: 'device.component.html'
 })
 
-export class CashRegisterComponent implements OnInit {
+export class DeviceComponent implements OnInit {
     totalRecords = 0;
-    items: CashRegister[];
-	selected: CashRegister;
+    items: Device[];
+	selected: Device;
     stores: SelectItem[];
     displayPanel: boolean;
 	dataform: FormGroup;
     
     constructor(private authenticationService: AuthenticationService,
-                private cashRegisterService: CashRegisterService,
+                private deviceService: DeviceService,
                 private storeService: StoreService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) { }
@@ -31,11 +31,12 @@ export class CashRegisterComponent implements OnInit {
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
+            'token': new FormControl('', Validators.nullValidator),
             'store': new FormControl('', Validators.required),
             'join': new FormControl('', Validators.required)
         });
 
-        this.cashRegisterService
+        this.deviceService
             .getAll()
             .subscribe(result => {
                 this.items = result;
@@ -50,23 +51,31 @@ export class CashRegisterComponent implements OnInit {
         );
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.cashRegisterId == 0; }
+    get isNew() : boolean { return this.selected == null || this.selected.deviceId == 0; }
 
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
     addClick() {
-        this.selected = new CashRegister();
+        this.selected = new Device();
         this.selected.store = this.stores.length > 0 ? this.stores[0].value : null;
+        this.dataform.controls.join.setValue(false);
         this.displayPanel = true;
     }
 
     onRowSelect(event: any) {
+        this.dataform.controls.join.setValue(false);
+        var json = localStorage.getItem("cashRegister");
+        if (json != null) {
+            var device: Device = JSON.parse(json)
+            if (device.deviceId == this.selected.deviceId) {
+                this.dataform.controls.join.setValue(true);
+            }
+        }
         this.displayPanel = true;
     }
 
     closeClick() {
         if (this.dataform.controls.join.value === true) {
-            alert(this.dataform.controls.join.value);
             localStorage.setItem("cashRegister", JSON.stringify(this.selected));
         }
         this.displayPanel = false;
@@ -75,15 +84,16 @@ export class CashRegisterComponent implements OnInit {
 
     saveClick() {
         if (this.isNew) {
-            this.cashRegisterService
+            this.deviceService
                 .create(this.selected)
                 .subscribe(result => {
+                    this.selected = result;
                     this.items.push(result);
                     this.closeClick();
                 }, onerror => alert(onerror._body));
         } else {
-            this.cashRegisterService
-                .update(this.selected.cashRegisterId, this.selected)
+            this.deviceService
+                .update(this.selected.deviceId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
                 }, onerror => alert(onerror._body));
@@ -92,10 +102,10 @@ export class CashRegisterComponent implements OnInit {
 
     deleteClick() {
         this.confirmationService.confirm({
-            message: 'All related products will be deleted. Are you sure that you want to delete this cash register?',
+            message: 'Are you sure that you want to delete this device?',
             accept: () => {
-                this.cashRegisterService
-                    .delete(this.selected.cashRegisterId)
+                this.deviceService
+                    .delete(this.selected.deviceId)
                     .subscribe(result => {
                         this.items.splice(this.selectedIndex, 1);
                         this.totalRecords--;

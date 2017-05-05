@@ -903,10 +903,10 @@
 		OBJ_2090 /* BrandController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* BrandController.swift */; };
 		OBJ_2091 /* BrandProtocoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* BrandProtocoll.swift */; };
 		OBJ_2092 /* BrandRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* BrandRepository.swift */; };
-		OBJ_2093 /* CashRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* CashRegister.swift */; };
-		OBJ_2094 /* CashRegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* CashRegisterController.swift */; };
-		OBJ_2095 /* CashRegisterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* CashRegisterProtocol.swift */; };
-		OBJ_2096 /* CashRegisterRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* CashRegisterRepository.swift */; };
+		OBJ_2093 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* Device.swift */; };
+		OBJ_2094 /* DeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* DeviceController.swift */; };
+		OBJ_2095 /* DeviceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* DeviceProtocol.swift */; };
+		OBJ_2096 /* DeviceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* DeviceRepository.swift */; };
 		OBJ_2097 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* Category.swift */; };
 		OBJ_2098 /* CategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* CategoryController.swift */; };
 		OBJ_2099 /* CategoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* CategoryProtocol.swift */; };
@@ -1810,7 +1810,7 @@
 		OBJ_297 /* bn_exp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_exp.c; sourceTree = "<group>"; };
 		OBJ_298 /* bn_exp2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_exp2.c; sourceTree = "<group>"; };
 		OBJ_299 /* bn_gcd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_gcd.c; sourceTree = "<group>"; };
-		OBJ_30 /* CashRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashRegister.swift; sourceTree = "<group>"; };
+		OBJ_30 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		OBJ_300 /* bn_gf2m.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_gf2m.c; sourceTree = "<group>"; };
 		OBJ_301 /* bn_kron.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_kron.c; sourceTree = "<group>"; };
 		OBJ_302 /* bn_lib.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_lib.c; sourceTree = "<group>"; };
@@ -1821,7 +1821,7 @@
 		OBJ_307 /* bn_nist.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_nist.c; sourceTree = "<group>"; };
 		OBJ_308 /* bn_prime.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_prime.c; sourceTree = "<group>"; };
 		OBJ_309 /* bn_print.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_print.c; sourceTree = "<group>"; };
-		OBJ_31 /* CashRegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashRegisterController.swift; sourceTree = "<group>"; };
+		OBJ_31 /* DeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceController.swift; sourceTree = "<group>"; };
 		OBJ_310 /* bn_rand.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_rand.c; sourceTree = "<group>"; };
 		OBJ_311 /* bn_recp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_recp.c; sourceTree = "<group>"; };
 		OBJ_312 /* bn_shift.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_shift.c; sourceTree = "<group>"; };
@@ -1832,7 +1832,7 @@
 		OBJ_317 /* bss_acpt.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bss_acpt.c; sourceTree = "<group>"; };
 		OBJ_318 /* bss_bio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bss_bio.c; sourceTree = "<group>"; };
 		OBJ_319 /* bss_conn.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bss_conn.c; sourceTree = "<group>"; };
-		OBJ_32 /* CashRegisterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashRegisterProtocol.swift; sourceTree = "<group>"; };
+		OBJ_32 /* DeviceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceProtocol.swift; sourceTree = "<group>"; };
 		OBJ_320 /* bss_dgram.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bss_dgram.c; sourceTree = "<group>"; };
 		OBJ_321 /* bss_fd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bss_fd.c; sourceTree = "<group>"; };
 		OBJ_322 /* bss_file.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bss_file.c; sourceTree = "<group>"; };
@@ -1843,7 +1843,7 @@
 		OBJ_327 /* buf_err.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = buf_err.c; sourceTree = "<group>"; };
 		OBJ_328 /* buf_str.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = buf_str.c; sourceTree = "<group>"; };
 		OBJ_329 /* buffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
-		OBJ_33 /* CashRegisterRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashRegisterRepository.swift; sourceTree = "<group>"; };
+		OBJ_33 /* DeviceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepository.swift; sourceTree = "<group>"; };
 		OBJ_330 /* by_dir.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = by_dir.c; sourceTree = "<group>"; };
 		OBJ_331 /* by_file.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = by_file.c; sourceTree = "<group>"; };
 		OBJ_332 /* c_all.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = c_all.c; sourceTree = "<group>"; };
@@ -2817,7 +2817,7 @@
 				OBJ_20 /* AttributeValueController.swift */,
 				OBJ_24 /* AuthenticationController.swift */,
 				OBJ_27 /* BrandController.swift */,
-				OBJ_31 /* CashRegisterController.swift */,
+				OBJ_31 /* DeviceController.swift */,
 				OBJ_35 /* CategoryController.swift */,
 				OBJ_39 /* CausalController.swift */,
 				OBJ_43 /* CompanyController.swift */,
@@ -2842,7 +2842,7 @@
 				OBJ_17 /* AttributeProtocol.swift */,
 				OBJ_21 /* AttributeValueProtocol.swift */,
 				OBJ_28 /* BrandProtocoll.swift */,
-				OBJ_32 /* CashRegisterProtocol.swift */,
+				OBJ_32 /* DeviceProtocol.swift */,
 				OBJ_36 /* CategoryProtocol.swift */,
 				OBJ_40 /* CausalProtocol.swift */,
 				OBJ_44 /* CompanyProtocol.swift */,
@@ -2866,7 +2866,7 @@
 				OBJ_18 /* AttributeRepository.swift */,
 				OBJ_22 /* AttributeValueRepository.swift */,
 				OBJ_29 /* BrandRepository.swift */,
-				OBJ_33 /* CashRegisterRepository.swift */,
+				OBJ_33 /* DeviceRepository.swift */,
 				OBJ_37 /* CatgoryRepository.swift */,
 				OBJ_41 /* CausalRepository.swift */,
 				OBJ_45 /* CompanyRepository.swift */,
@@ -2892,7 +2892,7 @@
 				OBJ_15 /* Attribute.swift */,
 				OBJ_19 /* AttributeValue.swift */,
 				OBJ_26 /* Brand.swift */,
-				OBJ_30 /* CashRegister.swift */,
+				OBJ_30 /* Device.swift */,
 				OBJ_34 /* Category.swift */,
 				OBJ_38 /* Causal.swift */,
 				OBJ_42 /* Company.swift */,
@@ -5718,10 +5718,10 @@
 				OBJ_2090 /* BrandController.swift in Sources */,
 				OBJ_2091 /* BrandProtocoll.swift in Sources */,
 				OBJ_2092 /* BrandRepository.swift in Sources */,
-				OBJ_2093 /* CashRegister.swift in Sources */,
-				OBJ_2094 /* CashRegisterController.swift in Sources */,
-				OBJ_2095 /* CashRegisterProtocol.swift in Sources */,
-				OBJ_2096 /* CashRegisterRepository.swift in Sources */,
+				OBJ_2093 /* Device.swift in Sources */,
+				OBJ_2094 /* DeviceController.swift in Sources */,
+				OBJ_2095 /* DeviceProtocol.swift in Sources */,
+				OBJ_2096 /* DeviceRepository.swift in Sources */,
 				OBJ_2097 /* Category.swift in Sources */,
 				OBJ_2098 /* CategoryController.swift in Sources */,
 				OBJ_2099 /* CategoryProtocol.swift in Sources */,

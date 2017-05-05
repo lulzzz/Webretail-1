@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
 
-    <h1>Cash Registers</h1>
+    <h1>Devices</h1>
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
@@ -19,15 +19,15 @@
         selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
         [globalFilter]="gb" #dt>
-        <p-column field="cashRegisterId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
-        <p-column field="cashRegisterName" header="Name" [sortable]="true"></p-column>
+        <p-column field="deviceId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+        <p-column field="deviceName" header="Name" [sortable]="true"></p-column>
         <p-column field="store.storeName" header="Store" [sortable]="true"></p-column>     
     </p-dataTable>
 
     <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">
-                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Cash Register</b></span>
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Device</b></span>
                 <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
@@ -35,12 +35,12 @@
             <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label>Id</label></div>
-                    <div class="ui-grid-col-8">{{selected.cashRegisterId}}</div>
+                    <div class="ui-grid-col-8">{{selected.deviceId}}</div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="name">Name</label></div>
                     <div class="ui-grid-col-8">
-                        <input pInputText formControlName="name" [(ngModel)]="selected.cashRegisterName"/>
+                        <input pInputText formControlName="name" [(ngModel)]="selected.deviceName"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
                             <i class="fa fa-close"></i> Name is required
                         </div>
@@ -57,12 +57,18 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="token">Token</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="token" [(ngModel)]="selected.deviceToken"/>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="join">Join with this device</label></div>
                     <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="join"></p-inputSwitch></div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4">
-                        <button *ngIf="selected.cashRegisterId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+                        <button *ngIf="selected.deviceId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
                     </div>
                     <div class="ui-grid-col-4"></div>
                     <div class="ui-grid-col-4">

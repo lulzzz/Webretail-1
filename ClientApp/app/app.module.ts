@@ -47,7 +47,7 @@ import { DiscountComponent } from './discount/discount.component';
 import { InvoicesComponent } from './invoice/invoices.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { InvoiceDocumentComponent } from './invoice/invoicedocument.component';
-import { CashRegisterComponent } from './cashregister/cashregister.component';
+import { DeviceComponent } from './device/device.component';
 import { ReportCashRegisterComponent } from './report/cashregister.component';
 
 import { AuthenticationService } from './services/authentication.service';
@@ -59,7 +59,7 @@ import { CategoryService } from './services/category.service';
 import { CausalService } from './services/causal.service';
 import { CustomerService } from './services/customer.service';
 import { StoreService } from './services/store.service';
-import { CashRegisterService } from './services/cashregister.service';
+import { DeviceService } from './services/device.service';
 import { ProductService } from './services/product.service';
 import { MovementService } from './services/movement.service';
 import { DiscountService } from './services/discount.service';
@@ -122,7 +122,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         InvoicesComponent,
         InvoiceComponent,
         InvoiceDocumentComponent,
-        CashRegisterComponent,
+        DeviceComponent,
         ReportCashRegisterComponent
     ],
     providers: [
@@ -136,7 +136,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         CausalService,
         CustomerService,
         StoreService,
-        CashRegisterService,
+        DeviceService,
         ProductService,
         MovementService,
         DiscountService,

@@ -46,7 +46,23 @@ open class CustomRealm : Realm {
         }
     }
     
-    /// Used when a "UsernamePassword" onject is passed to the authenticate function. Returns an Account object.
+	/// Used when an "APIKey" onject is passed to the authenticate function. Returns an Account object.
+	func authenticate(credentials: APIKey) throws -> Account {
+		let user = User()
+		user.id(credentials.id)
+		do {
+			let device = Device()
+			try device.get(credentials.id)
+			if device.keyIsEmpty() {
+				_ = try register(credentials: credentials)
+			}
+			return user
+		} catch {
+			throw IncorrectCredentialsError()
+		}
+	}
+
+	/// Used when a "UsernamePassword" onject is passed to the authenticate function. Returns an Account object.
     open func authenticate(credentials: UsernamePassword) throws -> Account {
         let account = User()
         do {
@@ -57,6 +73,7 @@ open class CustomRealm : Realm {
         }
     }
     
+	/// Used when a "ConsumerAccount" onject is passed to the authenticate function. Returns an Account object.
     private func authenticate(credentials: ConsumerAccount) throws -> Account {
         let account = User()
         try account.query(whereclause: "\(credentials.consumer)ID = $1",
@@ -68,8 +85,8 @@ open class CustomRealm : Realm {
 			throw IncorrectCredentialsError()
         }
     }
-    
-    /// Registers PasswordCredentials against the AuthRealm.
+
+	/// Registers PasswordCredentials against the AuthRealm.
     open func register(credentials: Credentials) throws -> Account {
         
         let account = User()
@@ -90,17 +107,17 @@ open class CustomRealm : Realm {
             }
         case let credentials as ConsumerAccount:
 			try account.query(whereclause: "\(credentials.consumer)ID = $1",
-			               	  params: [credentials.uniqueID],
-			               	  cursor: StORMCursor(limit: 1, offset: 0))
-            guard account.uniqueID.isEmpty else {
-                return account
-            }
-            newAccount.username = credentials.consumer
+				params: [credentials.uniqueID],
+				cursor: StORMCursor(limit: 1, offset: 0))
+			guard account.uniqueID.isEmpty else {
+				return account
+			}
+			newAccount.username = credentials.consumer
 			if credentials.consumer == "facebook" {
 				newAccount.facebookID = credentials.uniqueID
 			} else {
 				newAccount.googleID = credentials.uniqueID
-            }
+			}
         default:
             throw UnsupportedCredentialsError()
         }

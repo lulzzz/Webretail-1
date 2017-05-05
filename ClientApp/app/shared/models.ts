@@ -310,17 +310,19 @@ export class DiscountProduct {
   }
 }
 
-export class CashRegister {
-  public cashRegisterId: number;
-  public cashRegisterName: string;
+export class Device {
+  public deviceId: number;
+  public deviceName: string;
+  public deviceToken: string;
   public store: Store;
-  public cashRegisterUpdated: Date;
+  public deviceUpdated: Date;
 
   constructor() {
-    this.cashRegisterId = 0;
-    this.cashRegisterName = '';
+    this.deviceId = 0;
+    this.deviceName = '';
+    this.deviceToken = '';
     this.store = new Store();
-    this.cashRegisterUpdated = new Date();
+    this.deviceUpdated = new Date();
   }
 }
 
