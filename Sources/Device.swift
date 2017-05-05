@@ -64,4 +64,17 @@ class Device: PostgresSqlORM, JSONConvertible {
 			"updatedAt": deviceUpdated
 		]
 	}
+
+	/// Performs a find on supplied deviceToken
+	func get(deviceToken: String) {
+		do {
+			try query(whereclause: "deviceToken = $1", params: [deviceToken], cursor: StORMCursor(limit: 1, offset: 0))
+//			if self.results.rows.count == 0 {
+//				throw StORMError.noRecordFound
+//			}
+			//to(self.results.rows[0])
+		} catch {
+			print(error)
+		}
+	}
 }

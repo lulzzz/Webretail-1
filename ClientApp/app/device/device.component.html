@@ -52,7 +52,7 @@
                         <p-dropdown [options]="stores" formControlName="store" [(ngModel)]="selected.store" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['store'].valid&&dataform.controls['store'].dirty">
                             <i class="fa fa-close"></i>
-                            <span *ngIf="dataform.controls['brand'].errors['required']">Store is required</span>
+                            <span *ngIf="dataform.controls['store'].errors['required']">Store is required</span>
                         </div>
                     </div>
                 </div>

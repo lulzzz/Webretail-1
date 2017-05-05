@@ -4,7 +4,7 @@ import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { AuthenticationService } from './../services/authentication.service';
 import { DeviceService } from './../services/device.service';
 import { StoreService } from './../services/store.service';
-import { Device } from './../shared/models';
+import { Device, Store } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
@@ -16,7 +16,7 @@ export class DeviceComponent implements OnInit {
     totalRecords = 0;
     items: Device[];
 	selected: Device;
-    stores: SelectItem[];
+    stores: SelectItem[] = [];
     displayPanel: boolean;
 	dataform: FormGroup;
     
@@ -46,7 +46,8 @@ export class DeviceComponent implements OnInit {
 
         this.storeService.getAll()
             .subscribe(result => {
-                this.stores = result.map(p => Helpers.newSelectItem(p, p.storeName));
+                this.stores.push({label: '', value: null})
+                this.stores = this.stores.concat(result.map(p => Helpers.newSelectItem(p, p.storeName)));
             }, onerror => alert(onerror._body)
         );
     }
@@ -70,6 +71,10 @@ export class DeviceComponent implements OnInit {
             if (device.deviceId == this.selected.deviceId) {
                 this.dataform.controls.join.setValue(true);
             }
+        }
+        if (this.selected.store.storeId == 0)
+        {
+            this.selected.store = null;
         }
         this.displayPanel = true;
     }

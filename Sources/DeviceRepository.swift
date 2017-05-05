@@ -14,7 +14,7 @@ struct DeviceRepository : DeviceProtocol {
 		return StORMDataSourceJoin(
 			table: "stores",
 			onCondition: "devices.storeId = stores.storeId",
-			direction: StORMJoinType.INNER
+			direction: StORMJoinType.LEFT
 		)
 	}
 
@@ -53,7 +53,7 @@ struct DeviceRepository : DeviceProtocol {
 		guard let current = try get(id: id) else {
 			throw StORMError.noRecordFound
 		}
-		
+		current.storeId = item.storeId
 		current.deviceName = item.deviceName
 		current.deviceToken = item.deviceToken
 		current.deviceUpdated = Int.now()

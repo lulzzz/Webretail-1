@@ -117,13 +117,12 @@ class User : PostgresSqlORM, Account, JSONConvertible {
     /// Performs a find on supplied username, and matches hashed password
     open func get(_ un: String, _ pw: String) throws -> User {
         do {
-            try select(whereclause: "username = $1", params: [un], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
+            try query(whereclause: "username = $1", params: [un], cursor: StORMCursor(limit: 1, offset: 0))
             if self.results.rows.count == 0 {
                 throw StORMError.noRecordFound
             }
-            to(self.results.rows[0])
+            //to(self.results.rows[0])
         } catch {
-            print(error)
             throw StORMError.noRecordFound
         }
         if try BCrypt.verify(password: pw, matchesHash: password) {
@@ -136,21 +135,21 @@ class User : PostgresSqlORM, Account, JSONConvertible {
     /// Returns a true / false depending on if the username exits in the database.
     func exists(_ un: String) -> Bool {
         do {
-            try select(whereclause: "username = $1", params: [un], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
+            try query(whereclause: "username = $1", params: [un], cursor: StORMCursor(limit: 1, offset: 0))
             if results.rows.count == 1 {
                 return true
             } else {
                 return false
             }
         } catch {
-            print("Exists error: \(error)")
+            print("exists: \(error)")
             return false
         }
     }
 
 	func setAdmin() throws {
 		do {
-			try select(whereclause: "isadmin = $1", params: [true], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
+			try query(whereclause: "isadmin = $1", params: [true], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
 			
 			if results.rows.count == 0 {
 				if exists("admin") {
@@ -167,7 +166,7 @@ class User : PostgresSqlORM, Account, JSONConvertible {
 					try make()				}
 			}
 		} catch {
-			print("Set admin error: \(error)")
+			print("setAdmin: \(error)")
 		}
 	}
 }

@@ -109,6 +109,7 @@ func addFilters() {
 	authenticationConfig.include("/api/*}")
 	authenticationConfig.exclude("/api/login")
 	authenticationConfig.exclude("/api/login/consumer")
+	authenticationConfig.exclude("/api/login/apikey")
 	authenticationConfig.exclude("/api/register")
 	authenticationConfig.exclude("/api/authenticated")
 	authenticationConfig.exclude("/api/logout")

@@ -52,17 +52,12 @@ struct AuthorizationHeader {
     var basic: APIKey? {
         guard let range = headerValue.range(of: "Basic ") else { return nil }
         let token = headerValue.substring(from: range.upperBound)
-        
-        guard let data = Data(base64Encoded: token) else { return nil }
-        
-        
-        guard let decodedToken = String(data: data, encoding: .utf8),
-            let separatorRange = decodedToken.range(of: ":") else {
-                return nil
-        }
-        
-        let apiKeyID = decodedToken.substring(to: separatorRange.lowerBound)
-        let apiKeySecret = decodedToken.substring(from: separatorRange.upperBound)
+		guard let separatorRange = token.range(of: ":") else {
+			return nil
+		}
+		
+        let apiKeyID = token.substring(to: separatorRange.lowerBound)
+        let apiKeySecret = token.substring(from: separatorRange.upperBound)
         
         return APIKey(id: apiKeyID, secret: apiKeySecret)
     }
