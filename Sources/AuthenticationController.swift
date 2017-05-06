@@ -290,6 +290,8 @@ public class AuthenticationController {
         response.completed()
     }
 
+	/* ApiKey Login action (POST) */
+
 	func apikeyHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
