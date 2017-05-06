@@ -33,28 +33,20 @@ open class CustomRealm : Realm {
     
     /// Used when an "AccessToken" onject is passed to the authenticate function. Returns an Account object.
     open func authenticate(credentials: AccessToken) throws -> Account {
-        let token = AccessTokenStore()
-        do {
-            try token.get(credentials.string)
-            if token.check() == false {
-                throw IncorrectCredentialsError()
-            }
-			let account = User()
-            try account.get(token.userid)
-			
-			if account.uniqueID.isEmpty {
-				let device = Device()
-				device.get(deviceToken: token.userid)
-				account.id(device.deviceToken)
-				account.username = device.deviceName
+		let account = User()
+		let token = AccessTokenStore()
+		do {
+			try token.get(credentials.string)
+			if token.check() == false {
+				throw IncorrectCredentialsError()
 			}
-
+			try account.get(token.userid)
 			return account
-        } catch {
-            throw IncorrectCredentialsError()
-        }
+		} catch {
+			throw IncorrectCredentialsError()
+		}
     }
-    
+	
 	/// Used when an "APIKey" onject is passed to the authenticate function. Returns an Account object.
 	func authenticate(credentials: APIKey) throws -> Account {
 		let device = Device()

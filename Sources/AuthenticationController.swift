@@ -20,7 +20,6 @@ public class AuthenticationController {
         
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
         routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
-		routes.add(method: .post, uri: "/api/login/apikey", handler: apikeyHandlerPOST)
 		routes.add(method: .post, uri: "/api/logout", handler: logoutHandlerPOST)
 		routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
         routes.add(method: .get, uri: "/api/authenticated", handler: authenticatedHandlerGET)
@@ -289,42 +288,4 @@ public class AuthenticationController {
         }
         response.completed()
     }
-
-	/* ApiKey Login action (POST) */
-
-	func apikeyHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
-		var resp = [String: String]()
-		guard let id = request.param(name: "id"),
-			let secret = request.param(name: "secret") else {
-				resp["error"] = "Missing uniqueID"
-				do {
-					try response.setBody(json: resp)
-				} catch {
-					print(error)
-				}
-				response.completed()
-				return
-		}
-		
-		let credentials = APIKey(id: id, secret: secret)
-		
-		do {
-			try request.user.login(credentials: credentials, persist: true)
-			let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
-			let token = tokenStore.new(uniqueID)
-			resp["login"] = "ok"
-			resp["token"] = token
-			resp["uniqueID"] = uniqueID
-		} catch {
-			resp["error"] = "Invalid uniqueID"
-		}
-		do {
-			try response.setBody(json: resp)
-		} catch {
-			print(error)
-		}
-		response.completed()
-	}
 }
