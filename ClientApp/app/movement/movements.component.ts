@@ -104,7 +104,7 @@ export class MovementsComponent implements OnInit {
             .getAll()
             .subscribe(result => {
                 this.causals = result.map(p => Helpers.newSelectItem(p, p.causalName));
-                if (localStorage.getItem("deviceID") === null) {
+                if (localStorage.getItem("webretailDevice") === null) {
                     this.causals = this.causals.filter(p => p.value.causalIsPos === false);
                 }
             }
@@ -119,10 +119,9 @@ export class MovementsComponent implements OnInit {
             }
         );
 
-        let jsonObj: any = JSON.parse(localStorage.getItem('cashRegister'));
-        if (jsonObj !== null) {
-            this.device = <Device>jsonObj;
-        }
+        let jsonObj: any = JSON.parse(localStorage.getItem('webretailDevice'));
+        this.device = jsonObj !== null ? <Device>jsonObj : null;
+        alert(this.device);
     }
 
     buildFilter(items: Movement[]) {

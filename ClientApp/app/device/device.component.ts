@@ -65,7 +65,7 @@ export class DeviceComponent implements OnInit {
 
     onRowSelect(event: any) {
         this.dataform.controls.join.setValue(false);
-        var json = localStorage.getItem("cashRegister");
+        var json = localStorage.getItem("webretailDevice");
         if (json != null) {
             var device: Device = JSON.parse(json)
             if (device.deviceId == this.selected.deviceId) {
@@ -81,7 +81,9 @@ export class DeviceComponent implements OnInit {
 
     closeClick() {
         if (this.dataform.controls.join.value === true) {
-            localStorage.setItem("cashRegister", JSON.stringify(this.selected));
+            localStorage.setItem("webretailDevice", JSON.stringify(this.selected));
+        } else {
+            localStorage.removeItem("webretailDevice");
         }
         this.displayPanel = false;
         this.selected = null;
