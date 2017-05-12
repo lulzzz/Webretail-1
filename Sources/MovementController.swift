@@ -21,6 +21,7 @@ class MovementController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
+		routes.add(method: .get, uri: "/api/movementpayment", handler: movementPaymentsHandlerGET)
 		routes.add(method: .get, uri: "/api/movementstatus", handler: movementStatusHandlerGET)
         routes.add(method: .get, uri: "/api/movement", handler: movementsHandlerGET)
 		routes.add(method: .get, uri: "/api/movementinvoiced", handler: movementsInvoicedHandlerGET)
@@ -35,6 +36,18 @@ class MovementController {
         return routes
     }
     
+	func movementPaymentsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+		response.setHeader(.contentType, value: "application/json")
+		
+		do {
+			let status = self.repository.getPayments()
+			try response.setBody(json: status)
+			response.completed(status: .ok)
+		} catch {
+			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+		}
+	}
+	
 	func movementStatusHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		

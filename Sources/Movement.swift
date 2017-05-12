@@ -35,6 +35,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
 	public var movementStore : [String:Any] = [String:Any]()
 	public var movementCausal : [String:Any] = [String:Any]()
 	public var movementCustomer : [String:Any] = [String:Any]()
+	public var movementPayment : String = ""
 	public var movementUpdated : Int = Int.now()
 	
 	public var _amount : Double = 0
@@ -53,6 +54,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
 		movementStore = this.data["movementstore"] as? [String:Any] ?? [String:Any]()
 		movementCausal = this.data["movementcausal"] as? [String:Any] ?? [String:Any]()
 		movementCustomer = this.data["movementcustomer"] as? [String:Any] ?? [String:Any]()
+		movementPayment = this.data["movementpayment"] as? String ?? ""
 		movementUpdated = this.data["movementupdated"] as? Int ?? 0
     }
     
@@ -83,6 +85,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
 		self.movementStore = getJSONValue(named: "movementStore", from: values, defaultValue: [String:Any]())
 		self.movementCausal = getJSONValue(named: "movementCausal", from: values, defaultValue: [String:Any]())
 		self.movementCustomer = getJSONValue(named: "movementCustomer", from: values, defaultValue: [String:Any]())
+		self.movementPayment = getJSONValue(named: "movementPayment", from: values, defaultValue: "")
 	}
 	
     func jsonEncodedString() throws -> String {
@@ -103,6 +106,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
             "movementCausal": movementCausal,
             "movementCustomer": movementCustomer,
             "movementAmount": _amount.roundCurrency(),
+            "movementPayment": movementPayment,
             "movementUpdated": movementUpdated.formatDate()
         ]
     }

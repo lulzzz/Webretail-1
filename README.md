@@ -6,6 +6,10 @@ Retail Management System developed with Swift, Angular2 and PostgreSQL.
 
 <img src="https://github.com/gerardogrisolini/Webretail/blob/master/ClientApp/assets/logo.jpg?raw=true" width="80" alt="Webretail - RMS" />
 
+## Demo
+
+go to http://ec2-35-157-208-60.eu-central-1.compute.amazonaws.com/home
+
 ## Build Notes
 
 Ensure you have installed Xcode 8.0 or later.

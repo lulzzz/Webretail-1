@@ -80,4 +80,9 @@ export class MovementService {
         return this.http.get('/api/movementstatus', { headers: Helpers.getHeaders() })
             .map(result => <ItemValue[]>result.json());
     }
+
+    getPayments(): Observable<ItemValue[]> {
+        return this.http.get('/api/movementpayment', { headers: Helpers.getHeaders() })
+            .map(result => <ItemValue[]>result.json());
+    }
 }

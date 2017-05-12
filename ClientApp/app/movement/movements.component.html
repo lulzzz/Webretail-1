@@ -111,7 +111,7 @@
                     </div>
                 </div>
                 <div *ngIf="selected.movementCausal.causalIsPos" class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="device">Cash register</label></div>
+                    <div class="ui-grid-col-4"><label for="device">Device</label></div>
                     <div class="ui-grid-col-8">
                         <input pInputText disabled="true" formControlName="device" [(ngModel)]="selected.movementDevice"/>
                     </div>
@@ -148,9 +148,9 @@
                     <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="note">Note</label></div>
+                    <div class="ui-grid-col-4"><label for="payment">Payment</label></div>
                     <div class="ui-grid-col-8">
-                        <textarea pInputTextarea formControlName="note" [(ngModel)]="selected.movementNote" style="width: 100%"></textarea>
+                        <p-dropdown [options]="payments" formControlName="payment" [disabled]="selected.movementStatus==='Completed'" [(ngModel)]="selected.movementPayment" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                     </div>
                 </div>
                 <div class="ui-grid-row">
@@ -160,6 +160,12 @@
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['status'].valid&&dataform.controls['status'].dirty">
                             <i class="fa fa-close"></i> Status is required
                         </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="note">Note</label></div>
+                    <div class="ui-grid-col-8">
+                        <textarea pInputTextarea formControlName="note" [(ngModel)]="selected.movementNote" style="width: 100%"></textarea>
                     </div>
                 </div>
                 <div class="ui-grid-row">

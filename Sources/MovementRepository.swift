@@ -16,6 +16,16 @@ enum ActionType {
 
 struct MovementRepository : MovementProtocol {
 
+	func getPayments() -> [ItemValue] {
+		var status = [ItemValue]()
+		status.append(ItemValue(value: "None"))
+		status.append(ItemValue(value: "Cash"))
+		status.append(ItemValue(value: "Credit card"))
+		status.append(ItemValue(value: "Bank transfer"))
+		status.append(ItemValue(value: "Carrier"))
+		return status
+	}
+
 	func getStatus() -> [ItemValue] {
 		var status = [ItemValue]()
 		status.append(ItemValue(value: "New"))

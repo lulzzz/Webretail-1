@@ -29,6 +29,7 @@ export class MovementsComponent implements OnInit {
     customersFiltered: SelectItem[];
     status: SelectItem[];
     statusFiltered: SelectItem[];
+    payments: SelectItem[];
     currentStatus: string;
 	displayPanel: boolean;
 	dataform: FormGroup;
@@ -58,6 +59,7 @@ export class MovementsComponent implements OnInit {
             'causal': new FormControl('', Validators.required),
             'customer': new FormControl('', Validators.nullValidator),
             'device': new FormControl('', Validators.nullValidator),
+            'payment': new FormControl('', Validators.nullValidator),
             'status': new FormControl('', Validators.required),
             'note': new FormControl('', Validators.nullValidator)
         });
@@ -84,6 +86,13 @@ export class MovementsComponent implements OnInit {
             }
         );
 
+        this.movementService
+            .getPayments()
+            .subscribe(result => {
+                this.payments = result.map(p => Helpers.newSelectItem(p.value));
+            }
+        );
+        
         this.storeService
             .getAll()
             .subscribe(result => {

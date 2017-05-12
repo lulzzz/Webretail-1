@@ -12,10 +12,17 @@ struct InvoiceRepository : InvoiceProtocol {
 	
 	func getPayments() -> [ItemValue] {
 		var status = [ItemValue]()
-		status.append(ItemValue(value: "Cash"))
-		status.append(ItemValue(value: "Credit card"))
-		status.append(ItemValue(value: "Bank transfer"))
-		status.append(ItemValue(value: "Check"))
+		status.append(ItemValue(value: "Paid"))
+		status.append(ItemValue(value: "Bank transfer 30 day"))
+		status.append(ItemValue(value: "Bank transfer 60 day"))
+		status.append(ItemValue(value: "Bank transfer 90 day"))		
+		status.append(ItemValue(value: "Bank receipt 30 day"))
+		status.append(ItemValue(value: "Bank receipt 60 day"))
+		status.append(ItemValue(value: "Bank receipt 90 day"))
+		status.append(ItemValue(value: "Bank receipt 30 60 day"))
+		status.append(ItemValue(value: "Bank receipt 60 90 day"))
+		status.append(ItemValue(value: "Bank receipt 30 60 90 day"))
+		status.append(ItemValue(value: "Bank receipt 30 60 90 120 day"))
 		return status
 	}
 

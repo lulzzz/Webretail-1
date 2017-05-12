@@ -8,6 +8,8 @@
 
 protocol MovementProtocol {
     
+	func getPayments() -> [ItemValue]
+
 	func getStatus() -> [ItemValue]
 
 	func getAll() throws -> [Movement]

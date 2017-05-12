@@ -223,6 +223,7 @@ export class Movement {
   public movementUser: string;
   public movementDevice: string;
   public movementAmount: number;
+  public movementPayment: string;
   public movementUpdated: Date;
 
   constructor() {
@@ -235,6 +236,7 @@ export class Movement {
     this.movementUser = '';
     this.movementDevice = '';
     this.movementAmount = 0.0;
+    this.movementPayment = '';
     this.movementUpdated = new Date();
   }
 }
