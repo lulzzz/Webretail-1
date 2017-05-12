@@ -121,7 +121,6 @@ export class MovementsComponent implements OnInit {
 
         let jsonObj: any = JSON.parse(localStorage.getItem('webretailDevice'));
         this.device = jsonObj !== null ? <Device>jsonObj : null;
-        alert(this.device);
     }
 
     buildFilter(items: Movement[]) {
