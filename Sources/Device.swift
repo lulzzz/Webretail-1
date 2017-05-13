@@ -66,13 +66,9 @@ class Device: PostgresSqlORM, JSONConvertible {
 	}
 
 	/// Performs a find on supplied deviceToken
-	func get(deviceToken: String) {
+	func get(deviceToken: String, deviceName: String) {
 		do {
-			try query(whereclause: "deviceToken = $1", params: [deviceToken], cursor: StORMCursor(limit: 1, offset: 0))
-//			if self.results.rows.count == 0 {
-//				throw StORMError.noRecordFound
-//			}
-			//to(self.results.rows[0])
+			try query(whereclause: "deviceToken = $1 && deviceName = $2", params: [deviceToken, deviceName], cursor: StORMCursor(limit: 1, offset: 0))
 		} catch {
 			print(error)
 		}

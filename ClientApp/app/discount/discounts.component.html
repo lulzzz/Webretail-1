@@ -28,7 +28,7 @@
                 {{data.discountPercentage > 0 ? data.discountPercentage + '%' : data.discountPrice | currency: 'EUR' : true}}
             </ng-template>
         </p-column>
-        <p-column header="Start" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
+        <p-column field="discountStartAt" header="Start" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.discountStartAt | date:'yyyy-MM-dd'}}
             </ng-template>            
@@ -37,7 +37,7 @@
                 <p-calendar [(ngModel)]="dateStartValue" [inputStyle]="{'width':'100%'}" dateFormat="yy-mm-dd" placeholder="Start" styleClass="ui-column-filter"></p-calendar>
             </ng-template>
         </p-column>
-        <p-column header="Finish" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
+        <p-column field="discountFinishAt" header="Finish" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.discountFinishAt | date:'yyyy-MM-dd'}}
             </ng-template>            

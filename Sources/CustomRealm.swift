@@ -50,7 +50,7 @@ open class CustomRealm : Realm {
 	/// Used when an "APIKey" onject is passed to the authenticate function. Returns an Account object.
 	func authenticate(credentials: APIKey) throws -> Account {
 		let device = Device()
-		device.get(deviceToken: credentials.secret)
+		device.get(deviceToken: credentials.secret, deviceName: credentials.id)
 		if device.deviceId == 0 {
 			device.deviceToken = credentials.secret
 			device.deviceName = credentials.id

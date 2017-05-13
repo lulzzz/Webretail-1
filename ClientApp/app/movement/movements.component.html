@@ -19,7 +19,7 @@
         selectionMode="single" [(selection)]="selected" [contextMenu]="bts"
         [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="movementNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
+        <p-column field="movementDate" header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.movementDate | date:'yyyy-MM-dd'}}
             </ng-template>            
