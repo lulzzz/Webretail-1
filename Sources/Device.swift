@@ -68,7 +68,7 @@ class Device: PostgresSqlORM, JSONConvertible {
 	/// Performs a find on supplied deviceToken
 	func get(deviceToken: String, deviceName: String) {
 		do {
-			try query(whereclause: "deviceToken = $1 && deviceName = $2", params: [deviceToken, deviceName], cursor: StORMCursor(limit: 1, offset: 0))
+			try query(whereclause: "deviceToken = $1 AND deviceName = $2", params: [deviceToken, deviceName], cursor: StORMCursor(limit: 1, offset: 0))
 		} catch {
 			print(error)
 		}

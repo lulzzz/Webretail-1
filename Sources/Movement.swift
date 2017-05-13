@@ -106,7 +106,8 @@ class Movement: PostgresSqlORM, JSONConvertible {
             "movementCausal": movementCausal,
             "movementCustomer": movementCustomer,
             "movementAmount": _amount.roundCurrency(),
-            "movementPayment": movementPayment
+            "movementPayment": movementPayment,
+            "movementUpdated": movementUpdated.formatDate()
         ]
     }
 
