@@ -78,14 +78,12 @@ class CompanyController {
 		response.setHeader(.contentType, value: "application/json")
 
 		do {
-			if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.downloadsDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
-				if let uploads = request.postFileUploads {
-					for upload in uploads {
-						try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: dir.appending("/backup/header.png"))
-						LogFile.info("New file header uploaded")
-						response.completed(status: .created)
-						return
-					}
+			if let uploads = request.postFileUploads {
+				for upload in uploads {
+					try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: "/tmp/header.png")
+					LogFile.info("New file header uploaded")
+					response.completed(status: .created)
+					return
 				}
 			}
 		} catch {
@@ -94,12 +92,10 @@ class CompanyController {
     }
 
 	func uploadHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.downloadsDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
-			if let content = FileManager.default.contents(atPath: dir.appending("/backup/header.png")) {
-				response.setHeader(.contentType, value: "image/png")
-				response.setBody(bytes: [UInt8](content))
-				response.completed(status: .ok)
-			}
+		if let content = FileManager.default.contents(atPath: "/tmp/header.png") {
+			response.setHeader(.contentType, value: "image/png")
+			response.setBody(bytes: [UInt8](content))
+			response.completed(status: .ok)
 		}
 		response.badRequest(error: "\(request.uri) \(request.method): Header file not found")
     }
