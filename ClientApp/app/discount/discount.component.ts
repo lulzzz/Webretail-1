@@ -32,9 +32,10 @@ export class DiscountComponent implements OnInit, OnDestroy {
                 private location: Location) {
         this.codes = [];
         this.itemsSelected = [];
+        authenticationService.title = 'Discount';
     }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         // Subscribe to route params
@@ -44,8 +45,8 @@ export class DiscountComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     this.item = result;
                     this.discountService.getItemsById(this.discountId)
-                        .subscribe(result => {
-                            this.items = result;
+                        .subscribe(res => {
+                            this.items = res;
                             this.totalRecords = this.items.length;
                         }, onerror => alert(onerror._body)
                     );
@@ -59,13 +60,18 @@ export class DiscountComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    cancelClick() {
+    reloadData() {
+        this.items =  this.items.map(p => p);
+        this.totalRecords = this.items.length;
+    }
+
+   cancelClick() {
         this.location.back();
     }
 
     addCodes() {
         this.codes.forEach(code => {
-            var item = new DiscountProduct();
+            let item = new DiscountProduct();
             item.discountId = this.discountId;
             item.discountProduct.productCode = code;
             this.discountService
@@ -73,7 +79,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     this.items.push(result);
                     this.codes.splice(this.codes.indexOf(code), 1);
-                    this.totalRecords = this.items.length;
+                    this.reloadData();
                 }, onerror => alert(onerror._body));
         });
     }
@@ -91,12 +97,12 @@ export class DiscountComponent implements OnInit, OnDestroy {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to remove this selected items?',
             accept: () => {
-                this.itemsSelected.forEach(p =>{
+                this.itemsSelected.forEach(p => {
                     this.discountService
                         .removeProduct(p.discountProductId)
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(p), 1);
-                            this.totalRecords = this.items.length;
+                            this.reloadData();
                         }, onerror => alert(onerror._body));
                 });
             }

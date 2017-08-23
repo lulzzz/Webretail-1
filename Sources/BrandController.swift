@@ -5,7 +5,6 @@
 //  Created by Gerardo Grisolini on 16/02/17.
 //
 //
-
 import PerfectHTTP
 
 class BrandController {
@@ -45,7 +44,7 @@ class BrandController {
         
         let id = request.urlVariables["id"]!
         do {
-            let item = try self.repository.get(id: id.toInt()!)
+            let item = try self.repository.get(id: Int(id)!)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
@@ -76,7 +75,7 @@ class BrandController {
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = Brand()
             item.setJSONValues(json!)
-            try self.repository.update(id: id.toInt()!, item: item)
+            try self.repository.update(id: Int(id)!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
@@ -89,7 +88,7 @@ class BrandController {
         
         let id = request.urlVariables["id"]!
         do {
-            try self.repository.delete(id: id.toInt()!)
+            try self.repository.delete(id: Int(id)!)
             response.completed(status: .noContent)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

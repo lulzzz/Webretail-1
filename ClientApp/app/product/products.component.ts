@@ -16,7 +16,7 @@ import { ProductService } from './../services/product.service';
 export class ProductsComponent implements OnInit {
     totalRecords = 0;
     products: Product[];
-	selected: Product;
+    selected: Product;
     categories: SelectItem[];
     allbrands: SelectItem[];
     ums: SelectItem[];
@@ -24,16 +24,18 @@ export class ProductsComponent implements OnInit {
     categoryValue: string;
     sliderValue: number;
     displayPanel: boolean;
-	dataform: FormGroup;
+    dataform: FormGroup;
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
                 private productService: ProductService,
                 private brandService: BrandService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+        authenticationService.title = 'Products';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
@@ -46,13 +48,7 @@ export class ProductsComponent implements OnInit {
             'isActive': new FormControl('', Validators.required)
         });
 
-        this.productService.getProducts()
-            .subscribe(result => {
-                this.products = result;
-                this.totalRecords = this.products.length;
-                this.buildFilter(result);
-            }, onerror => alert(onerror._body)
-        );
+        this.refreshClick();
 
         this.brandService.getAll()
             .subscribe(result => {
@@ -61,7 +57,7 @@ export class ProductsComponent implements OnInit {
             }, onerror => alert(onerror._body));
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.productId == 0; }
+    get isNew(): boolean { return this.selected == null || this.selected.productId === 0; }
 
     get selectedIndex(): number { return this.products.indexOf(this.selected); }
 
@@ -76,6 +72,17 @@ export class ProductsComponent implements OnInit {
         let array = items.map((p: Product) => p.categories.map((c: ProductCategory) => c.category.categoryName)).join(',');
         let filterCategories = Helpers.distinct(array.split(',').map((item: string) => Helpers.newSelectItem(item)));
         this.categories = this.categories.concat(filterCategories);
+    }
+
+    refreshClick() {
+        this.products = null;
+        this.productService.getProducts()
+            .subscribe(result => {
+                this.products = result;
+                this.totalRecords = this.products.length;
+                this.buildFilter(result);
+            }, onerror => alert(onerror._body)
+        );
     }
 
     openClick() {
@@ -108,6 +115,7 @@ export class ProductsComponent implements OnInit {
             this.productService.create(this.selected)
                 .subscribe(result => {
                     this.selected = result;
+                    this.totalRecords++;
                     this.openClick();
                 }, onerror => alert(onerror._body));
         } else {

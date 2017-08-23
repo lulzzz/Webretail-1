@@ -36,7 +36,7 @@ class Attribute: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.attributeId = getJSONValue(named: "attributeId", from: values, defaultValue: 0)
         self.attributeName = getJSONValue(named: "attributeName", from: values, defaultValue: "")
     }

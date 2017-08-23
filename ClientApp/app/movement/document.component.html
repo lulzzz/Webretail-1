@@ -3,16 +3,15 @@
 <div class="container-fluid">
 
     <div class="noprint">
-        <button pButton type="button" title="Movements" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+        <button pButton type="button" title="Movements" (click)="cancelClick()" class="ui-button-secondary" style="width:50px" icon="fa-reply"></button>
         <button pButton type="button" label="Print" title="Print document" (click)="printClick()" class="ui-button-secondary" icon="fa-print"></button>
-        <button pButton type="button" label="Send mail" title="Send mail" (click)="sendMailClick()" class="ui-button-secondary" icon="fa-envelope"></button>
-    </div>
+     </div>
 
     <div *ngFor="let items of groups" #doc>          
         <table *ngIf="movement" class="table" style="width: 100%">    
             <thead>
                 <tr> 
-                    <td colspan="5"><img title="Close" src="http://{{document.location.host}}/assets/ci.jpg" style="width: 100%;margin: 10px 0;"></td> 
+                    <td colspan="5"><img title="Header" height="100" width="100%" src="http://{{document.location.host}}/upload/header" alt="Header not found. Upload on Settings -> Company -> Document Header" style="margin: 10px 0"></td> 
                 </tr> 
                 <tr> 
                     <td><strong>Number</strong></td> 

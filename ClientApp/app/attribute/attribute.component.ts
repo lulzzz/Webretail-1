@@ -16,19 +16,21 @@ export class AttributeComponent implements OnInit {
     totalValues = 0;
     attributes: Attribute[];
     values: AttributeValue[];
-	selected: Attribute;
+    selected: Attribute;
     selectedValue: AttributeValue;
     displayPanel: boolean;
-	displayPanelValue: boolean;
-	dataform: FormGroup;
+    displayPanelValue: boolean;
+    dataform: FormGroup;
     dataformValue: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
                 private attributeService: AttributeService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+        authenticationService.title = 'Attributes';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
@@ -49,9 +51,9 @@ export class AttributeComponent implements OnInit {
         );
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.attributeId == 0; }
+    get isNew(): boolean { return this.selected == null || this.selected.attributeId === 0; }
 
-    get isNewValue() : boolean { return this.selectedValue == null || this.selectedValue.attributeValueId == 0; }
+    get isNewValue(): boolean { return this.selectedValue == null || this.selectedValue.attributeValueId === 0; }
 
     get selectedIndex(): number { return this.attributes.indexOf(this.selected); }
 

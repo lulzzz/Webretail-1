@@ -10,14 +10,16 @@ import { Account } from './../shared/models';
 })
 
 export class MyInfoComponent implements OnInit {
-	public myinfo: Account;
-	dataform: FormGroup;
+    public myinfo: Account;
+    dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
                 private accountService: AccountService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+       authenticationService.title = 'My Info';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.getCredentials()
             .subscribe(p => {
                 this.accountService.getById(p.uniqueID)

@@ -12,7 +12,7 @@ import {
     TreeModule, ButtonModule, InputTextModule, InputSwitchModule,
     PanelModule, SplitButtonModule, PickListModule, GrowlModule,
     SelectButtonModule, ChipsModule, InputTextareaModule,
-    ContextMenuModule, TooltipModule, CalendarModule
+    ContextMenuModule, TooltipModule, CalendarModule, FileUploadModule, ChartModule
 } from 'primeng/primeng';
 
 import { Configuration } from './app.constants';
@@ -41,14 +41,15 @@ import { StockComponent } from './product/stock.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { DocumentComponent } from './movement/document.component';
-import { BarcodeComponent } from './movement/barcode.component';
 import { DiscountsComponent } from './discount/discounts.component';
 import { DiscountComponent } from './discount/discount.component';
 import { InvoicesComponent } from './invoice/invoices.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { InvoiceDocumentComponent } from './invoice/invoicedocument.component';
 import { DeviceComponent } from './device/device.component';
-import { ReportCashRegisterComponent } from './report/cashregister.component';
+import { ReportReceiptsComponent } from './report/receipts.component';
+import { ReportSalesComponent } from './report/sales.component';
+import { StatisticsComponent } from './report/statistics.component';
 
 import { AuthenticationService } from './services/authentication.service';
 import { CompanyService } from './services/company.service';
@@ -64,6 +65,7 @@ import { ProductService } from './services/product.service';
 import { MovementService } from './services/movement.service';
 import { DiscountService } from './services/discount.service';
 import { InvoiceService } from './services/invoice.service';
+import { StatisticService } from './services/statistic.service';
 
 import { CategoryFilterPipe } from './pipes/category-filter.pipe';
 import { PriceFilterPipe } from './pipes/price-filter.pipe';
@@ -81,8 +83,8 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ButtonModule, InputTextModule, InputSwitchModule,
         PanelModule, SplitButtonModule, PickListModule, GrowlModule,
         ConfirmDialogModule, ToolbarModule, SelectButtonModule,
-        ChipsModule, InputTextareaModule,
-        ContextMenuModule, TooltipModule, CalendarModule,
+        ChipsModule, InputTextareaModule, FileUploadModule,
+        ContextMenuModule, TooltipModule, CalendarModule, ChartModule,
         AppRoutes
     ],
     declarations: [
@@ -116,14 +118,15 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         MovementsComponent,
         MovementComponent,
         DocumentComponent,
-        BarcodeComponent,
         DiscountsComponent,
         DiscountComponent,
         InvoicesComponent,
         InvoiceComponent,
         InvoiceDocumentComponent,
         DeviceComponent,
-        ReportCashRegisterComponent
+        ReportReceiptsComponent,
+        ReportSalesComponent,
+        StatisticsComponent
     ],
     providers: [
         Configuration,
@@ -141,7 +144,8 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         MovementService,
         DiscountService,
         InvoiceService,
-        ConfirmationService
+        ConfirmationService,
+        StatisticService
     ],
     exports: [
         ArticlePickerComponent,

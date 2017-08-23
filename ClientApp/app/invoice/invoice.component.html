@@ -3,11 +3,10 @@
 
 <div class="container-fluid">
 
-    <button pButton type="button" title="Discounts" style="position: absolute; top: 84px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
-    <h1 style="margin-left: 40px">Invoice</h1>
-  
+    <button pButton type="button" title="Invoices" style="position: absolute; top: 154px; left: 30px; width:50px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+
     <p-toolbar *ngIf="item">
-        <div class="ui-toolbar-group-left">
+        <div class="ui-toolbar-group-left" style="margin-left:60px">
             <span><b>number</b>: {{item.invoiceNumber}}</span>
             <br/><span><b>date</b>: {{item.invoiceDate | date: 'yyyy-MM-dd'}}</span>
         </div>

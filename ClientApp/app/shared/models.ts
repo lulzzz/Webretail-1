@@ -13,10 +13,6 @@ export class Company {
   public companyCountry: string;
   public companyFiscalCode: string;
   public companyVatNumber: string;
-  public smtpHost: string = ""
-	public smtpSsl: boolean = false
-	public smtpUsername: string = ""
-	public smtpPassword: string = ""
 
 
   constructor() {
@@ -32,10 +28,6 @@ export class Company {
     this.companyCountry = '';
     this.companyFiscalCode = '';
     this.companyVatNumber = '';
-	  this.smtpHost = '';
-	  this.smtpSsl = false;
-	  this.smtpUsername = '';
-	  this.smtpPassword = '';
   }
 }
 
@@ -340,6 +332,16 @@ export class Email {
   }
 }
 
+export class Period {
+  public start: Date;
+  public finish: Date;
+
+  constructor() {
+    this.start = new Date();
+    this.finish = new Date(this.start.getFullYear(), 12, 31);
+  }
+}
+
 // Interfaces
 
 export interface Token {
@@ -350,7 +352,7 @@ export interface Token {
 }
 
 export interface ProductCategory {
-  //productCategoryId: number;
+  // productCategoryId: number;
   productId: number;
   category: Category;
 }
@@ -363,30 +365,30 @@ export interface ProductAttribute {
 }
 
 export interface ProductAttributeValue {
-  //productAttributeValueId: number;
+  // productAttributeValueId: number;
   productAttributeId: number;
   attributeValue: AttributeValue;
 }
 
 export interface ArticleAttributeValue {
-  //articleAttributeValueId: number;
-  //articleId: number;
+  // articleAttributeValueId: number;
+  // articleId: number;
   attributeValueId: number;
-  //attributeValue: AttributeValue;
+  // attributeValue: AttributeValue;
 }
 
 export interface ItemValue {
-	value: string;
+  value: string;
 }
 
 export interface ArticleForm {
-	header: string[];
-	body: ArticleItem[][];
+  header: string[];
+  body: ArticleItem[][];
 }
 
 export interface ArticleItem {
   id: number;
-	value: string;
+  value: string;
   stock: number;
   booked: number;
   data: number;

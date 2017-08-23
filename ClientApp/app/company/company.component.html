@@ -3,8 +3,6 @@
 
 <div class="container-fluid">
 
-    <h1>Company</h1>
-    
     <form *ngIf="company" [formGroup]="dataform">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
@@ -98,36 +96,22 @@
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-12"><h2>Outgoing Mail</h2></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="host">Ssl</label></div>
-                <div class="ui-grid-col-8">
-                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="ssl" [(ngModel)]="company.smtpSsl"></p-inputSwitch>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="host">Host</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="host" [(ngModel)]="company.smtpHost"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="username">Username</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="username" [(ngModel)]="company.smtpUsername"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="password">Password</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText type="password" formControlName="password" [(ngModel)]="company.smtpPassword"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
                 <div class="ui-grid-col-8"></div>
                 <div class="ui-grid-col-4">
                     <button type="button" pButton icon="fa-save" (click)="saveClick()" class="ui-button-success" label="Save" [disabled]="!dataform.valid"></button>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-12"><h3>Document Header</h3></div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-12">
+                    <p-fileUpload mode="basic" name="header" url="/upload/header" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUpload($event)"></p-fileUpload>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-12">
+                    <img title="Header" alt="Header not found. Upload new image size 2000×260 px" src="{{header}}" height="100" width="100%"/>
                 </div>
             </div>
         </div>

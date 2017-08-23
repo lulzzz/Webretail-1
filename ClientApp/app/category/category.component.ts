@@ -8,22 +8,24 @@ import { Helpers } from './../shared/helpers';
 
 @Component({
     selector: 'category-component',
-   	templateUrl: 'category.component.html'
+    templateUrl: 'category.component.html'
 })
 
 export class CategoryComponent implements OnInit {
     totalRecords = 0;
     categories: Category[];
-	selected: Category;
+    selected: Category;
     displayPanel: boolean;
-	dataform: FormGroup;
+    dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
                 private categoryService: CategoryService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+       authenticationService.title = 'Categories';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
@@ -40,7 +42,7 @@ export class CategoryComponent implements OnInit {
         );
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.categoryId == 0; }
+    get isNew(): boolean { return this.selected == null || this.selected.categoryId === 0; }
 
     get selectedIndex(): number { return this.categories.indexOf(this.selected); }
 
@@ -64,6 +66,7 @@ export class CategoryComponent implements OnInit {
                 .create(this.selected)
                 .subscribe(result => {
                     this.categories.push(result);
+                    this.totalRecords++;
                     this.closeClick();
                 }, onerror => alert(onerror._body));
         } else {

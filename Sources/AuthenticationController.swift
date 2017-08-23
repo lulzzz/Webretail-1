@@ -1,5 +1,5 @@
 //
-//  SocialAuthentication.swift
+//  AuthenticationController.swift
 //  Webretail
 //
 //  Created by Gerardo Grisolini on 24/02/17.
@@ -11,7 +11,7 @@ import PerfectLib
 import PerfectHTTP
 import Turnstile
 import TurnstileCrypto
-import TurnstileWeb
+//import TurnstileWeb
 
 public class AuthenticationController {
 
@@ -19,44 +19,21 @@ public class AuthenticationController {
         var routes = Routes()
         
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
-        routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
 		routes.add(method: .post, uri: "/api/logout", handler: logoutHandlerPOST)
-		routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
-        routes.add(method: .get, uri: "/api/authenticated", handler: authenticatedHandlerGET)
 
-        routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
-        routes.add(method: .get, uri: "/login/facebook/consumer", handler: facebookHandlerConsumer)
+        // routes.add(method: .get, uri: "/api/authenticated", handler: authenticatedHandlerGET)
+        // routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
+		// routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
+
+        // routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
+        // routes.add(method: .get, uri: "/login/facebook/consumer", handler: facebookHandlerConsumer)
         
-        routes.add(method: .get, uri: "/login/google", handler: googleHandler)
-        routes.add(method: .get, uri: "/login/google/consumer", handler: googleHandlerConsumer)
+        // routes.add(method: .get, uri: "/login/google", handler: googleHandler)
+        // routes.add(method: .get, uri: "/login/google/consumer", handler: googleHandlerConsumer)
 
         return routes
     }
 
-    func authenticatedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-
-        var resp = [String: Any]()
-        resp["authenticated"] = false
-        do {
-            if request.user.authenticated {
-                guard let uniqueID = request.user.authDetails?.account.uniqueID else {
-                    throw AccountTakenError()
-                }
-                let user = User()
-                try user.get(uniqueID)
-                
-                resp["authenticated"] = true
-                resp["uniqueID"] = request.user.authDetails?.account.uniqueID
-                resp["role"] = user.isAdmin ? "Admin" : "User"
-			}
-            try response.setBody(json: resp)
-        } catch {
-            print(error)
-        }
-        response.completed()
-    }
-    
     func loginHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
@@ -118,6 +95,31 @@ public class AuthenticationController {
 		response.completed()
 	}
 
+    /*
+    func authenticatedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+
+        var resp = [String: Any]()
+        resp["authenticated"] = false
+        do {
+            if request.user.authenticated {
+                guard let uniqueID = request.user.authDetails?.account.uniqueID else {
+                    throw AccountTakenError()
+                }
+                let user = User()
+                try user.get(uniqueID)
+                
+                resp["authenticated"] = true
+                resp["uniqueID"] = request.user.authDetails?.account.uniqueID
+                resp["role"] = user.isAdmin ? "Admin" : "User"
+			}
+            try response.setBody(json: resp)
+        } catch {
+            print(error)
+        }
+        response.completed()
+    }
+    
 	func registerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         var resp = [String: String]()
@@ -288,4 +290,6 @@ public class AuthenticationController {
         }
         response.completed()
     }
+    */
 }
+

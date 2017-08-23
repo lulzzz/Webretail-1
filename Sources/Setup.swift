@@ -11,23 +11,26 @@ import PostgresStORM
 import StORM
 import TurnstileWeb
 
-let facebook = Facebook(clientID: "1232307486877468", clientSecret: "b852db2dd51e4a9cca80afe812c33a11")
-let google = Google(clientID: "807060073548-m603cvhbmk5e8c633p333hflge1fi8mt.apps.googleusercontent.com", clientSecret: "_qcb-5fEEfDekInFe106Fhhl")
+// let facebook = Facebook(clientID: "1232307486877468", clientSecret: "b852db2dd51e4a9cca80afe812c33a11")
+// let google = Google(clientID: "807060073548-m603cvhbmk5e8c633p333hflge1fi8mt.apps.googleusercontent.com", clientSecret: "_qcb-5fEEfDekInFe106Fhhl")
+
+//let rootPath = Bundle.main.bundlePath + "/Contents/Resources"
 
 let tokenStore = AccessTokenStore()
 let ioCContainer = IoCContainer()
 
 func setupDatabase() throws {
+    
 	#if os(Linux)
-		PostgresConnector.host = "webretail.csb42stoatzh.eu-central-1.rds.amazonaws.com"
+		PostgresConnector.host = "192.168.1.4"
 	#else
 		PostgresConnector.host = "localhost"
 	#endif
-	PostgresConnector.username = "webretail"
-	PostgresConnector.password = "webretail"
+	PostgresConnector.username = "gerardo"
+	PostgresConnector.password = ""
 	PostgresConnector.database = "webretail"
 	PostgresConnector.port = 5432
-	StORMdebug = false
+    StORMdebug = true
 
 	try Company().setup()
 	try tokenStore.setup()
@@ -55,7 +58,7 @@ func setupDatabase() throws {
 	try MovementArticle().setup()
 	try Discount().setup()
 	try DiscountProduct().setup()
-	try Publication().setup()
+	//try Publication().setup()
 }
 
 func addIoC() {
@@ -75,7 +78,8 @@ func addIoC() {
 	ioCContainer.register { MovementArticleRepository() as MovementArticleProtocol }
 	ioCContainer.register { DiscountRepository() as DiscountProtocol }
 	ioCContainer.register { InvoiceRepository() as InvoiceProtocol }
-	ioCContainer.register { PublicationRepository() as PublicationProtocol }
+    ioCContainer.register { StatisticRepository() as StatisticProtocol }
+	//ioCContainer.register { PublicationRepository() as PublicationProtocol }
 }
 
 func addRoutesAndHandlers() {
@@ -83,7 +87,6 @@ func addRoutesAndHandlers() {
 	server.addRoutes(AngularController().getRoutes())
 	
 	// Register api routes and handlers
-	server.addRoutes(EmailController().getRoutes())
 	server.addRoutes(CompanyController().getRoutes())
 	server.addRoutes(AuthenticationController().getRoutes())
 	server.addRoutes(UserController().getRoutes())
@@ -100,18 +103,16 @@ func addRoutesAndHandlers() {
 	server.addRoutes(MovementController().getRoutes())
 	server.addRoutes(MovementArticleController().getRoutes())
 	server.addRoutes(DiscountController().getRoutes())
-	server.addRoutes(PublicationController().getRoutes())
 	server.addRoutes(InvoiceController().getRoutes())
+    server.addRoutes(PdfController().getRoutes())
+    server.addRoutes(StatisticController().getRoutes())
+    //server.addRoutes(PublicationController().getRoutes())
 }
 
 func addFilters() {
 	var authenticationConfig = AuthenticationConfig()
 	authenticationConfig.include("/api/*}")
 	authenticationConfig.exclude("/api/login")
-	authenticationConfig.exclude("/api/login/consumer")
-	authenticationConfig.exclude("/api/login/apikey")
-	authenticationConfig.exclude("/api/register")
-	authenticationConfig.exclude("/api/authenticated")
 	authenticationConfig.exclude("/api/logout")
 	let authFilter = AuthFilter(authenticationConfig)
 	

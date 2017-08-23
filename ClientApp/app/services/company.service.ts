@@ -11,23 +11,18 @@ export class CompanyService {
     constructor(private http: Http) {
     }
 
-    get() : Observable<Company> {
+    get(): Observable<Company> {
         return this.http.get('/api/company', { headers: Helpers.getHeaders() })
             .map(result => <Company>result.json());
     }
 
-    create(model: Company) : Observable<Company> {
+    create(model: Company): Observable<Company> {
         return this.http.post('/api/company', model, { headers: Helpers.getHeaders() })
             .map(result => <Company>result.json());
     }
 
-    update(model: Company) : Observable<Company> {
+    update(model: Company): Observable<Company> {
         return this.http.put('/api/company', model, { headers: Helpers.getHeaders() })
             .map(result => <Company>result.json());
-    }
-
-    sendMail(model: Email) : Observable<Email> {
-        return this.http.post('/api/email', model, { headers: Helpers.getHeaders() })
-            .map(result => <Email>result.json());
     }
 }

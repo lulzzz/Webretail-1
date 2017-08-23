@@ -85,6 +85,9 @@ struct DiscountRepository : DiscountProtocol {
 		}
 		try item.save {
 			id in item.discountProductId = id as! Int
+            
+            product.productUpdated = Int.now()
+            try! product.save()
 		}
 	}
 	
@@ -92,5 +95,10 @@ struct DiscountRepository : DiscountProtocol {
 		let item = DiscountProduct()
 		item.discountProductId = id
 		try item.delete()
-	}
+        
+        let product = Product()
+        try product.query(id: item.productId)
+        product.productUpdated = Int.now()
+        try product.save()
+    }
 }

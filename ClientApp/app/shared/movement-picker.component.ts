@@ -14,7 +14,7 @@ export class MovementPickerComponent {
     @ViewChild('dt') datatable: DataTable;
     totalRecords = 0;
     movements: Movement[];
-	selected: Movement[];
+    selected: Movement[];
     stores: SelectItem[];
     storesFiltered: SelectItem[];
     causals: SelectItem[];

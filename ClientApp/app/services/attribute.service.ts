@@ -15,22 +15,22 @@ export class AttributeService {
             .map(result => <Attribute[]>result.json());
     }
 
-    getById(id: number) : Observable<Attribute> {
+    getById(id: number): Observable<Attribute> {
         return this.http.get('/api/attribute/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Attribute>result.json());
     }
 
-    create(model: Attribute) : Observable<Attribute> {
+    create(model: Attribute): Observable<Attribute> {
         return this.http.post('/api/attribute', model, { headers: Helpers.getHeaders() })
             .map(result => <Attribute>result.json());
     }
 
-    update(id: number, model: Attribute) : Observable<Attribute> {
+    update(id: number, model: Attribute): Observable<Attribute> {
         return this.http.put('/api/attribute/' + id, model, { headers: Helpers.getHeaders() })
             .map(result => <Attribute>result.json());
     }
 
-    delete(id: number) : Observable<any> {
+    delete(id: number): Observable<any> {
         return this.http.delete('/api/attribute/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
@@ -40,27 +40,27 @@ export class AttributeService {
             .map(result => <AttributeValue[]>result.json());
     }
 
-    getValueByAttributeId(id: number) : Observable<AttributeValue[]> {
+    getValueByAttributeId(id: number): Observable<AttributeValue[]> {
         return this.http.get('/api/attribute/' + id + '/value', { headers: Helpers.getHeaders() })
             .map(result => <AttributeValue[]>result.json());
     }
 
-    getValueById(id: number) : Observable<AttributeValue> {
+    getValueById(id: number): Observable<AttributeValue> {
         return this.http.get('/api/attributevalue/' + id, { headers: Helpers.getHeaders() })
             .map(result => <AttributeValue>result.json());
     }
 
-    createValue(model: AttributeValue) : Observable<AttributeValue> {
+    createValue(model: AttributeValue): Observable<AttributeValue> {
         return this.http.post('/api/attributevalue', model, { headers: Helpers.getHeaders() })
             .map(result => <AttributeValue>result.json());
     }
 
-    updateValue(id: number, model: AttributeValue) : Observable<AttributeValue> {
+    updateValue(id: number, model: AttributeValue): Observable<AttributeValue> {
         return this.http.put('/api/attributevalue/' + id, model, { headers: Helpers.getHeaders() })
             .map(result => <AttributeValue>result.json());
     }
 
-    deleteValue(id: number) : Observable<any> {
+    deleteValue(id: number): Observable<any> {
         return this.http.delete('/api/attributevalue/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }

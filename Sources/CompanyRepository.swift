@@ -7,7 +7,6 @@
 //
 
 import StORM
-import TurnstileCrypto
 
 struct CompanyRepository : CompanyProtocol {
 		
@@ -41,10 +40,6 @@ struct CompanyRepository : CompanyProtocol {
 		current.companyCity = item.companyCity
 		current.companyZip = item.companyZip
 		current.companyCountry = item.companyCountry
-		current.smtpHost = item.smtpHost
-		current.smtpSsl = item.smtpSsl
-		current.smtpUsername = item.smtpUsername
-		current.smtpPassword = item.smtpPassword
 		try current.save()
 	}
 }

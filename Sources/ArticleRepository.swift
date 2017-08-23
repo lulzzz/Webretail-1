@@ -8,7 +8,6 @@
 
 import Foundation
 import StORM
-import TurnstileCrypto
 
 struct ArticleRepository : ArticleProtocol {
 

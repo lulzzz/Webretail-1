@@ -14,7 +14,7 @@ export class ProductPickerComponent {
     @ViewChild('dt') datatable: DataTable;
     totalRecords = 0;
     products: Product[];
-	selected: Product[];
+    selected: Product[];
     categories: SelectItem[];
     allbrands: SelectItem[];
     brands: SelectItem[];

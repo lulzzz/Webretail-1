@@ -16,22 +16,22 @@ export class AccountService {
             .map(result => <Account[]>result.json());
     }
 
-    getById(id: string) : Observable<Account> {
+    getById(id: string): Observable<Account> {
         return this.http.get('/api/account/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Account>result.json());
     }
 
-    create(model: Account) : Observable<Account> {
+    create(model: Account): Observable<Account> {
         return this.http.post('/api/account', model, { headers: Helpers.getHeaders() })
             .map(result => <Account>result.json());
     }
 
-    update(id: string, model: Account) : Observable<Account> {
+    update(id: string, model: Account): Observable<Account> {
         return this.http.put('/api/account/' + id, model, { headers: Helpers.getHeaders() })
             .map(result => <Account>result.json());
     }
 
-    delete(id: string) : Observable<any> {
+    delete(id: string): Observable<any> {
         return this.http.delete('/api/account/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }

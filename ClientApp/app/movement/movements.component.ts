@@ -9,6 +9,7 @@ import { CustomerService } from './../services/customer.service';
 import { MovementService } from './../services/movement.service';
 import { Movement, Device } from './../shared/models';
 import { Helpers } from './../shared/helpers';
+import * as FileSaver from 'file-saver';
 
 @Component({
     selector: 'movements-component',
@@ -18,7 +19,7 @@ import { Helpers } from './../shared/helpers';
 export class MovementsComponent implements OnInit {
     totalRecords = 0;
     items: Movement[];
-	selected: Movement;
+    selected: Movement;
     device: Device;
     cashregisters: SelectItem[];
     stores: SelectItem[];
@@ -31,14 +32,14 @@ export class MovementsComponent implements OnInit {
     statusFiltered: SelectItem[];
     payments: SelectItem[];
     currentStatus: string;
-	displayPanel: boolean;
-	dataform: FormGroup;
+    displayPanel: boolean;
+    dataform: FormGroup;
     buttons: MenuItem[];
     newNumber: number;
     dateStartValue: Date;
     dateFinishValue: Date;
     amountValue: number;
-    
+
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
                 private storeService: StoreService,
@@ -46,9 +47,11 @@ export class MovementsComponent implements OnInit {
                 private customerService: CustomerService,
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+        authenticationService.title = 'Movements';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
@@ -66,18 +69,11 @@ export class MovementsComponent implements OnInit {
 
         this.buttons = [
             { label: 'Document', icon: 'fa-print', command: (event) => this.openClick('document/') },
-            { label: 'Barcode', icon: 'fa-barcode', command: (event) => this.openClick('barcode/') },
+            { label: 'Barcode', icon: 'fa-barcode', command: (event) => this.openBarcodeClick() },
             { label: 'Create copy', icon: 'fa-clone', command: (event) => this.cloneClick() }
         ];
 
-        this.movementService
-            .getAll()
-            .subscribe(result => {
-                this.items = result;
-                this.totalRecords = this.items.length;
-                this.buildFilter(result);
-             }
-        );
+        this.refreshClick();
 
         this.movementService
             .getStatus()
@@ -92,7 +88,7 @@ export class MovementsComponent implements OnInit {
                 this.payments = result.map(p => Helpers.newSelectItem(p.value));
             }
         );
-        
+
         this.storeService
             .getAll()
             .subscribe(result => {
@@ -104,7 +100,7 @@ export class MovementsComponent implements OnInit {
             .getAll()
             .subscribe(result => {
                 this.causals = result.map(p => Helpers.newSelectItem(p, p.causalName));
-                if (localStorage.getItem("webretailDevice") === null) {
+                if (localStorage.getItem('webretailDevice') === null) {
                     this.causals = this.causals.filter(p => p.value.causalIsPos === false);
                 }
             }
@@ -145,16 +141,28 @@ export class MovementsComponent implements OnInit {
         this.statusFiltered = this.statusFiltered.concat(filterStatus);
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.movementId == 0; }
+    get isNew(): boolean { return this.selected == null || this.selected.movementId === 0; }
 
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
-    get getStatus() : SelectItem[] {
-        if (this.selected.movementId == 0) {
+    get getStatus(): SelectItem[] {
+        if (this.selected.movementId === 0) {
             return this.status.slice(0, 1);
         }
         let index = this.status.findIndex(p => p.label === this.selected.movementStatus);
         return this.status.slice(index, 5);
+    }
+
+    refreshClick() {
+        this.items = null;
+        this.movementService
+            .getAll()
+            .subscribe(result => {
+                this.items = result;
+                this.totalRecords = this.items.length;
+                this.buildFilter(result);
+             }
+        );
     }
 
     addClick() {
@@ -206,6 +214,7 @@ export class MovementsComponent implements OnInit {
             this.movementService.create(this.selected)
                 .subscribe(result => {
                     this.selected = result;
+                    this.totalRecords++;
                     this.openClick();
                 }, onerror => alert(onerror._body));
         } else {
@@ -231,7 +240,7 @@ export class MovementsComponent implements OnInit {
                 this.movementService.delete(this.selected.movementId)
                     .subscribe(result => {
                         this.items.splice(this.selectedIndex, 1);
-                        this.totalRecords = this.items.length;
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }
@@ -261,5 +270,24 @@ export class MovementsComponent implements OnInit {
             return;
         }
         this.router.navigateByUrl('movement/' + detail + this.selected.movementId);
+    }
+
+    openBarcodeClick() {
+        if (!this.selected) {
+            return;
+        }
+        this.movementService
+            .getBarcode(this.selected.movementId)
+            .subscribe(
+                data => {
+                    let blob = new Blob([data], {type: 'application/pdf'});
+                    let filename = 'barcode_' + this.selected.movementNumber + '_' + this.selected.movementDate + '.pdf';
+                    FileSaver.saveAs(blob, filename);
+                    // var url = window.URL.createObjectURL(blob);
+                    // window.location.href = url;
+                },
+                err => console.error(err),
+            () => console.log('done')
+        );
     }
 }

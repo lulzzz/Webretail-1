@@ -16,22 +16,22 @@ export class DeviceService {
             .map(result => <Device[]>result.json());
     }
 
-    getById(id: number) : Observable<Device> {
+    getById(id: number): Observable<Device> {
         return this.http.get('/api/device/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Device>result.json());
     }
 
-    create(model: Device) : Observable<Device> {
+    create(model: Device): Observable<Device> {
         return this.http.post('/api/device', model, { headers: Helpers.getHeaders() })
             .map(result => <Device>result.json());
     }
 
-    update(id: number, model: Device) : Observable<Device> {
+    update(id: number, model: Device): Observable<Device> {
         return this.http.put('/api/device/' + id, model, { headers: Helpers.getHeaders() })
             .map(result => <Device>result.json());
     }
 
-    delete(id: number) : Observable<any> {
+    delete(id: number): Observable<any> {
         return this.http.delete('/api/device/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }

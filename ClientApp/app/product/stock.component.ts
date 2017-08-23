@@ -26,11 +26,13 @@ export class StockComponent implements OnInit, OnDestroy {
     totalBookeds = 0;
     isBusy: boolean;
 
-	constructor(private activatedRoute: ActivatedRoute,
+    constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
                 private productService: ProductService,
                 private storeService: StoreService,
-                private location: Location) {}
+                private location: Location) {
+        authenticationService.title = 'Stock';
+    }
 
     ngOnInit() {
         this.authenticationService.checkCredentials(false);
@@ -67,7 +69,7 @@ export class StockComponent implements OnInit, OnDestroy {
 
     createSheet(storeIds: string) {
         this.isBusy = true;
-        if (storeIds == '') {
+        if (storeIds === '') {
             storeIds = '0';
         }
         this.totalStocks = 0;

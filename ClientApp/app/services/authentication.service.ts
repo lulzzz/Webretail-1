@@ -9,31 +9,24 @@ import { Helpers } from '../shared/helpers';
 @Injectable()
 export class AuthenticationService {
 
+    title: string;
+
     constructor(private router: Router, private http: Http) {
+        this.title = '';
     }
 
-    login(user: Login) : Observable<Token> {
-        let body = `username=${user.username}&password=${user.password}`;
+    login(user: Login): Observable<Token> {
+        let body = { username: user.username, password: user.password };
         return this.http.post('/api/login', body, { headers: Helpers.getHeaders() })
             .map(response => <Token>response.json());
     }
 
-    loginConsumer(consumer: String, uniqueID: String) : Observable<Token> {
-        let body = `consumer=${consumer}&uniqueID=${uniqueID}`;
-        return this.http.post('/api/login/consumer', body, { headers: Helpers.getHeaders() })
-            .map(response => <Token>response.json());
-    }
-
-    register(user: Login) : Observable<Token> {
-        let body = `username=${user.username}&password=${user.password}`;
-        return this.http.post('/api/register', body, { headers: Helpers.getHeaders() })
-            .map(response => <Token>response.json());
-    }
-
     logout() {
-        this.http.post('/api/logout', null, { headers: Helpers.getHeaders() })
+        let body = { token: localStorage.getItem('token') };
+        this.http.post('/api/logout', body, { headers: Helpers.getHeaders() })
             .map((response) => response.json())
-            .subscribe(result => this.removeCredentials());
+            .subscribe(result => result);
+        this.removeCredentials();
     }
 
     grantCredentials(data: any) {
@@ -47,15 +40,15 @@ export class AuthenticationService {
         localStorage.removeItem('uniqueID');
         localStorage.removeItem('token');
         localStorage.removeItem('role');
-        this.router.navigate(['login']);
+        this.router.navigate(['home']);
     }
 
-    get isAuthenticated() : boolean {
+    get isAuthenticated(): boolean {
         return localStorage.getItem('token') != null;
     }
 
-    get isAdmin() : boolean {
-        return localStorage.getItem('role') == 'Admin';
+    get isAdmin(): boolean {
+        return localStorage.getItem('role') === 'Admin';
     }
 
     checkCredentials(isAdmin: boolean) {
@@ -64,7 +57,7 @@ export class AuthenticationService {
         }
     }
 
-    getCredentials() : Observable<any>  {
+    getCredentials(): Observable<any>  {
         return this.http.get('/api/authenticated', { headers: Helpers.getHeaders() })
             .map(response => response.json());
     }

@@ -27,7 +27,7 @@ class Causal: PostgresSqlORM, JSONConvertible {
         causalName = this.data["causalname"] as? String ?? ""
         causalQuantity = this.data["causalquantity"] as? Int ?? 0
         causalBooked = this.data["causalbooked"] as? Int ?? 0
-		causalIsPos = this.data["causalispos"] as? Bool ?? false
+		causalIsPos = (this.data["causalispos"] as? String) == "true"
         causalCreated = this.data["causalcreated"] as? Int ?? 0
         causalUpdated = this.data["causalupdated"] as? Int ?? 0
     }
@@ -42,7 +42,7 @@ class Causal: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.causalId = getJSONValue(named: "causalId", from: values, defaultValue: 0)
         self.causalName = getJSONValue(named: "causalName", from: values, defaultValue: "")
         self.causalQuantity = getJSONValue(named: "causalQuantity", from: values, defaultValue: 0)

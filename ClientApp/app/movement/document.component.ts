@@ -13,7 +13,7 @@ import { Movement, MovementArticle, Company, Email } from './../shared/models';
 })
 
 export class DocumentComponent implements OnInit, OnDestroy {
-    @ViewChild('doc') doc: ElementRef; 
+    @ViewChild('doc') doc: ElementRef;
     private sub: any;
     movementId: number;
     totalItems = 0;
@@ -28,9 +28,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
                 private authenticationService: AuthenticationService,
                 private companyService: CompanyService,
                 private movementService: MovementService) {
+        authenticationService.title = 'Document';
     }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         // Subscribe to route params
@@ -86,18 +87,5 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
     printClick() {
         window.print();
-    }
-
-    sendMailClick() {
-        let email = new Email()
-        email.address = this.movement.movementCustomer.customerEmail;
-        email.subject = "Document n° " + this.movement.movementNumber;
-        email.content = this.doc.nativeElement.innerHTML;
-
-        this.companyService.sendMail(email)
-            .subscribe(
-                result => alert(result.content),
-                onerror => alert(onerror._body)
-            );
     }
 }

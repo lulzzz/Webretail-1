@@ -16,22 +16,22 @@ export class CustomerService {
             .map(result => <Customer[]>result.json());
     }
 
-    getById(id: number) : Observable<Customer> {
+    getById(id: number): Observable<Customer> {
         return this.http.get('/api/customer/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Customer>result.json());
     }
 
-    create(model: Customer) : Observable<Customer> {
+    create(model: Customer): Observable<Customer> {
         return this.http.post('/api/customer', model, { headers: Helpers.getHeaders() })
             .map(result => <Customer>result.json());
     }
 
-    update(id: number, model: Customer) : Observable<Customer> {
+    update(id: number, model: Customer): Observable<Customer> {
         return this.http.put('/api/customer/' + id, model, { headers: Helpers.getHeaders() })
             .map(result => <Customer>result.json());
     }
 
-    delete(id: number) : Observable<any> {
+    delete(id: number): Observable<any> {
         return this.http.delete('/api/customer/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }

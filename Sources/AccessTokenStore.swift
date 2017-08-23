@@ -6,10 +6,10 @@
 //
 //
 
-import StORM
 import Foundation
+import StORM
+import PerfectLogger
 import SwiftRandom
-import Turnstile
 
 /// Class for handling the tokens that are used for JSON API and Web authentication
 class AccessTokenStore : PostgresSqlORM {
@@ -61,7 +61,7 @@ class AccessTokenStore : PostgresSqlORM {
                 updated = Int.now()
                 try save()
             } catch {
-                print(error)
+                LogFile.error("\(error)")
             }
             return true
         }
@@ -86,8 +86,17 @@ class AccessTokenStore : PostgresSqlORM {
 				try save()
 			}
         } catch {
-            print(error)
+            LogFile.info("\(error)")
         }
         return token
     }
+    
+//    /// Performs a find on supplied token
+//    func get(token: String) {
+//        do {
+//            try self.query(whereclause: "token = $1", params: [token], cursor: StORMCursor(limit: 1, offset: 0))
+//        } catch {
+//            LogFile.error("\(error)")
+//        }
+//    }
 }

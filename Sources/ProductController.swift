@@ -40,7 +40,7 @@ class ProductController {
         
 		let date = request.urlVariables["date"]
 		do {
-			let items = try self.repository.getAll(date: date == nil ? 0 : date!.toInt()!)
+			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
@@ -52,8 +52,8 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-			let id = request.urlVariables["id"]?.toInt()
-            let item = try self.repository.get(id: id!)
+			let id = request.urlVariables["id"]!
+            let item = try self.repository.get(id: Int(id)!)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
@@ -80,11 +80,11 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-			let id = request.urlVariables["id"]?.toInt()
+			let id = request.urlVariables["id"]!
             let json = try request.postBodyString?.jsonDecode() as? [String: Any]
             let item = Product()
             item.setJSONValues(json!)
-            try self.repository.update(id: id!, item: item)
+            try self.repository.update(id: Int(id)!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
@@ -96,8 +96,8 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-			let id = request.urlVariables["id"]?.toInt()
-            try self.repository.delete(id: id!)
+			let id = request.urlVariables["id"]!
+            try self.repository.delete(id: Int(id)!)
             response.completed(status: .noContent)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")

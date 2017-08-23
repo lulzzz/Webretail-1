@@ -14,9 +14,11 @@ protocol MovementProtocol {
 
 	func getAll() throws -> [Movement]
 	
-	func getInvoiced() throws -> [Movement]
+    func getAll(device: String, user: String, date: Int) throws -> [Movement]
+    
+    func getSales(period: Period) throws -> [MovementArticle]
 	
-	func getReceipted() throws -> [Movement]
+	func getReceipted(period: Period) throws -> [Movement]
 	
 	func get(customerId: Int) throws -> [Movement]
 

@@ -33,12 +33,14 @@ export class ProductComponent implements OnInit, OnDestroy {
     display: boolean;
     isBusy: boolean;
 
-	constructor(private activatedRoute: ActivatedRoute,
+    constructor(private activatedRoute: ActivatedRoute,
                 private authenticationService: AuthenticationService,
                 private productService: ProductService,
                 private categoryService: CategoryService,
                 private attributeService: AttributeService,
-                private location: Location) {}
+                private location: Location) {
+        authenticationService.title = 'Product';
+    }
 
     ngOnInit() {
         this.authenticationService.checkCredentials(false);
@@ -125,35 +127,35 @@ export class ProductComponent implements OnInit, OnDestroy {
         let type = this.selectedNode.type;
         switch (type) {
             case 'categories':
-                this.nodesTarget = this.productInfo[0].children.find(p => p.type == 'categories').children;
+                this.nodesTarget = this.productInfo[0].children.find(p => p.type === 'categories').children;
                 this.categoryService.getAll()
                     .subscribe(result => {
                         result.forEach(p => {
-                            if (this.nodesTarget.findIndex(e => e.data == p.categoryId) < 0) {
+                            if (this.nodesTarget.findIndex(e => e.data === p.categoryId) < 0) {
                                 this.nodesSource.push(Helpers.newNode(p.categoryName, p.categoryId.toString(), 'category'));
                             }
                         });
                     }, onerror => this.msgs.push({severity: 'error', summary: 'Get categories', detail: onerror._body}));
                 break;
             case 'attributes':
-                this.nodesTarget = this.productInfo[0].children.find(p => p.type == 'attributes').children;
+                this.nodesTarget = this.productInfo[0].children.find(p => p.type === 'attributes').children;
                 this.attributeService.getAll()
                     .subscribe(result => {
                         result.forEach(p => {
-                            if (this.nodesTarget.findIndex(e => e.data == p.attributeId) < 0) {
+                            if (this.nodesTarget.findIndex(e => e.data === p.attributeId) < 0) {
                                 this.nodesSource.push(Helpers.newNode(p.attributeName, p.attributeId.toString(), 'attribute:0'));
                             }
                         });
                     }, onerror => this.msgs.push({severity: 'error', summary: 'Get attributes', detail: onerror._body}));
                 break;
             case (type.startsWith('attribute:') ? type : undefined):
-                this.nodesTarget = this.productInfo[0].children.find(p => p.type == 'attributes')
-                                                .children.find(p => p.data == this.selectedNode.data)
+                this.nodesTarget = this.productInfo[0].children.find(p => p.type === 'attributes')
+                                                .children.find(p => p.data === this.selectedNode.data)
                                                 .children;
                 this.attributeService.getValueByAttributeId(this.selectedNode.data)
                     .subscribe(result => {
                         result.forEach(p => {
-                            if (this.nodesTarget.findIndex(e => e.data == p.attributeValueId) < 0) {
+                            if (this.nodesTarget.findIndex(e => e.data === p.attributeValueId) < 0) {
                                 this.nodesSource.push(Helpers.newNode(p.attributeValueName, p.attributeValueId.toString(), 'attributeValue'));
                             }
                         });
@@ -325,8 +327,8 @@ export class ProductComponent implements OnInit, OnDestroy {
         let length = this.articleForm.body.length - 1;
         let barcode = this.articleForm.body[length][this.articleForm.body[length].length - 1].value;
         this.articleForm.body
-            .forEach(p => {
-                p.forEach(p => {
+            .forEach(pp => {
+                pp.forEach(p => {
                     if (p.id > 0) {
                         let article = new Article();
                         article.articleId = p.id;

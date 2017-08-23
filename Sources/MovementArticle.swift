@@ -25,9 +25,9 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         movementArticleId = this.data["movementarticleid"] as? Int ?? 0
         movementId = this.data["movementid"] as? Int ?? 0
         movementArticleBarcode = this.data["movementarticlebarcode"] as? String ?? ""
-        movementArticleProduct = this.data["movementarticleproduct"] as? [String:Any] ?? [String:Any]()
-        movementArticleQuantity = Double(this.data["movementarticlequantity"] as? Float ?? 0)
-		movementArticlePrice = Double(this.data["movementarticleprice"] as? Float ?? 0)
+        movementArticleProduct = try! (this.data["movementarticleproduct"] as? String)?.jsonDecode() as! [String:Any]
+        movementArticleQuantity = this.data["movementarticlequantity"] as? Double ?? 0
+		movementArticlePrice = this.data["movementarticleprice"] as? Double ?? 0
 		movementArticleUpdated = this.data["movementarticleupdated"] as? Int ?? 0
     }
     
@@ -41,7 +41,7 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.movementArticleId = getJSONValue(named: "movementArticleId", from: values, defaultValue: 0)
         self.movementId = getJSONValue(named: "movementId", from: values, defaultValue: 0)
         self.movementArticleBarcode = getJSONValue(named: "movementArticleBarcode", from: values, defaultValue: "")

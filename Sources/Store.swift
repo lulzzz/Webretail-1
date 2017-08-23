@@ -44,7 +44,7 @@ class Store: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.storeId = getJSONValue(named: "storeId", from: values, defaultValue: 0)
         self.storeName = getJSONValue(named: "storeName", from: values, defaultValue: "")
         self.storeAddress = getJSONValue(named: "storeAddress", from: values, defaultValue: "")

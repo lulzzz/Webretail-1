@@ -15,16 +15,18 @@ export class CausalComponent implements OnInit {
     totalRecords = 0;
     causals: Causal[];
     operators: SelectItem[];
-	selected: Causal;
+    selected: Causal;
     displayPanel: boolean;
-	dataform: FormGroup;
+    dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
                 private causalService: CausalService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+       authenticationService.title = 'Causals';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.operators = [];
@@ -47,7 +49,7 @@ export class CausalComponent implements OnInit {
             }, onerror => alert(onerror._body));
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.causalId == 0; }
+    get isNew(): boolean { return this.selected == null || this.selected.causalId === 0; }
 
     get selectedIndex(): number { return this.causals.indexOf(this.selected); }
 
@@ -71,6 +73,7 @@ export class CausalComponent implements OnInit {
                 .create(this.selected)
                 .subscribe(result => {
                     this.causals.push(result);
+                    this.totalRecords++;
                     this.closeClick();
                 }, onerror => alert(onerror._body));
         } else {

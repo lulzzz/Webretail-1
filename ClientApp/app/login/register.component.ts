@@ -17,8 +17,9 @@ export class RegisterComponent implements OnInit {
 
 	constructor(
 		private authenticationService: AuthenticationService,
-		private fb: FormBuilder
-	) {}
+		private fb: FormBuilder) {
+       	authenticationService.title = 'Register';
+    }
 
 	ngOnInit() {
         this.userform = this.fb.group({
@@ -33,14 +34,14 @@ export class RegisterComponent implements OnInit {
 			this.msgs.push({severity: 'error', summary: 'Registration', detail: 'The passwords do not match'});
 			return;
 		}
-		this.authenticationService.register(this.user)
-    		.subscribe(result => {
-				if (result.login === 'ok') {
-					this.authenticationService.grantCredentials(result);
-		    	} else {
-		    		this.msgs.push({severity: 'warn', summary: 'Authentication', detail: result.error});
-				}
-			},
-			error => this.msgs.push({severity: 'error', summary: 'Registration', detail: error}));
+		// this.authenticationService.register(this.user)
+    	// 	.subscribe(result => {
+		// 		if (result.login === 'ok') {
+		// 			this.authenticationService.grantCredentials(result);
+		//     	} else {
+		//     		this.msgs.push({severity: 'warn', summary: 'Authentication', detail: result.error});
+		// 		}
+		// 	},
+		// 	error => this.msgs.push({severity: 'error', summary: 'Registration', detail: error}));
     }
 }

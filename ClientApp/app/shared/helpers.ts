@@ -3,7 +3,7 @@ import { SelectItem, TreeNode } from 'primeng/primeng';
 
 export class Helpers {
 
-    static distinct(a: any[]) : any[] {
+    static distinct(a: any[]): any[] {
         let seen: any = {};
         let out: any[] = [];
         let len = a.length;
@@ -18,18 +18,18 @@ export class Helpers {
         return out;
     }
 
-    static getHeaders() : Headers {
+    static getHeaders(): Headers {
         let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${localStorage.getItem('token')}`);
+        headers.append('Content-Type', 'application/json');
         return headers;
     }
 
-    static newSelectItem(value: any, label?: string) : SelectItem {
+    static newSelectItem(value: any, label?: string): SelectItem {
         return <SelectItem>{ label: label ? label : value, value: value };
     }
 
-    static newNode(label: string, data: string, type: string) : TreeNode {
+    static newNode(label: string, data: string, type: string): TreeNode {
         return <TreeNode>{
                 'label': label,
                 'data': data,
@@ -38,7 +38,7 @@ export class Helpers {
         };
     }
 
-    static getUnitOfMeasure() : SelectItem[] {
+    static getUnitOfMeasure(): SelectItem[] {
         return <SelectItem[]>[
             Helpers.newSelectItem('QT', 'Quantity'),
             Helpers.newSelectItem('MT', 'Meter'),

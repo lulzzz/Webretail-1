@@ -37,7 +37,7 @@ class ProductAttributeValue: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         //self.productAttributeValueId = getJSONValue(named: "productAttributeValueId", from: values, defaultValue: 0)
         self.productAttributeId = getJSONValue(named: "productAttributeId", from: values, defaultValue: 0)
         self.attributeValueId = getJSONValue(named: "attributeValueId", from: values["attributeValue"] as! [String : Any], defaultValue: 0)

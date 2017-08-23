@@ -11,11 +11,11 @@ export class NavigationComponent {
     constructor(private authenticationService: AuthenticationService) {
     }
 
-    get isAuthenticated() : boolean {
+    get isAuthenticated(): boolean {
         return this.authenticationService.isAuthenticated;
     }
 
-    get isAdmin() : boolean {
+    get isAdmin(): boolean {
         return this.authenticationService.isAdmin;
     }
 

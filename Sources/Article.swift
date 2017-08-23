@@ -31,7 +31,7 @@ class Article: PostgresSqlORM, JSONConvertible {
         articleId = this.data["articleid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0
         articleBarcode = this.data["articlebarcode"] as? String ?? ""
-        articleIsValid = this.data["articleisvalid"] as? Bool ?? false
+        articleIsValid = (this.data["articleisvalid"] as? String) == "true"
         articleCreated = this.data["articlecreated"] as? Int ?? 0
         articleUpdated = this.data["articleupdated"] as? Int ?? 0
     }
@@ -77,7 +77,7 @@ class Article: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
         self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
         self.articleBarcode = getJSONValue(named: "articleBarcode", from: values, defaultValue: "")

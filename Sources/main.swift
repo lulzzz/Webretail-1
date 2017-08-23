@@ -32,15 +32,8 @@ let server = HTTPServer()
 
 // Where to serve static files from
 server.documentRoot = "./webroot"
-
 // Host address and server port
-#if os(Linux)
-server.serverPort 			= 80
-let host 					= "ec2-35-157-208-60.eu-central-1.compute.amazonaws.com:\(server.serverPort)"
-#else
-server.serverPort 			= 8181
-let host 					= "localhost:\(server.serverPort)"
-#endif
+server.serverPort   = 8181
 
 // Setup database
 try setupDatabase();

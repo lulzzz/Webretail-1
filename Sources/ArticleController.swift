@@ -37,7 +37,7 @@ class ArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            let count = try self.repository.build(productId: id.toInt()!)
+            let count = try self.repository.build(productId: Int(id)!)
             try response.setBody(json: count)
             response.completed(status: .ok)
         } catch {
@@ -63,7 +63,7 @@ class ArticleController {
         let id = request.urlVariables["id"]!
 		let storeIds = request.urlVariables["storeids"]!
 		do {
-            let item = try self.repository.getStock(productId: id.toInt()!, storeIds: storeIds)
+            let item = try self.repository.getStock(productId: Int(id)!, storeIds: storeIds)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
@@ -76,7 +76,7 @@ class ArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            let item = try self.repository.get(id: id.toInt()!)
+            let item = try self.repository.get(id: Int(id)!)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
@@ -107,7 +107,7 @@ class ArticleController {
             let json = try request.postBodyString?.jsonDecode() as! [String: Any]
             let item = Article()
             item.setJSONValues(json)
-            try self.repository.update(id: id.toInt()!, item: item)
+            try self.repository.update(id: Int(id)!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
@@ -120,7 +120,7 @@ class ArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            try self.repository.delete(id: id.toInt()!)
+            try self.repository.delete(id: Int(id)!)
             response.completed(status: .noContent)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -147,7 +147,7 @@ class ArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            try self.repository.removeAttributeValue(id: id.toInt()!)
+            try self.repository.removeAttributeValue(id: Int(id)!)
             response.completed(status: .noContent)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

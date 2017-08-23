@@ -25,8 +25,8 @@ class Stock: PostgresSqlORM, JSONConvertible {
         stockId = this.data["stockid"] as? Int ?? 0
         storeId = this.data["storeid"] as? Int ?? 0
         articleId = this.data["articleid"] as? Int ?? 0
-        stockQuantity = Double(this.data["stockquantity"] as? Float ?? 0)
-        stockBooked = Double(this.data["stockbooked"] as? Float ?? 0)
+        stockQuantity = this.data["stockquantity"] as? Double ?? 0
+        stockBooked = this.data["stockbooked"] as? Double ?? 0
         stockCreated = this.data["stockcreated"] as? Int ?? 0
         stockUpdated = this.data["stockupdated"] as? Int ?? 0
     }
@@ -41,7 +41,7 @@ class Stock: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.stockId = getJSONValue(named: "stockId", from: values, defaultValue: 0)
         self.storeId = getJSONValue(named: "storeId", from: values, defaultValue: 0)
         self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)

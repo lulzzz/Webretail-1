@@ -1,58 +1,50 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { AuthenticationService } from './../services/authentication.service';
 import { MovementService } from './../services/movement.service';
-import { Movement } from './../shared/models';
+import { Movement, Period } from './../shared/models';
 import { DateFilterPipe } from './../pipes/date-filter.pipe';
 
 @Component({
-    selector: 'reportcashregister-component',
-    templateUrl: 'cashregister.component.html'
+    selector: 'reportreceipts-component',
+    templateUrl: 'receipts.component.html'
 })
 
-export class ReportCashRegisterComponent implements OnInit {
+export class ReportReceiptsComponent implements OnInit {
     totalItems = 0;
     totalAmount = 0.0;
-    movemets: Movement[];
     items: Movement[];
-    private _dateStartValue: Date;
-    private _dateFinishValue: Date;
+    private period: Period;
 
     constructor(private authenticationService: AuthenticationService,
-                private movementService: MovementService) { }
+                private movementService: MovementService) {
+        authenticationService.title = 'Receipts';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
-
-        this.movementService
-            .getReceipted()
-            .subscribe(result => {
-                this.movemets = result;
-                this.dateStartValue = new Date();
-            }, onerror => alert(onerror._body)
-        );
+        this.period = new Period();
+        this.getData();
     }
 
     @Input() set dateStartValue(value: Date) {
-        this._dateStartValue = value;
-        this.updateTotals();
+        this.period.start = value;
     }
     get dateStartValue(): Date {
-        return this._dateStartValue;
+        return this.period.start;
     }
 
     @Input() set dateFinishValue(value: Date) {
-        this._dateFinishValue = value;
-        this.updateTotals();
+        this.period.finish = value;
     }
     get dateFinishValue(): Date {
-        return this._dateFinishValue;
+        return this.period.finish;
     }
 
     calculateGroupTotal(device: string) {
         let total = 0;
-        if(this.items) {
-            for(let movemet of this.items) {
-                if(movemet.movementDevice === device) {
+        if (this.items) {
+            for (let movemet of this.items) {
+                if (movemet.movementDevice === device) {
                     total += movemet.movementAmount;
                 }
             }
@@ -61,10 +53,19 @@ export class ReportCashRegisterComponent implements OnInit {
     }
 
     updateTotals() {
-        this.items = new DateFilterPipe().transform(this.movemets, this.dateStartValue, this.dateFinishValue);
         this.totalItems = this.items.length;
         if (this.totalItems > 0) {
             this.totalAmount = this.items.map(p => p.movementAmount).reduce((sum, current) => sum + current);
         }
+    }
+
+    getData() {
+        this.movementService
+            .getReceipted(this.period)
+            .subscribe(result => {
+                this.items = result;
+                this.updateTotals();
+            }, onerror => alert(onerror._body)
+        );
     }
 }

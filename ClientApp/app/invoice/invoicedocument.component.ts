@@ -13,7 +13,7 @@ import { Invoice, MovementArticle, Company, Email } from './../shared/models';
 })
 
 export class InvoiceDocumentComponent implements OnInit, OnDestroy {
-    @ViewChild('doc') doc: ElementRef; 
+    @ViewChild('doc') doc: ElementRef;
     private sub: any;
     invoiceId: number;
     totalItems = 0;
@@ -28,9 +28,10 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
                 private authenticationService: AuthenticationService,
                 private companyService: CompanyService,
                 private invoiceService: InvoiceService) {
+        authenticationService.title = 'Invoice';
     }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         // Subscribe to route params
@@ -86,18 +87,5 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
 
     printClick() {
         window.print();
-    }
-
-    sendMailClick() {
-        let email = new Email()
-        email.address = this.invoice.invoiceCustomer.customerEmail;
-        email.subject = "Invoice n° " + this.invoice.invoiceNumber;
-        email.content = this.doc.nativeElement.innerHTML;
-
-        this.companyService.sendMail(email)
-            .subscribe(
-                result => alert(result.content),
-                onerror => alert(onerror._body)
-            );
     }
 }

@@ -16,13 +16,13 @@ import { Helpers } from './../shared/helpers';
 export class InvoicesComponent implements OnInit {
     totalRecords = 0;
     items: Invoice[];
-	selected: Invoice;
+    selected: Invoice;
     customers: SelectItem[];
     customersFiltered: SelectItem[];
     payments: SelectItem[];
     buttons: MenuItem[];
     displayPanel: boolean;
-	dataform: FormGroup;
+    dataform: FormGroup;
     dateStartValue: Date;
     dateFinishValue: Date;
     amountValue: number;
@@ -32,9 +32,11 @@ export class InvoicesComponent implements OnInit {
                 private invoiceService: InvoiceService,
                 private customerService: CustomerService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+        authenticationService.title = 'Invoices';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
@@ -78,7 +80,7 @@ export class InvoicesComponent implements OnInit {
         ];
     }
 
-    get isNew() : boolean { return this.selected.invoiceId == 0; }
+    get isNew(): boolean { return this.selected.invoiceId === 0; }
 
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
@@ -105,6 +107,7 @@ export class InvoicesComponent implements OnInit {
             this.invoiceService.create(this.selected)
                 .subscribe(result => {
                     this.selected = result;
+                    this.totalRecords++;
                     this.openClick();
                 }, onerror => alert(onerror._body));
         } else {
@@ -129,7 +132,7 @@ export class InvoicesComponent implements OnInit {
                 this.invoiceService.delete(this.selected.invoiceId)
                     .subscribe(result => {
                         this.items.splice(this.selectedIndex, 1);
-                        this.totalRecords = this.items.length;
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

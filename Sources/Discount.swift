@@ -6,7 +6,6 @@
 //
 //
 
-
 import StORM
 import PerfectLib
 
@@ -43,7 +42,7 @@ class Discount: PostgresSqlORM, JSONConvertible {
 		return rows
 	}
 	
-	public func setJSONValues(_ values:[String:Any]) {
+	func setJSONValues(_ values:[String:Any]) {
 		self.discountId = getJSONValue(named: "discountId", from: values, defaultValue: 0)
 		self.discountName = getJSONValue(named: "discountName", from: values, defaultValue: "")
 		self.discountPercentage = getJSONValue(named: "discountPercentage", from: values, defaultValue: 0)

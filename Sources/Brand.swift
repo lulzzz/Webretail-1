@@ -36,7 +36,7 @@ class Brand: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.brandId = getJSONValue(named: "brandId", from: values, defaultValue: 0)
         self.brandName = getJSONValue(named: "brandName", from: values, defaultValue: "")
     }

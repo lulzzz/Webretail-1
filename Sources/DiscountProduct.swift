@@ -6,7 +6,6 @@
 //
 //
 
-
 import StORM
 import PerfectLib
 
@@ -23,7 +22,7 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 		discountProductId = this.data["discountproductid"] as? Int ?? 0
 		discountId = this.data["discountid"] as? Int ?? 0
 		productId = this.data["productid"] as? Int ?? 0
-		discountProduct = this.data["discountproduct"] as? [String:Any] ?? [String:Any]()
+		discountProduct = try! (this.data["discountproduct"] as? String)?.jsonDecode() as! [String:Any]
 	}
 	
 	func rows() -> [DiscountProduct] {
@@ -36,7 +35,7 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 		return rows
 	}
 	
-	public func setJSONValues(_ values:[String:Any]) {
+	func setJSONValues(_ values:[String:Any]) {
 		self.discountProductId = getJSONValue(named: "discountProductId", from: values, defaultValue: 0)
 		self.discountId = getJSONValue(named: "discountId", from: values, defaultValue: 0)
 		self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)

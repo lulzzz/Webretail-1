@@ -33,8 +33,8 @@ class MovementArticleController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-			let id = request.urlVariables["id"]?.toInt()
-            let items = try self.movementRepository.get(movementId: id!)
+			let id = request.urlVariables["id"]!
+            let items = try self.movementRepository.get(movementId: Int(id)!)
             try response.setBody(json: items)
             response.completed(status: .ok)
         } catch {
@@ -75,11 +75,11 @@ class MovementArticleController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-			let id = request.urlVariables["id"]?.toInt()
+			let id = request.urlVariables["id"]!
             let json = try request.postBodyString?.jsonDecode() as? [String:Any]
             let item = MovementArticle()
             item.setJSONValues(json!)
-            try self.movementRepository.update(id: id!, item: item)
+            try self.movementRepository.update(id: Int(id)!, item: item)
             try response.setBody(json: item)
             response.completed(status: .accepted)
         } catch {
@@ -91,8 +91,8 @@ class MovementArticleController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-			let id = request.urlVariables["id"]?.toInt()
-            try self.movementRepository.delete(id: id!)
+			let id = request.urlVariables["id"]!
+            try self.movementRepository.delete(id: Int(id)!)
             response.completed(status: .noContent)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")

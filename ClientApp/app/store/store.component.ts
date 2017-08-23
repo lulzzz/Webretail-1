@@ -14,16 +14,18 @@ import { Helpers } from './../shared/helpers';
 export class StoreComponent implements OnInit {
     totalRecords = 0;
     stores: Store[];
-	selected: Store;
+    selected: Store;
     displayPanel: boolean;
-	dataform: FormGroup;
+    dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
                 private storeService: StoreService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+        authenticationService.title = 'Stores';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
@@ -43,7 +45,7 @@ export class StoreComponent implements OnInit {
         );
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.storeId == 0; }
+    get isNew(): boolean { return this.selected == null || this.selected.storeId === 0; }
 
     get selectedIndex(): number { return this.stores.indexOf(this.selected); }
 
@@ -67,6 +69,7 @@ export class StoreComponent implements OnInit {
                 .create(this.selected)
                 .subscribe(result => {
                     this.stores.push(result);
+                    this.totalRecords++;
                     this.closeClick();
                 }, onerror => alert(onerror._body));
         } else {

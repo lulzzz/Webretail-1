@@ -10,15 +10,15 @@ import { Login } from './../shared/models';
 })
 
 export class LoginComponent implements OnInit {
-
 	userform: FormGroup;
-   	public user = new Login('', '');
+	public user = new Login('', '');
     public msgs: Message[] = [];
 
 	constructor(
 		private authenticationService: AuthenticationService,
-		private fb: FormBuilder
-	) {}
+		private fb: FormBuilder) {
+		authenticationService.title = 'Login';
+    }
 
 	ngOnInit() {
         this.userform = this.fb.group({
@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
 		    	} else {
 		    		this.msgs.push({severity: 'warn', summary: 'Authentication', detail: result.error});
 				}
-			},
-			error => this.msgs.push({severity: 'error', summary: 'Authentication', detail: error}));
+			}, error => this.msgs.push({severity: 'error', summary: 'Authentication', detail: error}));
     }
 }

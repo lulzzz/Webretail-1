@@ -5,7 +5,6 @@
 //  Created by Gerardo Grisolini on 11/04/17.
 //
 //
-
 import PerfectHTTP
 
 class DeviceController {
@@ -34,7 +33,7 @@ class DeviceController {
 		
 		let date = request.urlVariables["date"]
 		do {
-			let items = try self.repository.getAll(date: date == nil ? 0 : date!.toInt()!)
+			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)
 			try response.setBody(json: items)
 			response.completed(status: .ok)
 		} catch {
@@ -47,7 +46,7 @@ class DeviceController {
 		
 		let id = request.urlVariables["id"]!
 		do {
-			let item = try self.repository.get(id: id.toInt()!)
+			let item = try self.repository.get(id: Int(id)!)
 			try response.setBody(json: item)
 			response.completed(status: .ok)
 		} catch {
@@ -78,7 +77,7 @@ class DeviceController {
 			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
 			let item = Device()
 			item.setJSONValues(json!)
-			try self.repository.update(id: id.toInt()!, item: item)
+			try self.repository.update(id: Int(id)!, item: item)
 			try response.setBody(json: item)
 			response.completed(status: .accepted)
 		} catch {
@@ -91,7 +90,7 @@ class DeviceController {
 		
 		let id = request.urlVariables["id"]!
 		do {
-			try self.repository.delete(id: id.toInt()!)
+			try self.repository.delete(id: Int(id)!)
 			response.completed(status: .noContent)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")

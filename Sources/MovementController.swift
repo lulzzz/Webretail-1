@@ -17,16 +17,17 @@ class MovementController {
         self.repository = ioCContainer.resolve() as MovementProtocol
 		self.articleRepository = ioCContainer.resolve() as MovementArticleProtocol
     }
-    
+   
     func getRoutes() -> Routes {
         var routes = Routes()
         
 		routes.add(method: .get, uri: "/api/movementpayment", handler: movementPaymentsHandlerGET)
 		routes.add(method: .get, uri: "/api/movementstatus", handler: movementStatusHandlerGET)
         routes.add(method: .get, uri: "/api/movement", handler: movementsHandlerGET)
-		routes.add(method: .get, uri: "/api/movementinvoiced", handler: movementsInvoicedHandlerGET)
-		routes.add(method: .get, uri: "/api/movementreceipted", handler: movementsReceiptedHandlerGET)
+		routes.add(method: .post, uri: "/api/movementsales", handler: movementsSalesHandlerPOST)
+		routes.add(method: .post, uri: "/api/movementreceipted", handler: movementsReceiptedHandlerPOST)
 		routes.add(method: .get, uri: "/api/movement/{id}", handler: movementHandlerGET)
+		routes.add(method: .get, uri: "/api/movementfrom/{date}", handler: movementFromHandlerGET)
 		routes.add(method: .get, uri: "/api/movementcustomer/{id}", handler: movementCustomerHandlerGET)
         routes.add(method: .post, uri: "/api/movement", handler: movementHandlerPOST)
 		routes.add(method: .post, uri: "/api/movement/{id}", handler: movementCloneHandlerPOST)
@@ -35,7 +36,7 @@ class MovementController {
 		
         return routes
     }
-    
+
 	func movementPaymentsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
@@ -72,11 +73,14 @@ class MovementController {
         }
     }
 
-	func movementsInvoicedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func movementsSalesHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-			let items = try self.repository.getInvoiced()
+           	let json = try request.postBodyString?.jsonDecode() as! [String: Any]
+ 			let period = Period()
+			period.setJSONValues(json)
+			let items = try self.repository.getSales(period: period)
 			try response.setBody(json: items)
 			response.completed(status: .ok)
 		} catch {
@@ -84,11 +88,14 @@ class MovementController {
 		}
 	}
 	
-	func movementsReceiptedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func movementsReceiptedHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-			let items = try self.repository.getReceipted()
+           	let json = try request.postBodyString?.jsonDecode() as! [String: Any]
+			let period = Period()
+			period.setJSONValues(json)
+			let items = try self.repository.getReceipted(period: period)
 			try response.setBody(json: items)
 			response.completed(status: .ok)
 		} catch {
@@ -100,8 +107,8 @@ class MovementController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-			let id = request.urlVariables["id"]?.toInt()
-            let item = try self.repository.get(id: id!)
+			let id = request.urlVariables["id"]!
+            let item = try self.repository.get(id: Int(id)!)
             try response.setBody(json: item)
             response.completed(status: .ok)
         } catch {
@@ -113,8 +120,8 @@ class MovementController {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-			let id = request.urlVariables["id"]!.toInt()
-			let items = try self.repository.get(customerId: id!)
+			let id = request.urlVariables["id"]!
+			let items = try self.repository.get(customerId: Int(id)!)
 			try response.setBody(json: items)
 			response.completed(status: .ok)
 		} catch {
@@ -155,9 +162,9 @@ class MovementController {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-			let id = request.urlVariables["id"]?.toInt()
-			let item = try self.repository.clone(sourceId: id!)
-			try self.articleRepository.clone(sourceMovementId: id!, targetMovementId: item.movementId)
+			let id = Int(request.urlVariables["id"]!)!
+			let item = try self.repository.clone(sourceId: id)
+			try self.articleRepository.clone(sourceMovementId: id, targetMovementId: item.movementId)
 			try response.setBody(json: item)
 			response.completed(status: .created)
 		} catch {
@@ -169,11 +176,11 @@ class MovementController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-			let id = request.urlVariables["id"]?.toInt()
+			let id = request.urlVariables["id"]!
             let json = try request.postBodyString?.jsonDecode() as? [String: Any]
             let item = Movement()
             item.setJSONValues(json!)
-            try self.repository.update(id: id!, item: item)
+            try self.repository.update(id: Int(id)!, item: item)
 			item._amount = item.getJSONValue(named: "movementAmount", from: json!, defaultValue: 0.0)
             try response.setBody(json: item)
             response.completed(status: .accepted)
@@ -186,11 +193,31 @@ class MovementController {
         response.setHeader(.contentType, value: "application/json")
         
 		do {
-			let id = request.urlVariables["id"]?.toInt()
-            try self.repository.delete(id: id!)
+			let id = request.urlVariables["id"]!
+            try self.repository.delete(id: Int(id)!)
             response.completed(status: .noContent)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
+
+    func movementFromHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {    
+        /*       
+        if let tokenValue = r.headers["authorization"] {
+            let data = tokenValue.split(" ")
+            if data.first == "Basic" {
+                let key = tokenValue.replacingOccurrences(of: "Basic ", with: "")
+                let basic = key.split("#")
+                let date = r.params.first!.1
+                do {
+                    let items = try self.repository.getAll(device: basic.first!, user: basic.last!, date: Int(date)!)
+                    return .ok(.json(try items.jsonEncodedString()))
+                } catch {
+                    return .badRequest(.json("\(r.path) \(r.method): \(error)"))
+                }
+            }
+        }
+        return .unauthorized
+        */
+    }    
 }

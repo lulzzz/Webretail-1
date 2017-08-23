@@ -14,7 +14,7 @@ export class PeriodFilterPipe implements PipeTransform {
     if (arg0 == null && arg1 == null) {
       return value;
     }
-    
+
     let dateStart = arg0;
     let dateFinish = arg1;
 

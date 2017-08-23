@@ -3,24 +3,23 @@
 
 <div class="container-fluid">
 
-    <button pButton type="button" title="Movements" style="position: absolute; top: 84px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
-    <h1 style="margin-left: 40px">Movement</h1>
+    <button pButton type="button" title="Movements" style="position: absolute; top: 154px; left: 30px; width:50px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
   
     <p-toolbar *ngIf="item">
-        <div class="ui-toolbar-group-left">
+        <div class="ui-toolbar-group-left" style="margin-left:60px;">
             <span><b>n°</b> {{item.movementNumber}}</span> <span><b>date</b>: {{item.movementDate | date: 'yyyy-MM-dd'}}</span>
             <br/><span><b>causal</b>: {{item.movementCausal.causalName}}</span>
             <br/><span><b>store</b>: {{item.movementStore.storeName}}</span>
         </div>
-        <div class="ui-toolbar-group-right" style="text-align: right">
+        <div class="ui-toolbar-group-right" style="text-align: right;">
             <span><b>status</b>: {{item.movementStatus}}</span>
             <br/><button *ngIf="item.movementStatus!=='Completed'" type="button" pButton icon="fa-save" class="ui-button-success" (click)="completedClick()" label="Completed" style="margin-top: 10px"></button>
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!inputComponent.isOpen" [responsive]="true" [editable]="true" [value]="items | priceFilter:priceValue:'movement':amountValue | articleFilter:articleValue" #dt>
+    <p-dataTable *ngIf="!inputComponent.isOpen" [responsive]="true" [editable]="true" [totalRecords]="totalRecords" [value]="items | priceFilter:priceValue:'movement':amountValue | articleFilter:articleValue" #dt>
         <p-header *ngIf="!committed">
-            <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
+            <button pButton style="position: absolute;left: 10px; top: 8px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
             <p-chips [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
         </p-header>
         <p-footer>

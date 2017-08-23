@@ -36,24 +36,52 @@ struct MovementRepository : MovementProtocol {
 		return status
 	}
 	
-	func getAll() throws -> [Movement] {
+    func getAll() throws -> [Movement] {
         let items = Movement()
-		try items.query()
-		
+        try items.query(cursor: StORMCursor.init(limit: 10000, offset: 0))
+        
         return try items.rows()
     }
     
-	func getInvoiced() throws -> [Movement] {
+    func getAll(device: String, user: String, date: Int) throws -> [Movement] {
+        let items = Movement()
+        try items.query(
+            whereclause: "movementDevice == $1 AND movementUser == $2 AND movementUpdated > $3",
+            params: [device, user, date]
+        )
+        let rows = try items.rows()
+        for row in rows {
+            let item = MovementArticle()
+            try item.query(
+                whereclause: "movementId = $1",
+                params: [row.movementId],
+                orderby: ["movementArticleId"]
+            )
+            row._items = item.rows()
+        }
+        return rows
+    }
+    
+    func getSales(period: Period) throws -> [MovementArticle] {
+        let items = MovementArticle()
+        let join = StORMDataSourceJoin(
+            table: "movements",
+            onCondition: "movementarticles.movementId = movements.movementId",
+            direction: StORMJoinType.INNER
+        )
+        try items.query(whereclause: "movements.movementDate >= $1 AND movements.movementDate <= $2 AND (movements.invoiceId > $3 OR movements.movementCausal ->> 'causalIsPos' = $4)",
+                        params: [period.start, period.finish, 0, true],
+                        orderby: ["movementarticles.movementarticleId"],
+                        joins: [join]
+        )
+        
+        return items.rows()
+    }
+    
+    func getReceipted(period: Period) throws -> [Movement] {
 		let items = Movement()
-		try items.query(whereclause: "invoiceId <> $1", params: [0])
-		
-		return try items.rows()
-	}
-
-	func getReceipted() throws -> [Movement] {
-		let items = Movement()
-		try items.query(whereclause: "movementCausal ->> 'causalIsPos' = $1",
-		                params: [true],
+		try items.query(whereclause: "movementDate >= $1 AND movementDate <= $2 AND movementCausal ->> 'causalIsPos' = $3",
+		                params: [period.start, period.finish, true],
 		                orderby: ["movementDevice, movementDate, movementNumber"])
 		
 		return try items.rows()

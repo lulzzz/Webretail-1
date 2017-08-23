@@ -38,9 +38,10 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                 private location: Location) {
         this.codes = [];
         this.itemsSelected = [];
+        authenticationService.title = 'Invoice';
     }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         // Subscribe to route params
@@ -91,8 +92,8 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                 .addMovement(this.invoiceId, Number(id))
                 .subscribe(result => {
                     this.invoiceService.getMovementsById(this.invoiceId)
-                                       .subscribe(result => { 
-                                            this.items = result;
+                                       .subscribe(res => {
+                                            this.items = res;
                                             this.updateTotals();
                                        });
                 }, onerror => alert(onerror._body));
@@ -103,16 +104,21 @@ export class InvoiceComponent implements OnInit, OnDestroy {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to remove this selected items?',
             accept: () => {
-                this.itemsSelected.forEach(p =>{
+                this.itemsSelected.forEach(p => {
                     this.invoiceService
                         .removeMovement(p.movementId)
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(p), 1);
-                            this.updateTotals();
+                            this.reloadData();
                         }, onerror => alert(onerror._body));
                 });
             }
         });
+    }
+
+    reloadData() {
+        this.items =  this.items.map(p => p);
+        this.updateTotals();
     }
 
     updateTotals() {

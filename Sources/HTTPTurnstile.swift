@@ -23,7 +23,7 @@ extension HTTPResponse {
 		LogFile.error(error)
 		self.status = .badRequest
         self.appendBody(string: error)
-        self.completed()
+       self.completed()
     }
 }
 

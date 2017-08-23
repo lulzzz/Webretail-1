@@ -34,9 +34,10 @@ export class MovementComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private location: Location) {
         this.barcodes = [];
+        authenticationService.title = 'Movement';
     }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         // Subscribe to route params
@@ -45,7 +46,7 @@ export class MovementComponent implements OnInit, OnDestroy {
             this.movementService.getById(this.movementId)
                 .subscribe(result => {
                     this.item = result;
-                    this.committed = result.movementStatus != 'New';
+                    this.committed = result.movementStatus !== 'New';
                 }, onerror => alert(onerror._body)
             );
             this.movementService.getItemsById(this.movementId)
@@ -66,8 +67,20 @@ export class MovementComponent implements OnInit, OnDestroy {
         this.location.back();
     }
 
-    updateTotals() {
+    reloadData() {
+        // let newItems = new Array<MovementArticle>(this.items.length);
+        // for (var i = 0; i < newItems.length; i++) {
+        //     newItems[i] = this.items[i];
+        // }
+        this.items =  this.items.map(p => p);
+        this.updateTotals();
+    }
+
+   updateTotals() {
         if (!this.items || this.items.length === 0) {
+            this.totalRecords = 0;
+            this.totalItems = 0;
+            this.totalAmount = 0;
             return;
         }
         this.totalRecords = this.items.length;
@@ -94,13 +107,13 @@ export class MovementComponent implements OnInit, OnDestroy {
                 newItem.movementId = this.movementId;
                 newItem.movementArticleBarcode = barcode;
                 newItem.movementArticleQuantity = quantity;
-                let price = this.item.movementCausal.causalQuantity > 0 ? 'purchase' : this.item.movementCausal.causalQuantity < 0 ? 'selling' : 'none';               
+                let price = this.item.movementCausal.causalQuantity > 0 ? 'purchase' : this.item.movementCausal.causalQuantity < 0 ? 'selling' : 'none';
                 this.movementService
                     .createItem(newItem, price)
                     .subscribe(result => {
                         this.items.push(result);
                         this.barcodes.splice(this.barcodes.indexOf(data), 1);
-                        this.updateTotals();
+                        this.reloadData();
                     }, onerror => alert(onerror._body));
             }
         });
@@ -125,7 +138,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                         .deleteItem(data.movementArticleId)
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(data), 1);
-                            this.updateTotals();
+                            this.reloadData();
                         }, onerror => alert(onerror._body));
                 }
             });

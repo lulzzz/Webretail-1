@@ -11,8 +11,6 @@ import TurnstileCrypto
 
 struct UserRepository : UserProtocol {
     
-    public var random: Random = URandom()
-	
    	func getAll() throws -> [User] {
         let items = User()
         try items.query()
@@ -28,6 +26,7 @@ struct UserRepository : UserProtocol {
     }
     
     func add(item: User) throws {
+        let random: URandom =  URandom()
         item.uniqueID = String(random.secureToken)
         item.password = BCrypt.hash(password: item.password)
         try item.create()
@@ -42,7 +41,7 @@ struct UserRepository : UserProtocol {
         current.firstname = item.firstname
         current.lastname = item.lastname
         current.username = item.username
-        if (item.password.length < 20) {
+        if (item.password.characters.count < 20) {
             current.password = BCrypt.hash(password: item.password)
         }
         current.email = item.email

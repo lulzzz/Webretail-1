@@ -15,9 +15,9 @@ import { Helpers } from './../shared/helpers';
 export class DiscountsComponent implements OnInit {
     totalRecords = 0;
     items: Discount[];
-	selected: Discount;
+    selected: Discount;
     displayPanel: boolean;
-	dataform: FormGroup;
+    dataform: FormGroup;
     dateStartValue: Date;
     dateFinishValue: Date;
     sliderValue: number;
@@ -26,9 +26,11 @@ export class DiscountsComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 private discountService: DiscountService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+        authenticationService.title = 'Discounts';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
@@ -48,7 +50,7 @@ export class DiscountsComponent implements OnInit {
         );
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.discountId == 0; }
+    get isNew(): boolean { return this.selected == null || this.selected.discountId === 0; }
 
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
@@ -74,6 +76,7 @@ export class DiscountsComponent implements OnInit {
             this.discountService.create(this.selected)
                 .subscribe(result => {
                     this.selected = result;
+                    this.totalRecords++;
                     this.openClick();
                 }, onerror => alert(onerror._body));
         } else {
@@ -98,7 +101,7 @@ export class DiscountsComponent implements OnInit {
                 this.discountService.delete(this.selected.discountId)
                     .subscribe(result => {
                         this.items.splice(this.selectedIndex, 1);
-                        this.totalRecords = this.items.length;
+                        this.totalRecords--;
                         this.closeClick();
                     }, onerror => alert(onerror._body));
             }

@@ -8,6 +8,7 @@
 
 import StORM
 import PerfectLib
+import PerfectLogger
 
 class Device: PostgresSqlORM, JSONConvertible {
 	
@@ -43,7 +44,7 @@ class Device: PostgresSqlORM, JSONConvertible {
 		return rows
 	}
 	
-	public func setJSONValues(_ values:[String:Any]) {
+	func setJSONValues(_ values:[String:Any]) {
 		self.deviceId = getJSONValue(named: "deviceId", from: values, defaultValue: 0)
 		self.deviceName = getJSONValue(named: "deviceName", from: values, defaultValue: "")
 		self.deviceToken = getJSONValue(named: "deviceToken", from: values, defaultValue: "")
@@ -70,7 +71,7 @@ class Device: PostgresSqlORM, JSONConvertible {
 		do {
 			try query(whereclause: "deviceToken = $1 AND deviceName = $2", params: [deviceToken, deviceName], cursor: StORMCursor(limit: 1, offset: 0))
 		} catch {
-			print(error)
+            LogFile.error("\(error)", logFile: "./log.log")
 		}
 	}
 }

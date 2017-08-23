@@ -27,7 +27,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 		invoiceId = this.data["invoiceid"] as? Int ?? 0
 		invoiceNumber = this.data["invoicenumber"] as? Int ?? 0
 		invoiceDate = this.data["invoicedate"] as? Int ?? 0
-		invoiceCustomer = this.data["invoicecustomer"] as? [String:Any] ?? [String:Any]()
+		invoiceCustomer = try! (this.data["invoicecustomer"] as? String)?.jsonDecode() as! [String:Any]
 		invoicePayment = this.data["invoicepayment"] as? String ?? ""
 		invoiceNote = this.data["invoicenote"] as? String ?? ""
 		invoiceUpdated = this.data["invoiceupdated"] as? Int ?? 0
@@ -44,14 +44,14 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 				"INNER JOIN movements AS b ON a.movementId = b.movementId " +
 				"WHERE b.invoiceId = $1"
 			let getCount = try self.sqlRows(sql, params: [String(row.invoiceId)])
-			row.invoiceAmount = Double(getCount.first?.data["amount"] as? Float ?? 0)
+			row.invoiceAmount = getCount.first?.data["amount"] as? Double ?? 0
 
 			rows.append(row)
 		}
 		return rows
 	}
 	
-	public func setJSONValues(_ values:[String:Any]) {
+	func setJSONValues(_ values:[String:Any]) {
 		self.invoiceId = getJSONValue(named: "invoiceId", from: values, defaultValue: 0)
 		self.invoiceNumber = getJSONValue(named: "invoiceNumber", from: values, defaultValue: 0)
 		self.invoiceDate = getJSONValue(named: "invoiceDate", from: values, defaultValue: "").DateToInt()

@@ -8,11 +8,12 @@
 
 import StORM
 import PerfectLib
+import PerfectLogger
 import Turnstile
 import TurnstileCrypto
 
 /// Provides the Account structure for Perfect Turnstile
-class User : PostgresSqlORM, Account, JSONConvertible {
+class User : PostgresSqlORM, JSONConvertible, Account {
     
     /// The User account's Unique ID
     public var uniqueID: String = ""
@@ -54,13 +55,13 @@ class User : PostgresSqlORM, Account, JSONConvertible {
         firstname = this.data["firstname"] as? String ?? ""
         lastname = this.data["lastname"] as? String ?? ""
         email	 = this.data["email"] as? String ?? ""
-        isAdmin = this.data["isadmin"] as? Bool ?? false
+        isAdmin = (this.data["isadmin"] as? String) == "true"
         facebookID = this.data["facebookid"] as? String ?? ""
         googleID = this.data["googleid"] as? String ?? ""
     }
     
     /// Iterate through rows and set to object data
-    public func rows() -> [User] {
+    func rows() -> [User] {
         var rows = [User]()
         for i in 0..<self.results.rows.count {
             let row = User()
@@ -70,7 +71,7 @@ class User : PostgresSqlORM, Account, JSONConvertible {
         return rows
     }
 
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.uniqueID = getJSONValue(named: "uniqueID", from: values, defaultValue: "")
         self.username = getJSONValue(named: "username", from: values, defaultValue: "")
         self.password = getJSONValue(named: "password", from: values, defaultValue: "")
@@ -109,7 +110,7 @@ class User : PostgresSqlORM, Account, JSONConvertible {
             password = BCrypt.hash(password: password)
             try create() // can't use save as the id is populated
         } catch {
-            print(error)
+            LogFile.error("\(error)")
         }
     }
     
@@ -123,6 +124,7 @@ class User : PostgresSqlORM, Account, JSONConvertible {
             }
             //to(self.results.rows[0])
         } catch {
+            LogFile.error("\(error)")
             throw StORMError.noRecordFound
         }
         if try BCrypt.verify(password: pw, matchesHash: password) {
@@ -142,7 +144,7 @@ class User : PostgresSqlORM, Account, JSONConvertible {
                 return false
             }
         } catch {
-            print("exists: \(error)")
+            LogFile.error("\(error)")
             return false
         }
     }
@@ -166,7 +168,7 @@ class User : PostgresSqlORM, Account, JSONConvertible {
 					try make()				}
 			}
 		} catch {
-			print("setAdmin: \(error)")
+            LogFile.error("\(error)")
 		}
 	}
 }

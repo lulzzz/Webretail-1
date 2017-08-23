@@ -1,7 +1,7 @@
 body {
-  padding-top: 60px;
+  padding-top: 140px;
   font-size: medium;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .navigationLinkButton:hover {
@@ -9,11 +9,12 @@ body {
 }
 
 a {
-    color: #333;
+    color: #604b20;
     text-decoration: none; 
 }
 
 a:hover{
+    color: #000;
     text-decoration: none; 
 }
 
@@ -29,18 +30,21 @@ a:hover{
 }
 
 .loading {
-  float: right;
-  margin-top: 10px;
-  margin-right: 20px;
+  position: absolute;
+  top: 10px;
+  right: 40px;
   height: 50px;
+  z-index: 10000;
 }
 
 .percentage {
   float: right;
   height: 10px;
 }
+
 .ui-growl {
-  margin-top: 40px;
+  margin-top: 120px;
+  z-index: 100000;
 }
 
 body .ui-widget-header {
@@ -55,7 +59,22 @@ body .ui-toolbar-group-right i {
 }
 
 .ui-widget-content {
-  border: 1px solid #eee !important
+  border: 1px solid #eee !important;
+}
+
+.ui-widget {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ui-button {
+  padding: 2px;
+}
+.ui-button-text {
+  font-size: medium;
+}
+
+.ui-fluid .ui-button-text-icon-left .ui-button-text, .ui-fluid .ui-button-text-icon-right .ui-button-text {
+  padding-left: 2em;
 }
 
 .ui-datatable {
@@ -75,6 +94,11 @@ body .ui-toolbar-group-right i {
   border-color: #eee;
   border-style: solid;
   border-left-width: 1px;
+  padding: 12px 14px;
+}
+
+.ui-widget-header .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-state-highlight {
+  background: #604b20;
 }
 
 .noprint {

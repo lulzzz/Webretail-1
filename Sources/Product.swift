@@ -38,10 +38,10 @@ class Product: PostgresSqlORM, JSONConvertible {
         productCode = this.data["productcode"] as? String ?? ""
         productName = this.data["productname"] as? String ?? ""
         productUm = this.data["productum"] as? String ?? ""
-        productSellingPrice = Double(this.data["productsellingprice"] as? Float ?? 0)
-        productPurchasePrice = Double(this.data["productpurchaseprice"] as? Float ?? 0)
-        productIsActive = this.data["productisactive"] as? Bool ?? false
-        productIsValid = this.data["productisvalid"] as? Bool ?? false
+        productSellingPrice = this.data["productsellingprice"] as? Double ?? 0
+        productPurchasePrice = this.data["productpurchaseprice"] as? Double ?? 0
+        productIsActive = (this.data["productisactive"] as? String) == "true"
+        productIsValid = (this.data["productisvalid"] as? String) == "true"
         productCreated = this.data["productcreated"] as? Int ?? 0
         productUpdated = this.data["productupdated"] as? Int ?? 0
 		_brand.to(this)
@@ -66,7 +66,7 @@ class Product: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
         self.productCode = getJSONValue(named: "productCode", from: values, defaultValue: "")
         self.productName = getJSONValue(named: "productName", from: values, defaultValue: "")

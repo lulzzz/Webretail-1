@@ -23,6 +23,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 	public var companyCity : String = ""
 	public var companyCountry : String = ""
 	public var companyZip : String = ""
+    
 	public var smtpHost : String = ""
 	public var smtpSsl : Bool = false
 	public var smtpUsername : String = ""
@@ -60,7 +61,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 		return rows
 	}
 	
-	public func setJSONValues(_ values:[String:Any]) {
+	func setJSONValues(_ values:[String:Any]) {
 		self.companyId = getJSONValue(named: "companyId", from: values, defaultValue: 0)
 		self.companyName = getJSONValue(named: "companyName", from: values, defaultValue: "")
 		self.companyDesc = getJSONValue(named: "companyDesc", from: values, defaultValue: "")
@@ -73,6 +74,7 @@ class Company: PostgresSqlORM, JSONConvertible {
 		self.companyCity = getJSONValue(named: "companyCity", from: values, defaultValue: "")
 		self.companyZip = getJSONValue(named: "companyZip", from: values, defaultValue: "")
 		self.companyCountry = getJSONValue(named: "companyCountry", from: values, defaultValue: "")
+
 		self.smtpHost = getJSONValue(named: "smtpHost", from: values, defaultValue: "")
 		self.smtpSsl = getJSONValue(named: "smtpSsl", from: values, defaultValue: false)
 		self.smtpUsername = getJSONValue(named: "smtpUsername", from: values, defaultValue: "")

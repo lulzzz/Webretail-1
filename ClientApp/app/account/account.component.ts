@@ -14,16 +14,18 @@ import { Helpers } from './../shared/helpers';
 export class AccountComponent implements OnInit {
     totalRecords = 0;
     accounts: Account[];
-	selected: Account;
+    selected: Account;
     displayPanel: boolean;
-	dataform: FormGroup;
+    dataform: FormGroup;
 
     constructor(private authenticationService: AuthenticationService,
                 private accountService: AccountService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+       authenticationService.title = 'Accounts';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(true);
 
         this.dataform = this.fb.group({
@@ -43,7 +45,7 @@ export class AccountComponent implements OnInit {
         );
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.uniqueID == ''; }
+    get isNew(): boolean { return this.selected == null || this.selected.uniqueID === ''; }
 
     get selectedIndex(): number { return this.accounts.indexOf(this.selected); }
 
@@ -67,7 +69,8 @@ export class AccountComponent implements OnInit {
                 .create(this.selected)
                 .subscribe(result => {
                     this.accounts.push(result);
-                    this.closeClick();
+                    this.totalRecords++;
+                   this.closeClick();
                 }, onerror => alert(onerror._body));
         } else {
             this.accountService

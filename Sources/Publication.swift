@@ -24,9 +24,9 @@ class Publication: PostgresSqlORM, JSONConvertible {
     open override func to(_ this: StORMRow) {
         publicationId = this.data["publicationid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0
-		publicationFeatured = this.data["publicationfeatured"] as? Bool ?? false
-		publicationIsValid = this.data["publicationisvalid"] as? Bool ?? false
-		publicationStartAt = this.data["publicationstartat"] as? Int ?? 0
+		publicationFeatured = (this.data["publicationfeatured"] as? String) == "true"
+        publicationIsValid = (this.data["publicationisvalid"] as? String) == "true"
+        publicationStartAt = this.data["publicationstartat"] as? Int ?? 0
         publicationFinishAt = this.data["publicationfinishat"] as? Int ?? 0
 		publicationUpdated = this.data["publicationupdated"] as? Int ?? 0
     }
@@ -41,7 +41,7 @@ class Publication: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.publicationId = getJSONValue(named: "publicationId", from: values, defaultValue: 0)
         self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
         self.publicationFeatured = getJSONValue(named: "publicationFeatured", from: values, defaultValue: false)

@@ -16,22 +16,22 @@ export class StoreService {
             .map(result => <Store[]>result.json());
     }
 
-    getById(id: number) : Observable<Store> {
+    getById(id: number): Observable<Store> {
         return this.http.get('/api/store/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Store>result.json());
     }
 
-    create(model: Store) : Observable<Store> {
+    create(model: Store): Observable<Store> {
         return this.http.post('/api/store', model, { headers: Helpers.getHeaders() })
             .map(result => <Store>result.json());
     }
 
-    update(id: number, model: Store) : Observable<Store> {
+    update(id: number, model: Store): Observable<Store> {
         return this.http.put('/api/store/' + id, model, { headers: Helpers.getHeaders() })
             .map(result => <Store>result.json());
     }
 
-    delete(id: number) : Observable<any> {
+    delete(id: number): Observable<any> {
         return this.http.delete('/api/store/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }

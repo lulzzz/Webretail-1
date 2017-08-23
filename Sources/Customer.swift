@@ -52,7 +52,7 @@ class Customer: PostgresSqlORM, JSONConvertible {
 		return rows
 	}
 	
-	public func setJSONValues(_ values:[String:Any]) {
+	func setJSONValues(_ values:[String:Any]) {
 		self.customerId = getJSONValue(named: "customerId", from: values, defaultValue: 0)
 		self.customerName = getJSONValue(named: "customerName", from: values, defaultValue: "")
 		self.customerEmail = getJSONValue(named: "customerEmail", from: values, defaultValue: "")

@@ -3,11 +3,10 @@
 
 <div class="container-fluid">
 
-    <button pButton type="button" title="Discounts" style="position: absolute; top: 84px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
-    <h1 style="margin-left: 40px">Discount</h1>
-  
+    <button pButton type="button" title="Discounts" style="position: absolute; top: 154px; left: 30px; width:50px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+
     <p-toolbar *ngIf="item">
-        <div class="ui-toolbar-group-left">
+        <div class="ui-toolbar-group-left" style="margin-left:60px">
             <span><b>name</b>: {{item.discountName}}</span>
             <br/><span><b>start</b>: {{item.discountStartAt | date: 'yyyy-MM-dd'}}</span>
             <span><b>finish</b>: {{item.discountFinishAt | date: 'yyyy-MM-dd'}}</span>
@@ -22,7 +21,7 @@
     <p-dataTable *ngIf="!inputComponent.isOpen" [value]="items | priceFilter:sliderValue:'discount':item" 
         selectionMode="multiple" [(selection)]="itemsSelected" [responsive]="true" #dt>
         <p-header>
-            <button pButton style="position: absolute;left: 10px; top: 10px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
+            <button pButton style="position: absolute;left: 10px; top: 8px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
             <p-chips [(ngModel)]="codes" placeholder="code reading" (onAdd)="addCodes()"></p-chips>
         </p-header>
         <p-footer>

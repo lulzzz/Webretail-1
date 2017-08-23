@@ -13,13 +13,17 @@ import { Company } from './../shared/models';
 export class CompanyComponent implements OnInit {
     msgs: Message[] = [];
     company: Company;
-	dataform: FormGroup;
+    dataform: FormGroup;
+    header: string;
 
     constructor(private authenticationService: AuthenticationService,
                 private companyService: CompanyService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+       authenticationService.title = 'Company';
+       this.header = '/upload/header';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
@@ -33,11 +37,7 @@ export class CompanyComponent implements OnInit {
             'zip': new FormControl('', Validators.required),
             'country': new FormControl('', Validators.required),
             'fiscalCode': new FormControl('', Validators.required),
-            'vatNumber': new FormControl('', Validators.required),
-            'host': new FormControl('', Validators.nullValidator),
-            'ssl': new FormControl('', Validators.nullValidator),
-            'username': new FormControl('', Validators.nullValidator),
-            'password': new FormControl('', Validators.nullValidator)
+            'vatNumber': new FormControl('', Validators.required)
         });
 
         this.companyService.get()
@@ -47,21 +47,30 @@ export class CompanyComponent implements OnInit {
         );
     }
 
-    get isNew() : boolean { return this.company == null || this.company.companyId == 0; }
+    get isNew(): boolean { return this.company == null || this.company.companyId === 0; }
 
     saveClick() {
         if (this.isNew) {
             this.companyService
                 .create(this.company)
                 .subscribe(result => {
-                    this.msgs.push({severity: 'success', summary: 'Success', detail: "Company created"});
+                    this.msgs.push({severity: 'success', summary: 'Success', detail: 'Company created'});
                 }, onerror => this.msgs.push({severity: 'error', summary: 'Create company', detail: onerror._body}));
         } else {
             this.companyService
                 .update(this.company)
                 .subscribe(result => {
-                    this.msgs.push({severity: 'success', summary: 'Success', detail: "Company updated"});
+                    this.msgs.push({severity: 'success', summary: 'Success', detail: 'Company updated'});
                 }, onerror => this.msgs.push({severity: 'error', summary: 'Update company', detail: onerror._body}));
         }
+    }
+
+    onBasicUpload(event) {
+        this.header = '';
+        // for(let file of event.files) {
+        // }
+        this.msgs = [];
+        this.msgs.push({severity: 'info', summary: 'File Uploaded', detail: ''});
+        this.header = '/upload/header/?' + Date()
     }
 }

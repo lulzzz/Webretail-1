@@ -2,11 +2,10 @@
 
 <div class="container-fluid">
 
-    <button pButton type="button" title="Products" style="position: absolute; top: 74px; left: 30px;" (click)="cancelClick()" class="ui-button-secondary noprint" icon="fa-reply"></button>
-    <h1 style="margin-left: 40px">Stock</h1>
+   <button pButton type="button" title="Products" style="position: absolute; top: 144px; left: 30px; width:50px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
     
     <p-toolbar>
-        <div class="ui-toolbar-group-left">
+        <div class="ui-toolbar-group-left" style="margin-left:60px">
             <ul *ngIf="product">
                 <li><strong>Product</strong> {{product.productName}}</li>
                 <li><strong>Brand</strong> {{product.brand.brandName}}</li>

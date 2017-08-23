@@ -62,7 +62,7 @@ class InvoiceController {
 		
 		let id = request.urlVariables["id"]!
 		do {
-			let item = try self.repository.get(id: id.toInt()!)
+			let item = try self.repository.get(id: Int(id)!)
 			try response.setBody(json: item)
 			response.completed(status: .ok)
 		} catch {
@@ -93,7 +93,7 @@ class InvoiceController {
 			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
 			let item = Invoice()
 			item.setJSONValues(json!)
-			try self.repository.update(id: id.toInt()!, item: item)
+			try self.repository.update(id: Int(id)!, item: item)
 			item.invoiceAmount = item.getJSONValue(named: "invoiceAmount", from: json!, defaultValue: 0.0)
 			try response.setBody(json: item)
 			response.completed(status: .accepted)
@@ -107,7 +107,7 @@ class InvoiceController {
 		
 		let id = request.urlVariables["id"]!
 		do {
-			try self.repository.delete(id: id.toInt()!)
+			try self.repository.delete(id: Int(id)!)
 			response.completed(status: .noContent)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -119,7 +119,7 @@ class InvoiceController {
 		
 		let id = request.urlVariables["id"]!
 		do {
-			let items = try self.repository.getMovements(invoiceId: id.toInt()!)
+			let items = try self.repository.getMovements(invoiceId: Int(id)!)
 			try response.setBody(json: items)
 			response.completed(status: .ok)
 		} catch {
@@ -132,7 +132,7 @@ class InvoiceController {
 		
 		let id = request.urlVariables["id"]!
 		do {
-			let items = try self.repository.getMovementArticles(invoiceId: id.toInt()!)
+			let items = try self.repository.getMovementArticles(invoiceId: Int(id)!)
 			try response.setBody(json: items)
 			response.completed(status: .ok)
 		} catch {
@@ -146,7 +146,7 @@ class InvoiceController {
 		let id = request.urlVariables["id"]!
 		do {
 			let data = try request.postBodyString?.jsonDecode() as? [String:Any]
-			try self.repository.addMovement(invoiceId: id.toInt()!, id: (data?["value"] as! String).toInt()!)
+			try self.repository.addMovement(invoiceId: Int(id)!, id: Int(data?["value"] as! String)!)
 			try response.setBody(json: id)
 			response.completed(status: .created)
 		} catch {
@@ -159,7 +159,7 @@ class InvoiceController {
 		
 		let id = request.urlVariables["id"]!
 		do {
-			try self.repository.removeMovement(id: id.toInt()!)
+			try self.repository.removeMovement(id: Int(id)!)
 			response.completed(status: .noContent)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")

@@ -28,7 +28,7 @@ class UserController {
         return routes
     }
 
-    func accountsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+   func accountsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {

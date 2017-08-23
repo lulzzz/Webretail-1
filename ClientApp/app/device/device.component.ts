@@ -15,18 +15,20 @@ import { Helpers } from './../shared/helpers';
 export class DeviceComponent implements OnInit {
     totalRecords = 0;
     items: Device[];
-	selected: Device;
+    selected: Device;
     stores: SelectItem[] = [];
     displayPanel: boolean;
-	dataform: FormGroup;
-    
+    dataform: FormGroup;
+
     constructor(private authenticationService: AuthenticationService,
                 private deviceService: DeviceService,
                 private storeService: StoreService,
                 private confirmationService: ConfirmationService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) {
+       authenticationService.title = 'Devices';
+    }
 
-	ngOnInit() {
+    ngOnInit() {
         this.authenticationService.checkCredentials(false);
 
         this.dataform = this.fb.group({
@@ -52,7 +54,7 @@ export class DeviceComponent implements OnInit {
         );
     }
 
-    get isNew() : boolean { return this.selected == null || this.selected.deviceId == 0; }
+    get isNew(): boolean { return this.selected == null || this.selected.deviceId === 0; }
 
     get selectedIndex(): number { return this.items.indexOf(this.selected); }
 
@@ -65,15 +67,14 @@ export class DeviceComponent implements OnInit {
 
     onRowSelect(event: any) {
         this.dataform.controls.join.setValue(false);
-        var json = localStorage.getItem("webretailDevice");
+        let json = localStorage.getItem('webretailDevice');
         if (json != null) {
-            var device: Device = JSON.parse(json)
-            if (device.deviceId == this.selected.deviceId) {
+            let device: Device = JSON.parse(json)
+            if (device.deviceId === this.selected.deviceId) {
                 this.dataform.controls.join.setValue(true);
             }
         }
-        if (this.selected.store.storeId == 0)
-        {
+        if (this.selected.store.storeId === 0) {
             this.selected.store = null;
         }
         this.displayPanel = true;
@@ -81,9 +82,9 @@ export class DeviceComponent implements OnInit {
 
     closeClick() {
         if (this.dataform.controls.join.value === true) {
-            localStorage.setItem("webretailDevice", JSON.stringify(this.selected));
+            localStorage.setItem('webretailDevice', JSON.stringify(this.selected));
         } else {
-            localStorage.removeItem("webretailDevice");
+            localStorage.removeItem('webretailDevice');
         }
         this.displayPanel = false;
         this.selected = null;
@@ -96,6 +97,7 @@ export class DeviceComponent implements OnInit {
                 .subscribe(result => {
                     this.selected = result;
                     this.items.push(result);
+                    this.totalRecords++;
                     this.closeClick();
                 }, onerror => alert(onerror._body));
         } else {

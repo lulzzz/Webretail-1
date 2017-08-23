@@ -21,8 +21,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import 'primeng/resources/primeng.css';
-import 'primeng/resources/themes/bootstrap/theme.css';
-//import 'primeng/resources/themes/pepper-grinder/theme.css';
+// import 'primeng/resources/themes/bootstrap/theme.css';
+import 'primeng/resources/themes/pepper-grinder/theme.css';
 import 'font-awesome/css/font-awesome.css';
+import 'chart.js';
 
 import '../favicon.ico';

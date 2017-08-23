@@ -23,7 +23,7 @@ class Category: PostgresSqlORM, JSONConvertible {
     open override func to(_ this: StORMRow) {
         categoryId = this.data["categoryid"] as? Int ?? 0
         categoryName = this.data["categoryname"] as? String  ?? ""
-        categoryIsPrimary = this.data["categoryisprimary"] as? Bool ?? false
+        categoryIsPrimary = (this.data["categoryisprimary"] as? String) == "true"
         categoryCreated = this.data["categorycreated"] as? Int ?? 0
         categoryUpdated = this.data["categoryupdated"] as? Int ?? 0
     }
@@ -38,7 +38,7 @@ class Category: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    public func setJSONValues(_ values:[String:Any]) {
+    func setJSONValues(_ values:[String:Any]) {
         self.categoryId = getJSONValue(named: "categoryId", from: values, defaultValue: 0)
         self.categoryName = getJSONValue(named: "categoryName", from: values, defaultValue: "")
         self.categoryIsPrimary = getJSONValue(named: "categoryIsPrimary", from: values, defaultValue: false)
