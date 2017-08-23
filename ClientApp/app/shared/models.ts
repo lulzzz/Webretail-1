@@ -13,6 +13,10 @@ export class Company {
   public companyCountry: string;
   public companyFiscalCode: string;
   public companyVatNumber: string;
+  public smtpHost: string = ""
+	public smtpSsl: boolean = false
+	public smtpUsername: string = ""
+	public smtpPassword: string = ""
 
 
   constructor() {
@@ -28,6 +32,10 @@ export class Company {
     this.companyCountry = '';
     this.companyFiscalCode = '';
     this.companyVatNumber = '';
+	  this.smtpHost = '';
+	  this.smtpSsl = false;
+	  this.smtpUsername = '';
+	  this.smtpPassword = '';
   }
 }
 

@@ -88,4 +88,17 @@ export class DocumentComponent implements OnInit, OnDestroy {
     printClick() {
         window.print();
     }
+
+    sendMailClick() {
+        let email = new Email()
+        email.address = this.movement.movementCustomer.customerEmail;
+        email.subject = "Document n° " + this.movement.movementNumber;
+        email.content = this.doc.nativeElement.innerHTML;
+
+        this.companyService.sendMail(email)
+            .subscribe(
+                result => alert(result.content),
+                onerror => alert(onerror._body)
+            );
+    }
 }

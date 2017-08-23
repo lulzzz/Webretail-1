@@ -9,6 +9,7 @@
 import Foundation
 import PerfectLib
 import PerfectHTTP
+import PerfectLogger
 import Turnstile
 import TurnstileCrypto
 //import TurnstileWeb
@@ -38,37 +39,37 @@ public class AuthenticationController {
         response.setHeader(.contentType, value: "application/json")
         
         var resp = [String: String]()
-        guard let username = request.param(name: "username"),
-            let password = request.param(name: "password") else {
-                resp["error"] = "Missing username or password"
-                do {
+
+        do {
+            let json = try request.postBodyString?.jsonDecode() as? [String:Any] ?? [String:Any]()
+            guard let username = json["username"] as? String,
+                let password = json["password"] as? String else {
+                    resp["error"] = "Missing username or password"
                     try response.setBody(json: resp)
-                } catch {
-                    print(error)
-                }
-                response.completed()
-                return
-        }
-        let credentials = UsernamePassword(username: username, password: password)
-        
-        do {
-            try request.user.login(credentials: credentials, persist: true)
-            guard let uniqueID = request.user.authDetails?.account.uniqueID else {
-                throw AccountTakenError()
+                    response.completed()
+                    return
             }
-			let token = tokenStore.new(uniqueID)
-            let user = User()
-            try user.get(uniqueID)
             
-            resp["error"] = "none"
-            resp["login"] = "ok"
-            resp["token"] = token
-			resp["uniqueID"] = uniqueID
-            resp["role"] = user.isAdmin ? "Admin" : "User"
-        } catch {
-            resp["error"] = "Invalid username or password"
-        }
-        do {
+            let credentials = UsernamePassword(username: username, password: password)
+            
+            do {
+                try request.user.login(credentials: credentials, persist: true)
+                guard let uniqueID = request.user.authDetails?.account.uniqueID else {
+                    throw AccountTakenError()
+                }
+                let token = tokenStore.new(uniqueID)
+                let user = User()
+                try user.get(uniqueID)
+                
+                resp["error"] = "none"
+                resp["login"] = "ok"
+                resp["token"] = token
+                resp["uniqueID"] = uniqueID
+                resp["role"] = user.isAdmin ? "Admin" : "User"
+                LogFile.info("Logged in \(user.username)")
+            } catch {
+                resp["error"] = "Invalid username or password"
+            }
             try response.setBody(json: resp)
         } catch {
             print(error)
@@ -87,8 +88,7 @@ public class AuthenticationController {
 			}
 			resp["error"] = "none"
 			resp["logout"] = "completed"
-
-			try response.setBody(json: resp)
+            try response.setBody(json: resp)
 		} catch {
 			print(error)
 		}

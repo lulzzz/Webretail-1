@@ -37,7 +37,11 @@ export class CompanyComponent implements OnInit {
             'zip': new FormControl('', Validators.required),
             'country': new FormControl('', Validators.required),
             'fiscalCode': new FormControl('', Validators.required),
-            'vatNumber': new FormControl('', Validators.required)
+            'vatNumber': new FormControl('', Validators.required),
+            'host': new FormControl('', Validators.nullValidator),
+            'ssl': new FormControl('', Validators.nullValidator),
+            'username': new FormControl('', Validators.nullValidator),
+            'password': new FormControl('', Validators.nullValidator)
         });
 
         this.companyService.get()

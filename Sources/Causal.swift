@@ -27,7 +27,7 @@ class Causal: PostgresSqlORM, JSONConvertible {
         causalName = this.data["causalname"] as? String ?? ""
         causalQuantity = this.data["causalquantity"] as? Int ?? 0
         causalBooked = this.data["causalbooked"] as? Int ?? 0
-		causalIsPos = (this.data["causalispos"] as? String) == "true"
+		causalIsPos = this.data["causalispos"] as? Bool ?? true
         causalCreated = this.data["causalcreated"] as? Int ?? 0
         causalUpdated = this.data["causalupdated"] as? Int ?? 0
     }

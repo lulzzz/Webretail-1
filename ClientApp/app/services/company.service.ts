@@ -25,4 +25,9 @@ export class CompanyService {
         return this.http.put('/api/company', model, { headers: Helpers.getHeaders() })
             .map(result => <Company>result.json());
     }
+    
+    sendMail(model: Email) : Observable<Email> {
+        return this.http.post('/api/email', model, { headers: Helpers.getHeaders() })
+            .map(result => <Email>result.json());
+    }
 }

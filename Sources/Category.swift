@@ -23,7 +23,7 @@ class Category: PostgresSqlORM, JSONConvertible {
     open override func to(_ this: StORMRow) {
         categoryId = this.data["categoryid"] as? Int ?? 0
         categoryName = this.data["categoryname"] as? String  ?? ""
-        categoryIsPrimary = (this.data["categoryisprimary"] as? String) == "true"
+        categoryIsPrimary = this.data["categoryisprimary"] as? Bool ?? true
         categoryCreated = this.data["categorycreated"] as? Int ?? 0
         categoryUpdated = this.data["categoryupdated"] as? Int ?? 0
     }

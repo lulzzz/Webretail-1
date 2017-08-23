@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
 	login() {
     	this.authenticationService.login(this.user)
     		.subscribe(result => {
+				alert(JSON.stringify(result));
 				if (result.login === 'ok') {
 		    		this.authenticationService.grantCredentials(result);
 		    	} else {

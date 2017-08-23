@@ -55,7 +55,7 @@ class User : PostgresSqlORM, JSONConvertible, Account {
         firstname = this.data["firstname"] as? String ?? ""
         lastname = this.data["lastname"] as? String ?? ""
         email	 = this.data["email"] as? String ?? ""
-        isAdmin = (this.data["isadmin"] as? String) == "true"
+        isAdmin = this.data["isadmin"] as? Bool ?? false
         facebookID = this.data["facebookid"] as? String ?? ""
         googleID = this.data["googleid"] as? String ?? ""
     }

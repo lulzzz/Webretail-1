@@ -40,8 +40,8 @@ class Product: PostgresSqlORM, JSONConvertible {
         productUm = this.data["productum"] as? String ?? ""
         productSellingPrice = this.data["productsellingprice"] as? Double ?? 0
         productPurchasePrice = this.data["productpurchaseprice"] as? Double ?? 0
-        productIsActive = (this.data["productisactive"] as? String) == "true"
-        productIsValid = (this.data["productisvalid"] as? String) == "true"
+        productIsActive = this.data["productisactive"] as? Bool ?? true
+        productIsValid = this.data["productisvalid"] as? Bool ?? true
         productCreated = this.data["productcreated"] as? Int ?? 0
         productUpdated = this.data["productupdated"] as? Int ?? 0
 		_brand.to(this)

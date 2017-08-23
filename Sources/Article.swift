@@ -31,7 +31,7 @@ class Article: PostgresSqlORM, JSONConvertible {
         articleId = this.data["articleid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0
         articleBarcode = this.data["articlebarcode"] as? String ?? ""
-        articleIsValid = (this.data["articleisvalid"] as? String) == "true"
+        articleIsValid = this.data["articleisvalid"] as? Bool ?? true
         articleCreated = this.data["articlecreated"] as? Int ?? 0
         articleUpdated = this.data["articleupdated"] as? Int ?? 0
     }

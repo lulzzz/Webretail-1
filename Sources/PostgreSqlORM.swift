@@ -38,7 +38,7 @@ open class PostgresSqlORM: PostgresStORM {
     /// Table Creation
     /// Requires the connection to be configured, as well as a valid "table" property to have been set in the class
     open override func setup(_ str: String = "") throws {
-        LogFile.info("Running setup: \(table())", logFile: "./StORMlog.txt")
+        LogFile.info("Running setup: \(table())")
         var createStatement = str
         if str.characters.count == 0 {
             var opt = [String]()
@@ -93,7 +93,7 @@ open class PostgresSqlORM: PostgresStORM {
                 try sql(createIndex, params: [])
             }
         } catch {
-            LogFile.error("Error setup: \(error)", logFile: "./StORMlog.txt")
+            LogFile.error("Error setup: \(error)")
             throw StORMError.error("\(error)")
         }
     }
@@ -111,7 +111,7 @@ open class PostgresSqlORM: PostgresStORM {
 		do {
 			try query(whereclause: "\(idname.lowercased()) = $1", params: [id])
 		} catch {
-			LogFile.error("Error: \(error)", logFile: "./StORMlog.txt")
+			LogFile.error("Error: \(error)")
 			throw error
 		}
 	}
@@ -178,7 +178,7 @@ open class PostgresSqlORM: PostgresStORM {
 			
 			//return results
 		} catch {
-			LogFile.error("Error msg: \(error)", logFile: "./StORMlog.txt")
+			LogFile.error("Error msg: \(error)")
 			self.error = StORMError.error("\(error)")
 			throw error
 		}

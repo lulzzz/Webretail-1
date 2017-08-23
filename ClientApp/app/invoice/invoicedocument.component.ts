@@ -88,4 +88,17 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
     printClick() {
         window.print();
     }
+    
+    sendMailClick() {
+        let email = new Email()
+        email.address = this.invoice.invoiceCustomer.customerEmail;
+        email.subject = "Invoice n° " + this.invoice.invoiceNumber;
+        email.content = this.doc.nativeElement.innerHTML;
+
+        this.companyService.sendMail(email)
+            .subscribe(
+                result => alert(result.content),
+                onerror => alert(onerror._body)
+            );
+    }
 }

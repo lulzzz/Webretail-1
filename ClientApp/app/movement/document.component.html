@@ -5,7 +5,8 @@
     <div class="noprint">
         <button pButton type="button" title="Movements" (click)="cancelClick()" class="ui-button-secondary" style="width:50px" icon="fa-reply"></button>
         <button pButton type="button" label="Print" title="Print document" (click)="printClick()" class="ui-button-secondary" icon="fa-print"></button>
-     </div>
+        <button pButton type="button" label="Send mail" title="Send mail" (click)="sendMailClick()" class="ui-button-secondary" icon="fa-envelope"></button>
+    </div>
 
     <div *ngFor="let items of groups" #doc>          
         <table *ngIf="movement" class="table" style="width: 100%">    
