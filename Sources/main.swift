@@ -48,7 +48,7 @@ addRoutesAndHandlers()
 addFilters()
 
 // Error file location
-LogFile.location = "./error.log"
+LogFile.location = "./log.log"
 
 do {
     // Launch the HTTP server.

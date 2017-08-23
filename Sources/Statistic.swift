@@ -58,7 +58,7 @@ class StatisticItem: PostgresSqlORM, JSONConvertible {
     override open func to(_ this: StORMRow) {
         id = this.data["id"] as? Int ?? 0
         label = this.data["label"] as? String ?? ""
-        value = this.data["value"] as? Double ?? 0
+        value = Double(this.data["value"] as? Float ?? 0)
     }
     
     /// Iterate through rows and set to object data

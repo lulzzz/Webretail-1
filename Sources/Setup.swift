@@ -107,6 +107,7 @@ func addRoutesAndHandlers() {
     server.addRoutes(PdfController().getRoutes())
     server.addRoutes(StatisticController().getRoutes())
     //server.addRoutes(PublicationController().getRoutes())
+    server.addRoutes(EmailController().getRoutes())
 }
 
 func addFilters() {

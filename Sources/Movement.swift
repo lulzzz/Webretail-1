@@ -52,9 +52,9 @@ class Movement: PostgresSqlORM, JSONConvertible {
 		movementStatus = this.data["movementstatus"] as? String ?? ""
 		movementUser = this.data["movementuser"] as? String  ?? ""
 		movementDevice = this.data["movementdevice"] as? String  ?? ""
-		movementStore = try! (this.data["movementstore"] as? String)?.jsonDecode() as! [String:Any]
-		movementCausal = try! (this.data["movementcausal"] as? String)?.jsonDecode() as! [String:Any]
-        movementCustomer = try! (this.data["movementcustomer"] as? String)?.jsonDecode() as! [String:Any]
+		movementStore = this.data["movementstore"] as? [String:Any] ?? [String:Any]()
+		movementCausal = this.data["movementcausal"] as? [String:Any] ?? [String:Any]()
+		movementCustomer = this.data["movementcustomer"] as? [String:Any] ?? [String:Any]()
         movementPayment = this.data["movementpayment"] as? String ?? ""
 		movementUpdated = this.data["movementupdated"] as? Int ?? 0
     }
@@ -67,7 +67,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
 			
 			let sql = "SELECT SUM(movementArticleQuantity * movementArticlePrice) AS amount FROM movementArticles WHERE movementId = $1";
 			let getCount = try self.sqlRows(sql, params: [String(row.movementId)])
-			row._amount = getCount.first?.data["amount"] as? Double ?? 0
+			row._amount = Double(getCount.first?.data["amount"] as? Float ?? 0)
 			
 			rows.append(row)
         }
@@ -120,7 +120,7 @@ class Movement: PostgresSqlORM, JSONConvertible {
 		var sql = "SELECT MAX(movementNumber) AS counter FROM \(table())";
 		if pos {
 			self.movementNumber = 1
-			sql += " WHERE movementDevice = $1 AND date(strftime('%s', '2001-01-01 00:00:00') + movementDate, 'unixepoch') = $2";
+			sql += " WHERE movementDevice = $1 AND to_char(to_timestamp(movementDate + extract(epoch from timestamp '2001-01-01 00:00:00')), 'YYYY-MM-DD') = $2";
 			params.append(movementDevice)
 			params.append(movementDate.formatDate(format: "yyyy-MM-dd"))
 		}

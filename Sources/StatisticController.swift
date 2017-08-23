@@ -21,10 +21,10 @@ class StatisticController {
         var routes = Routes()
         
         routes.add(method: .get, uri: "/api/statistic/device", handler: statisticDeviceHandlerGET)
-        routes.add(method: .get, uri: "/api/statistic/category/:year", handler: statisticCategoryHandlerGET)
-        routes.add(method: .get, uri: "/api/statistic/categoryformonth/:year", handler: statisticCategoryformonthHandlerGET)
-        routes.add(method: .get, uri: "/api/statistic/product/:year", handler: statisticProductHandlerGET)
-        routes.add(method: .get, uri: "/api/statistic/productformonth/:year", handler: statisticProductformonthHandlerGET)
+        routes.add(method: .get, uri: "/api/statistic/category/{year}", handler: statisticCategoryHandlerGET)
+        routes.add(method: .get, uri: "/api/statistic/categoryformonth/{year}", handler: statisticCategoryformonthHandlerGET)
+        routes.add(method: .get, uri: "/api/statistic/product/{year}", handler: statisticProductHandlerGET)
+        routes.add(method: .get, uri: "/api/statistic/productformonth/{year}", handler: statisticProductformonthHandlerGET)
         
         return routes
     }

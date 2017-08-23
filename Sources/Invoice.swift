@@ -27,7 +27,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 		invoiceId = this.data["invoiceid"] as? Int ?? 0
 		invoiceNumber = this.data["invoicenumber"] as? Int ?? 0
 		invoiceDate = this.data["invoicedate"] as? Int ?? 0
-		invoiceCustomer = try! (this.data["invoicecustomer"] as? String)?.jsonDecode() as! [String:Any]
+		invoiceCustomer = this.data["invoicecustomer"] as? [String:Any] ?? [String:Any]()
 		invoicePayment = this.data["invoicepayment"] as? String ?? ""
 		invoiceNote = this.data["invoicenote"] as? String ?? ""
 		invoiceUpdated = this.data["invoiceupdated"] as? Int ?? 0
@@ -44,7 +44,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 				"INNER JOIN movements AS b ON a.movementId = b.movementId " +
 				"WHERE b.invoiceId = $1"
 			let getCount = try self.sqlRows(sql, params: [String(row.invoiceId)])
-			row.invoiceAmount = getCount.first?.data["amount"] as? Double ?? 0
+			row.invoiceAmount = Double(getCount.first?.data["amount"] as? Float ?? 0)
 
 			rows.append(row)
 		}
