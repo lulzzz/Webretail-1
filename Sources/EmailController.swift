@@ -19,11 +19,11 @@ class EmailController {
 
 	func getRoutes() -> Routes {
 		var routes = Routes()
-		routes.add(method: .post, uri: "/api/email", handler: emailHandlerPOST)
+	
+        routes.add(method: .post, uri: "/api/email", handler: emailHandlerPOST)
 
 		return routes
 	}
-	
 	
 	func emailHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
