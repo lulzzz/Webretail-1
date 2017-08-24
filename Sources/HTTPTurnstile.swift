@@ -51,21 +51,25 @@ struct AuthorizationHeader {
 	/// Enables auth checking via an API Key
     var basic: APIKey? {
         guard let range = headerValue.range(of: "Basic ") else { return nil }
-        let token = headerValue[range.upperBound...]//.substring(from: range.upperBound)
+        //let token = headerValue[range.upperBound...]
+        let token = headerValue.substring(from: range.upperBound)
 		guard let separatorRange = token.range(of: ":") else {
 			return nil
 		}
 		
-        let apiKeyID = token[..<separatorRange.lowerBound]//.substring(to: separatorRange.lowerBound)
-        let apiKeySecret = token[separatorRange.upperBound...]//.substring(from: separatorRange.upperBound)
-        
+        //let apiKeyID = token[..<separatorRange.lowerBound]
+        //let apiKeySecret = token[separatorRange.upperBound...]
+        let apiKeyID = token.substring(to: separatorRange.lowerBound)
+        let apiKeySecret = token.substring(from: separatorRange.upperBound)
+
         return APIKey(id: String(apiKeyID), secret: String(apiKeySecret))
     }
     
 	/// Enables auth checking via a Bearer Token
     var bearer: AccessToken? {
         guard let range = headerValue.range(of: "Bearer ") else { return nil }
-        let token = headerValue[range.upperBound...]//.substring(from: range.upperBound)
+        //let token = headerValue[range.upperBound...]
+        let token = headerValue.substring(from: range.upperBound)
         return AccessToken(string: String(token))
     }
 }

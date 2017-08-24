@@ -55,7 +55,8 @@ open class PostgresSqlORM: PostgresStORM {
                     } else if child.value is Int {
                         verbage += "integer DEFAULT 0"
                         if key.hasSuffix("Id") {
-                            var table = String(key[..<key.index(key.endIndex, offsetBy: -2)] + "s")
+                            //var table = String(key[..<key.index(key.endIndex, offsetBy: -2)] + "s")
+                            var table = key.substring(to: key.index(key.endIndex, offsetBy: -2)) + "s"
                             if table.hasSuffix("ys") {
                                 table = table.replacingOccurrences(of: "ys", with: "ies")
                             }
