@@ -17,6 +17,7 @@ public class TurnstilePerfectRealm {
     public let turnstile: Turnstile
     
     public init(sessionManager: SessionManager = PerfectSessionManager(), realm: Realm = CustomRealm()) {
+        
         turnstile = Turnstile(sessionManager: sessionManager, realm: realm)
         let filter = TurnstileFilter(turnstile: turnstile)
         
