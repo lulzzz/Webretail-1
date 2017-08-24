@@ -10,7 +10,7 @@ export class PriceFilterPipe implements PipeTransform {
     if (!value) {
       return;
     }
-    if (args0 == null && args2 == null) {
+    if (args0 == null) {
       return value;
     }
 
@@ -18,7 +18,7 @@ export class PriceFilterPipe implements PipeTransform {
     let maxValue = args0;
     switch (type) {
       case 'discounts':
-        return value.filter(item => (item.discountPercentage > 0 ? item.discountPercentage : item.discountPrice) <= maxValue);
+        return value.filter(data => (data.discountPercentage > 0 ? data.discountPercentage : data.discountPrice) <= maxValue);
       case 'discount':
         let item = args2;
         return value.filter(data => (item.discountPercentage === 0
@@ -39,7 +39,7 @@ export class PriceFilterPipe implements PipeTransform {
       case 'invoices':
         return value.filter(data => data.invoiceAmount <= maxValue);
       default:
-        return value.filter(item => (item.discount ? item.discount.discountPrice : item.productSellingPrice) <= maxValue);
+        return value.filter(data => (data.discount ? data.discount.discountPrice : data.productSellingPrice) <= maxValue);
     }
   }
 }

@@ -97,8 +97,22 @@ body .ui-toolbar-group-right i {
   padding: 12px 14px;
 }
 
-.ui-widget-header .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-state-highlight {
+.ui-widget-header .ui-state-highlight {
   background: #604b20;
+}
+
+.ui-widget-content {
+  background: #fcffff;
+  color: #1f1f1f;
+}
+
+.ui-widget-content .ui-state-highlight {
+  background: lightyellow;
+  color: #1f1f1f;
+}
+
+.ui-panel .ui-panel-content {
+    background: #fcfcfc;
 }
 
 .noprint {

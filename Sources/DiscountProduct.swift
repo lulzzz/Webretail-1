@@ -22,7 +22,7 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 		discountProductId = this.data["discountproductid"] as? Int ?? 0
 		discountId = this.data["discountid"] as? Int ?? 0
 		productId = this.data["productid"] as? Int ?? 0
-		discountProduct = try! (this.data["discountproduct"] as? String)?.jsonDecode() as! [String:Any]
+		discountProduct = this.data["discountproduct"] as? [String:Any] ?? [String:Any]()
 	}
 	
 	func rows() -> [DiscountProduct] {
