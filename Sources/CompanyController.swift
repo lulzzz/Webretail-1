@@ -96,6 +96,7 @@ class CompanyController {
 			response.setHeader(.contentType, value: "image/png")
 			response.setBody(bytes: [UInt8](content))
 			response.completed(status: .ok)
+			return
 		}
 		response.badRequest(error: "\(request.uri) \(request.method): Header file not found")
     }
