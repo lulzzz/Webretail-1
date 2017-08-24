@@ -2,10 +2,11 @@ FROM perfectlysoft/perfectassistant:latest
 
 WORKDIR /app
 ENV DEBIAN_FRONTEND noninteractive
-EXPOSE 8080
+EXPOSE 8181
 
 #RUN apt-get -y update && apt-get install -y apt-utils curl
-RUN apt-get -y update && apt-get install -y libssl-dev libcurl4-openssl-dev libpq-dev uuid-dev libxml2-dev pkg-config
+RUN apt-get -y update && apt-get install -y libssl-dev libcurl4-openssl-dev libpq-dev uuid-dev libxml2-dev pkg-config libpq-dev
+RUN rm -rf /var/lib/apt/lists/*
 
 #RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 #RUN apt-get update
@@ -18,7 +19,7 @@ ADD Package.swift .
 COPY Sources ./Sources/
 
 ADD favicon.ico .
-COPY wwwroot ./wwwroot/
+COPY webroot ./webroot/
 #COPY ClientApp ./ClientApp/
 #COPY *.json ./
 #COPY *.js ./

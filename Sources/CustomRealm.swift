@@ -26,8 +26,8 @@ open class CustomRealm : Realm {
             return try authenticate(credentials: credentials)
 		case let credentials as APIKey:
 			return try authenticate(credentials: credentials)
-        case let credentials as ConsumerAccount:
-            return try authenticate(credentials: credentials)
+//        case let credentials as ConsumerAccount:
+//            return try authenticate(credentials: credentials)
         default:
             throw UnsupportedCredentialsError()
         }
@@ -79,18 +79,18 @@ open class CustomRealm : Realm {
         }
     }
     
-	/// Used when a "ConsumerAccount" onject is passed to the authenticate function. Returns an Account object.
-    private func authenticate(credentials: ConsumerAccount) throws -> Account {
-        let account = User()
-        try account.query(whereclause: "\(credentials.consumer)ID = $1",
-						  params: [credentials.uniqueID],
-		                  cursor: StORMCursor(limit: 1, offset: 0))
-        if !account.uniqueID.isEmpty {
-			return account
-        } else {
-			throw IncorrectCredentialsError()
-        }
-    }
+//    /// Used when a "ConsumerAccount" onject is passed to the authenticate function. Returns an Account object.
+//    private func authenticate(credentials: ConsumerAccount) throws -> Account {
+//        let account = User()
+//        try account.query(whereclause: "\(credentials.consumer)ID = $1",
+//                          params: [credentials.uniqueID],
+//                          cursor: StORMCursor(limit: 1, offset: 0))
+//        if !account.uniqueID.isEmpty {
+//            return account
+//        } else {
+//            throw IncorrectCredentialsError()
+//        }
+//    }
 
 	/// Registers PasswordCredentials against the AuthRealm.
     open func register(credentials: Credentials) throws -> Account {
@@ -111,19 +111,19 @@ open class CustomRealm : Realm {
             } catch {
                 throw AccountTakenError()
             }
-        case let credentials as ConsumerAccount:
-			try account.query(whereclause: "\(credentials.consumer)ID = $1",
-				params: [credentials.uniqueID],
-				cursor: StORMCursor(limit: 1, offset: 0))
-			guard account.uniqueID.isEmpty else {
-				return account
-			}
-			newAccount.username = credentials.consumer
-			if credentials.consumer == "facebook" {
-				newAccount.facebookID = credentials.uniqueID
-			} else {
-				newAccount.googleID = credentials.uniqueID
-			}
+//        case let credentials as ConsumerAccount:
+//            try account.query(whereclause: "\(credentials.consumer)ID = $1",
+//                params: [credentials.uniqueID],
+//                cursor: StORMCursor(limit: 1, offset: 0))
+//            guard account.uniqueID.isEmpty else {
+//                return account
+//            }
+//            newAccount.username = credentials.consumer
+//            if credentials.consumer == "facebook" {
+//                newAccount.facebookID = credentials.uniqueID
+//            } else {
+//                newAccount.googleID = credentials.uniqueID
+//            }
         default:
             throw UnsupportedCredentialsError()
         }
@@ -135,8 +135,8 @@ open class CustomRealm : Realm {
     }
 }
 
-public struct ConsumerAccount: Account, Credentials {
-    public let consumer: String
-    public let uniqueID: String
-}
+//public struct ConsumerAccount: Account, Credentials {
+//    public let consumer: String
+//    public let uniqueID: String
+//}
 
