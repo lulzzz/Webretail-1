@@ -32,9 +32,19 @@ class EmailController {
 			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
 			let item = Email()
 			item.setJSONValues(json!)
+            
+            if item.address.isEmpty {
+                response.badRequest(error: "\(request.uri) \(request.method): Email address to is empty")
+                return
+            }
 
-			let company = try self.repository.get()!
-			let url = "\(company.smtpSsl ? "smtps" : "smtp")://\(company.smtpHost)"
+            let company = try self.repository.get()!
+            if company.companyEmail.isEmpty {
+                response.badRequest(error: "\(request.uri) \(request.method): Email address from is empty")
+                return
+            }
+
+            let url = "\(company.smtpSsl ? "smtps" : "smtp")://\(company.smtpHost)"
 			let client = SMTPClient(url: url, username: company.smtpUsername, password: company.smtpPassword)
 			let email = EMail(client: client)
 			
@@ -46,7 +56,6 @@ class EmailController {
 			try email.send() { code, header, body in
 				
 				if code != 0 {
-					print(header)
 					response.badRequest(error: "\(request.uri) \(request.method): \(header)")
 					return
 				}
