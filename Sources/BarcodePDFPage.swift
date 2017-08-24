@@ -6,7 +6,7 @@
 //  Copyright © 2017 Gerardo Grisolini. All rights reserved.
 //
 
-/*
+#if os(OSX)
 import Quartz
 
 class BarcodePDFPage: PDFPage {
@@ -28,7 +28,7 @@ class BarcodePDFPage: PDFPage {
         self.pdfHeight = image.size.height
         super.init(image: image)!
     }
-
+    
     func drawText()
     {
         let titleParagraphStyle = NSMutableParagraphStyle()
@@ -63,16 +63,16 @@ class BarcodePDFPage: PDFPage {
         self.barcode.draw(in: barcodeRect, withAttributes: barcodeFontAttributes)
     }
     
-    // macOS > 10.12
+    @available(OSX 10.12, *)
     override func draw(with box: PDFDisplayBox, to context: CGContext) {
         super.draw(with: box, to: context)
         self.drawText()
     }
-    
-    // macOS <= 10.12
+
     override func draw(with box: PDFDisplayBox) {
         super.draw(with: box)
         self.drawText()
     }
 }
-*/
+#endif
+

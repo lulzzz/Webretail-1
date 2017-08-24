@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if os(OSX)
+    import Quartz
+#endif
 
 extension Int {
     
@@ -62,6 +65,27 @@ extension String {
 		
 		return Int(date.timeIntervalSinceReferenceDate)
 	}
+    
+    #if os(OSX)
+    func toBarcode() -> NSImage? {
+        let data = self.data(using: String.Encoding.ascii)
+        
+        if let filter = CIFilter(name: "CICode128BarcodeGenerator") {
+            filter.setValue(data, forKey: "inputMessage")
+            let transform = CGAffineTransform(scaleX: 4, y: 5)
+            
+            if let output = filter.outputImage?.transformed(by: transform) {
+                let rep = NSCIImageRep(ciImage: output)
+                let nsImage = NSImage(size: rep.size)
+                //let nsImage = NSImage(size: NSSize(width: self.collectionView.bounds.width - 40, height: 100.0))
+                nsImage.addRepresentation(rep)
+                
+                return nsImage
+            }
+        }
+        return nil
+    }
+    #endif
 }
 
 extension Sequence {
