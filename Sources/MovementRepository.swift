@@ -46,7 +46,7 @@ struct MovementRepository : MovementProtocol {
     func getAll(device: String, user: String, date: Int) throws -> [Movement] {
         let items = Movement()
         try items.query(
-            whereclause: "movementDevice == $1 AND movementUser == $2 AND movementUpdated > $3",
+            whereclause: "movementDevice = $1 AND movementUser = $2 AND movementUpdated > $3",
             params: [device, user, date]
         )
         let rows = try items.rows()

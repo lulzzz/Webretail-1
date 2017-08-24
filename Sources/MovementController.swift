@@ -201,23 +201,20 @@ class MovementController {
         }
     }
 
-    func movementFromHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {    
-        /*       
-        if let tokenValue = r.headers["authorization"] {
-            let data = tokenValue.split(" ")
-            if data.first == "Basic" {
-                let key = tokenValue.replacingOccurrences(of: "Basic ", with: "")
-                let basic = key.split("#")
-                let date = r.params.first!.1
-                do {
-                    let items = try self.repository.getAll(device: basic.first!, user: basic.last!, date: Int(date)!)
-                    return .ok(.json(try items.jsonEncodedString()))
-                } catch {
-                    return .badRequest(.json("\(r.path) \(r.method): \(error)"))
-                }
+    func movementFromHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+
+        let date = request.urlVariables["date"]!
+        do {
+            if let apiKey = request.auth?.basic {
+                let items = try self.repository.getAll(device: apiKey.id, user: apiKey.secret, date: Int(date)!)
+                try response.setBody(json: items)
+                response.completed(status: .ok)
+            } else {
+                response.completed(status: .unauthorized)
             }
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
-        return .unauthorized
-        */
-    }    
+    }
 }

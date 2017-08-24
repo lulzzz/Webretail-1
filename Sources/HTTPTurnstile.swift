@@ -53,7 +53,7 @@ struct AuthorizationHeader {
         guard let range = headerValue.range(of: "Basic ") else { return nil }
         //let token = headerValue[range.upperBound...]
         let token = headerValue.substring(from: range.upperBound)
-		guard let separatorRange = token.range(of: ":") else {
+        guard let separatorRange = token.range(of: "#") else {
 			return nil
 		}
 		
