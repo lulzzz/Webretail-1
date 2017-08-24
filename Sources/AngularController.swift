@@ -37,7 +37,7 @@ public class AngularController {
 		routes.add(method: .get, uri: "/device", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/report/receipts", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/report/sales", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/eport/statistics", handler: angularHandlerGET)
+		routes.add(method: .get, uri: "/report/statistics", handler: angularHandlerGET)
 
 		return routes
     }
