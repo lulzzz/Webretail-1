@@ -1,5 +1,5 @@
 // Generated automatically by Perfect Assistant Application
-// Date: 2017-08-24 05:40:37 +0000
+// Date: 2017-09-13 21:03:22 +0000
 import PackageDescription
 let package = Package(
 	name: "Webretail",
