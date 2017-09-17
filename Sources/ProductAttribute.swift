@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class ProductAttribute: PostgresSqlORM, JSONConvertible {
+class ProductAttribute: PostgresSqlORM, Codable {
     
     public var productAttributeId	: Int = 0
     public var productId : Int = 0
@@ -17,6 +16,14 @@ class ProductAttribute: PostgresSqlORM, JSONConvertible {
     
     public var _attribute: Attribute = Attribute()
     public var _attributeValues: [ProductAttributeValue] = [ProductAttributeValue]()
+
+    private enum CodingKeys: String, CodingKey {
+        case productAttributeId
+        case productId
+        case attributeId
+        case _attribute = "attribute"
+        case _attributeValues = "attributeValues"
+    }
 
     open override func table() -> String { return "productattributes" }
     
@@ -39,26 +46,26 @@ class ProductAttribute: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    func setJSONValues(_ values:[String:Any]) {
-        //self.productAttributeId = getJSONValue(named: "productAttributeId", from: values, defaultValue: 0)
-        self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.attributeId = getJSONValue(named: "attributeId", from: values["attribute"] as! [String : Any], defaultValue: 0)
+    override init() {
+        super.init()
     }
     
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        productId = try container.decode(Int.self, forKey: .productId)
+        let attribute = try container.decode(Attribute.self, forKey: ._attribute)
+        attributeId = attribute.attributeId
     }
     
-    func getJSONValues() -> [String : Any] {
-        return [
-            "productAttributeId": productAttributeId,
-            //"productId": productId,
-            //"attributeId": attributeId,
-            "attribute": _attribute,
-            "attributeValues": _attributeValues
-        ]
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(productAttributeId, forKey: .productAttributeId)
+        try container.encode(_attribute, forKey: ._attribute)
+        try container.encode(_attributeValues, forKey: ._attributeValues)
     }
-	
+    
 	func makeAttributeValues() throws {
 		var valueJoin = StORMDataSourceJoin()
 		valueJoin.table = "attributevalues"

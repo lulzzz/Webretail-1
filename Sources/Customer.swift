@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class Customer: PostgresSqlORM, JSONConvertible {
+class Customer: PostgresSqlORM, Codable {
 	
 	public var customerId : Int = 0
 	public var customerName	: String = ""
@@ -24,7 +23,21 @@ class Customer: PostgresSqlORM, JSONConvertible {
 	public var customerCreated : Int = Int.now()
 	public var customerUpdated : Int = Int.now()
 	
-	open override func table() -> String { return "customers" }
+    private enum CodingKeys: String, CodingKey {
+        case customerId
+        case customerName
+        case customerEmail
+        case customerPhone
+        case customerAddress
+        case customerCity
+        case customerZip
+        case customerCountry
+        case customerFiscalCode
+        case customerVatNumber
+        case customerUpdated = "updatedAt"
+    }
+    
+    open override func table() -> String { return "customers" }
 	open override func tableIndexes() -> [String] { return ["customerName", "customerEmail"] }
 	
 	open override func to(_ this: StORMRow) {
@@ -50,39 +63,5 @@ class Customer: PostgresSqlORM, JSONConvertible {
 			rows.append(row)
 		}
 		return rows
-	}
-	
-	func setJSONValues(_ values:[String:Any]) {
-		self.customerId = getJSONValue(named: "customerId", from: values, defaultValue: 0)
-		self.customerName = getJSONValue(named: "customerName", from: values, defaultValue: "")
-		self.customerEmail = getJSONValue(named: "customerEmail", from: values, defaultValue: "")
-		self.customerPhone = getJSONValue(named: "customerPhone", from: values, defaultValue: "")
-		self.customerAddress = getJSONValue(named: "customerAddress", from: values, defaultValue: "")
-		self.customerCity = getJSONValue(named: "customerCity", from: values, defaultValue: "")
-		self.customerZip = getJSONValue(named: "customerZip", from: values, defaultValue: "")
-		self.customerCountry = getJSONValue(named: "customerCountry", from: values, defaultValue: "")
-		self.customerFiscalCode = getJSONValue(named: "customerFiscalCode", from: values, defaultValue: "")
-		self.customerVatNumber = getJSONValue(named: "customerVatNumber", from: values, defaultValue: "")
-		self.customerUpdated = getJSONValue(named: "updatedAt", from: values, defaultValue: 0)
-	}
-	
-	func jsonEncodedString() throws -> String {
-		return try self.getJSONValues().jsonEncodedString()
-	}
-	
-	func getJSONValues() -> [String : Any] {
-		return [
-			"customerId": customerId,
-			"customerName": customerName,
-			"customerEmail": customerEmail,
-			"customerPhone": customerPhone,
-			"customerAddress":	customerAddress,
-			"customerCity": customerCity,
-			"customerZip": customerZip,
-			"customerCountry": customerCountry,
-			"customerFiscalCode": customerFiscalCode,
-			"customerVatNumber": customerVatNumber,
-			"updatedAt": customerUpdated
-		]
 	}
 }

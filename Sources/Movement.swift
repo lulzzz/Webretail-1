@@ -7,21 +7,12 @@
 //
 
 import StORM
-import PerfectLib
 
-struct ItemValue: JSONConvertible {
+struct ItemValue: Codable {
 	public var value: String
-	
-	func getJSONValues() -> [String : Any] {
-		return ["value": value]
-	}
-	
-	func jsonEncodedString() throws -> String {
-		return try self.getJSONValues().jsonEncodedString()
-	}
 }
 
-class Movement: PostgresSqlORM, JSONConvertible {    
+class Movement: PostgresSqlORM, Codable {
 	
 	public var movementId : Int = 0
 	public var invoiceId : Int = 0
@@ -32,16 +23,34 @@ class Movement: PostgresSqlORM, JSONConvertible {
 	public var movementStatus : String = ""
 	public var movementUser : String = ""
 	public var movementDevice : String = ""
-	public var movementStore : [String:Any] = [String:Any]()
-	public var movementCausal : [String:Any] = [String:Any]()
-	public var movementCustomer : [String:Any] = [String:Any]()
+	public var movementStore : Store = Store()
+	public var movementCausal : Causal = Causal()
+	public var movementCustomer : Customer = Customer()
 	public var movementPayment : String = ""
 	public var movementUpdated : Int = Int.now()
 	
 	public var _amount : Double = 0
     public var _items : [MovementArticle] = [MovementArticle]()
     
-	open override func table() -> String { return "movements" }
+    private enum CodingKeys: String, CodingKey {
+        case movementId
+        case movementNumber
+        case movementDate
+        case movementDesc
+        case movementNote
+        case movementStatus
+        case movementUser
+        case movementDevice
+        case movementStore
+        case movementCausal
+        case movementCustomer
+        case movementPayment
+        case _amount = "movementAmount"
+        case _items = "items"
+        case movementUpdated = "updatedAt"
+    }
+
+    open override func table() -> String { return "movements" }
     
     open override func to(_ this: StORMRow) {
         movementId = this.data["movementid"] as? Int ?? 0
@@ -52,9 +61,9 @@ class Movement: PostgresSqlORM, JSONConvertible {
 		movementStatus = this.data["movementstatus"] as? String ?? ""
 		movementUser = this.data["movementuser"] as? String  ?? ""
 		movementDevice = this.data["movementdevice"] as? String  ?? ""
-		movementStore = this.data["movementstore"] as? [String:Any] ?? [String:Any]()
-		movementCausal = this.data["movementcausal"] as? [String:Any] ?? [String:Any]()
-		movementCustomer = this.data["movementcustomer"] as? [String:Any] ?? [String:Any]()
+		movementStore = this.data["movementstore"] as? Store ?? Store()
+		movementCausal = this.data["movementcausal"] as? Causal ?? Causal()
+		movementCustomer = this.data["movementcustomer"] as? Customer ?? Customer()
         movementPayment = this.data["movementpayment"] as? String ?? ""
 		movementUpdated = this.data["movementupdated"] as? Int ?? 0
     }
@@ -73,52 +82,54 @@ class Movement: PostgresSqlORM, JSONConvertible {
         }
         return rows
     }
-    
-    func setJSONValues(_ values:[String:Any]) {
-        self.movementId = getJSONValue(named: "movementId", from: values, defaultValue: 0)
-		self.movementNumber = getJSONValue(named: "movementNumber", from: values, defaultValue: 0)
-		self.movementDate = getJSONValue(named: "movementDate", from: values, defaultValue: "").DateToInt()
-        self.movementDesc = getJSONValue(named: "movementDesc", from: values, defaultValue: "")
-        self.movementNote = getJSONValue(named: "movementNote", from: values, defaultValue: "")
-		self.movementStatus = getJSONValue(named: "movementStatus", from: values, defaultValue: "")
-		self.movementUser = getJSONValue(named: "movementUser", from: values, defaultValue: "")
-		self.movementDevice = getJSONValue(named: "movementDevice", from: values, defaultValue: "")
-		self.movementStore = getJSONValue(named: "movementStore", from: values, defaultValue: [String:Any]())
-		self.movementCausal = getJSONValue(named: "movementCausal", from: values, defaultValue: [String:Any]())
-		self.movementCustomer = getJSONValue(named: "movementCustomer", from: values, defaultValue: [String:Any]())
-		self.movementPayment = getJSONValue(named: "movementPayment", from: values, defaultValue: "")
-	}
-	
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
+
+    override init() {
+        super.init()
     }
     
-    func getJSONValues() -> [String : Any] {
-        return [
-            "movementId": movementId,
-            "movementNumber": movementNumber,
-            "movementDate": movementDate.formatDateShort(),
-            "movementDesc": movementDesc,
-            "movementNote": movementNote,
-            "movementStatus": movementStatus,
-            "movementUser": movementUser,
-            "movementDevice": movementDevice,
-            "movementStore": movementStore,
-            "movementCausal": movementCausal,
-            "movementCustomer": movementCustomer,
-            "movementAmount": _amount.roundCurrency(),
-            "movementPayment": movementPayment,
-            "items": _items,
-            "updatedAt": movementUpdated
-        ]
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        movementId = try container.decode(Int.self, forKey: .movementId)
+        movementNumber = try container.decode(Int.self, forKey: .movementNumber)
+        movementDate = try container.decode(String.self, forKey: .movementDate).DateToInt()
+        movementDesc = try container.decode(String.self, forKey: .movementDesc)
+        movementNote = try container.decode(String.self, forKey: .movementNote)
+        movementStatus = try container.decode(String.self, forKey: .movementStatus)
+        movementUser = try container.decode(String.self, forKey: .movementUser)
+        movementDevice = try container.decode(String.self, forKey: .movementDevice)
+        movementStore = try container.decode(Store.self, forKey: .movementStore)
+        movementCausal = try container.decode(Causal.self, forKey: .movementCausal)
+        movementCustomer = try container.decode(Customer.self, forKey: .movementCustomer)
+        movementPayment = try container.decode(String.self, forKey: .movementPayment)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(movementId, forKey: .movementId)
+        try container.encode(movementNumber, forKey: .movementNumber)
+        try container.encode(movementDate, forKey: .movementDate)
+        try container.encode(movementDesc, forKey: .movementDesc)
+        try container.encode(movementNote, forKey: .movementNote)
+        try container.encode(movementStatus, forKey: .movementStatus)
+        try container.encode(movementUser, forKey: .movementUser)
+        try container.encode(movementDevice, forKey: .movementDevice)
+        try container.encode(movementStore, forKey: .movementStore)
+        try container.encode(movementCausal, forKey: .movementCausal)
+        try container.encode(movementCustomer, forKey: .movementCustomer)
+        try container.encode(movementPayment, forKey: .movementPayment)
+        try container.encode(_amount, forKey: ._amount)
+        try container.encode(_items, forKey: ._items)
+        try container.encode(movementUpdated, forKey: .movementUpdated)
     }
 
 	func newNumber() throws {
 		self.movementNumber = 1000
 		var params = [String]()
-		let pos = getJSONValue(named: "causalIsPos", from: self.movementCausal, defaultValue: false)
 		var sql = "SELECT MAX(movementNumber) AS counter FROM \(table())";
-		if pos {
+		if self.movementCausal.causalIsPos {
 			self.movementNumber = 1
 			sql += " WHERE movementDevice = $1 AND to_char(to_timestamp(movementDate + extract(epoch from timestamp '2001-01-01 00:00:00')), 'YYYY-MM-DD') = $2";
 			params.append(movementDevice)

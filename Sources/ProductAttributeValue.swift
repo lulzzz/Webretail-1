@@ -7,15 +7,19 @@
 //
 
 import StORM
-import PerfectLib
 
-class ProductAttributeValue: PostgresSqlORM, JSONConvertible {
+class ProductAttributeValue: PostgresSqlORM, Codable {
     
     public var productAttributeValueId	: Int = 0
     public var productAttributeId : Int = 0
     public var attributeValueId : Int = 0
     
     public var _attributeValue: AttributeValue = AttributeValue()
+
+    private enum CodingKeys: String, CodingKey {
+        case productAttributeId
+        case _attributeValue = "attributeValue"
+    }
 
     open override func table() -> String { return "productattributevalues" }
     
@@ -37,22 +41,21 @@ class ProductAttributeValue: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    func setJSONValues(_ values:[String:Any]) {
-        //self.productAttributeValueId = getJSONValue(named: "productAttributeValueId", from: values, defaultValue: 0)
-        self.productAttributeId = getJSONValue(named: "productAttributeId", from: values, defaultValue: 0)
-        self.attributeValueId = getJSONValue(named: "attributeValueId", from: values["attributeValue"] as! [String : Any], defaultValue: 0)
-    }
-
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
+    override init() {
+        super.init()
     }
     
-    func getJSONValues() -> [String : Any] {
-        return [
-            //"productAttributeValueId": productAttributeValueId,
-            //"productAttributeId": productAttributeId,
-            //"attributeValueId": attributeValueId,
-            "attributeValue": _attributeValue
-        ]
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        productAttributeId = try container.decode(Int.self, forKey: .productAttributeId)
+        let attributeValue = try container.decode(AttributeValue.self, forKey: ._attributeValue)
+        attributeValueId = attributeValue.attributeValueId
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(_attributeValue, forKey: ._attributeValue)
     }
 }

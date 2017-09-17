@@ -7,25 +7,38 @@
 //
 
 import StORM
-import PerfectLib
 
-class MovementArticle: PostgresSqlORM, JSONConvertible {
+class MovementArticle: PostgresSqlORM, Codable {
     
     public var movementArticleId : Int = 0
     public var movementId : Int = 0
     public var movementArticleBarcode : String = ""
-    public var movementArticleProduct : [String:Any] = [String:Any]()
+    public var movementArticleProduct : Product = Product()
     public var movementArticleQuantity : Double = 0
 	public var movementArticlePrice : Double = 0
 	public var movementArticleUpdated : Int = Int.now()
-	
+    
+    public var movementArticleAmount: Double {
+        return (movementArticleQuantity * movementArticlePrice).roundCurrency()
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case movementArticleId
+        case movementId
+        case movementArticleBarcode
+        case movementArticleProduct
+        case movementArticleQuantity
+        case movementArticlePrice
+        case movementArticleAmount
+    }
+
     open override func table() -> String { return "movementarticles" }
       
     open override func to(_ this: StORMRow) {
         movementArticleId = this.data["movementarticleid"] as? Int ?? 0
         movementId = this.data["movementid"] as? Int ?? 0
         movementArticleBarcode = this.data["movementarticlebarcode"] as? String ?? ""
-        movementArticleProduct = this.data["movementarticleproduct"] as? [String:Any] ?? [String:Any]()
+        movementArticleProduct = this.data["movementarticleproduct"] as? Product ?? Product()
         movementArticleQuantity = Double(this.data["movementarticlequantity"] as? Float ?? 0)
 		movementArticlePrice = Double(this.data["movementarticleprice"] as? Float ?? 0)
 		movementArticleUpdated = this.data["movementarticleupdated"] as? Int ?? 0
@@ -41,37 +54,38 @@ class MovementArticle: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    func setJSONValues(_ values:[String:Any]) {
-        self.movementArticleId = getJSONValue(named: "movementArticleId", from: values, defaultValue: 0)
-        self.movementId = getJSONValue(named: "movementId", from: values, defaultValue: 0)
-        self.movementArticleBarcode = getJSONValue(named: "movementArticleBarcode", from: values, defaultValue: "")
-		let product = try! self.getProduct(barcode: self.movementArticleBarcode)
-		if product != nil {
-			self.movementArticleProduct = try! product!.getJSONValues()
-		} else {
-			self.movementArticleProduct = getJSONValue(named: "movementArticleProduct", from: values, defaultValue: [String:Any]())
-		}
-        self.movementArticleQuantity = getJSONValue(named: "movementArticleQuantity", from: values, defaultValue: 1.0)
-		self.movementArticlePrice = getJSONValue(named: "movementArticlePrice", from: values, defaultValue: 0.0)
-    }
-	
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
+    override init() {
+        super.init()
     }
     
-    func getJSONValues() -> [String : Any] {
-        return [
-            "movementArticleId": movementArticleId,
-            "movementId": movementId,
-            "movementArticleBarcode": movementArticleBarcode,
-            "movementArticleProduct": movementArticleProduct,
-            "movementArticleQuantity": movementArticleQuantity.roundCurrency(),
-            "movementArticlePrice": movementArticlePrice.roundCurrency(),
-            "movementArticleAmount": (movementArticleQuantity * movementArticlePrice).roundCurrency()
-        ]
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        movementArticleId = try container.decode(Int.self, forKey: .movementArticleId)
+        movementId = try container.decode(Int.self, forKey: .movementId)
+        movementArticleBarcode = try container.decode(String.self, forKey: .movementArticleBarcode)
+        let product = try! self.getProduct(barcode: movementArticleBarcode)
+        if product != nil {
+            movementArticleProduct = product!
+        } else {
+            movementArticleProduct = try container.decode(Product.self, forKey: .movementArticleProduct)
+        }
+        movementArticleQuantity = try container.decode(Double.self, forKey: .movementArticleQuantity)
+        movementArticlePrice = try container.decode(Double.self, forKey: .movementArticlePrice)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(movementArticleId, forKey: .movementArticleId)
+        try container.encode(movementArticleBarcode, forKey: .movementArticleBarcode)
+        try container.encode(movementArticleProduct, forKey: .movementArticleProduct)
+        try container.encode(movementArticleQuantity, forKey: .movementArticleQuantity)
+        try container.encode(movementArticlePrice, forKey: .movementArticlePrice)
+        try container.encode(movementArticleAmount, forKey: .movementArticleAmount)
     }
 
-	func getProduct(barcode: String) throws -> Product? {
+    func getProduct(barcode: String) throws -> Product? {
 		let brandJoin = StORMDataSourceJoin(
 			table: "brands",
 			onCondition: "products.brandId = brands.brandId",

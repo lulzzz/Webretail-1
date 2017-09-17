@@ -10,6 +10,8 @@ import Foundation
 import PerfectHTTP
 #if os(OSX)
     import Quartz
+#else
+    import PerfectLib
 #endif
 
 class PdfController {
@@ -40,17 +42,17 @@ class PdfController {
                     for _ in 0..<Int(item.movementArticleQuantity) {
                         
                         var values = [Int:String]()
-                        for attribute in item.movementArticleProduct["attributes"] as! [NSDictionary] {
-                            for attributeValue in attribute["attributeValues"] as! [NSDictionary] {
-                                let value = attributeValue["attributeValue"] as! NSDictionary
-                                values.updateValue(value["attributeValueName"] as! String, forKey: value["attributeValueId"] as! Int)
+                        for attribute in item.movementArticleProduct._attributes {
+                            for attributeValue in attribute._attributeValues {
+                                let value = attributeValue._attributeValue
+                                values.updateValue(value.attributeValueName, forKey: value.attributeValueId)
                             }
                         }
                         
-                        var product = "\(item.movementArticleProduct["productName"] as! String) - "
-                        for article in item.movementArticleProduct["articles"] as! [NSDictionary] {
-                            for attributeValue in article["attributeValues"] as! [NSDictionary] {
-                                let value = values[attributeValue["attributeValueId"] as! Int]
+                        var product = "\(item.movementArticleProduct.productName) - "
+                        for article in item.movementArticleProduct._articles {
+                            for attributeValue in article._attributeValues {
+                                let value = values[attributeValue.attributeValueId]
                                 product.append("\(value!) ")
                             }
                         }

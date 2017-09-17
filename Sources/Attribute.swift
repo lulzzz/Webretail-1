@@ -7,15 +7,19 @@
 //
 
 import StORM
-import PerfectLib
 
-class Attribute: PostgresSqlORM, JSONConvertible {
+class Attribute: PostgresSqlORM, Codable {
     
     public var attributeId	: Int = 0
     public var attributeName : String = ""
     public var attributeCreated : Int = Int.now()
     public var attributeUpdated : Int = Int.now()
     
+    private enum CodingKeys: String, CodingKey {
+        case attributeId
+        case attributeName
+    }
+
     open override func table() -> String { return "attributes" }
     open override func tableIndexes() -> [String] { return ["attributeName"] }
     
@@ -34,21 +38,5 @@ class Attribute: PostgresSqlORM, JSONConvertible {
             rows.append(row)
         }
         return rows
-    }
-    
-    func setJSONValues(_ values:[String:Any]) {
-        self.attributeId = getJSONValue(named: "attributeId", from: values, defaultValue: 0)
-        self.attributeName = getJSONValue(named: "attributeName", from: values, defaultValue: "")
-    }
-
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "attributeId": attributeId,
-            "attributeName": attributeName
-        ]
     }
 }

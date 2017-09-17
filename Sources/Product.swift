@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class Product: PostgresSqlORM, JSONConvertible {
+class Product: PostgresSqlORM, Codable {
     
     public var productId : Int = 0
     public var brandId : Int = 0
@@ -29,6 +28,23 @@ class Product: PostgresSqlORM, JSONConvertible {
     public var _articles: [Article] = [Article]()
 	public var _discount : Discount?
 	
+    private enum CodingKeys: String, CodingKey {
+        case productId
+        case productCode
+        case productName
+        case productUm
+        case productSellingPrice
+        case productPurchasePrice
+        case productIsActive
+        case productIsValid
+        case _brand = "brand"
+        case _categories = "categories"
+        case _attributes = "attributes"
+        case _articles = "articles"
+        case _discount = "discount"
+        case productUpdated = "updatedAt"
+    }
+
     open override func table() -> String { return "products" }
     open override func tableIndexes() -> [String] { return ["productCode", "productName"] }
 
@@ -65,44 +81,8 @@ class Product: PostgresSqlORM, JSONConvertible {
         }
         return rows
     }
-    
-    func setJSONValues(_ values:[String:Any]) {
-        self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.productCode = getJSONValue(named: "productCode", from: values, defaultValue: "")
-        self.productName = getJSONValue(named: "productName", from: values, defaultValue: "")
-        self.productUm = getJSONValue(named: "productUm", from: values, defaultValue: "")
-        self.productSellingPrice = getJSONValue(named: "productSellingPrice", from: values, defaultValue: 0.0)
-        self.productPurchasePrice = getJSONValue(named: "productPurchasePrice", from: values, defaultValue: 0.0)
-        self.productIsActive = getJSONValue(named: "productIsActive", from: values, defaultValue: false)
-        self.productIsValid = getJSONValue(named: "productIsValid", from: values, defaultValue: false)
-		self._brand.setJSONValues(values["brand"] as! [String : Any])
-		self.brandId = self._brand.brandId
-	}
-	
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() throws -> [String : Any] {
-        return [
-            "productId": productId,
-            "productCode": productCode,
-            "productName": productName,
-            "productUm": productUm,
-            "productSellingPrice": productSellingPrice.roundCurrency(),
-            "productPurchasePrice": productPurchasePrice.roundCurrency(),
-            "productIsActive": productIsActive,
-            "productIsValid": productIsValid,
-            "brand": _brand,
-            "categories": _categories,
-            "attributes": _attributes,
-            "articles": _articles,
-            "discount": _discount as Any,
-            "updatedAt": productUpdated
-        ]
-    }
-	
-	func makeDiscount() throws {
+
+    func makeDiscount() throws {
 		let discount = Discount()
 		try discount.get(productId: self.productId)
 		if discount.discountId > 0 {

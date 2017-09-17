@@ -32,40 +32,15 @@ protocol ArticleProtocol {
 }
 
 
-struct ArticleForm: JSONConvertible {
+struct ArticleForm: Codable {
 	public var header: [String]
 	public var body: [[ArticleItem]]
-
-	func getJSONValues() -> [String: Any] {
-		return [
-			"header": header,
-			"body": body
-		]
-	}
-	
-	func jsonEncodedString() throws -> String {
-		return try self.getJSONValues().jsonEncodedString()
-	}
 }
 
-struct ArticleItem: JSONConvertible {
+struct ArticleItem: Codable {
 	public var id: Int
 	public var value: String
 	public var stock: Double
 	public var booked: Double
 	public var data: Double
-
-	func getJSONValues() -> [String: Any] {
-		return [
-			"id": id,
-			"value": value,
-			"stock": stock,
-			"booked": booked,
-			"data": data
-		]
-	}
-	
-	func jsonEncodedString() throws -> String {
-		return try self.getJSONValues().jsonEncodedString()
-	}
 }

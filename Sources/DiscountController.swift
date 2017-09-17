@@ -36,7 +36,7 @@ class DiscountController {
 		
 		do {
 			let items = try self.repository.getAll()
-			try response.setBody(json: items)
+			try response.setJson(items)
 			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -49,7 +49,7 @@ class DiscountController {
 		let id = request.urlVariables["id"]!
 		do {
 			let item = try self.repository.get(id: Int(id)!)
-			try response.setBody(json: item)
+			try response.setJson(item)
 			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -62,7 +62,7 @@ class DiscountController {
 		let id = request.urlVariables["id"]!
 		do {
 			let items = try self.repository.getProducts(id: Int(id)!)
-			try response.setBody(json: items)
+			try response.setJson(items)
 			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -73,11 +73,9 @@ class DiscountController {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-			let item = Discount()
-			item.setJSONValues(json!)
+            let item: Discount = try request.getJson()
 			try self.repository.add(item: item)
-			try response.setBody(json: item)
+			try response.setJson(item)
 			response.completed(status: .created)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -89,11 +87,9 @@ class DiscountController {
 		
 		let id = request.urlVariables["id"]!
 		do {
-			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-			let item = Discount()
-			item.setJSONValues(json!)
+            let item: Discount = try request.getJson()
 			try self.repository.update(id: Int(id)!, item: item)
-			try response.setBody(json: item)
+			try response.setJson(item)
 			response.completed(status: .accepted)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -116,11 +112,9 @@ class DiscountController {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-			let item = DiscountProduct()
-			item.setJSONValues(json!)
-			try self.repository.addProduct(item: item)
-			try response.setBody(json: item)
+			let item: DiscountProduct = try request.getJson()
+            try self.repository.addProduct(item: item)
+			try response.setJson(item)
 			response.completed(status: .created)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")

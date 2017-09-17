@@ -7,10 +7,9 @@
 //
 
 import StORM
-import PerfectLib
 import PerfectLogger
 
-class Device: PostgresSqlORM, JSONConvertible {
+class Device: PostgresSqlORM, Codable {
 	
 	public var deviceId : Int = 0
 	public var storeId : Int = 0
@@ -21,7 +20,15 @@ class Device: PostgresSqlORM, JSONConvertible {
 	
 	public var _store: Store = Store()
 
-	open override func table() -> String { return "devices" }
+    private enum CodingKeys: String, CodingKey {
+        case deviceId
+        case deviceName
+        case deviceToken
+        case _store = "store"
+        case deviceUpdated = "updatedAt"
+    }
+
+    open override func table() -> String { return "devices" }
 	open override func tableIndexes() -> [String] { return ["deviceId", "deviceName"] }
 	
 	open override func to(_ this: StORMRow) {
@@ -43,35 +50,13 @@ class Device: PostgresSqlORM, JSONConvertible {
 		}
 		return rows
 	}
-	
-	func setJSONValues(_ values:[String:Any]) {
-		self.deviceId = getJSONValue(named: "deviceId", from: values, defaultValue: 0)
-		self.deviceName = getJSONValue(named: "deviceName", from: values, defaultValue: "")
-		self.deviceToken = getJSONValue(named: "deviceToken", from: values, defaultValue: "")
-		self._store.setJSONValues(values["store"] as! [String : Any])
-		self.storeId = self._store.storeId
-	}
-	
-	func jsonEncodedString() throws -> String {
-		return try self.getJSONValues().jsonEncodedString()
-	}
-	
-	func getJSONValues() -> [String : Any] {
-		return [
-			"deviceId": deviceId,
-			"deviceName": deviceName,
-			"deviceToken": deviceToken,
-			"store": _store,
-			"updatedAt": deviceUpdated
-		]
-	}
-
+    
 	/// Performs a find on supplied deviceToken
 	func get(deviceToken: String, deviceName: String) {
 		do {
 			try query(whereclause: "deviceToken = $1 AND deviceName = $2", params: [deviceToken, deviceName], cursor: StORMCursor(limit: 1, offset: 0))
 		} catch {
-            LogFile.error("\(error)", logFile: "./log.log")
+            LogFile.error("\(error)")
 		}
 	}
 }

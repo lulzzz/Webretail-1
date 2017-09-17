@@ -22,8 +22,16 @@ extension HTTPResponse {
     public func badRequest(error: String) {
 		LogFile.error(error)
 		self.status = .badRequest
+        //self.setHeader(.contentType, value: "text/html")
         self.appendBody(string: error)
-       self.completed()
+        self.completed()
+    }
+
+    public func setJson<T>(_ json: T) throws where T:Codable {
+        let encoder = JSONEncoder()
+        let data = try! encoder.encode(json)
+        //self.setHeader(.contentType, value: "application/json")
+        self.appendBody(string: String(data: data, encoding: .utf8)!)
     }
 }
 
@@ -36,6 +44,12 @@ public extension HTTPRequest {
         set {
             scratchPad["TurnstileSubject"] = newValue
         }
+    }
+
+    public func getJson<T:Codable>() throws -> T {
+        let decoder = JSONDecoder()
+        let jsonData = self.postBodyString?.data(using: .utf8)!
+        return try! decoder.decode(T.self, from: jsonData!)
     }
 }
 

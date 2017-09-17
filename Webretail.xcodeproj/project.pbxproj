@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5686D50B1F6D25C000BCA33E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5686D50A1F6D25C000BCA33E /* Model.swift */; };
 		OBJ_1033 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_1039 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_110 /* Package.swift */; };
 		OBJ_1045 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_152 /* Package.swift */; };
@@ -1684,6 +1685,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5686D50A1F6D25C000BCA33E /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		OBJ_100 /* TurnstilePerfectRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnstilePerfectRealm.swift; sourceTree = "<group>"; };
@@ -4019,7 +4021,7 @@
 			path = ".build/checkouts/Perfect-COpenSSL.git--4744624199947727386/COpenSSL";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -4029,7 +4031,6 @@
 				OBJ_108 /* Dependencies */,
 				OBJ_1004 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -4133,6 +4134,7 @@
 				OBJ_103 /* UserProtocol.swift */,
 				OBJ_104 /* UserRepository.swift */,
 				OBJ_105 /* main.swift */,
+				5686D50A1F6D25C000BCA33E /* Model.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -5102,7 +5104,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_1004 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -5373,6 +5375,7 @@
 				OBJ_1207 /* MovementArticleController.swift in Sources */,
 				OBJ_1208 /* MovementArticleProtocol.swift in Sources */,
 				OBJ_1209 /* MovementArticleRepository.swift in Sources */,
+				5686D50B1F6D25C000BCA33E /* Model.swift in Sources */,
 				OBJ_1210 /* MovementController.swift in Sources */,
 				OBJ_1211 /* MovementProtocol.swift in Sources */,
 				OBJ_1212 /* MovementRepository.swift in Sources */,

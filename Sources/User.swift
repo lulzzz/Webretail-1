@@ -7,13 +7,12 @@
 //
 
 import StORM
-import PerfectLib
 import PerfectLogger
 import Turnstile
 import TurnstileCrypto
 
 /// Provides the Account structure for Perfect Turnstile
-class User : PostgresSqlORM, JSONConvertible, Account {
+class User : PostgresSqlORM, Codable, Account {
     
     /// The User account's Unique ID
     public var uniqueID: String = ""
@@ -34,15 +33,26 @@ class User : PostgresSqlORM, JSONConvertible, Account {
     public var email: String = ""
     
 	/// Stored Facebook ID when logging in with Facebook
-    public var facebookID: String = ""
+    //public var facebookID: String = ""
     
     /// Stored Google ID when logging in with Google
-    public var googleID: String = ""
+    //public var googleID: String = ""
 
     /// Is Administrator
     public var isAdmin: Bool = false
 
-    
+    private enum CodingKeys: String, CodingKey {
+        case uniqueID
+//        case facebookID
+//        case googleID
+        case username
+        case password
+        case firstname
+        case lastname
+        case email
+        case isAdmin
+    }
+
     /// The table to store the data
     override open func table() -> String { return "users" }
     open override func tableIndexes() -> [String] { return ["uniqueID", "username", "email"] }
@@ -56,8 +66,8 @@ class User : PostgresSqlORM, JSONConvertible, Account {
         lastname = this.data["lastname"] as? String ?? ""
         email	 = this.data["email"] as? String ?? ""
         isAdmin = this.data["isadmin"] as? Bool ?? false
-        facebookID = this.data["facebookid"] as? String ?? ""
-        googleID = this.data["googleid"] as? String ?? ""
+//        facebookID = this.data["facebookid"] as? String ?? ""
+//        googleID = this.data["googleid"] as? String ?? ""
     }
     
     /// Iterate through rows and set to object data
@@ -69,34 +79,6 @@ class User : PostgresSqlORM, JSONConvertible, Account {
             rows.append(row)
         }
         return rows
-    }
-
-    func setJSONValues(_ values:[String:Any]) {
-        self.uniqueID = getJSONValue(named: "uniqueID", from: values, defaultValue: "")
-        self.username = getJSONValue(named: "username", from: values, defaultValue: "")
-        self.password = getJSONValue(named: "password", from: values, defaultValue: "")
-        self.firstname = getJSONValue(named: "firstname", from: values, defaultValue: "")
-        self.lastname = getJSONValue(named: "lastname", from: values, defaultValue: "")
-        self.email = getJSONValue(named: "email", from: values, defaultValue: "")
-        self.isAdmin = getJSONValue(named: "isAdmin", from: values, defaultValue: false)
-    }
-    
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "uniqueID": uniqueID,
-            "facebookID": facebookID,
-            "googleID": googleID,
-            "username": username,
-            "password": password,
-            "firstname": firstname,
-            "lastname": lastname,
-            "email": email,
-            "isAdmin": isAdmin
-        ]
     }
     
     /// Shortcut to store the id

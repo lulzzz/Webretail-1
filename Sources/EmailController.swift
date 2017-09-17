@@ -29,10 +29,7 @@ class EmailController {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-			let item = Email()
-			item.setJSONValues(json!)
-            
+            let item: Email = try request.getJson()
             if item.address.isEmpty {
                 response.badRequest(error: "\(request.uri) \(request.method): Email address to is empty")
                 return
@@ -62,7 +59,7 @@ class EmailController {
 				
 				do {
 					item.content = "Email successfully sent"
-					try response.setBody(json: item)
+					try response.setJson(item)
 					response.completed(status: .accepted)
 				} catch {
 					print(error)

@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class Category: PostgresSqlORM, JSONConvertible {
+class Category: PostgresSqlORM, Codable {
     
     public var categoryId : Int = 0
     public var categoryName : String = ""
@@ -17,6 +16,12 @@ class Category: PostgresSqlORM, JSONConvertible {
     public var categoryCreated : Int = Int.now()
     public var categoryUpdated : Int = Int.now()
     
+    private enum CodingKeys: String, CodingKey {
+        case categoryId
+        case categoryName
+        case categoryIsPrimary
+    }
+
     open override func table() -> String { return "categories" }
     open override func tableIndexes() -> [String] { return ["categoryName"] }
 
@@ -36,23 +41,5 @@ class Category: PostgresSqlORM, JSONConvertible {
             rows.append(row)
         }
         return rows
-    }
-    
-    func setJSONValues(_ values:[String:Any]) {
-        self.categoryId = getJSONValue(named: "categoryId", from: values, defaultValue: 0)
-        self.categoryName = getJSONValue(named: "categoryName", from: values, defaultValue: "")
-        self.categoryIsPrimary = getJSONValue(named: "categoryIsPrimary", from: values, defaultValue: false)
-    }
-
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "categoryId": categoryId,
-            "categoryName": categoryName,
-            "categoryIsPrimary": categoryIsPrimary
-        ]
     }
 }

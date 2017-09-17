@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class Causal: PostgresSqlORM, JSONConvertible {
+class Causal: PostgresSqlORM, Codable {
     
     public var causalId : Int = 0
     public var causalName : String = ""
@@ -18,7 +17,16 @@ class Causal: PostgresSqlORM, JSONConvertible {
 	public var causalIsPos : Bool = false
     public var causalCreated : Int = Int.now()
     public var causalUpdated : Int = Int.now()
-    
+
+    private enum CodingKeys: String, CodingKey {
+        case causalId
+        case causalName
+        case causalQuantity
+        case causalBooked
+        case causalIsPos
+        case causalUpdated = "updatedAt"
+    }
+
     open override func table() -> String { return "causals" }
     open override func tableIndexes() -> [String] { return ["causalName"] }
     
@@ -27,11 +35,11 @@ class Causal: PostgresSqlORM, JSONConvertible {
         causalName = this.data["causalname"] as? String ?? ""
         causalQuantity = this.data["causalquantity"] as? Int ?? 0
         causalBooked = this.data["causalbooked"] as? Int ?? 0
-		causalIsPos = this.data["causalispos"] as? Bool ?? true
+        causalIsPos = this.data["causalispos"] as? Bool ?? false
         causalCreated = this.data["causalcreated"] as? Int ?? 0
         causalUpdated = this.data["causalupdated"] as? Int ?? 0
     }
-    
+
     func rows() -> [Causal] {
         var rows = [Causal]()
         for i in 0..<self.results.rows.count {
@@ -40,28 +48,5 @@ class Causal: PostgresSqlORM, JSONConvertible {
             rows.append(row)
         }
         return rows
-    }
-    
-    func setJSONValues(_ values:[String:Any]) {
-        self.causalId = getJSONValue(named: "causalId", from: values, defaultValue: 0)
-        self.causalName = getJSONValue(named: "causalName", from: values, defaultValue: "")
-        self.causalQuantity = getJSONValue(named: "causalQuantity", from: values, defaultValue: 0)
-        self.causalBooked = getJSONValue(named: "causalBooked",  from: values, defaultValue: 0)
-		self.causalIsPos = getJSONValue(named: "causalIsPos", from: values, defaultValue: false)
-    }
-    
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "causalId": causalId,
-            "causalName": causalName,
-            "causalQuantity": causalQuantity,
-            "causalBooked": causalBooked,
-            "causalIsPos": causalIsPos,
-            "updatedAt": causalUpdated
-        ]
     }
 }

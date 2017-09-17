@@ -7,49 +7,23 @@
 //
 
 import StORM
-import PerfectLib
 
-class Statistics: JSONConvertible {
+class Statistics: Codable {
     
     public var labels : [String] = [String]()
     public var datasets: [Statistic] = [Statistic]()
-    
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "labels": labels,
-            "datasets": datasets
-        ]
-    }
 }
 
-class Statistic: JSONConvertible {
+class Statistic: Codable {
     
     public var label : String = ""
     public var data: [Double] = [Double]()
     public var backgroundColor: [String] = [String]()
     public var borderColor : String = ""
     public var fill : Bool = false
-    
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "label": label,
-            "data": data,
-            "backgroundColor": backgroundColor,
-            "borderColor": borderColor,
-            "fill": fill
-        ]
-    }
 }
 
-class StatisticItem: PostgresSqlORM, JSONConvertible {
+class StatisticItem: PostgresSqlORM, Codable {
     
     public var id : Int = 0
     public var label : String = ""
@@ -70,18 +44,6 @@ class StatisticItem: PostgresSqlORM, JSONConvertible {
             rows.append(row)
         }
         return rows
-    }
-    
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "id": id,
-            "label": label,
-            "value": value
-        ]
     }
 }
 

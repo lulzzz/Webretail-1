@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class Store: PostgresSqlORM, JSONConvertible {
+class Store: PostgresSqlORM, Codable {
     
     public var storeId : Int = 0
     public var storeName	: String = ""
@@ -20,6 +19,16 @@ class Store: PostgresSqlORM, JSONConvertible {
     public var storeCreated : Int = Int.now()
     public var storeUpdated : Int = Int.now()
     
+    private enum CodingKeys: String, CodingKey {
+        case storeId
+        case storeName
+        case storeAddress
+        case storeCity
+        case storeCountry
+        case storeZip
+        case storeUpdated = "updatedAt"
+    }
+
     open override func table() -> String { return "stores" }
     open override func tableIndexes() -> [String] { return ["storeName"] }
   
@@ -42,30 +51,5 @@ class Store: PostgresSqlORM, JSONConvertible {
             rows.append(row)
         }
         return rows
-    }
-    
-    func setJSONValues(_ values:[String:Any]) {
-        self.storeId = getJSONValue(named: "storeId", from: values, defaultValue: 0)
-        self.storeName = getJSONValue(named: "storeName", from: values, defaultValue: "")
-        self.storeAddress = getJSONValue(named: "storeAddress", from: values, defaultValue: "")
-        self.storeCity = getJSONValue(named: "storeCity", from: values, defaultValue: "")
-        self.storeCountry = getJSONValue(named: "storeCountry", from: values, defaultValue: "")
-        self.storeZip = getJSONValue(named: "storeZip", from: values, defaultValue: "")
-    }
-    
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "storeId": storeId,
-            "storeName": storeName,
-            "storeAddress":	storeAddress,
-            "storeCity": storeCity,
-            "storeCountry": storeCountry,
-            "storeZip": storeZip,
-            "updatedAt": storeUpdated
-        ]
     }
 }

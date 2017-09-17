@@ -35,7 +35,7 @@ class CausalController {
 		let date = request.urlVariables["date"]
         do {
 			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -48,7 +48,7 @@ class CausalController {
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -59,11 +59,9 @@ class CausalController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = Causal()
-            item.setJSONValues(json!)
+            let item: Causal = try request.getJson()
             try self.repository.add(item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .created)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -75,11 +73,9 @@ class CausalController {
         
         let id = request.urlVariables["id"]!
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = Causal()
-            item.setJSONValues(json!)
+            let item: Causal = try request.getJson()
             try self.repository.update(id: Int(id)!, item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .accepted)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

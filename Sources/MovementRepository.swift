@@ -109,16 +109,15 @@ struct MovementRepository : MovementProtocol {
 		}
         item.movementUpdated = Int.now()
 		
-		if !item.movementCustomer.isEmpty {
-			let customer = Customer()
-			customer.setJSONValues(item.movementCustomer)
-			if customer.customerId <= 0 {
+		if !item.movementCustomer.customerName.isEmpty {
+			let customer = item.movementCustomer
+            if customer.customerId <= 0 {
 				customer.customerId = 0
 				customer.customerCreated = customer.customerUpdated
 				try customer.save {
 					id in customer.customerId = id as! Int
 				}
-				item.movementCustomer = customer.getJSONValues()
+				item.movementCustomer = customer
 			} else if customer.customerUpdated > 0 {
 				let current = Customer()
 				try current.query(id: customer.customerId)
@@ -173,51 +172,51 @@ struct MovementRepository : MovementProtocol {
 
 	func process(movement: Movement, actionType: ActionType) throws {
 		
-		let storeId = movement.getJSONValue(named: "storeId", from: movement.movementStore, defaultValue: 0)
-		let quantity = movement.getJSONValue(named: "causalQuantity", from: movement.movementCausal, defaultValue: 0)
-		let booked = movement.getJSONValue(named: "causalBooked", from: movement.movementCausal, defaultValue: 0)
-
-		let article = MovementArticle()
-		try article.query(whereclause: "movementId = $1",
-		                  params: [movement.movementId],
-		                  cursor: StORMCursor(limit: 1000, offset: 0))
-		for item in article.rows() {
-			
-			let articles = item.movementArticleProduct["articles"] as! [[String : Any]];
-			let articleId = item.getJSONValue(named: "articleId", from: articles[0], defaultValue: 0)
-			
-			let stock = Stock()
-			try stock.query(
-				whereclause: "articleId = $1 AND storeId = $2",
-				params: [ articleId, storeId ],
-				cursor: StORMCursor(limit: 1, offset: 0))
-			
-			if (stock.stockId == 0) {
-				stock.storeId = storeId
-				stock.articleId = articleId
-				try stock.save {
-					id in stock.stockId = id as! Int
-				}
-			}
-			
-			switch actionType {
-			case ActionType.Booking:
-				if booked > 0 {
-					stock.stockBooked += item.movementArticleQuantity
-				}
-			case ActionType.Unbooking:
-				if booked > 0 {
-					stock.stockBooked -= item.movementArticleQuantity
-				}
-			default:
-				if quantity > 0 {
-					stock.stockQuantity += item.movementArticleQuantity
-				} else if quantity < 0 {
-					stock.stockQuantity -= item.movementArticleQuantity
-				}
-			}
-			try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
-		}
+        let storeId = movement.movementStore.storeId
+        let quantity = movement.movementCausal.causalQuantity
+        let booked = movement.movementCausal.causalBooked
+        
+        let article = MovementArticle()
+        try article.query(whereclause: "movementId = $1",
+                          params: [movement.movementId],
+                          cursor: StORMCursor(limit: 1000, offset: 0))
+        for item in article.rows() {
+            
+            let articles = item.movementArticleProduct._articles;
+            let articleId = articles[0].articleId
+            
+            let stock = Stock()
+            try stock.query(
+                whereclause: "articleId = $1 AND storeId = $2",
+                params: [ articleId, storeId ],
+                cursor: StORMCursor(limit: 1, offset: 0))
+            
+            if (stock.stockId == 0) {
+                stock.storeId = storeId
+                stock.articleId = articleId
+                try stock.save {
+                    id in stock.stockId = id as! Int
+                }
+            }
+            
+            switch actionType {
+            case ActionType.Booking:
+                if booked > 0 {
+                    stock.stockBooked += item.movementArticleQuantity
+                }
+            case ActionType.Unbooking:
+                if booked > 0 {
+                    stock.stockBooked -= item.movementArticleQuantity
+                }
+            default:
+                if quantity > 0 {
+                    stock.stockQuantity += item.movementArticleQuantity
+                } else if quantity < 0 {
+                    stock.stockQuantity -= item.movementArticleQuantity
+                }
+            }
+            try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
+        }
 	}
 	
 	func clone(sourceId: Int) throws -> Movement {

@@ -55,6 +55,7 @@ struct ProductRepository : ProductProtocol {
 	}
 
     func add(item: Product) throws {
+        item.brandId = item._brand.brandId
         item.productCreated = Int.now()
         item.productUpdated = Int.now()
         try item.save {
@@ -75,7 +76,7 @@ struct ProductRepository : ProductProtocol {
         current.productSellingPrice = item.productSellingPrice
         current.productPurchasePrice = item.productPurchasePrice
         current.productIsActive = item.productIsActive
-        current.brandId = item.brandId
+        current.brandId = item._brand.brandId
 		current.productUpdated = item.productUpdated
 		try current.save()
     }

@@ -64,7 +64,7 @@ struct DiscountRepository : DiscountProtocol {
 
 	func addProduct(item: DiscountProduct) throws {
 		let product = Product()
-		let productCode = item.getJSONValue(named: "productCode", from: item.discountProduct, defaultValue: "")
+		let productCode = item.discountProduct.productCode
 		try product.query(whereclause: "productCode = $1 OR productId = $2",
 						  params: [productCode, item.productId],
 						  cursor: StORMCursor(limit: 1, offset: 0))
@@ -74,7 +74,7 @@ struct DiscountRepository : DiscountProtocol {
 		product.to(product.results.rows[0])
 		
 		item.productId = product.productId
-		item.discountProduct = try product.getJSONValues()
+		item.discountProduct = product
 		
 		try item.query(whereclause: "productId = $1 AND discountId = $2",
 		               params: [item.productId, item.discountId],

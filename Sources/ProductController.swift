@@ -41,7 +41,7 @@ class ProductController {
 		let date = request.urlVariables["date"]
 		do {
 			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -54,7 +54,7 @@ class ProductController {
         do {
 			let id = request.urlVariables["id"]!
             let item = try self.repository.get(id: Int(id)!)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .ok)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -65,11 +65,9 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String: Any]
-            let item = Product()
-            item.setJSONValues(json!)
+            let item: Product = try request.getJson()
             try self.repository.add(item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .created)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -81,11 +79,9 @@ class ProductController {
         
         do {
 			let id = request.urlVariables["id"]!
-            let json = try request.postBodyString?.jsonDecode() as? [String: Any]
-            let item = Product()
-            item.setJSONValues(json!)
+            let item: Product = try request.getJson()
             try self.repository.update(id: Int(id)!, item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .accepted)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -108,16 +104,11 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            var result = [ProductCategory]()
-            
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
-            for json in jsons! {
-                let item = ProductCategory()
-                item.setJSONValues(json)
+            let items: [ProductCategory] = try request.getJson()
+            for item in items {
                 try self.repository.addCategory(item: item)
-                result.append(item)
             }
-            try response.setBody(json: result)
+            try response.setJson(items)
             response.completed(status: .created)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -128,13 +119,11 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
-            for json in jsons! {
-                let item = ProductCategory()
-                item.setJSONValues(json)
+            let items: [ProductCategory] = try request.getJson()
+            for item in items {
                 try self.repository.removeCategory(item: item)
             }
-            try response.setBody(json: jsons)
+            try response.setJson(items)
             response.completed(status: .noContent)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -145,16 +134,11 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            var result = [ProductAttribute]()
-            
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
-            for json in jsons! {
-                let item = ProductAttribute()
-                item.setJSONValues(json)
+            let items: [ProductAttribute] = try request.getJson()
+            for item in items {
                 try self.repository.addAttribute(item: item)
-                result.append(item)
             }
-            try response.setBody(json: result)
+            try response.setJson(items)
             response.completed(status: .created)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -165,10 +149,8 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
-            for json in jsons! {
-                let item = ProductAttribute()
-                item.setJSONValues(json)
+            let items: [ProductAttribute] = try request.getJson()
+            for item in items {
                 try self.repository.removeAttribute(item: item)
             }
             response.completed(status: .noContent)
@@ -181,16 +163,11 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            var result = [ProductAttributeValue]()
-            
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
-            for json in jsons! {
-                let item = ProductAttributeValue()
-                item.setJSONValues(json)
+            let items: [ProductAttributeValue] = try request.getJson()
+            for item in items {
                 try self.repository.addAttributeValue(item: item)
-                result.append(item)
             }
-            try response.setBody(json: result)
+            try response.setBody(json: items)
             response.completed(status: .created)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -201,10 +178,8 @@ class ProductController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let jsons = try request.postBodyString?.jsonDecode() as? [[String: Any]]
-            for json in jsons! {
-                let item = ProductAttributeValue()
-                item.setJSONValues(json)
+            let items: [ProductAttributeValue] = try request.getJson()
+            for item in items {
                 try self.repository.removeAttributeValue(item: item)
             }
             response.completed(status: .noContent)

@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class AttributeValue: PostgresSqlORM, JSONConvertible {
+class AttributeValue: PostgresSqlORM, Codable {
     
     public var attributeValueId : Int = 0
 	public var attributeId : Int = 0
@@ -18,6 +17,13 @@ class AttributeValue: PostgresSqlORM, JSONConvertible {
     public var attributeValueCreated : Int = Int.now()
     public var attributeValueUpdated : Int = Int.now()
     
+    private enum CodingKeys: String, CodingKey {
+        case attributeValueId
+        case attributeId
+        case attributeValueCode
+        case attributeValueName
+    }
+
     open override func table() -> String { return "attributevalues" }
     open override func tableIndexes() -> [String] { return ["attributeValueCode", "attributeValueName"] }
 
@@ -38,25 +44,5 @@ class AttributeValue: PostgresSqlORM, JSONConvertible {
             rows.append(row)
         }
         return rows
-    }
-    
-    func setJSONValues(_ values:[String:Any]) {
-        self.attributeValueId = getJSONValue(named: "attributeValueId", from: values, defaultValue: 0)
-		self.attributeId = getJSONValue(named: "attributeId", from: values, defaultValue: 0)
-        self.attributeValueCode = getJSONValue(named: "attributeValueCode", from: values, defaultValue: "")
-        self.attributeValueName = getJSONValue(named: "attributeValueName", from: values, defaultValue: "")
-    }
-
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "attributeValueId": attributeValueId,
-            "attributeId": attributeId,
-            "attributeValueCode": attributeValueCode,
-            "attributeValueName": attributeValueName
-        ]
     }
 }

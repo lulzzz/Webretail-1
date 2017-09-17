@@ -42,7 +42,7 @@ class MovementController {
 		
 		do {
 			let status = self.repository.getPayments()
-			try response.setBody(json: status)
+			try response.setJson(status)
 			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -54,7 +54,7 @@ class MovementController {
 		
 		do {
 			let status = self.repository.getStatus()
-			try response.setBody(json: status)
+			try response.setJson(status)
 			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -66,7 +66,7 @@ class MovementController {
         
         do {
 			let items = try self.repository.getAll()
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -77,11 +77,9 @@ class MovementController {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-           	let json = try request.postBodyString?.jsonDecode() as! [String: Any]
- 			let period = Period()
-			period.setJSONValues(json)
+           	let period: Period = try request.getJson()
 			let items = try self.repository.getSales(period: period)
-			try response.setBody(json: items)
+			try response.setJson(items)
 			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -92,11 +90,9 @@ class MovementController {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-           	let json = try request.postBodyString?.jsonDecode() as! [String: Any]
-			let period = Period()
-			period.setJSONValues(json)
-			let items = try self.repository.getReceipted(period: period)
-			try response.setBody(json: items)
+            let period: Period = try request.getJson()
+            let items = try self.repository.getReceipted(period: period)
+			try response.setJson(items)
 			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -109,7 +105,7 @@ class MovementController {
         do {
 			let id = request.urlVariables["id"]!
             let item = try self.repository.get(id: Int(id)!)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .ok)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -122,7 +118,7 @@ class MovementController {
 		do {
 			let id = request.urlVariables["id"]!
 			let items = try self.repository.get(customerId: Int(id)!)
-			try response.setBody(json: items)
+			try response.setJson(items)
 			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -133,21 +129,14 @@ class MovementController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as! [String: Any]
-            let item = Movement()
-            item.setJSONValues(json)
+            let item: Movement = try request.getJson()
 			try self.repository.add(item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
 			
-			let rows = json["movementItems"] as? [[String: Any]]
-			if rows != nil {
-				for row in rows! {
-					let newRow = MovementArticle()
-					newRow.setJSONValues(row)
-					newRow.movementId = item.movementId
-					try self.articleRepository.add(item: newRow)
-				}
-			}
+            for row in item._items {
+                row.movementId = item.movementId
+                try self.articleRepository.add(item: row)
+            }
 			if item.movementStatus == "Completed" {
 				try self.repository.process(movement: item, actionType: ActionType.Stoking)
 			}
@@ -165,7 +154,7 @@ class MovementController {
 			let id = Int(request.urlVariables["id"]!)!
 			let item = try self.repository.clone(sourceId: id)
 			try self.articleRepository.clone(sourceMovementId: id, targetMovementId: item.movementId)
-			try response.setBody(json: item)
+			try response.setJson(item)
 			response.completed(status: .created)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -177,12 +166,10 @@ class MovementController {
         
         do {
 			let id = request.urlVariables["id"]!
-            let json = try request.postBodyString?.jsonDecode() as? [String: Any]
-            let item = Movement()
-            item.setJSONValues(json!)
+            let item: Movement = try request.getJson()
             try self.repository.update(id: Int(id)!, item: item)
-			item._amount = item.getJSONValue(named: "movementAmount", from: json!, defaultValue: 0.0)
-            try response.setBody(json: item)
+            //TODO: item._amount = item.getJSONValue(named: "movementAmount", from: json!, defaultValue: 0.0)
+            try response.setJson(item)
             response.completed(status: .accepted)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -208,7 +195,7 @@ class MovementController {
         do {
             if let apiKey = request.auth?.basic {
                 let items = try self.repository.getAll(device: apiKey.id, user: apiKey.secret, date: Int(date)!)
-                try response.setBody(json: items)
+                try response.setJson(items)
                 response.completed(status: .ok)
             } else {
                 response.completed(status: .unauthorized)

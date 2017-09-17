@@ -7,15 +7,17 @@
 //
 
 import StORM
-import PerfectLib
 
-class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
+class ArticleAttributeValue: PostgresSqlORM, Codable {
     
     public var articleAttributeValueId : Int = 0
     public var articleId : Int = 0
     public var attributeValueId : Int = 0
-    
-    public var _attributeValue: AttributeValue = AttributeValue()
+
+    private enum CodingKeys: String, CodingKey {
+        case articleId
+        case attributeValueId
+    }
 
     open override func table() -> String { return "articleattributevalues" }
     
@@ -36,22 +38,20 @@ class ArticleAttributeValue: PostgresSqlORM, JSONConvertible {
         return rows
     }
     
-    func setJSONValues(_ values:[String: Any]) {
-        //self.articleAttributeValueId = getJSONValue(named: "articleAttributeValueId", from: values, defaultValue: 0)
-        self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
-        self.attributeValueId = getJSONValue(named: "attributeValueId",  from: values, defaultValue: 0)
+    override init() {
+        super.init()
     }
     
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        articleId = try container.decode(Int.self, forKey: .articleId)
+        attributeValueId = try container.decode(Int.self, forKey: .attributeValueId)
     }
     
-    func getJSONValues() -> [String: Any] {
-        return [
-            //"articleAttributeValueId": articleAttributeValueId,
-            //"articleId": articleId,
-            "attributeValueId": attributeValueId,
-            //"attributeValue": _attributeValue
-        ]
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(attributeValueId, forKey: .attributeValueId)
     }
 }

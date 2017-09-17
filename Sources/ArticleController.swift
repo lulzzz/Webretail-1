@@ -38,7 +38,7 @@ class ArticleController {
         let id = request.urlVariables["id"]!
         do {
             let count = try self.repository.build(productId: Int(id)!)
-            try response.setBody(json: count)
+            try response.setJson(count)
             response.completed(status: .ok)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -50,7 +50,7 @@ class ArticleController {
         
         do {
             let items = try self.repository.getAll()
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -64,7 +64,7 @@ class ArticleController {
 		let storeIds = request.urlVariables["storeids"]!
 		do {
             let item = try self.repository.getStock(productId: Int(id)!, storeIds: storeIds)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -77,7 +77,7 @@ class ArticleController {
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -88,11 +88,9 @@ class ArticleController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as! [String: AnyObject]
-            let item = Article()
-            item.setJSONValues(json)
+            let item: Article = try request.getJson()
             try self.repository.add(item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .created)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -104,11 +102,9 @@ class ArticleController {
         
         let id = request.urlVariables["id"]!
         do {
-            let json = try request.postBodyString?.jsonDecode() as! [String: Any]
-            let item = Article()
-            item.setJSONValues(json)
+            let item: Article = try request.getJson()
             try self.repository.update(id: Int(id)!, item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .accepted)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -131,11 +127,9 @@ class ArticleController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as! [String: Any]
-            let item = ArticleAttributeValue()
-            item.setJSONValues(json)
+            let item: ArticleAttributeValue = try request.getJson()
             try self.repository.addAttributeValue(item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .created)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

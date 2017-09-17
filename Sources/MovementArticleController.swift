@@ -35,7 +35,7 @@ class MovementArticleController {
         do {
 			let id = request.urlVariables["id"]!
             let items = try self.movementRepository.get(movementId: Int(id)!)
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -46,14 +46,12 @@ class MovementArticleController {
         response.setHeader(.contentType, value: "application/json")
         
        	do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = MovementArticle()
-            item.setJSONValues(json!)
+            let item: MovementArticle = try request.getJson()
             guard let product = try item.getProduct(barcode: item.movementArticleBarcode) else {
                 response.completed(status: .notFound)
                 return
             }
-			item.movementArticleProduct = try product.getJSONValues()
+			item.movementArticleProduct = product
 
 			let price = request.urlVariables["price"]!
 			if price == "selling" {
@@ -64,7 +62,7 @@ class MovementArticleController {
 			}
 			
 			try self.movementRepository.add(item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .created)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -76,11 +74,9 @@ class MovementArticleController {
         
         do {
 			let id = request.urlVariables["id"]!
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = MovementArticle()
-            item.setJSONValues(json!)
+            let item: MovementArticle = try request.getJson()
             try self.movementRepository.update(id: Int(id)!, item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .accepted)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")

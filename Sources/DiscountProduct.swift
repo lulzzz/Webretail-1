@@ -7,22 +7,28 @@
 //
 
 import StORM
-import PerfectLib
 
-class DiscountProduct: PostgresSqlORM, JSONConvertible {
+class DiscountProduct: PostgresSqlORM, Codable {
 	
 	public var discountProductId : Int = 0
 	public var discountId : Int = 0
 	public var productId : Int = 0
-	public var discountProduct : [String:Any] = [String:Any]()
+	public var discountProduct : Product = Product()
 	
 	open override func table() -> String { return "discountproducts" }
 	
-	open override func to(_ this: StORMRow) {
+    private enum CodingKeys: String, CodingKey {
+        case discountProductId
+        case discountId
+        case productId
+        case discountProduct
+    }
+
+    open override func to(_ this: StORMRow) {
 		discountProductId = this.data["discountproductid"] as? Int ?? 0
 		discountId = this.data["discountid"] as? Int ?? 0
 		productId = this.data["productid"] as? Int ?? 0
-		discountProduct = this.data["discountproduct"] as? [String:Any] ?? [String:Any]()
+		discountProduct = this.data["discountproduct"] as? Product ?? Product()
 	}
 	
 	func rows() -> [DiscountProduct] {
@@ -35,6 +41,7 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 		return rows
 	}
 	
+    /*
 	func setJSONValues(_ values:[String:Any]) {
 		self.discountProductId = getJSONValue(named: "discountProductId", from: values, defaultValue: 0)
 		self.discountId = getJSONValue(named: "discountId", from: values, defaultValue: 0)
@@ -53,4 +60,5 @@ class DiscountProduct: PostgresSqlORM, JSONConvertible {
 			"discountProduct": discountProduct
 		]
 	}
+    */
 }

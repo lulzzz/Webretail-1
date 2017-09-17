@@ -8,14 +8,13 @@
 
 import Foundation
 import StORM
-import PerfectLib
 
-class Invoice: PostgresSqlORM, JSONConvertible {
+class Invoice: PostgresSqlORM, Codable {
 	
 	public var invoiceId : Int = 0
 	public var invoiceNumber : Int = 0
 	public var invoiceDate : Int = Int.now()
-	public var invoiceCustomer : [String:Any] = [String:Any]()
+	public var invoiceCustomer : Customer = Customer()
 	public var invoicePayment : String = ""
 	public var invoiceNote : String = ""
 	public var invoiceAmount : Double = 0
@@ -27,7 +26,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 		invoiceId = this.data["invoiceid"] as? Int ?? 0
 		invoiceNumber = this.data["invoicenumber"] as? Int ?? 0
 		invoiceDate = this.data["invoicedate"] as? Int ?? 0
-		invoiceCustomer = this.data["invoicecustomer"] as? [String:Any] ?? [String:Any]()
+		invoiceCustomer = this.data["invoicecustomer"] as? Customer ?? Customer()
 		invoicePayment = this.data["invoicepayment"] as? String ?? ""
 		invoiceNote = this.data["invoicenote"] as? String ?? ""
 		invoiceUpdated = this.data["invoiceupdated"] as? Int ?? 0
@@ -50,33 +49,7 @@ class Invoice: PostgresSqlORM, JSONConvertible {
 		}
 		return rows
 	}
-	
-	func setJSONValues(_ values:[String:Any]) {
-		self.invoiceId = getJSONValue(named: "invoiceId", from: values, defaultValue: 0)
-		self.invoiceNumber = getJSONValue(named: "invoiceNumber", from: values, defaultValue: 0)
-		self.invoiceDate = getJSONValue(named: "invoiceDate", from: values, defaultValue: "").DateToInt()
-		self.invoiceCustomer = getJSONValue(named: "invoiceCustomer", from: values, defaultValue: [String:Any]())
-		self.invoicePayment = getJSONValue(named: "invoicePayment", from: values, defaultValue: "")
-		self.invoiceNote = getJSONValue(named: "invoiceNote", from: values, defaultValue: "")
-	}
-	
-	func jsonEncodedString() throws -> String {
-		return try self.getJSONValues().jsonEncodedString()
-	}
-	
-	func getJSONValues() -> [String : Any] {
-		return [
-			"invoiceId": invoiceId,
-			"invoiceNumber": invoiceNumber,
-			"invoiceDate": invoiceDate.formatDateShort(),
-			"invoiceCustomer": invoiceCustomer,
-			"invoicePayment": invoicePayment,
-			"invoiceNote": invoiceNote,
-			"invoiceAmount": invoiceAmount.roundCurrency(),
-			"invoiceUpdated": invoiceUpdated.formatDate()
-		]
-	}
-	
+
 	func makeNumber() throws {
 		let now = Date()
 		let calendar = Calendar.current

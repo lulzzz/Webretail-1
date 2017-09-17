@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class Stock: PostgresSqlORM, JSONConvertible {
+class Stock: PostgresSqlORM, Codable {
     
     public var stockId : Int = 0
     public var storeId : Int = 0
@@ -39,27 +38,5 @@ class Stock: PostgresSqlORM, JSONConvertible {
             rows.append(row)
         }
         return rows
-    }
-    
-    func setJSONValues(_ values:[String:Any]) {
-        self.stockId = getJSONValue(named: "stockId", from: values, defaultValue: 0)
-        self.storeId = getJSONValue(named: "storeId", from: values, defaultValue: 0)
-        self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
-        self.stockQuantity = getJSONValue(named: "stockQuantity", from: values, defaultValue: 0)
-        self.stockBooked = getJSONValue(named: "stockBooked", from: values, defaultValue: 0)
-    }
-    
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
-    }
-    
-    func getJSONValues() -> [String : Any] {
-        return [
-            "stockId": stockId,
-            "storeId": storeId,
-            "articleId": articleId,
-            "stockQuantity": stockQuantity.roundCurrency(),
-            "stockBooked": stockBooked.roundCurrency()
-        ]
     }
 }

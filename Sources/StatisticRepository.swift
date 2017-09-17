@@ -47,7 +47,7 @@ struct StatisticRepository : StatisticProtocol {
     func getCategories(year: Int) throws -> Statistics {
         var data = [StatisticItem]()
         let movements = try getData(year: year).groupBy {
-            (($0.movementArticleProduct["categories"] as! [NSDictionary]).first!["category"] as! NSDictionary)["categoryName"] as! String
+            $0.movementArticleProduct._categories.first!._category.categoryName
         }
         for movement in movements {
             let item = StatisticItem()
@@ -63,7 +63,7 @@ struct StatisticRepository : StatisticProtocol {
     func getProducts(year: Int) throws -> Statistics {
         var data = [StatisticItem]()
         let movements = try getData(year: year).groupBy {
-            $0.movementArticleProduct["productName"] as! String
+            $0.movementArticleProduct.productName
         }
         for movement in movements {
             let item = StatisticItem()
@@ -84,7 +84,7 @@ struct StatisticRepository : StatisticProtocol {
             let item = StatisticItem()
             let date = Date(timeIntervalSinceReferenceDate: TimeInterval(movement.movementArticleUpdated))
             item.id = calendar.component(.month, from: date)
-            item.label = ((movement.movementArticleProduct["categories"] as! [NSDictionary]).first!["category"] as! NSDictionary)["categoryName"] as! String
+            item.label = movement.movementArticleProduct._categories.first!._category.categoryName
             item.value = movement.movementArticleQuantity * movement.movementArticlePrice
             data.append(item)
         }
@@ -100,7 +100,7 @@ struct StatisticRepository : StatisticProtocol {
             let item = StatisticItem()
             let date = Date(timeIntervalSinceReferenceDate: TimeInterval(movement.movementArticleUpdated))
             item.id = calendar.component(.month, from: date)
-            item.label = movement.movementArticleProduct["productName"] as! String
+            item.label = movement.movementArticleProduct.productName
             item.value = movement.movementArticleQuantity * movement.movementArticlePrice
             data.append(item)
         }

@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class Discount: PostgresSqlORM, JSONConvertible {
+class Discount: PostgresSqlORM, Codable {
 	
 	public var discountId : Int = 0
 	public var discountName : String = ""
@@ -41,32 +40,7 @@ class Discount: PostgresSqlORM, JSONConvertible {
 		}
 		return rows
 	}
-	
-	func setJSONValues(_ values:[String:Any]) {
-		self.discountId = getJSONValue(named: "discountId", from: values, defaultValue: 0)
-		self.discountName = getJSONValue(named: "discountName", from: values, defaultValue: "")
-		self.discountPercentage = getJSONValue(named: "discountPercentage", from: values, defaultValue: 0)
-		self.discountPrice = getJSONValue(named: "discountPrice", from: values, defaultValue: 0.0)
-		self.discountStartAt = getJSONValue(named: "discountStartAt", from: values, defaultValue: "").DateToInt()
-		self.discountFinishAt = getJSONValue(named: "discountFinishAt", from: values, defaultValue: "").DateToInt()
-	}
-	
-	func jsonEncodedString() throws -> String {
-		return try self.getJSONValues().jsonEncodedString()
-	}
-	
-	func getJSONValues() -> [String : Any] {
-		return [
-			"discountId": discountId,
-			"discountName": discountName,
-			"discountPercentage": discountPercentage,
-			"discountPrice": discountPrice.roundCurrency(),
-			"discountStartAt": discountStartAt.formatDateShort(),
-			"discountFinishAt": discountFinishAt.formatDateShort(),
-			"discountUpdated": discountUpdated.formatDate()
-		]
-	}
-	
+
 	func get(productId: Int) throws {
 		var join = StORMDataSourceJoin()
 		join.table = "discountproducts"

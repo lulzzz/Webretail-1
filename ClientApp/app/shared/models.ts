@@ -13,10 +13,10 @@ export class Company {
   public companyCountry: string;
   public companyFiscalCode: string;
   public companyVatNumber: string;
-  public smtpHost: string = ""
-	public smtpSsl: boolean = false
-	public smtpUsername: string = ""
-	public smtpPassword: string = ""
+  public smtpHost: string;
+  public smtpSsl: boolean;
+  public smtpUsername: string;
+  public smtpPassword: string;
 
 
   constructor() {
@@ -32,10 +32,10 @@ export class Company {
     this.companyCountry = '';
     this.companyFiscalCode = '';
     this.companyVatNumber = '';
-	  this.smtpHost = '';
-	  this.smtpSsl = false;
-	  this.smtpUsername = '';
-	  this.smtpPassword = '';
+    this.smtpHost = '';
+    this.smtpSsl = false;
+    this.smtpUsername = '';
+    this.smtpPassword = '';
   }
 }
 
@@ -72,6 +72,7 @@ export class Store {
   public storeCity: string;
   public storeZip: string;
   public storeCountry: string;
+  public updatedAt: number;
 
   constructor() {
     this.storeId = 0;
@@ -80,6 +81,7 @@ export class Store {
     this.storeCity = '';
     this.storeZip = '';
     this.storeCountry = '';
+    this.updatedAt = 0;
   }
 }
 
@@ -173,6 +175,7 @@ export class Causal {
   public causalQuantity: number;
   public causalBooked: number;
   public causalIsPos: boolean;
+  public updatedAt: number;
 
   constructor() {
     this.causalId = 0;
@@ -180,6 +183,7 @@ export class Causal {
     this.causalQuantity = 0;
     this.causalBooked = 0;
     this.causalIsPos = false;
+    this.updatedAt = 0;
   }
 }
 
@@ -194,6 +198,7 @@ export class Customer {
   public customerCountry: string;
   public customerFiscalCode: string;
   public customerVatNumber: string;
+  public updatedAt: number;
 
   constructor() {
     this.customerId = 0;
@@ -206,6 +211,7 @@ export class Customer {
     this.customerCountry = '';
     this.customerFiscalCode = '';
     this.customerVatNumber = '';
+    this.updatedAt = 0;
   }
 }
 
@@ -317,14 +323,14 @@ export class Device {
   public deviceName: string;
   public deviceToken: string;
   public store: Store;
-  public deviceUpdated: Date;
+  public updatedAt: number;
 
   constructor() {
     this.deviceId = 0;
     this.deviceName = '';
     this.deviceToken = '';
     this.store = new Store();
-    this.deviceUpdated = new Date();
+    this.updatedAt = 0;
   }
 }
 

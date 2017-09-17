@@ -37,7 +37,7 @@ class CompanyController {
 		
 		do {
 			let item = try self.repository.get()
-			try response.setBody(json: item)
+			try response.setJson(item)
 			response.completed(status: .ok)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -48,11 +48,9 @@ class CompanyController {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-			let item = Company()
-			item.setJSONValues(json!)
+			let item: Company = try request.getJson()
 			try self.repository.add(item: item)
-			try response.setBody(json: item)
+			try response.setJson(item)
 			response.completed(status: .accepted)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -63,11 +61,9 @@ class CompanyController {
 		response.setHeader(.contentType, value: "application/json")
 		
 		do {
-			let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-			let item = Company()
-			item.setJSONValues(json!)
-			try self.repository.update(item: item)
-			try response.setBody(json: item)
+            let item: Company = try request.getJson()
+            try self.repository.update(item: item)
+			try response.setJson(item)
 			response.completed(status: .accepted)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")

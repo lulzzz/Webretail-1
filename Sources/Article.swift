@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class Article: PostgresSqlORM, JSONConvertible {
+class Article: PostgresSqlORM, Codable {
     
     public var articleId	: Int = 0
     public var productId : Int = 0
@@ -23,7 +22,15 @@ class Article: PostgresSqlORM, JSONConvertible {
     public var _booked : Double = 0
     public var _attributeValues: [ArticleAttributeValue] = [ArticleAttributeValue]()
 
-    
+    private enum CodingKeys: String, CodingKey {
+        case articleId
+        case productId
+        case articleBarcode
+        case _quantity = "quantity"
+        case _booked = "booked"
+        case _attributeValues = "attributeValues"
+    }
+
     open override func table() -> String { return "articles" }
     open override func tableIndexes() -> [String] { return ["articleBarcode"] }
    
@@ -76,25 +83,26 @@ class Article: PostgresSqlORM, JSONConvertible {
         }
         return rows
     }
-    
-    func setJSONValues(_ values:[String:Any]) {
-        self.articleId = getJSONValue(named: "articleId", from: values, defaultValue: 0)
-        self.productId = getJSONValue(named: "productId", from: values, defaultValue: 0)
-        self.articleBarcode = getJSONValue(named: "articleBarcode", from: values, defaultValue: "")
+
+    override init() {
+        super.init()
     }
     
-    func jsonEncodedString() throws -> String {
-        return try self.getJSONValues().jsonEncodedString()
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        articleId = try container.decode(Int.self, forKey: .articleId)
+        productId = try container.decode(Int.self, forKey: .productId)
+        articleBarcode = try container.decode(String.self, forKey: .articleBarcode)
     }
     
-    func getJSONValues() -> [String : Any] {
-        return [
-            "articleId": articleId,
-            //"productId": productId,
-            "articleBarcode": articleBarcode,
-            "quantity": _quantity,
-            "booked": _booked,
-            "attributeValues": _attributeValues
-        ]
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(articleId, forKey: .articleId)
+        try container.encode(articleBarcode, forKey: .articleBarcode)
+        try container.encode(_quantity, forKey: ._quantity)
+        try container.encode(_booked, forKey: ._booked)
+        try container.encode(_attributeValues, forKey: ._attributeValues)
     }
 }

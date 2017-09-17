@@ -33,7 +33,7 @@ class UserController {
         
         do {
             let items = try self.repository.getAll()
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -46,7 +46,7 @@ class UserController {
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: id)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -57,11 +57,9 @@ class UserController {
         response.setHeader(.contentType, value: "application/json")
         
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = User()
-            item.setJSONValues(json!)
+            let item: User = try request.getJson()
             try self.repository.add(item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .created)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -73,11 +71,9 @@ class UserController {
         
         let id = request.urlVariables["id"]!
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any]
-            let item = User()
-            item.setJSONValues(json!)
+            let item: User = try request.getJson()
             try self.repository.update(id: id, item: item)
-            try response.setBody(json: item)
+            try response.setJson(item)
             response.completed(status: .accepted)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

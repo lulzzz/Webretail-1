@@ -33,7 +33,7 @@ class StatisticController {
         response.setHeader(.contentType, value: "application/json")
         do {
             let items = try self.repository.getDevices()
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -45,7 +45,7 @@ class StatisticController {
         do {
             let year = request.urlVariables["year"]!
             let items = try self.repository.getCategories(year: Int(year)!)
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -57,7 +57,7 @@ class StatisticController {
         do {
             let year = request.urlVariables["year"]!
             let items = try self.repository.getCategoriesForMonth(year: Int(year)!)
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -69,7 +69,7 @@ class StatisticController {
         do {
             let year = request.urlVariables["year"]!
             let items = try self.repository.getProducts(year: Int(year)!)
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -81,7 +81,7 @@ class StatisticController {
         do {
             let year = request.urlVariables["year"]!
             let items = try self.repository.getProductsForMonth(year: Int(year)!)
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

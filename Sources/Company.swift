@@ -7,9 +7,8 @@
 //
 
 import StORM
-import PerfectLib
 
-class Company: PostgresSqlORM, JSONConvertible {
+class Company: PostgresSqlORM, Codable {
 	
 	public var companyId : Int = 0
 	public var companyName : String = ""
@@ -29,7 +28,26 @@ class Company: PostgresSqlORM, JSONConvertible {
 	public var smtpUsername : String = ""
 	public var smtpPassword : String = ""
 
-	open override func table() -> String { return "company" }
+//    private enum CodingKeys: String, CodingKey {
+//        case companyId
+//        case companyName
+//        case companyDesc
+//        case companyWebsite
+//        case companyEmail
+//        case companyPhone
+//        case companyFiscalCode
+//        case companyVatNumber
+//        case companyAddress
+//        case companyCity
+//        case companyCountry
+//        case companyZip
+//        case smtpHost
+//        case smtpSsl
+//        case smtpUsername
+//        case smtpPassword
+//    }
+
+    open override func table() -> String { return "company" }
 	
 	open override func to(_ this: StORMRow) {
 		companyId = this.data["companyid"] as? Int ?? 0
@@ -59,50 +77,5 @@ class Company: PostgresSqlORM, JSONConvertible {
 			rows.append(row)
 		}
 		return rows
-	}
-	
-	func setJSONValues(_ values:[String:Any]) {
-		self.companyId = getJSONValue(named: "companyId", from: values, defaultValue: 0)
-		self.companyName = getJSONValue(named: "companyName", from: values, defaultValue: "")
-		self.companyDesc = getJSONValue(named: "companyDesc", from: values, defaultValue: "")
-		self.companyWebsite = getJSONValue(named: "companyWebsite", from: values, defaultValue: "")
-		self.companyEmail = getJSONValue(named: "companyEmail", from: values, defaultValue: "")
-		self.companyPhone = getJSONValue(named: "companyPhone", from: values, defaultValue: "")
-		self.companyFiscalCode = getJSONValue(named: "companyFiscalCode", from: values, defaultValue: "")
-		self.companyVatNumber = getJSONValue(named: "companyVatNumber", from: values, defaultValue: "")
-		self.companyAddress = getJSONValue(named: "companyAddress", from: values, defaultValue: "")
-		self.companyCity = getJSONValue(named: "companyCity", from: values, defaultValue: "")
-		self.companyZip = getJSONValue(named: "companyZip", from: values, defaultValue: "")
-		self.companyCountry = getJSONValue(named: "companyCountry", from: values, defaultValue: "")
-
-		self.smtpHost = getJSONValue(named: "smtpHost", from: values, defaultValue: "")
-		self.smtpSsl = getJSONValue(named: "smtpSsl", from: values, defaultValue: false)
-		self.smtpUsername = getJSONValue(named: "smtpUsername", from: values, defaultValue: "")
-		self.smtpPassword = getJSONValue(named: "smtpPassword", from: values, defaultValue: "")
-	}
-	
-	func jsonEncodedString() throws -> String {
-		return try self.getJSONValues().jsonEncodedString()
-	}
-	
-	func getJSONValues() -> [String : Any] {
-		return [
-			"companyId": companyId,
-			"companyName": companyName,
-			"companyDesc": companyDesc,
-			"companyWebsite": companyWebsite,
-			"companyEmail": companyEmail,
-			"companyPhone": companyPhone,
-			"companyFiscalCode": companyFiscalCode,
-			"companyVatNumber": companyVatNumber,
-			"companyAddress": companyAddress,
-			"companyCity": companyCity,
-			"companyZip": companyZip,
-			"companyCountry": companyCountry,
-			"smtpHost": smtpHost,
-			"smtpSsl": smtpSsl,
-			"smtpUsername": smtpUsername,
-			"smtpPassword": smtpPassword
-		]
 	}
 }
