@@ -10,7 +10,7 @@ import StORM
 
 class Article: PostgresSqlORM, Codable {
     
-    public var articleId	: Int = 0
+    public var articleId : Int = 0
     public var productId : Int = 0
     public var articleBarcode : String = ""
     public var articleIsValid : Bool = false

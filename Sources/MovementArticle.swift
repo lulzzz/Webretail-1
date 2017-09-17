@@ -6,6 +6,7 @@
 //
 //
 
+import Foundation
 import StORM
 
 class MovementArticle: PostgresSqlORM, Codable {
@@ -18,7 +19,7 @@ class MovementArticle: PostgresSqlORM, Codable {
 	public var movementArticlePrice : Double = 0
 	public var movementArticleUpdated : Int = Int.now()
     
-    public var movementArticleAmount: Double {
+    public var _movementArticleAmount: Double {
         return (movementArticleQuantity * movementArticlePrice).roundCurrency()
     }
 
@@ -29,7 +30,7 @@ class MovementArticle: PostgresSqlORM, Codable {
         case movementArticleProduct
         case movementArticleQuantity
         case movementArticlePrice
-        case movementArticleAmount
+        case _movementArticleAmount = "movementArticleAmount"
     }
 
     open override func table() -> String { return "movementarticles" }
@@ -38,10 +39,13 @@ class MovementArticle: PostgresSqlORM, Codable {
         movementArticleId = this.data["movementarticleid"] as? Int ?? 0
         movementId = this.data["movementid"] as? Int ?? 0
         movementArticleBarcode = this.data["movementarticlebarcode"] as? String ?? ""
-        movementArticleProduct = this.data["movementarticleproduct"] as? Product ?? Product()
         movementArticleQuantity = Double(this.data["movementarticlequantity"] as? Float ?? 0)
 		movementArticlePrice = Double(this.data["movementarticleprice"] as? Float ?? 0)
 		movementArticleUpdated = this.data["movementarticleupdated"] as? Int ?? 0
+        if let product = this.data["movementarticleproduct"] as? [String:Any] {
+            let jsonData = try! JSONSerialization.data(withJSONObject: product, options: [])
+            movementArticleProduct = try! JSONDecoder().decode(Product.self, from: jsonData)
+        }
     }
     
     func rows() -> [MovementArticle] {
@@ -66,8 +70,8 @@ class MovementArticle: PostgresSqlORM, Codable {
         movementId = try container.decode(Int.self, forKey: .movementId)
         movementArticleBarcode = try container.decode(String.self, forKey: .movementArticleBarcode)
         let product = try! self.getProduct(barcode: movementArticleBarcode)
-        if product != nil {
-            movementArticleProduct = product!
+        if let product = product {
+            movementArticleProduct = product
         } else {
             movementArticleProduct = try container.decode(Product.self, forKey: .movementArticleProduct)
         }
@@ -82,7 +86,7 @@ class MovementArticle: PostgresSqlORM, Codable {
         try container.encode(movementArticleProduct, forKey: .movementArticleProduct)
         try container.encode(movementArticleQuantity, forKey: .movementArticleQuantity)
         try container.encode(movementArticlePrice, forKey: .movementArticlePrice)
-        try container.encode(movementArticleAmount, forKey: .movementArticleAmount)
+        try container.encode(_movementArticleAmount, forKey: ._movementArticleAmount)
     }
 
     func getProduct(barcode: String) throws -> Product? {

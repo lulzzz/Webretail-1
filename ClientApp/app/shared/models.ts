@@ -121,7 +121,7 @@ export class Product {
   public articles: Article[];
   public productIsActive: boolean;
   public productCreated: Date;
-  public productUpdated: Date;
+  public updatedAt: number;
 
   constructor() {
     this.productId = 0;
@@ -135,7 +135,7 @@ export class Product {
     this.articles = [];
     this.productIsActive = false;
     this.productCreated = new Date();
-    this.productUpdated = new Date();
+    this.updatedAt = 0;
   }
 }
 

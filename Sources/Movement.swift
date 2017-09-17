@@ -1,3 +1,4 @@
+
 //
 //  Movement.swift
 //  Webretail
@@ -6,30 +7,35 @@
 //
 //
 
+import Foundation
 import StORM
 
 struct ItemValue: Codable {
-	public var value: String
+    public var value: String
 }
 
 class Movement: PostgresSqlORM, Codable {
-	
-	public var movementId : Int = 0
-	public var invoiceId : Int = 0
-	public var movementNumber : Int = 0
-	public var movementDate : Int = Int.now()
-	public var movementDesc : String = ""
+    
+    public var movementId : Int = 0
+    public var invoiceId : Int = 0
+    public var movementNumber : Int = 0
+    public var movementDate : Int = Int.now()
+    public var movementDesc : String = ""
     public var movementNote : String = ""
-	public var movementStatus : String = ""
-	public var movementUser : String = ""
-	public var movementDevice : String = ""
-	public var movementStore : Store = Store()
-	public var movementCausal : Causal = Causal()
-	public var movementCustomer : Customer = Customer()
-	public var movementPayment : String = ""
-	public var movementUpdated : Int = Int.now()
-	
-	public var _amount : Double = 0
+    public var movementStatus : String = ""
+    public var movementUser : String = ""
+    public var movementDevice : String = ""
+    public var movementStore : Store = Store()
+    public var movementCausal : Causal = Causal()
+    public var movementCustomer : Customer = Customer()
+    public var movementPayment : String = ""
+    public var movementUpdated : Int = Int.now()
+    
+    public var _movementDate: String {
+        return movementDate.formatDateShort()
+    }
+
+    public var _amount : Double = 0
     public var _items : [MovementArticle] = [MovementArticle]()
     
     private enum CodingKeys: String, CodingKey {
@@ -49,23 +55,31 @@ class Movement: PostgresSqlORM, Codable {
         case _items = "items"
         case movementUpdated = "updatedAt"
     }
-
+    
     open override func table() -> String { return "movements" }
     
     open override func to(_ this: StORMRow) {
         movementId = this.data["movementid"] as? Int ?? 0
-		movementNumber = this.data["movementnumber"] as? Int ?? 0
-		movementDate = this.data["movementdate"] as? Int ?? 0
-		movementDesc = this.data["movementdesc"] as? String  ?? ""
+        movementNumber = this.data["movementnumber"] as? Int ?? 0
+        movementDate = this.data["movementdate"] as? Int ?? 0
+        movementDesc = this.data["movementdesc"] as? String  ?? ""
         movementNote = this.data["movementnote"] as? String  ?? ""
-		movementStatus = this.data["movementstatus"] as? String ?? ""
-		movementUser = this.data["movementuser"] as? String  ?? ""
-		movementDevice = this.data["movementdevice"] as? String  ?? ""
-		movementStore = this.data["movementstore"] as? Store ?? Store()
-		movementCausal = this.data["movementcausal"] as? Causal ?? Causal()
-		movementCustomer = this.data["movementcustomer"] as? Customer ?? Customer()
+        movementStatus = this.data["movementstatus"] as? String ?? ""
+        movementUser = this.data["movementuser"] as? String  ?? ""
+        movementDevice = this.data["movementdevice"] as? String  ?? ""
+        let decoder = JSONDecoder()
+        var jsonData = try! JSONSerialization.data(withJSONObject: this.data["movementstore"]!, options: [])
+        movementStore = try! decoder.decode(Store.self, from: jsonData)
+        jsonData = try! JSONSerialization.data(withJSONObject: this.data["movementcausal"]!, options: [])
+        movementCausal = try! decoder.decode(Causal.self, from: jsonData)
+        if let json = this.data["movementcustomer"] as? [String:Any] {
+            if json.count > 0 {
+                jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])
+                movementCustomer = try! decoder.decode(Customer.self, from: jsonData)
+            }
+        }
         movementPayment = this.data["movementpayment"] as? String ?? ""
-		movementUpdated = this.data["movementupdated"] as? Int ?? 0
+        movementUpdated = this.data["movementupdated"] as? Int ?? 0
     }
     
     func rows() throws -> [Movement] {
@@ -73,16 +87,16 @@ class Movement: PostgresSqlORM, Codable {
         for i in 0..<self.results.rows.count {
             let row = Movement()
             row.to(self.results.rows[i])
-			
-			let sql = "SELECT SUM(movementArticleQuantity * movementArticlePrice) AS amount FROM movementArticles WHERE movementId = $1";
-			let getCount = try self.sqlRows(sql, params: [String(row.movementId)])
-			row._amount = Double(getCount.first?.data["amount"] as? Float ?? 0)
-			
-			rows.append(row)
+            
+            let sql = "SELECT SUM(movementArticleQuantity * movementArticlePrice) AS amount FROM movementArticles WHERE movementId = $1";
+            let getCount = try self.sqlRows(sql, params: [String(row.movementId)])
+            row._amount = Double(getCount.first?.data["amount"] as? Float ?? 0)
+            
+            rows.append(row)
         }
         return rows
     }
-
+    
     override init() {
         super.init()
     }
@@ -106,11 +120,11 @@ class Movement: PostgresSqlORM, Codable {
     }
     
     func encode(to encoder: Encoder) throws {
-
+        
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(movementId, forKey: .movementId)
         try container.encode(movementNumber, forKey: .movementNumber)
-        try container.encode(movementDate, forKey: .movementDate)
+        try container.encode(_movementDate, forKey: .movementDate)
         try container.encode(movementDesc, forKey: .movementDesc)
         try container.encode(movementNote, forKey: .movementNote)
         try container.encode(movementStatus, forKey: .movementStatus)
@@ -124,18 +138,18 @@ class Movement: PostgresSqlORM, Codable {
         try container.encode(_items, forKey: ._items)
         try container.encode(movementUpdated, forKey: .movementUpdated)
     }
-
-	func newNumber() throws {
-		self.movementNumber = 1000
-		var params = [String]()
-		var sql = "SELECT MAX(movementNumber) AS counter FROM \(table())";
-		if self.movementCausal.causalIsPos {
-			self.movementNumber = 1
-			sql += " WHERE movementDevice = $1 AND to_char(to_timestamp(movementDate + extract(epoch from timestamp '2001-01-01 00:00:00')), 'YYYY-MM-DD') = $2";
-			params.append(movementDevice)
-			params.append(movementDate.formatDate(format: "yyyy-MM-dd"))
-		}
-		let getCount = try self.sqlRows(sql, params: params)
-		self.movementNumber += getCount.first?.data["counter"] as? Int ?? 0
-	}
+    
+    func newNumber() throws {
+        self.movementNumber = 1000
+        var params = [String]()
+        var sql = "SELECT MAX(movementNumber) AS counter FROM \(table())";
+        if self.movementCausal.causalIsPos {
+            self.movementNumber = 1
+            sql += " WHERE movementDevice = $1 AND to_char(to_timestamp(movementDate + extract(epoch from timestamp '2001-01-01 00:00:00')), 'YYYY-MM-DD') = $2";
+            params.append(movementDevice)
+            params.append(movementDate.formatDate(format: "yyyy-MM-dd"))
+        }
+        let getCount = try self.sqlRows(sql, params: params)
+        self.movementNumber += getCount.first?.data["counter"] as? Int ?? 0
+    }
 }

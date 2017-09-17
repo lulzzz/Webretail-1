@@ -9,33 +9,33 @@
 import StORM
 
 enum ActionType {
-	case Booking
-	case Unbooking
-	case Stoking
+    case Booking
+    case Unbooking
+    case Stoking
 }
 
 struct MovementRepository : MovementProtocol {
-
-	func getPayments() -> [ItemValue] {
-		var status = [ItemValue]()
-		status.append(ItemValue(value: "None"))
-		status.append(ItemValue(value: "Cash"))
-		status.append(ItemValue(value: "Credit card"))
-		status.append(ItemValue(value: "Bank transfer"))
-		status.append(ItemValue(value: "Carrier"))
-		return status
-	}
-
-	func getStatus() -> [ItemValue] {
-		var status = [ItemValue]()
-		status.append(ItemValue(value: "New"))
-		status.append(ItemValue(value: "Processing"))
-		status.append(ItemValue(value: "Suspended"))
-		status.append(ItemValue(value: "Canceled"))
-		status.append(ItemValue(value: "Completed"))
-		return status
-	}
-	
+    
+    func getPayments() -> [ItemValue] {
+        var status = [ItemValue]()
+        status.append(ItemValue(value: "None"))
+        status.append(ItemValue(value: "Cash"))
+        status.append(ItemValue(value: "Credit card"))
+        status.append(ItemValue(value: "Bank transfer"))
+        status.append(ItemValue(value: "Carrier"))
+        return status
+    }
+    
+    func getStatus() -> [ItemValue] {
+        var status = [ItemValue]()
+        status.append(ItemValue(value: "New"))
+        status.append(ItemValue(value: "Processing"))
+        status.append(ItemValue(value: "Suspended"))
+        status.append(ItemValue(value: "Canceled"))
+        status.append(ItemValue(value: "Completed"))
+        return status
+    }
+    
     func getAll() throws -> [Movement] {
         let items = Movement()
         try items.query(cursor: StORMCursor.init(limit: 10000, offset: 0))
@@ -79,55 +79,55 @@ struct MovementRepository : MovementProtocol {
     }
     
     func getReceipted(period: Period) throws -> [Movement] {
-		let items = Movement()
-		try items.query(whereclause: "movementDate >= $1 AND movementDate <= $2 AND movementCausal ->> 'causalIsPos' = $3",
-		                params: [period.start, period.finish, true],
-		                orderby: ["movementDevice, movementDate, movementNumber"])
-		
-		return try items.rows()
-	}
-
-	func get(id: Int) throws -> Movement? {
-        let item = Movement()
-		try item.query(id: id)
-
-		return item
+        let items = Movement()
+        try items.query(whereclause: "movementDate >= $1 AND movementDate <= $2 AND movementCausal ->> 'causalIsPos' = $3",
+                        params: [period.start, period.finish, true],
+                        orderby: ["movementDevice, movementDate, movementNumber"])
+        
+        return try items.rows()
     }
-		
-	func get(customerId: Int) throws -> [Movement] {
-		let items = Movement()
-		try items.query(whereclause: "movementCustomer ->> 'customerId' = $1 AND invoiceId = $2 AND movementStatus = $3",
-		                params: [customerId, 0, "Completed"],
-		                orderby: ["movementId"])
-		
-		return try items.rows()
-	}
-	
-	func add(item: Movement) throws {
-		if item.movementNumber == 0 {
-			try item.newNumber()
-		}
+    
+    func get(id: Int) throws -> Movement? {
+        let item = Movement()
+        try item.query(id: id)
+        
+        return item
+    }
+    
+    func get(customerId: Int) throws -> [Movement] {
+        let items = Movement()
+        try items.query(whereclause: "movementCustomer ->> 'customerId' = $1 AND invoiceId = $2 AND movementStatus = $3",
+                        params: [customerId, 0, "Completed"],
+                        orderby: ["movementId"])
+        
+        return try items.rows()
+    }
+    
+    func add(item: Movement) throws {
+        if item.movementNumber == 0 {
+            try item.newNumber()
+        }
         item.movementUpdated = Int.now()
-		
-		if !item.movementCustomer.customerName.isEmpty {
-			let customer = item.movementCustomer
+        
+        if !item.movementCustomer.customerName.isEmpty {
+            let customer = item.movementCustomer
             if customer.customerId <= 0 {
-				customer.customerId = 0
-				customer.customerCreated = customer.customerUpdated
-				try customer.save {
-					id in customer.customerId = id as! Int
-				}
-				item.movementCustomer = customer
-			} else if customer.customerUpdated > 0 {
-				let current = Customer()
-				try current.query(id: customer.customerId)
-				if current.customerUpdated < customer.customerUpdated {
-					try customer.save()
-				}
-			}
-		}
-		
-		try item.save {
+                customer.customerId = 0
+                customer.customerCreated = customer.customerUpdated
+                try customer.save {
+                    id in customer.customerId = id as! Int
+                }
+                item.movementCustomer = customer
+            } else if customer.customerUpdated > 0 {
+                let current = Customer()
+                try current.query(id: customer.customerId)
+                if current.customerUpdated < customer.customerUpdated {
+                    try customer.save()
+                }
+            }
+        }
+        
+        try item.save {
             id in item.movementId = id as! Int
         }
     }
@@ -138,29 +138,29 @@ struct MovementRepository : MovementProtocol {
             throw StORMError.noRecordFound
         }
         
-		item.movementUpdated = Int.now()
-		if item.movementStatus == "New" {
-			current.movementNumber = item.movementNumber
-			current.movementDate = item.movementDate
-			current.movementDesc = item.movementDesc
-			current.movementUser = item.movementUser
-			current.movementDevice = item.movementDevice
-			current.movementCausal = item.movementCausal
-			current.movementStore = item.movementStore
-			current.movementCustomer = item.movementCustomer
-		}
-		else if current.movementStatus == "New" && item.movementStatus == "Processing" {
-			try process(movement: current, actionType: ActionType.Booking)
-		}
-		else if current.movementStatus != "Completed" && item.movementStatus == "Completed" {
-			try process(movement: current, actionType: ActionType.Stoking)
-		}
-		else if current.movementStatus == "Processing" && item.movementStatus != "Processing" {
-			try process(movement: current, actionType: ActionType.Unbooking)
-		}
-		current.movementStatus = item.movementStatus
-		current.movementNote = item.movementNote
-		current.movementUpdated = item.movementUpdated
+        item.movementUpdated = Int.now()
+        if item.movementStatus == "New" {
+            current.movementNumber = item.movementNumber
+            current.movementDate = item.movementDate
+            current.movementDesc = item.movementDesc
+            current.movementUser = item.movementUser
+            current.movementDevice = item.movementDevice
+            current.movementCausal = item.movementCausal
+            current.movementStore = item.movementStore
+            current.movementCustomer = item.movementCustomer
+        }
+        else if current.movementStatus == "New" && item.movementStatus == "Processing" {
+            try process(movement: current, actionType: ActionType.Booking)
+        }
+        else if current.movementStatus != "Completed" && item.movementStatus == "Completed" {
+            try process(movement: current, actionType: ActionType.Stoking)
+        }
+        else if current.movementStatus == "Processing" && item.movementStatus != "Processing" {
+            try process(movement: current, actionType: ActionType.Unbooking)
+        }
+        current.movementStatus = item.movementStatus
+        current.movementNote = item.movementNote
+        current.movementUpdated = item.movementUpdated
         try current.save()
     }
     
@@ -169,9 +169,9 @@ struct MovementRepository : MovementProtocol {
         item.movementId = id
         try item.delete()
     }
-
-	func process(movement: Movement, actionType: ActionType) throws {
-		
+    
+    func process(movement: Movement, actionType: ActionType) throws {
+        
         let storeId = movement.movementStore.storeId
         let quantity = movement.movementCausal.causalQuantity
         let booked = movement.movementCausal.causalBooked
@@ -217,15 +217,15 @@ struct MovementRepository : MovementProtocol {
             }
             try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
         }
-	}
-	
-	func clone(sourceId: Int) throws -> Movement {
-		let item = try self.get(id: sourceId)!
-		item.movementId = 0
-		item.movementNumber = 0
-		item.movementDate = Int.now()
-		item.movementStatus = "New"
-		try self.add(item: item)
-		return item
-	}
+    }
+    
+    func clone(sourceId: Int) throws -> Movement {
+        let item = try self.get(id: sourceId)!
+        item.movementId = 0
+        item.movementNumber = 0
+        item.movementDate = Int.now()
+        item.movementStatus = "New"
+        try self.add(item: item)
+        return item
+    }
 }

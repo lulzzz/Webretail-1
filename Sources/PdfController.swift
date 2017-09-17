@@ -27,8 +27,8 @@ class PdfController {
         routes.add(method: .get, uri: "/api/pdf/barcode/{id}", handler: barcodeHandlerGET)
         return routes
     }
-
-	func barcodeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func barcodeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             #if os(Linux)
                 throw PerfectError.apiError("Barcode is not available on linux")
@@ -37,7 +37,7 @@ class PdfController {
                 let items = try self.movementRepository.get(movementId: Int(id)!)
                 
                 let document = PDFDocument()
-
+                
                 for item in items {
                     for _ in 0..<Int(item.movementArticleQuantity) {
                         

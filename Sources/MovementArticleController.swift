@@ -55,7 +55,7 @@ class MovementArticleController {
 
 			let price = request.urlVariables["price"]!
 			if price == "selling" {
-				item.movementArticlePrice = product._discount != nil ? product._discount!.discountPrice : product.productSellingPrice
+                item.movementArticlePrice = product._discount != nil ? product._discount!.discountPrice : product.productSellingPrice
 			}
 			if price == "purchase" {
 				item.movementArticlePrice = product.productPurchasePrice

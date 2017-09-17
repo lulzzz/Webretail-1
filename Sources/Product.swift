@@ -36,7 +36,6 @@ class Product: PostgresSqlORM, Codable {
         case productSellingPrice
         case productPurchasePrice
         case productIsActive
-        case productIsValid
         case _brand = "brand"
         case _categories = "categories"
         case _attributes = "attributes"
@@ -80,6 +79,42 @@ class Product: PostgresSqlORM, Codable {
 			rows.append(row)
         }
         return rows
+    }
+
+    override init() {
+        super.init()
+    }
+    
+    required init(from decoder: Decoder) throws {
+        super.init()
+
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        productId = try container.decode(Int.self, forKey: .productId)
+        productCode = try container.decode(String.self, forKey: .productCode)
+        productName = try container.decode(String.self, forKey: .productName)
+        productUm = try container.decode(String.self, forKey: .productUm)
+        productSellingPrice = try container.decode(Double.self, forKey: .productSellingPrice)
+        productPurchasePrice = try container.decode(Double.self, forKey: .productPurchasePrice)
+        productIsActive = try container.decode(Bool.self, forKey: .productIsActive)
+        _brand = try container.decode(Brand.self, forKey: ._brand)
+        brandId = _brand.brandId
+}
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(productId, forKey: .productId)
+        try container.encode(productCode, forKey: .productCode)
+        try container.encode(productName, forKey: .productName)
+        try container.encode(productUm, forKey: .productUm)
+        try container.encode(productSellingPrice, forKey: .productSellingPrice)
+        try container.encode(productPurchasePrice, forKey: .productPurchasePrice)
+        try container.encode(productIsActive, forKey: .productIsActive)
+        try container.encode(_brand, forKey: ._brand)
+        try container.encode(_categories, forKey: ._categories)
+        try container.encode(_attributes, forKey: ._attributes)
+        try container.encode(_articles, forKey: ._articles)
+        try container.encodeIfPresent(_discount, forKey: ._discount)
+        try container.encode(productUpdated, forKey: .productUpdated)
     }
 
     func makeDiscount() throws {

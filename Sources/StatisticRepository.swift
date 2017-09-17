@@ -20,11 +20,11 @@ struct StatisticRepository : StatisticProtocol {
     func getDevices() throws -> Statistics {
         let data = StatisticItem()
         let sql = "SELECT MAX(a.movementId) AS id, a.movementDevice AS label, SUM(b.movementArticleQuantity * b.movementArticlePrice) AS value " +
-                  "FROM movements AS a " +
-                  "LEFT JOIN movementArticles AS b ON a.movementId = b.movementId " +
-                  "WHERE a.invoiceId > $1 OR a.movementCausal ->> 'causalIsPos' = $2 " +
-                  "GROUP BY a.movementDevice " +
-                  "ORDER BY a.movementDevice"
+            "FROM movements AS a " +
+            "LEFT JOIN movementArticles AS b ON a.movementId = b.movementId " +
+            "WHERE a.invoiceId > $1 OR a.movementCausal ->> 'causalIsPos' = $2 " +
+            "GROUP BY a.movementDevice " +
+        "ORDER BY a.movementDevice"
         data.results.rows = try data.sqlRows(sql, params: ["0", "true"])
         
         return self.toResult(items: data.rows())
@@ -38,7 +38,7 @@ struct StatisticRepository : StatisticProtocol {
         let sql = "SELECT b.* " +
             "FROM movements AS a " +
             "LEFT JOIN movementArticles AS b ON a.movementId = b.movementId " +
-            "WHERE a.movementDate >= $1 AND a.movementDate <= $2 AND (a.invoiceId > $3 OR a.movementCausal ->> 'causalIsPos' = $4)"
+        "WHERE a.movementDate >= $1 AND a.movementDate <= $2 AND (a.invoiceId > $3 OR a.movementCausal ->> 'causalIsPos' = $4)"
         data.results.rows = try data.sqlRows(sql, params: ["\(start)", "\(finish)", "0", "true"])
         
         return data.rows()

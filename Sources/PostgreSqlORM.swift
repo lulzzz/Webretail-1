@@ -6,31 +6,31 @@
 //
 //
 
-import PerfectLib
+import Foundation
 import PerfectLogger
 import PostgresStORM
 import StORM
 
 open class PostgresSqlORM: PostgresStORM {
     
-    /// Get value from json object
-    func getJSONValue<T: JSONConvertible>(named namd: String, from:[String:Any], defaultValue: T) -> T {
-        let f = from[namd]
-        if let v = f as? T {
-            return v
-        }
-        else if defaultValue is Int, let d = f as? String {
-            return Int(d) as! T
-        }
-        else if defaultValue is Double, let d = f as? String {
-            return Double(d) as! T
-        }
-        else if defaultValue is Double, let d = f as? Int {
-            return Double(d) as! T
-        }
-        
-        return defaultValue
-    }
+//    /// Get value from json object
+//    func getJSONValue<T: JSONConvertible>(named namd: String, from:[String:Any], defaultValue: T) -> T {
+//        let f = from[namd]
+//        if let v = f as? T {
+//            return v
+//        }
+//        else if defaultValue is Int, let d = f as? String {
+//            return Int(d) as! T
+//        }
+//        else if defaultValue is Double, let d = f as? String {
+//            return Double(d) as! T
+//        }
+//        else if defaultValue is Double, let d = f as? Int {
+//            return Double(d) as! T
+//        }
+//
+//        return defaultValue
+//    }
 
     // Table unique indexes
     open func tableIndexes() -> [String] { return [String]() }
@@ -66,7 +66,7 @@ open class PostgresSqlORM: PostgresStORM {
                         verbage += "boolean DEFAULT false"
                     } else if child.value is Character {
                         verbage += "char DEFAULT ' '"
-                    } else if child.value is [String:Any] {
+                    } else if child.value is [String:Any] || child.value is Codable {
                         verbage += "jsonb"
                     } else if child.value is Double {
                         verbage += "double precision DEFAULT 0"
@@ -101,7 +101,7 @@ open class PostgresSqlORM: PostgresStORM {
 
 	func query() throws {
 		do {
-			try query(cursor: StORMCursor(limit: 9999999,offset: 0))
+			try query(cursor: StORMCursor(limit: 10000,offset: 0))
 		} catch {
 			throw StORMError.error("\(error)")
 		}
@@ -184,4 +184,81 @@ open class PostgresSqlORM: PostgresStORM {
 			throw error
 		}
 	}
+    
+    /// Returns a [(String,Any)] object representation of the current object.
+    /// If any object property begins with an underscore, or with "internal_" it is omitted from the response.
+    private func asDataQuery(_ offset: Int = 0) -> [(String, Any)] {
+        var c = [(String, Any)]()
+        var count = 0
+        let mirror = Mirror(reflecting: self)
+        for case let (label?, value) in mirror.children {
+            if count >= offset && !label.hasPrefix("internal_") && !label.hasPrefix("_") {
+                if value is StORM {
+                    let encoder = JSONEncoder()
+                    let data: Data
+                    switch value {
+                    case is Store:
+                        data = try! encoder.encode(value as? Store)
+                        break
+                    case is Causal:
+                        data = try! encoder.encode(value as? Causal)
+                        break
+                    case is Customer:
+                        data = try! encoder.encode(value as? Customer)
+                        break
+                    default:
+                        data = try! encoder.encode(value as? Product)
+                        break
+                    }
+                    c.append((label, modifyValue(String(data: data, encoding: .utf8)!, forKey: label)))
+                } else if value is [String] {
+                    c.append((label, modifyValue((value as! [String]).joined(separator: ","), forKey: label)))
+                } else {
+                    c.append((label, modifyValue(value, forKey: label)))
+                }
+            }
+            count += 1
+        }
+        return c
+    }
+
+    /// Standard "Save" function.
+    /// Designed as "open" so it can be overriden and customized.
+    /// If an ID has been defined, save() will perform an updae, otherwise a new document is created.
+    /// On error can throw a StORMError error.
+    
+    open override func save() throws {
+        do {
+            if keyIsEmpty() {
+                try insert(asDataQuery(1))
+            } else {
+                let (idname, idval) = firstAsKey()
+                try update(data: asDataQuery(1), idName: idname, idValue: idval)
+            }
+        } catch {
+            LogFile.error("Error: \(error)")
+            throw StORMError.error("\(error)")
+        }
+    }
+    
+    /// Alternate "Save" function.
+    /// This save method will use the supplied "set" to assign or otherwise process the returned id.
+    /// Designed as "open" so it can be overriden and customized.
+    /// If an ID has been defined, save() will perform an updae, otherwise a new document is created.
+    /// On error can throw a StORMError error.
+    
+    open override func save(set: (_ id: Any)->Void) throws {
+        do {
+            if keyIsEmpty() {
+                let setId = try insert(asDataQuery(1))
+                set(setId)
+            } else {
+                let (idname, idval) = firstAsKey()
+                try update(data: asDataQuery(1), idName: idname, idValue: idval)
+            }
+        } catch {
+            LogFile.error("Error: \(error)")
+            throw StORMError.error("\(error)")
+        }
+    }
 }
