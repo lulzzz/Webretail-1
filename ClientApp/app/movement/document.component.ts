@@ -92,7 +92,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     sendMailClick() {
         let email = new Email()
         email.address = this.movement.movementCustomer.customerEmail;
-        email.subject = "Document n° " + this.movement.movementNumber;
+        email.subject = 'Document n° ' + this.movement.movementNumber;
         email.content = this.doc.nativeElement.innerHTML;
 
         this.companyService.sendMail(email)
