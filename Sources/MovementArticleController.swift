@@ -51,7 +51,6 @@ class MovementArticleController {
                 response.completed(status: .notFound)
                 return
             }
-			//item.movementArticleProduct = product
 
 			let price = request.urlVariables["price"]!
 			if price == "selling" {
