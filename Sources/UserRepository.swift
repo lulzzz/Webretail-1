@@ -41,7 +41,7 @@ struct UserRepository : UserProtocol {
         current.firstname = item.firstname
         current.lastname = item.lastname
         current.username = item.username
-        if (item.password.characters.count < 20) {
+        if (item.password.length < 20) {
             current.password = BCrypt.hash(password: item.password)
         }
         current.email = item.email

@@ -59,7 +59,7 @@ extension Double {
 extension String {
 	func DateToInt() -> Int {
 		let formatter = DateFormatter()
-		formatter.dateFormat = self.characters.count > 10 ? "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" : "yyyy-MM-dd"
+		formatter.dateFormat = self.length > 10 ? "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" : "yyyy-MM-dd"
 		formatter.timeZone = TimeZone(abbreviation: "UTC")
 		let date = formatter.date(from: self)!
 		

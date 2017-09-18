@@ -40,7 +40,7 @@ open class PostgresSqlORM: PostgresStORM {
     open override func setup(_ str: String = "") throws {
         LogFile.info("Running setup: \(table())")
         var createStatement = str
-        if str.characters.count == 0 {
+        if str.length == 0 {
             var opt = [String]()
             var keyName = ""
             for child in Mirror(reflecting: self).children {
@@ -146,7 +146,7 @@ open class PostgresSqlORM: PostgresStORM {
 			clauseSelect = keys.joined(separator: ",")
 		}
 		
-		if whereclause.characters.count > 0 {
+		if whereclause.length > 0 {
 			clauseWhere = "WHERE \(whereclause)"
 		}
 		
