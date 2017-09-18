@@ -49,6 +49,7 @@ public extension HTTPRequest {
     public func getJson<T:Codable>() throws -> T {
         let decoder = JSONDecoder()
         let jsonData = self.postBodyString?.data(using: .utf8)!
+        //LogFile.info(self.postBodyString!)
         return try! decoder.decode(T.self, from: jsonData!)
     }
 }

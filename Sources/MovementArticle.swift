@@ -82,6 +82,7 @@ class MovementArticle: PostgresSqlORM, Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(movementArticleId, forKey: .movementArticleId)
+        try container.encode(movementId, forKey: .movementId)
         try container.encode(movementArticleBarcode, forKey: .movementArticleBarcode)
         try container.encode(movementArticleProduct, forKey: .movementArticleProduct)
         try container.encode(movementArticleQuantity, forKey: .movementArticleQuantity)

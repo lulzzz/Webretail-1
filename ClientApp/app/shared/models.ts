@@ -260,7 +260,7 @@ export class MovementArticle {
     this.movementArticleId = 0;
     this.movementId = 0;
     this.movementArticleBarcode = '';
-    this.movementArticleProduct = new Product();
+    this.movementArticleProduct = null;
     this.movementArticleQuantity = 1.0;
     this.movementArticlePrice = 0.0;
     this.movementArticleAmount = 0.0;

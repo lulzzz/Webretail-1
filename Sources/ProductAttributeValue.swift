@@ -49,9 +49,9 @@ class ProductAttributeValue: PostgresSqlORM, Codable {
         super.init()
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        productAttributeId = try container.decode(Int.self, forKey: .productAttributeId)
-        let attributeValue = try container.decode(AttributeValue.self, forKey: ._attributeValue)
-        attributeValueId = attributeValue.attributeValueId
+        productAttributeId = try container.decodeIfPresent(Int.self, forKey: .productAttributeId) ?? 0
+        _attributeValue = try container.decode(AttributeValue.self, forKey: ._attributeValue)
+        attributeValueId = _attributeValue.attributeValueId
     }
     
     func encode(to encoder: Encoder) throws {

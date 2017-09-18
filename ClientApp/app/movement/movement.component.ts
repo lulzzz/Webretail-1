@@ -42,7 +42,7 @@ export class MovementComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            this.movementId = params['id'];
+            this.movementId = Number(params['id']);
             this.movementService.getById(this.movementId)
                 .subscribe(result => {
                     this.item = result;

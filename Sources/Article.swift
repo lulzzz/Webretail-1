@@ -93,8 +93,9 @@ class Article: PostgresSqlORM, Codable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         articleId = try container.decode(Int.self, forKey: .articleId)
-        productId = try container.decode(Int.self, forKey: .productId)
+        productId = try container.decodeIfPresent(Int.self, forKey: .productId) ?? 0
         articleBarcode = try container.decode(String.self, forKey: .articleBarcode)
+        _attributeValues = try container.decodeIfPresent([ArticleAttributeValue].self, forKey: ._attributeValues) ?? [ArticleAttributeValue]()
     }
     
     func encode(to encoder: Encoder) throws {

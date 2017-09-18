@@ -46,7 +46,7 @@ class ArticleAttributeValue: PostgresSqlORM, Codable {
         super.init()
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        articleId = try container.decode(Int.self, forKey: .articleId)
+        articleId = try container.decodeIfPresent(Int.self, forKey: .articleId) ?? 0
         attributeValueId = try container.decode(Int.self, forKey: .attributeValueId)
     }
     

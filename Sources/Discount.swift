@@ -18,7 +18,25 @@ class Discount: PostgresSqlORM, Codable {
 	public var discountFinishAt : Int = Int.now()
 	public var discountUpdated : Int = Int.now()
 	
-	open override func table() -> String { return "discounts" }
+    public var _discountStartAt: String {
+        return discountStartAt.formatDateShort()
+    }
+    
+    public var _discountFinishAt: String {
+        return discountFinishAt.formatDateShort()
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case discountId
+        case discountName
+        case discountPercentage
+        case discountPrice
+        case discountStartAt
+        case discountFinishAt
+        case discountUpdated
+    }
+
+    open override func table() -> String { return "discounts" }
 	open override func tableIndexes() -> [String] { return ["discountName"] }
 	
 	open override func to(_ this: StORMRow) {
@@ -41,7 +59,36 @@ class Discount: PostgresSqlORM, Codable {
 		return rows
 	}
 
-	func get(productId: Int) throws {
+    override init() {
+        super.init()
+    }
+    
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        discountId = try container.decode(Int.self, forKey: .discountId)
+        discountName = try container.decode(String.self, forKey: .discountName)
+        discountPercentage = try container.decode(Int.self, forKey: .discountPercentage)
+        discountPrice = try container.decode(Double.self, forKey: .discountPrice)
+        discountStartAt = try container.decode(String.self, forKey: .discountStartAt).DateToInt()
+        discountFinishAt = try container.decode(String.self, forKey: .discountStartAt).DateToInt()
+        discountUpdated = try container.decode(Int.self, forKey: .discountUpdated)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(discountId, forKey: .discountId)
+        try container.encode(discountName, forKey: .discountName)
+        try container.encode(discountPercentage, forKey: .discountPercentage)
+        try container.encode(discountPrice, forKey: .discountPrice)
+        try container.encode(_discountStartAt, forKey: .discountStartAt)
+        try container.encode(_discountFinishAt, forKey: .discountFinishAt)
+        try container.encode(discountUpdated, forKey: .discountUpdated)
+    }
+    
+    func get(productId: Int) throws {
 		var join = StORMDataSourceJoin()
 		join.table = "discountproducts"
 		join.direction = StORMJoinType.INNER

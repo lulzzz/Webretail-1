@@ -98,7 +98,12 @@ class Product: PostgresSqlORM, Codable {
         productIsActive = try container.decode(Bool.self, forKey: .productIsActive)
         _brand = try container.decode(Brand.self, forKey: ._brand)
         brandId = _brand.brandId
-}
+
+        _categories = try container.decodeIfPresent([ProductCategory].self, forKey: ._categories) ?? [ProductCategory]()
+        _attributes = try container.decodeIfPresent([ProductAttribute].self, forKey: ._attributes) ?? [ProductAttribute]()
+        _articles = try container.decodeIfPresent([Article].self, forKey: ._articles) ?? [Article]()
+        _discount = try container.decodeIfPresent(Discount.self, forKey: ._discount) ?? nil
+   }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
