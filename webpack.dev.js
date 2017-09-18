@@ -14,7 +14,9 @@ module.exports = webpackMerge(commonConfig, {
   },
 
   plugins: [
-    new ExtractTextPlugin('dist/[name].css')
+    new ExtractTextPlugin( {
+        filename: "dist/[name].css"
+     })
   ],
   
   devServer: {
