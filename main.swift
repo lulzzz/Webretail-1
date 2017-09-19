@@ -23,7 +23,6 @@ import PerfectHTTPServer
 import PerfectLogger
 import Turnstile
 
-
 // Used later in script for the Realm and how the user authenticates.
 let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
@@ -32,8 +31,9 @@ let server = HTTPServer()
 
 // Where to serve static files from
 server.documentRoot = "./webroot"
+
 // Host address and server port
-server.serverPort   = 8181
+server.serverPort = 8181
 
 // Setup database
 try setupDatabase();

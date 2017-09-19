@@ -19,8 +19,8 @@ class Period: Codable {
     required init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        start = try container.decode(String.self, forKey: .start).toInt() ?? 0
-        finish = try container.decode(String.self, forKey: .finish).toInt() ?? 0
+        start = try container.decode(String.self, forKey: .start).DateToInt()
+        finish = try container.decode(String.self, forKey: .finish).DateToInt()
     }
     
     func encode(to encoder: Encoder) throws {

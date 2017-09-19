@@ -161,7 +161,7 @@ export class MovementsComponent implements OnInit {
                 this.items = result;
                 this.totalRecords = this.items.length;
                 this.buildFilter(result);
-             }
+             }, onerror => alert(onerror)
         );
     }
 
