@@ -133,7 +133,7 @@ class User : PostgresSqlORM, Codable, Account {
 
 	func setAdmin() throws {
 		do {
-			try query(whereclause: "isadmin = $1", params: [true], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
+			try query(whereclause: "isAdmin = $1", params: [true], orderby: [], cursor: StORMCursor(limit: 1, offset: 0))
 			
 			if results.rows.count == 0 {
 				if exists("admin") {

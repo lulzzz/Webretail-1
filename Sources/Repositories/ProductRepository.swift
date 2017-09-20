@@ -78,8 +78,9 @@ struct ProductRepository : ProductProtocol {
             try brand.save {
                 id in item.brandId = id as! Int
             }
+        } else {
+            item.brandId = brand.brandId
         }
-        item.brandId = brand.brandId
         
         // Categories
         for c in item._categories {
@@ -90,13 +91,15 @@ struct ProductRepository : ProductProtocol {
             )
             if category.categoryId == 0 {
                 category.categoryName = c._category.categoryName
+                category.categoryIsPrimary = c._category.categoryIsPrimary
                 category.categoryCreated = Int.now()
                 category.categoryUpdated = Int.now()
                 try category.save {
-                    id in category.categoryId = id as! Int
+                    id in c.categoryId = id as! Int
                 }
+            } else {
+                c.categoryId = category.categoryId
             }
-            c.categoryId = category.categoryId
         }
         
         // Attributes
@@ -111,10 +114,11 @@ struct ProductRepository : ProductProtocol {
                 attribute.attributeCreated = Int.now()
                 attribute.attributeUpdated = Int.now()
                 try attribute.save {
-                    id in attribute.attributeId = id as! Int
+                    id in a.attributeId = id as! Int
                 }
+            } else {
+                a.attributeId = attribute.attributeId
             }
-            a.attributeId = attribute.attributeId
             
             // AttributeValues
             for v in a._attributeValues {
@@ -130,10 +134,11 @@ struct ProductRepository : ProductProtocol {
                     attributeValue.attributeValueCreated = Int.now()
                     attributeValue.attributeValueUpdated = Int.now()
                     try attributeValue.save {
-                        id in attributeValue.attributeValueId = id as! Int
+                        id in v.attributeValueId = id as! Int
                     }
+                } else {
+                    v.attributeValueId = attributeValue.attributeValueId
                 }
-                v.attributeValueId = attributeValue.attributeValueId
             }
         }
 

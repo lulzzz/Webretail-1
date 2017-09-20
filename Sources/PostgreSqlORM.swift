@@ -66,14 +66,14 @@ open class PostgresSqlORM: PostgresStORM {
                         verbage += "boolean DEFAULT false"
                     } else if child.value is Character {
                         verbage += "char DEFAULT ' '"
-                    } else if child.value is [String:Any] || child.value is Codable {
-                        verbage += "jsonb"
+                    } else if child.value is String {
+                        verbage += "text"
                     } else if child.value is Double {
                         verbage += "double precision DEFAULT 0"
                     } else if child.value is UInt || child.value is UInt8 || child.value is UInt16 || child.value is UInt32 || child.value is UInt64 {
                         verbage += "bytea"
                     } else {
-                        verbage += "text"
+                        verbage += "jsonb"
                     }
                     if opt.count == 0 {
                         verbage += " NOT NULL"
@@ -227,7 +227,7 @@ open class PostgresSqlORM: PostgresStORM {
     /// If an ID has been defined, save() will perform an updae, otherwise a new document is created.
     /// On error can throw a StORMError error.
     
-    open override func save() throws {
+    override open func save() throws {
         do {
             if keyIsEmpty() {
                 try insert(asDataQuery(1))
@@ -247,7 +247,7 @@ open class PostgresSqlORM: PostgresStORM {
     /// If an ID has been defined, save() will perform an updae, otherwise a new document is created.
     /// On error can throw a StORMError error.
     
-    open override func save(set: (_ id: Any)->Void) throws {
+    override open func save(set: (_ id: Any)->Void) throws {
         do {
             if keyIsEmpty() {
                 let setId = try insert(asDataQuery(1))
@@ -257,8 +257,12 @@ open class PostgresSqlORM: PostgresStORM {
                 try update(data: asDataQuery(1), idName: idname, idValue: idval)
             }
         } catch {
-            LogFile.error("Error: \(error)")
+            LogFile.error("Error on save: \(error)")
             throw StORMError.error("\(error)")
         }
+    }
+
+    override open func create() throws {
+        try insert(asDataQuery())
     }
 }
