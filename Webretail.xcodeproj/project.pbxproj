@@ -4190,7 +4190,7 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -4200,7 +4200,6 @@
 				OBJ_116 /* Dependencies */,
 				OBJ_1011 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -4240,12 +4239,6 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* Sources */,
-				OBJ_18 /* BarcodePDFPage.swift */,
-				OBJ_42 /* Extensions.swift */,
-				OBJ_43 /* IoCContainer.swift */,
-				OBJ_113 /* main.swift */,
-				OBJ_73 /* PostgreSqlORM.swift */,
-				OBJ_112 /* Setup.swift */,
 			);
 			name = Webretail;
 			sourceTree = SOURCE_ROOT;
@@ -4258,6 +4251,12 @@
 				OBJ_44 /* Models */,
 				OBJ_74 /* Protocols */,
 				OBJ_93 /* Repositories */,
+				OBJ_18 /* BarcodePDFPage.swift */,
+				OBJ_42 /* Extensions.swift */,
+				OBJ_43 /* IoCContainer.swift */,
+				OBJ_113 /* main.swift */,
+				OBJ_73 /* PostgreSqlORM.swift */,
+				OBJ_112 /* Setup.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -5155,7 +5154,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_1011 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

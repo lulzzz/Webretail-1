@@ -50,6 +50,7 @@ import { DeviceComponent } from './device/device.component';
 import { ReportReceiptsComponent } from './report/receipts.component';
 import { ReportSalesComponent } from './report/sales.component';
 import { StatisticsComponent } from './report/statistics.component';
+import { ImportComponent } from './import/import.component';
 
 import { AuthenticationService } from './services/authentication.service';
 import { CompanyService } from './services/company.service';
@@ -66,6 +67,7 @@ import { MovementService } from './services/movement.service';
 import { DiscountService } from './services/discount.service';
 import { InvoiceService } from './services/invoice.service';
 import { StatisticService } from './services/statistic.service';
+import { ImportService } from './services/import.service';
 
 import { CategoryFilterPipe } from './pipes/category-filter.pipe';
 import { PriceFilterPipe } from './pipes/price-filter.pipe';
@@ -79,7 +81,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         CommonModule, RouterModule, HttpModule, BrowserModule, BrowserAnimationsModule,
         FormsModule, ReactiveFormsModule,
         DataTableModule, SharedModule, PaginatorModule,
-        MultiSelectModule, DropdownModule, SliderModule, TreeModule, 
+        MultiSelectModule, DropdownModule, SliderModule, TreeModule,
         ButtonModule, InputTextModule, InputSwitchModule,
         PanelModule, SplitButtonModule, PickListModule, GrowlModule,
         ConfirmDialogModule, ToolbarModule, SelectButtonModule,
@@ -126,7 +128,8 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         DeviceComponent,
         ReportReceiptsComponent,
         ReportSalesComponent,
-        StatisticsComponent
+        StatisticsComponent,
+        ImportComponent
     ],
     providers: [
         Configuration,
@@ -145,7 +148,8 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         DiscountService,
         InvoiceService,
         ConfirmationService,
-        StatisticService
+        StatisticService,
+        ImportService
     ],
     exports: [
         ArticlePickerComponent,
