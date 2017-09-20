@@ -63,6 +63,17 @@ struct ProductRepository : ProductProtocol {
         }
     }
     
+    func create(item: Product) throws {
+        item.brandId = item._brand.brandId
+        item.productCreated = Int.now()
+        item.productUpdated = Int.now()
+//        try item.save {
+//            id in item.productId = id as! Int
+//        }
+        
+        //TODO: add other info
+    }
+    
     func update(id: Int, item: Product) throws {
         
         guard let current = try get(id: id) else {
