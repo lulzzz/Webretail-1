@@ -1,38 +1,46 @@
-﻿<div class="container-fluid">
+﻿<img *ngIf="isBusy" src="/assets/loading.gif" class="loading">
+
+<div class="container-fluid">
     
     <p-panel>
         <p-header>
             <div class="ui-helper-clearfix">
                 <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Import</b></span>
-                </div>
+            </div>
         </p-header>
-        <form [formGroup]="dataform">
-            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="name">Name</label></div>
-                    <div class="ui-grid-col-8">
-                        <input pInputText formControlName="name" [(ngModel)]="productName"/>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
-                            <i class="fa fa-close"></i> Name is required
-                        </div>
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="code">Code</label></div>
+                <div class="ui-grid-col-4">
+                    <input pInputText [(ngModel)]="productCode"/>
                 </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-12">
-                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="importClick()" label="Import" [disabled]="!dataform.valid"></button>
-                    </div>
+                <div class="ui-grid-col-4">
+                    <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="importClick()" label="Import"></button>
                 </div>
             </div>
-        </form>
+            <div *ngIf="product" class="ui-grid-row">
+                <div class="ui-grid-col-12">
+                    <span>Added new product {{product.productName}} id: {{product.productId}}</span>
+                </div>
+            </div>
+        </div>  
 
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="productsClick()" label="Get product codes"></button>
+                </div>
+                <div class="ui-grid-col-4"></div>
+                <div class="ui-grid-col-4"></div>
+            </div>
+            <div *ngIf="products" class="ui-grid-row">
                 <div class="ui-grid-col-12">
-                    <span *ngIf="product">{{product.productCode}}</span>
+                    <ul>
+                        <li *ngFor="let p of products">{{p.id}} : {{p.key}}</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    
     </p-panel>   
 
 </div>

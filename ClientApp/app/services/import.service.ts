@@ -8,28 +8,25 @@ import { Helpers } from '../shared/helpers';
 @Injectable()
 export class ImportService {
 
-    domain: String = 'http://www.tessilnova.com';
+    apiRoot: String = 'http://www.tessilnova.com';
 
     constructor(private http: Http) {
     }
 
-    getProductById(id: number): Observable<CodartInfo> {
-        return this.http.get(this.domain + '/api/codart/' + id)
+    getProducts(): Observable<Translate[]> {
+        let apiURL = `${this.apiRoot}/api/codart/products`;
+        return this.http.get(apiURL, { headers: Helpers.getHeaders() })
+            .map(result => <Translate[]>result.json());
+    }
+
+    getProductById(id: String): Observable<CodartInfo> {
+        let apiURL = `${this.apiRoot}/api/codart/${id}`;
+        return this.http.get(apiURL, { headers: Helpers.getHeaders() })
             .map(result => <CodartInfo>result.json());
     }
 
-    getProductByName(name: String): Observable<CodartInfo> {
-        return this.http.get(this.domain + '/api/codart/name/' + name)
-            .map(result => <CodartInfo>result.json());
-    }
-
-    createProduct(model: Product): Observable<Product> {
-        return this.http.post('/api/product', model, { headers: Helpers.getHeaders() })
-            .map(result => <Product>result.json());
-    }
-
-    updateProduct(model: Product): Observable<Product> {
-        return this.http.put('/api/product', model, { headers: Helpers.getHeaders() })
+    create(model: Product): Observable<Product> {
+        return this.http.post('/api/product/import', model, { headers: Helpers.getHeaders() })
             .map(result => <Product>result.json());
     }
 }
