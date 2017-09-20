@@ -99,14 +99,6 @@ open class PostgresSqlORM: PostgresStORM {
         }
     }
 
-	func query() throws {
-		do {
-			try query(cursor: StORMCursor(limit: 10000,offset: 0))
-		} catch {
-			throw StORMError.error("\(error)")
-		}
-	}
-	
 	public func query(id: Any) throws {
 		let (idname, _) = firstAsKey()
 		do {
@@ -122,7 +114,7 @@ open class PostgresSqlORM: PostgresStORM {
 		whereclause:	String = "",
 		params:			[Any] = [],
 		orderby:		[String] = [],
-		cursor:			StORMCursor = StORMCursor(),
+		cursor:			StORMCursor = StORMCursor(limit: 10000,offset: 0),
 		joins:			[StORMDataSourceJoin] = [],
 		having:			[String] = [],
 		groupBy:		[String] = []

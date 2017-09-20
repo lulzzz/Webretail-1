@@ -55,9 +55,8 @@ class ProductAttribute: PostgresSqlORM, Codable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         productId = try container.decodeIfPresent(Int.self, forKey: .productId) ?? 0
-        let attribute = try container.decode(Attribute.self, forKey: ._attribute)
-        attributeId = attribute.attributeId
- 
+        _attribute = try container.decode(Attribute.self, forKey: ._attribute)
+        attributeId = _attribute.attributeId
         _attributeValues = try container.decodeIfPresent([ProductAttributeValue].self, forKey: ._attributeValues) ?? [ProductAttributeValue]()
     }
     

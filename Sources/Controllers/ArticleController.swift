@@ -38,7 +38,7 @@ class ArticleController {
         let id = request.urlVariables["id"]!
         do {
             let count = try self.repository.build(productId: Int(id)!)
-            try response.setJson(count)
+            try response.setBody(string: count.jsonEncodedString())
             response.completed(status: .ok)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")

@@ -83,7 +83,7 @@ struct ProductRepository : ProductProtocol {
         }
         
         // Categories
-        for c in item._categories {
+        for c in item._categories.sorted(by: { $0._category.categoryIsPrimary.hashValue < $1._category.categoryIsPrimary.hashValue }) {
             let category = Category()
             try category.query(
                 whereclause: "categoryName = $1", params: [c._category.categoryName],
@@ -121,14 +121,14 @@ struct ProductRepository : ProductProtocol {
             }
             
             // AttributeValues
-            for v in a._attributeValues {
+            for v in a._attributeValues.sorted(by: { $0._attributeValue.attributeValueCode < $1._attributeValue.attributeValueCode }) {
                 let attributeValue = AttributeValue()
                 try attributeValue.query(
                     whereclause: "attributeId = $1 AND attributeValueName = $2", params: [attribute.attributeId, v._attributeValue.attributeValueName],
                     cursor: StORMCursor(limit: 1, offset: 0)
                 )
                 if attributeValue.attributeValueId == 0 {
-                    attributeValue.attributeId = attribute.attributeId
+                    attributeValue.attributeId = a.attributeId
                     attributeValue.attributeValueCode = v._attributeValue.attributeValueCode
                     attributeValue.attributeValueName = v._attributeValue.attributeValueName
                     attributeValue.attributeValueCreated = Int.now()
@@ -164,7 +164,7 @@ struct ProductRepository : ProductProtocol {
             productAttribute.productId = item.productId
             productAttribute.attributeId = a.attributeId
             try productAttribute.save {
-                id in productAttribute.productAttributeId = id as! Int
+                id in a.productAttributeId = id as! Int
             }
             
             // ProductAttributeValues
@@ -173,7 +173,7 @@ struct ProductRepository : ProductProtocol {
                 productAttributeValue.productAttributeId = a.productAttributeId
                 productAttributeValue.attributeValueId = v.attributeValueId
                 try productAttributeValue.save {
-                    id in productAttributeValue.productAttributeValueId = id as! Int
+                    id in v.productAttributeValueId = id as! Int
                 }
             }
         }
