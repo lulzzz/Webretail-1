@@ -297,28 +297,28 @@ export class ProductComponent implements OnInit, OnDestroy {
     buildClick() {
         this.isBusy = true;
         this.productService.build(this.product.productId)
-                           .subscribe(result => {
-                                this.productService.getProduct(this.product.productId)
-                                    .subscribe(res => {
-                                        this.product = res;
-                                        this.productInfo[0].expanded = false;
-                                        this.createSheet();
-                                        this.isBusy = false;
-                                        this.msgs.push({
-                                            severity: 'success',
-                                            summary: 'Articles build',
-                                            detail: 'Totals: added ' + result.added + ' updated ' + result.updated + ' deleted ' + result.deleted
-                                        });
-                                    }
-                                );
-                            }, onerror => {
-                                this.isBusy = false;
-                                this.msgs.push({
-                                    severity: 'error',
-                                    summary: 'Articles build',
-                                    detail: onerror._body
-                                });
-                            });
+            .subscribe(result => {
+                this.productService.getProduct(this.product.productId)
+                    .subscribe(res => {
+                        this.product = res;
+                        this.productInfo[0].expanded = false;
+                        this.createSheet();
+                        this.isBusy = false;
+                        this.msgs.push({
+                            severity: 'success',
+                            summary: 'Articles build',
+                            detail: 'Totals: added ' + result.added + ' updated ' + result.updated + ' deleted ' + result.deleted
+                        });
+                    }
+                );
+            }, onerror => {
+                this.isBusy = false;
+                this.msgs.push({
+                    severity: 'error',
+                    summary: 'Articles build',
+                    detail: onerror._body
+                });
+            });
     }
 
     saveClick() {

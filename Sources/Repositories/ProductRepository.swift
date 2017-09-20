@@ -64,14 +64,114 @@ struct ProductRepository : ProductProtocol {
     }
     
     func create(item: Product) throws {
-        item.brandId = item._brand.brandId
+
+        // Brand
+        let brand = Brand()
+        try brand.query(
+            whereclause: "brandName = $1", params: [item._brand.brandName],
+            cursor: StORMCursor(limit: 1, offset: 0)
+        )
+        if brand.brandId == 0 {
+            brand.brandName = item._brand.brandName
+            brand.brandCreated = Int.now()
+            brand.brandUpdated = Int.now()
+            try brand.save {
+                id in item.brandId = id as! Int
+            }
+        }
+        item.brandId = brand.brandId
+        
+        // Categories
+        for c in item._categories {
+            let category = Category()
+            try category.query(
+                whereclause: "categoryName = $1", params: [c._category.categoryName],
+                cursor: StORMCursor(limit: 1, offset: 0)
+            )
+            if category.categoryId == 0 {
+                category.categoryName = c._category.categoryName
+                category.categoryCreated = Int.now()
+                category.categoryUpdated = Int.now()
+                try category.save {
+                    id in category.categoryId = id as! Int
+                }
+            }
+            c.categoryId = category.categoryId
+        }
+        
+        // Attributes
+        for a in item._attributes {
+            let attribute = Attribute()
+            try attribute.query(
+                whereclause: "attributeName = $1", params: [a._attribute.attributeName],
+                cursor: StORMCursor(limit: 1, offset: 0)
+            )
+            if attribute.attributeId == 0 {
+                attribute.attributeName = a._attribute.attributeName
+                attribute.attributeCreated = Int.now()
+                attribute.attributeUpdated = Int.now()
+                try attribute.save {
+                    id in attribute.attributeId = id as! Int
+                }
+            }
+            a.attributeId = attribute.attributeId
+            
+            // AttributeValues
+            for v in a._attributeValues {
+                let attributeValue = AttributeValue()
+                try attributeValue.query(
+                    whereclause: "attributeId = $1 AND attributeValueName = $2", params: [attribute.attributeId, v._attributeValue.attributeValueName],
+                    cursor: StORMCursor(limit: 1, offset: 0)
+                )
+                if attributeValue.attributeValueId == 0 {
+                    attributeValue.attributeId = attribute.attributeId
+                    attributeValue.attributeValueCode = v._attributeValue.attributeValueCode
+                    attributeValue.attributeValueName = v._attributeValue.attributeValueName
+                    attributeValue.attributeValueCreated = Int.now()
+                    attributeValue.attributeValueUpdated = Int.now()
+                    try attributeValue.save {
+                        id in attributeValue.attributeValueId = id as! Int
+                    }
+                }
+                v.attributeValueId = attributeValue.attributeValueId
+            }
+        }
+
         item.productCreated = Int.now()
         item.productUpdated = Int.now()
-//        try item.save {
-//            id in item.productId = id as! Int
-//        }
+        try item.save {
+            id in item.productId = id as! Int
+        }
         
-        //TODO: add other info
+        // ProductCategories
+        for c in item._categories {
+            let productCategory = ProductCategory()
+            productCategory.productId = item.productId
+            productCategory.categoryId = c.categoryId
+            try productCategory.save {
+                id in productCategory.productCategoryId = id as! Int
+            }
+        }
+
+        // ProductAttributes
+        for a in item._attributes {
+            let productAttribute = ProductAttribute()
+            productAttribute.productId = item.productId
+            productAttribute.attributeId = a.attributeId
+            try productAttribute.save {
+                id in productAttribute.productAttributeId = id as! Int
+            }
+            
+            // ProductAttributeValues
+            for v in a._attributeValues {
+                let productAttributeValue = ProductAttributeValue()
+                productAttributeValue.productAttributeId = a.productAttributeId
+                productAttributeValue.attributeValueId = v.attributeValueId
+                try productAttributeValue.save {
+                    id in productAttributeValue.productAttributeValueId = id as! Int
+                }
+            }
+        }
     }
     
     func update(id: Int, item: Product) throws {

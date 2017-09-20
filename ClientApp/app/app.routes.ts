@@ -13,6 +13,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { StoreComponent } from './store/store.component';
 import { ProductsComponent } from './product/products.component';
 import { ProductComponent } from './product/product.component';
+import { ImportComponent } from './product/import.component';
 import { StockComponent } from './product/stock.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
@@ -26,7 +27,6 @@ import { DeviceComponent } from './device/device.component';
 import { ReportReceiptsComponent } from './report/receipts.component';
 import { ReportSalesComponent } from './report/sales.component';
 import { StatisticsComponent } from './report/statistics.component';
-import { ImportComponent } from './import/import.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },

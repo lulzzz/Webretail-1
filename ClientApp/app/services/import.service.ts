@@ -29,6 +29,11 @@ export class ImportService {
         return this.http.post('/api/product/import', model, { headers: Helpers.getHeaders() })
             .map(result => <Product>result.json());
     }
+
+    build(productId: number): Observable<any> {
+        return this.http.get('/api/product/' + productId + '/build', { headers: Helpers.getHeaders() })
+            .map(result => result.json());
+    }
 }
 
 export interface CodartInfo {

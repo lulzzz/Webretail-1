@@ -41,7 +41,7 @@ export class ImportComponent implements OnInit  {
         .subscribe(res => {
             this.products = res.map(p => Helpers.newSelectItem(p.id, `${p.id} : ${p.key}`));
             this.isBusy = false;
-        }, onerror => this.msgs.push({severity: 'error', summary: 'getProducts', detail: onerror._body}));
+        }, onerror => this.showError(onerror._body));
      }
 
      importClick() {
@@ -52,13 +52,19 @@ export class ImportComponent implements OnInit  {
             this.importService.create(this.product)
             .subscribe(response => {
                 this.product.productId = response.productId;
-                this.isBusy = false;
-                this.msgs.push({severity: 'success', summary: 'create', detail: `Added new product ${this.product.productName} id: ${this.product.productId}`});
-            }, onerror => {
-                this.msgs.push({severity: 'error', summary: 'create', detail: onerror._body});
-                this.isBusy = false;
-            });
-        }, onerror => this.msgs.push({severity: 'error', summary: 'getProductById', detail: onerror._body}));
+                this.msgs.push({severity: 'success', summary: 'create', detail: `Added product ${this.product.productName} id: ${this.product.productId}`});
+                this.importService.build(this.product.productId)
+                .subscribe(result => {
+                    this.msgs.push({severity: 'success', summary: 'build', detail: `Added ${result.added} articles`});
+                    this.isBusy = false;
+                }, onerror => this.showError(onerror._body));
+            }, onerror => this.showError(onerror._body));
+        }, onerror => this.showError(onerror._body));
+    }
+
+    showError(error: any) {
+        this.msgs.push({severity: 'error', summary: 'import', detail: error});
+        this.isBusy = false;
     }
 
     convertProduct(product: CodartInfo): Product {
