@@ -1,4 +1,5 @@
-﻿<img *ngIf="isBusy" src="/assets/loading.gif" class="loading">
+﻿<p-growl [value]="msgs"></p-growl>
+<img *ngIf="isBusy" src="/assets/loading.gif" class="loading">
 
 <div class="container-fluid">
     
@@ -10,37 +11,14 @@
         </p-header>
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="code">Code</label></div>
-                <div class="ui-grid-col-4">
-                    <input pInputText [(ngModel)]="productCode"/>
+                <div class="ui-grid-col-8">
+                    <p-dropdown [options]="products" [(ngModel)]="productCode" [style]="{'width':'100%'}" [filter]="true" styleClass="ui-column-filter"></p-dropdown>                     
                 </div>
                 <div class="ui-grid-col-4">
-                    <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="importClick()" label="Import"></button>
-                </div>
-            </div>
-            <div *ngIf="product" class="ui-grid-row">
-                <div class="ui-grid-col-12">
-                    <span>Added new product {{product.productName}} id: {{product.productId}}</span>
+                    <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="importClick()" label="Import" [disabled]="isBusy"></button>
                 </div>
             </div>
         </div>  
-
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4">
-                    <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="productsClick()" label="Get product codes"></button>
-                </div>
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4"></div>
-            </div>
-            <div *ngIf="products" class="ui-grid-row">
-                <div class="ui-grid-col-12">
-                    <ul>
-                        <li *ngFor="let p of products">{{p.id}} : {{p.key}}</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
     </p-panel>   
 
 </div>

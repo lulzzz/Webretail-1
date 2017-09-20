@@ -1,11 +1,13 @@
 import { Component, OnInit  } from '@angular/core';
 import { AuthenticationService } from './../services/authentication.service';
+import { Message, SelectItem } from 'primeng/primeng';
 import { ImportService, CodartInfo, Translate } from './../services/import.service';
 import {
     Product, Brand, Category, ProductCategory,
     Attribute, AttributeValue, ProductAttribute, ProductAttributeValue,
     Article, ArticleAttributeValue
 } from './../shared/models';
+import { Helpers } from '../shared/helpers';
 
 @Component({
     selector: 'import-component',
@@ -14,10 +16,11 @@ import {
 
 export class ImportComponent implements OnInit  {
 
+    msgs: Message[] = [];
     isBusy: boolean;
     productCode: String;
     product: Product;
-    products: Translate[];
+    products: SelectItem[];
 
     constructor(private authenticationService: AuthenticationService,
                 private importService: ImportService) {
@@ -28,16 +31,17 @@ export class ImportComponent implements OnInit  {
         if (!this.authenticationService.isAuthenticated) {
             return;
         }
-        this. productCode = '1000284';
+
+        this.getProducts();
      }
 
-     productsClick() {
+     getProducts() {
         this.isBusy = true;
         this.importService.getProducts()
         .subscribe(res => {
-            this.products = res;
+            this.products = res.map(p => Helpers.newSelectItem(p.id, `${p.id} : ${p.key}`));
             this.isBusy = false;
-        }, onerror => alert(JSON.stringify(onerror)));
+        }, onerror => this.msgs.push({severity: 'error', summary: 'getProducts', detail: onerror._body}));
      }
 
      importClick() {
@@ -49,8 +53,12 @@ export class ImportComponent implements OnInit  {
             .subscribe(response => {
                 this.product.productId = response.productId;
                 this.isBusy = false;
-            }, onerror => alert(JSON.stringify(onerror)));
-        }, onerror => alert(JSON.stringify(onerror)));
+                this.msgs.push({severity: 'success', summary: 'create', detail: `Added new product ${this.product.productName} id: ${this.product.productId}`});
+            }, onerror => {
+                this.msgs.push({severity: 'error', summary: 'create', detail: onerror._body});
+                this.isBusy = false;
+            });
+        }, onerror => this.msgs.push({severity: 'error', summary: 'getProductById', detail: onerror._body}));
     }
 
     convertProduct(product: CodartInfo): Product {
@@ -65,9 +73,12 @@ export class ImportComponent implements OnInit  {
         subcategory.categoryIsPrimary = false;
 
         // Texture
+        let texture = product.producer.desc.replace('Tessilnova ', '');
         let textureAttribute = <ProductAttribute>{
             attribute: new Attribute(0, 'Texture'),
-            attributeValues: [ <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id, product.producer.desc) } ]
+            attributeValues: [
+                <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id, texture) }
+            ]
         };
 
         // Colors
