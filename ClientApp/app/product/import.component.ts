@@ -84,7 +84,7 @@ export class ImportComponent implements OnInit  {
         };
 
         // Colors
-        let colors = Helpers.distinct(product.codarts.map(p => Helpers.newSelectItem(p.colorId, p.color)));
+        let colors = Helpers.distinct(product.codarts.map(p => Helpers.newSelectItem(p.colorId.trim(), p.color)));
         let colorAttribute = <ProductAttribute>{
             attribute: new Attribute(0, 'Color'),
             attributeValues: colors.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.value, p.label) })
@@ -103,8 +103,8 @@ export class ImportComponent implements OnInit  {
             let article = new Article();
             article.articleBarcode = p.barcode;
             article.attributeValues = [
-                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id, texture) },
-                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.colorId, p.color) },
+                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture) },
+                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.colorId.trim(), p.color) },
                 <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.size, p.size) }
             ];
             articles.push(article);
