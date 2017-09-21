@@ -50,14 +50,10 @@ export class ImportComponent implements OnInit  {
         .subscribe(res => {
             this.product = this.convertProduct(res);
             this.importService.create(this.product)
-            .subscribe(response => {
-                this.product.productId = response.productId;
-                this.msgs.push({severity: 'success', summary: 'create', detail: `Added product ${this.product.productName} id: ${this.product.productId}`});
-                this.importService.build(this.product.productId)
-                .subscribe(result => {
-                    this.msgs.push({severity: 'success', summary: 'build', detail: `Added ${result.added} articles`});
-                    this.isBusy = false;
-                }, onerror => this.showError(onerror._body));
+            .subscribe(result => {
+                this.product.productId = result.productId;
+                this.msgs.push({severity: 'success', summary: 'import', detail: `Added ${result.articles.length} articles`});
+                this.isBusy = false;
             }, onerror => this.showError(onerror._body));
         }, onerror => this.showError(onerror._body));
     }
@@ -83,15 +79,15 @@ export class ImportComponent implements OnInit  {
         let textureAttribute = <ProductAttribute>{
             attribute: new Attribute(0, 'Texture'),
             attributeValues: [
-                <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id, texture) }
+                <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture) }
             ]
         };
 
         // Colors
-        let colors = product.codarts.map(p => p.color).filter((x, i, a) => x && a.indexOf(x) === i);
+        let colors = Helpers.distinct(product.codarts.map(p => Helpers.newSelectItem(p.colorId, p.color)));
         let colorAttribute = <ProductAttribute>{
             attribute: new Attribute(0, 'Color'),
-            attributeValues: colors.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p, p) })
+            attributeValues: colors.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.value, p.label) })
         };
 
         // Sizes
@@ -101,17 +97,18 @@ export class ImportComponent implements OnInit  {
             attributeValues: sizes.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p, p) })
         };
 
-        // // Articles
-        // let articles: Article[]
-        // product.codarts.forEach(p => {
-        //     let article = new Article();
-        //     article.articleBarcode = p.id.toString();
-        //     article.attributeValues = [
-        //         <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.color, p.color) },
-        //         <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.size, p.size) }
-        //     ];
-        //     articles.push(article);
-        // });
+        // Articles
+        let articles: Article[] = [];
+        product.codarts.forEach(p => {
+            let article = new Article();
+            article.articleBarcode = p.barcode;
+            article.attributeValues = [
+                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id, texture) },
+                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.colorId, p.color) },
+                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.size, p.size) }
+            ];
+            articles.push(article);
+        });
 
         // Product
         let item = new Product();
@@ -125,7 +122,7 @@ export class ImportComponent implements OnInit  {
             <ProductCategory>{ productId: 0, category: subcategory }
         ];
         item.attributes = [ textureAttribute, colorAttribute, sizeAttribute ];
-        // item.articles = articles;
+        item.articles = articles;
 
         return item;
     }

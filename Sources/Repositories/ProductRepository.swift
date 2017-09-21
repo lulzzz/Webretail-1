@@ -177,6 +177,38 @@ struct ProductRepository : ProductProtocol {
                 }
             }
         }
+        
+        // Build articles
+        _ = try (ioCContainer.resolve() as ArticleProtocol).build(productId: item.productId)
+
+        // Sync barcodes
+        for a in item._articles {
+            var values = a._attributeValues.map({ a in a._attributeValue.attributeValueCode })
+            values.append("\(item.productId)")
+            
+            var articleattributevalues = StORMDataSourceJoin()
+            articleattributevalues.table = "articleattributevalues"
+            articleattributevalues.direction = StORMJoinType.LEFT
+            articleattributevalues.onCondition = "articles.articleId = articleattributevalues.articleId"
+            
+            var attributevalues = StORMDataSourceJoin()
+            attributevalues.table = "attributevalues"
+            attributevalues.direction = StORMJoinType.INNER
+            attributevalues.onCondition = "articleattributevalues.attributeValueId = attributevalues.attributeValueId"
+
+            let article = Article()
+            try article.query(
+                whereclause: "attributevalues.attributeValueCode IN ($1, $2, $3) AND articles.productId = $4",
+                params: values,
+                cursor: StORMCursor(limit: 1, offset: 0),
+                joins: [articleattributevalues, attributevalues]
+            )
+            
+            if (article.articleId > 0) {
+                article.articleBarcode = a.articleBarcode
+                try article.save()
+            }
+        }
     }
     
     func update(id: Int, item: Product) throws {
@@ -201,6 +233,40 @@ struct ProductRepository : ProductProtocol {
         let item = Product()
         item.productId = id
         try item.delete()
+
+        let productId = String(id)
+        try item.sql("DELETE FROM productcategories WHERE productId = $1", params: [productId])
+        try item.sql("""
+            DELETE FROM productattributevalues
+            WHERE productattributeId IN
+            (
+              SELECT productattributeId
+              FROM   productattributes
+              WHERE  productId = $1
+            )
+            """, params: [productId])
+        try item.sql("DELETE FROM productattributes WHERE productId = $1", params: [productId])
+        try item.sql("""
+            DELETE FROM articleattributevalues
+            WHERE articleId IN
+            (
+              SELECT articleId
+              FROM   articles
+              WHERE  productId = $1
+            )
+            """, params: [productId])
+        try item.sql("""
+            DELETE FROM stocks
+            WHERE articleId IN
+            (
+              SELECT articleId
+              FROM   articles
+              WHERE  productId = $1
+            )
+            """, params: [productId])
+        try item.sql("DELETE FROM articles WHERE productId = $1", params: [productId])
+        try item.sql("DELETE FROM discountproducts WHERE productId = $1", params: [productId])
+        try item.sql("DELETE FROM publications WHERE productId = $1", params: [productId])
     }
 
     func addCategory(item: ProductCategory) throws {

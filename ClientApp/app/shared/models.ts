@@ -388,7 +388,7 @@ export interface ArticleAttributeValue {
   // articleAttributeValueId: number;
   // articleId: number;
   attributeValueId: number;
-  // attributeValue: AttributeValue;
+  attributeValue: AttributeValue;
 }
 
 export interface ItemValue {

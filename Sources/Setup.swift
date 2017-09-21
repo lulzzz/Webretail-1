@@ -30,7 +30,7 @@ func setupDatabase() throws {
 	PostgresConnector.database = "webretail"
 	PostgresConnector.username = "gerardo"
 	PostgresConnector.password = ""
-    StORMdebug = false
+    StORMdebug = true
 
 	try Company().setup()
 	try tokenStore.setup()

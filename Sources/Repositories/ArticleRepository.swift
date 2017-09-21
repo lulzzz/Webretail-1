@@ -140,6 +140,7 @@ struct ArticleRepository : ArticleProtocol {
                 try item.delete()
                 articles.remove(at: i - countDeleted)
                 countDeleted += 1
+                try item.sql("DELETE FROM articleattributevalues WHERE articleId = $1", params: [String(item.articleId)])
             }
         }
         

@@ -14,9 +14,12 @@ class ArticleAttributeValue: PostgresSqlORM, Codable {
     public var articleId : Int = 0
     public var attributeValueId : Int = 0
 
+    public var _attributeValue: AttributeValue = AttributeValue()
+
     private enum CodingKeys: String, CodingKey {
         case articleId
         case attributeValueId
+        case _attributeValue = "attributeValue"
     }
 
     open override func table() -> String { return "articleattributevalues" }
@@ -47,8 +50,9 @@ class ArticleAttributeValue: PostgresSqlORM, Codable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         articleId = try container.decodeIfPresent(Int.self, forKey: .articleId) ?? 0
-        attributeValueId = try container.decode(Int.self, forKey: .attributeValueId)
-    }
+        attributeValueId = try container.decodeIfPresent(Int.self, forKey: .attributeValueId) ?? 0
+        _attributeValue = try container.decodeIfPresent(AttributeValue.self, forKey: ._attributeValue) ?? AttributeValue()
+}
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)

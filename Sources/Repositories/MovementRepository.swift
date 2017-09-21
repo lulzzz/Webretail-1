@@ -168,6 +168,8 @@ struct MovementRepository : MovementProtocol {
         let item = Movement()
         item.movementId = id
         try item.delete()
+        
+        try item.sql("DELETE FROM movementarticles WHERE movementId = $1", params: [String(id)])
     }
     
     func process(movement: Movement, actionType: ActionType) throws {

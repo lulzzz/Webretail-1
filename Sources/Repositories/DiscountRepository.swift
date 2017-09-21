@@ -60,6 +60,8 @@ struct DiscountRepository : DiscountProtocol {
 		let item = Discount()
 		item.discountId = id
 		try item.delete()
+
+        try item.sql("DELETE FROM discountproducts WHERE discountId = $1", params: [String(id)])
 	}
 
 	func addProduct(item: DiscountProduct) throws {
