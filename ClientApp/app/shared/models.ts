@@ -17,7 +17,7 @@ export class Company {
   public smtpSsl: boolean;
   public smtpUsername: string;
   public smtpPassword: string;
-
+  public barcodeCounter: number;
 
   constructor() {
     this.companyId = 0;
@@ -36,6 +36,7 @@ export class Company {
     this.smtpSsl = false;
     this.smtpUsername = '';
     this.smtpPassword = '';
+    this.barcodeCounter = 0;
   }
 }
 

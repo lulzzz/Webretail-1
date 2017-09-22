@@ -6,6 +6,7 @@
 //
 //
 
+import Foundation
 import StORM
 
 class Company: PostgresSqlORM, Codable {
@@ -28,7 +29,9 @@ class Company: PostgresSqlORM, Codable {
 	public var smtpUsername : String = ""
 	public var smtpPassword : String = ""
 
-//    private enum CodingKeys: String, CodingKey {
+    public var barcodeCounter : UInt64 = 1000000000001
+
+    //    private enum CodingKeys: String, CodingKey {
 //        case companyId
 //        case companyName
 //        case companyDesc
@@ -67,7 +70,9 @@ class Company: PostgresSqlORM, Codable {
 		smtpSsl = this.data["smtpssl"] as? Bool ?? false
 		smtpUsername = this.data["smtpusername"] as? String ?? ""
 		smtpPassword = this.data["smtppassword"] as? String ?? ""
-	}
+
+        barcodeCounter = UInt64(this.data["barcodecounter"] as! String) ?? barcodeCounter
+    }
 	
 	func rows() -> [Company] {
 		var rows = [Company]()

@@ -185,26 +185,20 @@ struct ProductRepository : ProductProtocol {
         for a in item._articles {
             var values = a._attributeValues.map({ a in a._attributeValue.attributeValueCode })
             values.append("\(item.productId)")
+            values.append("\(item._attributes.count)")
             
-            var articleattributevalues = StORMDataSourceJoin()
-            articleattributevalues.table = "articleattributevalues"
-            articleattributevalues.direction = StORMJoinType.LEFT
-            articleattributevalues.onCondition = "articles.articleId = articleattributevalues.articleId"
-            
-            var attributevalues = StORMDataSourceJoin()
-            attributevalues.table = "attributevalues"
-            attributevalues.direction = StORMJoinType.INNER
-            attributevalues.onCondition = "articleattributevalues.attributeValueId = attributevalues.attributeValueId"
-
             let article = Article()
-            try article.query(
-                whereclause: "attributevalues.attributeValueCode IN ($1, $2, $3) AND articles.productId = $4",
-                params: values,
-                cursor: StORMCursor(limit: 1, offset: 0),
-                joins: [articleattributevalues, attributevalues]
-            )
+            let current = try article.sqlRows("""
+                SELECT a.*
+                FROM articles as a
+                LEFT JOIN articleattributevalues as b ON a.articleId = b.articleId
+                LEFT JOIN attributevalues as c ON b.attributeValueId = c.attributeValueId
+                WHERE c.attributeValueCode IN ($1, $2, $3) AND a.productId = $4
+                GROUP BY a.articleId HAVING count(b.attributeValueId) = $5
+                """, params: values)
             
-            if (article.articleId > 0) {
+             if current.count > 0 {
+                article.to(current[0])
                 article.articleBarcode = a.articleBarcode
                 try article.save()
             }

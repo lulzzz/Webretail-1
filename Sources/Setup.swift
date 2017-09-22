@@ -30,7 +30,7 @@ func setupDatabase() throws {
 	PostgresConnector.database = "webretail"
 	PostgresConnector.username = "gerardo"
 	PostgresConnector.password = ""
-    StORMdebug = true
+    StORMdebug = false
 
 	try Company().setup()
 	try tokenStore.setup()
@@ -58,7 +58,7 @@ func setupDatabase() throws {
 	try MovementArticle().setup()
 	try Discount().setup()
 	try DiscountProduct().setup()
-	//try Publication().setup()
+	try Publication().setup()
 }
 
 func addIoC() {
@@ -79,7 +79,7 @@ func addIoC() {
 	ioCContainer.register { DiscountRepository() as DiscountProtocol }
 	ioCContainer.register { InvoiceRepository() as InvoiceProtocol }
     ioCContainer.register { StatisticRepository() as StatisticProtocol }
-	//ioCContainer.register { PublicationRepository() as PublicationProtocol }
+	ioCContainer.register { PublicationRepository() as PublicationProtocol }
 }
 
 func addRoutesAndHandlers() {
@@ -106,7 +106,7 @@ func addRoutesAndHandlers() {
 	server.addRoutes(InvoiceController().getRoutes())
     server.addRoutes(PdfController().getRoutes())
     server.addRoutes(StatisticController().getRoutes())
-    //server.addRoutes(PublicationController().getRoutes())
+    server.addRoutes(PublicationController().getRoutes())
     server.addRoutes(EmailController().getRoutes())
 }
 

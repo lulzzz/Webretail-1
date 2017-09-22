@@ -41,7 +41,8 @@ export class CompanyComponent implements OnInit {
             'host': new FormControl('', Validators.nullValidator),
             'ssl': new FormControl('', Validators.nullValidator),
             'username': new FormControl('', Validators.nullValidator),
-            'password': new FormControl('', Validators.nullValidator)
+            'password': new FormControl('', Validators.nullValidator),
+            'barcode': new FormControl('', Validators.required)
         });
 
         this.companyService.get()

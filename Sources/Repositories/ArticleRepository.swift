@@ -53,15 +53,6 @@ struct ArticleRepository : ArticleProtocol {
         try product.save()
 
         let article = Article()
-        
-        // TODO: fix barcode counter
-        var barcode: Int = 1000000000001
-        try article.query(orderby: ["articleBarcode DESC"], cursor: StORMCursor(limit: 1, offset: 0))
-        let rows = try article.rows();
-        if (rows.count > 0) {
-            barcode = Int(rows[0].articleBarcode)!
-        }
-        
         try article.update(
             cols: ["articleIsValid"],
             params: [false],
@@ -70,6 +61,8 @@ struct ArticleRepository : ArticleProtocol {
         )
 
         // Creation articles
+        let company = Company()
+        try company.query()
         var index = 0
         while index >= 0 {
             
@@ -102,8 +95,8 @@ struct ArticleRepository : ArticleProtocol {
             else {
                 // Add article
                 newArticle.productId = productId
-                barcode += 1
-                newArticle.articleBarcode = String(barcode)
+                company.barcodeCounter += 1
+                newArticle.articleBarcode = String(company.barcodeCounter)
                 newArticle.articleIsValid = true;
                 try add(item: newArticle)
                 
@@ -157,6 +150,9 @@ struct ArticleRepository : ArticleProtocol {
         product.productIsValid = true
         product.productUpdated = Int.now()
         try product.save()
+        
+        // Update barcode counter
+        try company.save()
         
         var result = [String: Any]()
         result["added"] = countAdded
