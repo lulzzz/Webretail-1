@@ -6,6 +6,7 @@
 //
 //
 
+import Foundation
 import StORM
 
 class Product: PostgresSqlORM, Codable {
@@ -17,6 +18,8 @@ class Product: PostgresSqlORM, Codable {
     public var productUm : String = ""
     public var productSellingPrice : Double = 0
     public var productPurchasePrice : Double = 0
+    public var productMedias: [Media] = [Media]()
+    public var productTranslates: [Translation] = [Translation]()
     public var productIsActive : Bool = false
     public var productIsValid : Bool = false
     public var productCreated : Int = Int.now()
@@ -27,7 +30,7 @@ class Product: PostgresSqlORM, Codable {
     public var _attributes: [ProductAttribute] = [ProductAttribute]()
     public var _articles: [Article] = [Article]()
 	public var _discount : Discount?
-	
+
     private enum CodingKeys: String, CodingKey {
         case productId
         case productCode
@@ -35,6 +38,8 @@ class Product: PostgresSqlORM, Codable {
         case productUm
         case productSellingPrice
         case productPurchasePrice
+        case productMedias = "medias"
+        case productTranslates = "translates"
         case productIsActive
         case _brand = "brand"
         case _categories = "categories"
@@ -55,6 +60,13 @@ class Product: PostgresSqlORM, Codable {
         productUm = this.data["productum"] as? String ?? ""
         productSellingPrice = Double(this.data["productsellingprice"] as? Float ?? 0)
         productPurchasePrice = Double(this.data["productpurchaseprice"] as? Float ?? 0)
+        
+        let decoder = JSONDecoder()
+        var jsonData = try! JSONSerialization.data(withJSONObject: this.data["productmedias"]!, options: [])
+        productMedias = try! decoder.decode([Media].self, from: jsonData)
+        jsonData = try! JSONSerialization.data(withJSONObject: this.data["producttranslates"]!, options: [])
+        productTranslates = try! decoder.decode([Translation].self, from: jsonData)
+        
         productIsActive = this.data["productisactive"] as? Bool ?? false
         productIsValid = this.data["productisvalid"] as? Bool ?? false
         productCreated = this.data["productcreated"] as? Int ?? 0
@@ -95,6 +107,8 @@ class Product: PostgresSqlORM, Codable {
         productUm = try container.decode(String.self, forKey: .productUm)
         productSellingPrice = try container.decode(Double.self, forKey: .productSellingPrice)
         productPurchasePrice = try container.decode(Double.self, forKey: .productPurchasePrice)
+        productMedias = try container.decodeIfPresent([Media].self, forKey: .productMedias) ?? [Media]()
+        productTranslates = try container.decodeIfPresent([Translation].self, forKey: .productTranslates) ?? [Translation]()
         productIsActive = try container.decode(Bool.self, forKey: .productIsActive)
         _brand = try container.decode(Brand.self, forKey: ._brand)
         brandId = _brand.brandId
@@ -113,6 +127,8 @@ class Product: PostgresSqlORM, Codable {
         try container.encode(productUm, forKey: .productUm)
         try container.encode(productSellingPrice, forKey: .productSellingPrice)
         try container.encode(productPurchasePrice, forKey: .productPurchasePrice)
+        try container.encode(productMedias, forKey: .productMedias)
+        try container.encode(productTranslates, forKey: .productTranslates)
         try container.encode(productIsActive, forKey: .productIsActive)
         try container.encode(_brand, forKey: ._brand)
         try container.encode(_categories, forKey: ._categories)

@@ -43,7 +43,7 @@ export interface CodartInfo {
     featured: boolean;
     published: Date;
     codarts: Codart[];
-    medias: Media[];
+    medias: Image[];
     translates: Translate[];
 }
 
@@ -66,7 +66,7 @@ export interface Codart {
     size: string;
 }
 
-export interface Media {
+export interface Image {
     id: number;
     codartCode: string;
     filename: string;

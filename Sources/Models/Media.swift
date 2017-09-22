@@ -5,4 +5,10 @@
 //  Created by Gerardo Grisolini on 22/09/17.
 //
 
-import Foundation
+class Media: Codable {
+    
+    public var name : String = ""
+    public var url : String = ""
+    public var number : Int = 0
+}
+

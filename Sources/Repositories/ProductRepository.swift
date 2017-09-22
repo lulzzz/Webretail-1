@@ -6,6 +6,7 @@
 //
 //
 
+import Foundation
 import StORM
 
 struct ProductRepository : ProductProtocol {
@@ -138,6 +139,19 @@ struct ProductRepository : ProductProtocol {
                     }
                 } else {
                     v.attributeValueId = attributeValue.attributeValueId
+                }
+            }
+            
+            // Medias
+            var isDir: ObjCBool = false
+            if !FileManager.default.fileExists(atPath: "./webroot/media", isDirectory: &isDir) {
+                try FileManager.default.createDirectory(atPath: "./webroot/media", withIntermediateDirectories: true, attributes: nil)
+            }
+            for m in item.productMedias {
+                let url = URL(string: m.url)
+                let data = try? Data(contentsOf: url!)
+                if !FileManager.default.createFile(atPath: "./webroot/media/\(m.name)", contents: data, attributes: nil) {
+                    throw StORMError.error("File \(m.url) not found")
                 }
             }
         }

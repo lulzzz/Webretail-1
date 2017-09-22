@@ -1,11 +1,11 @@
 import { Component, OnInit  } from '@angular/core';
 import { AuthenticationService } from './../services/authentication.service';
 import { Message, SelectItem } from 'primeng/primeng';
-import { ImportService, CodartInfo, Translate } from './../services/import.service';
+import { ImportService, CodartInfo, Translate, Image } from './../services/import.service';
 import {
     Product, Brand, Category, ProductCategory,
     Attribute, AttributeValue, ProductAttribute, ProductAttributeValue,
-    Article, ArticleAttributeValue
+    Article, ArticleAttributeValue, Media, Translation
 } from './../shared/models';
 import { Helpers } from '../shared/helpers';
 
@@ -110,6 +110,12 @@ export class ImportComponent implements OnInit  {
             articles.push(article);
         });
 
+        // Medias
+        let medias = product.medias.map(p => new Media(p.filename, p.url, p.number));
+
+        // Translations
+        let translations = product.translates.map(p => new Translation(p.code, p.key, p.value));
+
         // Product
         let item = new Product();
         item.productCode = product.id;
@@ -123,6 +129,8 @@ export class ImportComponent implements OnInit  {
         ];
         item.attributes = [ textureAttribute, colorAttribute, sizeAttribute ];
         item.articles = articles;
+        item.medias = medias;
+        item.translations = translations;
 
         return item;
     }

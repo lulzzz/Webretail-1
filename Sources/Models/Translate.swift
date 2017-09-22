@@ -5,4 +5,10 @@
 //  Created by Gerardo Grisolini on 22/09/17.
 //
 
-import Foundation
+class Translation: Codable {
+    
+    public var country : String = ""
+    public var key : String = ""
+    public var value : String = ""
+}
+

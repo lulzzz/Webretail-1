@@ -108,6 +108,20 @@ export class Category {
   }
 }
 
+export class Media {
+  constructor(
+    public name: string,
+    public url: string,
+    public number: number) { }
+}
+
+export class Translation {
+  constructor(
+    public country: string,
+    public key: string,
+    public value: string) { }
+}
+
 export class Product {
   public productId: number;
   public productCode: string;
@@ -115,6 +129,8 @@ export class Product {
   public productUm: string;
   public productSellingPrice: number;
   public productPurchasePrice: number;
+  public medias: Media[];
+  public translations: Translation[];
   public discount?: Discount;
   public brand: Brand;
   public categories: ProductCategory[];
@@ -131,6 +147,8 @@ export class Product {
     this.productUm = '';
     this.productSellingPrice = 0;
     this.productPurchasePrice = 0;
+    this.medias = [];
+    this.translations = [];
     this.categories = [];
     this.attributes = [];
     this.articles = [];
