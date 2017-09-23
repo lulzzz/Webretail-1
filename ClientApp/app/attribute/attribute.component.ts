@@ -70,7 +70,7 @@ export class AttributeComponent implements OnInit {
     }
 
     addClick() {
-        this.selected = new Attribute(0, '');
+        this.selected = new Attribute(0, '', []);
         this.displayPanel = true;
     }
 
@@ -122,7 +122,7 @@ export class AttributeComponent implements OnInit {
 
     addValueClick() {
         if (this.selected && this.selected.attributeId > 0) {
-            this.selectedValue = new AttributeValue(this.selected.attributeId, 0, '', '');
+            this.selectedValue = new AttributeValue(this.selected.attributeId, 0, '', '', []);
             this.displayPanelValue = true;
         } else {
             alert('Select a attribute before add value!');

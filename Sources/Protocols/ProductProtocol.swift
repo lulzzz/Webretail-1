@@ -18,6 +18,8 @@ protocol ProductProtocol {
 
     func update(id: Int, item: Product) throws
     
+    func publish(id: Int, item: Product) throws
+
     func delete(id: Int) throws
 
     func addCategory(item: ProductCategory) throws

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		564949D11F7690CE000657A2 /* JsonbProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564949D01F7690CE000657A2 /* JsonbProtocol.swift */; };
 		565AE41C1F75972400D7D114 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565AE41B1F75972400D7D114 /* Media.swift */; };
 		565AE41E1F7599B400D7D114 /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565AE41D1F7599B400D7D114 /* Translate.swift */; };
 		OBJ_1040 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
@@ -1686,6 +1687,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		564949D01F7690CE000657A2 /* JsonbProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonbProtocol.swift; sourceTree = "<group>"; };
 		565AE41B1F75972400D7D114 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		565AE41D1F7599B400D7D114 /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4236,6 +4238,7 @@
 				OBJ_90 /* StatisticProtocol.swift */,
 				OBJ_91 /* StoreProtocol.swift */,
 				OBJ_92 /* UserProtocol.swift */,
+				564949D01F7690CE000657A2 /* JsonbProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -5434,6 +5437,7 @@
 				OBJ_1216 /* AttributeProtocol.swift in Sources */,
 				OBJ_1217 /* AttributeValueProtocol.swift in Sources */,
 				OBJ_1218 /* BrandProtocol.swift in Sources */,
+				564949D11F7690CE000657A2 /* JsonbProtocol.swift in Sources */,
 				OBJ_1219 /* CategoryProtocol.swift in Sources */,
 				OBJ_1220 /* CausalProtocol.swift in Sources */,
 				OBJ_1221 /* CompanyProtocol.swift in Sources */,

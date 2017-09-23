@@ -100,11 +100,13 @@ export class Category {
   public categoryId: number;
   public categoryName: string;
   public categoryIsPrimary: boolean;
+  public translations: Translation[];
 
   constructor(categoryId: number, categoryName: string) {
     this.categoryId = categoryId;
     this.categoryName = categoryName;
     this.categoryIsPrimary = false;
+    this.translations = [];
   }
 }
 
@@ -177,7 +179,9 @@ export class Article {
 export class Attribute {
   constructor(
     public attributeId: number,
-    public attributeName: string) { }
+    public attributeName: string,
+    public translations: Translation[]
+  ) { }
 }
 
 export class AttributeValue {
@@ -185,7 +189,20 @@ export class AttributeValue {
     public attributeId: number,
     public attributeValueId: number,
     public attributeValueCode: string,
-    public attributeValueName: string) { }
+    public attributeValueName: string,
+    public translations: Translation[]
+  ) { }
+}
+
+export class Publication {
+  constructor(
+    public publicationId: number,
+    public productId: number,
+    public publicationFeatured: boolean,
+    public publicationStartAt: Date,
+    public publicationFinishAt: Date,
+    public publicationUpdated: Date
+  ) {}
 }
 
 export class Causal {

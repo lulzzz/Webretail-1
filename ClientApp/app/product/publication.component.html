@@ -1,0 +1,172 @@
+<p-growl [value]="msgs"></p-growl>
+<p-confirmDialog width="425"></p-confirmDialog>
+<img *ngIf="!product" src="/assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+
+   <button pButton type="button" title="Products" style="position: absolute; top: 144px; left: 30px; width:50px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+    
+    <h4 *ngIf="product">{{product.productName}}</h4>
+
+    <p-steps [model]="items" [(activeIndex)]="activeIndex" styleClass="steps-custom" [readonly]="false"></p-steps>
+
+    <div class="steps-container">
+
+        <div *ngIf="activeIndex===0&&product">
+            <div class="steps-status">
+                <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
+                {{publicationService.step1}}
+            </div>
+            <p-panel header="Translate Categories">
+                <table *ngFor="let c of product.categories" class='table' cellpadding="2" cellspacing="2">
+                    <tr>
+                        <td align="center"><strong>Category</strong></td>
+                        <td align="center">{{c.category.categoryId}}</td>
+                        <td align="center">{{c.category.categoryName}}</td>
+                    <tr>
+                        <td align="center"><strong>Country</strong></td>
+                        <td align="center"><strong>Translate</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><p-dropdown [options]="countries" [(ngModel)]="translateCategory.country"></p-dropdown></td>
+                        <td align="center"><input type="text" pInputText class="inputtext" [(ngModel)]="translateCategory.value"/></td>
+                        <td><button type="button" pButton (click)="addTranslateClick(c.category.translations, translateCategory)" icon="fa-plus-circle"></button></td>
+                    </tr>
+                    <tr *ngFor="let item of c.category.translations">
+                        <td align="center">{{item.code === "EN" ? 'English' : 'Italian'}}</td>
+                        <td align="center"><input type="text" pInputText class="inputtext" [(ngModel)]="item.value"/></td>
+                        <td>
+                            <button type="button" pButton (click)="updateTranslateClick(c.category.translations, item)" icon="fa-save"></button>
+                            <button type="button" pButton (click)="deleteTranslateClick(c.category.translations, item)" icon="fa-trash"></button>
+                        </td>
+                    </tr>
+                </table>
+            </p-panel>    
+        </div>
+
+        <div *ngIf="activeIndex===1&&product">
+            <span class="steps-status">
+                <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
+                {{publicationService.step2}}
+            </span>
+            <p-panel header="Translate Attributes">
+                <table class='table' cellpadding="2" cellspacing="2">
+                    <thead>
+                        <tr>
+                            <td align="center"><strong>Description</strong></td>
+                            <td align="center">{{product.productCode}}</td>
+                            <td align="center">{{product.productName}}</td>
+                        </tr>
+                        <tr>
+                            <td align="center"><strong>Country</strong></td>
+                            <td align="center"><strong>Translate</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td align="center"><p-dropdown [options]="countries" [(ngModel)]="translateAttribute.country"></p-dropdown></td>
+                            <td align="center"><textarea pInputTextarea class="inputtext" [(ngModel)]="translateAttribute.value"></textarea></td>
+                            <td><button type="button" pButton (click)="addTranslateClick(product.translations, translateAttribute)" icon="fa-plus-circle"></button></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of product.translations">
+                            <td align="center">{{item.code === "EN" ? 'English' : 'Italian'}}</td>
+                            <td align="center"><textarea pInputTextarea class="inputtext" [(ngModel)]="item.value"></textarea></td>
+                            <td>
+                                <button type="button" pButton (click)="updateTranslateClick(product.translations, item)" icon="fa-save"></button>
+                                <button type="button" pButton (click)="deleteTranslateClick(product.translations, item)" icon="fa-trash"></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p-panel>
+        </div>
+
+        <div *ngIf="activeIndex===2&&product">
+            <span class="steps-status">
+                <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
+                Optional
+            </span>
+            <p-panel header="Translate Attributes">
+                <table *ngFor="let a of product.attributes" class='table' cellpadding="2" cellspacing="2">
+                    <tr>
+                        <td align="center"><strong>Attribute</strong></td>
+                        <td align="center">{{a.attribute.attributeId}}</td>
+                        <td align="center">{{a.attribute.attributeName}}</td>
+                    <tr>
+                        <td align="center"><strong>Country</strong></td>
+                        <td align="center"><strong>Translate</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><p-dropdown [options]="countries" [(ngModel)]="translateAttribute.country"></p-dropdown></td>
+                        <td align="center"><input type="text" pInputText class="inputtext" [(ngModel)]="translateAttribute.value"/></td>
+                        <td><button type="button" pButton (click)="addTranslateClick(c.attribute.translations, translateAttribute)" icon="fa-plus-circle"></button></td>
+                    </tr>
+                    <tr *ngFor="let item of c.attribute.translations">
+                        <td align="center">{{item.code === "EN" ? 'English' : 'Italian'}}</td>
+                        <td align="center"><input type="text" pInputText class="inputtext" [(ngModel)]="item.value"/></td>
+                        <td>
+                            <button type="button" pButton (click)="updateTranslateClick(c.attribute.translations, item)" icon="fa-save"></button>
+                            <button type="button" pButton (click)="deleteTranslateClick(c.attribute.translations, item)" icon="fa-trash"></button>
+                        </td>
+                    </tr>
+                </table>
+            </p-panel>   
+        </div>
+
+        <div *ngIf="activeIndex===3&&product">
+            <span class="steps-status">
+                <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
+                {{publicationService.step4}}
+            </span>
+            <p-carousel headerText="Images" [value]="product.medias">
+                <ng-template let-media>
+                    <div class="ui-grid ui-grid-responsive">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12"><img src="{{media.url}}" height="240px" width="100%" (click)="selectMedia(media.url);"/></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12">
+                                <button type="button" pButton icon="fa-trash" style="margin-right: 30px" (click)="deleteMediaClick(media)"></button>
+                                <span>N°</span>
+                                <p-spinner size="5" [(ngModel)]="media.number"></p-spinner>
+                                <button type="button" pButton icon="fa-save" style="margin-left: 10px" (click)="updateMediaClick(media)"></button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+            
+            <p-fileUpload name="files" url="/api/media" multiple="multiple" accept="image/*" maxFileSize="1000000" 
+                (onBeforeUpload)="onBeforeUpload($event)" (onUpload)="onUpload($event)"></p-fileUpload>
+
+            <p-panel header="{{selectedMedia}}">
+                <img src="{{selectedMedia}}" width="100%" *ngIf="selectedMedia"/>
+            </p-panel>
+            </div>
+
+            <div *ngIf="activeIndex===4&&product">
+                <span class="steps-status">
+                        <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
+                        {{status}}
+                    </span>
+                <p-panel header="Publish in the store">
+                    <div style="padding: 30px">
+                        <p>
+                            <strong>Featured</strong>
+                            <br/>
+                            <p-inputSwitch [(ngModel)]="publications.featured" (onChange)="handleFeaturedChange($event)"></p-inputSwitch>
+                        </p>
+                        <br/>
+                        <p>
+                            <strong>Published</strong>
+                            <br/>
+                            <button type="button" pButton icon="fa-save" style="margin-left: 10px" (click)="publishClick()"></button>
+                        </p>
+                    </div>
+                </p-panel>
+            </div>
+        </div>
+</div>

@@ -203,6 +203,18 @@ open class PostgresSqlORM: PostgresStORM {
                         break
                     }
                     c.append((label, modifyValue(String(data: data, encoding: .utf8)!, forKey: label)))
+                } else if value is [JsonbProtocol] {
+                    let encoder = JSONEncoder()
+                    let data: Data
+                    switch value {
+                    case is [Media]:
+                        data = try! encoder.encode(value as? [Media])
+                        break
+                    default:
+                        data = try! encoder.encode(value as? [Translation])
+                        break
+                    }
+                    c.append((label, modifyValue(String(data: data, encoding: .utf8)!, forKey: label)))
                 } else if value is [String] {
                     c.append((label, modifyValue((value as! [String]).joined(separator: ","), forKey: label)))
                 } else {

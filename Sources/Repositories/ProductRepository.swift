@@ -148,7 +148,7 @@ struct ProductRepository : ProductProtocol {
                 try FileManager.default.createDirectory(atPath: "./webroot/media", withIntermediateDirectories: true, attributes: nil)
             }
             for m in item.productMedias {
-                let url = URL(string: m.url)
+                let url = URL(string: "http://www.tessilnova.com/\(m.url)")
                 let data = try? Data(contentsOf: url!)
                 if !FileManager.default.createFile(atPath: "./webroot/media/\(m.name)", contents: data, attributes: nil) {
                     throw StORMError.error("File \(m.url) not found")
@@ -237,6 +237,17 @@ struct ProductRepository : ProductProtocol {
 		try current.save()
     }
     
+    func publish(id: Int, item: Product) throws {
+        
+        guard let current = try get(id: id) else {
+            throw StORMError.noRecordFound
+        }
+        
+        // TODO: sync medias and translates
+        
+        try current.save()
+    }
+
     func delete(id: Int) throws {
         let item = Product()
         item.productId = id

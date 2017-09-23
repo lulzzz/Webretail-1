@@ -13,7 +13,6 @@ class Publication: PostgresSqlORM, Codable {
     public var publicationId : Int = 0
     public var productId : Int = 0
     public var publicationFeatured : Bool = false
-	public var publicationIsValid : Bool = false
     public var publicationStartAt : Int = Int.now()
     public var publicationFinishAt : Int = Int.now()
 	public var publicationUpdated : Int = Int.now()
@@ -24,7 +23,6 @@ class Publication: PostgresSqlORM, Codable {
         publicationId = this.data["publicationid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0
 		publicationFeatured = this.data["publicationfeatured"] as? Bool ?? false
-        publicationIsValid = this.data["publicationisvalid"] as? Bool ?? false
         publicationStartAt = this.data["publicationstartat"] as? Int ?? 0
         publicationFinishAt = this.data["publicationfinishat"] as? Int ?? 0
 		publicationUpdated = this.data["publicationupdated"] as? Int ?? 0

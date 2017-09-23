@@ -6,6 +6,7 @@
 //
 //
 
+import Foundation
 import StORM
 
 class Category: PostgresSqlORM, Codable {
@@ -13,6 +14,7 @@ class Category: PostgresSqlORM, Codable {
     public var categoryId : Int = 0
     public var categoryName : String = ""
     public var categoryIsPrimary : Bool = false
+    public var categoryTranslates: [Translation] = [Translation]()
     public var categoryCreated : Int = Int.now()
     public var categoryUpdated : Int = Int.now()
     
@@ -20,6 +22,7 @@ class Category: PostgresSqlORM, Codable {
         case categoryId
         case categoryName
         case categoryIsPrimary
+        case categoryTranslates = "translations"
     }
 
     open override func table() -> String { return "categories" }
@@ -29,6 +32,9 @@ class Category: PostgresSqlORM, Codable {
         categoryId = this.data["categoryid"] as? Int ?? 0
         categoryName = this.data["categoryname"] as? String  ?? ""
         categoryIsPrimary = this.data["categoryisprimary"] as? Bool ?? true
+        let decoder = JSONDecoder()
+        let jsonData = try! JSONSerialization.data(withJSONObject: this.data["categorytranslates"]!, options: [])
+        categoryTranslates = try! decoder.decode([Translation].self, from: jsonData)
         categoryCreated = this.data["categorycreated"] as? Int ?? 0
         categoryUpdated = this.data["categoryupdated"] as? Int ?? 0
     }
@@ -41,5 +47,27 @@ class Category: PostgresSqlORM, Codable {
             rows.append(row)
         }
         return rows
+    }
+
+    override init() {
+        super.init()
+    }
+    
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        categoryId = try container.decode(Int.self, forKey: .categoryId)
+        categoryName = try container.decode(String.self, forKey: .categoryName)
+        categoryIsPrimary = try container.decode(Bool.self, forKey: .categoryIsPrimary)
+        categoryTranslates = try container.decodeIfPresent([Translation].self, forKey: .categoryTranslates) ?? [Translation]()
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(categoryId, forKey: .categoryId)
+        try container.encode(categoryName, forKey: .categoryName)
+        try container.encode(categoryIsPrimary, forKey: .categoryIsPrimary)
+        try container.encode(categoryTranslates, forKey: .categoryTranslates)
     }
 }

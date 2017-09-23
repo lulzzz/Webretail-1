@@ -12,7 +12,9 @@ import {
     TreeModule, ButtonModule, InputTextModule, InputSwitchModule,
     PanelModule, SplitButtonModule, PickListModule, GrowlModule,
     SelectButtonModule, ChipsModule, InputTextareaModule,
-    ContextMenuModule, TooltipModule, CalendarModule, FileUploadModule, ChartModule
+    ContextMenuModule, TooltipModule, CalendarModule,
+    FileUploadModule, ChartModule, CarouselModule,
+    SpinnerModule, StepsModule
 } from 'primeng/primeng';
 
 import { Configuration } from './app.constants';
@@ -39,6 +41,7 @@ import { ProductsComponent } from './product/products.component';
 import { ProductComponent } from './product/product.component';
 import { ImportComponent } from './product/import.component';
 import { StockComponent } from './product/stock.component';
+import { PublicationComponent } from './product/publication.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { DocumentComponent } from './movement/document.component';
@@ -67,6 +70,7 @@ import { MovementService } from './services/movement.service';
 import { DiscountService } from './services/discount.service';
 import { InvoiceService } from './services/invoice.service';
 import { StatisticService } from './services/statistic.service';
+import { PublicationService } from './services/publication.service';
 import { ImportService } from './services/import.service';
 
 import { CategoryFilterPipe } from './pipes/category-filter.pipe';
@@ -87,6 +91,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ConfirmDialogModule, ToolbarModule, SelectButtonModule,
         ChipsModule, InputTextareaModule, FileUploadModule,
         ContextMenuModule, TooltipModule, CalendarModule, ChartModule,
+        CarouselModule, SpinnerModule, StepsModule,
         AppRoutes
     ],
     declarations: [
@@ -117,6 +122,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ProductsComponent,
         ProductComponent,
         StockComponent,
+        PublicationComponent,
         MovementsComponent,
         MovementComponent,
         DocumentComponent,
@@ -149,6 +155,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         InvoiceService,
         ConfirmationService,
         StatisticService,
+        PublicationService,
         ImportService
     ],
     exports: [

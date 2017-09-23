@@ -15,6 +15,7 @@ import { ProductsComponent } from './product/products.component';
 import { ProductComponent } from './product/product.component';
 import { ImportComponent } from './product/import.component';
 import { StockComponent } from './product/stock.component';
+import { PublicationComponent } from './product/publication.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { DocumentComponent } from './movement/document.component';
@@ -45,6 +46,7 @@ export const routes: Routes = [
     { path: 'product', component: ProductsComponent },
     { path: 'product/:id', component: ProductComponent },
     { path: 'product/:id/stock', component: StockComponent },
+    { path: 'product/:id/publication', component: PublicationComponent },
     { path: 'movement', component: MovementsComponent },
     { path: 'movement/:id', component: MovementComponent },
     { path: 'movement/document/:id', component: DocumentComponent },

@@ -187,14 +187,14 @@ export class ProductComponent implements OnInit, OnDestroy {
                 case (p.type.startsWith('attribute:') ? p.type : undefined):
                     let productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
-                        attribute: new Attribute(p.data, p.label)
+                        attribute: new Attribute(p.data, p.label, [])
                     };
                     productAttributes.push(productAttribute);
                     break;
                 case 'attributeValue':
                     let productAttributeValue = <ProductAttributeValue>{
                         productAttributeId: Number(this.selectedNode.type.split(':')[1]),
-                        attributeValue: new AttributeValue(0, p.data, '', p.label)
+                        attributeValue: new AttributeValue(0, p.data, '', p.label, [])
                     };
                     productAttributeValues.push(productAttributeValue);
                     break;
@@ -251,14 +251,14 @@ export class ProductComponent implements OnInit, OnDestroy {
                 case (p.type.startsWith('attribute:') ? p.type : undefined):
                     let productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
-                        attribute: new Attribute(p.data, p.label)
+                        attribute: new Attribute(p.data, p.label, [])
                     };
                     productAttributes.push(productAttribute);
                     break;
                 case 'attributeValue':
                     let productAttributeValue = <ProductAttributeValue>{
                         productAttributeId: Number(this.selectedNode.type.split(':')[1]),
-                        attributeValue: new AttributeValue(0, p.data, '', p.label)
+                        attributeValue: new AttributeValue(0, p.data, '', p.label, [])
                     };
                     productAttributeValues.push(productAttributeValue);
                     break;

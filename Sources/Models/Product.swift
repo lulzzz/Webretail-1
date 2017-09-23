@@ -39,7 +39,7 @@ class Product: PostgresSqlORM, Codable {
         case productSellingPrice
         case productPurchasePrice
         case productMedias = "medias"
-        case productTranslates = "translates"
+        case productTranslates = "translations"
         case productIsActive
         case _brand = "brand"
         case _categories = "categories"

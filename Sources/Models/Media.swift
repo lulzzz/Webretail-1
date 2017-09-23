@@ -5,7 +5,7 @@
 //  Created by Gerardo Grisolini on 22/09/17.
 //
 
-class Media: Codable {
+class Media: Codable, JsonbProtocol {
     
     public var name : String = ""
     public var url : String = ""

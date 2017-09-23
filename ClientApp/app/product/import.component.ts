@@ -77,24 +77,24 @@ export class ImportComponent implements OnInit  {
         // Texture
         let texture = product.producer.desc.replace('Tessilnova ', '');
         let textureAttribute = <ProductAttribute>{
-            attribute: new Attribute(0, 'Texture'),
+            attribute: new Attribute(0, 'Texture', []),
             attributeValues: [
-                <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture) }
+                <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture, []) }
             ]
         };
 
         // Colors
         let colors = Helpers.distinct(product.codarts.map(p => Helpers.newSelectItem(p.colorId.trim(), p.color)));
         let colorAttribute = <ProductAttribute>{
-            attribute: new Attribute(0, 'Color'),
-            attributeValues: colors.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.value, p.label) })
+            attribute: new Attribute(0, 'Color', []),
+            attributeValues: colors.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.value, p.label, []) })
         };
 
         // Sizes
         let sizes = product.codarts.map(p => p.size).filter((x, i, a) => x && a.indexOf(x) === i);
         let sizeAttribute = <ProductAttribute>{
-            attribute: new Attribute(0, 'Size'),
-            attributeValues: sizes.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p, p) })
+            attribute: new Attribute(0, 'Size', []),
+            attributeValues: sizes.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p, p, []) })
         };
 
         // Articles
@@ -103,9 +103,9 @@ export class ImportComponent implements OnInit  {
             let article = new Article();
             article.articleBarcode = p.barcode;
             article.attributeValues = [
-                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture) },
-                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.colorId.trim(), p.color) },
-                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.size, p.size) }
+                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture, []) },
+                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.colorId.trim(), p.color, []) },
+                <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.size, p.size, []) }
             ];
             articles.push(article);
         });
