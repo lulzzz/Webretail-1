@@ -25,8 +25,8 @@ class CompanyController {
 		routes.add(method: .post, uri: "/api/company", handler: companyHandlerPOST)
 		routes.add(method: .put, uri: "/api/company", handler: companyHandlerPUT)
 
-		routes.add(method: .post, uri: "/upload/header", handler: uploadHandlerPOST)
-		routes.add(method: .get, uri: "/upload/header", handler: uploadHandlerGET)
+		routes.add(method: .post, uri: "/Media/header", handler: uploadHandlerPOST)
+		routes.add(method: .get, uri: "/Media/header", handler: uploadHandlerGET)
 		
 		return routes
 	}

@@ -195,15 +195,21 @@ export class AttributeValue {
 }
 
 export class Publication {
-  constructor(
-    public publicationId: number,
-    public productId: number,
-    public publicationFeatured: boolean,
-    public publicationStartAt: Date,
-    public publicationFinishAt: Date,
-    public publicationUpdated: Date
-  ) {}
-}
+  public publicationId: number;
+  public productId: number;
+  public publicationFeatured: boolean;
+  public publicationStartAt: Date;
+  public publicationFinishAt: Date;
+  public publicationUpdated: Date;
+
+  constructor(productId: number) {
+    this.publicationId = 0;
+    this.productId = productId;
+    this.publicationFeatured = false;
+    // this.publicationStartAt = new Date();
+    // this.publicationFinishAt = new Date();
+    // this.publicationUpdated = new Date();
+  }}
 
 export class Causal {
   public causalId: number;

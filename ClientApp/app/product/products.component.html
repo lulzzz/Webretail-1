@@ -10,9 +10,7 @@
             <button pButton type="button" label="Edit" title="Edit product" (click)="editClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-edit"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <button pButton type="button" label="Details" title="Details" (click)="openClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-bars"></button>
-            <button pButton type="button" label="Stock" title="Stock" (click)="stockClick()" [disabled]="!selected" class="ui-button-info" icon="fa-list-ol"></button>
-            <button pButton type="button" label="Publication" title="Publication" (click)="publicationClick()" [disabled]="!selected" class="ui-button-info" icon="fa-list-ol"></button>
+            <p-splitButton label="Details" icon="fa-bars" (onClick)="openClick()" [model]="buttons" [disabled]="!selected"></p-splitButton>
         </div>
     </p-toolbar>
 

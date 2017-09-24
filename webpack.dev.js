@@ -30,7 +30,7 @@ module.exports = webpackMerge(commonConfig, {
                 port: 8181
             }
         },
-        '/upload': {
+        '/Media': {
             target: {
                 host: "localhost",
                 protocol: 'http:',

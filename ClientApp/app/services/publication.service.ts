@@ -56,10 +56,8 @@ export class PublicationService {
     }
     get published() { return this.publication != null; }
 
-    get step1() {
-        return this.product.categories.map(p => p.category.translations.length === 2) ? 'Completed' : 'In progress';
-    }
-    get step2() { return this.product.translations.length === 2 ? 'Completed' : 'In progress'; }
+    get step1() { return this.product.translations.length === 2 ? 'Completed' : 'In progress'; }
+    get step2() { return this.product.categories.map(p => p.category.translations.length === 2) ? 'Completed' : 'In progress'; }
     get step4() { return this.product.medias.length > 0 ? 'Completed' : 'In progress'; }
 
     getStatus(): string {
@@ -87,11 +85,11 @@ export class PublicationService {
     }
 
     getTranslate(array, code, key): Translation {
-        return array.translates.find(p => p.code === code && p.key === key);
+        return array.find(p => p.code === code && p.key === key);
     }
 
     addTranslate(array, item) {
-        array.translates.push(item);
+        array.push(item);
     }
 
     updateTranslate(array, item) {
@@ -100,8 +98,8 @@ export class PublicationService {
     }
 
     deleteTranslate(array, item) {
-        let index = array.translates.indexOf(item);
-        array.translates.splice(index, 1);
+        let index = array.indexOf(item);
+        array.splice(index, 1);
     }
 
     addMedia(item) {

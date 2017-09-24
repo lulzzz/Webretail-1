@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Message, MenuItem, SelectItem, Button, ConfirmationService } from 'primeng/primeng';
 import { Observable } from 'rxjs/Rx';
 import { AuthenticationService } from '../services/authentication.service'
 import { PublicationService } from '../services/publication.service'
-import { Translation } from '../shared/models'
+import { Publication, Translation } from '../shared/models'
 
 @Component({
     selector: 'publication',
@@ -21,41 +22,47 @@ export class PublicationComponent implements OnInit {
     countries: SelectItem[];
     categories: SelectItem[];
     attributes: SelectItem[];
-    translateCategory: Translation;
-    translateDescription: Translation;
-    translateAttribute: Translation;
+    translation: Translation;
 
     constructor(private authenticationService: AuthenticationService,
                 private activatedRoute: ActivatedRoute,
                 private confirmationService: ConfirmationService,
-                private publicationService: PublicationService) { }
+                private publicationService: PublicationService,
+                private location: Location) {
 
-    ngOnInit() {
-        this.authenticationService.checkCredentials(true);
+        authenticationService.title = 'Publication';
 
         this.countries = [];
         this.countries.push({label: 'English', value: 'EN'});
         this.countries.push({label: 'Italian', value: 'IT'});
+
+        this.translation = new Translation(this.countries[0].value, '', '');
+    }
+
+    get product() { return this.publicationService.product; }
+
+    get publication() { return this.publicationService.publication; }
+
+    ngOnInit() {
+        this.authenticationService.checkCredentials(true);
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
             let id = params['id'];
             this.publicationService.getProduct(id).subscribe(result => {
                 this.publicationService.product = result;
-                this.translateDescription = new Translation(this.countries[0].value, this.publicationService.product.productName, '');
-                this.translateCategory = new Translation(this.countries[0].value, '', '');
-                this.translateAttribute = new Translation(this.countries[0].value, '', '');
+                this.publicationService.publication = new Publication(result.productId);
                 this.categories = this.publicationService.getCategories();
                 this.attributes = this.publicationService.getAttributes();
             });
         });
 
         this.items = [{
-                label: 'Translate Categories',
+                label: 'Translate Description',
                 command: (event: any) => this.activeIndex = 0
             },
             {
-                label: 'Translate Description',
+                label: 'Translate Categories',
                 command: (event: any) => this.activeIndex = 1
             },
             {
@@ -63,7 +70,7 @@ export class PublicationComponent implements OnInit {
                 command: (event: any) => this.activeIndex = 2
             },
             {
-                label: 'Images',
+                label: 'Medias',
                 command: (event: any) => this.activeIndex = 3
             },
             {
@@ -81,14 +88,14 @@ export class PublicationComponent implements OnInit {
         this.selectedMedia = null;
         this.countries = null;
         this.publicationService.product = null;
-        this.translateCategory = null;
-        this.translateDescription = null;
-        this.translateAttribute = null;
+        this.translation = null;
         this.categories = null;
         this.attributes = null;
     }
 
-    get product() { return this.publicationService.product; }
+    cancelClick() {
+        this.location.back();
+    }
 
     // Step 1 2 3
     addTranslateClick(array, item) {
@@ -158,15 +165,24 @@ export class PublicationComponent implements OnInit {
 
     // Step 5
     handleFeaturedChange(e) {
-        if (this.publicationService.publication != null) {
-            this.publicationService.publication.publicationFeatured = e.checked;
-        }
+        this.publicationService.publication.publicationFeatured = e.checked;
     }
 
-    publishClick() {
+    saveClick() {
         this.publicationService.saveProduct().subscribe(result => {
             this.publicationService.product = result;
-            this.msgs.push({severity: 'success', summary: 'Publication', detail: 'Successfully published!'});
+            this.msgs.push({severity: 'success', summary: 'Save', detail: 'Successfully saved!'});
+            if (this.publication.publicationStartAt) {
+                if (this.publication.publicationId === 0) {
+                    this.publicationService.create(this.publication)
+                        .subscribe(response =>
+                            this.msgs.push({severity: 'success', summary: 'Publication', detail: 'Successfully published!'})
+                        );
+                } else {
+                    this.publicationService.update(this.publication.publicationId, this.publication)
+                        .subscribe(response => { });
+                }
+            }
         });
     }
 

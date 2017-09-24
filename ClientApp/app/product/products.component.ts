@@ -25,6 +25,7 @@ export class ProductsComponent implements OnInit {
     sliderValue: number;
     displayPanel: boolean;
     dataform: FormGroup;
+    buttons: MenuItem[];
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
@@ -47,6 +48,11 @@ export class ProductsComponent implements OnInit {
             'purchase': new FormControl('', Validators.required),
             'isActive': new FormControl('', Validators.required)
         });
+
+        this.buttons = [
+            { label: 'Stock', icon: 'fa-list-ol', command: (event) => this.stockClick() },
+            { label: 'Publication', icon: 'fa-shopping-cart', command: (event) => this.publicationClick() }
+        ];
 
         this.refreshClick();
 
