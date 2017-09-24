@@ -4,7 +4,7 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
 import { Product, ProductCategory } from './../shared/models';
 import { Helpers } from './../shared/helpers';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { BrandService } from './../services/brand.service';
 import { ProductService } from './../services/product.service';
 
@@ -28,16 +28,16 @@ export class ProductsComponent implements OnInit {
     buttons: MenuItem[];
 
     constructor(private router: Router,
-                private authenticationService: AuthenticationService,
+                private sessionService: SessionService,
                 private productService: ProductService,
                 private brandService: BrandService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        authenticationService.title = 'Products';
+        sessionService.title = 'Products';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         this.dataform = this.fb.group({
             'brand': new FormControl('', Validators.required),

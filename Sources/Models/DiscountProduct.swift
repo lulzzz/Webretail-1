@@ -29,8 +29,7 @@ class DiscountProduct: PostgresSqlORM, Codable {
 		discountProductId = this.data["discountproductid"] as? Int ?? 0
 		discountId = this.data["discountid"] as? Int ?? 0
 		productId = this.data["productid"] as? Int ?? 0
-		discountProduct = this.data["discountproduct"] as? Product ?? Product()
-        if let product = this.data["discountproduct"] as? [String:Any] {
+		if let product = this.data["discountproduct"] as? [String:Any] {
             let jsonData = try! JSONSerialization.data(withJSONObject: product, options: [])
             discountProduct = try! JSONDecoder().decode(Product.self, from: jsonData)
         }
@@ -56,8 +55,8 @@ class DiscountProduct: PostgresSqlORM, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         discountProductId = try container.decode(Int.self, forKey: .discountProductId)
         discountId = try container.decode(Int.self, forKey: .discountId)
-        productId = try container.decode(Int.self, forKey: .productId)
         discountProduct = try container.decode(Product.self, forKey: .discountProduct)
+        productId = discountProduct.productId
     }
     
     func encode(to encoder: Encoder) throws {

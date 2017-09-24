@@ -1,5 +1,5 @@
 import { Component, OnInit  } from '@angular/core';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { Message, SelectItem } from 'primeng/primeng';
 import { ImportService, CodartInfo, Translate, Image } from './../services/import.service';
 import {
@@ -22,13 +22,13 @@ export class ImportComponent implements OnInit  {
     product: Product;
     products: SelectItem[];
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private importService: ImportService) {
-        authenticationService.title = 'Import';
+        sessionService.title = 'Import';
     }
 
     ngOnInit() {
-        if (!this.authenticationService.isAuthenticated) {
+        if (!this.sessionService.isAuthenticated) {
             return;
         }
 
@@ -51,8 +51,11 @@ export class ImportComponent implements OnInit  {
             this.product = this.convertProduct(res);
             this.importService.create(this.product)
             .subscribe(result => {
-                this.product.productId = result.productId;
-                this.msgs.push({severity: 'success', summary: 'import', detail: `Added ${result.articles.length} articles`});
+                this.msgs.push({
+                    severity: 'success',
+                    summary: 'import',
+                    detail: 'Totals: added ' + result.added + ' updated ' + result.updated + ' deleted ' + result.deleted
+                });
                 this.isBusy = false;
             }, onerror => this.showError(onerror._body));
         }, onerror => this.showError(onerror._body));
@@ -71,13 +74,16 @@ export class ImportComponent implements OnInit  {
         // Categories
         let category = new Category(0, product.category.desc);
         category.categoryIsPrimary = true;
+        category.translations = product.category.translates.map(p => new Translation(p.code, p.value));
+
         let subcategory = new Category(0, product.subcategory.desc);
         subcategory.categoryIsPrimary = false;
+        subcategory.translations = product.subcategory.translates.map(p => new Translation(p.code, p.value));
 
         // Texture
         let texture = product.producer.desc.replace('Tessilnova ', '');
         let textureAttribute = <ProductAttribute>{
-            attribute: new Attribute(0, 'Texture', []),
+            attribute: new Attribute(0, 'Texture', [new Translation('IT', 'Tessuto')]),
             attributeValues: [
                 <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture, []) }
             ]
@@ -86,15 +92,21 @@ export class ImportComponent implements OnInit  {
         // Colors
         let colors = Helpers.distinct(product.codarts.map(p => Helpers.newSelectItem(p.colorId.trim(), p.color)));
         let colorAttribute = <ProductAttribute>{
-            attribute: new Attribute(0, 'Color', []),
-            attributeValues: colors.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.value, p.label, []) })
+            attribute: new Attribute(0, 'Color', [new Translation('IT', 'Colore')]),
+            attributeValues: colors.map(p => <ProductAttributeValue>{
+                attributeValue: new AttributeValue(0, 0, p.value, p.label,
+                    product.translates.filter(t => t.key === p.label).map(t => new Translation(t.code, t.value))
+                )
+            })
         };
 
         // Sizes
         let sizes = product.codarts.map(p => p.size).filter((x, i, a) => x && a.indexOf(x) === i);
         let sizeAttribute = <ProductAttribute>{
-            attribute: new Attribute(0, 'Size', []),
-            attributeValues: sizes.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p, p, []) })
+            attribute: new Attribute(0, 'Size', [new Translation('IT', 'Misura')]),
+            attributeValues: sizes.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p, p,
+                product.translates.filter(t => t.key === p).map(t => new Translation(t.code, t.value))
+            ) })
         };
 
         // Articles
@@ -114,7 +126,9 @@ export class ImportComponent implements OnInit  {
         let medias = product.medias.map(p => new Media(p.filename, p.url, p.number));
 
         // Translations
-        let translations = product.translates.map(p => new Translation(p.code, p.key, p.value));
+        let translations = product
+            .translates.filter(p => p.key === product.id)
+            .map(p => new Translation(p.code, p.value));
 
         // Product
         let item = new Product();
@@ -130,7 +144,7 @@ export class ImportComponent implements OnInit  {
         item.attributes = [ textureAttribute, colorAttribute, sizeAttribute ];
         item.articles = articles;
         item.medias = medias;
-        item.translations = translations;
+        item.translations = product.translates.filter(p => p.key === product.id).map(p => new Translation(p.code, p.value));
 
         return item;
     }

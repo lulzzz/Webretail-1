@@ -25,9 +25,9 @@ export class ImportService {
             .map(result => <CodartInfo>result.json());
     }
 
-    create(model: Product): Observable<Product> {
+    create(model: Product): Observable<any> {
         return this.http.post('/api/product/import', model, { headers: Helpers.getHeaders() })
-            .map(result => <Product>result.json());
+            .map(result => result.json());
     }
 }
 

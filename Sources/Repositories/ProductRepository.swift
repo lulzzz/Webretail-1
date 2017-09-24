@@ -64,7 +64,7 @@ struct ProductRepository : ProductProtocol {
         }
     }
     
-    func create(item: Product) throws {
+    func create(item: Product) throws -> [String : Any] {
 
         // Brand
         let brand = Brand()
@@ -93,6 +93,7 @@ struct ProductRepository : ProductProtocol {
             if category.categoryId == 0 {
                 category.categoryName = c._category.categoryName
                 category.categoryIsPrimary = c._category.categoryIsPrimary
+                category.categoryTranslates = c._category.categoryTranslates
                 category.categoryCreated = Int.now()
                 category.categoryUpdated = Int.now()
                 try category.save {
@@ -112,6 +113,7 @@ struct ProductRepository : ProductProtocol {
             )
             if attribute.attributeId == 0 {
                 attribute.attributeName = a._attribute.attributeName
+                attribute.attributeTranslates = a._attribute.attributeTranslates
                 attribute.attributeCreated = Int.now()
                 attribute.attributeUpdated = Int.now()
                 try attribute.save {
@@ -132,6 +134,7 @@ struct ProductRepository : ProductProtocol {
                     attributeValue.attributeId = a.attributeId
                     attributeValue.attributeValueCode = v._attributeValue.attributeValueCode
                     attributeValue.attributeValueName = v._attributeValue.attributeValueName
+                    attributeValue.attributeValueTranslates = v._attributeValue.attributeValueTranslates
                     attributeValue.attributeValueCreated = Int.now()
                     attributeValue.attributeValueUpdated = Int.now()
                     try attributeValue.save {
@@ -193,7 +196,7 @@ struct ProductRepository : ProductProtocol {
         }
         
         // Build articles
-        _ = try (ioCContainer.resolve() as ArticleProtocol).build(productId: item.productId)
+        let result = try (ioCContainer.resolve() as ArticleProtocol).build(productId: item.productId)
 
         // Sync barcodes
         for a in item._articles {
@@ -217,6 +220,8 @@ struct ProductRepository : ProductProtocol {
                 try article.save()
             }
         }
+        
+        return result;
     }
     
     func update(id: Int, item: Product) throws {
@@ -243,7 +248,36 @@ struct ProductRepository : ProductProtocol {
             throw StORMError.noRecordFound
         }
         
-        // TODO: sync medias and translates
+        for c in item._categories {
+            let category = Category()
+            try category.query(id: c._category.categoryId)
+            category.categoryTranslates = c._category.categoryTranslates
+            try category.save()
+        }
+        
+        for a in item._attributes {
+            let attribute = Attribute()
+            try attribute.query(id: a._attribute.attributeId)
+            attribute.attributeTranslates = a._attribute.attributeTranslates
+            try attribute.save()
+            
+            for v in a._attributeValues {
+                let attributeValue = AttributeValue()
+                try attributeValue.query(id: v._attributeValue.attributeValueId)
+                attributeValue.attributeValueTranslates = v._attributeValue.attributeValueTranslates
+                try attributeValue.save()
+            }
+        }
+        
+        for c in current.productMedias {
+            if !item.productMedias.contains(where: { p in p.name == c.name }) {
+                try FileManager.default.removeItem(atPath: "./webroot/\(c.url)")
+            }
+        }
+        
+        current.productMedias = item.productMedias
+        current.productTranslates = item.productTranslates
+        current.productUpdated = Int.now()
         
         try current.save()
     }

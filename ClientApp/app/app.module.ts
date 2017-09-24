@@ -55,7 +55,7 @@ import { ReportReceiptsComponent } from './report/receipts.component';
 import { ReportSalesComponent } from './report/sales.component';
 import { StatisticsComponent } from './report/statistics.component';
 
-import { AuthenticationService } from './services/authentication.service';
+import { SessionService } from './services/session.service';
 import { CompanyService } from './services/company.service';
 import { AccountService } from './services/account.service';
 import { AttributeService } from './services/attribute.service';
@@ -139,7 +139,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
     ],
     providers: [
         Configuration,
-        AuthenticationService,
+        SessionService,
         CompanyService,
         AccountService,
         AttributeService,

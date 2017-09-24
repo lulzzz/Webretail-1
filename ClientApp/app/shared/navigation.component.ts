@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 
 @Component({
     selector: 'navigation',
@@ -8,18 +8,18 @@ import { AuthenticationService } from './../services/authentication.service';
 
 export class NavigationComponent {
 
-    constructor(private authenticationService: AuthenticationService) {
+    constructor(private sessionService: SessionService) {
     }
 
     get isAuthenticated(): boolean {
-        return this.authenticationService.isAuthenticated;
+        return this.sessionService.isAuthenticated;
     }
 
     get isAdmin(): boolean {
-        return this.authenticationService.isAdmin;
+        return this.sessionService.isAdmin;
     }
 
     logoutClick() {
-        this.authenticationService.logout();
+        this.sessionService.logout();
     }
 }

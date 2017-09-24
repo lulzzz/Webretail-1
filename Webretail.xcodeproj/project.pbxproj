@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		564949D11F7690CE000657A2 /* JsonbProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564949D01F7690CE000657A2 /* JsonbProtocol.swift */; };
 		565AE41C1F75972400D7D114 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565AE41B1F75972400D7D114 /* Media.swift */; };
-		565AE41E1F7599B400D7D114 /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565AE41D1F7599B400D7D114 /* Translate.swift */; };
+		565AE41E1F7599B400D7D114 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565AE41D1F7599B400D7D114 /* Translation.swift */; };
 		OBJ_1040 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_1046 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_157 /* Package.swift */; };
 		OBJ_1052 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_159 /* Package.swift */; };
@@ -1689,7 +1689,7 @@
 /* Begin PBXFileReference section */
 		564949D01F7690CE000657A2 /* JsonbProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonbProtocol.swift; sourceTree = "<group>"; };
 		565AE41B1F75972400D7D114 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
-		565AE41D1F7599B400D7D114 /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
+		565AE41D1F7599B400D7D114 /* Translation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_100 /* CompanyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyRepository.swift; sourceTree = "<group>"; };
 		OBJ_1002 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
@@ -4192,7 +4192,7 @@
 				OBJ_71 /* Store.swift */,
 				OBJ_72 /* User.swift */,
 				565AE41B1F75972400D7D114 /* Media.swift */,
-				565AE41D1F7599B400D7D114 /* Translate.swift */,
+				565AE41D1F7599B400D7D114 /* Translation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5448,7 +5448,7 @@
 				OBJ_1226 /* MovementArticleProtocol.swift in Sources */,
 				OBJ_1227 /* MovementProtocol.swift in Sources */,
 				OBJ_1228 /* ProductProtocol.swift in Sources */,
-				565AE41E1F7599B400D7D114 /* Translate.swift in Sources */,
+				565AE41E1F7599B400D7D114 /* Translation.swift in Sources */,
 				OBJ_1229 /* PublicationProtocol.swift in Sources */,
 				OBJ_1230 /* StatisticProtocol.swift in Sources */,
 				OBJ_1231 /* StoreProtocol.swift in Sources */,

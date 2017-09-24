@@ -21,6 +21,7 @@ class PublicationController {
         
         routes.add(method: .get, uri: "/api/publication", handler: publicationsHandlerGET)
         routes.add(method: .get, uri: "/api/publication/{id}", handler: publicationHandlerGET)
+        routes.add(method: .get, uri: "/api/product/{id}/publication", handler: publicationProductHandlerGET)
         routes.add(method: .post, uri: "/api/publication", handler: publicationHandlerPOST)
         routes.add(method: .put, uri: "/api/publication/{id}", handler: publicationHandlerPUT)
         routes.add(method: .delete, uri: "/api/publication/{id}", handler: publicationHandlerDELETE)
@@ -46,6 +47,21 @@ class PublicationController {
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
+            if item!.publicationId > 0 {
+                try response.setJson(item)
+            }
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func publicationProductHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
+        
+        let id = request.urlVariables["id"]!
+        do {
+            let item = try self.repository.get(productId: Int(id)!)
             try response.setJson(item)
             response.completed(status: .ok)
         } catch {

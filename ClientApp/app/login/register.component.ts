@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Message } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { Login } from './../shared/models';
 
 @Component({
@@ -16,9 +16,9 @@ export class RegisterComponent implements OnInit {
     public msgs: Message[] = [];
 
 	constructor(
-		private authenticationService: AuthenticationService,
+		private sessionService: SessionService,
 		private fb: FormBuilder) {
-       	authenticationService.title = 'Register';
+       	sessionService.title = 'Register';
     }
 
 	ngOnInit() {
@@ -34,10 +34,10 @@ export class RegisterComponent implements OnInit {
 			this.msgs.push({severity: 'error', summary: 'Registration', detail: 'The passwords do not match'});
 			return;
 		}
-		// this.authenticationService.register(this.user)
+		// this.sessionService.register(this.user)
     	// 	.subscribe(result => {
 		// 		if (result.login === 'ok') {
-		// 			this.authenticationService.grantCredentials(result);
+		// 			this.sessionService.grantCredentials(result);
 		//     	} else {
 		//     		this.msgs.push({severity: 'warn', summary: 'Authentication', detail: result.error});
 		// 		}

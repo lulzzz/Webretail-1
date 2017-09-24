@@ -120,7 +120,6 @@ export class Media {
 export class Translation {
   constructor(
     public country: string,
-    public key: string,
     public value: string) { }
 }
 

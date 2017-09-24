@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Message, MenuItem, SelectItem, Button, ConfirmationService } from 'primeng/primeng';
 import { Observable } from 'rxjs/Rx';
-import { AuthenticationService } from '../services/authentication.service'
+import { SessionService } from '../services/session.service'
 import { PublicationService } from '../services/publication.service'
 import { Publication, Translation } from '../shared/models'
 
@@ -16,27 +16,28 @@ export class PublicationComponent implements OnInit {
 
     private sub: any;
     private items: MenuItem[];
-    msgs: Message[] = [];
+    private selectedArray: any;
     selectedMedia: string;
+    selectedKey: string;
+    msgs: Message[] = [];
+    isBusy: boolean;
     activeIndex = 0;
     countries: SelectItem[];
     categories: SelectItem[];
     attributes: SelectItem[];
     translation: Translation;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private activatedRoute: ActivatedRoute,
                 private confirmationService: ConfirmationService,
                 private publicationService: PublicationService,
                 private location: Location) {
 
-        authenticationService.title = 'Publication';
+        sessionService.title = 'Publication';
 
         this.countries = [];
         this.countries.push({label: 'English', value: 'EN'});
         this.countries.push({label: 'Italian', value: 'IT'});
-
-        this.translation = new Translation(this.countries[0].value, '', '');
     }
 
     get product() { return this.publicationService.product; }
@@ -44,38 +45,46 @@ export class PublicationComponent implements OnInit {
     get publication() { return this.publicationService.publication; }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(true);
+        this.sessionService.checkCredentials(true);
+
+        this.translation = new Translation(this.countries[0].value, '');
+        this.selectedKey = 'Description';
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
             let id = params['id'];
             this.publicationService.getProduct(id).subscribe(result => {
                 this.publicationService.product = result;
-                this.publicationService.publication = new Publication(result.productId);
+                this.selectedArray = this.product.translations;
                 this.categories = this.publicationService.getCategories();
                 this.attributes = this.publicationService.getAttributes();
+                this.publicationService.getPublication(id).subscribe(res => {
+                    res.productId = result.productId;
+                    this.publicationService.publication = res;
+                    this.isBusy = false;
+                });
             });
         });
 
         this.items = [{
                 label: 'Translate Description',
-                command: (event: any) => this.activeIndex = 0
+                command: (event: any) => { this.activeIndex = 0; this.onIndexChanged(); }
             },
             {
                 label: 'Translate Categories',
-                command: (event: any) => this.activeIndex = 1
+                command: (event: any) => { this.activeIndex = 1; this.onIndexChanged(); }
             },
             {
                 label: 'Translate Attributes',
-                command: (event: any) => this.activeIndex = 2
+                command: (event: any) => { this.activeIndex = 2; this.onIndexChanged(); }
             },
             {
                 label: 'Medias',
-                command: (event: any) => this.activeIndex = 3
+                command: (event: any) => { this.activeIndex = 3; this.onIndexChanged(); }
             },
             {
                 label: 'Publish',
-                command: (event: any) => this.activeIndex = 4
+                command: (event: any) => { this.activeIndex = 4; this.onIndexChanged(); }
             }
         ];
     }
@@ -97,20 +106,46 @@ export class PublicationComponent implements OnInit {
         this.location.back();
     }
 
+    onIndexChanged() {
+        switch (this.activeIndex) {
+            case 0:
+                this.selectedKey = 'Description';
+                this.selectedArray = this.product.translations;
+                break;
+            case 1:
+                this.selectedKey = this.product.categories[0].category.categoryName;
+                this.selectedArray = this.product.categories[0].category.translations;
+                break;
+            case 2:
+                this.selectedKey = this.product.attributes[0].attribute.attributeName;
+                this.selectedArray = this.product.attributes[0].attribute.translations;
+                break;
+            default:
+                break;
+        }
+        this.translation = new Translation(this.translation.country, '');
+    }
+
     // Step 1 2 3
-    addTranslateClick(array, item) {
-        if (item.value === '') {
+    addTranslateClick() {
+        if (this.translation.value === '') {
             this.msgs.push({severity: 'warn', summary: 'Attention', detail: 'Translate is not empty!'});
             return;
         }
-        let translate = this.publicationService.getTranslate(array, item.country, item.key);
+        let translate = this.publicationService.getTranslate(this.selectedArray, this.translation.country);
         if (translate) {
             this.msgs.push({severity: 'warn', summary: 'Attention', detail: 'Translate for this country alrady present!'});
             return;
         }
+        let item = new Translation(this.translation.country, this.translation.value);
+        this.publicationService.addTranslate(this.selectedArray, item);
+        this.translation.value = '';
+    }
 
-        this.publicationService.addTranslate(array, item);
-        item.value = '';
+    selectTranslateClick(array, key) {
+        this.selectedKey = key;
+        this.selectedArray = array;
+        this.translation = new Translation(this.translation.country, '');
     }
 
     updateTranslateClick(array, item) {
@@ -169,18 +204,20 @@ export class PublicationComponent implements OnInit {
     }
 
     saveClick() {
+        this.isBusy = true;
         this.publicationService.saveProduct().subscribe(result => {
             this.publicationService.product = result;
-            this.msgs.push({severity: 'success', summary: 'Save', detail: 'Successfully saved!'});
+            this.msgs.push({severity: 'success', summary: 'Product', detail: 'Successfully saved!'});
             if (this.publication.publicationStartAt) {
                 if (this.publication.publicationId === 0) {
                     this.publicationService.create(this.publication)
-                        .subscribe(response =>
-                            this.msgs.push({severity: 'success', summary: 'Publication', detail: 'Successfully published!'})
-                        );
+                        .subscribe(response => {
+                            this.isBusy = false;
+                            this.msgs.push({severity: 'success', summary: 'Publication', detail: 'Successfully published!'});
+                        });
                 } else {
                     this.publicationService.update(this.publication.publicationId, this.publication)
-                        .subscribe(response => { });
+                        .subscribe(response => this.isBusy = false );
                 }
             }
         });

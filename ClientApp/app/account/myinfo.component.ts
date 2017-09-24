@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { AccountService } from './../services/account.service';
 import { Account } from './../shared/models';
 
@@ -13,14 +13,14 @@ export class MyInfoComponent implements OnInit {
     public myinfo: Account;
     dataform: FormGroup;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private accountService: AccountService,
                 private fb: FormBuilder) {
-       authenticationService.title = 'My Info';
+       sessionService.title = 'My Info';
     }
 
     ngOnInit() {
-        this.authenticationService.getCredentials()
+        this.sessionService.getCredentials()
             .subscribe(p => {
                 this.accountService.getById(p.uniqueID)
                     .subscribe(account => {

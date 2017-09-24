@@ -1,5 +1,5 @@
 ﻿import { ViewChild, Component, OnInit } from '@angular/core';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { StatisticService } from './../services/statistic.service';
 import { SelectItem, UIChart } from 'primeng/primeng';
 
@@ -23,13 +23,13 @@ export class StatisticsComponent implements OnInit {
     totals: any;
     totalOptions: any;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private statisticService: StatisticService) {
-        authenticationService.title = 'Statistics';
+        sessionService.title = 'Statistics';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(true);
+        this.sessionService.checkCredentials(true);
 
         this.deviceOptions = {
             title: {

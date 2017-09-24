@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { CausalService } from './../services/causal.service';
 import { Causal } from './../shared/models';
 import { Helpers } from './../shared/helpers';
@@ -19,15 +19,15 @@ export class CausalComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private causalService: CausalService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-       authenticationService.title = 'Causals';
+       sessionService.title = 'Causals';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         this.operators = [];
         this.operators.push({label: '-1', value: -1});

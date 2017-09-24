@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { AccountService } from './../services/account.service';
 import { Account } from './../shared/models';
 import { Helpers } from './../shared/helpers';
@@ -18,15 +18,15 @@ export class AccountComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private accountService: AccountService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-       authenticationService.title = 'Accounts';
+       sessionService.title = 'Accounts';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(true);
+        this.sessionService.checkCredentials(true);
 
         this.dataform = this.fb.group({
             'firstname': new FormControl('', Validators.required),

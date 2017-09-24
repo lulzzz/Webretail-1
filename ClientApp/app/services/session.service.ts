@@ -7,7 +7,7 @@ import { Login, Token } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
-export class AuthenticationService {
+export class SessionService {
 
     title: string;
 

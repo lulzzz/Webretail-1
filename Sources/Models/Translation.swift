@@ -6,9 +6,6 @@
 //
 
 class Translation: Codable, JsonbProtocol {
-    
     public var country : String = ""
-    public var key : String = ""
     public var value : String = ""
 }
-

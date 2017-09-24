@@ -2,7 +2,7 @@
 import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { StoreService } from './../services/store.service';
 import { CausalService } from './../services/causal.service';
 import { CustomerService } from './../services/customer.service';
@@ -41,18 +41,18 @@ export class MovementsComponent implements OnInit {
     amountValue: number;
 
     constructor(private router: Router,
-                private authenticationService: AuthenticationService,
+                private sessionService: SessionService,
                 private storeService: StoreService,
                 private causalService: CausalService,
                 private customerService: CustomerService,
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        authenticationService.title = 'Movements';
+        sessionService.title = 'Movements';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         this.dataform = this.fb.group({
             'number': new FormControl('', Validators.required),

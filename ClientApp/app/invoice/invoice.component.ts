@@ -2,7 +2,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { InvoiceService } from './../services/invoice.service';
 import { Invoice, Movement } from './../shared/models';
 import { Helpers } from './../shared/helpers';
@@ -32,17 +32,17 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     amountValue: number;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private authenticationService: AuthenticationService,
+                private sessionService: SessionService,
                 private invoiceService: InvoiceService,
                 private confirmationService: ConfirmationService,
                 private location: Location) {
         this.codes = [];
         this.itemsSelected = [];
-        authenticationService.title = 'Invoice';
+        sessionService.title = 'Invoice';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { AttributeService } from './../services/attribute.service';
 import { Attribute, AttributeValue } from './../shared/models';
 import { Helpers } from './../shared/helpers';
@@ -23,15 +23,15 @@ export class AttributeComponent implements OnInit {
     dataform: FormGroup;
     dataformValue: FormGroup;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private attributeService: AttributeService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        authenticationService.title = 'Attributes';
+        sessionService.title = 'Attributes';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required)

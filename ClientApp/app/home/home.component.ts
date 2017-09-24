@@ -1,6 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 
 @Component({
     selector: 'home-component',
@@ -12,18 +12,18 @@ export class HomeComponent implements OnInit  {
     token: string;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private authenticationService: AuthenticationService) {
-        authenticationService.title = 'Home';
+                private sessionService: SessionService) {
+        sessionService.title = 'Home';
     }
 
     ngOnInit() {
 
-        if (this.authenticationService.isAuthenticated) {
+        if (this.sessionService.isAuthenticated) {
             this.token = localStorage.getItem('token');
             return;
         }
 
-        // this.authenticationService.getCredentials()
+        // this.sessionService.getCredentials()
         //     .subscribe(res => {
         //         alert(JSON.stringify(res));
         //     });

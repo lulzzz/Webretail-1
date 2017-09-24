@@ -2,7 +2,7 @@
 import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { DiscountService } from './../services/discount.service';
 import { Discount } from './../shared/models';
 import { Helpers } from './../shared/helpers';
@@ -23,15 +23,15 @@ export class DiscountsComponent implements OnInit {
     sliderValue: number;
 
     constructor(private router: Router,
-                private authenticationService: AuthenticationService,
+                private sessionService: SessionService,
                 private discountService: DiscountService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        authenticationService.title = 'Discounts';
+        sessionService.title = 'Discounts';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

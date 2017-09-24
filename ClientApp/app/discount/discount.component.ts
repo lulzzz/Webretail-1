@@ -2,7 +2,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { DiscountService } from './../services/discount.service';
 import { Discount, DiscountProduct } from './../shared/models';
 import { Helpers } from './../shared/helpers';
@@ -26,24 +26,24 @@ export class DiscountComponent implements OnInit, OnDestroy {
     sliderValue: number;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private authenticationService: AuthenticationService,
+                private sessionService: SessionService,
                 private discountService: DiscountService,
                 private confirmationService: ConfirmationService,
                 private location: Location) {
         this.codes = [];
         this.itemsSelected = [];
-        authenticationService.title = 'Discount';
+        sessionService.title = 'Discount';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            this.discountId = params['id'];
-            this.discountService.getById(this.discountId)
+            this.discountService.getById(params['id'])
                 .subscribe(result => {
                     this.item = result;
+                    this.discountId = result.discountId;
                     this.discountService.getItemsById(this.discountId)
                         .subscribe(res => {
                             this.items = res;

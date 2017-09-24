@@ -2,7 +2,7 @@
 import { DOCUMENT } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { CompanyService } from './../services/company.service';
 import { Movement, MovementArticle, Company, Email } from './../shared/models';
@@ -25,14 +25,14 @@ export class DocumentComponent implements OnInit, OnDestroy {
     constructor(@Inject(DOCUMENT) private document: any,
                 private location: Location,
                 private activatedRoute: ActivatedRoute,
-                private authenticationService: AuthenticationService,
+                private sessionService: SessionService,
                 private companyService: CompanyService,
                 private movementService: MovementService) {
-        authenticationService.title = 'Document';
+        sessionService.title = 'Document';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

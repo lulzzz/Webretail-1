@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { CategoryService } from './../services/category.service';
 import { Category } from './../shared/models';
 import { Helpers } from './../shared/helpers';
@@ -18,15 +18,15 @@ export class CategoryComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private categoryService: CategoryService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-       authenticationService.title = 'Categories';
+       sessionService.title = 'Categories';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

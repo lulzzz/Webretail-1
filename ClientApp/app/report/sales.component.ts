@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { MovementArticle, Period } from './../shared/models';
 import { DateFilterPipe } from './../pipes/date-filter.pipe';
@@ -19,13 +19,13 @@ export class ReportSalesComponent implements OnInit {
     priceValue: number;
     amountValue: number;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private movementService: MovementService) {
-        authenticationService.title = 'Sales';
+        sessionService.title = 'Sales';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(true);
+        this.sessionService.checkCredentials(true);
 
         this.period = new Period();
         this.getData();

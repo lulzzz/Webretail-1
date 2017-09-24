@@ -25,7 +25,7 @@ class ProductController {
 		routes.add(method: .post, uri: "/api/product", handler: productHandlerPOST)
         routes.add(method: .post, uri: "/api/product/import", handler: productImportHandlerPOST)
         routes.add(method: .put, uri: "/api/product/{id}", handler: productHandlerPUT)
-        routes.add(method: .put, uri: "/api/product/{id}/publication", handler: productPublicationHandlerPOST)
+        routes.add(method: .put, uri: "/api/product/{id}/publication", handler: productPublicationHandlerPUT)
         routes.add(method: .delete, uri: "/api/product/{id}", handler: productHandlerDELETE)
         routes.add(method: .post, uri: "/api/productcategory", handler: productCategoryHandlerPOST)
         routes.add(method: .put, uri: "/api/productcategory", handler: productCategoryHandlerPUT)
@@ -81,8 +81,8 @@ class ProductController {
         
         do {
             let item: Product = try request.getJson()
-            try self.repository.create(item: item)
-            try response.setJson(item)
+            let result = try self.repository.create(item: item)
+            try response.setBody(string: result.jsonEncodedString())
             response.completed(status: .created)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -103,7 +103,7 @@ class ProductController {
         }
     }
 
-    func productPublicationHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+    func productPublicationHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
         do {

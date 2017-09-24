@@ -14,7 +14,7 @@ protocol ProductProtocol {
 
     func add(item: Product) throws
     
-    func create(item: Product) throws
+    func create(item: Product) throws -> [String : Any]
 
     func update(id: Int, item: Product) throws
     

@@ -20,14 +20,14 @@ export class PublicationService {
             .map(result => <Product>result.json());
     }
 
-    saveProduct(): Observable<Product> {
-        return this.http.post('api/product/' + this.product.productId + '/publication', this.product, { headers: Helpers.getHeaders() })
-            .map(result => <Product>result.json());
+    getPublication(productId: number): Observable<Publication> {
+        return this.http.get('/api/product/' + productId + '/publication', { headers: Helpers.getHeaders() })
+            .map(result => <Publication>result.json());
     }
 
-    getById(id: number): Observable<Publication> {
-        return this.http.get('/api/publication/' + id, { headers: Helpers.getHeaders() })
-            .map(result => <Publication>result.json());
+    saveProduct(): Observable<Product> {
+        return this.http.put('api/product/' + this.product.productId + '/publication', this.product, { headers: Helpers.getHeaders() })
+            .map(result => <Product>result.json());
     }
 
     create(model: Publication): Observable<Publication> {
@@ -84,8 +84,8 @@ export class PublicationService {
         return items;
     }
 
-    getTranslate(array, code, key): Translation {
-        return array.find(p => p.code === code && p.key === key);
+    getTranslate(array, country): Translation {
+        return array.find(p => p.country === country);
     }
 
     addTranslate(array, item) {
@@ -93,7 +93,7 @@ export class PublicationService {
     }
 
     updateTranslate(array, item) {
-        let translate = this.getTranslate(array, item.country, item.key);
+        let translate = this.getTranslate(array, item.country);
         translate.value = item.value;
     }
 

@@ -41,6 +41,7 @@ class Product: PostgresSqlORM, Codable {
         case productMedias = "medias"
         case productTranslates = "translations"
         case productIsActive
+        case brandId
         case _brand = "brand"
         case _categories = "categories"
         case _attributes = "attributes"
@@ -110,8 +111,8 @@ class Product: PostgresSqlORM, Codable {
         productMedias = try container.decodeIfPresent([Media].self, forKey: .productMedias) ?? [Media]()
         productTranslates = try container.decodeIfPresent([Translation].self, forKey: .productTranslates) ?? [Translation]()
         productIsActive = try container.decode(Bool.self, forKey: .productIsActive)
-        _brand = try container.decode(Brand.self, forKey: ._brand)
-        brandId = _brand.brandId
+        _brand = try container.decodeIfPresent(Brand.self, forKey: ._brand) ?? Brand()
+        brandId = try container.decodeIfPresent(Int.self, forKey: .brandId) ?? _brand.brandId
 
         _categories = try container.decodeIfPresent([ProductCategory].self, forKey: ._categories) ?? [ProductCategory]()
         _attributes = try container.decodeIfPresent([ProductAttribute].self, forKey: ._attributes) ?? [ProductAttribute]()

@@ -7,7 +7,7 @@ import {
     ProductAttributeValue, Article, ArticleAttributeValue, AttributeValue, ArticleForm
 } from './../shared/models';
 import { Helpers } from './../shared/helpers';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { ProductService } from './../services/product.service';
 import { CategoryService } from './../services/category.service';
 import { AttributeService } from './../services/attribute.service';
@@ -34,16 +34,16 @@ export class ProductComponent implements OnInit, OnDestroy {
     isBusy: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private authenticationService: AuthenticationService,
+                private sessionService: SessionService,
                 private productService: ProductService,
                 private categoryService: CategoryService,
                 private attributeService: AttributeService,
                 private location: Location) {
-        authenticationService.title = 'Product';
+        sessionService.title = 'Product';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

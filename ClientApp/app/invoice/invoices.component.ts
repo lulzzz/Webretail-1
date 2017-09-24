@@ -2,7 +2,7 @@
 import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { InvoiceService } from './../services/invoice.service';
 import { CustomerService } from './../services/customer.service';
 import { Invoice } from './../shared/models';
@@ -28,16 +28,16 @@ export class InvoicesComponent implements OnInit {
     amountValue: number;
 
     constructor(private router: Router,
-                private authenticationService: AuthenticationService,
+                private sessionService: SessionService,
                 private invoiceService: InvoiceService,
                 private customerService: CustomerService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        authenticationService.title = 'Invoices';
+        sessionService.title = 'Invoices';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         this.dataform = this.fb.group({
             'number': new FormControl('', Validators.required),

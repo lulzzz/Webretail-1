@@ -41,7 +41,7 @@
     </p-column>
     <ng-template pTemplate="rowexpansion">
         <div style="text-align: center">
-            <img *ngIf="!articleForm" src="/assets/loading.gif" width="200px">
+            <img *ngIf="!articleForm" src="/assets/loading.gif" width="100px">
             <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">    
                 <tr> 
                     <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 

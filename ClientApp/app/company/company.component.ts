@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Message } from 'primeng/primeng';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { CompanyService } from './../services/company.service';
 import { Company } from './../shared/models';
 
@@ -16,15 +16,15 @@ export class CompanyComponent implements OnInit {
     dataform: FormGroup;
     header: string;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private sessionService: SessionService,
                 private companyService: CompanyService,
                 private fb: FormBuilder) {
-       authenticationService.title = 'Company';
+       sessionService.title = 'Company';
        this.header = '/Media/header';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

@@ -7,7 +7,7 @@ import {
     ProductAttributeValue, Article, ArticleAttributeValue, AttributeValue, ArticleForm
 } from './../shared/models';
 import { Helpers } from './../shared/helpers';
-import { AuthenticationService } from './../services/authentication.service';
+import { SessionService } from './../services/session.service';
 import { ProductService } from './../services/product.service';
 import { StoreService } from './../services/store.service';
 
@@ -27,15 +27,15 @@ export class StockComponent implements OnInit, OnDestroy {
     isBusy: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private authenticationService: AuthenticationService,
+                private sessionService: SessionService,
                 private productService: ProductService,
                 private storeService: StoreService,
                 private location: Location) {
-        authenticationService.title = 'Stock';
+        sessionService.title = 'Stock';
     }
 
     ngOnInit() {
-        this.authenticationService.checkCredentials(false);
+        this.sessionService.checkCredentials(false);
 
         this.isBusy = true;
 
