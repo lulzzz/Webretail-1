@@ -199,9 +199,9 @@ export class PublicationComponent implements OnInit {
     }
 
     // Step 5
-    handleFeaturedChange(e) {
-        this.publicationService.publication.publicationFeatured = e.checked;
-    }
+    // handleFeaturedChange(e) {
+    //     this.publicationService.publication.publicationFeatured = e.checked;
+    // }
 
     saveClick() {
         this.isBusy = true;

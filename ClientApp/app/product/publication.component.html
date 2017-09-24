@@ -87,24 +87,40 @@
             </span>
             <p-panel header="Translated attributes">
                 <table *ngFor="let a of product.attributes" class='table' style="margin-bottom: 5px; background-color: white;" cellpadding="2" cellspacing="2">
-                    <thead>
-                        <tr>
-                            <td colspan="2"><strong>{{a.attribute.attributeName}}</strong></td>
-                            <td style="width: 100px; text-align: right;">
-                                <button type="button" label="Select" pButton (click)="selectTranslateClick(a.attribute.translations, a.attribute.attributeName)" icon="fa-plus-circle"></button>
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of a.attribute.translations">
-                            <td>{{item.country === "EN" ? 'English' : 'Italian'}}</td>
-                            <td><input type="text" pInputText class="inputtext" [(ngModel)]="item.value"/></td>
-                            <td>
-                                <button type="button" pButton (click)="updateTranslateClick(a.attribute.translations, item)" icon="fa-save"></button>
-                                <button type="button" pButton (click)="deleteTranslateClick(a.attribute.translations, item)" icon="fa-trash"></button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <td colspan="2"><strong>{{a.attribute.attributeName}}</strong></td>
+                        <td style="width: 100px; text-align: right;">
+                            <button type="button" label="Select" pButton (click)="selectTranslateClick(a.attribute.translations, a.attribute.attributeName)" icon="fa-plus-circle"></button>
+                        </td>
+                    </tr>
+                    <tr *ngFor="let item of a.attribute.translations">
+                        <td>{{item.country === "EN" ? 'English' : 'Italian'}}</td>
+                        <td><input type="text" pInputText class="inputtext" [(ngModel)]="item.value"/></td>
+                        <td>
+                            <button type="button" pButton (click)="updateTranslateClick(a.attribute.translations, item)" icon="fa-save"></button>
+                            <button type="button" pButton (click)="deleteTranslateClick(a.attribute.translations, item)" icon="fa-trash"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table *ngFor="let b of a.attributeValues" class='table' style="margin-bottom: 5px; background-color: white;" cellpadding="2" cellspacing="2">
+                                <tr>
+                                    <td colspan="2"><strong>{{b.attributeValue.attributeValueName}}</strong></td>
+                                    <td style="width: 100px; text-align: right;">
+                                        <button type="button" label="Select" pButton (click)="selectTranslateClick(b.attributeValue.translations, b.attributeValue.attributeValueName)" icon="fa-plus-circle"></button>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let item of b.attributeValue.translations">
+                                    <td>{{item.country === "EN" ? 'English' : 'Italian'}}</td>
+                                    <td><input type="text" pInputText class="inputtext" [(ngModel)]="item.value"/></td>
+                                    <td>
+                                        <button type="button" pButton (click)="updateTranslateClick(b.attributeValue.translations, item)" icon="fa-save"></button>
+                                        <button type="button" pButton (click)="deleteTranslateClick(b.attributeValue.translations, item)" icon="fa-trash"></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
                 </table>
             </p-panel>   
         </div>
@@ -161,7 +177,7 @@
                     <p>
                         <strong>Featured</strong>
                         <br/>
-                        <p-inputSwitch [(ngModel)]="publication.publicationFeatured" (onChange)="handleFeaturedChange($event)"></p-inputSwitch>
+                        <p-inputSwitch [(ngModel)]="publication.publicationFeatured"></p-inputSwitch>
                     </p>
                 </div>
             </p-panel>
