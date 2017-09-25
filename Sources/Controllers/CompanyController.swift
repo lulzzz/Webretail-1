@@ -24,9 +24,7 @@ class CompanyController {
 		routes.add(method: .get, uri: "/api/company", handler: companyHandlerGET)
 		routes.add(method: .post, uri: "/api/company", handler: companyHandlerPOST)
 		routes.add(method: .put, uri: "/api/company", handler: companyHandlerPUT)
-
-		routes.add(method: .post, uri: "/Media/header", handler: uploadHandlerPOST)
-		routes.add(method: .get, uri: "/Media/header", handler: uploadHandlerGET)
+		routes.add(method: .post, uri: "/api/media", handler: uploadHandlerPOST)
 		
 		return routes
 	}
@@ -76,24 +74,18 @@ class CompanyController {
 		do {
 			if let uploads = request.postFileUploads {
 				for upload in uploads {
-					try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: "/tmp/header.png")
-					LogFile.info("New file header uploaded")
-					response.completed(status: .created)
-					return
+                    let path = "./webroot/media/\(upload.fileName)"
+                    if (FileManager.default.fileExists(atPath: path)) {
+                        try FileManager.default.removeItem(atPath: path)
+                    }
+					try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: "./webroot/media/\(upload.fileName)")
+					LogFile.info("Uploaded file \(upload.fileName)")
 				}
+                response.completed(status: .created)
+                return
 			}
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
 		}
-    }
-
-	func uploadHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		if let content = FileManager.default.contents(atPath: "/tmp/header.png") {
-			response.setHeader(.contentType, value: "image/png")
-			response.setBody(bytes: [UInt8](content))
-			response.completed(status: .ok)
-			return
-		}
-		response.badRequest(error: "\(request.uri) \(request.method): Header file not found")
     }
 }

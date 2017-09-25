@@ -20,7 +20,7 @@ export class CompanyComponent implements OnInit {
                 private companyService: CompanyService,
                 private fb: FormBuilder) {
        sessionService.title = 'Company';
-       this.header = '/Media/header';
+       this.header = '/media/header.png';
     }
 
     ngOnInit() {
@@ -76,6 +76,6 @@ export class CompanyComponent implements OnInit {
         // }
         this.msgs = [];
         this.msgs.push({severity: 'info', summary: 'File Uploaded', detail: ''});
-        this.header = '/Media/header?' + Date().length
+        this.header = '/media/header.png?' + Date().length
     }
 }

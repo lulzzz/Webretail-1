@@ -5,7 +5,7 @@ import { Message, MenuItem, SelectItem, Button, ConfirmationService } from 'prim
 import { Observable } from 'rxjs/Rx';
 import { SessionService } from '../services/session.service'
 import { PublicationService } from '../services/publication.service'
-import { Publication, Translation } from '../shared/models'
+import { Publication, Translation, Media } from '../shared/models'
 
 @Component({
     selector: 'publication',
@@ -174,9 +174,12 @@ export class PublicationComponent implements OnInit {
     }
 
     onUpload(event) {
-        // this.publicationService.getMedias().subscribe(result => {
-        //     this.publicationService.codartinfo.medias = result;
-        // });
+        let index = this.product.medias.length;
+        event.files.forEach(file => {
+            index++;
+            let media = new Media(file.name, 'media/' + file.name, index);
+            this.publicationService.addMedia(media);
+        });
     }
 
     updateMediaClick(item) {
@@ -197,11 +200,6 @@ export class PublicationComponent implements OnInit {
     selectMedia(url: string) {
         this.selectedMedia = url;
     }
-
-    // Step 5
-    // handleFeaturedChange(e) {
-    //     this.publicationService.publication.publicationFeatured = e.checked;
-    // }
 
     saveClick() {
         this.isBusy = true;

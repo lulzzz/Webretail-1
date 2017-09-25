@@ -50,9 +50,5 @@ webroot/favicon.ico
 webroot/index.html
 webroot/assets/
 webroot/dist/
-../../bitbucket.org/Webretail/WebretailService/.DS_Store
-../../bitbucket.org/Webretail/.DS_Store
-../../bitbucket.org/Webretail/WebretailService/ClientApp/.DS_Store
-../../bitbucket.org/Webretail/WebretailService/ClientApp/app/.DS_Store
-../../bitbucket.org/Webretail/WebretailService/ClientApp/app/components/.DS_Store
-../../bitbucket.org/Webretail/WebretailService/Models/.DS_Store
+webroot/media/
+.DS_Store

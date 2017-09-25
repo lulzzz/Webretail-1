@@ -8,6 +8,7 @@
 
 import Foundation
 import StORM
+import PerfectLogger
 
 struct ProductRepository : ProductProtocol {
 
@@ -271,7 +272,9 @@ struct ProductRepository : ProductProtocol {
         
         for c in current.productMedias {
             if !item.productMedias.contains(where: { p in p.name == c.name }) {
-                try FileManager.default.removeItem(atPath: "./webroot/\(c.url)")
+                if (FileManager.default.fileExists(atPath: "./webroot/\(c.url)")) {
+                    try FileManager.default.removeItem(atPath: "./webroot/\(c.url)")
+                }
             }
         }
         

@@ -72,7 +72,7 @@ class Discount: PostgresSqlORM, Codable {
         discountPercentage = try container.decode(Int.self, forKey: .discountPercentage)
         discountPrice = try container.decode(Double.self, forKey: .discountPrice)
         discountStartAt = try container.decode(String.self, forKey: .discountStartAt).DateToInt()
-        discountFinishAt = try container.decode(String.self, forKey: .discountStartAt).DateToInt()
+        discountFinishAt = try container.decode(String.self, forKey: .discountFinishAt).DateToInt()
     }
     
     func encode(to encoder: Encoder) throws {
