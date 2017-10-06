@@ -1,3 +1,5 @@
+<img src="https://github.com/gerardogrisolini/Webretail/blob/master/ClientApp/assets/logo.jpg?raw=true" width="80" alt="Webretail - RMS" />
+
 # Webretail - RMS
 
 Retail Management System developed with Swift, Angular2 and PostgreSQL.
@@ -5,8 +7,6 @@ Retail Management System developed with Swift, Angular2 and PostgreSQL.
 #### Under active development. Please do not use.
 
 <a href="http://webretail.westeurope.cloudapp.azure.com">Try Demo</a>
-
-<img src="https://github.com/gerardogrisolini/Webretail/blob/master/ClientApp/assets/logo.jpg?raw=true" width="80" alt="Webretail - RMS" />
 
 ## Build Notes
 
