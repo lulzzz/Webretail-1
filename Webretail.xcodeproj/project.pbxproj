@@ -4016,7 +4016,7 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -4026,7 +4026,6 @@
 				OBJ_121 /* Dependencies */,
 				OBJ_1016 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -4074,18 +4073,18 @@
 		OBJ_9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_10 /* Authentication */,
 				OBJ_17 /* BarcodePDFPage.swift */,
-				OBJ_18 /* Controllers */,
 				OBJ_41 /* Extensions.swift */,
 				OBJ_42 /* HTTPTurnstile.swift */,
 				OBJ_43 /* IoCContainer.swift */,
-				OBJ_44 /* Models */,
+				OBJ_116 /* main.swift */,
 				OBJ_75 /* PostgreSqlORM.swift */,
+				OBJ_115 /* Setup.swift */,
+				OBJ_10 /* Authentication */,
+				OBJ_18 /* Controllers */,
+				OBJ_44 /* Models */,
 				OBJ_76 /* Protocols */,
 				OBJ_96 /* Repositories */,
-				OBJ_115 /* Setup.swift */,
-				OBJ_116 /* main.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -5105,7 +5104,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_1016 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
