@@ -21,15 +21,15 @@ let ioCContainer = IoCContainer()
 
 func setupDatabase() throws {
     
-	#if os(Linux)
-		PostgresConnector.host = "192.168.1.3"
-	#else
-		PostgresConnector.host = "localhost"
-	#endif
+    #if os(Linux)
+        PostgresConnector.host = "localhost"
+    #else
+        PostgresConnector.host = "localhost"
+    #endif
 	PostgresConnector.port = 5432
-	PostgresConnector.database = "webretail"
-	PostgresConnector.username = "gerardo"
-	PostgresConnector.password = ""
+    PostgresConnector.database = "webretail"
+    PostgresConnector.username = "gerardo"
+    PostgresConnector.password = ""
     StORMdebug = false
 
 	try Company().setup()
