@@ -71,10 +71,10 @@ To run this project from Xcode, edit the Scheme, Under "Options" for "run", chec
 * Check out or download the project;
 * In terminal, navigate to the directory 
 * Execute `swift build`
-* Once the project has compiled, execute `./.build/debug/Webretail`
+* Once the project has compiled, execute `../.build/x86_64-unknown-linux/debug/Webretail`
 
 ```
-[INFO] Starting HTTP server on 0.0.0.0:8080 with document root ./webroot
+[INFO] Starting HTTP server on 0.0.0.0:80 with document root ./webroot
 ```
 
 ## Angular2
