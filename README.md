@@ -4,11 +4,13 @@ Retail Management System developed with Swift, Angular2 and PostgreSQL.
 
 #### Under active development. Please do not use.
 
+<a href="http://webretail.westeurope.cloudapp.azure.com">Try Demo</a>
+
 <img src="https://github.com/gerardogrisolini/Webretail/blob/master/ClientApp/assets/logo.jpg?raw=true" width="80" alt="Webretail - RMS" />
 
 ## Build Notes
 
-Ensure you have installed Xcode 8.0 or later.
+Ensure you have installed Xcode 9.0 or later.
 
 ### macOS
 
@@ -51,7 +53,7 @@ To install libpq-dev
 sudo apt-get install libpq-dev
 ```
 
-## Setup - Xcode 8
+## Setup - Xcode 9
 
 * Check out or download the project;
 * In terminal, navigate to the directory and execute
