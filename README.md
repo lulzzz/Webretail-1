@@ -6,7 +6,7 @@ Retail Management System developed with Swift, Angular2 and PostgreSQL.
 
 #### Under active development. Please do not use.
 
-<a href="http://webretail.westeurope.cloudapp.azure.com">Try Demo</a>
+<a href="http://webretail.westeurope.cloudapp.azure.com" target="_blank">Try Demo</a>
 
 ## Build Notes
 
