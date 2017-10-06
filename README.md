@@ -7,6 +7,8 @@ Retail Management System developed with Swift, Angular2 and PostgreSQL.
 #### Under active development. Please do not use.
 
 <a href="http://webretail.westeurope.cloudapp.azure.com" target="_new">Try Demo</a>
+username: admin
+password: admin
 
 ## Build Notes
 
@@ -77,15 +79,13 @@ To run this project from Xcode, edit the Scheme, Under "Options" for "run", chec
 [INFO] Starting HTTP server on 0.0.0.0:80 with document root ./webroot
 ```
 
-## Angular2
+## Typescript
 
 Steps for the development UI:
 
 ```
 npm install
-npm start
+npm run server
 
-go to http://localhost:8888/webpack-dev-server/
-username: admin
-password: admin
+go to http://localhost:8080/webpack-dev-server/
 ```
