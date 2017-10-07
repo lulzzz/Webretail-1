@@ -115,7 +115,7 @@ class Movement: PostgresSqlORM, Codable {
         movementDevice = try container.decode(String.self, forKey: .movementDevice)
         movementStore = try container.decode(Store.self, forKey: .movementStore)
         movementCausal = try container.decode(Causal.self, forKey: .movementCausal)
-        movementCustomer = try container.decode(Customer.self, forKey: .movementCustomer)
+        movementCustomer = try container.decodeIfPresent(Customer.self, forKey: .movementCustomer) ?? Customer()
         movementPayment = try container.decode(String.self, forKey: .movementPayment)
     }
     
