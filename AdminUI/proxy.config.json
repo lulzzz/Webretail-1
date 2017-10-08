@@ -1,0 +1,12 @@
+{
+    "/api/**": {
+       "target": "http://webretail.westeurope.cloudapp.azure.com",
+       "secure": false,
+       "logLevel": "debug"
+    },
+    "/Media/**": {
+        "target": "http://webretail.westeurope.cloudapp.azure.com",
+        "secure": false,
+        "logLevel": "debug"
+     }
+ }

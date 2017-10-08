@@ -1,0 +1,18 @@
+<div class="app-grid-list">
+  <mat-card>
+    <mat-card-title>Featured</mat-card-title>
+    <mat-card-content>
+      <mat-grid-list cols="3" rowHeight="200px">
+        <mat-grid-tile *ngFor="let dog of dogs">
+          <img [alt]="dog.name" src="https://material.angularjs.org/material2_assets/ngconf/{{dog.name}}.png">
+          <mat-grid-tile-footer>
+            <h3 mat-line>{{dog.name}}</h3>
+            <span mat-line>Human: {{dog.human}}</span>
+            <mat-icon>star_border</mat-icon>
+          </mat-grid-tile-footer>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</div>
+

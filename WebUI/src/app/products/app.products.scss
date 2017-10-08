@@ -1,0 +1,19 @@
+.app-grid-list {
+  width: 1100px;
+
+  .mat-card {
+    margin: 16px 0;
+  }
+
+  p {
+    margin: 16px;
+  }
+
+  .app-basic-list .mat-grid-tile {
+    background: rgba(0, 0, 0, 0.32);
+  }
+
+  img {
+    width: 350px;
+  }
+}
