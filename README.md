@@ -1,8 +1,8 @@
-<img src="https://github.com/gerardogrisolini/Webretail/blob/master/ClientApp/assets/logo.jpg?raw=true" width="80" alt="Webretail - RMS" />
+<img src="https://github.com/gerardogrisolini/Webretail/blob/master/AdminUI/src/assets/logo.jpg?raw=true" width="80" alt="Webretail - RMS" />
 
 # Webretail - RMS
 
-Retail Management System developed with Swift, Angular2 and PostgreSQL.
+Retail Management System developed with Swift 4.0, Angular 4.0 and PostgreSQL.
 
 #### Under active development. Please do not use.
 
@@ -79,13 +79,15 @@ To run this project from Xcode, edit the Scheme, Under "Options" for "run", chec
 [INFO] Starting HTTP server on 0.0.0.0:80 with document root ./webroot
 ```
 
-## Typescript
+## Typescript - Angular 4
 
 Steps for the development UI:
 
+in the subfolders:
+* AdminUI
+* WebUI
+
 ```
 npm install
-npm run server
-
-go to http://localhost:8080/webpack-dev-server/
+npm start
 ```

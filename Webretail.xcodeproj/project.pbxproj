@@ -1719,7 +1719,6 @@
 		OBJ_114 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		OBJ_115 /* Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setup.swift; sourceTree = "<group>"; };
 		OBJ_116 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		OBJ_118 /* ClientApp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ClientApp; sourceTree = SOURCE_ROOT; };
 		OBJ_12 /* AuthenticationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationConfig.swift; sourceTree = "<group>"; };
 		OBJ_124 /* PerfectSMTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfectSMTP.swift; sourceTree = "<group>"; };
 		OBJ_125 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/gerardo/Projects/github.com/Webretail/.build/checkouts/Perfect-SMTP.git-9132372392332813665/Package.swift"; sourceTree = "<group>"; };
@@ -4022,7 +4021,6 @@
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_117 /* Tests */,
-				OBJ_118 /* ClientApp */,
 				OBJ_121 /* Dependencies */,
 				OBJ_1016 /* Products */,
 			);
