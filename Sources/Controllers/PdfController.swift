@@ -24,10 +24,50 @@ class PdfController {
     
     func getRoutes() -> Routes {
         var routes = Routes()
+
+        routes.add(method: .get, uri: "/api/pdf", handler: htmlToPdfHandlerGET)
         routes.add(method: .get, uri: "/api/pdf/barcode/{id}", handler: barcodeHandlerGET)
+        
         return routes
     }
     
+    func htmlToPdfHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        try? FileManager.default.removeItem(atPath: "/tmp/page.pdf")
+        
+        let result = self.execCommand(
+            command: "/usr/local/bin/wkhtmltopdf",
+            args: [
+                "http://localhost:8181/movement/document/1",
+                "/tmp/page.pdf"
+            ])
+        
+        if !result.isEmpty {
+            response.badRequest(error: result)
+            return
+        }
+        
+        let content = FileManager.default.contents(atPath: "/tmp/page.pdf")!
+        response.appendBody(bytes: [UInt8](content))
+        response.setHeader(.contentType, value: "application/pdf")
+        response.completed()
+    }
+    
+    func execCommand(command: String, args: [String]) -> String {
+        if !command.hasPrefix("/") {
+            let commandFull = execCommand(command: "/usr/bin/which", args: [command]).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            return execCommand(command: commandFull, args: args)
+        } else {
+            let proc = Process()
+            proc.launchPath = command
+            proc.arguments = args
+            let pipe = Pipe()
+            proc.standardOutput = pipe
+            proc.launch()
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            return String(data: data, encoding: String.Encoding.utf8)!
+        }
+    }
+
     func barcodeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             #if os(Linux)

@@ -62,7 +62,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
                         }
                         index++;
                     });
-                    let lenght = 13 - array.length;
+                    const lenght = 13 - array.length;
                     for (let i = 0; i < lenght; i++) {
                         array.push(new MovementArticle());
                     }
@@ -90,7 +90,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     }
 
     sendMailClick() {
-        let email = new Email()
+        const email = new Email()
         email.address = this.movement.movementCustomer.customerEmail;
         email.subject = 'Document n° ' + this.movement.movementNumber;
         email.content = this.doc.nativeElement.innerHTML;
