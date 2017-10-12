@@ -25,19 +25,20 @@ class PdfController {
     func getRoutes() -> Routes {
         var routes = Routes()
 
-        routes.add(method: .get, uri: "/api/pdf", handler: htmlToPdfHandlerGET)
+        //routes.add(method: .get, uri: "/api/pdf", handler: htmlToPdfHandlerGET)
         routes.add(method: .get, uri: "/api/pdf/barcode/{id}", handler: barcodeHandlerGET)
         
         return routes
     }
     
+    /*
     func htmlToPdfHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         try? FileManager.default.removeItem(atPath: "/tmp/page.pdf")
         
         let result = self.execCommand(
             command: "/usr/local/bin/wkhtmltopdf",
             args: [
-                "http://localhost:8181/movement/document/1",
+                "http://www.tessilnova.com",
                 "/tmp/page.pdf"
             ])
         
@@ -67,7 +68,8 @@ class PdfController {
             return String(data: data, encoding: String.Encoding.utf8)!
         }
     }
-
+    */
+    
     func barcodeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             #if os(Linux)

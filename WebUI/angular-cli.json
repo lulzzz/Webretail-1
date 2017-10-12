@@ -1,12 +1,12 @@
 {
   "project": {
     "version": "1.0.0",
-    "name": "webretail"
+    "name": "webretail-web"
   },
   "apps": [
     {
       "root": "src",
-      "outDir": "../webroot",
+      "outDir": "dist",
       "assets": [
         "assets",
         "favicon.ico"
