@@ -8,7 +8,7 @@ import { SessionService } from './../services/session.service';
 
 export class NavigationComponent {
 
-    constructor(private sessionService: SessionService) {
+    constructor(public sessionService: SessionService) {
     }
 
     get isAuthenticated(): boolean {

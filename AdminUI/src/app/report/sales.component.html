@@ -10,7 +10,7 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable [value]="items | priceFilter:priceValue:'movement':amountValue | articleFilter:articleValue | categoryFilter:categoryValue:'sales'" [totalRecords]="totalRecords" [responsive]="true" #dt>
+    <p-dataTable [value]="items | priceFilter:priceValue:'movement':amountValue | articleFilter:articleValue | categoryFilter:categoryValue:'sales'" [totalRecords]="totalItems" [responsive]="true" #dt>
         <p-footer>
             <span style="float: left"><b>{{totalItems}}</b> receipts</span>
             <span style="float: right">Total amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
