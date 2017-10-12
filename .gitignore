@@ -46,9 +46,5 @@ StORMlog.txt
 *.log
 error.log 
 node_modules/
-webroot/favicon.ico
-webroot/index.html
-webroot/assets/
-webroot/dist/
-webroot/media/
+webroot/Media/
 .DS_Store
