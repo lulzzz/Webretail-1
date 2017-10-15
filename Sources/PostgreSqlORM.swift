@@ -125,19 +125,19 @@ open class PostgresSqlORM: PostgresStORM {
 		var clauseOrder = ""
 		var clauseJoin = ""
 
-		if columns.count > 0 {
+        var keys = [String]()
+        keys.append(self.table() + ".*")
+        for join in joins {
+            keys.append(join.table + ".*")
+            clauseJoin += " \(join.direction) JOIN \(join.table) ON \(join.onCondition)"
+        }
+
+        if columns.count > 0 {
 			clauseSelect = columns.joined(separator: ",")
 		} else {
-			var keys = [String]()
-			keys.append(self.table() + ".*")
-			for join in joins {
-				keys.append(join.table + ".*")
-				
-				clauseJoin += " \(join.direction) JOIN \(join.table) ON \(join.onCondition)"
-			}
-			clauseSelect = keys.joined(separator: ",")
+            clauseSelect = keys.joined(separator: ",")
 		}
-		
+
 		if whereclause.length > 0 {
 			clauseWhere = "WHERE \(whereclause)"
 		}

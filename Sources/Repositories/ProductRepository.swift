@@ -243,6 +243,16 @@ struct ProductRepository : ProductProtocol {
 		try current.save()
     }
     
+    func get(productId: Int) throws -> Publication? {
+        let item = Publication()
+        try item.query(
+            whereclause: "productId = $1", params: [productId],
+            cursor: StORMCursor(limit: 1, offset: 0)
+        )
+        
+        return item
+    }
+
     func publish(id: Int, item: Product) throws {
         
         guard let current = try get(id: id) else {

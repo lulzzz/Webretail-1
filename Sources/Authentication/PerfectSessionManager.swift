@@ -42,7 +42,7 @@ public class PerfectSessionManager: SessionManager {
             guard token.check()! else { throw InvalidSessionError() }
             return SessionAccount(uniqueID: token.userid)
         } catch {
-            print("Error... \(error)")
+            //print("Error... \(error)")
             throw InvalidSessionError()
         }
     }

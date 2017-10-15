@@ -102,7 +102,7 @@ extension Sequence {
 			}
 		}
 		return results
-	}
+    }
 }
 
 extension Sequence where Iterator.Element: Hashable {

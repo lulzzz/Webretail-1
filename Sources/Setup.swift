@@ -111,6 +111,9 @@ func addFilters() {
 	authenticationConfig.include("/api/*}")
 	authenticationConfig.exclude("/api/login")
 	authenticationConfig.exclude("/api/logout")
+    authenticationConfig.exclude("/api/published")
+    authenticationConfig.exclude("/api/published/*")
+    
 	let authFilter = AuthFilter(authenticationConfig)
 	
 	// Note that order matters when the filters are of the same priority level
