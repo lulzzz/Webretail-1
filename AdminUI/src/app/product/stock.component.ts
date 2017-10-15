@@ -12,7 +12,7 @@ import { ProductService } from './../services/product.service';
 import { StoreService } from './../services/store.service';
 
 @Component({
-    selector: 'stock',
+    selector: 'app-stock',
     templateUrl: 'stock.component.html'
 })
 
@@ -41,7 +41,7 @@ export class StockComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            let id = params['id'];
+            const id = params['id'];
             this.productService.getProduct(id)
                 .subscribe(result => {
                     this.product = result;

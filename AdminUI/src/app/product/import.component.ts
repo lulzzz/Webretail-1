@@ -10,7 +10,7 @@ import {
 import { Helpers } from '../shared/helpers';
 
 @Component({
-    selector: 'import-component',
+    selector: 'app-import-component',
     templateUrl: 'import.component.html'
 })
 
@@ -68,21 +68,21 @@ export class ImportComponent implements OnInit  {
 
     convertProduct(product: CodartInfo): Product {
         // Brand
-        let brand = new Brand();
+        const brand = new Brand();
         brand.brandName = 'Tessilnova';
 
         // Categories
-        let category = new Category(0, product.category.desc);
+        const category = new Category(0, product.category.desc);
         category.categoryIsPrimary = true;
         category.translations = product.category.translates.map(p => new Translation(p.code, p.value));
 
-        let subcategory = new Category(0, product.subcategory.desc);
+        const subcategory = new Category(0, product.subcategory.desc);
         subcategory.categoryIsPrimary = false;
         subcategory.translations = product.subcategory.translates.map(p => new Translation(p.code, p.value));
 
         // Texture
-        let texture = product.producer.desc.replace('Tessilnova ', '');
-        let textureAttribute = <ProductAttribute>{
+        const texture = product.producer.desc.replace('Tessilnova ', '');
+        const textureAttribute = <ProductAttribute>{
             attribute: new Attribute(0, 'Texture', [new Translation('IT', 'Tessuto')]),
             attributeValues: [
                 <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture, []) }
@@ -90,8 +90,8 @@ export class ImportComponent implements OnInit  {
         };
 
         // Colors
-        let colors = Helpers.distinct(product.codarts.map(p => Helpers.newSelectItem(p.colorId.trim(), p.color)));
-        let colorAttribute = <ProductAttribute>{
+        const colors = Helpers.distinct(product.codarts.map(p => Helpers.newSelectItem(p.colorId.trim(), p.color)));
+        const colorAttribute = <ProductAttribute>{
             attribute: new Attribute(0, 'Color', [new Translation('IT', 'Colore')]),
             attributeValues: colors.map(p => <ProductAttributeValue>{
                 attributeValue: new AttributeValue(0, 0, p.value, p.label,
@@ -101,8 +101,8 @@ export class ImportComponent implements OnInit  {
         };
 
         // Sizes
-        let sizes = product.codarts.map(p => p.size).filter((x, i, a) => x && a.indexOf(x) === i);
-        let sizeAttribute = <ProductAttribute>{
+        const sizes = product.codarts.map(p => p.size).filter((x, i, a) => x && a.indexOf(x) === i);
+        const sizeAttribute = <ProductAttribute>{
             attribute: new Attribute(0, 'Size', [new Translation('IT', 'Misura')]),
             attributeValues: sizes.map(p => <ProductAttributeValue>{ attributeValue: new AttributeValue(0, 0, p, p,
                 product.translates.filter(t => t.key === p).map(t => new Translation(t.code, t.value))
@@ -110,9 +110,9 @@ export class ImportComponent implements OnInit  {
         };
 
         // Articles
-        let articles: Article[] = [];
+        const articles: Article[] = [];
         product.codarts.forEach(p => {
-            let article = new Article();
+            const article = new Article();
             article.articleBarcode = p.barcode;
             article.attributeValues = [
                 <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture, []) },
@@ -123,15 +123,15 @@ export class ImportComponent implements OnInit  {
         });
 
         // Medias
-        let medias = product.medias.map(p => new Media(p.filename, p.url, p.number));
+        const medias = product.medias.map(p => new Media(p.filename, p.url, p.number));
 
         // Translations
-        let translations = product
+        const translations = product
             .translates.filter(p => p.key === product.id)
             .map(p => new Translation(p.code, p.value));
 
         // Product
-        let item = new Product();
+        const item = new Product();
         item.productCode = product.id;
         item.productName = product.name;
         item.productUm = 'QT';

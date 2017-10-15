@@ -13,7 +13,7 @@ import { CategoryService } from './../services/category.service';
 import { AttributeService } from './../services/attribute.service';
 
 @Component({
-    selector: 'product',
+    selector: 'app-product',
     templateUrl: 'product.component.html'
 })
 
@@ -47,7 +47,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            let id = params['id'];
+            const id = params['id'];
             this.productService.getProduct(id)
                 .subscribe(result => {
                     this.product = result;
@@ -78,7 +78,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     createTree() {
-        let rootNode = Helpers.newNode(this.product.productName, this.product.productCode, 'product');
+        const rootNode = Helpers.newNode(this.product.productName, this.product.productCode, 'product');
         rootNode.expanded = this.product.articles.length === 0;
 
         // let producerNode = Helpers.newNode('Brand', '[]', 'brands');
@@ -86,18 +86,25 @@ export class ProductComponent implements OnInit, OnDestroy {
         // producerNode.children.push(Helpers.newNode(this.product.brand.brandName, this.product.brand.brandId.toString(), 'brand'));
         // rootNode.children.push(producerNode);
 
-        let categoriesNode = Helpers.newNode('Categories', '[]', 'categories');
+        const categoriesNode = Helpers.newNode('Categories', '[]', 'categories');
         this.product.categories.forEach(elem => {
             categoriesNode.children.push(Helpers.newNode(elem.category.categoryName, elem.category.categoryId.toString(), 'category'));
         });
         categoriesNode.expanded = categoriesNode.children.length > 0;
         rootNode.children.push(categoriesNode);
 
-        let attributesNode = Helpers.newNode('Attributes', '[]', 'attributes');
+        const attributesNode = Helpers.newNode('Attributes', '[]', 'attributes');
         this.product.attributes.forEach(elem => {
-            let node = Helpers.newNode(elem.attribute.attributeName, elem.attribute.attributeId.toString(), `attribute:${elem.productAttributeId}`);
+            const node = Helpers.newNode(
+                elem.attribute.attributeName, elem.attribute.attributeId.toString(),
+                `attribute:${elem.productAttributeId}`
+            );
             elem.attributeValues.forEach(e =>
-                node.children.push(Helpers.newNode(e.attributeValue.attributeValueName, e.attributeValue.attributeValueId.toString(), 'attributeValue'))
+                node.children.push(Helpers.newNode(
+                    e.attributeValue.attributeValueName,
+                    e.attributeValue.attributeValueId.toString(),
+                    'attributeValue')
+                )
             );
             node.expanded = node.children.length > 0;
             attributesNode.children.push(node);
@@ -124,7 +131,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         this.nodesSource = [];
 
-        let type = this.selectedNode.type;
+        const type = this.selectedNode.type;
         switch (type) {
             case 'categories':
                 this.nodesTarget = this.productInfo[0].children.find(p => p.type === 'categories').children;
@@ -156,7 +163,8 @@ export class ProductComponent implements OnInit, OnDestroy {
                     .subscribe(result => {
                         result.forEach(p => {
                             if (this.nodesTarget.findIndex(e => e.data === p.attributeValueId) < 0) {
-                                this.nodesSource.push(Helpers.newNode(p.attributeValueName, p.attributeValueId.toString(), 'attributeValue'));
+                                this.nodesSource.push(Helpers.newNode(
+                                    p.attributeValueName, p.attributeValueId.toString(), 'attributeValue'));
                             }
                         });
                     }, onerror => this.msgs.push({severity: 'error', summary: 'Get values by attributeId', detail: onerror._body}));
@@ -170,29 +178,29 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     addNodes(event: any) {
-        let productCategories: ProductCategory[] = [];
-        let productAttributes: ProductAttribute[] = [];
-        let productAttributeValues: ProductAttributeValue[] = [];
-        let nodes: TreeNode[] = event.items;
+        const productCategories: ProductCategory[] = [];
+        const productAttributes: ProductAttribute[] = [];
+        const productAttributeValues: ProductAttributeValue[] = [];
+        const nodes: TreeNode[] = event.items;
 
         nodes.forEach(p => {
             switch (p.type) {
                 case 'category':
-                    let productCategory = <ProductCategory>{
+                    const productCategory = <ProductCategory>{
                         productId: this.product.productId,
                         category: new Category(p.data, p.label)
                     };
                     productCategories.push(productCategory);
                     break;
                 case (p.type.startsWith('attribute:') ? p.type : undefined):
-                    let productAttribute = <ProductAttribute>{
+                    const productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
                         attribute: new Attribute(p.data, p.label, [])
                     };
                     productAttributes.push(productAttribute);
                     break;
                 case 'attributeValue':
-                    let productAttributeValue = <ProductAttributeValue>{
+                    const productAttributeValue = <ProductAttributeValue>{
                         productAttributeId: Number(this.selectedNode.type.split(':')[1]),
                         attributeValue: new AttributeValue(0, p.data, '', p.label, [])
                     };
@@ -234,29 +242,29 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     removeNodes(event: any) {
-        let productCategories: ProductCategory[] = [];
-        let productAttributes: ProductAttribute[] = [];
-        let productAttributeValues: ProductAttributeValue[] = [];
-        let nodes: TreeNode[] = event.items;
+        const productCategories: ProductCategory[] = [];
+        const productAttributes: ProductAttribute[] = [];
+        const productAttributeValues: ProductAttributeValue[] = [];
+        const nodes: TreeNode[] = event.items;
 
         nodes.forEach(p => {
             switch (p.type) {
                 case 'category':
-                    let productCategory = <ProductCategory>{
+                    const productCategory = <ProductCategory>{
                         productId: this.product.productId,
                         category: new Category(p.data, p.label)
                     };
                     productCategories.push(productCategory);
                     break;
                 case (p.type.startsWith('attribute:') ? p.type : undefined):
-                    let productAttribute = <ProductAttribute>{
+                    const productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
                         attribute: new Attribute(p.data, p.label, [])
                     };
                     productAttributes.push(productAttribute);
                     break;
                 case 'attributeValue':
-                    let productAttributeValue = <ProductAttributeValue>{
+                    const productAttributeValue = <ProductAttributeValue>{
                         productAttributeId: Number(this.selectedNode.type.split(':')[1]),
                         attributeValue: new AttributeValue(0, p.data, '', p.label, [])
                     };
@@ -324,13 +332,13 @@ export class ProductComponent implements OnInit, OnDestroy {
     saveClick() {
         let count = 0;
         this.isBusy = true;
-        let length = this.articleForm.body.length - 1;
-        let barcode = this.articleForm.body[length][this.articleForm.body[length].length - 1].value;
+        const length = this.articleForm.body.length - 1;
+        const barcode = this.articleForm.body[length][this.articleForm.body[length].length - 1].value;
         this.articleForm.body
             .forEach(pp => {
                 pp.forEach(p => {
                     if (p.id > 0) {
-                        let article = new Article();
+                        const article = new Article();
                         article.articleId = p.id;
                         article.articleBarcode = p.value;
                         this.productService

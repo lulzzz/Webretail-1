@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Message, MenuItem, SelectItem, Button, ConfirmationService } from 'primeng/primeng';
@@ -8,11 +8,11 @@ import { PublicationService } from '../services/publication.service'
 import { Publication, Translation, Media } from '../shared/models'
 
 @Component({
-    selector: 'publication',
+    selector: 'app-publication',
     templateUrl: 'publication.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class PublicationComponent implements OnInit {
+export class PublicationComponent implements OnInit, OnDestroy {
 
     private sub: any;
     private items: MenuItem[];
@@ -52,7 +52,7 @@ export class PublicationComponent implements OnInit {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            let id = params['id'];
+            const id = params['id'];
             this.publicationService.getProduct(id).subscribe(result => {
                 this.publicationService.product = result;
                 this.selectedArray = this.product.translations;
@@ -132,12 +132,12 @@ export class PublicationComponent implements OnInit {
             this.msgs.push({severity: 'warn', summary: 'Attention', detail: 'Translate is not empty!'});
             return;
         }
-        let translate = this.publicationService.getTranslate(this.selectedArray, this.translation.country);
+        const translate = this.publicationService.getTranslate(this.selectedArray, this.translation.country);
         if (translate) {
             this.msgs.push({severity: 'warn', summary: 'Attention', detail: 'Translate for this country alrady present!'});
             return;
         }
-        let item = new Translation(this.translation.country, this.translation.value);
+        const item = new Translation(this.translation.country, this.translation.value);
         this.publicationService.addTranslate(this.selectedArray, item);
         this.translation.value = '';
     }
@@ -177,7 +177,7 @@ export class PublicationComponent implements OnInit {
         let index = this.product.medias.length;
         event.files.forEach(file => {
             index++;
-            let media = new Media(file.name, 'media/' + file.name, index);
+            const media = new Media(file.name, 'media/' + file.name, index);
             this.publicationService.addMedia(media);
         });
     }
@@ -222,7 +222,7 @@ export class PublicationComponent implements OnInit {
     }
 
     get status(): string {
-        let status = this.publicationService.getStatus();
+        const status = this.publicationService.getStatus();
         return status === 'Completed' ? this.publicationService.published ? 'Published' : 'Ready for sale' : 'Check ' + status;
     }
 }

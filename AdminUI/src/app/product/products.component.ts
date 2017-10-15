@@ -9,7 +9,7 @@ import { BrandService } from './../services/brand.service';
 import { ProductService } from './../services/product.service';
 
 @Component({
-    selector: 'products',
+    selector: 'app-products',
     templateUrl: 'products.component.html'
 })
 
@@ -41,7 +41,7 @@ export class ProductsComponent implements OnInit {
 
         this.dataform = this.fb.group({
             'brand': new FormControl('', Validators.required),
-            'code': new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
+            'code': new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
             'name': new FormControl('', Validators.required),
             'um': new FormControl('', Validators.required),
             'selling': new FormControl('', Validators.required),
@@ -70,13 +70,13 @@ export class ProductsComponent implements OnInit {
     buildFilter(items: Product[]) {
         this.brands = [];
         this.brands.push({label: 'All', value: null});
-        let filterBrands = Helpers.distinct(items.map((item: Product) => Helpers.newSelectItem(item.brand.brandName)));
+        const filterBrands = Helpers.distinct(items.map((item: Product) => Helpers.newSelectItem(item.brand.brandName)));
         this.brands = this.brands.concat(filterBrands);
 
         this.categories = [];
         this.categories.push({label: 'All', value: null});
-        let array = items.map((p: Product) => p.categories.map((c: ProductCategory) => c.category.categoryName)).join(',');
-        let filterCategories = Helpers.distinct(array.split(',').map((item: string) => Helpers.newSelectItem(item)));
+        const array = items.map((p: Product) => p.categories.map((c: ProductCategory) => c.category.categoryName)).join(',');
+        const filterCategories = Helpers.distinct(array.split(',').map((item: string) => Helpers.newSelectItem(item)));
         this.categories = this.categories.concat(filterCategories);
     }
 
