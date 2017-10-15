@@ -63,7 +63,7 @@ struct PublicationRepository : PublicationProtocol {
 
         let items = Product()
         try items.query(
-            whereclause: "publications.publicationFeatured = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2",
+            whereclause: "publications.publicationFeatured = $1 AND products.productIsActive = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2",
             params: [true, Int.now()],
             orderby: ["publications.publicationStartAt DESC"],
             joins: [publication, brand]
@@ -91,8 +91,8 @@ struct PublicationRepository : PublicationProtocol {
         
         let items = Product()
         try items.query(
-            whereclause: "publications.publicationStartAt <= $1 AND publications.publicationFinishAt >= $1",
-            params: [Int.now()],
+            whereclause: "publications.publicationStartAt <= $1 AND publications.publicationFinishAt >= $1 AND products.productIsActive = $2",
+            params: [Int.now(), true],
             orderby: ["products.productName"],
             joins:  [publication, brand, categories]
         )
@@ -120,7 +120,7 @@ struct PublicationRepository : PublicationProtocol {
         let items = Category()
         try items.query(
             columns: ["DISTINCT categories.*"],
-            whereclause: "publications.publicationStartAt <= $1 AND publications.publicationFinishAt >= $1 AND categories.categoryIsPrimary = $2",
+            whereclause: "publications.publicationStartAt <= $1 AND publications.publicationFinishAt >= $1 AND categories.categoryIsPrimary = $2 AND products.productIsActive = $2",
             params: [Int.now(), true],
             orderby: ["categories.categoryName"],
             joins:  [categories, product, publication]
@@ -148,8 +148,8 @@ struct PublicationRepository : PublicationProtocol {
 
         let items = Product()
         try items.query(
-            whereclause: "productcategories.categoryId = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2",
-            params: [categoryId, Int.now()],
+            whereclause: "productcategories.categoryId = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
+            params: [categoryId, Int.now(), true],
             orderby: ["products.productName"],
             joins:  [publication, brand, categories]
         )
