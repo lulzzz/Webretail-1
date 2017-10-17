@@ -5,7 +5,7 @@ import { AppComponent, HomeComponent } from './app.component';
 export const APP_ROUTES: Routes = [
   {path: '', component: AppComponent, children: [
     {path: 'home', component: HomeComponent},
-    {path: 'products', component: ProductsComponent},
+    {path: 'products/:id/:name', component: ProductsComponent},
   ]}
 ];
 

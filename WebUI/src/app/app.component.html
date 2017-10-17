@@ -1,6 +1,7 @@
 <mat-sidenav-container class="app-root" fullscreen>
   
   <mat-sidenav #start>
+    <img src="assets/logo.jpg"/>
     <mat-nav-list>
       <a mat-list-item
         tabindex="-1"
@@ -27,7 +28,7 @@
   </mat-sidenav>
 
   <div>
-    <mat-toolbar color="primary">
+    <mat-toolbar id="toolbar" color="transparent">
       <button mat-icon-button (click)="start.open()">
         <mat-icon>menu</mat-icon>
       </button>

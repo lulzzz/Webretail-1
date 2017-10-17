@@ -1,5 +1,6 @@
-import {Component, ElementRef, Renderer2, ViewEncapsulation} from '@angular/core';
-import {OverlayContainer} from '@angular/cdk/overlay';
+import { Component, OnInit, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { ProductService } from './services/product.service';
 
 /**
  * The entry app for demo site. Routes under `accessibility` will use AccessibilityDemo component,
@@ -30,7 +31,11 @@ export class AppEntry {}
   </span>
   `
 })
-export class HomeComponent {}
+export class HomeComponent {
+  constructor() {
+    AppComponent.title = 'Home';
+  }
+}
 
 @Component({
   moduleId: module.id,
@@ -40,13 +45,27 @@ export class HomeComponent {}
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
 })
-export class AppComponent {
-  title = 'Webretail';
+export class AppComponent implements OnInit {
+  static title: string;
   navItems = [
-    {name: 'Products', route: '/products'},
+    {name: 'Featured', route: '/products/featured/Featured'}
   ];
 
-  constructor(private _element: ElementRef) {}
+  get title() {
+    return AppComponent.title;
+  }
+
+  constructor(
+    private productService: ProductService,
+    private _element: ElementRef
+  ) {}
+
+  ngOnInit() {
+    this.productService.getCategories()
+    .subscribe(result => {
+      result.forEach(p => this.navItems.push({name: p.categoryName, route: '/products/' + p.categoryId + '/' + p.categoryName}));
+  });
+}
 
   toggleFullscreen() {
     const elem = this._element.nativeElement.querySelector('.app-content');
@@ -59,5 +78,16 @@ export class AppComponent {
     } else if (elem.msRequestFullScreen) {
       elem.msRequestFullScreen();
     }
+
+    // const element = document as any;
+    // if (element.exitFullscreen) {
+    //     element.exitFullscreen();
+    // } else if (element.mozCancelFullScreen) {
+    //     element.mozCancelFullScreen();
+    // } else if (element.webkitExitFullscreen) {
+    //     element.webkitExitFullscreen();
+    // } else if (element.msExitFullscreen) {
+    //     element.msExitFullscreen();
+    // }
   }
 }

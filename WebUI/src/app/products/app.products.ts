@@ -1,6 +1,8 @@
-import {Component} from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ProductService } from './../services/product.service';
 import { Product } from './../shared/models';
+import { AppComponent } from 'app/app.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -8,40 +10,49 @@ import { Product } from './../shared/models';
   templateUrl: './app.products.html',
   styleUrls: ['./app.products.scss']
 })
-export class ProductsComponent {
-
+export class ProductsComponent implements OnInit, OnDestroy {
+  private sub: any;
   products: Product[];
+  fixedCols: number;
+  fitListHeight: string;
+  fitListWidth: string;
 
-  tiles: any[] = [
-    {text: 'One', cols: 3, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 2, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Four', cols: 2, rows: 1, color: '#DDBDF1'},
-  ];
-
-  dogs: Object[] = [
-    { name: 'Porter', human: 'Kara' },
-    { name: 'Mal', human: 'Jeremy' },
-    { name: 'Koby', human: 'Igor' },
-    { name: 'Razzle', human: 'Ward' },
-    { name: 'Molly', human: 'Rob' },
-    { name: 'Husi', human: 'Matias' },
-  ];
-
-  basicRowHeight = 80;
-  fixedCols = 4;
-  fixedRowHeight = 100;
-  ratioGutter = 1;
-  fitListHeight = '400px';
-  ratio = '4:1';
-
-  addTileCols() { this.tiles[2].cols++; }
-
-  constructor(private productService: ProductService) {
+  constructor(
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.onResizeChanged(window);
   }
 
-  loadProducts() {
-    this.productService.getProducts()
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.onResizeChanged(event.target);
+  }
+
+  ngOnInit() {
+    this.sub = this.activatedRoute.params.subscribe(params => {
+      const id = params['id'];
+      const name = params['name'];
+      this.loadProducts(id, name);
+    });
+  }
+
+  ngOnDestroy() {
+    // Clean sub to avoid memory leak
+    this.sub.unsubscribe();
+}
+
+onResizeChanged(event: any) {
+    const w = event.innerWidth;
+    this.fixedCols = w < 600 ? 1 : w < 1200 ? 2 : 3;
+    this.fitListWidth = (w - this.fixedCols - 1) + 'px';
+    this.fitListHeight = (w / this.fixedCols * 1.2) + 'px';
+  }
+
+  loadProducts(categoryId: string, categoryName: string) {
+    AppComponent.title = categoryName;
+
+    this.productService.getByCategoryId(categoryId)
         .subscribe(result => {
           this.products = result;
     });
