@@ -1,10 +1,10 @@
 {
     "/api/**": {
-       "target": "http://webretail.westeurope.cloudapp.azure.com",
+       "target": "http://localhost:8181",
        "secure": false,
        "logLevel": "debug"
     },
-    "/Media/**": {
+    "/media/**": {
         "target": "http://webretail.westeurope.cloudapp.azure.com",
         "secure": false,
         "logLevel": "debug"

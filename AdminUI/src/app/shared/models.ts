@@ -375,7 +375,7 @@ export class Device {
   }
 }
 
-export class Email {
+export class Message {
   public address: string;
   public subject: string;
   public content: string;

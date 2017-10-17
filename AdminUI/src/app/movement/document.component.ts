@@ -5,10 +5,11 @@ import { Location } from '@angular/common';
 import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { CompanyService } from './../services/company.service';
-import { Movement, MovementArticle, Company, Email } from './../shared/models';
+import { Movement, MovementArticle, Company, Message } from './../shared/models';
+import * as FileSaver from 'file-saver';
 
 @Component({
-    selector: 'document-component',
+    selector: 'app-document-component',
     templateUrl: 'document.component.html'
 })
 
@@ -85,12 +86,31 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.location.back();
     }
 
-    printClick() {
-        window.print();
+    // printClick() {
+    //     window.print();
+    // }
+
+    pdfClick() {
+        const model = new Message()
+        model.subject = this.movement.movementNumber + '.pdf';
+        model.content = this.doc.nativeElement.innerHTML;
+
+        this.companyService
+            .htmlToPdf(model)
+            .subscribe(
+                data => {
+                    const blob = new Blob([data], {type: 'application/pdf'});
+                    FileSaver.saveAs(blob, model.subject);
+                    // const url = window.URL.createObjectURL(blob);
+                    // window.location.href = url;
+                },
+                err => console.error(err),
+            () => console.log('done')
+        );
     }
 
     sendMailClick() {
-        const email = new Email()
+        const email = new Message()
         email.address = this.movement.movementCustomer.customerEmail;
         email.subject = 'Document n° ' + this.movement.movementNumber;
         email.content = this.doc.nativeElement.innerHTML;

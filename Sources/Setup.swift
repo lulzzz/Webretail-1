@@ -103,7 +103,6 @@ func addRoutesAndHandlers() {
     server.addRoutes(PdfController().getRoutes())
     server.addRoutes(StatisticController().getRoutes())
     server.addRoutes(PublicationController().getRoutes())
-    server.addRoutes(EmailController().getRoutes())
 }
 
 func addFilters() {
@@ -113,7 +112,7 @@ func addFilters() {
 	authenticationConfig.exclude("/api/logout")
     authenticationConfig.exclude("/api/published")
     authenticationConfig.exclude("/api/published/*")
-    
+
 	let authFilter = AuthFilter(authenticationConfig)
 	
 	// Note that order matters when the filters are of the same priority level

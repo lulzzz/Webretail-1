@@ -1,7 +1,10 @@
-body {
-  padding-top: 140px;
+html {
   font-size: medium;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  padding-top: 140px;
 }
 
 .navigationLinkButton:hover {

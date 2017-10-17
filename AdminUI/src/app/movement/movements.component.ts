@@ -12,7 +12,7 @@ import { Helpers } from './../shared/helpers';
 import * as FileSaver from 'file-saver';
 
 @Component({
-    selector: 'movements-component',
+    selector: 'app-movements-component',
     templateUrl: 'movements.component.html'
 })
 
@@ -115,29 +115,29 @@ export class MovementsComponent implements OnInit {
             }
         );
 
-        let jsonObj: any = JSON.parse(localStorage.getItem('webretailDevice'));
+        const jsonObj: any = JSON.parse(localStorage.getItem('webretailDevice'));
         this.device = jsonObj !== null ? <Device>jsonObj : null;
     }
 
     buildFilter(items: Movement[]) {
         this.storesFiltered = [];
         this.storesFiltered.push({label: 'All', value: null});
-        let filterStores = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStore.storeName)));
+        const filterStores = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStore.storeName)));
         this.storesFiltered = this.storesFiltered.concat(filterStores);
 
         this.causalsFiltered = [];
         this.causalsFiltered.push({label: 'All', value: null});
-        let filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCausal.causalName)));
+        const filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCausal.causalName)));
         this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
 
         this.customersFiltered = [];
         this.customersFiltered.push({label: 'All', value: null});
-        let filterCustomer = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCustomer.customerName)));
+        const filterCustomer = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCustomer.customerName)));
         this.customersFiltered = this.customersFiltered.concat(filterCustomer);
 
         this.statusFiltered = [];
         this.statusFiltered.push({label: 'All', value: null});
-        let filterStatus = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStatus)));
+        const filterStatus = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStatus)));
         this.statusFiltered = this.statusFiltered.concat(filterStatus);
     }
 
@@ -149,7 +149,7 @@ export class MovementsComponent implements OnInit {
         if (this.selected.movementId === 0) {
             return this.status.slice(0, 1);
         }
-        let index = this.status.findIndex(p => p.label === this.selected.movementStatus);
+        const index = this.status.findIndex(p => p.label === this.selected.movementStatus);
         return this.status.slice(index, 5);
     }
 
@@ -280,10 +280,10 @@ export class MovementsComponent implements OnInit {
             .getBarcode(this.selected.movementId)
             .subscribe(
                 data => {
-                    let blob = new Blob([data], {type: 'application/pdf'});
-                    let filename = 'barcode_' + this.selected.movementNumber + '_' + this.selected.movementDate + '.pdf';
+                    const blob = new Blob([data], {type: 'application/pdf'});
+                    const filename = 'barcode_' + this.selected.movementNumber + '_' + this.selected.movementDate + '.pdf';
                     FileSaver.saveAs(blob, filename);
-                    // var url = window.URL.createObjectURL(blob);
+                    // const url = window.URL.createObjectURL(blob);
                     // window.location.href = url;
                 },
                 err => console.error(err),

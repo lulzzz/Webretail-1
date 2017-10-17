@@ -72,9 +72,15 @@ class CompanyController {
 		response.setHeader(.contentType, value: "application/json")
 
 		do {
+            let pathDir = "./webroot/media"
+            var isDir : ObjCBool = true
+            if (!FileManager.default.fileExists(atPath: pathDir, isDirectory: &isDir)) {
+                try FileManager.default.createDirectory(atPath: pathDir, withIntermediateDirectories: false, attributes: nil)
+            }
+            
 			if let uploads = request.postFileUploads {
-				for upload in uploads {
-                    let path = "./webroot/media/\(upload.fileName)"
+                for upload in uploads {
+                    let path = "\(pathDir)/\(upload.fileName)"
                     if (FileManager.default.fileExists(atPath: path)) {
                         try FileManager.default.removeItem(atPath: path)
                     }

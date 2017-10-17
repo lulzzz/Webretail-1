@@ -5,10 +5,11 @@ import { Location } from '@angular/common';
 import { SessionService } from './../services/session.service';
 import { CompanyService } from './../services/company.service';
 import { InvoiceService } from './../services/invoice.service';
-import { Invoice, MovementArticle, Company, Email } from './../shared/models';
+import { Invoice, MovementArticle, Company, Message } from './../shared/models';
+import * as FileSaver from 'file-saver';
 
 @Component({
-    selector: 'invoicedocument-component',
+    selector: 'app-invoicedocument-component',
     templateUrl: 'invoicedocument.component.html'
 })
 
@@ -62,7 +63,7 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
                         }
                         index++;
                     });
-                    let lenght = 13 - array.length;
+                    const lenght = 13 - array.length;
                     for (let i = 0; i < lenght; i++) {
                         array.push(new MovementArticle());
                     }
@@ -85,17 +86,34 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
         this.location.back();
     }
 
-    printClick() {
-        window.print();
-    }
-    
-    sendMailClick() {
-        let email = new Email()
-        email.address = this.invoice.invoiceCustomer.customerEmail;
-        email.subject = "Invoice n° " + this.invoice.invoiceNumber;
-        email.content = this.doc.nativeElement.innerHTML;
+    // printClick() {
+    //     window.print();
+    // }
 
-        this.companyService.sendMail(email)
+    pdfClick() {
+        const model = new Message()
+        model.subject = this.invoice.invoiceNumber + '.pdf';
+        model.content = this.doc.nativeElement.innerHTML;
+
+        this.companyService
+            .htmlToPdf(model)
+            .subscribe(
+                data => {
+                    const blob = new Blob([data], {type: 'application/pdf'});
+                    FileSaver.saveAs(blob, model.subject);
+                },
+                err => console.error(err),
+            () => console.log('done')
+        );
+    }
+
+    sendMailClick() {
+        const model = new Message()
+        model.address = this.invoice.invoiceCustomer.customerEmail;
+        model.subject = 'Invoice n° ' + this.invoice.invoiceNumber;
+        model.content = this.doc.nativeElement.innerHTML;
+
+        this.companyService.sendMail(model)
             .subscribe(
                 result => alert(result.content),
                 onerror => alert(onerror._body)

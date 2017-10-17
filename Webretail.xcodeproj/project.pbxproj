@@ -45,7 +45,6 @@
 		OBJ_1175 /* CustomerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* CustomerController.swift */; };
 		OBJ_1176 /* DeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* DeviceController.swift */; };
 		OBJ_1177 /* DiscountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* DiscountController.swift */; };
-		OBJ_1178 /* EmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* EmailController.swift */; };
 		OBJ_1179 /* InvoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* InvoiceController.swift */; };
 		OBJ_1180 /* MovementArticleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* MovementArticleController.swift */; };
 		OBJ_1181 /* MovementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* MovementController.swift */; };
@@ -71,7 +70,7 @@
 		OBJ_1201 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_55 /* Device.swift */; };
 		OBJ_1202 /* Discount.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_56 /* Discount.swift */; };
 		OBJ_1203 /* DiscountProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* DiscountProduct.swift */; };
-		OBJ_1204 /* Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* Email.swift */; };
+		OBJ_1204 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* Message.swift */; };
 		OBJ_1205 /* Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* Invoice.swift */; };
 		OBJ_1206 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_60 /* Media.swift */; };
 		OBJ_1207 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_61 /* Model.swift */; };
@@ -1907,7 +1906,6 @@
 		OBJ_307 /* bn_lib.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_lib.c; sourceTree = "<group>"; };
 		OBJ_308 /* bn_mod.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_mod.c; sourceTree = "<group>"; };
 		OBJ_309 /* bn_mont.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_mont.c; sourceTree = "<group>"; };
-		OBJ_31 /* EmailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailController.swift; sourceTree = "<group>"; };
 		OBJ_310 /* bn_mpi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_mpi.c; sourceTree = "<group>"; };
 		OBJ_311 /* bn_mul.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_mul.c; sourceTree = "<group>"; };
 		OBJ_312 /* bn_nist.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bn_nist.c; sourceTree = "<group>"; };
@@ -2203,7 +2201,7 @@
 		OBJ_577 /* i_ecb.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = i_ecb.c; sourceTree = "<group>"; };
 		OBJ_578 /* i_ofb64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = i_ofb64.c; sourceTree = "<group>"; };
 		OBJ_579 /* i_skey.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = i_skey.c; sourceTree = "<group>"; };
-		OBJ_58 /* Email.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Email.swift; sourceTree = "<group>"; };
+		OBJ_58 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		OBJ_580 /* krb5_asn.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = krb5_asn.c; sourceTree = "<group>"; };
 		OBJ_581 /* kssl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = kssl.c; sourceTree = "<group>"; };
 		OBJ_582 /* lh_stats.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lh_stats.c; sourceTree = "<group>"; };
@@ -3190,7 +3188,6 @@
 				OBJ_28 /* CustomerController.swift */,
 				OBJ_29 /* DeviceController.swift */,
 				OBJ_30 /* DiscountController.swift */,
-				OBJ_31 /* EmailController.swift */,
 				OBJ_32 /* InvoiceController.swift */,
 				OBJ_33 /* MovementArticleController.swift */,
 				OBJ_34 /* MovementController.swift */,
@@ -3994,7 +3991,7 @@
 				OBJ_55 /* Device.swift */,
 				OBJ_56 /* Discount.swift */,
 				OBJ_57 /* DiscountProduct.swift */,
-				OBJ_58 /* Email.swift */,
+				OBJ_58 /* Message.swift */,
 				OBJ_59 /* Invoice.swift */,
 				OBJ_60 /* Media.swift */,
 				OBJ_61 /* Model.swift */,
@@ -5388,7 +5385,6 @@
 				OBJ_1175 /* CustomerController.swift in Sources */,
 				OBJ_1176 /* DeviceController.swift in Sources */,
 				OBJ_1177 /* DiscountController.swift in Sources */,
-				OBJ_1178 /* EmailController.swift in Sources */,
 				OBJ_1179 /* InvoiceController.swift in Sources */,
 				OBJ_1180 /* MovementArticleController.swift in Sources */,
 				OBJ_1181 /* MovementController.swift in Sources */,
@@ -5414,7 +5410,7 @@
 				OBJ_1201 /* Device.swift in Sources */,
 				OBJ_1202 /* Discount.swift in Sources */,
 				OBJ_1203 /* DiscountProduct.swift in Sources */,
-				OBJ_1204 /* Email.swift in Sources */,
+				OBJ_1204 /* Message.swift in Sources */,
 				OBJ_1205 /* Invoice.swift in Sources */,
 				OBJ_1206 /* Media.swift in Sources */,
 				OBJ_1207 /* Model.swift in Sources */,

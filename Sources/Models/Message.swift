@@ -6,7 +6,7 @@
 //
 //
 
-class Email: Codable {
+class Message: Codable {
 	
 	public var address : String = ""
 	public var subject : String = ""
