@@ -12,9 +12,9 @@ import PerfectLogger
 import PerfectSMTP
 import PerfectLib
 
-#if os(OSX)
-    import Quartz
-#endif
+//#if os(OSX)
+//    import Quartz
+//#endif
 
 class PdfController {
     
@@ -33,7 +33,7 @@ class PdfController {
         routes.add(method: .post, uri: "/api/pdf/email", handler: emailHandlerPOST)
 //        routes.add(method: .get, uri: "/api/pdf/movement/{id}", handler: PdfMovementHandlerGET)
 //        routes.add(method: .get, uri: "/api/pdf/invoice{id}", handler: PdfInvoiceHandlerGET)
-        routes.add(method: .get, uri: "/api/pdf/barcode/{id}", handler: barcodeHandlerGET)
+//        routes.add(method: .get, uri: "/api/pdf/barcode/{id}", handler: barcodeHandlerGET)
         
         return routes
     }
@@ -115,7 +115,7 @@ class PdfController {
                 "rasterize.js",
                 model.content,
                 path,
-                "28cm*38.5cm"
+                model.address.isEmpty ? "28cm*38.5cm" : model.address
             ])
         
         if !result.isEmpty {
@@ -142,6 +142,7 @@ class PdfController {
         }
     }
     
+    /*
     func barcodeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             #if os(Linux)
@@ -189,5 +190,6 @@ class PdfController {
             response.setHeader(.contentType, value: "application/json")
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
-    }
+     }
+     */
 }

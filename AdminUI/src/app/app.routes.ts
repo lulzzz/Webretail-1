@@ -19,6 +19,7 @@ import { PublicationComponent } from './product/publication.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { DocumentComponent } from './movement/document.component';
+import { BarcodeComponent } from './movement/barcode.component';
 import { DiscountsComponent } from './discount/discounts.component';
 import { DiscountComponent } from './discount/discount.component';
 import { InvoicesComponent } from './invoice/invoices.component';
@@ -50,6 +51,7 @@ export const routes: Routes = [
     { path: 'movement', component: MovementsComponent },
     { path: 'movement/:id', component: MovementComponent },
     { path: 'movement/document/:id', component: DocumentComponent },
+    { path: 'movement/barcode/:id', component: BarcodeComponent },
     { path: 'discount', component: DiscountsComponent },
     { path: 'discount/:id', component: DiscountComponent },
     { path: 'invoice', component: InvoicesComponent },

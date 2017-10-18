@@ -1,0 +1,22 @@
+﻿<img *ngIf="!items" src="/assets/loading.gif" class="loading">
+
+<div class="container-fluid">
+
+    <div class="noprint">
+        <button pButton type="button" title="Movements" (click)="cancelClick()" class="ui-button-secondary" style="width:50px" icon="fa-reply"></button>
+        <button pButton type="button" label="PDF" title="Pdf document" (click)="pdfClick()" class="ui-button-secondary" icon="fa-file-pdf-o"></button>
+    </div>
+    <br/><br/>
+    <div #doc>
+        <p *ngFor="let item of items" style="display: table;margin: 0 auto;">
+            <span style="font-size: 24px">
+                &nbsp;&nbsp;{{item.movementArticleProduct | articleInfo:item.movementArticleBarcode}}
+                &nbsp;-&nbsp;<b>{{item.movementArticlePrice | currency: 'EUR' : true}}</b>
+            </span>
+            <br/>
+            <ngx-barcode [bc-width]="4" [bc-height]="200" [bc-font-size]="36" [bc-value]="item.movementArticleBarcode" [bc-display-value]="true"></ngx-barcode>
+            <br/>
+        </p>
+    </div>
+
+</div>

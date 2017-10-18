@@ -69,7 +69,7 @@ export class MovementsComponent implements OnInit {
 
         this.buttons = [
             { label: 'Document', icon: 'fa-print', command: (event) => this.openClick('document/') },
-            { label: 'Barcode', icon: 'fa-barcode', command: (event) => this.openBarcodeClick() },
+            { label: 'Barcode', icon: 'fa-barcode', command: (event) => this.openClick('barcode/') },
             { label: 'Create copy', icon: 'fa-clone', command: (event) => this.cloneClick() }
         ];
 
@@ -272,22 +272,22 @@ export class MovementsComponent implements OnInit {
         this.router.navigateByUrl('movement/' + detail + this.selected.movementId);
     }
 
-    openBarcodeClick() {
-        if (!this.selected) {
-            return;
-        }
-        this.movementService
-            .getBarcode(this.selected.movementId)
-            .subscribe(
-                data => {
-                    const blob = new Blob([data], {type: 'application/pdf'});
-                    const filename = 'barcode_' + this.selected.movementNumber + '_' + this.selected.movementDate + '.pdf';
-                    FileSaver.saveAs(blob, filename);
-                    // const url = window.URL.createObjectURL(blob);
-                    // window.location.href = url;
-                },
-                err => console.error(err),
-            () => console.log('done')
-        );
-    }
+    // openBarcodeClick() {
+    //     if (!this.selected) {
+    //         return;
+    //     }
+    //     this.movementService
+    //         .getBarcode(this.selected.movementId)
+    //         .subscribe(
+    //             data => {
+    //                 const blob = new Blob([data], {type: 'application/pdf'});
+    //                 const filename = 'barcode_' + this.selected.movementNumber + '_' + this.selected.movementDate + '.pdf';
+    //                 FileSaver.saveAs(blob, filename);
+    //                 // const url = window.URL.createObjectURL(blob);
+    //                 // window.location.href = url;
+    //             },
+    //             err => console.error(err),
+    //         () => console.log('done')
+    //     );
+    // }
 }

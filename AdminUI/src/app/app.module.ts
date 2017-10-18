@@ -16,6 +16,7 @@ import {
     FileUploadModule, ChartModule, CarouselModule,
     SpinnerModule, StepsModule
 } from 'primeng/primeng';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 import { AppRoutes } from './app.routes';
 import { AppComponent } from './app.component';
@@ -43,6 +44,7 @@ import { StockComponent } from './product/stock.component';
 import { PublicationComponent } from './product/publication.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
+import { BarcodeComponent } from './movement/barcode.component';
 import { DocumentComponent } from './movement/document.component';
 import { DiscountsComponent } from './discount/discounts.component';
 import { DiscountComponent } from './discount/discount.component';
@@ -90,7 +92,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ConfirmDialogModule, ToolbarModule, SelectButtonModule,
         ChipsModule, InputTextareaModule, FileUploadModule,
         ContextMenuModule, TooltipModule, CalendarModule, ChartModule,
-        CarouselModule, SpinnerModule, StepsModule,
+        CarouselModule, SpinnerModule, StepsModule, NgxBarcodeModule,
         AppRoutes
     ],
     declarations: [
@@ -125,6 +127,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         MovementsComponent,
         MovementComponent,
         DocumentComponent,
+        BarcodeComponent,
         DiscountsComponent,
         DiscountComponent,
         InvoicesComponent,
