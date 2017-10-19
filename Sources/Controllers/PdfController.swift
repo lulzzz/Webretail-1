@@ -105,6 +105,8 @@ class PdfController {
     }
     
     func htmlToPdf(model: Message) -> Data? {
+        LogFile.info(model.content);
+        
         let path = "/tmp/\(model.subject)";
         
         try? FileManager.default.removeItem(atPath: path)
