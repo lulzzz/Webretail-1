@@ -39,6 +39,7 @@ class PdfController {
     }
     
     func pdfHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        response.setHeader(.contentType, value: "application/json")
         do {
             let item: Message = try request.getJson()
             
@@ -50,6 +51,8 @@ class PdfController {
             response.appendBody(bytes: [UInt8](content))
             response.setHeader(.contentType, value: "application/pdf")
             response.completed()
+//        } catch PerfectError.apiError(let msg) {
+//            response.badRequest(error: "\(request.uri) \(request.method): \(msg)")
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
@@ -57,7 +60,6 @@ class PdfController {
     
     func emailHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Message = try request.getJson()
             if item.address.isEmpty {
@@ -99,14 +101,14 @@ class PdfController {
                     print(error)
                 }
             }
+        } catch PerfectError.apiError(let msg) {
+            response.badRequest(error: "\(request.uri) \(request.method): \(msg)")
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
-    func htmlToPdf(model: Message) -> Data? {
-        LogFile.info(model.content);
-        
+    func htmlToPdf(model: Message) -> Data? {        
         let path = "/tmp/\(model.subject)";
         
         try? FileManager.default.removeItem(atPath: path)
@@ -125,7 +127,7 @@ class PdfController {
             return nil;
         }
 
-        return FileManager.default.contents(atPath: path)!
+        return FileManager.default.contents(atPath: path)
     }
 
     func execCommand(command: String, args: [String]) -> String {

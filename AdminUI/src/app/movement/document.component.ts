@@ -104,7 +104,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
                     // const url = window.URL.createObjectURL(blob);
                     // window.location.href = url;
                 },
-                err => console.error(err),
+                err => {
+                    const reader = new FileReader();
+                    reader.addEventListener('loadend', (e) => alert(reader.result));
+                    reader.readAsText(err._body);
+                },
             () => console.log('done')
         );
     }
