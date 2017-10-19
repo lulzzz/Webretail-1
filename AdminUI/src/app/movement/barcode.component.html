@@ -10,8 +10,10 @@
     <div #doc>
         <p *ngFor="let item of items" style="display: table;margin: 0 auto;">
             <span style="font-size: 24px">
-                &nbsp;&nbsp;{{item.movementArticleProduct | articleInfo:item.movementArticleBarcode}}
-                &nbsp;-&nbsp;<b>{{item.movementArticlePrice | currency: 'EUR' : true}}</b>
+                &nbsp;&nbsp;{{item.movementArticleProduct | articleInfo:item.movementArticleBarcode}}&nbsp;-&nbsp;
+            </span>
+            <span style="font-size: 26px">
+                <b>{{item.movementArticlePrice | currency: 'EUR' : true}}</b>
             </span>
             <br/>
             <ngx-barcode [bc-width]="4" [bc-height]="200" [bc-font-size]="36" [bc-value]="item.movementArticleBarcode" [bc-display-value]="true"></ngx-barcode>
