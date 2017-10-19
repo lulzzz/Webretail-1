@@ -115,7 +115,7 @@ class PdfController {
                 "rasterize.js",
                 model.content,
                 path,
-                model.address.isEmpty ? "28cm*38.5cm" : model.address
+                model.address.isEmpty ? "32cm*38.5cm" : model.address
             ])
         
         if !result.isEmpty {
