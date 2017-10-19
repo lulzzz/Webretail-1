@@ -20,7 +20,7 @@ export class CompanyComponent implements OnInit {
                 private companyService: CompanyService,
                 private fb: FormBuilder) {
        sessionService.title = 'Company';
-       this.header = '/media/header.png';
+       this.header = '/Media/header.png';
     }
 
     ngOnInit() {
