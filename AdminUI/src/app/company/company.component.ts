@@ -76,6 +76,6 @@ export class CompanyComponent implements OnInit {
         // }
         this.msgs = [];
         this.msgs.push({severity: 'info', summary: 'File Uploaded', detail: ''});
-        this.header = '/media/header.png?' + Date().length
+        this.header = '/Media/header.png?' + Date().length
     }
 }
