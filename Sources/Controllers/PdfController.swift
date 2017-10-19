@@ -122,6 +122,8 @@ class PdfController {
                 model.address.isEmpty ? "32cm*38.6cm" : model.address
             ])
         
+        sleep(1000)
+        
         if !result.isEmpty {
             LogFile.error(result);
             return nil;
