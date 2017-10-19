@@ -122,7 +122,7 @@ class PdfController {
                 model.address.isEmpty ? "32cm*38.6cm" : model.address
             ])
         
-        sleep(1000)
+        sleep(2)
         
         if !result.isEmpty {
             LogFile.error(result);
