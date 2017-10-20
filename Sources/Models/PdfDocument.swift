@@ -6,9 +6,9 @@
 //
 //
 
-class Message: Codable {
-	
+class PdfDocument: Codable {
 	public var address : String = ""
 	public var subject : String = ""
 	public var content : String = ""
+    public var size : String = ""
 }

@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { SessionService } from './../services/session.service';
 import { CompanyService } from './../services/company.service';
 import { InvoiceService } from './../services/invoice.service';
-import { Invoice, MovementArticle, Company, Message } from './../shared/models';
+import { Invoice, MovementArticle, Company, PdfDocument } from './../shared/models';
 import * as FileSaver from 'file-saver';
 
 @Component({
@@ -91,9 +91,10 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
     // }
 
     pdfClick() {
-        const model = new Message()
+        const model = new PdfDocument()
         model.subject = this.invoice.invoiceNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
+        // model.size = '32cm*38.6cm';
 
         this.companyService
             .htmlToPdf(model)
@@ -101,17 +102,24 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
                 data => {
                     const blob = new Blob([data], {type: 'application/pdf'});
                     FileSaver.saveAs(blob, model.subject);
+                    // const url = window.URL.createObjectURL(blob);
+                    // window.location.href = url;
                 },
-                err => console.error(err),
-            () => console.log('done')
-        );
+                err => {
+                    const reader = new FileReader();
+                    reader.addEventListener('loadend', (e) => alert(reader.result));
+                    reader.readAsText(err._body);
+                },
+                () => console.log('done')
+            );
     }
 
     sendMailClick() {
-        const model = new Message()
+        const model = new PdfDocument()
         model.address = this.invoice.invoiceCustomer.customerEmail;
-        model.subject = 'Invoice n° ' + this.invoice.invoiceNumber;
+        model.subject = 'Invoice_' + this.invoice.invoiceNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
+        // model.size = '32cm*38.6cm';
 
         this.companyService.sendMail(model)
             .subscribe(

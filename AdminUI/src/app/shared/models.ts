@@ -375,15 +375,17 @@ export class Device {
   }
 }
 
-export class Message {
+export class PdfDocument {
   public address: string;
   public subject: string;
   public content: string;
+  public size: string;
 
   constructor() {
     this.address = '';
     this.subject = '';
     this.content = '';
+    this.size = 'A4';
   }
 }
 

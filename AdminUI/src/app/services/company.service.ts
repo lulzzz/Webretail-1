@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Company, Message } from '../shared/models';
+import { Company, PdfDocument } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -160,15 +160,15 @@ export class CompanyService {
         </html>`;
     }
 
-    htmlToPdf(model: Message): Observable<Blob> {
+    htmlToPdf(model: PdfDocument): Observable<Blob> {
         model.content = this.getHtml(model.content);
         return this.http.post('/api/pdf', model, { headers: Helpers.getHeaders(), responseType: ResponseContentType.Blob })
             .map(result => <Blob>result.blob());
     }
 
-    sendMail(model: Message): Observable<Message> {
+    sendMail(model: PdfDocument): Observable<PdfDocument> {
         model.content = this.getHtml(model.content);
         return this.http.post('/api/pdf/email', model, { headers: Helpers.getHeaders() })
-            .map(result => <Message>result.json());
+            .map(result => <PdfDocument>result.json());
     }
 }

@@ -72,7 +72,7 @@
 		OBJ_1200 /* DiscountProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_56 /* DiscountProduct.swift */; };
 		OBJ_1201 /* Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* Invoice.swift */; };
 		OBJ_1202 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* Media.swift */; };
-		OBJ_1203 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* Message.swift */; };
+		OBJ_1203 /* PdfDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* PdfDocument.swift */; };
 		OBJ_1204 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_60 /* Model.swift */; };
 		OBJ_1205 /* Movement.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_61 /* Movement.swift */; };
 		OBJ_1206 /* MovementArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_62 /* MovementArticle.swift */; };
@@ -1686,6 +1686,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		56AB8EC11F99FD1200EE916F /* rasterize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rasterize.js; sourceTree = "<group>"; };
+		56AB8EC21F99FD1D00EE916F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		56AB8EC31F99FD1D00EE916F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_100 /* CatgoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatgoryRepository.swift; sourceTree = "<group>"; };
 		OBJ_1000 /* URLSession+Turnstile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Turnstile.swift"; sourceTree = "<group>"; };
@@ -2212,7 +2215,7 @@
 		OBJ_587 /* m_md5.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = m_md5.c; sourceTree = "<group>"; };
 		OBJ_588 /* m_mdc2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = m_mdc2.c; sourceTree = "<group>"; };
 		OBJ_589 /* m_null.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = m_null.c; sourceTree = "<group>"; };
-		OBJ_59 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		OBJ_59 /* PdfDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfDocument.swift; sourceTree = "<group>"; };
 		OBJ_590 /* m_ripemd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = m_ripemd.c; sourceTree = "<group>"; };
 		OBJ_591 /* m_sha.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = m_sha.c; sourceTree = "<group>"; };
 		OBJ_592 /* m_sha1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = m_sha1.c; sourceTree = "<group>"; };
@@ -3993,7 +3996,7 @@
 				OBJ_56 /* DiscountProduct.swift */,
 				OBJ_57 /* Invoice.swift */,
 				OBJ_58 /* Media.swift */,
-				OBJ_59 /* Message.swift */,
+				OBJ_59 /* PdfDocument.swift */,
 				OBJ_60 /* Model.swift */,
 				OBJ_61 /* Movement.swift */,
 				OBJ_62 /* MovementArticle.swift */,
@@ -4012,16 +4015,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				56AB8EC31F99FD1D00EE916F /* LICENSE */,
+				56AB8EC21F99FD1D00EE916F /* README.md */,
+				56AB8EC11F99FD1200EE916F /* rasterize.js */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_116 /* Tests */,
 				OBJ_119 /* Dependencies */,
 				OBJ_1014 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -5100,7 +5105,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_1014 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -5354,7 +5359,7 @@
 				OBJ_1200 /* DiscountProduct.swift in Sources */,
 				OBJ_1201 /* Invoice.swift in Sources */,
 				OBJ_1202 /* Media.swift in Sources */,
-				OBJ_1203 /* Message.swift in Sources */,
+				OBJ_1203 /* PdfDocument.swift in Sources */,
 				OBJ_1204 /* Model.swift in Sources */,
 				OBJ_1205 /* Movement.swift in Sources */,
 				OBJ_1206 /* MovementArticle.swift in Sources */,

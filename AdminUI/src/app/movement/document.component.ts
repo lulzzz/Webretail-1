@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { CompanyService } from './../services/company.service';
-import { Movement, MovementArticle, Company, Message } from './../shared/models';
+import { Movement, MovementArticle, Company, PdfDocument } from './../shared/models';
 import * as FileSaver from 'file-saver';
 
 @Component({
@@ -91,7 +91,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     // }
 
     pdfClick() {
-        const model = new Message()
+        const model = new PdfDocument()
         model.subject = this.movement.movementNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
 
@@ -109,14 +109,14 @@ export class DocumentComponent implements OnInit, OnDestroy {
                     reader.addEventListener('loadend', (e) => alert(reader.result));
                     reader.readAsText(err._body);
                 },
-            () => console.log('done')
-        );
+                () => console.log('done')
+            );
     }
 
     sendMailClick() {
-        const email = new Message()
+        const email = new PdfDocument()
         email.address = this.movement.movementCustomer.customerEmail;
-        email.subject = 'Document n° ' + this.movement.movementNumber;
+        email.subject = 'Document_' + this.movement.movementNumber + '.pdf';
         email.content = this.doc.nativeElement.innerHTML;
 
         this.companyService.sendMail(email)

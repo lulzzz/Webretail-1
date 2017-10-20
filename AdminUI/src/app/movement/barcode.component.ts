@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { CompanyService } from './../services/company.service';
-import { MovementArticle, Message } from './../shared/models';
+import { MovementArticle, PdfDocument } from './../shared/models';
 import * as FileSaver from 'file-saver';
 
 @Component({
@@ -62,9 +62,9 @@ export class BarcodeComponent implements OnInit, OnDestroy {
     }
 
     pdfClick() {
-        const model = new Message()
-        model.address = '24cm*12.5cm';
-        model.subject = 'barcode.pdf';
+        const model = new PdfDocument()
+        model.size = '24cm*12.5cm';
+        model.subject = 'barcode_' + this.movementId + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
 
         this.companyService

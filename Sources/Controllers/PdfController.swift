@@ -41,7 +41,7 @@ class PdfController {
     func pdfHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         do {
-            let item: Message = try request.getJson()
+            let item: PdfDocument = try request.getJson()
             
             let data = self.htmlToPdf(model: item);
             guard let content = data else {
@@ -51,8 +51,6 @@ class PdfController {
             response.appendBody(bytes: [UInt8](content))
             response.setHeader(.contentType, value: "application/pdf")
             response.completed()
-//        } catch PerfectError.apiError(let msg) {
-//            response.badRequest(error: "\(request.uri) \(request.method): \(msg)")
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
@@ -61,7 +59,7 @@ class PdfController {
     func emailHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         do {
-            let item: Message = try request.getJson()
+            let item: PdfDocument = try request.getJson()
             if item.address.isEmpty {
                 throw PerfectError.apiError("email address to is empty")
             }
@@ -101,17 +99,13 @@ class PdfController {
                     print(error)
                 }
             }
-        } catch PerfectError.apiError(let msg) {
-            response.badRequest(error: "\(request.uri) \(request.method): \(msg)")
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
     
-    func htmlToPdf(model: Message) -> Data? {        
+    func htmlToPdf(model: PdfDocument) -> Data? {
         let path = "/tmp/\(model.subject)";
-        
-        try? FileManager.default.removeItem(atPath: path)
         
         let result = self.execCommand(
             command: "/usr/local/bin/phantomjs",
@@ -119,17 +113,17 @@ class PdfController {
                 "rasterize.js",
                 model.content,
                 path,
-                model.address.isEmpty ? "32cm*38.6cm" : model.address
+                model.size
             ])
-        
-        sleep(2)
         
         if !result.isEmpty {
             LogFile.error(result);
             return nil;
         }
 
-        return FileManager.default.contents(atPath: path)
+        let content = FileManager.default.contents(atPath: path)
+        try? FileManager.default.removeItem(atPath: path)
+        return content
     }
 
     func execCommand(command: String, args: [String]) -> String {
