@@ -63,7 +63,7 @@ export class BarcodeComponent implements OnInit, OnDestroy {
 
     pdfClick() {
         const model = new PdfDocument()
-        model.size = '24cm*12.5cm';
+        model.size = '15cm*10cm';
         model.subject = 'barcode_' + this.movementId + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
 

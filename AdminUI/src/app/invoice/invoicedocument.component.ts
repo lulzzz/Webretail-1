@@ -94,7 +94,6 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
         const model = new PdfDocument()
         model.subject = this.invoice.invoiceNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
-        // model.size = '32cm*38.6cm';
 
         this.companyService
             .htmlToPdf(model)
@@ -119,7 +118,6 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
         model.address = this.invoice.invoiceCustomer.customerEmail;
         model.subject = 'Invoice_' + this.invoice.invoiceNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
-        // model.size = '32cm*38.6cm';
 
         this.companyService.sendMail(model)
             .subscribe(

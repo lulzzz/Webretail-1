@@ -113,7 +113,8 @@ class PdfController {
                 "rasterize.js",
                 model.content,
                 path,
-                model.size
+                model.size,
+                "0.73"
             ])
         
         if !result.isEmpty {

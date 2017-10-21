@@ -114,12 +114,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
     }
 
     sendMailClick() {
-        const email = new PdfDocument()
-        email.address = this.movement.movementCustomer.customerEmail;
-        email.subject = 'Document_' + this.movement.movementNumber + '.pdf';
-        email.content = this.doc.nativeElement.innerHTML;
+        const model = new PdfDocument()
+        model.address = this.movement.movementCustomer.customerEmail;
+        model.subject = 'Document_' + this.movement.movementNumber + '.pdf';
+        model.content = this.doc.nativeElement.innerHTML;
 
-        this.companyService.sendMail(email)
+        this.companyService.sendMail(model)
             .subscribe(
                 result => alert(result.content),
                 onerror => alert(onerror._body)

@@ -8,17 +8,16 @@
     </div>
     <br/><br/>
     <div #doc>
-        <p *ngFor="let item of items" style="display: table;margin: 0 auto;">
-            <span style="font-size: 24px">
-                &nbsp;&nbsp;{{item.movementArticleProduct | articleInfo:item.movementArticleBarcode}}&nbsp;-&nbsp;
+        <div *ngFor="let item of items">
+            <span style="font-size: 16px">
+                &nbsp;&nbsp;{{item.movementArticleProduct | articleInfo:item.movementArticleBarcode}}
             </span>
-            <span style="font-size: 26px">
-                <b>{{item.movementArticlePrice | currency: 'EUR' : true}}</b>
+            <span style="font-size: 22px">
+                <b>&nbsp;&nbsp;{{item.movementArticlePrice | currency: 'EUR' : true}}</b>
             </span>
+            <ngx-barcode [bc-width]="4" [bc-height]="220" [bc-font-size]="28" [bc-value]="item.movementArticleBarcode" [bc-display-value]="true"></ngx-barcode>
             <br/>
-            <ngx-barcode [bc-width]="4" [bc-height]="200" [bc-font-size]="36" [bc-value]="item.movementArticleBarcode" [bc-display-value]="true"></ngx-barcode>
-            <br/>
-        </p>
+        </div>
     </div>
 
 </div>
