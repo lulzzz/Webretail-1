@@ -10,9 +10,11 @@ Retail Management System developed with Swift 4.0, Angular 4.0 and PostgreSQL.
 username: admin
 password: admin
 
+
 ## Build Notes
 
 Ensure you have installed Xcode 9.0 or later.
+
 
 ### macOS
 
@@ -35,10 +37,16 @@ brew install libxml2
 brew link --force libxml2
 ```
 
-To install Postgres:
+To install postgres:
 
 ```
 brew install postgres
+```
+
+To install nodejs and phantomjs:
+
+```
+brew install node phantomjs
 ```
 
 ### Linux
@@ -55,9 +63,21 @@ To install libpq-dev
 sudo apt-get install libpq-dev
 ```
 
+To install nodejs and phantomjs:
+
+```
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+sudo apt-get install build-essential chrpath libssl-dev libxft-dev libfreetype6-dev libfreetype6 libfontconfig1-dev libfontconfig1 -y
+sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+sudo tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/
+sudo ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/
+```
+
 ## Setup - Xcode 9
 
-* Check out or download the project;
+* If you want to regenerate the xcode project
 * In terminal, navigate to the directory and execute
 
 ```
@@ -68,12 +88,13 @@ swift package generate-xcodeproj
 
 To run this project from Xcode, edit the Scheme, Under "Options" for "run", check "Use custom working directory" and choose the project's working directory. After doing this, the project can be run from within Xcode.
 
+
 ## Setup - Terminal
 
 * Check out or download the project;
 * In terminal, navigate to the directory 
-* Execute `swift build`
-* Once the project has compiled, execute `../.build/x86_64-unknown-linux/debug/Webretail`
+* Execute `swift build --configuration release`
+* Once the project has compiled, execute `sudo ../.build/x86_64-unknown-linux/release/Webretail`
 
 ```
 [INFO] Starting HTTP server on 0.0.0.0:80 with document root ./webroot
@@ -90,4 +111,9 @@ in the subfolders:
 ```
 npm install
 npm start
+```
+
+Steps for build UI:
+```
+npm run build
 ```
