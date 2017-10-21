@@ -46,5 +46,5 @@ StORMlog.txt
 *.log
 error.log 
 node_modules/
-webroot/Media/
+webroot
 .DS_Store
