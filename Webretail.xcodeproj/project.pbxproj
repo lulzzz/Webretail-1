@@ -32,7 +32,6 @@
 		OBJ_1160 /* PerfectSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* PerfectSessionManager.swift */; };
 		OBJ_1161 /* TurnstileFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* TurnstileFilter.swift */; };
 		OBJ_1162 /* TurnstilePerfectRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* TurnstilePerfectRealm.swift */; };
-		OBJ_1163 /* BarcodePDFPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* BarcodePDFPage.swift */; };
 		OBJ_1164 /* AngularController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* AngularController.swift */; };
 		OBJ_1165 /* ArticleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* ArticleController.swift */; };
 		OBJ_1166 /* AttributeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* AttributeController.swift */; };
@@ -1763,7 +1762,6 @@
 		OBJ_167 /* HTTPContentCompression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPContentCompression.swift; sourceTree = "<group>"; };
 		OBJ_168 /* HTTPMultiplexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMultiplexer.swift; sourceTree = "<group>"; };
 		OBJ_169 /* HTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServer.swift; sourceTree = "<group>"; };
-		OBJ_17 /* BarcodePDFPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodePDFPage.swift; sourceTree = "<group>"; };
 		OBJ_170 /* HTTPServerEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServerEx.swift; sourceTree = "<group>"; };
 		OBJ_171 /* HTTPServerExConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServerExConfig.swift; sourceTree = "<group>"; };
 		OBJ_172 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/gerardo/Projects/github.com/Webretail/.build/checkouts/Perfect-HTTPServer.git--6671958091389663080/Package.swift"; sourceTree = "<group>"; };
@@ -4075,15 +4073,14 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_10 /* Authentication */,
-				OBJ_17 /* BarcodePDFPage.swift */,
 				OBJ_18 /* Controllers */,
+				OBJ_43 /* Models */,
+				OBJ_75 /* Protocols */,
+				OBJ_95 /* Repositories */,
 				OBJ_40 /* Extensions.swift */,
 				OBJ_41 /* HTTPTurnstile.swift */,
 				OBJ_42 /* IoCContainer.swift */,
-				OBJ_43 /* Models */,
 				OBJ_74 /* PostgreSqlORM.swift */,
-				OBJ_75 /* Protocols */,
-				OBJ_95 /* Repositories */,
 				OBJ_114 /* Setup.swift */,
 				OBJ_115 /* main.swift */,
 			);
@@ -5319,7 +5316,6 @@
 				OBJ_1160 /* PerfectSessionManager.swift in Sources */,
 				OBJ_1161 /* TurnstileFilter.swift in Sources */,
 				OBJ_1162 /* TurnstilePerfectRealm.swift in Sources */,
-				OBJ_1163 /* BarcodePDFPage.swift in Sources */,
 				OBJ_1164 /* AngularController.swift in Sources */,
 				OBJ_1165 /* ArticleController.swift in Sources */,
 				OBJ_1166 /* AttributeController.swift in Sources */,
