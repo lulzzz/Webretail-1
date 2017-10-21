@@ -65,10 +65,22 @@ if (args.length < 3 || args.length > 6) {
 else {
     urlOrHTML = args[1]; //decodeURIComponent(args[1]);
     outputFile = args[2];
-    size = args[3] !== null ? args[3].split('*') : [];
+    size = 'auto'; // args[3] !== null ? args[3].split('*') : [];
     scale = args[4];
     element = args[5];
-
+    page.settings.loadImages = true;
+    page.paperSize = {
+        format: 'A4',
+        orientation: 'portrait',
+        margin: {
+            top: '0px',
+            bottom: '0px',
+            right: '10px',
+            left: '0px'
+        }
+    };
+    page.paperSize = size.length === 2 ? { width: size[0], height: size[1], margin: '0px' }
+        : { format: system.args[3], orientation: 'portrait', margin: '0cm' };
     page.viewportSize = { width: 800, height: 600 };
 
     if (size && size != 'auto') {
@@ -88,12 +100,12 @@ else {
         }
     }
 
-    if (scale) {
-        page.viewportSize = {
-            width: page.viewportSize.width * scale,
-            height: page.viewportSize.height * scale
-        };
-    }
+//    if (scale) {
+//        page.viewportSize = {
+//            width: page.viewportSize.width * scale,
+//            height: page.viewportSize.height * scale
+//        };
+//    }
 
     //  if (urlOrHTML.match('http')) {
     //      page.open(urlOrHTML, function (status) {
