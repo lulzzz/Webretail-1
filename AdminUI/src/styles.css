@@ -188,3 +188,19 @@ body .ui-toolbar-group-right i {
   tfoot { display: table-footer-group; }
   tbody { display: table-row-group; }
 }
+
+.pdfDocument {
+  position: relative;
+  border: 0px;
+  width: calc(210mm * 1.25);
+  height: calc(297mm * 1.25);
+  page-break-after: always;
+}
+
+.pdfBarcode {
+  position: relative;
+  border: 0px;
+  width: calc(60mm * 1.25);
+  height: calc(40mm * 1.25);
+  page-break-after: always;
+}

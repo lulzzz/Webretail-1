@@ -22,6 +22,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     total = 0.0;
     movement: Movement;
     groups: any[];
+    isBusy: boolean;
 
     constructor(@Inject(DOCUMENT) private document: any,
                 private location: Location,
@@ -38,6 +39,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.movementId = params['id'];
+            this.isBusy = true;
 
             this.movementService.getById(this.movementId)
                 .subscribe(result => {
@@ -46,34 +48,37 @@ export class DocumentComponent implements OnInit, OnDestroy {
             );
 
             this.movementService.getItemsById(this.movementId)
-                .subscribe(result => {
-                    // let items: MovementArticle[] = [];
-                    // for (let i = 0; i < 30; i++) {
-                    //     items.push(result[0]);
-                    // }
-                    this.groups = [];
-                    let array: MovementArticle[] = [];
-                    let index = 0;
-                    result.forEach((item) => {
-                        array.push(item);
-                        if (index > 11) {
-                            this.groups.push(array);
-                            array = [];
-                            index = -1;
+                .subscribe(
+                    result => {
+                        // let items: MovementArticle[] = [];
+                        // for (let i = 0; i < 30; i++) {
+                        //     items.push(result[0]);
+                        // }
+                        this.groups = [];
+                        let array: MovementArticle[] = [];
+                        let index = 0;
+                        result.forEach((item) => {
+                            array.push(item);
+                            if (index > 21) {
+                                this.groups.push(array);
+                                array = [];
+                                index = -1;
+                            }
+                            index++;
+                        });
+                        const lenght = 23 - array.length;
+                        for (let i = 0; i < lenght; i++) {
+                            array.push(new MovementArticle());
                         }
-                        index++;
-                    });
-                    const lenght = 13 - array.length;
-                    for (let i = 0; i < lenght; i++) {
-                        array.push(new MovementArticle());
-                    }
-                    this.groups.push(array);
+                        this.groups.push(array);
 
-                    this.totalItems = result.map(p => p.movementArticleQuantity).reduce((sum, current) => sum + current);
-                    this.total = result.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
-                    this.amount = this.total * 100 / 122;
-                }, onerror => alert(onerror._body)
-            );
+                        this.totalItems = result.map(p => p.movementArticleQuantity).reduce((sum, current) => sum + current);
+                        this.total = result.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
+                        this.amount = this.total * 100 / 122;
+                    },
+                    onerror => alert(onerror._body),
+                    () => this.isBusy = false
+                );
         });
     }
 
@@ -91,6 +96,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
     // }
 
     pdfClick() {
+        this.isBusy = true;
+
         const model = new PdfDocument()
         model.subject = this.movement.movementNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
@@ -109,20 +116,24 @@ export class DocumentComponent implements OnInit, OnDestroy {
                     reader.addEventListener('loadend', (e) => alert(reader.result));
                     reader.readAsText(err._body);
                 },
-                () => console.log('done')
+                () => this.isBusy = false
             );
     }
 
     sendMailClick() {
+        this.isBusy = true;
+
         const model = new PdfDocument()
         model.address = this.movement.movementCustomer.customerEmail;
         model.subject = 'Document_' + this.movement.movementNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
+        model.zoom = '0.53';
 
         this.companyService.sendMail(model)
             .subscribe(
                 result => alert(result.content),
-                onerror => alert(onerror._body)
+                onerror => alert(onerror._body),
+                () => this.isBusy = false
             );
     }
 }

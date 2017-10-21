@@ -73,7 +73,7 @@ else {
         ? {
             width: size[0],
             height: size[1],
-            margin: '1cm'
+            margin: '0cm'
         } : {
             format: 'A4',
             orientation: 'portrait',
@@ -119,6 +119,6 @@ else {
             preflight();
             page.render(outputFile);
             phantom.exit();
-        }, 2000);
+        }, 1000);
     //  }
 }

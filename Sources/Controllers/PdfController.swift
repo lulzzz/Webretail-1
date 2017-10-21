@@ -105,16 +105,15 @@ class PdfController {
     }
     
     func htmlToPdf(model: PdfDocument) -> Data? {
-        let path = "/tmp/\(model.subject)";
+        let pathOutput = "/tmp/\(model.subject)";
         
         let result = self.execCommand(
             command: "/usr/local/bin/phantomjs",
             args: [
                 "rasterize.js",
                 model.content,
-                path,
-                model.size,
-                "0.73"
+                pathOutput,
+                model.size
             ])
         
         if !result.isEmpty {
@@ -122,8 +121,8 @@ class PdfController {
             return nil;
         }
 
-        let content = FileManager.default.contents(atPath: path)
-        try? FileManager.default.removeItem(atPath: path)
+        let content = FileManager.default.contents(atPath: pathOutput)
+        try? FileManager.default.removeItem(atPath: pathOutput)
         return content
     }
 

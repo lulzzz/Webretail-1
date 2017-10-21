@@ -1689,7 +1689,6 @@
 		56AB8EC11F99FD1200EE916F /* rasterize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rasterize.js; sourceTree = "<group>"; };
 		56AB8EC21F99FD1D00EE916F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		56AB8EC31F99FD1D00EE916F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		56E3A23E1F9A53480088FE53 /* rasterize.old.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rasterize.old.js; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_100 /* CatgoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatgoryRepository.swift; sourceTree = "<group>"; };
 		OBJ_1000 /* URLSession+Turnstile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Turnstile.swift"; sourceTree = "<group>"; };
@@ -4019,7 +4018,6 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
-				56E3A23E1F9A53480088FE53 /* rasterize.old.js */,
 				56AB8EC31F99FD1D00EE916F /* LICENSE */,
 				56AB8EC21F99FD1D00EE916F /* README.md */,
 				56AB8EC11F99FD1200EE916F /* rasterize.js */,

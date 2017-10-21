@@ -18,6 +18,7 @@ export class BarcodeComponent implements OnInit, OnDestroy {
     private sub: any;
     movementId: number;
     items: MovementArticle[];
+    isBusy: boolean;
 
     constructor(@Inject(DOCUMENT) private document: any,
                 private location: Location,
@@ -34,11 +35,15 @@ export class BarcodeComponent implements OnInit, OnDestroy {
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.movementId = params['id'];
+            this.isBusy = true;
 
             this.movementService.getItemsById(this.movementId)
-                .subscribe(result => {
-                    this.loadBarcode(result);
-                }, onerror => alert(onerror._body)
+                .subscribe(
+                    result => {
+                        this.loadBarcode(result);
+                    },
+                    onerror => alert(onerror._body),
+                    () => this.isBusy = false
             );
         });
     }
@@ -62,8 +67,10 @@ export class BarcodeComponent implements OnInit, OnDestroy {
     }
 
     pdfClick() {
+        this.isBusy = true;
+
         const model = new PdfDocument()
-        model.size = '15cm*10cm';
+        model.size = '6cm*4cm';
         model.subject = 'barcode_' + this.movementId + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
 
@@ -75,7 +82,7 @@ export class BarcodeComponent implements OnInit, OnDestroy {
                     FileSaver.saveAs(blob, model.subject);
                 },
                 err => console.error(err),
-            () => console.log('done')
-        );
+                () => this.isBusy = false
+            );
     }
 }

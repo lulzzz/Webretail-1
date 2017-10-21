@@ -5,15 +5,15 @@ import { Product } from './../shared/models';
   name: 'articleInfo'
 })
 export class ArticleInfoPipe implements PipeTransform {
-  transform(value: Product, args?: string): string {
+  transform(value: Product, args0?: string, args1?: boolean): string {
     if (value == null || value.productId === 0) {
       return '';
     }
-    if (args == null) {
+    if (args0 == null) {
       return value.productName;
     }
-    let barcode = args;
-    let info = value.productName;
+    const barcode = args0;
+    let info = args1 ? '' : value.productName;
     const ids = value.articles.find(p => p.articleBarcode === barcode).attributeValues.map(p => p.attributeValueId);
 
     value.attributes.map(p => p.attributeValues.forEach(b => {

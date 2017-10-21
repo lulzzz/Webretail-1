@@ -380,12 +380,14 @@ export class PdfDocument {
   public subject: string;
   public content: string;
   public size: string;
+  public zoom: string;
 
   constructor() {
     this.address = '';
     this.subject = '';
     this.content = '';
     this.size = 'A4';
+    this.zoom = '0.53';
   }
 }
 

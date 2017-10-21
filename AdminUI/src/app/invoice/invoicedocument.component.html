@@ -1,16 +1,16 @@
-﻿<img *ngIf="!invoice||!groups" src="/assets/loading.gif" class="loading">
+﻿<img *ngIf="isBusy" src="/assets/loading.gif" class="loading">
 
 <div class="container-fluid">
 
     <div class="noprint">
         <button pButton type="button" title="Movements" (click)="cancelClick()" class="ui-button-secondary" style="width:50px" icon="fa-reply"></button>
         <!-- <button pButton type="button" label="Print" title="Print document" (click)="printClick()" class="ui-button-secondary" icon="fa-print"></button> -->
-        <button pButton type="button" label="PDF" title="Pdf document" (click)="pdfClick()" class="ui-button-secondary" icon="fa-file-pdf-o"></button>
-        <button pButton type="button" label="Send mail" title="Send mail" (click)="sendMailClick()" class="ui-button-secondary" icon="fa-envelope"></button>
+        <button pButton type="button" label="PDF" title="Pdf document" (click)="pdfClick()" [disabled]="isBusy" class="ui-button-secondary" icon="fa-file-pdf-o"></button>
+        <button pButton type="button" label="Send mail" title="Send mail" (click)="sendMailClick()" [disabled]="isBusy" class="ui-button-secondary" icon="fa-envelope"></button>
     </div>
 
     <div *ngIf="invoice" #doc>
-        <div *ngFor="let items of groups">          
+        <div *ngFor="let items of groups" class="pdfDocument">          
             <table class="table" style="width: 100%">    
                 <thead>
                     <tr> 
@@ -45,7 +45,7 @@
             </table>
 
             <table class="table" cellpadding="2" cellspacing="2" style="width: 100%">    
-                <thead *ngIf="items">
+                <thead>
                     <tr style="background-color: whitesmoke"> 
                         <td><strong>Barcode</strong></td> 
                         <td><strong>Product</strong></td> 

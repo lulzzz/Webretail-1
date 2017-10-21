@@ -26,14 +26,17 @@ export class CompanyService {
             .map(result => <Company>result.json());
     }
 
-    getHtml(content: string): string {
-        return  `
+    getHtml(model: PdfDocument): string {
+    return  `
         <html>
         <head>
         <style>
           html {
             font-size: medium;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          }
+          body > * {
+            zoom: ` + model.zoom + `;
           }
           .table {
             width: 100%;
@@ -154,20 +157,34 @@ export class CompanyService {
             min-height: .01%;
             overflow-x: auto;
           }
+          .pdfDocument {
+            position: relative;
+            border: 0px;
+            width: calc(210mm * 1.25);
+            height: calc(297mm * 1.25);
+            page-break-after: always;
+          }
+          .pdfBarcode {
+            position: relative;
+            border: 0px;
+            width: calc(60mm * 1.25);
+            height: calc(40mm * 1.25);
+            page-break-after: always;
+          }
         </style>
         </head>
-        <body>` + content + `</body>
+        <body>` + model.content + `</body>
         </html>`;
     }
 
     htmlToPdf(model: PdfDocument): Observable<Blob> {
-        model.content = this.getHtml(model.content);
+        model.content = this.getHtml(model);
         return this.http.post('/api/pdf', model, { headers: Helpers.getHeaders(), responseType: ResponseContentType.Blob })
             .map(result => <Blob>result.blob());
     }
 
     sendMail(model: PdfDocument): Observable<PdfDocument> {
-        model.content = this.getHtml(model.content);
+        model.content = this.getHtml(model);
         return this.http.post('/api/pdf/email', model, { headers: Helpers.getHeaders() })
             .map(result => <PdfDocument>result.json());
     }

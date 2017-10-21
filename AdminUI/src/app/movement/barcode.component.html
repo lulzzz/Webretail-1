@@ -1,22 +1,27 @@
-﻿<img *ngIf="!items" src="/assets/loading.gif" class="loading">
+﻿<img *ngIf="isBusy" src="/assets/loading.gif" class="loading">
 
 <div class="container-fluid">
 
     <div class="noprint">
         <button pButton type="button" title="Movements" (click)="cancelClick()" class="ui-button-secondary" style="width:50px" icon="fa-reply"></button>
-        <button pButton type="button" label="PDF" title="Pdf document" (click)="pdfClick()" class="ui-button-secondary" icon="fa-file-pdf-o"></button>
+        <button pButton type="button" label="PDF" title="Pdf document" [disabled]="isBusy" (click)="pdfClick()" class="ui-button-secondary" icon="fa-file-pdf-o"></button>
     </div>
     <br/><br/>
     <div #doc>
-        <div *ngFor="let item of items">
-            <span style="font-size: 16px">
-                &nbsp;&nbsp;{{item.movementArticleProduct | articleInfo:item.movementArticleBarcode}}
+        <div *ngFor="let item of items" class="pdfBarcode">
+            <hr style="background-color: transparent; height: 1px; border: 0;">
+            <span style="font-size: 16px; float: right;">
+                <strong>{{item.movementArticlePrice | currency: 'EUR' : true}}</strong>
             </span>
-            <span style="font-size: 22px">
-                <b>&nbsp;&nbsp;{{item.movementArticlePrice | currency: 'EUR' : true}}</b>
+            <span style="font-size: 16px; margin-left: 10px;">
+                {{item.movementArticleProduct.productName}}
             </span>
-            <ngx-barcode [bc-width]="4" [bc-height]="220" [bc-font-size]="28" [bc-value]="item.movementArticleBarcode" [bc-display-value]="true"></ngx-barcode>
             <br/>
+            <span style="font-size: 14px; margin-left: 10px;">
+                {{item.movementArticleProduct | articleInfo:item.movementArticleBarcode:true}}
+            </span>
+            <br/>
+            <ngx-barcode [bc-width]="1.8" [bc-height]="110" [bc-font-size]="16" [bc-value]="item.movementArticleBarcode" [bc-display-value]="true"></ngx-barcode>
         </div>
     </div>
 
