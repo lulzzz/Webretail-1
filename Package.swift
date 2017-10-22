@@ -31,9 +31,7 @@ let package = Package(
                 "PostgresStORM",
                 "Turnstile",
                 "PerfectSMTP",
-                ],
-            path: ".",
-            sources: ["Sources"]),
+                ]),
         ]
 )
 
