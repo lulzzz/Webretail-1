@@ -47,14 +47,14 @@ export class PublicationService {
 
     get translateDescriptions(): Translation[] { return this.product.translations; }
     get translateAttributes(): Translation[] {
-        let items: Translation[] = [];
+        const items: Translation[] = [];
         this.product.attributes.forEach(p => {
             p.attribute.translations.map(t => items.push(t));
             p.attributeValues.forEach(v => v.attributeValue.translations.map(t => items.push(t)))
         });
         return items;
     }
-    get published() { return this.publication != null; }
+    get published() { return this.publication != null && this.publication.publicationId > 0; }
 
     get step1() { return this.product.translations.length === 2 ? 'Completed' : 'In progress'; }
     get step2() { return this.product.categories.map(p => p.category.translations.length === 2) ? 'Completed' : 'In progress'; }
@@ -76,7 +76,7 @@ export class PublicationService {
     }
 
     getAttributes(): SelectItem[] {
-        let items: SelectItem[] = [];
+        const items: SelectItem[] = [];
         this.product.attributes.forEach(p => {
             items.push(Helpers.newSelectItem(p.attribute.attributeName));
             p.attributeValues.forEach(v => items.push(Helpers.newSelectItem(v.attributeValue.attributeValueName)))
@@ -93,12 +93,12 @@ export class PublicationService {
     }
 
     updateTranslate(array, item) {
-        let translate = this.getTranslate(array, item.country);
+        const translate = this.getTranslate(array, item.country);
         translate.value = item.value;
     }
 
     deleteTranslate(array, item) {
-        let index = array.indexOf(item);
+        const index = array.indexOf(item);
         array.splice(index, 1);
     }
 
@@ -107,12 +107,12 @@ export class PublicationService {
     }
 
     updateMedia(item) {
-        let media = this.product.medias.find(p => p.name === item.name);
+        const media = this.product.medias.find(p => p.name === item.name);
         media.number = item.number;
     }
 
     deleteMedia(item) {
-        let index = this.product.medias.indexOf(item);
+        const index = this.product.medias.indexOf(item);
         this.product.medias.splice(index, 1);
     }
 }

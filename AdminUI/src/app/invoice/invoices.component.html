@@ -15,7 +15,7 @@
 
     <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items | dateFilter:dateStartValue:dateFinishValue | priceFilter:amountValue:'invoices'"
         selectionMode="single" [(selection)]="selected" [contextMenu]="bts"
-        [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="invoiceNumber" header="Number" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="invoiceDate" header="Date" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">
             <ng-template let-col let-data="rowData" pTemplate="body">

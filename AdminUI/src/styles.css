@@ -70,7 +70,7 @@ body .ui-toolbar-group-right i {
 }
 
 .ui-button {
-  padding: 2px;
+  padding: 2px !important;
 }
 
 .ui-button-text {
@@ -95,10 +95,7 @@ body .ui-toolbar-group-right i {
 }
 
 .ui-datatable .ui-datatable-data > tr > td {
-  border-color: #eee;
-  border-style: solid;
-  border-left-width: 1px;
-  padding: 12px 14px;
+  padding: 10px !important;
 }
 
 .ui-datatable .ui-datatable-data > tr {

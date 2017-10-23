@@ -16,7 +16,7 @@
 
     <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="products | priceFilter:sliderValue:'price' | categoryFilter:categoryValue" 
         selectionMode="single" [(selection)]="selected" [contextMenu]="bts"
-        [paginator]="true" [rows]="20" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
+        [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
         <p-column field="productCode" header="Code" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="productName" header="Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="brand.brandName" header="Brand" [sortable]="true" [filter]="true" filterMatchMode="equals" [style]="{'overflow':'visible'}" >
