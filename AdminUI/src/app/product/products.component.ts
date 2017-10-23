@@ -15,7 +15,6 @@ import { ProductService } from './../services/product.service';
 
 export class ProductsComponent implements OnInit {
     totalRecords = 0;
-    products: Product[];
     selected: Product;
     categories: SelectItem[];
     allbrands: SelectItem[];
@@ -54,14 +53,22 @@ export class ProductsComponent implements OnInit {
             { label: 'Publication', icon: 'fa-shopping-cart', command: (event) => this.publicationClick() }
         ];
 
-        this.refreshClick();
+        if (this.products == null) {
+            this.refreshClick();
+        } else {
+            this.refreshControl();
+        }
 
         this.brandService.getAll()
             .subscribe(result => {
                 this.allbrands = result.map(p => Helpers.newSelectItem(p, p.brandName));
                 this.ums = Helpers.getUnitOfMeasure();
             }, onerror => alert(onerror._body));
+
     }
+
+    set products(value) { this.productService.products = value; }
+    get products(): Product[] { return this.productService.products; }
 
     get isNew(): boolean { return this.selected == null || this.selected.productId === 0; }
 
@@ -85,10 +92,14 @@ export class ProductsComponent implements OnInit {
         this.productService.getProducts()
             .subscribe(result => {
                 this.products = result;
-                this.totalRecords = this.products.length;
-                this.buildFilter(result);
+                this.refreshControl();
             }, onerror => alert(onerror._body)
         );
+    }
+
+    private refreshControl() {
+        this.totalRecords = this.products.length;
+        this.buildFilter(this.products);
     }
 
     openClick() {

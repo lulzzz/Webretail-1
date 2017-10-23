@@ -8,6 +8,8 @@ import { Helpers } from '../shared/helpers';
 @Injectable()
 export class MovementService {
 
+    movements: Movement[];
+
     constructor(private http: Http) {
     }
 

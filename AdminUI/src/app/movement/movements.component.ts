@@ -18,7 +18,6 @@ import * as FileSaver from 'file-saver';
 
 export class MovementsComponent implements OnInit {
     totalRecords = 0;
-    items: Movement[];
     selected: Movement;
     device: Device;
     cashregisters: SelectItem[];
@@ -73,7 +72,11 @@ export class MovementsComponent implements OnInit {
             { label: 'Create copy', icon: 'fa-clone', command: (event) => this.cloneClick() }
         ];
 
-        this.refreshClick();
+        if (this.items == null) {
+            this.refreshClick();
+        } else {
+            this.refreshControl();
+        }
 
         this.movementService
             .getStatus()
@@ -119,27 +122,34 @@ export class MovementsComponent implements OnInit {
         this.device = jsonObj !== null ? <Device>jsonObj : null;
     }
 
-    buildFilter(items: Movement[]) {
+    buildFilter() {
         this.storesFiltered = [];
         this.storesFiltered.push({label: 'All', value: null});
-        const filterStores = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStore.storeName)));
+        const filterStores = Helpers.distinct(this.items.map((item: Movement) =>
+            Helpers.newSelectItem(item.movementStore.storeName)));
         this.storesFiltered = this.storesFiltered.concat(filterStores);
 
         this.causalsFiltered = [];
         this.causalsFiltered.push({label: 'All', value: null});
-        const filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCausal.causalName)));
+        const filterCusals = Helpers.distinct(this.items.map((item: Movement) =>
+            Helpers.newSelectItem(item.movementCausal.causalName)));
         this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
 
         this.customersFiltered = [];
         this.customersFiltered.push({label: 'All', value: null});
-        const filterCustomer = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCustomer.customerName)));
+        const filterCustomer = Helpers.distinct(this.items.map((item: Movement) =>
+            Helpers.newSelectItem(item.movementCustomer.customerName)));
         this.customersFiltered = this.customersFiltered.concat(filterCustomer);
 
         this.statusFiltered = [];
         this.statusFiltered.push({label: 'All', value: null});
-        const filterStatus = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStatus)));
+        const filterStatus = Helpers.distinct(this.items.map((item: Movement) =>
+            Helpers.newSelectItem(item.movementStatus)));
         this.statusFiltered = this.statusFiltered.concat(filterStatus);
     }
+
+    set items(value) { this.movementService.movements = value; }
+    get items(): Movement[] { return this.movementService.movements; }
 
     get isNew(): boolean { return this.selected == null || this.selected.movementId === 0; }
 
@@ -159,11 +169,14 @@ export class MovementsComponent implements OnInit {
             .getAll()
             .subscribe(result => {
                 this.items = result;
-                this.totalRecords = this.items.length;
-                this.buildFilter(result);
              }, onerror => alert(onerror)
         );
     }
+
+    private refreshControl() {
+        this.totalRecords = this.items.length;
+        this.buildFilter();
+}
 
     addClick() {
         this.selected = new Movement();
@@ -206,7 +219,7 @@ export class MovementsComponent implements OnInit {
         this.displayPanel = false;
         this.selected = null;
         this.currentStatus = null;
-        this.buildFilter(this.items);
+        this.buildFilter();
     }
 
     saveClick() {

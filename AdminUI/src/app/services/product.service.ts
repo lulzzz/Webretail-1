@@ -11,6 +11,8 @@ import { Helpers } from '../shared/helpers';
 @Injectable()
 export class ProductService {
 
+    products: Product[];
+
     constructor(private http: Http) {
     }
 
