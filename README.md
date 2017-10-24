@@ -100,7 +100,7 @@ To run this project from Xcode, edit the Scheme, Under "Options" for "run", chec
 [INFO] Starting HTTP server on 0.0.0.0:80 with document root ./webroot
 ```
 
-## Typescript - Angular 4
+## Angular 4 - Terminal
 
 Steps for the development UI:
 
@@ -116,4 +116,20 @@ npm start
 Steps for build UI:
 ```
 npm run build
+```
+
+## Docker - Terminal
+
+* Postgresql
+
+```
+docker pull postgres
+docker run -p 5432:5432 --name db -e POSTGRES_DB=webretail -e POSTGRES_PASSWORD=postgres -d postgres
+```
+
+* Webretail
+
+```
+docker build -t webretail .
+docker run -d -p 80:8181 --link db -t webretail
 ```
