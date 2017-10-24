@@ -28,11 +28,11 @@ let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
 
 // Create HTTP server.
 let server = HTTPServer()
-#if os(Linux)
-server.serverPort = 80
-#else
-server.serverPort = 8181
-#endif
+// #if os(Linux)
+// server.serverPort = 80
+// #else
+ server.serverPort = 8181
+// #endif
 
 // Where to serve static files from
 server.documentRoot = "./webroot"

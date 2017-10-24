@@ -22,7 +22,7 @@ let ioCContainer = IoCContainer()
 func setupDatabase() throws {
     
 	PostgresConnector.port = 5432
-    PostgresConnector.host = "localhost"
+    PostgresConnector.host = "192.168.1.6"
     PostgresConnector.username = "postgres"
     PostgresConnector.password = "postgres"
     PostgresConnector.database = "webretail"
