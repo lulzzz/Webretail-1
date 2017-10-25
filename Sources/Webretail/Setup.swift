@@ -110,7 +110,9 @@ func addFilters() {
 	authenticationConfig.exclude("/api/logout")
     authenticationConfig.exclude("/api/register")
     authenticationConfig.exclude("/api/ecommerce")
-    authenticationConfig.exclude("/api/ecommerce/*")
+    authenticationConfig.exclude("/api/ecommerce/featured")
+    authenticationConfig.exclude("/api/ecommerce/category")
+    authenticationConfig.exclude("/api/ecommerce/category/*")
 
 	let authFilter = AuthFilter(authenticationConfig)
 	

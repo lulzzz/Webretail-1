@@ -47,7 +47,7 @@ public struct AuthFilter: HTTPRequestFilter {
 			if request.path.startsWith(wInc.split("*")[0]) { checkAuth = false }
 		}
 
-		if checkAuth && request.user.authenticated && (isUser || request.path.contains(string: "customer")) {
+		if checkAuth && request.user.authenticated && (isUser || request.path.contains(string: "ecommerce")) {
             callback(.continue(request, response))
             return
 		} else if checkAuth {

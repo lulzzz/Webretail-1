@@ -20,8 +20,8 @@ class EcommerceController {
         
         /// Public Api
         routes.add(method: .get, uri: "/api/ecommerce", handler: ecommerceHandlerGET)
-        routes.add(method: .get, uri: "/api/ecommerce/category", handler: ecommerceCategoriesHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/featured", handler: ecommerceFeaturedHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/category", handler: ecommerceCategoriesHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category/{id}", handler: ecommerceCategoryHandlerGET)
         
         /// Customer Api
