@@ -26,8 +26,8 @@ open class CustomRealm : Realm {
             return try authenticate(credentials: credentials)
 		case let credentials as APIKey:
 			return try authenticate(credentials: credentials)
-//        case let credentials as ConsumerAccount:
-//            return try authenticate(credentials: credentials)
+        case let credentials as CustomerAccount:
+            return try authenticate(credentials: credentials)
         default:
             throw UnsupportedCredentialsError()
         }
@@ -35,16 +35,22 @@ open class CustomRealm : Realm {
     
     /// Used when an "AccessToken" onject is passed to the authenticate function. Returns an Account object.
     open func authenticate(credentials: AccessToken) throws -> Account {
-		let account = User()
 		let token = AccessTokenStore()
 		do {
 			try token.get(credentials.string)
 			if token.check() == false {
 				throw IncorrectCredentialsError()
 			}
-			try account.get(token.userid)
-			return account
-		} catch {
+            if token.userid.contains(string: "@") {
+                let customer = Customer()
+                try customer.get(email: token.userid)
+                return customer
+            } else {
+                let account = User()
+                try account.get(token.userid)
+                return account
+            }
+        } catch {
 			throw IncorrectCredentialsError()
 		}
     }
@@ -79,64 +85,49 @@ open class CustomRealm : Realm {
         }
     }
     
-//    /// Used when a "ConsumerAccount" onject is passed to the authenticate function. Returns an Account object.
-//    private func authenticate(credentials: ConsumerAccount) throws -> Account {
-//        let account = User()
-//        try account.query(whereclause: "\(credentials.consumer)ID = $1",
-//                          params: [credentials.uniqueID],
-//                          cursor: StORMCursor(limit: 1, offset: 0))
-//        if !account.uniqueID.isEmpty {
-//            return account
-//        } else {
-//            throw IncorrectCredentialsError()
-//        }
-//    }
+    /// Used when a "CustomerAccount" onject is passed to the authenticate function. Returns an Account object.
+    private func authenticate(credentials: CustomerAccount) throws -> Account {
+        let customer = Customer()
+        do {
+            let thisAccount = try customer.get(credentials.uniqueID, credentials.password)
+            return thisAccount
+        } catch {
+            throw IncorrectCredentialsError()
+        }
+    }
 
 	/// Registers PasswordCredentials against the AuthRealm.
     open func register(credentials: Credentials) throws -> Account {
         
-        let account = User()
-        let newAccount = User()
-		let random: Random = URandom()
-        newAccount.id(String(random.secureToken))
-        
+        let account = Customer()
+        let newAccount = Customer()
+		
         switch credentials {
-        case let credentials as UsernamePassword:
+        case let credentials as CustomerAccount:
             do {
-                if account.exists(credentials.username) {
+                if account.exists(credentials.uniqueID) {
                     throw AccountTakenError()
                 }
-                newAccount.username = credentials.username
-                newAccount.password = credentials.password
+                newAccount.customerEmail = credentials.uniqueID
+                newAccount.customerPassword = credentials.password
             } catch {
                 throw AccountTakenError()
             }
-//        case let credentials as ConsumerAccount:
-//            try account.query(whereclause: "\(credentials.consumer)ID = $1",
-//                params: [credentials.uniqueID],
-//                cursor: StORMCursor(limit: 1, offset: 0))
-//            guard account.uniqueID.isEmpty else {
-//                return account
-//            }
-//            newAccount.username = credentials.consumer
-//            if credentials.consumer == "facebook" {
-//                newAccount.facebookID = credentials.uniqueID
-//            } else {
-//                newAccount.googleID = credentials.uniqueID
-//            }
         default:
             throw UnsupportedCredentialsError()
         }
         
-        newAccount.password = BCrypt.hash(password: newAccount.password)
-        try newAccount.create() // can't use save as the id is populated
-        
+        newAccount.customerPassword = BCrypt.hash(password: newAccount.customerPassword)
+        try newAccount.save {
+            id in newAccount.customerId = id as! Int
+        }
+
         return newAccount
     }
 }
 
-//public struct ConsumerAccount: Account, Credentials {
-//    public let consumer: String
-//    public let uniqueID: String
-//}
+public struct CustomerAccount: Account, Credentials {
+    public let uniqueID: String
+    public let password: String
+}
 

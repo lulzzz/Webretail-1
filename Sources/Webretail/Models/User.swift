@@ -32,19 +32,11 @@ class User : PostgresSqlORM, Codable, Account {
     /// Optional email
     public var email: String = ""
     
-	/// Stored Facebook ID when logging in with Facebook
-    //public var facebookID: String = ""
-    
-    /// Stored Google ID when logging in with Google
-    //public var googleID: String = ""
-
     /// Is Administrator
     public var isAdmin: Bool = false
 
     private enum CodingKeys: String, CodingKey {
         case uniqueID
-//        case facebookID
-//        case googleID
         case username
         case password
         case firstname
@@ -66,8 +58,6 @@ class User : PostgresSqlORM, Codable, Account {
         lastname = this.data["lastname"] as? String ?? ""
         email	 = this.data["email"] as? String ?? ""
         isAdmin = this.data["isadmin"] as? Bool ?? false
-//        facebookID = this.data["facebookid"] as? String ?? ""
-//        googleID = this.data["googleid"] as? String ?? ""
     }
     
     /// Iterate through rows and set to object data

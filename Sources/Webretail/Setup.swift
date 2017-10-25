@@ -11,18 +11,14 @@ import PostgresStORM
 import StORM
 import TurnstileWeb
 
-// let facebook = Facebook(clientID: "1232307486877468", clientSecret: "b852db2dd51e4a9cca80afe812c33a11")
-// let google = Google(clientID: "807060073548-m603cvhbmk5e8c633p333hflge1fi8mt.apps.googleusercontent.com", clientSecret: "_qcb-5fEEfDekInFe106Fhhl")
-
-//let rootPath = Bundle.main.bundlePath + "/Contents/Resources"
-
+let pturnstile = TurnstilePerfectRealm()
 let tokenStore = AccessTokenStore()
 let ioCContainer = IoCContainer()
 
 func setupDatabase() throws {
     
 	PostgresConnector.port = 5432
-    PostgresConnector.host = "192.168.1.6"
+    PostgresConnector.host = "localhost"
     PostgresConnector.username = "postgres"
     PostgresConnector.password = "postgres"
     PostgresConnector.database = "webretail"
@@ -76,6 +72,7 @@ func addIoC() {
 	ioCContainer.register { InvoiceRepository() as InvoiceProtocol }
     ioCContainer.register { StatisticRepository() as StatisticProtocol }
 	ioCContainer.register { PublicationRepository() as PublicationProtocol }
+    ioCContainer.register { EcommerceRepository() as EcommerceProtocol }
 }
 
 func addRoutesAndHandlers() {
@@ -103,20 +100,22 @@ func addRoutesAndHandlers() {
     server.addRoutes(PdfController().getRoutes())
     server.addRoutes(StatisticController().getRoutes())
     server.addRoutes(PublicationController().getRoutes())
+    server.addRoutes(EcommerceController().getRoutes())
 }
 
 func addFilters() {
 	var authenticationConfig = AuthenticationConfig()
 	authenticationConfig.include("/api/*}")
-	authenticationConfig.exclude("/api/login")
+    authenticationConfig.exclude("/api/login")
 	authenticationConfig.exclude("/api/logout")
-    authenticationConfig.exclude("/api/published")
-    authenticationConfig.exclude("/api/published/*")
+    authenticationConfig.exclude("/api/register")
+    authenticationConfig.exclude("/api/ecommerce")
+    authenticationConfig.exclude("/api/ecommerce/*")
 
 	let authFilter = AuthFilter(authenticationConfig)
 	
 	// Note that order matters when the filters are of the same priority level
-	server.setRequestFilters([pturnstile.requestFilter])
-	server.setResponseFilters([pturnstile.responseFilter])
+    server.setRequestFilters([pturnstile.requestFilter])
+    server.setResponseFilters([pturnstile.responseFilter])
 	server.setRequestFilters([(authFilter, .high)])
 }

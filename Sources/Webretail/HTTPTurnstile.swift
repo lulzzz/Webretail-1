@@ -50,7 +50,7 @@ public extension HTTPRequest {
         let decoder = JSONDecoder()
         let jsonData = self.postBodyString?.data(using: .utf8)!
         //LogFile.info(self.postBodyString!)
-        return try! decoder.decode(T.self, from: jsonData!)
+        return try decoder.decode(T.self, from: jsonData!)
     }
 }
 

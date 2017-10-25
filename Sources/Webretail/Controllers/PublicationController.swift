@@ -24,12 +24,6 @@ class PublicationController {
         routes.add(method: .post, uri: "/api/publication", handler: publicationHandlerPOST)
         routes.add(method: .put, uri: "/api/publication/{id}", handler: publicationHandlerPUT)
         routes.add(method: .delete, uri: "/api/publication/{id}", handler: publicationHandlerDELETE)
-        
-        /// Public Api
-        routes.add(method: .get, uri: "/api/published", handler: publishedHandlerGET)
-        routes.add(method: .get, uri: "/api/published/category", handler: publishedCategoriesHandlerGET)
-        routes.add(method: .get, uri: "/api/published/featured", handler: publishedFeaturedHandlerGET)
-        routes.add(method: .get, uri: "/api/published/category/{id}", handler: publishedCategoryHandlerGET)
 
         return routes
     }
@@ -95,55 +89,6 @@ class PublicationController {
         do {
             try self.repository.delete(id: Int(id)!)
             response.completed(status: .noContent)
-        } catch {
-            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-        }
-    }
-
-    func publishedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
-        do {
-            let items = try self.repository.getPublished()
-            try response.setJson(items)
-            response.completed(status: .ok)
-        } catch {
-            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-        }
-    }
-
-    func publishedCategoriesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
-        do {
-            let items = try self.repository.getCategories()
-            try response.setJson(items)
-            response.completed(status: .ok)
-        } catch {
-            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-        }
-    }
-
-    func publishedFeaturedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
-        do {
-            let items = try self.repository.getFeatured()
-            try response.setJson(items)
-            response.completed(status: .ok)
-        } catch {
-            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-        }
-    }
-
-    func publishedCategoryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
-        let id = request.urlVariables["id"]!
-        do {
-            let items = try self.repository.getPublished(categoryId: Int(id)!)
-            try response.setJson(items)
-            response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }

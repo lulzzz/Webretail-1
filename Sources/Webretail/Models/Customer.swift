@@ -7,12 +7,15 @@
 //
 
 import StORM
+import Turnstile
+import TurnstileCrypto
 
-class Customer: PostgresSqlORM, Codable {
+class Customer: PostgresSqlORM, Codable, Account {
 	
-	public var customerId : Int = 0
+    public var customerId : Int = 0
 	public var customerName	: String = ""
 	public var customerEmail : String = ""
+    public var customerPassword : String = ""
 	public var customerPhone : String = ""
 	public var customerAddress : String = ""
 	public var customerCity : String = ""
@@ -22,7 +25,12 @@ class Customer: PostgresSqlORM, Codable {
 	public var customerVatNumber : String = ""
 	public var customerCreated : Int = Int.now()
 	public var customerUpdated : Int = Int.now()
-	
+
+    /// The User account's Unique ID
+    public var uniqueID: String {
+        return customerEmail
+    }
+
     private enum CodingKeys: String, CodingKey {
         case customerId
         case customerName
@@ -64,4 +72,43 @@ class Customer: PostgresSqlORM, Codable {
 		}
 		return rows
 	}
+
+    func get(email: String) throws {
+        do {
+            try query(
+                whereclause: "customerEmail = $1",
+                params: [email],
+                cursor: StORMCursor(limit: 1, offset: 0)
+            )
+            if self.results.rows.count == 0 {
+                throw StORMError.noRecordFound
+            }
+        } catch {
+            throw StORMError.noRecordFound
+        }
+    }
+    
+    /// Performs a find on supplied email, and matches hashed password
+    open func get(_ email: String, _ pwd: String) throws -> Customer {
+        try get(email: email)
+        if try BCrypt.verify(password: pwd, matchesHash: customerPassword) {
+            return self
+        } else {
+            throw StORMError.noRecordFound
+        }
+    }
+
+    /// Returns a true / false depending on if the email exits in the database.
+    func exists(_ email: String) -> Bool {
+        do {
+            try query(whereclause: "customerEmail = $1", params: [email], cursor: StORMCursor(limit: 1, offset: 0))
+            if results.rows.count == 1 {
+                return true
+            } else {
+                return false
+            }
+        } catch {
+            return false
+        }
+    }
 }

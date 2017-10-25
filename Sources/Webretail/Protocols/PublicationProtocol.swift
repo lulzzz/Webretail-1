@@ -17,12 +17,4 @@ protocol PublicationProtocol {
     func update(id: Int, item: Publication) throws
     
     func delete(id: Int) throws
-
-    func getPublished() throws -> [Product]
-
-    func getFeatured() throws -> [Product]
-
-    func getCategories() throws -> [Category]
-
-    func getPublished(categoryId: Int) throws -> [Product]
 }

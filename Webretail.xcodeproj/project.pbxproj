@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		565B303D1FA086EE0078C8C4 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B303C1FA086EE0078C8C4 /* Login.swift */; };
+		565B303F1FA093970078C8C4 /* EcommerceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B303E1FA093970078C8C4 /* EcommerceController.swift */; };
+		565B30411FA094480078C8C4 /* EcommerceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B30401FA094480078C8C4 /* EcommerceProtocol.swift */; };
+		565B30431FA094860078C8C4 /* EcommerceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B30421FA094860078C8C4 /* EcommerceRepository.swift */; };
 		OBJ_1042 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_1048 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_122 /* Package.swift */; };
 		OBJ_1054 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_171 /* Package.swift */; };
@@ -1685,6 +1689,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		565B303C1FA086EE0078C8C4 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		565B303E1FA093970078C8C4 /* EcommerceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceController.swift; sourceTree = "<group>"; };
+		565B30401FA094480078C8C4 /* EcommerceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceProtocol.swift; sourceTree = "<group>"; };
+		565B30421FA094860078C8C4 /* EcommerceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceRepository.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFilter.swift; sourceTree = "<group>"; };
 		OBJ_100 /* CompanyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyRepository.swift; sourceTree = "<group>"; };
@@ -3152,6 +3160,7 @@
 				OBJ_26 /* CustomerController.swift */,
 				OBJ_27 /* DeviceController.swift */,
 				OBJ_28 /* DiscountController.swift */,
+				565B303E1FA093970078C8C4 /* EcommerceController.swift */,
 				OBJ_29 /* InvoiceController.swift */,
 				OBJ_30 /* MovementArticleController.swift */,
 				OBJ_31 /* MovementController.swift */,
@@ -3993,11 +4002,12 @@
 				OBJ_69 /* Store.swift */,
 				OBJ_70 /* Translation.swift */,
 				OBJ_71 /* User.swift */,
+				565B303C1FA086EE0078C8C4 /* Login.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -4006,7 +4016,6 @@
 				OBJ_118 /* Dependencies */,
 				OBJ_1013 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -4030,6 +4039,7 @@
 				OBJ_81 /* CustomerProtocol.swift */,
 				OBJ_82 /* DeviceProtocol.swift */,
 				OBJ_83 /* DiscountProtocol.swift */,
+				565B30401FA094480078C8C4 /* EcommerceProtocol.swift */,
 				OBJ_84 /* InvoiceProtocol.swift */,
 				OBJ_85 /* JsonbProtocol.swift */,
 				OBJ_86 /* MovementArticleProtocol.swift */,
@@ -4143,6 +4153,7 @@
 				OBJ_101 /* CustomerRepository.swift */,
 				OBJ_102 /* DeviceRepository.swift */,
 				OBJ_103 /* DiscountRepository.swift */,
+				565B30421FA094860078C8C4 /* EcommerceRepository.swift */,
 				OBJ_104 /* InvoiceRepository.swift */,
 				OBJ_105 /* MovementArticleRepository.swift */,
 				OBJ_106 /* MovementRepository.swift */,
@@ -5090,7 +5101,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_1013 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -5298,6 +5309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				565B303F1FA093970078C8C4 /* EcommerceController.swift in Sources */,
 				OBJ_1156 /* AuthFilter.swift in Sources */,
 				OBJ_1157 /* AuthenticationConfig.swift in Sources */,
 				OBJ_1158 /* CustomRealm.swift in Sources */,
@@ -5324,6 +5336,7 @@
 				OBJ_1179 /* PublicationController.swift in Sources */,
 				OBJ_1180 /* StatisticController.swift in Sources */,
 				OBJ_1181 /* StoreController.swift in Sources */,
+				565B30411FA094480078C8C4 /* EcommerceProtocol.swift in Sources */,
 				OBJ_1182 /* UserController.swift in Sources */,
 				OBJ_1183 /* Extensions.swift in Sources */,
 				OBJ_1184 /* HTTPTurnstile.swift in Sources */,
@@ -5347,6 +5360,7 @@
 				OBJ_1202 /* Movement.swift in Sources */,
 				OBJ_1203 /* MovementArticle.swift in Sources */,
 				OBJ_1204 /* PdfDocument.swift in Sources */,
+				565B303D1FA086EE0078C8C4 /* Login.swift in Sources */,
 				OBJ_1205 /* Period.swift in Sources */,
 				OBJ_1206 /* Product.swift in Sources */,
 				OBJ_1207 /* ProductAttribute.swift in Sources */,
@@ -5371,6 +5385,7 @@
 				OBJ_1226 /* DiscountProtocol.swift in Sources */,
 				OBJ_1227 /* InvoiceProtocol.swift in Sources */,
 				OBJ_1228 /* JsonbProtocol.swift in Sources */,
+				565B30431FA094860078C8C4 /* EcommerceRepository.swift in Sources */,
 				OBJ_1229 /* MovementArticleProtocol.swift in Sources */,
 				OBJ_1230 /* MovementProtocol.swift in Sources */,
 				OBJ_1231 /* ProductProtocol.swift in Sources */,

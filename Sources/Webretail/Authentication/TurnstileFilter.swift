@@ -33,7 +33,7 @@ extension TurnstileFilter: HTTPRequestFilter {
 		} else if let apiKeys = request.auth?.basic {
 			try? request.user.login(credentials: apiKeys)
 		}
-        
+
         callback(HTTPRequestFilterResult.continue(request, response))
     }
 }

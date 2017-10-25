@@ -17,44 +17,41 @@
 //===----------------------------------------------------------------------===//
 //
 
-import PerfectLib
+import PerfectNet
 import PerfectHTTP
 import PerfectHTTPServer
 import PerfectLogger
 import Turnstile
-
-// Used later in script for the Realm and how the user authenticates.
-let pturnstile = TurnstilePerfectRealm(realm: CustomRealm())
-
-// Create HTTP server.
-let server = HTTPServer()
-// #if os(Linux)
-// server.serverPort = 80
-// #else
- server.serverPort = 8181
-// #endif
-
-// Where to serve static files from
-server.documentRoot = "./webroot"
-
-// Setup database
-try setupDatabase();
-
-// Register dependency injection
-addIoC()
-
-// Register auth routes and handlers
-addRoutesAndHandlers()
-
-// Add routes to be checked for auth
-addFilters()
+import StORM
 
 // Error file location
 LogFile.location = "./log.log"
 
+// Create HTTP server.
+let server = HTTPServer()
+server.serverPort = 8181
+server.documentRoot = "./webroot"
+
+// Register dependency injection
+addIoC()
+
+// Register routes and handlers
+addRoutesAndHandlers()
+
+// Register filters
+addFilters()
+
 do {
+    // Setup database
+    try setupDatabase();
+
     // Launch the HTTP server.
     try server.start()
-} catch PerfectError.networkError(let err, let msg) {
-    print("Network error thrown: \(err) \(msg)")
+
+} catch StORMError.error(let msg) {
+    print("Database error thrown: \(msg)")
+} catch PerfectNetError.networkError(let msg) {
+    print("Network error thrown: \(msg)")
+} catch {
+    print("System error thrown: \(error)")
 }

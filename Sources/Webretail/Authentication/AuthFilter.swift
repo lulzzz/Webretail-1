@@ -23,13 +23,14 @@ public struct AuthFilter: HTTPRequestFilter {
 	/// Perform the filtering, with a callback allowing continuation of request, or galting immediately.
 	public func filter(request: HTTPRequest, response: HTTPResponse, callback: (HTTPRequestFilterResult) -> ()) {
 
-		//		guard let denied = authenticationConfig.denied else {
+        //		guard let denied = authenticationConfig.denied else {
 		//			callback(.continue(request, response))
 		//			return
 		//		}
 
 		var checkAuth = false
-		let wildcardInclusions = authenticationConfig.inclusions.filter({$0.contains("*")})
+        let isUser = request.user.authDetails?.account is User
+        let wildcardInclusions = authenticationConfig.inclusions.filter({$0.contains("*")})
 		let wildcardExclusions = authenticationConfig.exclusions.filter({$0.contains("*")})
 
 		// check if specifically in inclusions
@@ -46,14 +47,15 @@ public struct AuthFilter: HTTPRequestFilter {
 			if request.path.startsWith(wInc.split("*")[0]) { checkAuth = false }
 		}
 
-		if checkAuth && request.user.authenticated {
-			callback(.continue(request, response))
-			return
+		if checkAuth && request.user.authenticated && (isUser || request.path.contains(string: "customer")) {
+            callback(.continue(request, response))
+            return
 		} else if checkAuth {
 			response.status = .unauthorized
 			callback(.halt(request, response))
 			return
 		}
-		callback(.continue(request, response))
+        
+        callback(.continue(request, response))
 	}
 }

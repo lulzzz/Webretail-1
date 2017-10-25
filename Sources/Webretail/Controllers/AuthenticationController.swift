@@ -6,13 +6,9 @@
 //
 //
 
-import Foundation
-import PerfectLib
 import PerfectHTTP
 import PerfectLogger
 import Turnstile
-import TurnstileCrypto
-//import TurnstileWeb
 
 public class AuthenticationController {
 
@@ -20,17 +16,9 @@ public class AuthenticationController {
         var routes = Routes()
         
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
-		routes.add(method: .post, uri: "/api/logout", handler: logoutHandlerPOST)
-
-        // routes.add(method: .get, uri: "/api/authenticated", handler: authenticatedHandlerGET)
-        // routes.add(method: .post, uri: "/api/login/consumer", handler: consumerHandlerPOST)
-		// routes.add(method: .post, uri: "/api/register", handler: registerHandlerPOST)
-
-        // routes.add(method: .get, uri: "/login/facebook", handler: facebookHandler)
-        // routes.add(method: .get, uri: "/login/facebook/consumer", handler: facebookHandlerConsumer)
-        
-        // routes.add(method: .get, uri: "/login/google", handler: googleHandler)
-        // routes.add(method: .get, uri: "/login/google/consumer", handler: googleHandlerConsumer)
+        routes.add(method: .post, uri: "/api/logout", handler: logoutHandlerPOST)
+        routes.add(method: .post, uri: "/api/register", handler: registerCustomerHandlerPOST)
+        routes.add(method: .get,  uri: "/api/authenticated", handler: authenticatedHandlerGET)
 
         return routes
     }
@@ -39,18 +27,19 @@ public class AuthenticationController {
         response.setHeader(.contentType, value: "application/json")
         
         var resp = [String: String]()
-
         do {
-            let json = try request.postBodyString?.jsonDecode() as? [String:Any] ?? [String:Any]()
-            guard let username = json["username"] as? String,
-                let password = json["password"] as? String else {
-                    resp["error"] = "Missing username or password"
-                    try response.setBody(json: resp)
-                    response.completed()
-                    return
-            }
+            var credentials: Credentials
             
-            let credentials = UsernamePassword(username: username, password: password)
+            if let login: LoginUser = try request.getJson() {
+                credentials = UsernamePassword(username: login.username, password: login.password)
+            } else if let login: LoginCustomer = try request.getJson() {
+                credentials = CustomerAccount(uniqueID: login.email, password: login.password)
+            } else {
+                resp["error"] = "Missing username or password"
+                try response.setBody(json: resp)
+                response.completed()
+                return
+            }
             
             do {
                 try request.user.login(credentials: credentials, persist: true)
@@ -58,15 +47,20 @@ public class AuthenticationController {
                     throw AccountTakenError()
                 }
                 let token = tokenStore.new(uniqueID)
-                let user = User()
-                try user.get(uniqueID)
-                
                 resp["error"] = "none"
                 resp["login"] = "ok"
                 resp["token"] = token
                 resp["uniqueID"] = uniqueID
-                resp["role"] = user.isAdmin ? "Admin" : "User"
-                LogFile.info("Logged in \(user.username)")
+
+                if (credentials is UsernamePassword) {
+                    let user = User()
+                    try user.get(uniqueID)
+                    resp["role"] = user.isAdmin ? "Admin" : "User"
+                    LogFile.info("Logged in \(user.username)")
+                } else {
+                    resp["role"] = "Customer"
+                    LogFile.info("Logged in \(uniqueID)")
+                }
             } catch {
                 resp["error"] = "Invalid username or password"
             }
@@ -76,16 +70,16 @@ public class AuthenticationController {
         }
         response.completed()
     }
-
-	func logoutHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+    
+    func logoutHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		
 		var resp = [String: String]()
 		do {
 			request.user.logout()
-			if let auth = request.header(.authorization)?.replacingOccurrences(of: "Bearer ", with: "") {
-				pturnstile.turnstile.sessionManager.destroySession(identifier: auth)
-			}
+            if let auth = request.header(.authorization)?.replacingOccurrences(of: "Bearer ", with: "") {
+                pturnstile.turnstile.sessionManager.destroySession(identifier: auth)
+            }
 			resp["error"] = "none"
 			resp["logout"] = "completed"
             try response.setBody(json: resp)
@@ -95,38 +89,13 @@ public class AuthenticationController {
 		response.completed()
 	}
 
-    /*
-    func authenticatedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func registerCustomerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
-
-        var resp = [String: Any]()
-        resp["authenticated"] = false
-        do {
-            if request.user.authenticated {
-                guard let uniqueID = request.user.authDetails?.account.uniqueID else {
-                    throw AccountTakenError()
-                }
-                let user = User()
-                try user.get(uniqueID)
-                
-                resp["authenticated"] = true
-                resp["uniqueID"] = request.user.authDetails?.account.uniqueID
-                resp["role"] = user.isAdmin ? "Admin" : "User"
-			}
-            try response.setBody(json: resp)
-        } catch {
-            print(error)
-        }
-        response.completed()
-    }
-    
-	func registerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
+        
         var resp = [String: String]()
-	
-        guard let username = request.param(name: "username"),
+        guard let email = request.param(name: "email"),
             let password = request.param(name: "password") else {
-                resp["error"] = "Missing username or password"
+                resp["error"] = "Missing email or password"
                 do {
                     try response.setBody(json: resp)
                 } catch {
@@ -135,7 +104,8 @@ public class AuthenticationController {
                 response.completed()
                 return
         }
-        let credentials = UsernamePassword(username: username, password: password)
+
+        let credentials = CustomerAccount(uniqueID: email, password: password)
         
         do {
             try request.user.register(credentials: credentials)
@@ -143,14 +113,12 @@ public class AuthenticationController {
             
             let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
             let token = tokenStore.new(uniqueID)
-            let user = User()
-            try user.get(uniqueID)
             
             resp["error"] = "none"
             resp["login"] = "ok"
             resp["token"] = token
 			resp["uniqueID"] = uniqueID
-            resp["role"] = user.isAdmin ? "Admin" : "User"
+            resp["role"] = "Customer"
         } catch let e as TurnstileError {
             resp["error"] = e.description
         } catch {
@@ -164,132 +132,33 @@ public class AuthenticationController {
         response.completed()
     }
 
-    
-    /* Facebook Signin */
-    
-    func facebookHandler(request: HTTPRequest, _ response: HTTPResponse) {
+    func authenticatedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "application/json")
         
-        let state = URandom().secureToken
-        let redirectURL = facebook.getLoginLink(redirectURL: "http://" + host + "/login/facebook/consumer", state: state)
-        
-        response.addCookie(HTTPCookie(name: "OAuthState", value: state, domain: nil, expires: HTTPCookie.Expiration.relativeSeconds(3600), path: "/", secure: nil, httpOnly: true))
-        response.redirect(path: redirectURL.absoluteString)
-    }
-    
-    func facebookHandlerConsumer(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        var resp = [String: String]()
-        
-        guard let state = request.cookies.filter({$0.0 == "OAuthState"}).first?.1 else {
-            resp["error"] = "unknown error"
-            do {
-                try response.setBody(json: resp)
-            } catch {
-                print(error)
-            }
-            response.completed()
-            return
-        }
-        response.addCookie(HTTPCookie(name: "OAuthState", value: state, domain: nil, expires: HTTPCookie.Expiration.absoluteSeconds(0), path: "/", secure: nil, httpOnly: true))
-        let uri = "http://" + host + request.uri
-        
+        var resp = [String: Any]()
+        resp["authenticated"] = false
         do {
-            let credentials = try facebook.authenticate(authorizationCodeCallbackURL: uri, state: state) as! FacebookAccount
-            try request.user.register(credentials: credentials)
-            response.redirect(path: "/?consumer=facebook&uniqueID=\(credentials.uniqueID)")
-        } catch let error {
-            let description = (error as? TurnstileError)?.description ?? "Unknown Error"
-            resp["error"] = description
-            do {
-                try response.setBody(json: resp)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        }
-    }
-    
-    /* Google Signin */
-    
-    func googleHandler(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
-        let state = URandom().secureToken
-        let redirectURL = google.getLoginLink(redirectURL: "http://" + host + "/login/google/consumer", state: state)
-        
-        response.addCookie(HTTPCookie(name: "OAuthState", value: state, domain: nil, expires: nil, path: "/", secure: nil, httpOnly: true))
-        response.redirect(path: redirectURL.absoluteString)
-    }
-    
-    func googleHandlerConsumer(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        var resp = [String: String]()
-        
-        guard let state = request.cookies.filter({$0.0 == "OAuthState"}).first?.1 else {
-            return
-        }
-        response.addCookie(HTTPCookie(name: "OAuthState", value: state, domain: nil, expires: HTTPCookie.Expiration.absoluteSeconds(0), path: "/", secure: nil, httpOnly: true))
-        let uri = "http://" + host + request.uri
-        
-        do {
-            let credentials = try google.authenticate(authorizationCodeCallbackURL: uri, state: state) as! GoogleAccount
-            try request.user.register(credentials: credentials)
-            response.redirect(path: "/?consumer=google&uniqueID=\(credentials.uniqueID)")
-        } catch let error {
-            let description = (error as? TurnstileError)?.description ?? "Unknown Error"
-            resp["error"] = description
-            do {
-                try response.setBody(json: resp)
-            } catch {
-                print(error)
-            }
-            response.completed()
-        }
-    }
-
-    /* Consumer Login action (POST) */
-    
-    func consumerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
-        var resp = [String: String]()
-        guard let consumer = request.param(name: "consumer"),
-              let uniqueID = request.param(name: "uniqueID") else {
-                resp["error"] = "Missing uniqueID"
-                do {
-                    try response.setBody(json: resp)
-                } catch {
-                    print(error)
+            if request.user.authenticated {
+                guard let uniqueID = request.user.authDetails?.account.uniqueID else {
+                    throw AccountTakenError()
                 }
-                response.completed()
-                return
-        }
-        
-        let credentials = ConsumerAccount(consumer: consumer, uniqueID: uniqueID)
-        
-        do {
-            try request.user.login(credentials: credentials, persist: true)
-            let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
-            let token = tokenStore.new(uniqueID)
-            let user = User()
-            try user.get(uniqueID)
-            
-            resp["error"] = "none"
-            resp["login"] = "ok"
-            resp["token"] = token
-			resp["uniqueID"] = uniqueID
-            resp["role"] = user.isAdmin ? "Admin" : "User"
-        } catch {
-            resp["error"] = "Invalid uniqueID"
-        }
-        do {
+                
+                resp["authenticated"] = true
+                resp["uniqueID"] = request.user.authDetails?.account.uniqueID
+
+                if (request.user.authDetails?.account is User) {
+                    let user = User()
+                    try user.get(uniqueID)
+                    resp["role"] = user.isAdmin ? "Admin" : "User"
+                } else {
+                    resp["role"] = "Customer"
+                }
+            }
             try response.setBody(json: resp)
         } catch {
             print(error)
         }
         response.completed()
     }
-    */
 }
 
