@@ -11,6 +11,7 @@
 		565B303F1FA093970078C8C4 /* EcommerceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B303E1FA093970078C8C4 /* EcommerceController.swift */; };
 		565B30411FA094480078C8C4 /* EcommerceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B30401FA094480078C8C4 /* EcommerceProtocol.swift */; };
 		565B30431FA094860078C8C4 /* EcommerceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B30421FA094860078C8C4 /* EcommerceRepository.swift */; };
+		56F783591FA1384A00477A68 /* Basket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F783581FA1384A00477A68 /* Basket.swift */; };
 		OBJ_1042 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_1048 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_122 /* Package.swift */; };
 		OBJ_1054 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_171 /* Package.swift */; };
@@ -1693,6 +1694,7 @@
 		565B303E1FA093970078C8C4 /* EcommerceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceController.swift; sourceTree = "<group>"; };
 		565B30401FA094480078C8C4 /* EcommerceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceProtocol.swift; sourceTree = "<group>"; };
 		565B30421FA094860078C8C4 /* EcommerceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceRepository.swift; sourceTree = "<group>"; };
+		56F783581FA1384A00477A68 /* Basket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basket.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFilter.swift; sourceTree = "<group>"; };
 		OBJ_100 /* CompanyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyRepository.swift; sourceTree = "<group>"; };
@@ -3977,6 +3979,7 @@
 				OBJ_44 /* ArticleAttributeValue.swift */,
 				OBJ_45 /* Attribute.swift */,
 				OBJ_46 /* AttributeValue.swift */,
+				56F783581FA1384A00477A68 /* Basket.swift */,
 				OBJ_47 /* Brand.swift */,
 				OBJ_48 /* Category.swift */,
 				OBJ_49 /* Causal.swift */,
@@ -5318,6 +5321,7 @@
 				OBJ_1161 /* TurnstilePerfectRealm.swift in Sources */,
 				OBJ_1162 /* AngularController.swift in Sources */,
 				OBJ_1163 /* ArticleController.swift in Sources */,
+				56F783591FA1384A00477A68 /* Basket.swift in Sources */,
 				OBJ_1164 /* AttributeController.swift in Sources */,
 				OBJ_1165 /* AttributeValueController.swift in Sources */,
 				OBJ_1166 /* AuthenticationController.swift in Sources */,

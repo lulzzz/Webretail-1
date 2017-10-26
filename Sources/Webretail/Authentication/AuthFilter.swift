@@ -29,7 +29,7 @@ public struct AuthFilter: HTTPRequestFilter {
 		//		}
 
 		var checkAuth = false
-        let isUser = request.user.authDetails?.account is User
+        let isUser = true //request.user.authDetails?.account is User
         let wildcardInclusions = authenticationConfig.inclusions.filter({$0.contains("*")})
 		let wildcardExclusions = authenticationConfig.exclusions.filter({$0.contains("*")})
 

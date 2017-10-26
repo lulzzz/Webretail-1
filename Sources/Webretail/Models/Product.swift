@@ -198,4 +198,30 @@ class Product: PostgresSqlORM, Codable {
 		)
 		self._articles = try article.rows()
 	}
+
+    func get(barcode: String) throws {
+        let brandJoin = StORMDataSourceJoin(
+            table: "brands",
+            onCondition: "products.brandId = brands.brandId",
+            direction: StORMJoinType.INNER
+        )
+        let articleJoin = StORMDataSourceJoin(
+            table: "articles",
+            onCondition: "products.productId = articles.productId",
+            direction: StORMJoinType.INNER
+        )
+        
+        try query(whereclause: "articles.articleBarcode = $1",
+                  params: [barcode],
+                  cursor: StORMCursor(limit: 1, offset: 0),
+                  joins: [brandJoin, articleJoin])
+        if self.productId == 0 {
+            return
+        }
+        
+        try self.makeDiscount()
+        try self.makeCategories()
+        try self.makeAttributes()
+        try self.makeArticle(barcode: barcode)
+    }
 }

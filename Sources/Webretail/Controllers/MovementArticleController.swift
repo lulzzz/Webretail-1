@@ -47,7 +47,9 @@ class MovementArticleController {
         
        	do {
             let item: MovementArticle = try request.getJson()
-            guard let product = try item.getProduct(barcode: item.movementArticleBarcode) else {
+            let product = Product()
+            try product.get(barcode: item.movementArticleBarcode)
+            if product.productId == 0 {
                 response.completed(status: .notFound)
                 return
             }

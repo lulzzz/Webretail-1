@@ -69,8 +69,9 @@ class MovementArticle: PostgresSqlORM, Codable {
         movementArticleId = try container.decode(Int.self, forKey: .movementArticleId)
         movementId = try container.decode(Int.self, forKey: .movementId)
         movementArticleBarcode = try container.decode(String.self, forKey: .movementArticleBarcode)
-        let product = try! self.getProduct(barcode: movementArticleBarcode)
-        if let product = product {
+        let product = Product()
+        try! product.get(barcode: movementArticleBarcode)
+        if product.productId > 0 {
             movementArticleProduct = product
         } else {
             movementArticleProduct = try container.decode(Product.self, forKey: .movementArticleProduct)
@@ -89,33 +90,4 @@ class MovementArticle: PostgresSqlORM, Codable {
         try container.encode(movementArticlePrice, forKey: .movementArticlePrice)
         try container.encode(_movementArticleAmount, forKey: ._movementArticleAmount)
     }
-
-    func getProduct(barcode: String) throws -> Product? {
-		let brandJoin = StORMDataSourceJoin(
-			table: "brands",
-			onCondition: "products.brandId = brands.brandId",
-			direction: StORMJoinType.INNER
-		)
-		let articleJoin = StORMDataSourceJoin(
-			table: "articles",
-			onCondition: "products.productId = articles.productId",
-			direction: StORMJoinType.INNER
-		)
-		
-		let product = Product()
-		try product.query(whereclause: "articles.articleBarcode = $1",
-		                  params: [barcode],
-		                  cursor: StORMCursor(limit: 1, offset: 0),
-		                  joins: [brandJoin, articleJoin])
-		if product.productId == 0 {
-			return nil
-		}
-		
-		try product.makeDiscount()
-		try product.makeCategories()
-		try product.makeAttributes()
-		try product.makeArticle(barcode: barcode)
-		
-		return product
-	}
 }

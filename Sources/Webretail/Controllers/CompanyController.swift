@@ -29,7 +29,6 @@ class CompanyController {
 		return routes
 	}
 	
-	
 	func companyHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		response.setHeader(.contentType, value: "application/json")
 		

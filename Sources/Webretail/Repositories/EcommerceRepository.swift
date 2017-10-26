@@ -116,5 +116,40 @@ struct EcommerceRepository : EcommerceProtocol {
         
         return try items.rows(barcodes: false)
     }
+    
+    func getBasket(customerId: Int) throws -> [Basket] {
+        let items = Basket()
+        try items.query(whereclause: "customerId = $1", params: [customerId])
+        
+        return items.rows()
+    }
+    
+    func addBasket(item: Basket) throws {
+        item.basketUpdated = Int.now()
+        try item.save {
+            id in item.basketId = id as! Int
+        }
+    }
+    
+    func updateBasket(id: Int, item: Basket) throws {
+        let current = Basket()
+        try current.get(id)
+        if current.basketId == 0 {
+            throw StORMError.noRecordFound
+        }
+        current.basketQuantity = item.basketQuantity
+        current.basketUpdated = Int.now()
+        try current.save()
+    }
+    
+    func deleteBasket(id: Int) throws {
+        let item = Basket()
+        item.basketId = id
+        try item.delete()
+    }
+    
+    func commitBasket(customerId: Int) throws {
+        
+    }
 }
 
