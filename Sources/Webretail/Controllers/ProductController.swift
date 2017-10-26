@@ -39,8 +39,6 @@ class ProductController {
     }
     
     func productsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
 		let date = request.urlVariables["date"]
 		do {
 			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)
@@ -52,8 +50,6 @@ class ProductController {
     }
 
     func productHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
 			let id = request.urlVariables["id"]!
             let item = try self.repository.get(id: Int(id)!)
@@ -65,8 +61,6 @@ class ProductController {
     }
 
     func productHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Product = try request.getJson()
             try self.repository.add(item: item)
@@ -78,12 +72,10 @@ class ProductController {
     }
 
     func productImportHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Product = try request.getJson()
             let result = try self.repository.create(item: item)
-            try response.setBody(string: result.jsonEncodedString())
+            try response.setBody(json: result)
             response.completed(status: .created)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -91,8 +83,6 @@ class ProductController {
     }
 
     func productHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
 			let id = request.urlVariables["id"]!
             let item: Product = try request.getJson()
@@ -105,8 +95,6 @@ class ProductController {
     }
 
     func productHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
 			let id = request.urlVariables["id"]!
             try self.repository.delete(id: Int(id)!)
@@ -117,8 +105,6 @@ class ProductController {
     }
 
     func publicationProductHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(productId: Int(id)!)
@@ -130,8 +116,6 @@ class ProductController {
     }
     
     func productPublicationHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let id = request.urlVariables["id"]!
             let item: Product = try request.getJson()
@@ -144,8 +128,6 @@ class ProductController {
     }
     
     func productCategoryHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items: [ProductCategory] = try request.getJson()
             for item in items {
@@ -159,8 +141,6 @@ class ProductController {
     }
 
     func productCategoryHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items: [ProductCategory] = try request.getJson()
             for item in items {
@@ -174,8 +154,6 @@ class ProductController {
     }
 
     func productAttributeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items: [ProductAttribute] = try request.getJson()
             for item in items {
@@ -189,8 +167,6 @@ class ProductController {
     }
     
     func productAttributeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items: [ProductAttribute] = try request.getJson()
             for item in items {
@@ -203,14 +179,12 @@ class ProductController {
     }
 
     func productAttributeValueHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items: [ProductAttributeValue] = try request.getJson()
             for item in items {
                 try self.repository.addAttributeValue(item: item)
             }
-            try response.setBody(json: items)
+            try response.setJson(items)
             response.completed(status: .created)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -218,8 +192,6 @@ class ProductController {
     }
     
     func productAttributeValueHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items: [ProductAttributeValue] = try request.getJson()
             for item in items {

@@ -2,6 +2,7 @@
 import { DOCUMENT } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { CompanyService } from './../services/company.service';
@@ -27,6 +28,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     constructor(@Inject(DOCUMENT) private document: any,
                 private location: Location,
                 private activatedRoute: ActivatedRoute,
+                private messageService: MessageService,
                 private sessionService: SessionService,
                 private companyService: CompanyService,
                 private movementService: MovementService) {
@@ -38,22 +40,14 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            this.movementId = params['id'];
+            this.movementId = Number(params['id']);
             this.isBusy = true;
 
-            this.movementService.getById(this.movementId)
-                .subscribe(result => {
-                    this.movement = result;
-                }, onerror => alert(onerror._body)
-            );
+            this.movement = this.movementService.movements.find(p => p.movementId === this.movementId);
 
             this.movementService.getItemsById(this.movementId)
                 .subscribe(
                     result => {
-                        // let items: MovementArticle[] = [];
-                        // for (let i = 0; i < 30; i++) {
-                        //     items.push(result[0]);
-                        // }
                         this.groups = [];
                         let array: MovementArticle[] = [];
                         let index = 0;
@@ -76,7 +70,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
                         this.total = result.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
                         this.amount = this.total * 100 / 122;
                     },
-                    onerror => alert(onerror._body),
+                    onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}),
                     () => this.isBusy = false
                 );
         });
@@ -113,7 +107,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     const reader = new FileReader();
-                    reader.addEventListener('loadend', (e) => alert(reader.result));
+                    reader.addEventListener('loadend', (e) =>
+                        this.messageService.add({severity: 'error', summary: 'Error', detail: reader.result}));
                     reader.readAsText(err._body);
                 },
                 () => this.isBusy = false
@@ -131,8 +126,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
         this.companyService.sendMail(model)
             .subscribe(
-                result => alert(result.content),
-                onerror => alert(onerror._body),
+                result => this.messageService.add({severity: 'success', summary: 'Success', detail: result.content}),
+                onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}),
                 () => this.isBusy = false
             );
     }

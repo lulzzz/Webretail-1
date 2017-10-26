@@ -30,7 +30,6 @@ class StatisticController {
     }
 
     func statisticDeviceHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
         do {
             let items = try self.repository.getDevices()
             try response.setJson(items)
@@ -41,7 +40,6 @@ class StatisticController {
     }
 
     func statisticCategoryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
         do {
             let year = request.urlVariables["year"]!
             let items = try self.repository.getCategories(year: Int(year)!)
@@ -53,7 +51,6 @@ class StatisticController {
     }
 
     func statisticCategoryformonthHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
         do {
             let year = request.urlVariables["year"]!
             let items = try self.repository.getCategoriesForMonth(year: Int(year)!)
@@ -65,7 +62,6 @@ class StatisticController {
     }
 
     func statisticProductHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
         do {
             let year = request.urlVariables["year"]!
             let items = try self.repository.getProducts(year: Int(year)!)
@@ -77,7 +73,6 @@ class StatisticController {
     }
 
     func statisticProductformonthHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
         do {
             let year = request.urlVariables["year"]!
             let items = try self.repository.getProductsForMonth(year: Int(year)!)

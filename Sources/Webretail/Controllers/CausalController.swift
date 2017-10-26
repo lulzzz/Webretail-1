@@ -30,8 +30,6 @@ class CausalController {
     }
     
     func causalsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
 		let date = request.urlVariables["date"]
         do {
 			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)
@@ -43,8 +41,6 @@ class CausalController {
     }
     
     func causalHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
@@ -56,8 +52,6 @@ class CausalController {
     }
     
     func causalHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Causal = try request.getJson()
             try self.repository.add(item: item)
@@ -69,8 +63,6 @@ class CausalController {
     }
     
     func causalHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item: Causal = try request.getJson()
@@ -83,8 +75,6 @@ class CausalController {
     }
     
     func causalHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             try self.repository.delete(id: Int(id)!)

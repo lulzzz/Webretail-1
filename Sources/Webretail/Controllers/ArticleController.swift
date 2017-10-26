@@ -33,12 +33,10 @@ class ArticleController {
     }
     
     func articleBuildHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let count = try self.repository.build(productId: Int(id)!)
-            try response.setBody(string: count.jsonEncodedString())
+            try response.setBody(json: count)
             response.completed(status: .ok)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -46,8 +44,6 @@ class ArticleController {
     }
     
     func articlesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getAll()
             try response.setJson(items)
@@ -58,8 +54,6 @@ class ArticleController {
     }
     
     func productArticleHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
 		let storeIds = request.urlVariables["storeids"]!
 		do {
@@ -72,8 +66,6 @@ class ArticleController {
     }
     
     func articleHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
@@ -85,8 +77,6 @@ class ArticleController {
     }
     
     func articleHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Article = try request.getJson()
             try self.repository.add(item: item)
@@ -98,8 +88,6 @@ class ArticleController {
     }
     
     func articleHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item: Article = try request.getJson()
@@ -112,8 +100,6 @@ class ArticleController {
     }
     
     func articleHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             try self.repository.delete(id: Int(id)!)
@@ -124,8 +110,6 @@ class ArticleController {
     }
     
     func articleAttributeValueHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: ArticleAttributeValue = try request.getJson()
             try self.repository.addAttributeValue(item: item)
@@ -137,8 +121,6 @@ class ArticleController {
     }
     
     func articleAttributeValueHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             try self.repository.removeAttributeValue(id: Int(id)!)

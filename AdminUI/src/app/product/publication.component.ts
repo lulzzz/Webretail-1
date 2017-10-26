@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { Message, MenuItem, SelectItem, Button, ConfirmationService } from 'primeng/primeng';
+import { MenuItem, SelectItem, Button, ConfirmationService } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { Observable } from 'rxjs/Rx';
 import { SessionService } from '../services/session.service'
 import { PublicationService } from '../services/publication.service'
@@ -19,7 +20,6 @@ export class PublicationComponent implements OnInit, OnDestroy {
     private selectedArray: any;
     selectedMedia: string;
     selectedKey: string;
-    msgs: Message[] = [];
     isBusy: boolean;
     activeIndex = 0;
     countries: SelectItem[];
@@ -27,7 +27,8 @@ export class PublicationComponent implements OnInit, OnDestroy {
     attributes: SelectItem[];
     translation: Translation;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private activatedRoute: ActivatedRoute,
                 private confirmationService: ConfirmationService,
                 private publicationService: PublicationService,
@@ -93,7 +94,6 @@ export class PublicationComponent implements OnInit, OnDestroy {
         // Clean sub to avoid memory leak
         this.sub.unsubscribe();
 
-        this.msgs = null;
         this.selectedMedia = null;
         this.countries = null;
         this.publicationService.product = null;
@@ -129,12 +129,12 @@ export class PublicationComponent implements OnInit, OnDestroy {
     // Step 1 2 3
     addTranslateClick() {
         if (this.translation.value === '') {
-            this.msgs.push({severity: 'warn', summary: 'Attention', detail: 'Translate is not empty!'});
+            this.messageService.add({severity: 'warn', summary: 'Attention', detail: 'Translate is not empty!'});
             return;
         }
         const translate = this.publicationService.getTranslate(this.selectedArray, this.translation.country);
         if (translate) {
-            this.msgs.push({severity: 'warn', summary: 'Attention', detail: 'Translate for this country alrady present!'});
+            this.messageService.add({severity: 'warn', summary: 'Attention', detail: 'Translate for this country alrady present!'});
             return;
         }
         const item = new Translation(this.translation.country, this.translation.value);
@@ -154,7 +154,7 @@ export class PublicationComponent implements OnInit, OnDestroy {
         }
 
         this.publicationService.updateTranslate(array, item);
-        this.msgs.push({severity: 'success', summary: 'Update translate', detail: 'Successfully updated!'});
+        this.messageService.add({severity: 'success', summary: 'Update translate', detail: 'Successfully updated!'});
     }
 
     deleteTranslateClick(array, item) {
@@ -205,13 +205,13 @@ export class PublicationComponent implements OnInit, OnDestroy {
         this.isBusy = true;
         this.publicationService.saveProduct().subscribe(result => {
             this.publicationService.product = result;
-            this.msgs.push({severity: 'success', summary: 'Product', detail: 'Successfully saved!'});
+            this.messageService.add({severity: 'success', summary: 'Product', detail: 'Successfully saved!'});
             if (this.publication.publicationStartAt) {
                 if (this.publication.publicationId === 0) {
                     this.publicationService.create(this.publication)
                         .subscribe(response => {
                             this.isBusy = false;
-                            this.msgs.push({severity: 'success', summary: 'Publication', detail: 'Successfully published!'});
+                            this.messageService.add({severity: 'success', summary: 'Publication', detail: 'Successfully published!'});
                         });
                 } else {
                     this.publicationService.update(this.publication.publicationId, this.publication)

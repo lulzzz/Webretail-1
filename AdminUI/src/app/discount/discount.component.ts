@@ -2,6 +2,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { DiscountService } from './../services/discount.service';
 import { Discount, DiscountProduct } from './../shared/models';
@@ -9,7 +10,7 @@ import { Helpers } from './../shared/helpers';
 import { ProductPickerComponent } from './../shared/product-picker.component';
 
 @Component({
-    selector: 'discount-component',
+    selector: 'app-discount-component',
     templateUrl: 'discount.component.html'
 })
 
@@ -25,7 +26,8 @@ export class DiscountComponent implements OnInit, OnDestroy {
     articleValue: string;
     sliderValue: number;
 
-    constructor(private activatedRoute: ActivatedRoute,
+    constructor(private messageService: MessageService,
+                private activatedRoute: ActivatedRoute,
                 private sessionService: SessionService,
                 private discountService: DiscountService,
                 private confirmationService: ConfirmationService,
@@ -48,9 +50,9 @@ export class DiscountComponent implements OnInit, OnDestroy {
                         .subscribe(res => {
                             this.items = res;
                             this.totalRecords = this.items.length;
-                        }, onerror => alert(onerror._body)
+                        }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
                     );
-                }, onerror => alert(onerror._body)
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
             );
         });
     }
@@ -71,7 +73,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
 
     addCodes() {
         this.codes.forEach(code => {
-            let item = new DiscountProduct();
+            const item = new DiscountProduct();
             item.discountId = this.discountId;
             item.discountProduct.productCode = code;
             this.discountService
@@ -80,7 +82,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
                     this.items.push(result);
                     this.codes.splice(this.codes.indexOf(code), 1);
                     this.reloadData();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         });
     }
 
@@ -103,7 +105,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(p), 1);
                             this.reloadData();
-                        }, onerror => alert(onerror._body));
+                        }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
                 });
             }
         });

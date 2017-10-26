@@ -29,8 +29,6 @@ class DeviceController {
 	}
 	
 	func devicesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let date = request.urlVariables["date"]
 		do {
 			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)
@@ -42,8 +40,6 @@ class DeviceController {
 	}
 	
 	func deviceHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			let item = try self.repository.get(id: Int(id)!)
@@ -55,8 +51,6 @@ class DeviceController {
 	}
 	
 	func deviceHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
             let item: Device = try request.getJson()
             item.storeId = item._store.storeId
@@ -69,8 +63,6 @@ class DeviceController {
 	}
 	
 	func deviceHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			let item: Device = try request.getJson()
@@ -84,8 +76,6 @@ class DeviceController {
 	}
 	
 	func deviceHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			try self.repository.delete(id: Int(id)!)

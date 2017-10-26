@@ -244,7 +244,7 @@ struct ArticleRepository : ArticleProtocol {
 						})
 						let articleLabel = ArticleItem(
 							id: 0,
-							value: (productAttributeValue?._attributeValue.attributeValueName)!,
+							value: productAttributeValue?._attributeValue.attributeValueName ?? "",
 							stock: 0.0,
 							booked: 0.0,
 							data: 0.0

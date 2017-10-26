@@ -1,6 +1,7 @@
 import { Component, OnInit  } from '@angular/core';
 import { SessionService } from './../services/session.service';
-import { Message, SelectItem } from 'primeng/primeng';
+import { SelectItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { ImportService, CodartInfo, Translate, Image } from './../services/import.service';
 import {
     Product, Brand, Category, ProductCategory,
@@ -16,13 +17,13 @@ import { Helpers } from '../shared/helpers';
 
 export class ImportComponent implements OnInit  {
 
-    msgs: Message[] = [];
     isBusy: boolean;
     productCode: String;
     product: Product;
     products: SelectItem[];
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private importService: ImportService) {
         sessionService.title = 'Import';
     }
@@ -51,7 +52,7 @@ export class ImportComponent implements OnInit  {
             this.product = this.convertProduct(res);
             this.importService.create(this.product)
             .subscribe(result => {
-                this.msgs.push({
+                this.messageService.add({
                     severity: 'success',
                     summary: 'import',
                     detail: 'Totals: added ' + result.added + ' updated ' + result.updated + ' deleted ' + result.deleted
@@ -62,7 +63,7 @@ export class ImportComponent implements OnInit  {
     }
 
     showError(error: any) {
-        this.msgs.push({severity: 'error', summary: 'import', detail: error});
+        this.messageService.add({severity: 'error', summary: 'import', detail: error});
         this.isBusy = false;
     }
 

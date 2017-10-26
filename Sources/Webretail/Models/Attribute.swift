@@ -30,8 +30,10 @@ class Attribute: PostgresSqlORM, Codable {
         attributeId = this.data["attributeid"] as? Int ?? 0
         attributeName = this.data["attributename"] as? String ?? ""
         let decoder = JSONDecoder()
-        let jsonData = try! JSONSerialization.data(withJSONObject: this.data["attributetranslates"]!, options: [])
-        attributeTranslates = try! decoder.decode([Translation].self, from: jsonData)
+        if let translates = this.data["attributetranslates"] {
+            let jsonData = try! JSONSerialization.data(withJSONObject: translates, options: [])
+            attributeTranslates = try! decoder.decode([Translation].self, from: jsonData)
+        }
         attributeCreated = this.data["attributecreated"] as? Int ?? 0
         attributeUpdated = this.data["attributeupdated"] as? Int ?? 0
     }

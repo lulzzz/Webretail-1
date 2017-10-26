@@ -32,8 +32,6 @@ class DiscountController {
 	}
 	
 	func discountsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let items = try self.repository.getAll()
 			try response.setJson(items)
@@ -44,8 +42,6 @@ class DiscountController {
 	}
 	
 	func discountHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			let item = try self.repository.get(id: Int(id)!)
@@ -57,8 +53,6 @@ class DiscountController {
 	}
 	
 	func discountProductHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			let items = try self.repository.getProducts(id: Int(id)!)
@@ -70,8 +64,6 @@ class DiscountController {
 	}
 	
 	func discountHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
             let item: Discount = try request.getJson()
 			try self.repository.add(item: item)
@@ -83,8 +75,6 @@ class DiscountController {
 	}
 	
 	func discountHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
             let item: Discount = try request.getJson()
@@ -97,8 +87,6 @@ class DiscountController {
 	}
 	
 	func discountHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			try self.repository.delete(id: Int(id)!)
@@ -109,8 +97,6 @@ class DiscountController {
 	}
 
 	func discountProductHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let item: DiscountProduct = try request.getJson()
             try self.repository.addProduct(item: item)
@@ -122,8 +108,6 @@ class DiscountController {
 	}
 
 	func discountProductHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			try self.repository.removeProduct(id: Int(id)!)

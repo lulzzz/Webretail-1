@@ -30,8 +30,6 @@ class CustomerController {
 	}
 	
 	func customersHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let date = request.urlVariables["date"]
 		do {
 			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)
@@ -43,8 +41,6 @@ class CustomerController {
 	}
 	
 	func customerHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			let item = try self.repository.get(id: Int(id)!)
@@ -56,8 +52,6 @@ class CustomerController {
 	}
 	
 	func customerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
             let item: Customer = try request.getJson()
 			try self.repository.add(item: item)
@@ -69,8 +63,6 @@ class CustomerController {
 	}
 	
 	func customerHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
             let item: Customer = try request.getJson()
@@ -83,8 +75,6 @@ class CustomerController {
 	}
 	
 	func customerHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			try self.repository.delete(id: Int(id)!)

@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { AttributeService } from './../services/attribute.service';
 import { Attribute, AttributeValue } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'attribute-component',
+    selector: 'app-attribute-component',
     templateUrl: 'attribute.component.html'
 })
 
@@ -23,7 +24,8 @@ export class AttributeComponent implements OnInit {
     dataform: FormGroup;
     dataformValue: FormGroup;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private attributeService: AttributeService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -66,7 +68,7 @@ export class AttributeComponent implements OnInit {
             .subscribe(result => {
                 this.values = result;
                 this.totalValues = this.values.length;
-            }, onerror => alert(onerror._body));
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
     }
 
     addClick() {
@@ -89,13 +91,13 @@ export class AttributeComponent implements OnInit {
                 .subscribe(result => {
                     this.attributes.push(result);
                     this.displayPanel = false;
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.attributeService
                 .update(this.selected.attributeId, this.selected)
                 .subscribe(result => {
                     this.displayPanel = false;
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -111,7 +113,7 @@ export class AttributeComponent implements OnInit {
                         this.selected = null;
                         this.values.length = 0;
                         this.displayPanel = false;
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }
@@ -145,13 +147,13 @@ export class AttributeComponent implements OnInit {
                 .subscribe(result => {
                     this.values.push(result);
                     this.closeValueClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.attributeService
                 .updateValue(this.selectedValue.attributeValueId, this.selectedValue)
                 .subscribe(result => {
                     this.closeValueClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -165,7 +167,7 @@ export class AttributeComponent implements OnInit {
                         this.values.splice(this.selectedValueIndex, 1);
                         this.totalValues--;
                         this.closeValueClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

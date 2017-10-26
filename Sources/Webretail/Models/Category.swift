@@ -32,9 +32,11 @@ class Category: PostgresSqlORM, Codable {
         categoryId = this.data["categoryid"] as? Int ?? 0
         categoryName = this.data["categoryname"] as? String  ?? ""
         categoryIsPrimary = this.data["categoryisprimary"] as? Bool ?? true
-        let decoder = JSONDecoder()
-        let jsonData = try! JSONSerialization.data(withJSONObject: this.data["categorytranslates"]!, options: [])
-        categoryTranslates = try! decoder.decode([Translation].self, from: jsonData)
+        if let translates = this.data["categorytranslates"] {
+            let decoder = JSONDecoder()
+            let jsonData = try! JSONSerialization.data(withJSONObject: translates, options: [])
+            categoryTranslates = try! decoder.decode([Translation].self, from: jsonData)
+        }
         categoryCreated = this.data["categorycreated"] as? Int ?? 0
         categoryUpdated = this.data["categoryupdated"] as? Int ?? 0
     }

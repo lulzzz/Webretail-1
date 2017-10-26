@@ -30,8 +30,6 @@ class CategoryController {
     }
 
     func categoriesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getAll()
             try response.setJson(items)
@@ -42,8 +40,6 @@ class CategoryController {
     }
     
     func categoryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
@@ -55,8 +51,6 @@ class CategoryController {
     }
 
     func categoryHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Category = try request.getJson()
             try self.repository.add(item: item)
@@ -68,8 +62,6 @@ class CategoryController {
     }
 
     func categoryHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item: Category = try request.getJson()
@@ -82,8 +74,6 @@ class CategoryController {
     }
 
     func categoryHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             try self.repository.delete(id: Int(id)!)

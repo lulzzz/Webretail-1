@@ -30,8 +30,6 @@ class BrandController {
     }
 
     func brandsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getAll()
             try response.setJson(items)
@@ -42,8 +40,6 @@ class BrandController {
     }
     
     func brandHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
@@ -55,8 +51,6 @@ class BrandController {
     }
 
     func brandHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Brand = try request.getJson()
             try self.repository.add(item: item)
@@ -68,8 +62,6 @@ class BrandController {
     }
 
     func brandHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item: Brand = try request.getJson()
@@ -82,8 +74,6 @@ class BrandController {
     }
 
     func brandHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             try self.repository.delete(id: Int(id)!)

@@ -1,5 +1,6 @@
 ﻿import { Component, Input, EventEmitter, ViewChild } from '@angular/core';
 import { DataTable, SelectItem, MenuItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { Product, ProductCategory, ProductAttributeValue, ArticleForm, ArticleItem } from './models';
 import { Helpers } from './helpers';
 import { ProductService } from './../services/product.service';
@@ -24,7 +25,8 @@ export class ArticlePickerComponent {
     onPicked = new EventEmitter();
     public isOpen: boolean;
 
-    constructor(private productService: ProductService) {
+    constructor(private messageService: MessageService,
+                private productService: ProductService) {
         this.isOpen = false;
     }
 
@@ -37,7 +39,7 @@ export class ArticlePickerComponent {
                     this.products = result;
                     this.totalRecords = this.products.length;
                     this.buildFilter(result);
-                }, onerror => alert(onerror._body)
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
             );
         }
     }
@@ -47,7 +49,7 @@ export class ArticlePickerComponent {
     }
 
     pickerClick() {
-        let data: string[] = [];
+        const data: string[] = [];
         this.articleForm.body
             .forEach(p => p.forEach(e => {
                 if (e.data > 0) {
@@ -61,13 +63,13 @@ export class ArticlePickerComponent {
     buildFilter(items: Product[]) {
         this.brands = [];
         this.brands.push({label: 'All', value: null});
-        let filterBrands = Helpers.distinct(items.map((item: Product) => Helpers.newSelectItem(item.brand.brandName)));
+        const filterBrands = Helpers.distinct(items.map((item: Product) => Helpers.newSelectItem(item.brand.brandName)));
         this.brands = this.brands.concat(filterBrands);
 
         this.categories = [];
         this.categories.push({label: 'All', value: null});
-        let array = items.map((p: Product) => p.categories.map((c: ProductCategory) => c.category.categoryName)).join(',');
-        let filterCategories = Helpers.distinct(array.split(',').map((item: string) => Helpers.newSelectItem(item)));
+        const array = items.map((p: Product) => p.categories.map((c: ProductCategory) => c.category.categoryName)).join(',');
+        const filterCategories = Helpers.distinct(array.split(',').map((item: string) => Helpers.newSelectItem(item)));
         this.categories = this.categories.concat(filterCategories);
     }
 
@@ -85,7 +87,7 @@ export class ArticlePickerComponent {
         this.productService.getArticles(productId, '0')
             .subscribe(result => {
                 this.articleForm = result;
-            }, onerror => alert(onerror._body));
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         /*
         // or from client
         this.header = [];

@@ -2,6 +2,7 @@
 import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { Product, ProductCategory } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 import { SessionService } from './../services/session.service';
@@ -27,6 +28,7 @@ export class ProductsComponent implements OnInit {
     buttons: MenuItem[];
 
     constructor(private router: Router,
+                private messageService: MessageService,
                 private sessionService: SessionService,
                 private productService: ProductService,
                 private brandService: BrandService,
@@ -63,7 +65,7 @@ export class ProductsComponent implements OnInit {
             .subscribe(result => {
                 this.allbrands = result.map(p => Helpers.newSelectItem(p, p.brandName));
                 this.ums = Helpers.getUnitOfMeasure();
-            }, onerror => alert(onerror._body));
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
 
     }
 
@@ -93,7 +95,7 @@ export class ProductsComponent implements OnInit {
             .subscribe(result => {
                 this.products = result;
                 this.refreshControl();
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
@@ -136,15 +138,16 @@ export class ProductsComponent implements OnInit {
             this.productService.create(this.selected)
                 .subscribe(result => {
                     this.selected = result;
+                    this.products.push(this.selected);
                     this.totalRecords++;
                     this.openClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.productService.update(this.selected.productId, this.selected)
                 .subscribe(result => {
                     this.products[this.selectedIndex] = result;
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -157,7 +160,7 @@ export class ProductsComponent implements OnInit {
                         this.products.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

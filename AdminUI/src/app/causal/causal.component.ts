@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { CausalService } from './../services/causal.service';
 import { Causal } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'causal-component',
+    selector: 'app-causal-component',
     templateUrl: 'causal.component.html'
 })
 
@@ -19,7 +20,8 @@ export class CausalComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private causalService: CausalService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -46,7 +48,7 @@ export class CausalComponent implements OnInit {
             .subscribe(result => {
                 this.causals = result;
                 this.totalRecords = this.causals.length;
-            }, onerror => alert(onerror._body));
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
     }
 
     get isNew(): boolean { return this.selected == null || this.selected.causalId === 0; }
@@ -75,13 +77,13 @@ export class CausalComponent implements OnInit {
                     this.causals.push(result);
                     this.totalRecords++;
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.causalService
                 .update(this.selected.causalId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -95,7 +97,7 @@ export class CausalComponent implements OnInit {
                         this.causals.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

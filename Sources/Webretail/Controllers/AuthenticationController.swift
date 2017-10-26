@@ -24,8 +24,6 @@ public class AuthenticationController {
     }
 
     func loginHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         var resp = [String: String]()
         do {
             var credentials: Credentials
@@ -72,8 +70,6 @@ public class AuthenticationController {
     }
     
     func logoutHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		var resp = [String: String]()
 		do {
 			request.user.logout()
@@ -90,8 +86,6 @@ public class AuthenticationController {
 	}
 
 	func registerCustomerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         var resp = [String: String]()
         guard let email = request.param(name: "email"),
             let password = request.param(name: "password") else {
@@ -133,8 +127,6 @@ public class AuthenticationController {
     }
 
     func authenticatedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         var resp = [String: Any]()
         resp["authenticated"] = false
         do {

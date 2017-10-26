@@ -29,8 +29,6 @@ class StoreController {
     }
     
     func storesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getAll()
             try response.setJson(items)
@@ -41,8 +39,6 @@ class StoreController {
     }
     
     func storeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
@@ -54,8 +50,6 @@ class StoreController {
     }
     
     func storeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Store = try request.getJson()
             try self.repository.add(item: item)
@@ -67,8 +61,6 @@ class StoreController {
     }
     
     func storeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item: Store = try request.getJson()
@@ -81,8 +73,6 @@ class StoreController {
     }
     
     func storeHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             try self.repository.delete(id: Int(id)!)

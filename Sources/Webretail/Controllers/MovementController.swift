@@ -38,8 +38,6 @@ class MovementController {
     }
 
 	func movementPaymentsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let status = self.repository.getPayments()
 			try response.setJson(status)
@@ -50,8 +48,6 @@ class MovementController {
 	}
 	
 	func movementStatusHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let status = self.repository.getStatus()
 			try response.setJson(status)
@@ -62,8 +58,6 @@ class MovementController {
 	}
 
 	func movementsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
 			let items = try self.repository.getAll()
             try response.setJson(items)
@@ -74,8 +68,6 @@ class MovementController {
     }
 
 	func movementsSalesHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
            	let period: Period = try request.getJson()
 			let items = try self.repository.getSales(period: period)
@@ -87,8 +79,6 @@ class MovementController {
 	}
 	
 	func movementsReceiptedHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
             let period: Period = try request.getJson()
             let items = try self.repository.getReceipted(period: period)
@@ -100,8 +90,6 @@ class MovementController {
 	}
 	
 	func movementHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
 			let id = request.urlVariables["id"]!
             let item = try self.repository.get(id: Int(id)!)
@@ -113,8 +101,6 @@ class MovementController {
     }
     
 	func movementCustomerHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let id = request.urlVariables["id"]!
 			let items = try self.repository.get(customerId: Int(id)!)
@@ -126,8 +112,6 @@ class MovementController {
 	}
 	
 	func movementHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Movement = try request.getJson()
 			try self.repository.add(item: item)
@@ -148,8 +132,6 @@ class MovementController {
     }
     
 	func movementCloneHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let id = Int(request.urlVariables["id"]!)!
 			let item = try self.repository.clone(sourceId: id)
@@ -162,8 +144,6 @@ class MovementController {
 	}
 
 	func movementHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
 			let id = request.urlVariables["id"]!
             let item: Movement = try request.getJson()
@@ -177,8 +157,6 @@ class MovementController {
     }
     
     func movementHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
 		do {
 			let id = request.urlVariables["id"]!
             try self.repository.delete(id: Int(id)!)
@@ -189,8 +167,6 @@ class MovementController {
     }
 
     func movementFromHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-
         let date = request.urlVariables["date"]!
         do {
             if let apiKey = request.auth?.basic {

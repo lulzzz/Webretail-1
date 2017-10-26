@@ -1,11 +1,12 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { MovementArticle, Period } from './../shared/models';
 import { DateFilterPipe } from './../pipes/date-filter.pipe';
 
 @Component({
-    selector: 'reportsales-component',
+    selector: 'app-reportsales-component',
     templateUrl: 'sales.component.html'
 })
 
@@ -19,7 +20,8 @@ export class ReportSalesComponent implements OnInit {
     priceValue: number;
     amountValue: number;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private movementService: MovementService) {
         sessionService.title = 'Sales';
     }
@@ -66,7 +68,7 @@ export class ReportSalesComponent implements OnInit {
                 if (this.totalItems > 0) {
                     this.totalAmount = this.items.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
                 }
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 }

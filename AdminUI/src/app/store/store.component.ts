@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { StoreService } from './../services/store.service';
 import { Store } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'store-component',
+    selector: 'app-store-component',
     templateUrl: 'store.component.html'
 })
 
@@ -18,7 +19,8 @@ export class StoreComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private storeService: StoreService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -41,7 +43,7 @@ export class StoreComponent implements OnInit {
             .subscribe(result => {
                 this.stores = result;
                 this.totalRecords = this.stores.length;
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
@@ -71,13 +73,13 @@ export class StoreComponent implements OnInit {
                     this.stores.push(result);
                     this.totalRecords++;
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.storeService
                 .update(this.selected.storeId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -91,7 +93,7 @@ export class StoreComponent implements OnInit {
                         this.stores.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

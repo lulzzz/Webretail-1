@@ -31,15 +31,12 @@ class PdfController {
 
         routes.add(method: .post, uri: "/api/pdf", handler: pdfHandlerPOST)
         routes.add(method: .post, uri: "/api/pdf/email", handler: emailHandlerPOST)
-//        routes.add(method: .get, uri: "/api/pdf/movement/{id}", handler: PdfMovementHandlerGET)
-//        routes.add(method: .get, uri: "/api/pdf/invoice{id}", handler: PdfInvoiceHandlerGET)
 //        routes.add(method: .get, uri: "/api/pdf/barcode/{id}", handler: barcodeHandlerGET)
         
         return routes
     }
     
     func pdfHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
         do {
             let item: PdfDocument = try request.getJson()
             
@@ -57,7 +54,6 @@ class PdfController {
     }
     
     func emailHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
         do {
             let item: PdfDocument = try request.getJson()
             if item.address.isEmpty {
@@ -187,7 +183,6 @@ class PdfController {
                 response.completed()
             #endif
         } catch {
-            response.setHeader(.contentType, value: "application/json")
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
      }

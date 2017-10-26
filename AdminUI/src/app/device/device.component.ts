@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { DeviceService } from './../services/device.service';
 import { StoreService } from './../services/store.service';
@@ -8,7 +9,7 @@ import { Device, Store } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'device-component',
+    selector: 'app-device-component',
     templateUrl: 'device.component.html'
 })
 
@@ -20,7 +21,8 @@ export class DeviceComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private deviceService: DeviceService,
                 private storeService: StoreService,
                 private confirmationService: ConfirmationService,
@@ -43,14 +45,14 @@ export class DeviceComponent implements OnInit {
             .subscribe(result => {
                 this.items = result;
                 this.totalRecords = this.items.length;
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
 
         this.storeService.getAll()
             .subscribe(result => {
                 this.stores.push({label: '', value: null})
                 this.stores = this.stores.concat(result.map(p => Helpers.newSelectItem(p, p.storeName)));
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
@@ -99,13 +101,13 @@ export class DeviceComponent implements OnInit {
                     this.items.push(result);
                     this.totalRecords++;
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.deviceService
                 .update(this.selected.deviceId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -119,7 +121,7 @@ export class DeviceComponent implements OnInit {
                         this.items.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

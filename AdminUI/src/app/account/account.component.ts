@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { AccountService } from './../services/account.service';
 import { Account } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'account-component',
+    selector: 'app-account-component',
     templateUrl: 'account.component.html'
 })
 
@@ -18,7 +19,8 @@ export class AccountComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private accountService: AccountService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -41,7 +43,7 @@ export class AccountComponent implements OnInit {
             .subscribe(result => {
                 this.accounts = result;
                 this.totalRecords = this.accounts.length;
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
@@ -71,13 +73,13 @@ export class AccountComponent implements OnInit {
                     this.accounts.push(result);
                     this.totalRecords++;
                    this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.accountService
                 .update(this.selected.uniqueID, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -91,7 +93,7 @@ export class AccountComponent implements OnInit {
                         this.accounts.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

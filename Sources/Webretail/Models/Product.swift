@@ -63,11 +63,15 @@ class Product: PostgresSqlORM, Codable {
         productPurchasePrice = Double(this.data["productpurchaseprice"] as? Float ?? 0)
         
         let decoder = JSONDecoder()
-        var jsonData = try! JSONSerialization.data(withJSONObject: this.data["productmedias"]!, options: [])
-        productMedias = try! decoder.decode([Media].self, from: jsonData)
-        jsonData = try! JSONSerialization.data(withJSONObject: this.data["producttranslates"]!, options: [])
-        productTranslates = try! decoder.decode([Translation].self, from: jsonData)
-        
+        var jsonData: Data
+        if let medias = this.data["productmedias"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: medias, options: [])
+            productMedias = try! decoder.decode([Media].self, from: jsonData)
+        }
+        if let translates = this.data["producttranslates"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: translates, options: [])
+            productTranslates = try! decoder.decode([Translation].self, from: jsonData)
+        }
         productIsActive = this.data["productisactive"] as? Bool ?? false
         productIsValid = this.data["productisvalid"] as? Bool ?? false
         productCreated = this.data["productcreated"] as? Int ?? 0

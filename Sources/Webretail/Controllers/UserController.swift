@@ -29,8 +29,6 @@ class UserController {
     }
 
    func accountsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getAll()
             try response.setJson(items)
@@ -41,8 +39,6 @@ class UserController {
     }
 
     func accountHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: id)
@@ -54,8 +50,6 @@ class UserController {
     }
 
     func accountHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: User = try request.getJson()
             try self.repository.add(item: item)
@@ -67,8 +61,6 @@ class UserController {
     }
     
     func accountHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item: User = try request.getJson()
@@ -81,8 +73,6 @@ class UserController {
     }
     
     func accountHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             try self.repository.delete(id: id)

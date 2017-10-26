@@ -1,11 +1,12 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { AccountService } from './../services/account.service';
 import { Account } from './../shared/models';
 
 @Component({
-    selector: 'myinfo-component',
+    selector: 'app-myinfo-component',
     templateUrl: 'myinfo.component.html'
 })
 
@@ -13,7 +14,8 @@ export class MyInfoComponent implements OnInit {
     public myinfo: Account;
     dataform: FormGroup;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private accountService: AccountService,
                 private fb: FormBuilder) {
        sessionService.title = 'My Info';
@@ -26,7 +28,7 @@ export class MyInfoComponent implements OnInit {
                     .subscribe(account => {
                         this.myinfo = account;
                     });
-            }, onerror => alert(onerror));
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
 
         this.dataform = this.fb.group({
             'firstname': new FormControl('', Validators.required),

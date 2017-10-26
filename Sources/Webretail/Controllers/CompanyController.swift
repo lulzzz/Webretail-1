@@ -30,8 +30,6 @@ class CompanyController {
 	}
 	
 	func companyHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let item = try self.repository.get()
 			try response.setJson(item)
@@ -42,8 +40,6 @@ class CompanyController {
 	}
 	
 	func companyHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let item: Company = try request.getJson()
 			try self.repository.add(item: item)
@@ -55,8 +51,6 @@ class CompanyController {
 	}
 	
 	func companyHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
             let item: Company = try request.getJson()
             try self.repository.update(item: item)
@@ -68,8 +62,6 @@ class CompanyController {
 	}
 
 	func uploadHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-
 		do {
             let pathDir = "./webroot/Media"
             var isDir : ObjCBool = true

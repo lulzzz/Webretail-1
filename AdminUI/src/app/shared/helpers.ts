@@ -4,12 +4,12 @@ import { SelectItem, TreeNode } from 'primeng/primeng';
 export class Helpers {
 
     static distinct(a: any[]): any[] {
-        let seen: any = {};
-        let out: any[] = [];
-        let len = a.length;
+        const seen: any = {};
+        const out: any[] = [];
+        const len = a.length;
         let j = 0;
         for (let i = 0; i < len; i++) {
-            let item = a[i];
+            const item = a[i];
             if (seen[item.label] !== 1) {
                 seen[item.label] = 1;
                 out[j++] = item;
@@ -19,7 +19,7 @@ export class Helpers {
     }
 
     static getHeaders(): Headers {
-        let headers = new Headers();
+        const headers = new Headers();
         headers.append('Authorization', `Bearer ${localStorage.getItem('token')}`);
         headers.append('Content-Type', 'application/json');
         return headers;

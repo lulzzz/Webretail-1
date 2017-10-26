@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { BrandService } from './../services/brand.service';
 import { Brand } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'brand-component',
+    selector: 'app-brand-component',
     templateUrl: 'brand.component.html'
 })
 
@@ -18,7 +19,8 @@ export class BrandComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private brandService: BrandService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -37,7 +39,7 @@ export class BrandComponent implements OnInit {
             .subscribe(result => {
                 this.brands = result;
                 this.totalRecords = this.brands.length;
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
@@ -67,13 +69,13 @@ export class BrandComponent implements OnInit {
                     this.brands.push(result);
                     this.totalRecords++;
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.brandService
                 .update(this.selected.brandId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -87,7 +89,7 @@ export class BrandComponent implements OnInit {
                         this.brands.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

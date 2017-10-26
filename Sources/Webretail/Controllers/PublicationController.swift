@@ -29,8 +29,6 @@ class PublicationController {
     }
 
     func publicationsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getAll()
             try response.setJson(items)
@@ -41,8 +39,6 @@ class PublicationController {
     }
 
     func publicationHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
@@ -56,8 +52,6 @@ class PublicationController {
     }
 
     func publicationHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: Publication = try request.getJson()
             try self.repository.add(item: item)
@@ -69,8 +63,6 @@ class PublicationController {
     }
 
     func publicationHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item: Publication = try request.getJson()
@@ -83,8 +75,6 @@ class PublicationController {
     }
 
     func publicationHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             try self.repository.delete(id: Int(id)!)

@@ -1,11 +1,12 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { Movement, Period } from './../shared/models';
 import { DateFilterPipe } from './../pipes/date-filter.pipe';
 
 @Component({
-    selector: 'reportreceipts-component',
+    selector: 'app-reportreceipts-component',
     templateUrl: 'receipts.component.html'
 })
 
@@ -15,7 +16,8 @@ export class ReportReceiptsComponent implements OnInit {
     items: Movement[];
     private period: Period;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private movementService: MovementService) {
         sessionService.title = 'Receipts';
     }
@@ -65,7 +67,7 @@ export class ReportReceiptsComponent implements OnInit {
             .subscribe(result => {
                 this.items = result;
                 this.updateTotals();
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 }

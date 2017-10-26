@@ -30,8 +30,6 @@ class MovementArticleController {
     }
     
     func movementArticlesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
 			let id = request.urlVariables["id"]!
             let items = try self.movementRepository.get(movementId: Int(id)!)
@@ -43,8 +41,6 @@ class MovementArticleController {
     }
     
     func movementArticleHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
        	do {
             let item: MovementArticle = try request.getJson()
             let product = Product()
@@ -71,8 +67,6 @@ class MovementArticleController {
     }
     
     func movementArticleHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
 			let id = request.urlVariables["id"]!
             let item: MovementArticle = try request.getJson()
@@ -85,8 +79,6 @@ class MovementArticleController {
     }
     
     func movementArticleHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
 			let id = request.urlVariables["id"]!
             try self.movementRepository.delete(id: Int(id)!)

@@ -40,4 +40,23 @@ class ProductCategory: PostgresSqlORM, Codable {
         }
         return rows
     }
+
+    override init() {
+        super.init()
+    }
+    
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        productId = try container.decodeIfPresent(Int.self, forKey: .productId) ?? 0
+        _category = try container.decode(Category.self, forKey: ._category)
+        categoryId = _category.categoryId
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(productId, forKey: .productId)
+        try container.encode(_category, forKey: ._category)
+    }
 }

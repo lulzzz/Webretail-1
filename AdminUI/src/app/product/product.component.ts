@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { TreeNode, Message, MenuItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import {
     Product, ProductCategory, Category, ProductAttribute, Attribute,
     ProductAttributeValue, Article, ArticleAttributeValue, AttributeValue, ArticleForm
@@ -20,7 +21,6 @@ import { AttributeService } from './../services/attribute.service';
 export class ProductComponent implements OnInit, OnDestroy {
 
     private sub: any;
-    msgs: Message[] = [];
     buttons: MenuItem[];
     product: Product;
     articleForm: ArticleForm;
@@ -34,6 +34,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     isBusy: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
+                private messageService: MessageService,
                 private sessionService: SessionService,
                 private productService: ProductService,
                 private categoryService: CategoryService,
@@ -47,13 +48,11 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            const id = params['id'];
-            this.productService.getProduct(id)
+            const productId = Number(params['id']);
+            this.productService.getProduct(productId)
                 .subscribe(result => {
                     this.product = result;
-                    this.createTree();
-                    this.createSheet();
-                }, onerror => this.msgs.push({severity: 'error', summary: 'Get product', detail: onerror._body})
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Get product', detail: onerror._body})
             );
         });
 
@@ -79,7 +78,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     createTree() {
         const rootNode = Helpers.newNode(this.product.productName, this.product.productCode, 'product');
-        rootNode.expanded = this.product.articles.length === 0;
+        rootNode.expanded = true; // this.product.articles.length === 0;
 
         // let producerNode = Helpers.newNode('Brand', '[]', 'brands');
         // producerNode.expanded = true;
@@ -106,7 +105,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                     'attributeValue')
                 )
             );
-            node.expanded = node.children.length > 0;
+            node.expanded = false; // node.children.length > 0;
             attributesNode.children.push(node);
         });
         attributesNode.expanded = attributesNode.children.length > 0;
@@ -120,12 +119,12 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.productService.getArticles(this.product.productId, '0')
             .subscribe(result => {
                 this.articleForm = result;
-            }, onerror => alert(onerror._body));
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
     }
 
     editClick() {
         if (!this.selectedNode) {
-            this.msgs.push({severity: 'warn', summary: 'Warning', detail: 'A node must be selected before editing!'});
+            this.messageService.add({severity: 'warn', summary: 'Warning', detail: 'A node must be selected before editing!'});
             return;
         }
 
@@ -142,7 +141,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                                 this.nodesSource.push(Helpers.newNode(p.categoryName, p.categoryId.toString(), 'category'));
                             }
                         });
-                    }, onerror => this.msgs.push({severity: 'error', summary: 'Get categories', detail: onerror._body}));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Get categories', detail: onerror._body}));
                 break;
             case 'attributes':
                 this.nodesTarget = this.productInfo[0].children.find(p => p.type === 'attributes').children;
@@ -153,7 +152,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                                 this.nodesSource.push(Helpers.newNode(p.attributeName, p.attributeId.toString(), 'attribute:0'));
                             }
                         });
-                    }, onerror => this.msgs.push({severity: 'error', summary: 'Get attributes', detail: onerror._body}));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Get attributes', detail: onerror._body}));
                 break;
             case (type.startsWith('attribute:') ? type : undefined):
                 this.nodesTarget = this.productInfo[0].children.find(p => p.type === 'attributes')
@@ -167,10 +166,11 @@ export class ProductComponent implements OnInit, OnDestroy {
                                     p.attributeValueName, p.attributeValueId.toString(), 'attributeValue'));
                             }
                         });
-                    }, onerror => this.msgs.push({severity: 'error', summary: 'Get values by attributeId', detail: onerror._body}));
+                    },
+                    onerror => this.messageService.add({severity: 'error', summary: 'Get values by attributeId', detail: onerror._body}));
                 break;
             default:
-                this.msgs.push({severity: 'warn', summary: 'warning', detail: 'You can not update anything to this node!'});
+                this.messageService.add({severity: 'warn', summary: 'warning', detail: 'You can not update anything to this node!'});
                 return;
         }
 
@@ -188,21 +188,21 @@ export class ProductComponent implements OnInit, OnDestroy {
                 case 'category':
                     const productCategory = <ProductCategory>{
                         productId: this.product.productId,
-                        category: new Category(p.data, p.label)
+                        category: new Category(Number(p.data), p.label)
                     };
                     productCategories.push(productCategory);
                     break;
                 case (p.type.startsWith('attribute:') ? p.type : undefined):
                     const productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
-                        attribute: new Attribute(p.data, p.label, [])
+                        attribute: new Attribute(Number(p.data), p.label, [])
                     };
                     productAttributes.push(productAttribute);
                     break;
                 case 'attributeValue':
                     const productAttributeValue = <ProductAttributeValue>{
                         productAttributeId: Number(this.selectedNode.type.split(':')[1]),
-                        attributeValue: new AttributeValue(0, p.data, '', p.label, [])
+                        attributeValue: new AttributeValue(0, Number(p.data), '', p.label, [])
                     };
                     productAttributeValues.push(productAttributeValue);
                     break;
@@ -212,11 +212,11 @@ export class ProductComponent implements OnInit, OnDestroy {
         if (productCategories.length > 0) {
             this.productService
                 .addCategories(productCategories)
-                .subscribe(result => this.msgs.push({
+                .subscribe(result => this.messageService.add({
                         severity: 'success',
                         summary: 'Success',
                         detail: 'Added ' + result.length + ' categories'
-                    }), onerror => this.msgs.push({severity: 'error', summary: 'Add categories', detail: onerror._body}));
+                    }), onerror => this.messageService.add({severity: 'error', summary: 'Add categories', detail: onerror._body}));
         } else if (productAttributes.length > 0) {
             this.productService
                 .addAttributes(productAttributes)
@@ -224,20 +224,20 @@ export class ProductComponent implements OnInit, OnDestroy {
                     result.forEach((p, i) => {
                         this.nodesTarget[i].type = `attribute:${p.productAttributeId}`;
                     });
-                    this.msgs.push({
+                    this.messageService.add({
                         severity: 'success',
                         summary: 'Success',
                         detail: 'Added ' + result.length + ' attributes'
                     });
-                }, onerror => this.msgs.push({severity: 'error', summary: 'Add attributes', detail: onerror._body}));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Add attributes', detail: onerror._body}));
         } else if (productAttributeValues.length > 0) {
             this.productService
                 .addAttributeValues(productAttributeValues)
-                .subscribe(result => this.msgs.push({
+                .subscribe(result => this.messageService.add({
                         severity: 'success',
                         summary: 'Success',
                         detail: 'Added ' + result.length + ' attribute values'
-                    }), onerror => this.msgs.push({severity: 'error', summary: 'Add attribute values', detail: onerror._body}));
+                    }), onerror => this.messageService.add({severity: 'error', summary: 'Add attribute values', detail: onerror._body}));
         }
     }
 
@@ -252,21 +252,21 @@ export class ProductComponent implements OnInit, OnDestroy {
                 case 'category':
                     const productCategory = <ProductCategory>{
                         productId: this.product.productId,
-                        category: new Category(p.data, p.label)
+                        category: new Category(Number(p.data), p.label)
                     };
                     productCategories.push(productCategory);
                     break;
                 case (p.type.startsWith('attribute:') ? p.type : undefined):
                     const productAttribute = <ProductAttribute>{
                         productId: this.product.productId,
-                        attribute: new Attribute(p.data, p.label, [])
+                        attribute: new Attribute(Number(p.data), p.label, [])
                     };
                     productAttributes.push(productAttribute);
                     break;
                 case 'attributeValue':
                     const productAttributeValue = <ProductAttributeValue>{
                         productAttributeId: Number(this.selectedNode.type.split(':')[1]),
-                        attributeValue: new AttributeValue(0, p.data, '', p.label, [])
+                        attributeValue: new AttributeValue(0, Number(p.data), '', p.label, [])
                     };
                     productAttributeValues.push(productAttributeValue);
                     break;
@@ -276,29 +276,29 @@ export class ProductComponent implements OnInit, OnDestroy {
         if (productCategories.length > 0) {
             this.productService
                 .removeCategories(productCategories)
-                .subscribe(result => this.msgs.push({
+                .subscribe(result => this.messageService.add({
                         severity: 'success',
                         summary: 'Success',
-                        detail: 'Removed ' + result.length + ' categories'
-                    }), onerror => this.msgs.push({severity: 'error', summary: 'Remove categories', detail: onerror._body}));
+                        detail: 'Removed ' + productCategories.length + ' categories'
+                    }), onerror => this.messageService.add({severity: 'error', summary: 'Remove categories', detail: onerror._body}));
         } else if (productAttributes.length > 0) {
             this.productService
                 .removeAttributes(productAttributes)
                 .subscribe(result => {
-                    this.msgs.push({
+                    this.messageService.add({
                         severity: 'success',
                         summary: 'Success',
-                        detail: 'Removed ' + result.length + ' attributes'
+                        detail: 'Removed ' + productAttributes.length + ' attributes'
                     });
-                }, onerror => this.msgs.push({severity: 'error', summary: 'Remove attributes', detail: onerror._body}));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Remove attributes', detail: onerror._body}));
         } else if (productAttributeValues.length > 0) {
             this.productService
                 .removeAttributeValues(productAttributeValues)
-                .subscribe(result => this.msgs.push({
+                .subscribe(result => this.messageService.add({
                         severity: 'success',
                         summary: 'Success',
-                        detail: 'Removed ' + result.length + ' attribute values'
-                    }), onerror => this.msgs.push({severity: 'error', summary: 'Remove attribute Values', detail: onerror._body}));
+                        detail: 'Removed ' + productAttributeValues.length + ' attribute values'
+                    }), onerror => this.messageService.add({severity: 'error', summary: 'Remove attribute Values', detail: onerror._body}));
         }
     }
 
@@ -312,7 +312,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                         this.productInfo[0].expanded = false;
                         this.createSheet();
                         this.isBusy = false;
-                        this.msgs.push({
+                        this.messageService.add({
                             severity: 'success',
                             summary: 'Articles build',
                             detail: 'Totals: added ' + result.added + ' updated ' + result.updated + ' deleted ' + result.deleted
@@ -321,7 +321,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                 );
             }, onerror => {
                 this.isBusy = false;
-                this.msgs.push({
+                this.messageService.add({
                     severity: 'error',
                     summary: 'Articles build',
                     detail: onerror._body
@@ -347,7 +347,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                                 count++;
                                 if (result.articleBarcode === barcode) {
                                     this.isBusy = false;
-                                    this.msgs.push({
+                                    this.messageService.add({
                                         severity: 'success',
                                         summary: 'Save barcodes',
                                         detail: count + ' barcodes successfully saved!'

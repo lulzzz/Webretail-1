@@ -2,6 +2,7 @@
 import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { InvoiceService } from './../services/invoice.service';
 import { CustomerService } from './../services/customer.service';
@@ -9,7 +10,7 @@ import { Invoice } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'invoices-component',
+    selector: 'app-invoices-component',
     templateUrl: 'invoices.component.html'
 })
 
@@ -28,6 +29,7 @@ export class InvoicesComponent implements OnInit {
     amountValue: number;
 
     constructor(private router: Router,
+                private messageService: MessageService,
                 private sessionService: SessionService,
                 private invoiceService: InvoiceService,
                 private customerService: CustomerService,
@@ -109,14 +111,14 @@ export class InvoicesComponent implements OnInit {
                     this.selected = result;
                     this.totalRecords++;
                     this.openClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.invoiceService.update(this.selected.invoiceId, this.selected)
                 .subscribe(result => {
                     this.items[this.selectedIndex] = result;
                     this.closeClick();
                 }, onerror => {
-                    alert(onerror._body);
+                    this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body});
                 });
         }
     }
@@ -134,7 +136,7 @@ export class InvoicesComponent implements OnInit {
                         this.items.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

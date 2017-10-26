@@ -1,22 +1,22 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Message } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { CompanyService } from './../services/company.service';
 import { Company } from './../shared/models';
 
 @Component({
-    selector: 'company-component',
+    selector: 'app-company-component',
     templateUrl: 'company.component.html'
 })
 
 export class CompanyComponent implements OnInit {
-    msgs: Message[] = [];
     company: Company;
     dataform: FormGroup;
     header: string;
 
     constructor(private sessionService: SessionService,
+                private messageService: MessageService,
                 private companyService: CompanyService,
                 private fb: FormBuilder) {
        sessionService.title = 'Company';
@@ -48,7 +48,7 @@ export class CompanyComponent implements OnInit {
         this.companyService.get()
             .subscribe(result => {
                 this.company = result;
-            }, onerror => this.msgs.push({severity: 'error', summary: 'Get company', detail: onerror._body})
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Get company', detail: onerror._body})
         );
     }
 
@@ -59,14 +59,14 @@ export class CompanyComponent implements OnInit {
             this.companyService
                 .create(this.company)
                 .subscribe(result => {
-                    this.msgs.push({severity: 'success', summary: 'Success', detail: 'Company created'});
-                }, onerror => this.msgs.push({severity: 'error', summary: 'Create company', detail: onerror._body}));
+                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Company created'});
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Create company', detail: onerror._body}));
         } else {
             this.companyService
                 .update(this.company)
                 .subscribe(result => {
-                    this.msgs.push({severity: 'success', summary: 'Success', detail: 'Company updated'});
-                }, onerror => this.msgs.push({severity: 'error', summary: 'Update company', detail: onerror._body}));
+                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Company updated'});
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Update company', detail: onerror._body}));
         }
     }
 
@@ -74,8 +74,7 @@ export class CompanyComponent implements OnInit {
         this.header = '';
         // for(let file of event.files) {
         // }
-        this.msgs = [];
-        this.msgs.push({severity: 'info', summary: 'File Uploaded', detail: ''});
+        this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
         this.header = '/Media/header.png?' + Date().length
     }
 }

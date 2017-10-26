@@ -2,6 +2,7 @@
 import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { StoreService } from './../services/store.service';
 import { CausalService } from './../services/causal.service';
@@ -41,6 +42,7 @@ export class MovementsComponent implements OnInit {
 
     constructor(private router: Router,
                 private sessionService: SessionService,
+                private messageService: MessageService,
                 private storeService: StoreService,
                 private causalService: CausalService,
                 private customerService: CustomerService,
@@ -169,7 +171,7 @@ export class MovementsComponent implements OnInit {
             .getAll()
             .subscribe(result => {
                 this.items = result;
-             }, onerror => alert(onerror)
+             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
@@ -227,9 +229,10 @@ export class MovementsComponent implements OnInit {
             this.movementService.create(this.selected)
                 .subscribe(result => {
                     this.selected = result;
+                    this.items.push(this.selected);
                     this.totalRecords++;
                     this.openClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.movementService.update(this.selected.movementId, this.selected)
                 .subscribe(result => {
@@ -237,7 +240,7 @@ export class MovementsComponent implements OnInit {
                     this.closeClick();
                 }, onerror => {
                     this.selected.movementStatus = this.currentStatus;
-                    alert(onerror._body);
+                    this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body});
                 });
         }
     }
@@ -255,7 +258,7 @@ export class MovementsComponent implements OnInit {
                         this.items.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }
@@ -273,7 +276,7 @@ export class MovementsComponent implements OnInit {
                         this.selected = result;
                         this.items.push(this.selected);
                         this.editClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

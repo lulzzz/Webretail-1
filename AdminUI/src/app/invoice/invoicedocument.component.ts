@@ -2,6 +2,7 @@
 import { DOCUMENT } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { CompanyService } from './../services/company.service';
 import { InvoiceService } from './../services/invoice.service';
@@ -27,6 +28,7 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
     constructor(@Inject(DOCUMENT) private document: any,
                 private location: Location,
                 private activatedRoute: ActivatedRoute,
+                private messageService: MessageService,
                 private sessionService: SessionService,
                 private companyService: CompanyService,
                 private invoiceService: InvoiceService) {
@@ -44,7 +46,7 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
             this.invoiceService.getById(this.invoiceId)
                 .subscribe(result => {
                     this.invoice = result;
-                }, onerror => alert(onerror._body)
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
             );
 
             this.invoiceService.getMovementArticlesById(this.invoiceId)
@@ -76,7 +78,7 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
                         this.total = result.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
                         this.amount = this.total * 100 / 122;
                     },
-                    onerror => alert(onerror._body),
+                    onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}),
                     () => this.isBusy = false
                 );
         });
@@ -113,7 +115,8 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     const reader = new FileReader();
-                    reader.addEventListener('loadend', (e) => alert(reader.result));
+                    reader.addEventListener('loadend', (e) =>
+                        this.messageService.add({severity: 'error', summary: 'Error', detail: reader.result}));
                     reader.readAsText(err._body);
                 },
                 () => this.isBusy = false
@@ -131,8 +134,8 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
 
         this.companyService.sendMail(model)
             .subscribe(
-                result => alert(result.content),
-                onerror => alert(onerror._body),
+                result => this.messageService.add({severity: 'success', summary: 'Success', detail: result.content}),
+                onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}),
                 () => this.isBusy = false
             );
     }

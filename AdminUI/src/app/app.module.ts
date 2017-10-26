@@ -16,6 +16,7 @@ import {
     FileUploadModule, ChartModule, CarouselModule,
     SpinnerModule, StepsModule
 } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { NgxBarcodeModule } from 'ngx-barcode';
 
 import { AppRoutes } from './app.routes';
@@ -140,6 +141,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ImportComponent
     ],
     providers: [
+        MessageService,
         SessionService,
         CompanyService,
         AccountService,

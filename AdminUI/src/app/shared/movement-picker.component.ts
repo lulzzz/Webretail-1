@@ -1,5 +1,6 @@
 ﻿import { Component, Input, EventEmitter, ViewChild } from '@angular/core';
 import { DataTable, SelectItem, MenuItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { Movement } from './models';
 import { Helpers } from './helpers';
 import { MovementService } from './../services/movement.service';
@@ -24,7 +25,8 @@ export class MovementPickerComponent {
     dateFinishValue: Date;
     public isOpen: boolean;
 
-    constructor(private movementService: MovementService) {
+    constructor(private messageService: MessageService,
+                private movementService: MovementService) {
         this.isOpen = false;
     }
 
@@ -37,7 +39,7 @@ export class MovementPickerComponent {
                     this.movements = result;
                     this.totalRecords = this.movements.length;
                     this.buildFilter(result);
-                }, onerror => alert(onerror._body)
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
             );
         }
     }
@@ -47,7 +49,7 @@ export class MovementPickerComponent {
     }
 
     pickerClick() {
-        let data: number[] = [];
+        const data: number[] = [];
         this.selected.forEach(e => data.push(e.movementId));
         this.onPicked.emit(data);
         this.isOpen = false;
@@ -56,12 +58,12 @@ export class MovementPickerComponent {
     buildFilter(items: Movement[]) {
         this.storesFiltered = [];
         this.storesFiltered.push({label: 'All', value: null});
-        let filterStores = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStore.storeName)));
+        const filterStores = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementStore.storeName)));
         this.storesFiltered = this.storesFiltered.concat(filterStores);
 
         this.causalsFiltered = [];
         this.causalsFiltered.push({label: 'All', value: null});
-        let filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCausal.causalName)));
+        const filterCusals = Helpers.distinct(items.map((item: Movement) => Helpers.newSelectItem(item.movementCausal.causalName)));
         this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
     }
 }

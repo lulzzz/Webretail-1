@@ -1,40 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Message } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { Login } from './../shared/models';
 
 @Component({
-    selector: 'login-component',
+	selector: 'app-login-component',
 	templateUrl: 'login.component.html'
 })
 
 export class LoginComponent implements OnInit {
 	userform: FormGroup;
 	public user = new Login('', '');
-    public msgs: Message[] = [];
 
 	constructor(
+		private messageService: MessageService,
 		private sessionService: SessionService,
 		private fb: FormBuilder) {
 		sessionService.title = 'Login';
-    }
+	}
 
 	ngOnInit() {
-        this.userform = this.fb.group({
-            'username': new FormControl('', Validators.required),
-            'password': new FormControl('', Validators.required)
-        });
-    }
+		this.userform = this.fb.group({
+			'username': new FormControl('', Validators.required),
+			'password': new FormControl('', Validators.required)
+		});
+	}
 
 	login() {
-    	this.sessionService.login(this.user)
-    		.subscribe(result => {
+		this.sessionService.login(this.user)
+			.subscribe(result => {
 				if (result.login === 'ok') {
-		    		this.sessionService.grantCredentials(result);
-		    	} else {
-		    		this.msgs.push({severity: 'warn', summary: 'Authentication', detail: result.error});
+					this.sessionService.grantCredentials(result);
+				} else {
+					this.messageService.add({ severity: 'warn', summary: 'Authentication', detail: result.error });
 				}
-			}, error => this.msgs.push({severity: 'error', summary: 'Authentication', detail: error}));
-    }
+			}, error => this.messageService.add({ severity: 'error', summary: 'Authentication', detail: error }));
+	}
 }

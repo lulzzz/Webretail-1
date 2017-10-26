@@ -34,8 +34,6 @@ class InvoiceController {
 	}
 	
 	func invoicePaymentsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let items = self.repository.getPayments()
 			try response.setJson(items)
@@ -46,8 +44,6 @@ class InvoiceController {
 	}
 	
 	func invoicesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let items = try self.repository.getAll()
 			try response.setJson(items)
@@ -58,8 +54,6 @@ class InvoiceController {
 	}
 	
 	func invoiceHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			let item = try self.repository.get(id: Int(id)!)
@@ -71,8 +65,6 @@ class InvoiceController {
 	}
 	
 	func invoiceHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		do {
 			let item: Invoice = try request.getJson()
 			try self.repository.add(item: item)
@@ -84,8 +76,6 @@ class InvoiceController {
 	}
 	
 	func invoiceHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
             let item: Invoice = try request.getJson()
@@ -98,8 +88,6 @@ class InvoiceController {
 	}
 	
 	func invoiceHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			try self.repository.delete(id: Int(id)!)
@@ -110,8 +98,6 @@ class InvoiceController {
 	}
 	
 	func invoiceMovementHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			let items = try self.repository.getMovements(invoiceId: Int(id)!)
@@ -123,8 +109,6 @@ class InvoiceController {
 	}
 	
 	func invoiceMovementArticleHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			let items = try self.repository.getMovementArticles(invoiceId: Int(id)!)
@@ -136,13 +120,12 @@ class InvoiceController {
 	}
 	
 	func invoiceMovementHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
-			let data = try request.postBodyString?.jsonDecode() as? [String:Any]
-			try self.repository.addMovement(invoiceId: Int(id)!, id: Int(data?["value"] as! String)!)
-			try response.setJson(id)
+            let data = try request.postBodyString?.jsonDecode() as? [String:Any]
+            let value = Int(data?["value"] as! String)!
+			try self.repository.addMovement(invoiceId: Int(id)!, id: value)
+            try response.setBody(json: data)
 			response.completed(status: .created)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -150,8 +133,6 @@ class InvoiceController {
 	}
 	
 	func invoiceMovementHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-		response.setHeader(.contentType, value: "application/json")
-		
 		let id = request.urlVariables["id"]!
 		do {
 			try self.repository.removeMovement(id: Int(id)!)

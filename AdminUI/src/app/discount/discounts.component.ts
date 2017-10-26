@@ -2,13 +2,14 @@
 import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { DiscountService } from './../services/discount.service';
 import { Discount } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'discounts-component',
+    selector: 'app-discounts-component',
     templateUrl: 'discounts.component.html'
 })
 
@@ -23,6 +24,7 @@ export class DiscountsComponent implements OnInit {
     sliderValue: number;
 
     constructor(private router: Router,
+                private messageService: MessageService,
                 private sessionService: SessionService,
                 private discountService: DiscountService,
                 private confirmationService: ConfirmationService,
@@ -78,14 +80,14 @@ export class DiscountsComponent implements OnInit {
                     this.selected = result;
                     this.totalRecords++;
                     this.openClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.discountService.update(this.selected.discountId, this.selected)
                 .subscribe(result => {
                     this.items[this.selectedIndex] = result;
                     this.closeClick();
                 }, onerror => {
-                    alert(onerror._body);
+                    this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body});
                 });
         }
     }
@@ -103,7 +105,7 @@ export class DiscountsComponent implements OnInit {
                         this.items.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

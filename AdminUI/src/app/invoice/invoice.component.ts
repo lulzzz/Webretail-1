@@ -2,6 +2,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { InvoiceService } from './../services/invoice.service';
 import { Invoice, Movement } from './../shared/models';
@@ -9,7 +10,7 @@ import { Helpers } from './../shared/helpers';
 import { MovementPickerComponent } from './../shared/movement-picker.component';
 
 @Component({
-    selector: 'invoice-component',
+    selector: 'app-invoice-component',
     templateUrl: 'invoice.component.html'
 })
 
@@ -31,7 +32,8 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     dateFinishValue: Date;
     amountValue: number;
 
-    constructor(private activatedRoute: ActivatedRoute,
+    constructor(private messageService: MessageService,
+                private activatedRoute: ActivatedRoute,
                 private sessionService: SessionService,
                 private invoiceService: InvoiceService,
                 private confirmationService: ConfirmationService,
@@ -50,14 +52,14 @@ export class InvoiceComponent implements OnInit, OnDestroy {
             this.invoiceService.getById(this.invoiceId)
                 .subscribe(result => {
                     this.item = result;
-                }, onerror => alert(onerror._body)
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
             );
             this.invoiceService.getMovementsById(this.invoiceId)
                 .subscribe(result => {
                     this.items = result;
                     this.updateTotals();
                     this.buildFilter(this.items);
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         });
     }
 
@@ -96,7 +98,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                                             this.items = res;
                                             this.updateTotals();
                                        });
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         });
     }
 
@@ -110,7 +112,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(p), 1);
                             this.reloadData();
-                        }, onerror => alert(onerror._body));
+                        }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
                 });
             }
         });

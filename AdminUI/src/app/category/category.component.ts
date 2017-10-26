@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { CategoryService } from './../services/category.service';
 import { Category } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'category-component',
+    selector: 'app-category-component',
     templateUrl: 'category.component.html'
 })
 
@@ -18,7 +19,8 @@ export class CategoryComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private categoryService: CategoryService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -38,7 +40,7 @@ export class CategoryComponent implements OnInit {
             .subscribe(result => {
                 this.categories = result;
                 this.totalRecords = this.categories.length;
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
@@ -68,13 +70,13 @@ export class CategoryComponent implements OnInit {
                     this.categories.push(result);
                     this.totalRecords++;
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.categoryService
                 .update(this.selected.categoryId, this.selected)
                 .subscribe(result => {
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -88,7 +90,7 @@ export class CategoryComponent implements OnInit {
                         this.categories.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

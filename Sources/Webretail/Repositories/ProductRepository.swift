@@ -336,6 +336,7 @@ struct ProductRepository : ProductProtocol {
     }
 
     func addCategory(item: ProductCategory) throws {
+        //item.categoryId = item._category.categoryId
         try item.save {
             id in item.productCategoryId = id as! Int
         }

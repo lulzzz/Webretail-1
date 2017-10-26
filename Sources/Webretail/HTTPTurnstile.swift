@@ -22,7 +22,7 @@ extension HTTPResponse {
     public func badRequest(error: String) {
 		LogFile.error(error)
 		self.status = .badRequest
-        //self.setHeader(.contentType, value: "text/html")
+        self.setHeader(.contentType, value: "text/html")
         self.appendBody(string: error)
         self.completed()
     }
@@ -30,7 +30,7 @@ extension HTTPResponse {
     public func setJson<T>(_ json: T) throws where T:Codable {
         let encoder = JSONEncoder()
         let data = try! encoder.encode(json)
-        //self.setHeader(.contentType, value: "application/json")
+        self.setHeader(.contentType, value: "application/json")
         self.appendBody(string: String(data: data, encoding: .utf8)!)
     }
 }

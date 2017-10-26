@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { SelectItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import {
     Product, ProductCategory, Category, ProductAttribute, Attribute,
     ProductAttributeValue, Article, ArticleAttributeValue, AttributeValue, ArticleForm
@@ -27,6 +28,7 @@ export class StockComponent implements OnInit, OnDestroy {
     isBusy: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
+                private messageService: MessageService,
                 private sessionService: SessionService,
                 private productService: ProductService,
                 private storeService: StoreService,
@@ -41,20 +43,16 @@ export class StockComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            const id = params['id'];
-            this.productService.getProduct(id)
-                .subscribe(result => {
-                    this.product = result;
-                    this.totalRecords = this.product.articles.length;
-                    this.createSheet('0');
-                }, onerror => alert(onerror._body)
-            );
+            const productId = Number(params['id']);
+            this.product = this.productService.products.find(p => p.productId === productId);
+            this.totalRecords = this.product.articles.length;
+            this.createSheet('0');
         });
 
         this.storeService.getAll()
             .subscribe(result => {
                 this.stores = result.map(p => Helpers.newSelectItem(p.storeId, p.storeName));
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
@@ -84,7 +82,7 @@ export class StockComponent implements OnInit, OnDestroy {
                     });
                 });
                 this.isBusy = false;
-            }, onerror => alert(onerror._body));
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
     }
 
     onStoreChanged(event: any) {

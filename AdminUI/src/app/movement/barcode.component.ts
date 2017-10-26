@@ -2,6 +2,7 @@
 import { DOCUMENT } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { CompanyService } from './../services/company.service';
@@ -23,6 +24,7 @@ export class BarcodeComponent implements OnInit, OnDestroy {
     constructor(@Inject(DOCUMENT) private document: any,
                 private location: Location,
                 private activatedRoute: ActivatedRoute,
+                private messageService: MessageService,
                 private sessionService: SessionService,
                 private companyService: CompanyService,
                 private movementService: MovementService) {
@@ -34,7 +36,7 @@ export class BarcodeComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
-            this.movementId = params['id'];
+            this.movementId = Number(params['id']);
             this.isBusy = true;
 
             this.movementService.getItemsById(this.movementId)
@@ -42,7 +44,7 @@ export class BarcodeComponent implements OnInit, OnDestroy {
                     result => {
                         this.loadBarcode(result);
                     },
-                    onerror => alert(onerror._body),
+                    onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}),
                     () => this.isBusy = false
             );
         });

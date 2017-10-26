@@ -2,6 +2,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { MovementService } from './../services/movement.service';
 import { Movement, MovementArticle } from './../shared/models';
@@ -9,7 +10,7 @@ import { Helpers } from './../shared/helpers';
 import { ArticlePickerComponent } from './../shared/article-picker.component';
 
 @Component({
-    selector: 'movement-component',
+    selector: 'app-movement-component',
     templateUrl: 'movement.component.html'
 })
 
@@ -30,6 +31,7 @@ export class MovementComponent implements OnInit, OnDestroy {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private sessionService: SessionService,
+                private messageService: MessageService,
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService,
                 private location: Location) {
@@ -43,17 +45,14 @@ export class MovementComponent implements OnInit, OnDestroy {
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.movementId = Number(params['id']);
-            this.movementService.getById(this.movementId)
-                .subscribe(result => {
-                    this.item = result;
-                    this.committed = result.movementStatus !== 'New';
-                }, onerror => alert(onerror._body)
-            );
+            this.item = this.movementService.movements.find(p => p.movementId === this.movementId);
+            this.committed = this.item.movementStatus !== 'New';
+
             this.movementService.getItemsById(this.movementId)
                 .subscribe(result => {
                     this.items = result;
                     this.updateTotals();
-                }, onerror => alert(onerror._body)
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
             );
         });
     }
@@ -86,13 +85,14 @@ export class MovementComponent implements OnInit, OnDestroy {
         this.totalRecords = this.items.length;
         this.totalItems = this.items.map(p => p.movementArticleQuantity).reduce((sum, current) => sum + current);
         this.totalAmount = this.items.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
+        this.item.movementAmount = this.totalAmount;
     }
 
     addBarcode() {
         this.barcodes.forEach(data => {
-            let array = data.split('#');
-            let barcode = array[0];
-            let quantity = array.length === 2 ? Number(array[1]) : 1.0;
+            const array = data.split('#');
+            const barcode = array[0];
+            const quantity = array.length === 2 ? Number(array[1]) : 1.0;
             let newItem = this.items.find(p => p.movementArticleBarcode === barcode);
             if (newItem) {
                 newItem.movementArticleQuantity += quantity;
@@ -101,20 +101,22 @@ export class MovementComponent implements OnInit, OnDestroy {
                     .subscribe(result => {
                         this.barcodes.splice(this.barcodes.indexOf(data), 1);
                         this.updateTotals();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             } else {
                 newItem = new MovementArticle();
                 newItem.movementId = this.movementId;
                 newItem.movementArticleBarcode = barcode;
                 newItem.movementArticleQuantity = quantity;
-                let price = this.item.movementCausal.causalQuantity > 0 ? 'purchase' : this.item.movementCausal.causalQuantity < 0 ? 'selling' : 'none';
+                const price = this.item.movementCausal.causalQuantity > 0
+                    ? 'purchase'
+                    : this.item.movementCausal.causalQuantity < 0 ? 'selling' : 'none';
                 this.movementService
                     .createItem(newItem, price)
                     .subscribe(result => {
                         this.items.push(result);
                         this.barcodes.splice(this.barcodes.indexOf(data), 1);
                         this.reloadData();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }
@@ -139,7 +141,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                         .subscribe(result => {
                             this.items.splice(this.items.indexOf(data), 1);
                             this.reloadData();
-                        }, onerror => alert(onerror._body));
+                        }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
                 }
             });
         } else {
@@ -148,7 +150,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     data.movementArticleAmount = result.movementArticleAmount;
                     this.updateTotals();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -160,7 +162,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                 this.movementService.update(this.item.movementId, this.item)
                     .subscribe(result => {
                         this.cancelClick();
-                    }, onerror => alert(onerror._body)
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
                 );
             }
         });

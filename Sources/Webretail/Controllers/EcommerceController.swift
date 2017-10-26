@@ -43,8 +43,6 @@ class EcommerceController {
     /// Public Api
 
     func ecommerceHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getPublished()
             try response.setJson(items)
@@ -55,8 +53,6 @@ class EcommerceController {
     }
     
     func ecommerceCategoriesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getCategories()
             try response.setJson(items)
@@ -67,8 +63,6 @@ class EcommerceController {
     }
     
     func ecommerceFeaturedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getFeatured()
             try response.setJson(items)
@@ -79,8 +73,6 @@ class EcommerceController {
     }
     
     func ecommerceCategoryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let items = try self.repository.getPublished(categoryId: Int(id)!)
@@ -94,33 +86,24 @@ class EcommerceController {
     /// Customer Api
 
     func ecommerceCustomerHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
     }
     func ecommerceCustomerHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
     }
     func ecommerceCustomerHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
     }
 
     func ecommerceBasketHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
     }
     func ecommerceBasketHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
     }
     func ecommerceBasketHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
     }
     func ecommerceBasketHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
     }
 
     func ecommerceOrderHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
     }
     func ecommerceOrderHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
     }
 }
 

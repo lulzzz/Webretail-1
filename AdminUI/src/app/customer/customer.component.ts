@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, Paginator } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { CustomerService } from './../services/customer.service';
 import { Customer } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'customer-component',
+    selector: 'app-customer-component',
     templateUrl: 'customer.component.html'
 })
 
@@ -18,7 +19,8 @@ export class CustomerComponent implements OnInit {
     displayPanel: boolean;
     dataform: FormGroup;
 
-    constructor(private sessionService: SessionService,
+    constructor(private messageService: MessageService,
+                private sessionService: SessionService,
                 private customerService: CustomerService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -44,7 +46,7 @@ export class CustomerComponent implements OnInit {
             .subscribe(result => {
                 this.customers = result;
                 this.totalRecords = this.customers.length;
-            }, onerror => alert(onerror._body)
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
@@ -74,14 +76,14 @@ export class CustomerComponent implements OnInit {
                     this.customers.push(result);
                     this.totalRecords++;
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.customerService
                 .update(this.selected.customerId, this.selected)
                 .subscribe(result => {
                     this.customers[this.selectedIndex] = this.selected;
                     this.closeClick();
-                }, onerror => alert(onerror._body));
+                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
 
@@ -95,7 +97,7 @@ export class CustomerComponent implements OnInit {
                         this.customers.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
-                    }, onerror => alert(onerror._body));
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
     }

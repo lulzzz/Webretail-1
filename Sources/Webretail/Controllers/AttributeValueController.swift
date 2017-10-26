@@ -29,8 +29,6 @@ class AttributeValueController {
     }
 
     func attributevaluesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let items = try self.repository.getAll()
             try response.setJson(items)
@@ -41,8 +39,6 @@ class AttributeValueController {
     }
     
     func attributevalueHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
@@ -54,8 +50,6 @@ class AttributeValueController {
     }
 
     func attributevalueHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         do {
             let item: AttributeValue = try request.getJson()
             try self.repository.add(item: item)
@@ -67,8 +61,6 @@ class AttributeValueController {
     }
 
     func attributevalueHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             let item: AttributeValue = try request.getJson()
@@ -81,8 +73,6 @@ class AttributeValueController {
     }
 
     func attributevalueHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "application/json")
-        
         let id = request.urlVariables["id"]!
         do {
             try self.repository.delete(id: Int(id)!)
