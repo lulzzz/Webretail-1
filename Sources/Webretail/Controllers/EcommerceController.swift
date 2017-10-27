@@ -10,15 +10,17 @@ import PerfectHTTP
 class EcommerceController {
     
     private let repository: EcommerceProtocol
-    
+    private let customerRepository: CustomerProtocol
+
     init() {
         self.repository = ioCContainer.resolve() as EcommerceProtocol
+        self.customerRepository = ioCContainer.resolve() as CustomerProtocol
     }
     
     func getRoutes() -> Routes {
         var routes = Routes()
         
-        /// Public Api
+        /// Guest Api
         routes.add(method: .get, uri: "/api/ecommerce", handler: ecommerceHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/featured", handler: ecommerceFeaturedHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category", handler: ecommerceCategoriesHandlerGET)
@@ -40,7 +42,8 @@ class EcommerceController {
         return routes
     }
 
-    /// Public Api
+    
+    /// Products
 
     func ecommerceHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
@@ -83,27 +86,112 @@ class EcommerceController {
         }
     }
 
-    /// Customer Api
+    /// Customer
 
     func ecommerceCustomerHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            let customer = try self.customerRepository.get(id: Int(uniqueID)!)
+            try response.setJson(customer)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
     func ecommerceCustomerHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            let customer: Customer = try request.getJson()
+            try self.customerRepository.update(id: Int(uniqueID)!, item: customer)
+            try response.setJson(customer)
+            response.completed(status: .accepted)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
     func ecommerceCustomerHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            try self.customerRepository.delete(id: Int(uniqueID)!)
+            response.completed(status: .noContent)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
+
+    
+    /// Basket
 
     func ecommerceBasketHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            let items = try self.repository.getBasket(customerId: Int(uniqueID)!)
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
+    
     func ecommerceBasketHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            let basket: Basket = try request.getJson()
+            basket.customerId = Int(uniqueID)!
+            try self.repository.addBasket(item: basket)
+            try response.setJson(basket)
+            response.completed(status: .created)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
+    
     func ecommerceBasketHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+        let id = request.urlVariables["id"]!
+        do {
+            let basket: Basket = try request.getJson()
+            try self.repository.updateBasket(id: Int(id)!, item: basket)
+            try response.setJson(basket)
+            response.completed(status: .accepted)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
+    
     func ecommerceBasketHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+        let id = request.urlVariables["id"]!
+        do {
+            try self.repository.deleteBasket(id: Int(id)!)
+            response.completed(status: .noContent)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
 
+    
+    /// Order
+    
     func ecommerceOrderHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            let items = try self.repository.getOrders(customerId: Int(uniqueID)!)
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
+    
     func ecommerceOrderHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            let basket: Basket = try request.getJson()
+            try self.repository.addOrder(customerId: Int(uniqueID)!, payment: "Cash")
+            try response.setJson(basket)
+            response.completed(status: .created)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
 }
 

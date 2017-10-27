@@ -8,7 +8,7 @@
 import StORM
 
 struct EcommerceRepository : EcommerceProtocol {
-    
+
     func getFeatured() throws -> [Product] {
         let publication = StORMDataSourceJoin(
             table: "publications",
@@ -148,7 +148,7 @@ struct EcommerceRepository : EcommerceProtocol {
         try item.delete()
     }
     
-    func commitBasket(customerId: Int, payment: String) throws {
+    func addOrder(customerId: Int, payment: String) throws {
         let repository = ioCContainer.resolve() as MovementProtocol
         
         let customer = Customer()
@@ -195,6 +195,15 @@ struct EcommerceRepository : EcommerceProtocol {
         
         order.movementStatus = "Processing"
         try repository.update(id: order.movementId, item: order)
+    }
+
+    func getOrders(customerId: Int) throws -> [Movement] {
+        let items = Movement()
+        try items.query(whereclause: "movementCustomer ->> 'customerId' = $1",
+                        params: [customerId],
+                        orderby: ["movementDate"])
+        
+        return try items.rows()
     }
 }
 
