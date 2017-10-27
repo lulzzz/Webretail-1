@@ -15,7 +15,7 @@ import { ProductService } from './services/product.service';
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
 })
-export class AppEntry {}
+export class AppEntry { }
 
 /**
  * Home component for welcome message in DemoApp.
@@ -48,7 +48,7 @@ export class HomeComponent {
 export class AppComponent implements OnInit {
   static title: string;
   navItems = [
-    {name: 'Featured', route: '/products/featured/Featured'}
+    { name: 'Featured', route: '/products/featured/Featured' }
   ];
 
   get title() {
@@ -58,14 +58,15 @@ export class AppComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private _element: ElementRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.productService.getCategories()
-    .subscribe(result => {
-      result.forEach(p => this.navItems.push({name: p.categoryName, route: '/products/' + p.categoryId + '/' + p.categoryName}));
-  });
-}
+      .subscribe(result => {
+        result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryId + '/' + p.categoryName }));
+        this.navItems.push({ name: 'Account', route: '/account' })
+      });
+  }
 
   toggleFullscreen() {
     const elem = this._element.nativeElement.querySelector('.app-content');

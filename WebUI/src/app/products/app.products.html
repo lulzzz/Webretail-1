@@ -1,7 +1,7 @@
 <div class="app-grid-list">
   <mat-grid-list [cols]="fixedCols" [rowHeight]="fitListHeight" [style.height]="fitListHeight" [style.width]="fitListWidth">
     <mat-grid-tile *ngFor="let product of products">
-      <img [alt]="product.productName" src="http://webretail.westeurope.cloudapp.azure.com/{{product.medias[0].url}}">
+      <img [alt]="product.productName" src="/{{product.medias[0].url}}">
       <mat-grid-tile-footer>
         <h3 mat-line>{{product.productName}}</h3>
         <span mat-line>Price: {{product.productSellingPrice}}</span>

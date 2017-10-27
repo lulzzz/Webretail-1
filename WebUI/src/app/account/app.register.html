@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <form [formGroup]="userform">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2">
+                <label for="username">Email</label>
+            </div>
+            <div class="ui-grid-col-6">
+                <input [(ngModel)]="user.email" type="email" formControlName="email"/>
+            </div>
+            <div class="ui-grid-col-4">
+                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['email'].valid&&userform.controls['email'].dirty">
+                    <i class="fa fa-close"></i>
+                    <span *ngIf="dataform.controls['email'].errors['required']">Email is required</span>
+                    <span *ngIf="dataform.controls['email'].errors['email']">Must be a valid email address</span>
+                </div>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2">
+                <label for="password">Password</label>
+            </div>
+            <div class="ui-grid-col-6">
+                <input [(ngModel)]="user.password" type="password" formControlName="password"/>
+            </div>
+            <div class="ui-grid-col-4">
+                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['password'].valid&&userform.controls['password'].dirty">
+                    <i class="fa fa-close"></i>
+                    <span *ngIf="userform.controls['password'].errors['required']">Password is required</span>
+                    <span *ngIf="userform.controls['password'].errors['minlength']">Must be longer than 8 characters</span>
+                    <span *ngIf="dataform.controls['password'].errors['maxlength']">Must be at most 20 characters</span>
+                </div>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2">
+                <label for="confirmPassword">Confirm Password</label>
+            </div>
+            <div class="ui-grid-col-6">
+                <input type="password" formControlName="confirmPassword"/>
+            </div>
+            <div class="ui-grid-col-4">
+                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['confirmPassword'].valid&&userform.controls['confirmPassword'].dirty">
+                    <i class="alert alert-danger"></i>
+                    <span *ngIf="userform.controls['confirmPassword'].errors['required']">Confirm Password is required</span>
+                    <span *ngIf="userform.controls['confirmPassword'].errors['matchPassword']">Password not match</span>
+                </div>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2"></div>
+            <div class="ui-grid-col-4">
+                <button type="button" label="Register" (click)="register()" icon="fa-sign-in" [disabled]="!userform.valid"></button>
+            </div>
+            <div class="ui-grid-col-6"></div>
+        </div>
+    </div>
+    </form>
+
+</div>

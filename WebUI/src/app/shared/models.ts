@@ -1,69 +1,9 @@
 // Classes
 
-export class Company {
-  public companyId: number;
-  public companyName: string;
-  public companyDesc: string;
-  public companyWebsite: string;
-  public companyEmail: string;
-  public companyPhone: string;
-  public companyAddress: string;
-  public companyCity: string;
-  public companyZip: string;
-  public companyCountry: string;
-  public companyFiscalCode: string;
-  public companyVatNumber: string;
-  public smtpHost: string;
-  public smtpSsl: boolean;
-  public smtpUsername: string;
-  public smtpPassword: string;
-  public barcodeCounter: number;
-
-  constructor() {
-    this.companyId = 0;
-    this.companyName = '';
-    this.companyDesc = '';
-    this.companyWebsite = '';
-    this.companyEmail = '';
-    this.companyPhone = '';
-    this.companyAddress = '';
-    this.companyCity = '';
-    this.companyZip = '';
-    this.companyCountry = '';
-    this.companyFiscalCode = '';
-    this.companyVatNumber = '';
-    this.smtpHost = '';
-    this.smtpSsl = false;
-    this.smtpUsername = '';
-    this.smtpPassword = '';
-    this.barcodeCounter = 0;
-  }
-}
-
 export class Login {
   constructor(
-    public username: string,
+    public email: string,
     public password: string) { }
-}
-
-export class Account {
-  public uniqueID: string;
-  public firstname: string;
-  public lastname: string;
-  public email: string;
-  public username: string;
-  public password: string;
-  public isAdmin: boolean;
-
-  constructor() {
-    this.uniqueID = '';
-    this.firstname = '';
-    this.lastname = '';
-    this.email = '';
-    this.username = '';
-    this.password = '';
-    this.isAdmin = false;
-  }
 }
 
 export class Store {
@@ -192,23 +132,6 @@ export class AttributeValue {
     public translations: Translation[]
   ) { }
 }
-
-export class Publication {
-  public publicationId: number;
-  public productId: number;
-  public publicationFeatured: boolean;
-  public publicationStartAt: Date;
-  public publicationFinishAt: Date;
-  public publicationUpdated: Date;
-
-  constructor(productId: number) {
-    this.publicationId = 0;
-    this.productId = productId;
-    this.publicationFeatured = false;
-    // this.publicationStartAt = new Date();
-    // this.publicationFinishAt = new Date();
-    // this.publicationUpdated = new Date();
-  }}
 
 export class Causal {
   public causalId: number;
@@ -344,34 +267,6 @@ export class Discount {
     this.discountPercentage = 0;
     this.discountPrice = 0;
     this.discountUpdated = new Date();
-  }
-}
-
-export class DiscountProduct {
-  public discountProductId: number;
-  public discountId: number;
-  public discountProduct: Product;
-
-  constructor() {
-    this.discountProductId = 0;
-    this.discountId = 0;
-    this.discountProduct = new Product();
-  }
-}
-
-export class Device {
-  public deviceId: number;
-  public deviceName: string;
-  public deviceToken: string;
-  public store: Store;
-  public updatedAt: number;
-
-  constructor() {
-    this.deviceId = 0;
-    this.deviceName = '';
-    this.deviceToken = '';
-    this.store = new Store();
-    this.updatedAt = 0;
   }
 }
 
