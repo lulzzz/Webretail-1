@@ -37,11 +37,11 @@
                     <div class="ui-grid-col-8">{{selected.customerId}}</div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                    <div class="ui-grid-col-4"><label for="name">Full Name</label></div>
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="name" [(ngModel)]="selected.customerName"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
-                            <i class="fa fa-close"></i> Name is required
+                            <i class="fa fa-close"></i> Full Name is required
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,9 @@
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="email" [(ngModel)]="selected.customerEmail" type="email"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
-                            <i class="fa fa-close"></i> Email is required
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['email'].errors['required']">Email is required</span>
+                            <span *ngIf="dataform.controls['email'].errors['email']">Must be a valid email address</span>
                         </div>
                     </div>
                 </div>
@@ -83,7 +85,9 @@
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="zip" [(ngModel)]="selected.customerZip"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
-                            <i class="fa fa-close"></i> Zip is required
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['zip'].errors['required']">Zip is required</span>
+                            <span *ngIf="dataform.controls['zip'].errors['minlength']||dataform.controls['zip'].errors['maxlength']">Must be equals than 5 characters</span>
                         </div>
                     </div>
                 </div>
@@ -92,7 +96,9 @@
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="country" [(ngModel)]="selected.customerCountry"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
-                            <i class="fa fa-close"></i> Country is required
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['country'].errors['required']">Country is required</span>
+                            <span *ngIf="dataform.controls['country'].errors['minlength']||dataform.controls['country'].errors['maxlength']">Must be equals than 3 characters</span>
                         </div>
                     </div>
                 </div>
@@ -100,12 +106,21 @@
                     <div class="ui-grid-col-4"><label for="fiscalCode">Fiscal Code</label></div>
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="fiscalCode" [(ngModel)]="selected.customerFiscalCode"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['fiscalCode'].valid&&dataform.controls['fiscalCode'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['fiscalCode'].errors['required']">Fiscal Code is required</span>
+                            <span *ngIf="dataform.controls['fiscalCode'].errors['minlength']||dataform.controls['fiscalCode'].errors['maxlength']">Must be equals than 13 characters</span>
+                        </div>
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="vatNumber">VAT number</label></div>
+                    <div class="ui-grid-col-4"><label for="vatNumber">VAT Number</label></div>
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="vatNumber" [(ngModel)]="selected.customerVatNumber"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['vatNumber'].valid&&dataform.controls['vatNumber'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['vatNumber'].errors['minlength']||dataform.controls['vatNumber'].errors['maxlength']">Must be equals than 11 characters</span>
+                        </div>
                     </div>
                 </div>
                 <div class="ui-grid-row">

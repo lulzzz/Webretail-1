@@ -72,8 +72,8 @@
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['code'].errors['required']">Code is required</span>
-                            <span *ngIf="dataform.controls['code'].errors['minlength']">Must be equals than 5 characters</span>
-                            <span *ngIf="dataform.controls['code'].errors['maxlength']">Must be equals than 5 characters</span>
+                            <span *ngIf="userform.controls['code'].errors['minlength']">Must be at least 5 characters</span>
+                            <span *ngIf="dataform.controls['code'].errors['maxlength']">Must be at most 10 characters</span>
                         </div>
                     </div>
                 </div>

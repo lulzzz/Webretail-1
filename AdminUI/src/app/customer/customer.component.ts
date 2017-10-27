@@ -32,14 +32,15 @@ export class CustomerComponent implements OnInit {
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
-            'email': new FormControl('', Validators.required),
+            'email': new FormControl('', [Validators.required, Validators.email]),
+            // 'password': new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
             'phone': new FormControl('', Validators.nullValidator),
             'address': new FormControl('', Validators.required),
             'city': new FormControl('', Validators.required),
-            'zip': new FormControl('', Validators.required),
-            'country': new FormControl('', Validators.required),
-            'fiscalCode': new FormControl('', Validators.nullValidator),
-            'vatNumber': new FormControl('', Validators.nullValidator)
+            'zip': new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
+            'country': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]),
+            'fiscalCode': new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]),
+            'vatNumber': new FormControl('', [Validators.nullValidator, Validators.minLength(11), Validators.maxLength(11)])
         });
 
         this.customerService.getAll()

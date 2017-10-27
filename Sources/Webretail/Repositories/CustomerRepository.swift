@@ -7,6 +7,7 @@
 //
 
 import StORM
+import TurnstileCrypto
 
 struct CustomerRepository : CustomerProtocol {
 
@@ -25,6 +26,11 @@ struct CustomerRepository : CustomerProtocol {
 	}
 	
 	func add(item: Customer) throws {
+        if (item.customerPassword.isEmpty) {
+            let random: URandom =  URandom()
+            let password = String(random.secureToken)
+            item.customerPassword = BCrypt.hash(password: password)
+        }
 		item.customerCreated = Int.now()
 		item.customerUpdated = Int.now()
 		try item.save {
@@ -37,7 +43,10 @@ struct CustomerRepository : CustomerProtocol {
 		guard let current = try get(id: id) else {
 			throw StORMError.noRecordFound
 		}
-		
+        if (item.customerPassword.length >= 8 && item.customerPassword.length <= 20) {
+            current.customerPassword = BCrypt.hash(password: item.customerPassword)
+        }
+
 		current.customerName = item.customerName
 		current.customerEmail = item.customerEmail
 		current.customerPhone = item.customerPhone
