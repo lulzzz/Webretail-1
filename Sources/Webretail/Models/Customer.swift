@@ -28,7 +28,7 @@ class Customer: PostgresSqlORM, Codable, Account {
 
     /// The User account's Unique ID
     public var uniqueID: String {
-        return customerEmail
+        return customerId.description
     }
 
     private enum CodingKeys: String, CodingKey {

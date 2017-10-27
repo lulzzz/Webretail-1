@@ -148,8 +148,53 @@ struct EcommerceRepository : EcommerceProtocol {
         try item.delete()
     }
     
-    func commitBasket(customerId: Int) throws {
+    func commitBasket(customerId: Int, payment: String) throws {
+        let repository = ioCContainer.resolve() as MovementProtocol
         
+        let customer = Customer()
+        try customer.get(customerId)
+        if customer.customerId == 0 {
+            throw StORMError.noRecordFound
+        }
+        
+        let store = Store()
+        try store.query(orderby: ["storeId"],
+                        cursor: StORMCursor.init(limit: 1, offset: 0))
+
+        let causal = Causal()
+        try causal.query(whereclause: "causalBooked = $1 AND causalQuantity = $2 AND causalIsPos = $3",
+                        params: [1, -1 , true],
+                        orderby: ["causalId"],
+                        cursor: StORMCursor.init(limit: 1, offset: 0))
+        if causal.causalId == 0 {
+            throw StORMError.error("no causal found")
+        }
+        
+        let order = Movement()
+        order.movementDate = Int.now()
+        order.movementStore = store
+        order.movementCausal = causal
+        order.movementCustomer = customer
+        order.movementUser = "Customer"
+        order.movementStatus = "New"
+        order.movementPayment = payment
+        order.movementDesc = "eCommerce order"
+        
+        try repository.add(item: order)
+        
+        let items = try self.getBasket(customerId: customerId)
+        for item in items {
+            let orderArticle = MovementArticle()
+            orderArticle.movementId = order.movementId
+            orderArticle.movementArticleBarcode = item.basketBarcode
+            orderArticle.movementArticleProduct = item.basketProduct
+            orderArticle.movementArticlePrice = item.basketPrice
+            orderArticle.movementArticleQuantity = item.basketQuantity
+            orderArticle.movementArticleUpdated = Int.now()
+        }
+        
+        order.movementStatus = "Processing"
+        try repository.update(id: order.movementId, item: order)
     }
 }
 

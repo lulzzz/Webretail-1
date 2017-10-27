@@ -24,6 +24,6 @@ protocol EcommerceProtocol {
     
     func deleteBasket(id: Int) throws
 
-    func commitBasket(customerId: Int) throws
+    func commitBasket(customerId: Int, payment: String) throws
 }
 
