@@ -1690,6 +1690,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		56471B0B1FA395FF004B636F /* Dockerfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
+		56471B0C1FA395FF004B636F /* rasterize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rasterize.js; sourceTree = "<group>"; };
+		56471B0D1FA39600004B636F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		565B303C1FA086EE0078C8C4 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		565B303E1FA093970078C8C4 /* EcommerceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceController.swift; sourceTree = "<group>"; };
 		565B30401FA094480078C8C4 /* EcommerceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceProtocol.swift; sourceTree = "<group>"; };
@@ -4013,6 +4016,9 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				56471B0B1FA395FF004B636F /* Dockerfile */,
+				56471B0C1FA395FF004B636F /* rasterize.js */,
+				56471B0D1FA39600004B636F /* README.md */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_114 /* Tests */,

@@ -6,7 +6,7 @@ Retail Management System developed with Swift 4.0, Angular 4.0 and PostgreSQL.
 
 #### Under active development. Please do not use.
 
-<a href="http://webretail.westeurope.cloudapp.azure.com" target="_new">Try Demo</a>
+<a href="http://webretail.westeurope.cloudapp.azure.com:8181" target="_new">Try Demo</a>
 username: admin
 password: admin
 
