@@ -10,7 +10,7 @@ protocol ProductProtocol {
     
     func getAll(date: Int) throws -> [Product]
     
-    func get(id: Int) throws -> Product?
+    func get(id: Int) throws -> Product
 
     func add(item: Product) throws
     
@@ -18,7 +18,7 @@ protocol ProductProtocol {
 
     func update(id: Int, item: Product) throws
     
-    func get(productId: Int) throws -> Publication?
+    func get(productId: Int) throws -> Publication
     
     func publish(id: Int, item: Product) throws
 

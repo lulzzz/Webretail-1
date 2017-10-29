@@ -69,7 +69,7 @@ class MovementController {
 
 	func movementsSalesHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-           	let period: Period = try request.getJson()
+           	let period: Period = request.getJson()!
 			let items = try self.repository.getSales(period: period)
 			try response.setJson(items)
 			response.completed(status: .ok)
@@ -80,7 +80,7 @@ class MovementController {
 	
 	func movementsReceiptedHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-            let period: Period = try request.getJson()
+            let period: Period = request.getJson()!
             let items = try self.repository.getReceipted(period: period)
 			try response.setJson(items)
 			response.completed(status: .ok)
@@ -113,7 +113,7 @@ class MovementController {
 	
 	func movementHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: Movement = try request.getJson()
+            let item: Movement = request.getJson()!
 			try self.repository.add(item: item)
             try response.setJson(item)
 			
@@ -146,7 +146,7 @@ class MovementController {
 	func movementHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
 			let id = request.urlVariables["id"]!
-            let item: Movement = try request.getJson()
+            let item: Movement = request.getJson()!
             try self.repository.update(id: Int(id)!, item: item)
             //TODO: item._amount = item.getJSONValue(named: "movementAmount", from: json!, defaultValue: 0.0)
             try response.setJson(item)

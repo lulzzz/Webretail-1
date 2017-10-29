@@ -155,6 +155,7 @@ export class Customer {
   public customerId: number;
   public customerName: string;
   public customerEmail: string;
+  public customerPassword: string;
   public customerPhone: string;
   public customerAddress: string;
   public customerCity: string;
@@ -168,6 +169,7 @@ export class Customer {
     this.customerId = 0;
     this.customerName = '';
     this.customerEmail = '';
+    this.customerPassword = '';
     this.customerPhone = '';
     this.customerAddress = '';
     this.customerCity = '';

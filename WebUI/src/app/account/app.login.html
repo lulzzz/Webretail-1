@@ -18,9 +18,9 @@
                 </div>
             </mat-form-field>
 
-            <button mat-raised-button (click)="login()" [disabled]="!dataform.valid">Login</button>
-        
-            <a mat-raised-button routerLink="/register">Register</a>
+            <button mat-raised-button color="primary" (click)="login()" [disabled]="!dataform.valid"><mat-icon>playlist_add_check</mat-icon> Login</button>
+            
+            <a mat-raised-button routerLink="/register" style="float: right"><mat-icon>playlist_add</mat-icon> Register</a>
         </form>
     </mat-card-content>
 </mat-card>

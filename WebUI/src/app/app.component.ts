@@ -3,7 +3,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { ProductService } from './services/product.service';
 
 /**
- * The entry app for demo site. Routes under `accessibility` will use AccessibilityDemo component,
+ * The entry app for site. Routes under `accessibility` will use AccessibilityDemo component,
  * while other demos will use `DemoApp` component. Since DemoApp and AccessibilityDemo use
  * different templates (DemoApp has toolbar and sidenav), we use this EntryApp in index.html
  * as our entry point.
@@ -18,16 +18,14 @@ import { ProductService } from './services/product.service';
 export class AppEntry { }
 
 /**
- * Home component for welcome message in DemoApp.
+ * Home component for welcome message in App.
  */
 @Component({
   selector: 'app-home',
   template: `
-    <p>Welcome to the development app for Angular Material!</p>
+    <p>&nbsp;&nbsp;Welcome to the Webretail eCommerce!</p>
     <span class="done">
-    <button mat-fab>
-      <mat-icon>check circle</mat-icon>
-    </button>
+    <a mat-fab routerLink="/products/featured/Featured" style="float: right"><mat-icon>shopping_cart</mat-icon></a>
   </span>
   `
 })
@@ -64,7 +62,6 @@ export class AppComponent implements OnInit {
     this.productService.getCategories()
       .subscribe(result => {
         result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryId + '/' + p.categoryName }));
-        this.navItems.push({ name: 'Account', route: '/account' })
       });
   }
 

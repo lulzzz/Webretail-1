@@ -46,11 +46,11 @@ public extension HTTPRequest {
         }
     }
 
-    public func getJson<T:Codable>() throws -> T {
+    public func getJson<T:Codable>() -> T? {
         let decoder = JSONDecoder()
-        let jsonData = self.postBodyString?.data(using: .utf8)!
+        let jsonData = self.postBodyString?.data(using: .utf8)
         //LogFile.info(self.postBodyString!)
-        return try decoder.decode(T.self, from: jsonData!)
+        return try? decoder.decode(T.self, from: jsonData!)
     }
 }
 

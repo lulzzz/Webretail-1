@@ -1,137 +1,105 @@
-﻿<div *ngIf="account" class="container-fluid">
-    <form [formGroup]="dataform">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Id</label></div>
-                <div class="ui-grid-col-8">{{account.customerId}}</div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="name">Full Name</label></div>
-                <div class="ui-grid-col-8">
-                    <input formControlName="name" [(ngModel)]="account.customerName"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
-                        <i class="fa fa-close"></i> Full Name is required
-                    </div>
+﻿<div *ngIf="account">
+<form [formGroup]="dataform">
+    <mat-card>
+        <mat-card-content>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerName" formControlName="name" placeholder="Full Name"/>
+                <div *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['name'].errors['required']">Full Name is required</mat-error>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="email">Email</label></div>
-                <div class="ui-grid-col-8">
-                    <input formControlName="email" [(ngModel)]="account.customerEmail" type="email"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['email'].errors['required']">Email is required</span>
-                        <span *ngIf="dataform.controls['email'].errors['email']">Must be a valid email address</span>
-                    </div>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerEmail" type="email" formControlName="email" placeholder="Email"/>
+                <div *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['email'].errors['required']">Email is required</mat-error>
+                    <mat-error *ngIf="dataform.controls['email'].errors['email']">Must be a valid email address</mat-error>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="phone">Phone</label></div>
-                <div class="ui-grid-col-8">
-                    <input formControlName="phone" [(ngModel)]="account.customerPhone"/>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerPhone" formControlName="phone" placeholder="Phone"/>
+                <div *ngIf="!dataform.controls['phone'].valid&&dataform.controls['phone'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['phone'].errors['required']">Phone is required</mat-error>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="address">Address</label></div>
-                <div class="ui-grid-col-8">
-                    <input formControlName="address" [(ngModel)]="account.customerAddress"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['address'].valid&&dataform.controls['address'].dirty">
-                        <i class="fa fa-close"></i> Address is required
-                    </div>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerAddress" formControlName="address" placeholder="Address"/>
+                <div *ngIf="!dataform.controls['address'].valid&&dataform.controls['address'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['address'].errors['required']">Address is required</mat-error>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="city">City</label></div>
-                <div class="ui-grid-col-8">
-                    <input formControlName="city" [(ngModel)]="account.customerCity"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['city'].valid&&dataform.controls['city'].dirty">
-                        <i class="fa fa-close"></i> City is required
-                    </div>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerCity" formControlName="city" placeholder="City"/>
+                <div *ngIf="!dataform.controls['city'].valid&&dataform.controls['city'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['city'].errors['required']">City is required</mat-error>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="zip">Zip</label></div>
-                <div class="ui-grid-col-8">
-                    <input formControlName="zip" [(ngModel)]="account.customerZip"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['zip'].errors['required']">Zip is required</span>
-                        <span *ngIf="dataform.controls['zip'].errors['minlength']||dataform.controls['zip'].errors['maxlength']">Must be equals than 5 characters</span>
-                    </div>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerZip" formControlName="zip" placeholder="Zip"/>
+                <div *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['zip'].errors['required']">Zip is required</mat-error>
+                    <mat-error *ngIf="dataform.controls['zip'].errors['minlength']||dataform.controls['zip'].errors['maxlength']">Must be equals than 5 characters</mat-error>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="country">Country</label></div>
-                <div class="ui-grid-col-8">
-                    <input formControlName="country" [(ngModel)]="account.customerCountry"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['country'].errors['required']">Country is required</span>
-                        <span *ngIf="dataform.controls['country'].errors['minlength']||dataform.controls['country'].errors['maxlength']">Must be equals than 3 characters</span>
-                    </div>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerCountry" formControlName="country" placeholder="Country"/>
+                <div *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['country'].errors['required']">Country is required</mat-error>
+                    <mat-error *ngIf="dataform.controls['country'].errors['minlength']||dataform.controls['country'].errors['maxlength']">Must be equals than 3 characters</mat-error>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="fiscalCode">Fiscal Code</label></div>
-                <div class="ui-grid-col-8">
-                    <input formControlName="fiscalCode" [(ngModel)]="account.customerFiscalCode"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['fiscalCode'].valid&&dataform.controls['fiscalCode'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['fiscalCode'].errors['required']">Fiscal Code is required</span>
-                        <span *ngIf="dataform.controls['fiscalCode'].errors['minlength']||dataform.controls['fiscalCode'].errors['maxlength']">Must be equals than 13 characters</span>
-                    </div>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerFiscalCode" formControlName="fiscalCode" placeholder="Fiscal Code"/>
+                <div *ngIf="!dataform.controls['fiscalCode'].valid&&dataform.controls['fiscalCode'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['fiscalCode'].errors['required']">Fiscal Code is required</mat-error>
+                    <mat-error *ngIf="dataform.controls['fiscalCode'].errors['minlength']||dataform.controls['fiscalCode'].errors['maxlength']">Must be equals than 16 characters</mat-error>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="vatNumber">VAT Number</label></div>
-                <div class="ui-grid-col-8">
-                    <input formControlName="vatNumber" [(ngModel)]="account.customerVatNumber"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['vatNumber'].valid&&dataform.controls['vatNumber'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="dataform.controls['vatNumber'].errors['minlength']||dataform.controls['vatNumber'].errors['maxlength']">Must be equals than 11 characters</span>
-                    </div>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerVatNumber" formControlName="vatNumber" placeholder="VAT Number"/>
+                <div *ngIf="!dataform.controls['vatNumber'].valid&&dataform.controls['vatNumber'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['vatNumber'].errors['required']">VAT Number is required</mat-error>
+                    <mat-error *ngIf="dataform.controls['vatNumber'].errors['minlength']||dataform.controls['vatNumber'].errors['maxlength']">Must be equals than 11 characters</mat-error>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    <label for="password">Password</label>
+            </mat-form-field>
+            <button mat-raised-button olor="primary" (click)="saveClick()" [disabled]="!dataform.valid"><mat-icon>save</mat-icon> Save</button>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-content>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.customerPassword" type="password" formControlName="password" placeholder="New password"/>
+                <div *ngIf="!dataform.controls['password'].valid&&dataform.controls['password'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['password'].errors['required']">Password is required</mat-error>
+                    <mat-error *ngIf="dataform.controls['password'].errors['minlength']">Must be longer than 8 characters</mat-error>
+                    <mat-error *ngIf="dataform.controls['password'].errors['maxlength']">Must be at most 20 characters</mat-error>
                 </div>
-                <div class="ui-grid-col-6">
-                    <input [(ngModel)]="user.password" type="password" formControlName="password"/>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm new password"/>
+                <div *ngIf="!dataform.controls['confirmPassword'].valid&&dataform.controls['confirmPassword'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['confirmPassword'].errors['required']">Confirm Password is required</mat-error>
+                    <mat-error *ngIf="dataform.controls['confirmPassword'].errors['matchPassword']">Password not match</mat-error>
                 </div>
-                <div class="ui-grid-col-4">
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['password'].valid&&userform.controls['password'].dirty">
-                        <i class="fa fa-close"></i>
-                        <span *ngIf="userform.controls['password'].errors['required']">Password is required</span>
-                        <span *ngIf="userform.controls['password'].errors['minlength']">Must be longer than 8 characters</span>
-                        <span *ngIf="dataform.controls['password'].errors['maxlength']">Must be at most 20 characters</span>
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    <label for="confirmPassword">Confirm Password</label>
-                </div>
-                <div class="ui-grid-col-6">
-                    <input type="password" formControlName="confirmPassword"/>
-                </div>
-                <div class="ui-grid-col-4">
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['confirmPassword'].valid&&userform.controls['confirmPassword'].dirty">
-                        <i class="alert alert-danger"></i>
-                        <span *ngIf="userform.controls['confirmPassword'].errors['required']">Confirm Password is required</span>
-                        <span *ngIf="userform.controls['confirmPassword'].errors['matchPassword']">Password not match</span>
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4">
-                    <button *ngIf="account.customerId>0" type="button" icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
-                </div>
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4">
-                    <button type="button" icon="fa-save" (click)="saveClick()" class="ui-button-success" label="Save" [disabled]="!dataform.valid"></button>
-                </div>
-            </div>
-        </div>
-    </form>
+            </mat-form-field>
+            <button mat-raised-button olor="primary" (click)="updateClick()" [disabled]="!dataform.controls['confirmPassword'].valid"><mat-icon>save</mat-icon> Update</button>
+        </mat-card-content>
+    </mat-card>
+</form>
+<mat-card>
+    <mat-card-content>
+        <button mat-raised-button color="primary" (click)="logoutClick()"><mat-icon>exit_to_app</mat-icon> Logout</button>
+        <button *ngIf="account.customerId>0" mat-raised-button (click)="deleteClick()" style="float: right"><mat-icon>delete_forever</mat-icon> Delete</button>
+    </mat-card-content>
+</mat-card>
 </div>

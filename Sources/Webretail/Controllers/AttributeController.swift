@@ -64,7 +64,7 @@ class AttributeController {
 
     func attributeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: Attribute = try request.getJson()
+            let item: Attribute = request.getJson()!
             try self.repository.add(item: item)
             try response.setJson(item)
             response.completed(status: .created)
@@ -76,7 +76,7 @@ class AttributeController {
     func attributeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         let id = request.urlVariables["id"]!
         do {
-            let item: Attribute = try request.getJson()
+            let item: Attribute = request.getJson()!
             try self.repository.update(id: Int(id)!, item: item)
             try response.setJson(item)
             response.completed(status: .accepted)

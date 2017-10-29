@@ -48,10 +48,12 @@ export class SessionService {
         return localStorage.getItem('token') != null;
     }
 
-    checkCredentials() {
+    checkCredentials(): boolean {
         if (!this.isAuthenticated) {
             this.removeCredentials();
+            return false;
         }
+        return true;
     }
 
     getCredentials(): Observable<any>  {

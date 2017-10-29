@@ -1,0 +1,40 @@
+<div *ngIf="product">
+  <mat-card>
+    <mat-card-content>
+      <h3 mat-line>{{product.productName}}</h3>
+      <div *ngIf="product.discount;then discount_content else price_content"></div>
+      <ng-template #discount_content>
+        <strong>
+          <span class="percentage">-{{product.discount.discountPercentage}}%</span>
+          <del>{{product.productSellingPrice | currency: 'EUR' : true}}</del><br><strong>{{product.discount.discountPrice | currency: 'EUR' : true}}</strong>
+        </strong>
+      </ng-template>
+      <ng-template #price_content>
+        <strong>{{product.productSellingPrice | currency: 'EUR' : true}}</strong>
+      </ng-template>
+      <p><span mat-line>Brand: {{product.brand.brandName}}</span></p>
+      <p><span mat-line>Categories</span></p>
+      <ul>
+        <li *ngFor="let c of product.categories"><span mat-line>{{ c.category.categoryName }}</span></li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-form-field *ngFor="let a of product.attributes">
+        <mat-select placeholder="{{a.attribute.attributeName}}">
+          <mat-option *ngFor="let v of a.attributeValues" [value]="v.attributeValue.attributeValueCode">
+            {{ v.attributeValue.attributeValueName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <img [alt]="product.productName" src="/{{product.medias[0].url}}" [style.height.px]="fitHeight">
+    </mat-card-content>
+  </mat-card>
+</div>

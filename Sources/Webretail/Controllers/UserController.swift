@@ -51,7 +51,7 @@ class UserController {
 
     func accountHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: User = try request.getJson()
+            let item: User = request.getJson()!
             try self.repository.add(item: item)
             try response.setJson(item)
             response.completed(status: .created)
@@ -63,7 +63,7 @@ class UserController {
     func accountHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         let id = request.urlVariables["id"]!
         do {
-            let item: User = try request.getJson()
+            let item: User = request.getJson()!
             try self.repository.update(id: id, item: item)
             try response.setJson(item)
             response.completed(status: .accepted)

@@ -15,7 +15,7 @@
     "import-blacklist": [true, "rxjs"],
     "import-spacing": true,
     "indent": [
-      true,
+      false,
       "tabs"
     ],
     "interface-over-type-literal": true,

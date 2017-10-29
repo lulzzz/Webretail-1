@@ -78,7 +78,7 @@ class ArticleController {
     
     func articleHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: Article = try request.getJson()
+            let item: Article = request.getJson()!
             try self.repository.add(item: item)
             try response.setJson(item)
             response.completed(status: .created)
@@ -90,7 +90,7 @@ class ArticleController {
     func articleHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         let id = request.urlVariables["id"]!
         do {
-            let item: Article = try request.getJson()
+            let item: Article = request.getJson()!
             try self.repository.update(id: Int(id)!, item: item)
             try response.setJson(item)
             response.completed(status: .accepted)
@@ -111,7 +111,7 @@ class ArticleController {
     
     func articleAttributeValueHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: ArticleAttributeValue = try request.getJson()
+            let item: ArticleAttributeValue = request.getJson()!
             try self.repository.addAttributeValue(item: item)
             try response.setJson(item)
             response.completed(status: .created)

@@ -28,10 +28,12 @@ public class AuthenticationController {
         do {
             var credentials: Credentials
             
-            if let login: LoginUser = try request.getJson() {
+            if let login: LoginUser = request.getJson() {
                 credentials = UsernamePassword(username: login.username, password: login.password)
-            } else if let login: LoginCustomer = try request.getJson() {
+                LogFile.info("Login user: \(login.username)")
+            } else if let login: LoginCustomer = request.getJson() {
                 credentials = CustomerAccount(uniqueID: login.email, password: login.password)
+                LogFile.info("Login customer: \(login.email)")
             } else {
                 resp["error"] = "Missing username or password"
                 try response.setBody(json: resp)
@@ -54,14 +56,17 @@ public class AuthenticationController {
                     let user = User()
                     try user.get(uniqueID)
                     resp["role"] = user.isAdmin ? "Admin" : "User"
-                    LogFile.info("Logged in \(user.username)")
                 } else {
                     resp["role"] = "Customer"
-                    LogFile.info("Logged in \(uniqueID)")
                 }
             } catch {
                 resp["error"] = "Invalid username or password"
             }
+        } catch {
+            resp["error"] = error.localizedDescription
+        }
+
+        do {
             try response.setBody(json: resp)
         } catch {
             print(error)
@@ -71,41 +76,37 @@ public class AuthenticationController {
     
     func logoutHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		var resp = [String: String]()
-		do {
-			request.user.logout()
-            if let auth = request.header(.authorization)?.replacingOccurrences(of: "Bearer ", with: "") {
-                pturnstile.turnstile.sessionManager.destroySession(identifier: auth)
-            }
-			resp["error"] = "none"
-			resp["logout"] = "completed"
+        request.user.logout()
+        if let auth = request.header(.authorization)?.replacingOccurrences(of: "Bearer ", with: "") {
+            pturnstile.turnstile.sessionManager.destroySession(identifier: auth)
+        }
+        resp["error"] = "none"
+        resp["logout"] = "completed"
+
+        do {
             try response.setBody(json: resp)
-		} catch {
-			print(error)
-		}
+        } catch {
+            print(error)
+        }
 		response.completed()
 	}
 
 	func registerCustomerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         var resp = [String: String]()
-        guard let email = request.param(name: "email"),
-            let password = request.param(name: "password") else {
+        do {
+            guard let login: LoginCustomer = request.getJson() else {
                 resp["error"] = "Missing email or password"
-                do {
-                    try response.setBody(json: resp)
-                } catch {
-                    print(error)
-                }
+                try response.setBody(json: resp)
                 response.completed()
                 return
-        }
+            }
 
-        let credentials = CustomerAccount(uniqueID: email, password: password)
-        
-        do {
+            let credentials = CustomerAccount(uniqueID: login.email, password: login.password)
+
             try request.user.register(credentials: credentials)
             try request.user.login(credentials: credentials, persist: true)
             
-            let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
+            let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
             let token = tokenStore.new(uniqueID)
             
             resp["error"] = "none"
@@ -113,11 +114,13 @@ public class AuthenticationController {
             resp["token"] = token
 			resp["uniqueID"] = uniqueID
             resp["role"] = "Customer"
+        
         } catch let e as TurnstileError {
             resp["error"] = e.description
         } catch {
             resp["error"] = "An unknown error occurred."
         }
+        
         do {
             try response.setBody(json: resp)
         } catch {
@@ -146,6 +149,11 @@ public class AuthenticationController {
                     resp["role"] = "Customer"
                 }
             }
+        } catch {
+            resp["error"] = error.localizedDescription
+        }
+
+        do {
             try response.setBody(json: resp)
         } catch {
             print(error)

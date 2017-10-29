@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { ProductService } from './../services/product.service';
 import { Product } from './../shared/models';
 import { AppComponent } from 'app/app.component';
@@ -18,6 +19,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   fitListWidth: string;
 
   constructor(
+    public snackBar: MatSnackBar,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute
   ) {
@@ -55,6 +57,7 @@ onResizeChanged(event: any) {
     this.productService.getByCategoryId(categoryId)
         .subscribe(result => {
           this.products = result;
-    });
+    },
+    onerror => this.snackBar.open(onerror._body, 'Undo'));
   }
 }

@@ -53,7 +53,7 @@ class CausalController {
     
     func causalHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: Causal = try request.getJson()
+            let item: Causal = request.getJson()!
             try self.repository.add(item: item)
             try response.setJson(item)
             response.completed(status: .created)
@@ -65,7 +65,7 @@ class CausalController {
     func causalHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         let id = request.urlVariables["id"]!
         do {
-            let item: Causal = try request.getJson()
+            let item: Causal = request.getJson()!
             try self.repository.update(id: Int(id)!, item: item)
             try response.setJson(item)
             response.completed(status: .accepted)

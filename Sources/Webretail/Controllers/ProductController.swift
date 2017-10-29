@@ -62,7 +62,7 @@ class ProductController {
 
     func productHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: Product = try request.getJson()
+            let item: Product = request.getJson()!
             try self.repository.add(item: item)
             try response.setJson(item)
             response.completed(status: .created)
@@ -73,7 +73,7 @@ class ProductController {
 
     func productImportHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: Product = try request.getJson()
+            let item: Product = request.getJson()!
             let result = try self.repository.create(item: item)
             try response.setBody(json: result)
             response.completed(status: .created)
@@ -85,7 +85,7 @@ class ProductController {
     func productHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
 			let id = request.urlVariables["id"]!
-            let item: Product = try request.getJson()
+            let item: Product = request.getJson()!
             try self.repository.update(id: Int(id)!, item: item)
             try response.setJson(item)
             response.completed(status: .accepted)
@@ -118,7 +118,7 @@ class ProductController {
     func productPublicationHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             let id = request.urlVariables["id"]!
-            let item: Product = try request.getJson()
+            let item: Product = request.getJson()!
             try self.repository.publish(id: Int(id)!, item: item)
             try response.setJson(item)
             response.completed(status: .accepted)
@@ -129,7 +129,7 @@ class ProductController {
     
     func productCategoryHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let items: [ProductCategory] = try request.getJson()
+            let items: [ProductCategory] = request.getJson()!
             for item in items {
                 try self.repository.addCategory(item: item)
             }
@@ -142,7 +142,7 @@ class ProductController {
 
     func productCategoryHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let items: [ProductCategory] = try request.getJson()
+            let items: [ProductCategory] = request.getJson()!
             for item in items {
                 try self.repository.removeCategory(item: item)
             }
@@ -155,7 +155,7 @@ class ProductController {
 
     func productAttributeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let items: [ProductAttribute] = try request.getJson()
+            let items: [ProductAttribute] = request.getJson()!
             for item in items {
                 try self.repository.addAttribute(item: item)
             }
@@ -168,7 +168,7 @@ class ProductController {
     
     func productAttributeHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let items: [ProductAttribute] = try request.getJson()
+            let items: [ProductAttribute] = request.getJson()!
             for item in items {
                 try self.repository.removeAttribute(item: item)
             }
@@ -180,7 +180,7 @@ class ProductController {
 
     func productAttributeValueHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let items: [ProductAttributeValue] = try request.getJson()
+            let items: [ProductAttributeValue] = request.getJson()!
             for item in items {
                 try self.repository.addAttributeValue(item: item)
             }
@@ -193,7 +193,7 @@ class ProductController {
     
     func productAttributeValueHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let items: [ProductAttributeValue] = try request.getJson()
+            let items: [ProductAttributeValue] = request.getJson()!
             for item in items {
                 try self.repository.removeAttributeValue(item: item)
             }

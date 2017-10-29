@@ -41,7 +41,7 @@ class CompanyController {
 	
 	func companyHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-			let item: Company = try request.getJson()
+			let item: Company = request.getJson()!
 			try self.repository.add(item: item)
 			try response.setJson(item)
 			response.completed(status: .accepted)
@@ -52,7 +52,7 @@ class CompanyController {
 	
 	func companyHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-            let item: Company = try request.getJson()
+            let item: Company = request.getJson()!
             try self.repository.update(item: item)
 			try response.setJson(item)
 			response.completed(status: .accepted)

@@ -52,7 +52,7 @@ class DeviceController {
 	
 	func deviceHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-            let item: Device = try request.getJson()
+            let item: Device = request.getJson()!
             item.storeId = item._store.storeId
             try self.repository.add(item: item)
             try response.setJson(item)
@@ -65,7 +65,7 @@ class DeviceController {
 	func deviceHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
 		let id = request.urlVariables["id"]!
 		do {
-			let item: Device = try request.getJson()
+			let item: Device = request.getJson()!
             item.storeId = item._store.storeId
             try self.repository.update(id: Int(id)!, item: item)
 			try response.setJson(item)

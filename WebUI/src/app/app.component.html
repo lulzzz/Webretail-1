@@ -10,8 +10,18 @@
         #routerLinkActiveInstance="routerLinkActive"
         [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
         [routerLink]="['/home']">
-        <span><mat-icon>mood</mat-icon></span>
+        <span><mat-icon>home</mat-icon></span>
         &nbsp;&nbsp;Home
+      </a>
+      <a mat-list-item
+        tabindex="-1"
+        (click)="start.close()"
+        routerLinkActive
+        #routerLinkActiveInstance="routerLinkActive"
+        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
+        [routerLink]="['/account']">
+        <span><mat-icon>account_box</mat-icon></span>
+        &nbsp;&nbsp;Account
       </a>
       <a *ngFor="let navItem of navItems"
         mat-list-item
@@ -20,10 +30,9 @@
         #routerLinkActiveInstance="routerLinkActive"
         [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
         [routerLink]="[navItem.route]">
-        <span><mat-icon>mood</mat-icon></span>
+        <span><mat-icon>library_books</mat-icon></span>
         &nbsp;&nbsp;{{navItem.name}}
       </a>
-      <button mat-button tabindex="-1" (click)="start.close()">Close</button>
     </mat-nav-list>
   </mat-sidenav>
 

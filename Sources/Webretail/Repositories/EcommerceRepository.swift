@@ -117,6 +117,31 @@ struct EcommerceRepository : EcommerceProtocol {
         return try items.rows(barcodes: false)
     }
     
+    func getProduct(id: Int) throws -> Product {
+        let item = Product()
+        try item.query(
+            whereclause: "products.productId = $1",
+            params: [id],
+            joins: [
+                StORMDataSourceJoin(
+                    table: "brands",
+                    onCondition: "products.brandId = brands.brandId",
+                    direction: StORMJoinType.INNER
+                )
+            ]
+        )
+        if item.productId == 0 {
+            throw StORMError.noRecordFound
+        }
+        
+        try item.makeDiscount()
+        try item.makeCategories()
+        try item.makeAttributes()
+        try item.makeArticles()
+        
+        return item
+    }
+
     func getBasket(customerId: Int) throws -> [Basket] {
         let items = Basket()
         try items.query(whereclause: "customerId = $1", params: [customerId])

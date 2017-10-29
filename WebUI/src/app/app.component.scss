@@ -9,13 +9,20 @@ body {
   }
 
   .mat-sidenav {
-    min-width: 30vw;
-
+    width: 50vw;
+    max-width: 400px;
+    padding: 1vw;
+    img {
+      height: 100px;
+    }
     .mat-button {
       width: 100%;
       position: relative;
       bottom: 0;
       margin: 24px 0;
+    }
+    .mat-list-item {
+      border-bottom: thin ridge gray;
     }
   }
 

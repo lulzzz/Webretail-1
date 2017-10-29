@@ -28,4 +28,10 @@ export class ProductService {
         return this.http.get(url, { headers: Helpers.getHeaders() })
             .map(result => <Product[]>result.json());
     }
+
+    getByProductId(id: number): Observable<Product> {
+        const url = 'api/ecommerce/product/' + id;
+        return this.http.get(url, { headers: Helpers.getHeaders() })
+            .map(result => <Product>result.json());
+    }
 }

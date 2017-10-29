@@ -42,7 +42,7 @@ class MovementArticleController {
     
     func movementArticleHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
        	do {
-            let item: MovementArticle = try request.getJson()
+            let item: MovementArticle = request.getJson()!
             let product = Product()
             try product.get(barcode: item.movementArticleBarcode)
             if product.productId == 0 {
@@ -69,7 +69,7 @@ class MovementArticleController {
     func movementArticleHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
 			let id = request.urlVariables["id"]!
-            let item: MovementArticle = try request.getJson()
+            let item: MovementArticle = request.getJson()!
             try self.movementRepository.update(id: Int(id)!, item: item)
             try response.setJson(item)
             response.completed(status: .accepted)

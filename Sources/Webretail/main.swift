@@ -25,13 +25,13 @@ import Turnstile
 import StORM
 
 
-// Error file location
-LogFile.location = "./log.log"
-
 // Create HTTP server.
 let server = HTTPServer()
 server.serverPort = 8181
 server.documentRoot = "./webroot"
+
+// Error file location
+LogFile.location = "./StORMlog.txt"
 
 // Register dependency injection
 addIoC()

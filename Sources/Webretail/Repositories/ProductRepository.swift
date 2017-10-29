@@ -31,7 +31,7 @@ struct ProductRepository : ProductProtocol {
         return try items.rows(barcodes: date > 0)
     }
 	
-    func getProduct(id: Int) throws -> Product? {
+    func getProduct(id: Int) throws -> Product {
         let item = Product()
 		try item.query(
 			whereclause: "products.productId = $1",
@@ -39,7 +39,7 @@ struct ProductRepository : ProductProtocol {
 			joins: [self.getJoin()]
 		)
         if item.productId == 0 {
-            return nil
+            throw StORMError.noRecordFound
         }
         
 		try item.makeDiscount()
@@ -49,9 +49,9 @@ struct ProductRepository : ProductProtocol {
         return item
     }
     
-	func get(id: Int) throws -> Product? {
+	func get(id: Int) throws -> Product {
 		let item = try getProduct(id: id)
-		try item?.makeArticles()
+		try item.makeArticles()
 		
 		return item
 	}
@@ -227,10 +227,7 @@ struct ProductRepository : ProductProtocol {
     
     func update(id: Int, item: Product) throws {
         
-        guard let current = try get(id: id) else {
-            throw StORMError.noRecordFound
-        }
-		
+        let current = try get(id: id)
         item.productUpdated = Int.now()
         current.productCode = item.productCode
         current.productName = item.productName
@@ -243,21 +240,23 @@ struct ProductRepository : ProductProtocol {
 		try current.save()
     }
     
-    func get(productId: Int) throws -> Publication? {
+    func get(productId: Int) throws -> Publication {
         let item = Publication()
         try item.query(
             whereclause: "productId = $1", params: [productId],
             cursor: StORMCursor(limit: 1, offset: 0)
         )
         
+        if (item.publicationId == 0) {
+            throw StORMError.noRecordFound
+        }
+        
         return item
     }
 
     func publish(id: Int, item: Product) throws {
         
-        guard let current = try get(id: id) else {
-            throw StORMError.noRecordFound
-        }
+        let current = try get(id: id)
         
         for c in item._categories {
             let category = Category()
@@ -390,7 +389,7 @@ struct ProductRepository : ProductProtocol {
     }
     
     internal func setValid(productId: Int, valid: Bool) throws {
-        let product = try get(id: productId)!
+        let product = try get(id: productId)
         if product.productIsValid != valid {
             product.productIsValid = valid
             try update(id: productId, item: product)

@@ -38,7 +38,7 @@ class PdfController {
     
     func pdfHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: PdfDocument = try request.getJson()
+            let item: PdfDocument = request.getJson()!
             
             let data = self.htmlToPdf(model: item);
             guard let content = data else {
@@ -55,7 +55,7 @@ class PdfController {
     
     func emailHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: PdfDocument = try request.getJson()
+            let item: PdfDocument = request.getJson()!
             if item.address.isEmpty {
                 throw PerfectError.apiError("email address to is empty")
             }

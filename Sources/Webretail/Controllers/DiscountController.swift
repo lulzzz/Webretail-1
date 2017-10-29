@@ -65,7 +65,7 @@ class DiscountController {
 	
 	func discountHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-            let item: Discount = try request.getJson()
+            let item: Discount = request.getJson()!
 			try self.repository.add(item: item)
 			try response.setJson(item)
 			response.completed(status: .created)
@@ -77,7 +77,7 @@ class DiscountController {
 	func discountHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
 		let id = request.urlVariables["id"]!
 		do {
-            let item: Discount = try request.getJson()
+            let item: Discount = request.getJson()!
 			try self.repository.update(id: Int(id)!, item: item)
 			try response.setJson(item)
 			response.completed(status: .accepted)
@@ -98,7 +98,7 @@ class DiscountController {
 
 	func discountProductHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-			let item: DiscountProduct = try request.getJson()
+			let item: DiscountProduct = request.getJson()!
             try self.repository.addProduct(item: item)
 			try response.setJson(item)
 			response.completed(status: .created)

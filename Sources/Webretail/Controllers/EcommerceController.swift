@@ -6,6 +6,7 @@
 //
 
 import PerfectHTTP
+import PerfectLib
 
 class EcommerceController {
     
@@ -25,7 +26,8 @@ class EcommerceController {
         routes.add(method: .get, uri: "/api/ecommerce/featured", handler: ecommerceFeaturedHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category", handler: ecommerceCategoriesHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category/{id}", handler: ecommerceCategoryHandlerGET)
-        
+        routes.add(method: .get, uri: "/api/ecommerce/product/{id}", handler: ecommerceProductHandlerGET)
+
         /// Customer Api
         routes.add(method: .get, uri: "/api/ecommerce/customer", handler: ecommerceCustomerHandlerGET)
         routes.add(method: .put, uri: "/api/ecommerce/customer", handler: ecommerceCustomerHandlerPUT)
@@ -76,9 +78,24 @@ class EcommerceController {
     }
     
     func ecommerceCategoryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        let id = request.urlVariables["id"]!
         do {
-            let items = try self.repository.getPublished(categoryId: Int(id)!)
+            guard let id = Int(request.urlVariables["id"]!) else {
+                throw PerfectError.apiError("id")
+            }
+            let items = try self.repository.getPublished(categoryId: id)
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func ecommerceProductHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            guard let id = Int(request.urlVariables["id"]!) else {
+                throw PerfectError.apiError("id")
+            }
+            let items = try self.repository.getProduct(id: id)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
@@ -101,7 +118,7 @@ class EcommerceController {
     func ecommerceCustomerHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let customer: Customer = try request.getJson()
+            let customer: Customer = request.getJson()!
             try self.customerRepository.update(id: Int(uniqueID)!, item: customer)
             try response.setJson(customer)
             response.completed(status: .accepted)
@@ -136,7 +153,7 @@ class EcommerceController {
     func ecommerceBasketHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let basket: Basket = try request.getJson()
+            let basket: Basket = request.getJson()!
             basket.customerId = Int(uniqueID)!
             try self.repository.addBasket(item: basket)
             try response.setJson(basket)
@@ -147,10 +164,12 @@ class EcommerceController {
     }
     
     func ecommerceBasketHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        let id = request.urlVariables["id"]!
         do {
-            let basket: Basket = try request.getJson()
-            try self.repository.updateBasket(id: Int(id)!, item: basket)
+            guard let id = Int(request.urlVariables["id"]!) else {
+                throw PerfectError.apiError("id")
+            }
+            let basket: Basket = request.getJson()!
+            try self.repository.updateBasket(id: id, item: basket)
             try response.setJson(basket)
             response.completed(status: .accepted)
         } catch {
@@ -159,8 +178,10 @@ class EcommerceController {
     }
     
     func ecommerceBasketHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
-        let id = request.urlVariables["id"]!
         do {
+            guard let id = request.urlVariables["id"] else {
+                throw PerfectError.apiError("id")
+            }
             try self.repository.deleteBasket(id: Int(id)!)
             response.completed(status: .noContent)
         } catch {
@@ -185,7 +206,7 @@ class EcommerceController {
     func ecommerceOrderHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let basket: Basket = try request.getJson()
+            let basket: Basket = request.getJson()!
             try self.repository.addOrder(customerId: Int(uniqueID)!, payment: "Cash")
             try response.setJson(basket)
             response.completed(status: .created)

@@ -52,6 +52,7 @@ class Customer: PostgresSqlORM, Codable, Account {
 		customerId = this.data["customerid"] as? Int ?? 0
 		customerName = this.data["customername"] as? String ?? ""
 		customerEmail = this.data["customeremail"] as? String ?? ""
+        customerPassword = this.data["customerpassword"] as? String ?? ""
 		customerPhone = this.data["customerphone"] as? String ?? ""
 		customerAddress = this.data["customeraddress"] as? String ?? ""
 		customerCity = this.data["customercity"] as? String ?? ""
@@ -74,16 +75,12 @@ class Customer: PostgresSqlORM, Codable, Account {
 	}
 
     func get(email: String) throws {
-        do {
-            try query(
-                whereclause: "customerEmail = $1",
-                params: [email],
-                cursor: StORMCursor(limit: 1, offset: 0)
-            )
-            if self.results.rows.count == 0 {
-                throw StORMError.noRecordFound
-            }
-        } catch {
+        try query(
+            whereclause: "customerEmail = $1",
+            params: [email],
+            cursor: StORMCursor(limit: 1, offset: 0)
+        )
+        if self.results.rows.count == 0 {
             throw StORMError.noRecordFound
         }
     }
