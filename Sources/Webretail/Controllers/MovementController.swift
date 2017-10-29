@@ -7,6 +7,7 @@
 //
 
 import PerfectHTTP
+import PerfectLib
 
 class MovementController {
     
@@ -113,7 +114,9 @@ class MovementController {
 	
 	func movementHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: Movement = request.getJson()!
+            guard let item: Movement = request.getJson() else {
+                throw PerfectError.apiError("json decode")
+            }
 			try self.repository.add(item: item)
             try response.setJson(item)
 			
@@ -146,9 +149,10 @@ class MovementController {
 	func movementHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
 			let id = request.urlVariables["id"]!
-            let item: Movement = request.getJson()!
+            guard let item: Movement = request.getJson() else {
+                throw PerfectError.apiError("json decode")
+            }
             try self.repository.update(id: Int(id)!, item: item)
-            //TODO: item._amount = item.getJSONValue(named: "movementAmount", from: json!, defaultValue: 0.0)
             try response.setJson(item)
             response.completed(status: .accepted)
         } catch {

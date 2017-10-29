@@ -39,9 +39,9 @@ export class RegisterComponent implements OnInit {
 				if (result.login === 'ok') {
 					this.sessionService.grantCredentials(result);
 				} else {
-					this.snackBar.open(result.error, 'Undo');
+					this.snackBar.open(result.error, 'Close');
 				}
 			},
-			onerror => this.snackBar.open(onerror._body, 'Undo'));
+			onerror => this.snackBar.open(onerror._body, 'Close'));
 	}
 }

@@ -1,40 +1,37 @@
 <div *ngIf="product">
-  <mat-card>
-    <mat-card-content>
-      <h3 mat-line>{{product.productName}}</h3>
-      <div *ngIf="product.discount;then discount_content else price_content"></div>
-      <ng-template #discount_content>
-        <strong>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-description>Information</mat-panel-description>
+      <mat-panel-title><b>ID: {{product.productCode}}</b></mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-card>
+      <mat-card-content>
+        <p><span mat-line>BRAND<br/><b>{{product.brand.brandName}}</b></span></p>
+        <p><span mat-line>CATEGORIES<br/>
+          <li *ngFor="let c of product.categories"><b>{{c.category.translations | translate : c.category.categoryName}}</b></li>
+        </span></p>
+        <p><span mat-line>DESCRIPTION<br/><b>{{product.translations | translate : product.productName}}</b></span></p>
+        <div *ngIf="product.discount;then discount_content else price_content"></div>
+        <ng-template #discount_content>
+          <p><span mat-line>PRICE<br/>
           <span class="percentage">-{{product.discount.discountPercentage}}%</span>
-          <del>{{product.productSellingPrice | currency: 'EUR' : true}}</del><br><strong>{{product.discount.discountPrice | currency: 'EUR' : true}}</strong>
-        </strong>
-      </ng-template>
-      <ng-template #price_content>
-        <strong>{{product.productSellingPrice | currency: 'EUR' : true}}</strong>
-      </ng-template>
-      <p><span mat-line>Brand: {{product.brand.brandName}}</span></p>
-      <p><span mat-line>Categories</span></p>
-      <ul>
-        <li *ngFor="let c of product.categories"><span mat-line>{{ c.category.categoryName }}</span></li>
-      </ul>
-    </mat-card-content>
-  </mat-card>
+          <del>{{product.productSellingPrice | currency: 'EUR' : true}}</del>
+          <br/><b>{{product.discount.discountPrice | currency: 'EUR' : true}}</b>
+          </span></p>
+        </ng-template>
+        <ng-template #price_content>
+          <p><span mat-line>PRICE<br/><b>{{product.productSellingPrice | currency: 'EUR' : true}}</b></span></p>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </mat-expansion-panel>
 
+  <article-picker [product]="product" (onPicked)="pickerClick($event)"></article-picker>
+  
   <mat-card>
     <mat-card-content>
-      <mat-form-field *ngFor="let a of product.attributes">
-        <mat-select placeholder="{{a.attribute.attributeName}}">
-          <mat-option *ngFor="let v of a.attributeValues" [value]="v.attributeValue.attributeValueCode">
-            {{ v.attributeValue.attributeValueName }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card>
-    <mat-card-content>
-      <img [alt]="product.productName" src="/{{product.medias[0].url}}" [style.height.px]="fitHeight">
+      <image-slider [slides]="images"></image-slider>
+      <!-- <img (click)="cancelClick()" [alt]="product.productName" src="/{{product.medias[0].url}}"> -->
     </mat-card-content>
   </mat-card>
 </div>

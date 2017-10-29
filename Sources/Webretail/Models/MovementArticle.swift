@@ -66,8 +66,8 @@ class MovementArticle: PostgresSqlORM, Codable {
         super.init()
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        movementArticleId = try container.decode(Int.self, forKey: .movementArticleId)
-        movementId = try container.decode(Int.self, forKey: .movementId)
+        movementArticleId = try container.decodeIfPresent(Int.self, forKey: .movementArticleId) ?? 0
+        movementId = try container.decodeIfPresent(Int.self, forKey: .movementId) ?? 0
         movementArticleBarcode = try container.decode(String.self, forKey: .movementArticleBarcode)
         let product = Product()
         try! product.get(barcode: movementArticleBarcode)

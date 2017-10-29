@@ -49,7 +49,7 @@ export class AccountComponent implements OnInit {
             .getById(cutomerId)
             .subscribe(result => {
                 this.account = result;
-            }, onerror => this.snackBar.open(onerror._body, 'Undo'));
+            }, onerror => this.snackBar.open(onerror._body, 'Close'));
     }
 
     saveClick() {
@@ -62,7 +62,7 @@ export class AccountComponent implements OnInit {
             .update(this.account.customerId, this.account)
             .subscribe(result => {
                 this.account.updatedAt = result.updatedAt;
-            }, onerror => this.snackBar.open(onerror._body, 'Undo'));
+            }, onerror => this.snackBar.open(onerror._body, 'Close'));
     }
 
     deleteClick() {
@@ -74,7 +74,7 @@ export class AccountComponent implements OnInit {
                     .delete(this.account.customerId)
                     .subscribe(result => {
                         this.sessionService.removeCredentials();
-                    }, onerror => this.snackBar.open(onerror._body, 'Undo'));
+                    }, onerror => this.snackBar.open(onerror._body, 'Close'));
                 }
             });
     }

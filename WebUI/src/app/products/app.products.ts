@@ -58,6 +58,6 @@ onResizeChanged(event: any) {
         .subscribe(result => {
           this.products = result;
     },
-    onerror => this.snackBar.open(onerror._body, 'Undo'));
+    onerror => this.snackBar.open(onerror._body, 'Close'));
   }
 }

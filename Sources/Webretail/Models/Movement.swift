@@ -52,7 +52,7 @@ class Movement: PostgresSqlORM, Codable {
         case movementCustomer
         case movementPayment
         case _amount = "movementAmount"
-        case _items = "items"
+        case _items = "movementItems"
         case movementUpdated = "updatedAt"
     }
     
@@ -105,10 +105,10 @@ class Movement: PostgresSqlORM, Codable {
         super.init()
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        movementId = try container.decode(Int.self, forKey: .movementId)
+        movementId = try container.decodeIfPresent(Int.self, forKey: .movementId) ?? 0
         movementNumber = try container.decode(Int.self, forKey: .movementNumber)
         movementDate = try container.decode(String.self, forKey: .movementDate).DateToInt()
-        movementDesc = try container.decode(String.self, forKey: .movementDesc)
+        movementDesc = try container.decodeIfPresent(String.self, forKey: .movementDesc) ?? ""
         movementNote = try container.decode(String.self, forKey: .movementNote)
         movementStatus = try container.decode(String.self, forKey: .movementStatus)
         movementUser = try container.decode(String.self, forKey: .movementUser)
@@ -117,6 +117,7 @@ class Movement: PostgresSqlORM, Codable {
         movementCausal = try container.decode(Causal.self, forKey: .movementCausal)
         movementCustomer = try container.decodeIfPresent(Customer.self, forKey: .movementCustomer) ?? Customer()
         movementPayment = try container.decode(String.self, forKey: .movementPayment)
+        _items = try container.decodeIfPresent([MovementArticle].self, forKey: ._items) ?? [MovementArticle]()
     }
     
     func encode(to encoder: Encoder) throws {

@@ -80,6 +80,7 @@ import { PriceFilterPipe } from './pipes/price-filter.pipe';
 import { ArticleInfoPipe } from './pipes/articleinfo.pipe';
 import { ArticleFilterPipe } from './pipes/article-filter.pipe';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 import { PeriodFilterPipe } from './pipes/period-filter.pipe';
 
 @NgModule({
@@ -102,6 +103,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ArticleInfoPipe,
         ArticleFilterPipe,
         DateFilterPipe,
+        DateFormatPipe,
         PeriodFilterPipe,
         AppComponent,
         NavigationComponent,
@@ -170,6 +172,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ArticleInfoPipe,
         ArticleFilterPipe,
         DateFilterPipe,
+        DateFormatPipe,
         PeriodFilterPipe
     ],
     bootstrap: [AppComponent],

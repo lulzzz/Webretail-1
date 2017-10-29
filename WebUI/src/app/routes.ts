@@ -8,6 +8,7 @@ import { AccountComponent } from './account/app.account';
 
 export const APP_ROUTES: Routes = [
   {path: '', component: AppComponent, children: [
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'account', component: AccountComponent},
     {path: 'login', component: LoginComponent},

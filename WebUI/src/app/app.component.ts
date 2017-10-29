@@ -3,21 +3,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { ProductService } from './services/product.service';
 
 /**
- * The entry app for site. Routes under `accessibility` will use AccessibilityDemo component,
- * while other demos will use `DemoApp` component. Since DemoApp and AccessibilityDemo use
- * different templates (DemoApp has toolbar and sidenav), we use this EntryApp in index.html
- * as our entry point.
- */
-@Component({
-  moduleId: module.id,
-  selector: 'app-entry',
-  template: '<router-outlet></router-outlet>',
-  encapsulation: ViewEncapsulation.None,
-  preserveWhitespaces: false,
-})
-export class AppEntry { }
-
-/**
  * Home component for welcome message in App.
  */
 @Component({
@@ -39,7 +24,7 @@ export class HomeComponent {
   moduleId: module.id,
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['app.component.scss'],
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
 })
