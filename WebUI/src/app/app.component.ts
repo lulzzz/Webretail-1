@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Location } from '@angular/common';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ProductService } from './services/product.service';
 
@@ -16,7 +17,7 @@ import { ProductService } from './services/product.service';
 })
 export class HomeComponent {
   constructor() {
-    AppComponent.title = 'Home';
+    AppComponent.setPage('Home', false);
   }
 }
 
@@ -30,15 +31,26 @@ export class HomeComponent {
 })
 export class AppComponent implements OnInit {
   static title: string;
+  static backButton: boolean;
   navItems = [
     { name: 'Featured', route: '/products/featured/Featured' }
   ];
 
-  get title() {
+  static setPage(title: string, backButton: boolean) {
+    AppComponent.title = title;
+    AppComponent.backButton = backButton;
+  }
+
+  get title(): string {
     return AppComponent.title;
   }
 
+  get backButton(): boolean {
+    return AppComponent.backButton;
+  }
+
   constructor(
+    private location: Location,
     private productService: ProductService,
     private _element: ElementRef
   ) { }
@@ -72,5 +84,9 @@ export class AppComponent implements OnInit {
     // } else if (element.msExitFullscreen) {
     //     element.msExitFullscreen();
     // }
+  }
+
+  backClick() {
+    this.location.back();
   }
 }

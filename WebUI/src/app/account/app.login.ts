@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 		public snackBar: MatSnackBar,
 		private sessionService: SessionService,
 		private fb: FormBuilder) {
-		AppComponent.title = 'Login';
+		AppComponent.setPage('Login', false);
 	}
 
 	ngOnInit() {

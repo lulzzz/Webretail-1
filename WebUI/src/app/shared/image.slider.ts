@@ -31,8 +31,7 @@ export class SafeHtmlPipe implements PipeTransform {
         <img [src]="meta.imgSrc" *ngIf="meta.sType=='img'" style="width: 100%"/>
     </li>
 </ul>
-</div>
-    `,
+</div>`,
     styleUrls: ['image.slider.scss'],
     encapsulation: ViewEncapsulation.None
 })

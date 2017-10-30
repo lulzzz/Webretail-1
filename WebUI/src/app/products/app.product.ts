@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { ProductService } from 'app/services/product.service';
@@ -20,7 +19,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   images: Array<any>;
 
   constructor(
-    private location: Location,
     private snackBar: MatSnackBar,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute
@@ -43,7 +41,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.productService.getByProductId(id)
         .subscribe(result => {
           this.product = result;
-          AppComponent.title = result.productName;
+          AppComponent.setPage(result.productName, true);
           this.product.medias.forEach(m => {
             this.images.push({'sType': 'img', 'imgSrc': m.url});
           });
@@ -59,9 +57,5 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     this.snackBar.open(event.articleBarcode, 'Close')
-  }
-
-  cancelClick() {
-    this.location.back();
   }
 }

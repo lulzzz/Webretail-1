@@ -22,7 +22,7 @@ export class AccountComponent implements OnInit {
                 private sessionService: SessionService,
                 private customerService: CustomerService,
                 private fb: FormBuilder) {
-        AppComponent.title = 'Account';
+        AppComponent.setPage('Account', false);
     }
 
     ngOnInit() {

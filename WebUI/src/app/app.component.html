@@ -38,7 +38,10 @@
 
   <div>
     <mat-toolbar id="toolbar" color="transparent">
-      <button mat-icon-button (click)="start.open()">
+      <button *ngIf="backButton" mat-icon-button (click)="backClick()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button *ngIf="!backButton" mat-icon-button (click)="start.open()">
         <mat-icon>menu</mat-icon>
       </button>
       <div class="app-toolbar">

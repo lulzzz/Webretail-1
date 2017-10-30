@@ -53,6 +53,7 @@ onResizeChanged(event: any) {
 
   loadProducts(categoryId: string, categoryName: string) {
     AppComponent.title = categoryName;
+    AppComponent.setPage(categoryName, false);
 
     this.productService.getByCategoryId(categoryId)
         .subscribe(result => {

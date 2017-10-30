@@ -1,4 +1,5 @@
 <div *ngIf="product">
+  <image-slider [slides]="images"></image-slider>
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-description>Information</mat-panel-description>
@@ -25,13 +26,5 @@
       </mat-card-content>
     </mat-card>
   </mat-expansion-panel>
-
   <article-picker [product]="product" (onPicked)="pickerClick($event)"></article-picker>
-  
-  <mat-card>
-    <mat-card-content>
-      <image-slider [slides]="images"></image-slider>
-      <!-- <img (click)="cancelClick()" [alt]="product.productName" src="/{{product.medias[0].url}}"> -->
-    </mat-card-content>
-  </mat-card>
 </div>
