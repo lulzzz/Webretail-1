@@ -30,8 +30,8 @@ export class HomeComponent {
   preserveWhitespaces: false,
 })
 export class AppComponent implements OnInit {
-  static title: string;
-  static backButton: boolean;
+  static title = 'Webretail';
+  static backButton = false;
   navItems = [
     { name: 'Featured', route: '/products/featured/Featured' }
   ];

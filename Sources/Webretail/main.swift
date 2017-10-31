@@ -21,32 +21,49 @@ import PerfectNet
 import PerfectHTTP
 import PerfectHTTPServer
 import PerfectLogger
-import Turnstile
 import StORM
+import PerfectSession
 
 
-// Create HTTP server.
 let server = HTTPServer()
-server.serverPort = 8181
-server.documentRoot = "./webroot"
 
-// Error file location
-LogFile.location = "./StORMlog.txt"
+// CORS
+SessionConfig.CORS.enabled = true
+SessionConfig.CORS.acceptableHostnames = ["*"]
+SessionConfig.CORS.methods = [.get, .post, .put, .delete]
+SessionConfig.CORS.withCredentials = true
+SessionConfig.CORS.maxAge = 60
 
 // Register dependency injection
 addIoC()
 
-// Register routes and handlers
-addRoutesAndHandlers()
-
-// Register filters
-addFilters()
+// Error file location
+LogFile.location = "./StORMlog.txt"
 
 do {
     // Setup database
     try setupDatabase();
 
-    // Launch the HTTP server.
+    // Launch the HTTP servers.
+//    let tls = TLSConfiguration(certPath: "cert.pem", keyPath: "key.pem", alpnSupport: [.http2, .http11])
+//    try HTTPServer.launch(
+//        .secureServer(
+//            tls,
+//            name: "localhost",
+//            port: 8181,
+//            routes: getRoutesAndHandlers(),
+//            requestFilters: getRequestFilters(),
+//            responseFilters: getResponseFilters()
+//        ),
+//        .server(name: "localhost", port: 5000, documentRoot:  "./WebUI/dist"),
+//        .server(name: "localhost", port: 5001, documentRoot:  "./AdminUI/dist")
+//    )
+    
+    
+    server.setRequestFilters(getRequestFilters())
+    server.setResponseFilters(getResponseFilters())
+    server.addRoutes(getRoutesAndHandlers())
+    server.serverPort = 8181
     try server.start()
 
 } catch StORMError.error(let msg) {
@@ -56,3 +73,4 @@ do {
 } catch {
     print("System error thrown: \(error)")
 }
+

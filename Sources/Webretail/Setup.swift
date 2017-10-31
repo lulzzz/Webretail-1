@@ -10,10 +10,14 @@ import Foundation
 import PostgresStORM
 import StORM
 import TurnstileWeb
+import PerfectHTTP
+import PerfectSession
+
 
 let pturnstile = TurnstilePerfectRealm()
 let tokenStore = AccessTokenStore()
 let ioCContainer = IoCContainer()
+let sessionDriver = SessionMemoryDriver()
 
 func setupDatabase() throws {
     
@@ -75,49 +79,57 @@ func addIoC() {
     ioCContainer.register { EcommerceRepository() as EcommerceProtocol }
 }
 
-func addRoutesAndHandlers() {
+func getRoutesAndHandlers() -> Routes {
+    var routes = Routes()
+    
 	// Register Angular routes and handlers
-	server.addRoutes(AngularController().getRoutes())
+	routes.add(AngularController().getRoutes())
 	
 	// Register api routes and handlers
-	server.addRoutes(CompanyController().getRoutes())
-	server.addRoutes(AuthenticationController().getRoutes())
-	server.addRoutes(UserController().getRoutes())
-	server.addRoutes(CausalController().getRoutes())
-	server.addRoutes(StoreController().getRoutes())
-	server.addRoutes(DeviceController().getRoutes())
-	server.addRoutes(BrandController().getRoutes())
-	server.addRoutes(CategoryController().getRoutes())
-	server.addRoutes(AttributeController().getRoutes())
-	server.addRoutes(AttributeValueController().getRoutes())
-	server.addRoutes(ProductController().getRoutes())
-	server.addRoutes(ArticleController().getRoutes())
-	server.addRoutes(CustomerController().getRoutes())
-	server.addRoutes(MovementController().getRoutes())
-	server.addRoutes(MovementArticleController().getRoutes())
-	server.addRoutes(DiscountController().getRoutes())
-	server.addRoutes(InvoiceController().getRoutes())
-    server.addRoutes(PdfController().getRoutes())
-    server.addRoutes(StatisticController().getRoutes())
-    server.addRoutes(PublicationController().getRoutes())
-    server.addRoutes(EcommerceController().getRoutes())
+	routes.add(CompanyController().getRoutes())
+	routes.add(AuthenticationController().getRoutes())
+	routes.add(UserController().getRoutes())
+	routes.add(CausalController().getRoutes())
+	routes.add(StoreController().getRoutes())
+	routes.add(DeviceController().getRoutes())
+	routes.add(BrandController().getRoutes())
+	routes.add(CategoryController().getRoutes())
+	routes.add(AttributeController().getRoutes())
+	routes.add(AttributeValueController().getRoutes())
+	routes.add(ProductController().getRoutes())
+	routes.add(ArticleController().getRoutes())
+	routes.add(CustomerController().getRoutes())
+	routes.add(MovementController().getRoutes())
+	routes.add(MovementArticleController().getRoutes())
+	routes.add(DiscountController().getRoutes())
+	routes.add(InvoiceController().getRoutes())
+    routes.add(PdfController().getRoutes())
+    routes.add(StatisticController().getRoutes())
+    routes.add(PublicationController().getRoutes())
+    routes.add(EcommerceController().getRoutes())
+    
+    return routes
 }
 
-func addFilters() {
-	var authenticationConfig = AuthenticationConfig()
-	authenticationConfig.include("/api/*}")
+func getResponseFilters() -> [(HTTPResponseFilter, HTTPFilterPriority)] {
+	
+	// Note that order matters when the filters are of the same priority level
+    return [sessionDriver.responseFilter, pturnstile.responseFilter]
+}
+
+func getRequestFilters() -> [(HTTPRequestFilter, HTTPFilterPriority)] {
+    var authenticationConfig = AuthenticationConfig()
+    authenticationConfig.include("/api/*}")
     authenticationConfig.exclude("/api/login")
-	authenticationConfig.exclude("/api/logout")
+    authenticationConfig.exclude("/api/logout")
     authenticationConfig.exclude("/api/register")
     authenticationConfig.exclude("/api/ecommerce")
     authenticationConfig.exclude("/api/ecommerce/featured")
     authenticationConfig.exclude("/api/ecommerce/category")
     authenticationConfig.exclude("/api/ecommerce/category/*")
+    
+    let authFilter = AuthFilter(authenticationConfig)
 
-	let authFilter = AuthFilter(authenticationConfig)
-	
-	// Note that order matters when the filters are of the same priority level
-    server.setRequestFilters([pturnstile.requestFilter])
-    server.setResponseFilters([pturnstile.responseFilter])
-	server.setRequestFilters([(authFilter, .high)])
+    return [sessionDriver.requestFilter, (authFilter, .high), pturnstile.requestFilter]
 }
+

@@ -8,13 +8,17 @@
 
 import Foundation
 import PerfectHTTP
+import PerfectHTTPServer
 
 public class AngularController {
 
-   func getRoutes() -> Routes {
+    func getRoutes() -> Routes {
         var routes = Routes()
 
-		routes.add(method: .get, uri: "/home", handler: angularHandlerGET)
+        routes.add(method: .get, uri: "/cors", handler: CORSHandlerGET)
+        routes.add(method: .get, uri: "/Media/*", handler: try! HTTPHandler.staticFiles(data: ["documentRoot": "./webroot"]))
+
+        routes.add(method: .get, uri: "/home", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/company", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/login", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/account", handler: angularHandlerGET)
@@ -41,9 +45,16 @@ public class AngularController {
 		routes.add(method: .get, uri: "/report/statistics", handler: angularHandlerGET)
 		routes.add(method: .get, uri: "/import", handler: angularHandlerGET)
 
-		return routes
+        return routes
     }
     
+    func CORSHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        response.addHeader(.contentType, value: "application/json")
+        let _ = try? response.setBody(json: ["Success":"CORS Request"])
+        response.completed()
+        
+    }
+
     func angularHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         response.setHeader(.contentType, value: "text/html")
         

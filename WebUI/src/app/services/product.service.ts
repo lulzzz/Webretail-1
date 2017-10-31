@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import {
@@ -10,28 +10,28 @@ import { Helpers } from '../shared/helpers';
 
 @Injectable()
 export class ProductService {
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     getPublished(): Observable<Product[]> {
-        return this.http.get('api/ecommerce', { headers: Helpers.getHeaders() })
-            .map(result => <Product[]>result.json());
+        return this.http.get('/api/ecommerce', { headers: Helpers.getHeaders() })
+            .map(result => <Product[]>result);
     }
 
     getCategories(): Observable<Category[]> {
-        return this.http.get('api/ecommerce/category', { headers: Helpers.getHeaders() })
-            .map(result => <Category[]>result.json());
+        return this.http.get('/api/ecommerce/category', { headers: Helpers.getHeaders() })
+            .map(result => <Category[]>result);
     }
 
     getByCategoryId(id: string): Observable<Product[]> {
-        const url = id === 'featured' ? 'api/ecommerce/featured' : 'api/ecommerce/category/' + id;
+        const url = id === 'featured' ? '/api/ecommerce/featured' : '/api/ecommerce/category/' + id;
         return this.http.get(url, { headers: Helpers.getHeaders() })
-            .map(result => <Product[]>result.json());
+            .map(result => <Product[]>result);
     }
 
     getByProductId(id: number): Observable<Product> {
-        const url = 'api/ecommerce/product/' + id;
+        const url = '/api/ecommerce/product/' + id;
         return this.http.get(url, { headers: Helpers.getHeaders() })
-            .map(result => <Product>result.json());
+            .map(result => <Product>result);
     }
 }

@@ -1,33 +1,33 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { Login, Token } from '../shared/models';
 import { Helpers } from '../shared/helpers';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class SessionService {
 
-    constructor(private router: Router, private http: Http) {
+    constructor(private router: Router, private http: HttpClient) {
     }
 
     login(account: Login): Observable<Token> {
         return this.http.post('/api/login', account, { headers: Helpers.getHeaders() })
-            .map(response => <Token>response.json());
+            .map(response => <Token>response);
     }
 
     logout() {
         const body = { token: localStorage.getItem('token') };
         this.http.post('/api/logout', body, { headers: Helpers.getHeaders() })
-            .map((response) => response.json())
+            .map((response) => response)
             .subscribe(result => result);
         this.removeCredentials();
     }
 
     register(account: Login): Observable<Token> {
         return this.http.post('/api/register', account, { headers: Helpers.getHeaders() })
-            .map(response => <Token>response.json());
+            .map(response => <Token>response);
     }
 
     grantCredentials(data: any) {
@@ -58,6 +58,6 @@ export class SessionService {
 
     getCredentials(): Observable<any>  {
         return this.http.get('/api/authenticated', { headers: Helpers.getHeaders() })
-            .map(response => response.json());
+            .map(response => response);
     }
 }

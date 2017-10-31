@@ -98,48 +98,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectLogger::PerfectLogger"
-               BuildableName = "PerfectLogger.framework"
-               BlueprintName = "PerfectLogger"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectCURL::PerfectCURL"
-               BuildableName = "PerfectCURL.framework"
-               BlueprintName = "PerfectCURL"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftMoment::SwiftMoment"
-               BuildableName = "SwiftMoment.framework"
-               BlueprintName = "SwiftMoment"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "PerfectXML::PerfectXML"
                BuildableName = "PerfectXML.framework"
                BlueprintName = "PerfectXML"
@@ -182,6 +140,76 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectSession::PerfectSession"
+               BuildableName = "PerfectSession.framework"
+               BlueprintName = "PerfectSession"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectRepeater::PerfectRepeater"
+               BuildableName = "PerfectRepeater.framework"
+               BlueprintName = "PerfectRepeater"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectLogger::PerfectLogger"
+               BuildableName = "PerfectLogger.framework"
+               BlueprintName = "PerfectLogger"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectCURL::PerfectCURL"
+               BuildableName = "PerfectCURL.framework"
+               BlueprintName = "PerfectCURL"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftMoment::SwiftMoment"
+               BuildableName = "SwiftMoment.framework"
+               BlueprintName = "SwiftMoment"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "PerfectHTTPServer::PerfectHTTPServer"
                BuildableName = "PerfectHTTPServer.framework"
                BlueprintName = "PerfectHTTPServer"
@@ -196,21 +224,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectHTTPServer::PerfectCHTTPParser"
-               BuildableName = "PerfectCHTTPParser.framework"
-               BlueprintName = "PerfectCHTTPParser"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectHTTPServer::PerfectCZlib"
+               BlueprintIdentifier = "PerfectCZlib::PerfectCZlib"
                BuildableName = "PerfectCZlib.framework"
                BlueprintName = "PerfectCZlib"
                ReferencedContainer = "container:Webretail.xcodeproj">
@@ -297,6 +311,20 @@
                BlueprintIdentifier = "PerfectLib::PerfectLib"
                BuildableName = "PerfectLib.framework"
                BlueprintName = "PerfectLib"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectHTTPServer::PerfectCHTTPParser"
+               BuildableName = "PerfectCHTTPParser.framework"
+               BlueprintName = "PerfectCHTTPParser"
                ReferencedContainer = "container:Webretail.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

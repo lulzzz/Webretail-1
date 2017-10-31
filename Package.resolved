@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-COpenSSL.git",
         "state": {
           "branch": null,
-          "revision": "87b6d1f313887fa11bd75e157a3678f066eec981",
-          "version": "3.0.0"
+          "revision": "aa39c5503945abf36f6d8d0b632b6188288f999f",
+          "version": "3.1.1"
         }
       },
       {
@@ -17,6 +17,15 @@
           "branch": null,
           "revision": "493ed0aa7cff166588a782fb14c3e8392adb0078",
           "version": "3.0.0"
+        }
+      },
+      {
+        "package": "PerfectCZlib",
+        "repositoryURL": "https://github.com/PerfectlySoft/Perfect-CZlib-src.git",
+        "state": {
+          "branch": null,
+          "revision": "2002034d47e9d57a695fb33ad2e09f136868b406",
+          "version": "0.0.3"
         }
       },
       {
@@ -42,8 +51,8 @@
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-HTTPServer.git",
         "state": {
           "branch": null,
-          "revision": "f493937203568db511425117574487821378eac5",
-          "version": "3.0.0"
+          "revision": "504f1278c386131b7145042ba93dc55a74039b72",
+          "version": "3.0.2"
         }
       },
       {
@@ -78,8 +87,17 @@
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-PostgreSQL.git",
         "state": {
           "branch": null,
-          "revision": "df6dea4a62b87ff1314bd0d74a74d6d09e35219b",
-          "version": "3.0.3"
+          "revision": "00310ef7ce892ada5d344f1d531a44a16c13152b",
+          "version": "3.0.4"
+        }
+      },
+      {
+        "package": "PerfectRepeater",
+        "repositoryURL": "https://github.com/PerfectlySoft/Perfect-Repeater.git",
+        "state": {
+          "branch": null,
+          "revision": "c7bba679dae88622d24e47a18977843835e9a748",
+          "version": "1.0.1"
         }
       },
       {
@@ -92,12 +110,21 @@
         }
       },
       {
+        "package": "PerfectSession",
+        "repositoryURL": "https://github.com/PerfectlySoft/Perfect-Session.git",
+        "state": {
+          "branch": null,
+          "revision": "37bbeac3c03262a26744ba6e525cfc6ff627c9de",
+          "version": "3.0.0"
+        }
+      },
+      {
         "package": "PerfectThread",
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-Thread.git",
         "state": {
           "branch": null,
-          "revision": "2b63f0fa535d089eef57eb3683d2da31b7b9e027",
-          "version": "3.0.0"
+          "revision": "15e3eb947d2465a072c41c9a0bfbefa6c48b34ee",
+          "version": "3.0.1"
         }
       },
       {
