@@ -47,39 +47,40 @@ server.alpnSupport = [.http11, .http2]
 // Register dependency injection
 addIoC()
 
-// Register routes and handlers
-addRoutesAndHandlers()
-
 // Register filters
 addFilters()
 
+// Register routes and handlers
+addRoutesAndHandlers()
+
+// Angular routes
+let angularRoutes = [
+    Route(method: .get, uri: "/**", handler: try! HTTPHandler.staticFiles(data: ["documentRoot": "./WebUI/dist"])),
+    Route(method: .get, uri: "/home", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/account", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/login", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/register", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/products/{id}/{name}", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/basket", handler: HTTPHandler.angularHandler(webapi: false))
+]
 
 // Launch the Web server.
-//let angularRoutes = [
-//    Route(method: .get, uri: "/**", handler: try! HTTPHandler.staticFiles(data: ["documentRoot": "./WebUI/dist"])),
-//    Route(method: .get, uri: "/home", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/account", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/login", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/register", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/products/{id}/{name}", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/basket", handler: HTTPHandler.angularHandler(webapi: false))
-//]
-//Threading.dispatch {
-//    _ = try? HTTPServer.launch(
-//        .secureServer(
-//            TLSConfiguration(certPath: server.ssl!.sslCert, keyPath: server.ssl!.sslKey, alpnSupport: server.alpnSupport),
-//            name: "",
-//            port: 443,
-//            routes: angularRoutes
-//        ),
-//        .server(
-//            name: "",
-//            port: 80,
-//            routes: angularRoutes
-//        )
-//    )
-//}
+Threading.dispatch {
+    _ = try? HTTPServer.launch(
+        .secureServer(
+            TLSConfiguration(certPath: server.ssl!.sslCert, keyPath: server.ssl!.sslKey, alpnSupport: server.alpnSupport),
+            name: "",
+            port: 443,
+            routes: angularRoutes
+        ),
+        .server(
+            name: "",
+            port: 80,
+            routes: angularRoutes
+        )
+    )
+}
 
 do {
     // Setup database
