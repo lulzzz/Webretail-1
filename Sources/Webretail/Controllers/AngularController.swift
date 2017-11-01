@@ -6,66 +6,58 @@
 //
 //
 
-import Foundation
+import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
 
 public class AngularController {
 
-    func getRoutes() -> Routes {
+   func getRoutes() -> Routes {
         var routes = Routes()
 
-        routes.add(method: .get, uri: "/cors", handler: CORSHandlerGET)
-        routes.add(method: .get, uri: "/Media/*", handler: try! HTTPHandler.staticFiles(data: ["documentRoot": "./webroot"]))
-
-        routes.add(method: .get, uri: "/home", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/company", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/login", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/account", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/brand", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/store", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/category", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/attribute", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/product", handler: angularHandlerGET)
-        routes.add(method: .get, uri: "/product/{id}", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/product/{id}/stock", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/customer", handler: angularHandlerGET)
-        routes.add(method: .get, uri: "/causal", handler: angularHandlerGET)
-        routes.add(method: .get, uri: "/movement", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/movement/{id}", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/movement/document/{id}", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/discount", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/discount/{id}", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/invoice", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/invoice/{id}", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/invoice/document/{id}", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/device", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/report/receipts", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/report/sales", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/report/statistics", handler: angularHandlerGET)
-		routes.add(method: .get, uri: "/import", handler: angularHandlerGET)
-
-        return routes
-    }
-    
-    func CORSHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.addHeader(.contentType, value: "application/json")
-        let _ = try? response.setBody(json: ["Success":"CORS Request"])
-        response.completed()
-        
-    }
-
-    func angularHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        response.setHeader(.contentType, value: "text/html")
-        
-        let data = FileManager.default.contents(atPath: "./webroot/index.html")
-        
-        guard let content = data else {
-            response.completed(status: .notFound)
-            return
+        let documentRoot = "./Upload"
+        do {
+            let dir = Dir(documentRoot)
+            if !dir.exists {
+                try Dir(documentRoot).create()
+            }
+        } catch {
+            Log.terminal(message: "The document root \(documentRoot) could not be created.")
         }
 
-        response.appendBody(string: String(data: content, encoding: .utf8)!)
-        response.completed()
+        routes.add(method: .get, uri: "/Media/**", handler: {
+            req, resp in
+            StaticFileHandler(documentRoot: documentRoot, allowResponseFilters: false)
+                .handleRequest(request: req, response: resp)
+        })
+
+        routes.add(method: .get, uri: "/home", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/company", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/login", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/account", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/brand", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/store", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/category", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/attribute", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/product", handler: HTTPHandler.angularHandler())
+        routes.add(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/product/{id}/stock", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/customer", handler: HTTPHandler.angularHandler())
+        routes.add(method: .get, uri: "/causal", handler: HTTPHandler.angularHandler())
+        routes.add(method: .get, uri: "/movement", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/movement/{id}", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/movement/document/{id}", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/discount", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/discount/{id}", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/invoice", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/invoice/{id}", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/invoice/document/{id}", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/device", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/report/receipts", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/report/sales", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/report/statistics", handler: HTTPHandler.angularHandler())
+		routes.add(method: .get, uri: "/import", handler: HTTPHandler.angularHandler())
+
+		return routes
     }
 }

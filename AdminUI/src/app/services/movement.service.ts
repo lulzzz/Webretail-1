@@ -28,6 +28,10 @@ export class MovementService {
             .map(result => <Movement[]>result.json());
     }
 
+    findById(id: number): Movement {
+        return this.movements.find(p => p.movementId === id);
+    }
+
     getById(id: number): Observable<Movement> {
         return this.http.get('/api/movement/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Movement>result.json());

@@ -34,6 +34,14 @@ extension TurnstileFilter: HTTPRequestFilter {
 			try? request.user.login(credentials: apiKeys)
 		}
 
+        if request.path.contains("api/") {
+            CORSheaders.make(request, response)
+            if "OPTIONS" == request.method.description {
+                let _ = try? response.setBody(json: ["Success":"CORS Request"])
+                response.completed(status: .ok)
+            }
+        }
+
         callback(HTTPRequestFilterResult.continue(request, response))
     }
 }

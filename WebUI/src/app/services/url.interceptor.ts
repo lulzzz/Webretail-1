@@ -7,9 +7,9 @@ import { environment } from 'environments/environment';
 @Injectable()
 export class UrlInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // req = req.clone({
-    //   url: environment.apiUrl + req.url
-    // });
+    req = req.clone({
+      url: environment.apiUrl + req.url
+    });
     return next.handle(req);
   }
 }

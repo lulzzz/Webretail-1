@@ -21,49 +21,70 @@ import PerfectNet
 import PerfectHTTP
 import PerfectHTTPServer
 import PerfectLogger
+import PerfectThread
+import Turnstile
 import StORM
-import PerfectSession
 
-
-let server = HTTPServer()
 
 // CORS
 SessionConfig.CORS.enabled = true
 SessionConfig.CORS.acceptableHostnames = ["*"]
-SessionConfig.CORS.methods = [.get, .post, .put, .delete]
+SessionConfig.CORS.methods = [.get, .post, .put, .delete, .options, .head]
+SessionConfig.CORS.allowHeaders = ["Access-Control-*","Origin","Content-Type","Accept","Authorization"]
 SessionConfig.CORS.withCredentials = true
-SessionConfig.CORS.maxAge = 60
-
-// Register dependency injection
-addIoC()
+SessionConfig.CORS.maxAge = 3000
 
 // Error file location
 LogFile.location = "./StORMlog.txt"
 
+// Create HTTP server.
+let server = HTTPServer()
+server.serverPort = 8181
+server.documentRoot = "./webroot"
+server.ssl = (sslCert: "cert.pem", sslKey: "key.pem")
+server.alpnSupport = [.http2, .http11]
+
+// Register dependency injection
+addIoC()
+
+// Register routes and handlers
+addRoutesAndHandlers()
+
+// Register filters
+addFilters()
+
+
+// Launch the Web server.
+let angularRoutes = [
+    Route(method: .get, uri: "/**", handler: try! HTTPHandler.staticFiles(data: ["documentRoot": "./WebUI/dist"])),
+    Route(method: .get, uri: "/home", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/account", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/login", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/register", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/products/{id}/{name}", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler(webapi: false))
+]
+Threading.dispatch {
+    _ = try? HTTPServer.launch(
+        .secureServer(
+            TLSConfiguration(certPath: server.ssl!.sslCert, keyPath: server.ssl!.sslKey, alpnSupport: server.alpnSupport),
+            name: "localhost",
+            port: 4433,
+            routes: angularRoutes
+        ),
+        .server(
+            name: "localhost",
+            port: 8080,
+            routes: angularRoutes
+        )
+    )
+}
+
 do {
     // Setup database
-    try setupDatabase();
+    try setupDatabase()
 
-    // Launch the HTTP servers.
-//    let tls = TLSConfiguration(certPath: "cert.pem", keyPath: "key.pem", alpnSupport: [.http2, .http11])
-//    try HTTPServer.launch(
-//        .secureServer(
-//            tls,
-//            name: "localhost",
-//            port: 8181,
-//            routes: getRoutesAndHandlers(),
-//            requestFilters: getRequestFilters(),
-//            responseFilters: getResponseFilters()
-//        ),
-//        .server(name: "localhost", port: 5000, documentRoot:  "./WebUI/dist"),
-//        .server(name: "localhost", port: 5001, documentRoot:  "./AdminUI/dist")
-//    )
-    
-    
-    server.setRequestFilters(getRequestFilters())
-    server.setResponseFilters(getResponseFilters())
-    server.addRoutes(getRoutesAndHandlers())
-    server.serverPort = 8181
+    // Launch the WebApi server.
     try server.start()
 
 } catch StORMError.error(let msg) {
@@ -73,4 +94,6 @@ do {
 } catch {
     print("System error thrown: \(error)")
 }
+
+
 

@@ -1,12 +1,12 @@
 {
     "/api/**": {
        "target": "https://localhost:8181",
-       "secure": true,
+       "secure": false,
        "logLevel": "debug"
     },
-    "/media/**": {
+    "/Media/**": {
         "target": "https://localhost:8181",
-        "secure": true,
+        "secure": false,
         "logLevel": "debug"
      }
  }

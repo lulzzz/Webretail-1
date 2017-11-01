@@ -42,9 +42,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // Clean sub to avoid memory leak
     this.sub.unsubscribe();
-}
+  }
 
-onResizeChanged(event: any) {
+  onResizeChanged(event: any) {
     const w = event.innerWidth;
     this.fixedCols = w < 600 ? 1 : w < 1200 ? 2 : 3;
     this.fitListWidth = (w - this.fixedCols - 1) + 'px';
@@ -58,7 +58,6 @@ onResizeChanged(event: any) {
     this.productService.getByCategoryId(categoryId)
         .subscribe(result => {
           this.products = result;
-    },
-    onerror => this.snackBar.open(onerror._body, 'Close'));
-  }
+        }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));
+      }
 }

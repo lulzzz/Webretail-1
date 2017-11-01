@@ -98,76 +98,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectXML::PerfectXML"
-               BuildableName = "PerfectXML.framework"
-               BlueprintName = "PerfectXML"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "StORM::StORM"
-               BuildableName = "StORM.framework"
-               BlueprintName = "StORM"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectPostgreSQL::PerfectPostgreSQL"
-               BuildableName = "PerfectPostgreSQL.framework"
-               BlueprintName = "PerfectPostgreSQL"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectSession::PerfectSession"
-               BuildableName = "PerfectSession.framework"
-               BlueprintName = "PerfectSession"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectRepeater::PerfectRepeater"
-               BuildableName = "PerfectRepeater.framework"
-               BlueprintName = "PerfectRepeater"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "PerfectLogger::PerfectLogger"
                BuildableName = "PerfectLogger.framework"
                BlueprintName = "PerfectLogger"
@@ -199,6 +129,48 @@
                BlueprintIdentifier = "SwiftMoment::SwiftMoment"
                BuildableName = "SwiftMoment.framework"
                BlueprintName = "SwiftMoment"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectXML::PerfectXML"
+               BuildableName = "PerfectXML.framework"
+               BlueprintName = "PerfectXML"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "StORM::StORM"
+               BuildableName = "StORM.framework"
+               BlueprintName = "StORM"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectPostgreSQL::PerfectPostgreSQL"
+               BuildableName = "PerfectPostgreSQL.framework"
+               BlueprintName = "PerfectPostgreSQL"
                ReferencedContainer = "container:Webretail.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

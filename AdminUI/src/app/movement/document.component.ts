@@ -40,10 +40,15 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
+            if (!this.movementService.movements) {
+                this.cancelClick();
+                return;
+            }
+
             this.movementId = Number(params['id']);
             this.isBusy = true;
 
-            this.movement = this.movementService.movements.find(p => p.movementId === this.movementId);
+            this.movement = this.movementService.findById(this.movementId);
 
             this.movementService.getItemsById(this.movementId)
                 .subscribe(
@@ -66,9 +71,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
                         }
                         this.groups.push(array);
 
-                        this.totalItems = result.map(p => p.movementArticleQuantity).reduce((sum, current) => sum + current);
-                        this.total = result.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
-                        this.amount = this.total * 100 / 122;
+                        if (result.length > 0) {
+                            this.totalItems = result.map(p => p.movementArticleQuantity).reduce((sum, current) => sum + current);
+                            this.total = result.map(p => p.movementArticleAmount).reduce((sum, current) => sum + current);
+                            this.amount = this.total * 100 / 122;
+                        }
                     },
                     onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}),
                     () => this.isBusy = false

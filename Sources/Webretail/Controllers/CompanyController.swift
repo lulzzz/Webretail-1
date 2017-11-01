@@ -63,7 +63,7 @@ class CompanyController {
 
 	func uploadHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-            let pathDir = "./webroot/Media"
+            let pathDir = "./Upload/Media"
             var isDir : ObjCBool = true
             if (!FileManager.default.fileExists(atPath: pathDir, isDirectory: &isDir)) {
                 try FileManager.default.createDirectory(atPath: pathDir, withIntermediateDirectories: false, attributes: nil)

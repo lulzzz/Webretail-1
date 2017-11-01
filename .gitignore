@@ -39,12 +39,11 @@ playground.xcworkspace
 #
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
 Packages/
-.packages_lin/
 
-webretail.service
 StORMlog.txt
 *.log
-error.log 
 node_modules/
+dist
 webroot
+Upload
 .DS_Store

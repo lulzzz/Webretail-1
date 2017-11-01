@@ -31,10 +31,6 @@ extension HTTPResponse {
         let encoder = JSONEncoder()
         let data = try! encoder.encode(json)
         self.setHeader(.contentType, value: "application/json")
-//        self.setHeader(.accessControlAllowOrigin, value: "*")
-//        self.setHeader(.accessControlAllowCredentials, value: "true")
-//        self.setHeader(.accessControlAllowMethods, value: "get,post,put,delete,head")
-
         self.appendBody(string: String(data: data, encoding: .utf8)!)
     }
 }

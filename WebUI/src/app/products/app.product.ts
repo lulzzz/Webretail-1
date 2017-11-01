@@ -5,6 +5,7 @@ import { ProductService } from 'app/services/product.service';
 import { Product, Article } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 import { ArticlePicker } from 'app/shared/article.picker';
+import { ParseUrlPipe } from 'app/pipes/parseurl.pipe';
 
 @Component({
   moduleId: module.id,
@@ -43,10 +44,9 @@ export class ProductComponent implements OnInit, OnDestroy {
           this.product = result;
           AppComponent.setPage(result.productName, true);
           this.product.medias.forEach(m => {
-            this.images.push({'sType': 'img', 'imgSrc': m.url});
+            this.images.push({'sType': 'img', 'imgSrc': new ParseUrlPipe().transform(m.url)});
           });
-        },
-        onerror => this.snackBar.open(onerror._body, 'Close')
+        }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close')
       );
   }
 

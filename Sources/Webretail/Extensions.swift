@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import PerfectHTTP
+import PerfectHTTPServer
 //#if os(OSX)
 //    import Quartz
 //#endif
@@ -111,6 +113,26 @@ extension Sequence where Iterator.Element: Hashable {
         return self.filter { alreadyAdded.insert($0).inserted }
     }
 }
+
+extension HTTPHandler {
+    public static func angularHandler(webapi: Bool = true) -> RequestHandler {
+        return {
+            req, resp in
+            resp.setHeader(.contentType, value: "text/html")
+            
+            let data = FileManager.default.contents(atPath: webapi ? "./webroot/index.html" : "./WebUI/dist/index.html")
+            
+            guard let content = data else {
+                resp.completed(status: .notFound)
+                return
+            }
+            
+            resp.appendBody(string: String(data: content, encoding: .utf8)!)
+            resp.completed()
+        }
+    }
+}
+
 
 //#if os(OSX)
 //class BarcodePDFPage: PDFPage {
