@@ -294,6 +294,26 @@ export class Period {
   }
 }
 
+export class Basket {
+  public basketId: number;
+  public customerId: number;
+  public basketBarcode: string;
+  public basketProduct: Product;
+  public basketQuantity: number;
+  public basketPrice: number;
+  public basketUpdated: number;
+
+  constructor() {
+    this.basketId = 0;
+    this.customerId = 0;
+    this.basketBarcode = '';
+    this.basketQuantity = 0.0;
+    this.basketPrice = 0.0;
+    this.basketUpdated = 0;
+  }
+}
+
+
 // Interfaces
 
 export interface Token {

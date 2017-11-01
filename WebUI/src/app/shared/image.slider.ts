@@ -39,21 +39,19 @@ export class ImageSlider {
     /**
      * Play Interval
      */
-    @Input('playInterval') interval: any = 2000;
+    @Input('playInterval') playInterval: any = 2000;
     slides: any;
 
-    @Input("slides") set _slides(s) {
+    @Input('slides') set _slides(s) {
         this.slides = s;
-        console.log(this.slides);
         this.number = this.slides.length;
-        if (this.slides.length)
-            this.slides[0]["classes"] = ["active"];
+        if (this.slides.length) { this.slides[0]['classes'] = ['active']; }
     }
 
     @Input('autoPlay') set _autoPlay(b: boolean) {
         this.autoPlay = b
         if (b) {
-            this.auto(this.interval);
+            this.auto(this.playInterval);
         }
     }
     currentElement = 0;
@@ -64,35 +62,33 @@ export class ImageSlider {
     constructor() {
     }
     backWard() {
-        if (this.autoPlay)
-            clearInterval(this.interval);
+        if (this.autoPlay) { clearInterval(this.playInterval); }
         this.currentElement = this.currentElement - 1;
         if (this.currentElement < 0) {
             this.currentElement = this.number - 1;
         }
         this.removeClasses();
-        var prev = this.currentElement == this.number - 1 ? 0 : this.currentElement + 1;
-        this.slides[prev].classes = ["animateForward"];
+        const prev = this.currentElement === this.number - 1 ? 0 : this.currentElement + 1;
+        this.slides[prev].classes = ['animateForward'];
         this.show(this.slides[prev]);
         this.show(this.slides[this.currentElement]);
 
         clearTimeout(this.delayHideSetTimeOutControl);
 
         this.delayHideSetTimeOutControl = this.delayHide(this.slides[prev], 1100);
-        this.slides[this.currentElement].classes = ["active", "backward"];
-        if (this.autoPlay) this.auto(this.intervalTime);
+        this.slides[this.currentElement].classes = ['active', 'backward'];
+        if (this.autoPlay) { this.auto(this.intervalTime); }
     }
 
     removeClasses() {
-        for (var i = 0; i < this.number; i++) {
+        for (let i = 0; i < this.number; i++) {
             this.slides[i].classes = {}
         }
     }
     forWard() {
-        console.log("forward called")
-        if (this.autoPlay) clearInterval(this.interval);
+        if (this.autoPlay) { clearInterval(this.playInterval); }
         this._forWard();
-        if (this.autoPlay) this.auto(this.intervalTime);
+        if (this.autoPlay) { this.auto(this.intervalTime); }
     }
     private _forWard() {
         this.currentElement = 1 + this.currentElement;
@@ -100,21 +96,20 @@ export class ImageSlider {
             this.currentElement = 0;
         }
         this.removeClasses();
-        var prev = this.currentElement == 0 ? this.number - 1 : this.currentElement - 1;
-        console.log(this.slides[prev]);
-        this.slides[prev]["classes"] = ["animateBack"];
+        const prev = this.currentElement === 0 ? this.number - 1 : this.currentElement - 1;
+        this.slides[prev]['classes'] = ['animateBack'];
 
         // this.show(this.slides[prev]);
         this.show(this.slides[this.currentElement]);
 
         clearTimeout(this.delayHideSetTimeOutControl);
         this.delayHideSetTimeOutControl = this.delayHide(this.slides[prev], 1100);
-        this.slides[this.currentElement].classes = ["active", "forward"];
+        this.slides[this.currentElement].classes = ['active', 'forward'];
     }
     auto(ms) {
         this.autoPlay = true;
         this.intervalTime = ms;
-        this.interval = setInterval(this._forWard.bind(this), ms);
+        this.playInterval = setInterval(this._forWard.bind(this), ms);
     }
     delayHide(el, ms) {
         return setTimeout(() => el.hidden = true, ms);

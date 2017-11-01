@@ -5,6 +5,7 @@ import { AppComponent, HomeComponent } from './app.component';
 import { LoginComponent } from './account/app.login';
 import { RegisterComponent } from './account/app.register';
 import { AccountComponent } from './account/app.account';
+import { BasketComponent } from 'app/basket/app.basket';
 
 export const APP_ROUTES: Routes = [
   {path: '', component: AppComponent, children: [
@@ -14,7 +15,8 @@ export const APP_ROUTES: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'products/:id/:name', component: ProductsComponent},
-    {path: 'product/:id', component: ProductComponent}
+    {path: 'product/:id', component: ProductComponent},
+    {path: 'basket', component: BasketComponent}
   ]}
 ];
 

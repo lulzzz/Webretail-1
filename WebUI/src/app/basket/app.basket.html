@@ -1,0 +1,34 @@
+<mat-card>
+    <mat-card-content>
+
+        <mat-table #table [dataSource]="dataSource">       
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.basketId}} </mat-cell>
+            </ng-container>
+        
+            <!-- Name Column -->
+            <ng-container matColumnDef="barcode">
+                <mat-header-cell *matHeaderCellDef> Barcode </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.basketBarcode}} </mat-cell>
+            </ng-container>
+        
+            <!-- Weight Column -->
+            <ng-container matColumnDef="quantity">
+                <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.basketQuantity}} </mat-cell>
+            </ng-container>
+        
+            <!-- Color Column -->
+            <ng-container matColumnDef="price">
+                <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.basketPrice}} </mat-cell>
+            </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+  
+    </mat-card-content>
+</mat-card>

@@ -5,8 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start-proxy": "ng serve --proxy-config proxy.config.json",
+    "start": "ng serve --proxy-config proxy.config.json",
     "build": "ng build --target=production"
   },
   "private": true,

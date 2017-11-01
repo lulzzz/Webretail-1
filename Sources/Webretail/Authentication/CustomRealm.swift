@@ -41,9 +41,10 @@ open class CustomRealm : Realm {
 			if token.check() == false {
 				throw IncorrectCredentialsError()
 			}
-            if token.userid.contains(string: "@") {
+//            if token.userid.contains(string: "@") {
+            if token.userid.length < 10 {
                 let customer = Customer()
-                try customer.get(email: token.userid)
+                try customer.get(token.userid)
                 return customer
             } else {
                 let account = User()

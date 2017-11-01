@@ -23,13 +23,12 @@ public struct AuthFilter: HTTPRequestFilter {
 	/// Perform the filtering, with a callback allowing continuation of request, or galting immediately.
 	public func filter(request: HTTPRequest, response: HTTPResponse, callback: (HTTPRequestFilterResult) -> ()) {
 
-        //		guard let denied = authenticationConfig.denied else {
-		//			callback(.continue(request, response))
-		//			return
-		//		}
+//        guard let denied = authenticationConfig.denied else {
+//            callback(.continue(request, response))
+//            return
+//        }
 
 		var checkAuth = false
-        let isUser = true //request.user.authDetails?.account is User
         let wildcardInclusions = authenticationConfig.inclusions.filter({$0.contains("*")})
 		let wildcardExclusions = authenticationConfig.exclusions.filter({$0.contains("*")})
 
@@ -46,8 +45,9 @@ public struct AuthFilter: HTTPRequestFilter {
 		for wInc in wildcardExclusions {
 			if request.path.startsWith(wInc.split("*")[0]) { checkAuth = false }
 		}
-
-		if checkAuth && request.user.authenticated && (isUser || request.path.contains(string: "ecommerce")) {
+        
+        //LogFile.info("authenticated: \(request.user.authenticated)")
+		if checkAuth && request.user.authenticated {
             callback(.continue(request, response))
             return
 		} else if checkAuth {

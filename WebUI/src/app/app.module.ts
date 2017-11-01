@@ -16,6 +16,7 @@ import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
 import { CustomerService } from 'app/services/customer.service';
 import { ProductService } from 'app/services/product.service';
+import { BasketService } from 'app/services/basket.service';
 
 import { ParseUrlPipe } from 'app/pipes/parseurl.pipe';
 import { TranslatePipe } from 'app/pipes/translate.pipe';
@@ -29,6 +30,7 @@ import { LoginComponent } from 'app/account/app.login';
 import { RegisterComponent } from 'app/account/app.register';
 import { ProductsComponent } from 'app/products/app.products';
 import { ProductComponent } from 'app/products/app.product';
+import { BasketComponent } from 'app/basket/app.basket';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { ProductComponent } from 'app/products/app.product';
     LoginComponent,
     RegisterComponent,
     ProductsComponent,
-    ProductComponent
+    ProductComponent,
+    BasketComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ import { ProductComponent } from 'app/products/app.product';
     DialogService,
     SessionService,
     CustomerService,
-    ProductService
+    ProductService,
+    BasketService
   ],
   exports: [
     ArticlePicker,

@@ -30,10 +30,8 @@ public class AuthenticationController {
             
             if let login: LoginUser = request.getJson() {
                 credentials = UsernamePassword(username: login.username, password: login.password)
-                LogFile.info("Login user: \(login.username)")
             } else if let login: LoginCustomer = request.getJson() {
                 credentials = CustomerAccount(uniqueID: login.email, password: login.password)
-                LogFile.info("Login customer: \(login.email)")
             } else {
                 resp["error"] = "Missing username or password"
                 try response.setBody(json: resp)
@@ -56,8 +54,10 @@ public class AuthenticationController {
                     let user = User()
                     try user.get(uniqueID)
                     resp["role"] = user.isAdmin ? "Admin" : "User"
+                    LogFile.info("Login user: \(user.username)")
                 } else {
                     resp["role"] = "Customer"
+                    LogFile.info("Login customer: \((credentials as! CustomerAccount).uniqueID)")
                 }
             } catch {
                 resp["error"] = "Invalid username or password"

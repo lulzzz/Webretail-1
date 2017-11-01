@@ -51,6 +51,7 @@ func setupDatabase() throws {
 	try Discount().setup()
 	try DiscountProduct().setup()
 	try Publication().setup()
+    try Basket().setup()
 }
 
 func addIoC() {
