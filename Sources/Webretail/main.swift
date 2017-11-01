@@ -42,7 +42,7 @@ let server = HTTPServer()
 server.serverPort = 8181
 server.documentRoot = "./webroot"
 server.ssl = (sslCert: "cert.pem", sslKey: "key.pem")
-server.alpnSupport = [.http2, .http11]
+server.alpnSupport = [.http11, .http2]
 
 // Register dependency injection
 addIoC()
@@ -68,12 +68,12 @@ Threading.dispatch {
     _ = try? HTTPServer.launch(
         .secureServer(
             TLSConfiguration(certPath: server.ssl!.sslCert, keyPath: server.ssl!.sslKey, alpnSupport: server.alpnSupport),
-            name: "localhost",
+            name: "",
             port: 443,
             routes: angularRoutes
         ),
         .server(
-            name: "localhost",
+            name: "",
             port: 80,
             routes: angularRoutes
         )

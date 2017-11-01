@@ -52,6 +52,8 @@ export class ProductComponent implements OnInit, OnDestroy {
             this.productService.getProduct(productId)
                 .subscribe(result => {
                     this.product = result;
+                    this.createTree();
+                    this.createSheet();
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Get product', detail: onerror._body})
             );
         });
