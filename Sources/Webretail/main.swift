@@ -69,12 +69,12 @@ Threading.dispatch {
         .secureServer(
             TLSConfiguration(certPath: server.ssl!.sslCert, keyPath: server.ssl!.sslKey, alpnSupport: server.alpnSupport),
             name: "localhost",
-            port: 4433,
+            port: 443,
             routes: angularRoutes
         ),
         .server(
             name: "localhost",
-            port: 8080,
+            port: 80,
             routes: angularRoutes
         )
     )
