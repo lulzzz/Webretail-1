@@ -8,11 +8,15 @@
 
 import Foundation
 import PerfectHTTP
+import PerfectLib
 import PerfectLogger
 
 class CompanyController {
 	
-	private let repository: CompanyProtocol
+    let mediaRoot = "./Upload"
+    let mediaDir = "./Upload/Media"
+    
+    private let repository: CompanyProtocol
 	
 	init() {
 		self.repository = ioCContainer.resolve() as CompanyProtocol
@@ -26,7 +30,26 @@ class CompanyController {
 		routes.add(method: .put, uri: "/api/company", handler: companyHandlerPUT)
 		routes.add(method: .post, uri: "/api/media", handler: uploadHandlerPOST)
 		
-		return routes
+        do {
+            var dir = Dir(mediaRoot)
+            if !dir.exists {
+                try dir.create()
+            }
+            dir = Dir(mediaDir)
+            if !dir.exists {
+                try dir.create()
+            }
+        } catch {
+            Log.terminal(message: "The document root \(mediaRoot) could not be created.")
+        }
+        
+        routes.add(method: .get, uri: "/Media/**", handler: {
+            req, resp in
+            StaticFileHandler(documentRoot: self.mediaRoot, allowResponseFilters: false)
+                .handleRequest(request: req, response: resp)
+        })
+
+        return routes
 	}
 	
 	func companyHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
@@ -63,19 +86,14 @@ class CompanyController {
 
 	func uploadHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-            let pathDir = "./Upload/Media"
-            var isDir : ObjCBool = true
-            if (!FileManager.default.fileExists(atPath: pathDir, isDirectory: &isDir)) {
-                try FileManager.default.createDirectory(atPath: pathDir, withIntermediateDirectories: false, attributes: nil)
-            }
-            
+
 			if let uploads = request.postFileUploads {
                 for upload in uploads {
-                    let path = "\(pathDir)/\(upload.fileName)"
+                    let path = "\(mediaDir)/\(upload.fileName)"
                     if (FileManager.default.fileExists(atPath: path)) {
                         try FileManager.default.removeItem(atPath: path)
                     }
-					try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: "\(pathDir)/\(upload.fileName)")
+					try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: "\(mediaDir)/\(upload.fileName)")
 					LogFile.info("Uploaded file \(upload.fileName)")
 				}
                 response.completed(status: .created)

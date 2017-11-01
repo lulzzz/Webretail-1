@@ -6,7 +6,6 @@
 //
 //
 
-import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
 
@@ -14,22 +13,6 @@ public class AngularController {
 
    func getRoutes() -> Routes {
         var routes = Routes()
-
-        let documentRoot = "./Upload"
-        do {
-            let dir = Dir(documentRoot)
-            if !dir.exists {
-                try Dir(documentRoot).create()
-            }
-        } catch {
-            Log.terminal(message: "The document root \(documentRoot) could not be created.")
-        }
-
-        routes.add(method: .get, uri: "/Media/**", handler: {
-            req, resp in
-            StaticFileHandler(documentRoot: documentRoot, allowResponseFilters: false)
-                .handleRequest(request: req, response: resp)
-        })
 
         routes.add(method: .get, uri: "/home", handler: HTTPHandler.angularHandler())
 		routes.add(method: .get, uri: "/company", handler: HTTPHandler.angularHandler())
