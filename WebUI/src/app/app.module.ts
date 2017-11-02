@@ -20,6 +20,7 @@ import { BasketService } from 'app/services/basket.service';
 
 import { ParseUrlPipe } from 'app/pipes/parseurl.pipe';
 import { TranslatePipe } from 'app/pipes/translate.pipe';
+import { ArticleInfoPipe } from 'app/pipes/articleinfo.pipe';
 import { ArticlePicker } from 'app/shared/article.picker';
 import { ConfirmDialog } from 'app/shared/confirm.dialog';
 import { ImageSlider, SafeHtmlPipe } from 'app/shared/image.slider';
@@ -36,6 +37,7 @@ import { BasketComponent } from 'app/basket/app.basket';
   declarations: [
     ParseUrlPipe,
     TranslatePipe,
+    ArticleInfoPipe,
     SafeHtmlPipe,
     ArticlePicker,
     ConfirmDialog,
@@ -75,6 +77,7 @@ import { BasketComponent } from 'app/basket/app.basket';
     ParseUrlPipe,
     SafeHtmlPipe,
     TranslatePipe,
+    ArticleInfoPipe,
     ImageSlider
   ],
   entryComponents: [

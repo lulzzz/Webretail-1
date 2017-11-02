@@ -151,10 +151,24 @@ class EcommerceController {
     }
     
     func ecommerceBasketHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
+            guard let uniqueID = request.user.authDetails?.account.uniqueID else {
+                response.completed(status: .unauthorized)
+                return
+            }
+
             let basket: Basket = request.getJson()!
             basket.customerId = Int(uniqueID)!
+            
+            let product = Product()
+            try product.get(barcode: basket.basketBarcode)
+            if product.productId == 0 {
+                response.completed(status: .notFound)
+                return
+            }
+            basket.basketProduct = product
+            basket.basketPrice = product._discount != nil ? product._discount!.discountPrice : product.productSellingPrice
+
             try self.repository.addBasket(item: basket)
             try response.setJson(basket)
             response.completed(status: .created)

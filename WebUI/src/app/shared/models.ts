@@ -307,7 +307,7 @@ export class Basket {
     this.basketId = 0;
     this.customerId = 0;
     this.basketBarcode = '';
-    this.basketQuantity = 0.0;
+    this.basketQuantity = 1.0;
     this.basketPrice = 0.0;
     this.basketUpdated = 0;
   }
