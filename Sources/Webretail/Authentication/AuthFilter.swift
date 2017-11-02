@@ -8,6 +8,7 @@
 
 import PerfectHTTP
 import SwiftString
+import PerfectLogger
 
 /// Contains the filtering mechanism for determining valid authentication on routes.
 public struct AuthFilter: HTTPRequestFilter {
@@ -46,8 +47,11 @@ public struct AuthFilter: HTTPRequestFilter {
 			if request.path.startsWith(wInc.split("*")[0]) { checkAuth = false }
 		}
         
-        //LogFile.info("authenticated: \(request.user.authenticated)")
-		if checkAuth && request.user.authenticated {
+        var checkCustomer = true
+        if checkAuth, let uniqueID = request.user.authDetails?.account.uniqueID, uniqueID.length < 10 {
+            checkCustomer = request.path.contains(string: "ecommerce")
+        }
+		if checkAuth && request.user.authenticated && checkCustomer {
             callback(.continue(request, response))
             return
 		} else if checkAuth {

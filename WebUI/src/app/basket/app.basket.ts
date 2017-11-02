@@ -41,7 +41,12 @@ export class BasketComponent implements OnInit {
 				this.basket = result;
 				this.setTotals();
 			},
-			onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'))
+			onerror => {
+				if (onerror.status === 401) {
+					this.sessionService.logout();
+				}
+				this.snackBar.open(onerror._body, 'Close');
+			});
 	}
 
 	setTotals() {

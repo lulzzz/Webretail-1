@@ -16,13 +16,12 @@ export class SessionService {
     }
 
     login(user: Login): Observable<Token> {
-        let body = { username: user.username, password: user.password };
-        return this.http.post('/api/login', body, { headers: Helpers.getHeaders() })
+        return this.http.post('/api/login', user, { headers: Helpers.getHeaders() })
             .map(response => <Token>response.json());
     }
 
     logout() {
-        let body = { token: localStorage.getItem('token') };
+        const body = { token: localStorage.getItem('token') };
         this.http.post('/api/logout', body, { headers: Helpers.getHeaders() })
             .map((response) => response.json())
             .subscribe(result => result);
@@ -44,7 +43,7 @@ export class SessionService {
     }
 
     get isAuthenticated(): boolean {
-        return localStorage.getItem('token') != null;
+        return localStorage.getItem('token') != null && localStorage.getItem('role') !== 'Customer';
     }
 
     get isAdmin(): boolean {

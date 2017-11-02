@@ -39,7 +39,7 @@ export class SessionService {
     }
 
     get isAuthenticated(): boolean {
-        return localStorage.getItem('token') != null;
+        return localStorage.getItem('token') != null && localStorage.getItem('role') === 'Customer';
     }
 
     checkCredentials(): boolean {
