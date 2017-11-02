@@ -27,10 +27,10 @@
     <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <h3>If the information is complete you can proceed with the order</h3>
-        <p>Account: <i *ngIf="this.account.isValid" class="material-icons">verified_user</i></p>
-        <p>Payment: <i *ngIf="this.paymentMethod !== ''" class="material-icons">verified_user</i> {{paymentMethod}}</p>
+        <p>Account: <i class="material-icons">{{isValidAccount ? 'verified_user' : 'error'}}</i></p>
+        <p>Payment: <i class="material-icons">{{isValidPayment ? 'verified_user' : 'error'}}</i> {{paymentMethod}}</p>
         <br/>
-        <button mat-raised-button color="accent" [disabled]="!isValid" (click)="confirmClick()"><mat-icon>check_circle</mat-icon> Checkout</button>
+        <button mat-raised-button color="accent" [disabled]="!isValidAccount||!isValidPayment" (click)="confirmClick()"><mat-icon>check_circle</mat-icon> Checkout</button>
         <br/>
         <br/>
         <div>

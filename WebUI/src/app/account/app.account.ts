@@ -23,12 +23,14 @@ export class AccountComponent implements OnInit {
                 private sessionService: SessionService,
                 private customerService: CustomerService,
                 private fb: FormBuilder) {
-        AppComponent.setPage('Account', false);
-        this.isCheckout = false;
     }
 
     ngOnInit() {
         if (!this.sessionService.checkCredentials()) { return; }
+
+        if (!this.isCheckout) {
+            AppComponent.setPage('Account', false);
+        }
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
@@ -58,8 +60,6 @@ export class AccountComponent implements OnInit {
                 this.snackBar.open(onerror._body, 'Close');
             });
     }
-
-    get isValid(): Boolean { return this.dataform.valid; }
 
     saveClick() {
         this.account.customerPassword = '';

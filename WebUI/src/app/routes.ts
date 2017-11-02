@@ -7,6 +7,7 @@ import { RegisterComponent } from './account/app.register';
 import { AccountComponent } from './account/app.account';
 import { BasketComponent } from 'app/basket/app.basket';
 import { CheckoutComponent } from 'app/basket/app.checkout';
+import { OrdersComponent } from 'app/order/app.orders';
 
 export const APP_ROUTES: Routes = [
   {path: '', component: AppComponent, children: [
@@ -18,7 +19,8 @@ export const APP_ROUTES: Routes = [
     {path: 'products/:id/:name', component: ProductsComponent},
     {path: 'product/:id', component: ProductComponent},
     {path: 'basket', component: BasketComponent},
-    {path: 'checkout', component: CheckoutComponent}
+    {path: 'checkout', component: CheckoutComponent},
+    {path: 'orders', component: OrdersComponent}
   ]}
 ];
 

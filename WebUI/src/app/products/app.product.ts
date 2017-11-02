@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { ProductService } from 'app/services/product.service';
 import { BasketService } from 'app/services/basket.service';
@@ -19,6 +19,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   images: Array<any>;
 
   constructor(
+    private router: Router,
     private snackBar: MatSnackBar,
     private productService: ProductService,
     private basketService: BasketService,
@@ -56,7 +57,14 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.basketService
         .create(model)
         .subscribe(result => {
-          this.snackBar.open(event.articleBarcode + ' added to basket!', 'Close');
+          this.snackBar
+          .open(event.articleBarcode + ' added to basket!', 'Show Basket', {
+            duration: 5000
+          })
+          .onAction()
+          .subscribe(() => {
+            this.router.navigate(['basket']);
+          });
           this.basketService.basket.push(result);
         });
   }

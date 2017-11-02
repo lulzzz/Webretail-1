@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-import { Basket } from '../shared/models';
+import { Basket, Movement } from '../shared/models';
 
 @Injectable()
 export class BasketService {
@@ -34,7 +34,7 @@ export class BasketService {
         return this.http.delete<any>('/api/ecommerce/basket/' + id);
     }
 
-    commit(): Observable<any> {
-        return this.http.post<any>('/api/ecommerce/order', null);
+    commit(): Observable<Movement> {
+        return this.http.post<Movement>('/api/ecommerce/order', null);
     }
 }

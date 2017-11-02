@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatSnackBar, MatSelectionList } from '@angular/material';
 import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
@@ -15,7 +16,7 @@ import { AccountComponent } from 'app/account/app.account';
 })
 
 export class CheckoutComponent implements OnInit {
-    @ViewChild('account') account: AccountComponent;
+    @ViewChild('account') component: AccountComponent;
 	amount = 0.0;
 	count = 0.0;
 	shippingCost = 10.0;
@@ -23,6 +24,7 @@ export class CheckoutComponent implements OnInit {
 
 	constructor(
 		public snackBar: MatSnackBar,
+		private router: Router,
 		private dialogsService: DialogService,
 		private sessionService: SessionService,
 		private basketService: BasketService) {
@@ -36,7 +38,9 @@ export class CheckoutComponent implements OnInit {
 		this.setTotals();
 	}
 
-    get isValid(): Boolean { return this.account.isValid && this.paymentMethod !== ''; }
+	get isValidPayment(): Boolean { return this.paymentMethod !== ''; }
+	get isValidAccount(): Boolean { return this.component.account != null && this.component.account.customerId > 0; }
+
     set basket(value) { this.basketService.basket = value; }
     get basket(): Basket[] { return this.basketService.basket; }
 
@@ -58,9 +62,15 @@ export class CheckoutComponent implements OnInit {
 					this.basketService
 						.commit()
 						.subscribe(p => {
-							this.snackBar.open('Successfully registered order!', 'Close');
-							this.basket = [];
-						});
+							this.snackBar
+							.open('Successfully registered order n.' + p.movementNumber, 'Show Orders', {
+								duration: 5000
+							})
+							.onAction()
+							.subscribe(() => {
+								this.router.navigate(['orders']);
+							});
+					});
 				}
 			});
 	}

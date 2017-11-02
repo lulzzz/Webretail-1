@@ -1,6 +1,12 @@
-<div class="app-grid-list">
+<div class="app-grid-list" #gridproduct>
+
+  <mat-form-field *ngIf="filtering" style="width: 96%; padding: 0 2%;">
+    <input matInput mode="search" (ngModelChange)="onFilterChange($event)" [(ngModel)]="pippo" placeholder="Search">
+    <mat-icon matSuffix (click)="toggleSearch()">search</mat-icon>
+  </mat-form-field>
+
   <mat-grid-list [cols]="fixedCols" [rowHeight]="fitListHeight" [style.height]="fitListHeight" [style.width]="fitListWidth">
-    <mat-grid-tile *ngFor="let product of products" style="cursor: pointer">
+    <mat-grid-tile *ngFor="let product of filtered" style="cursor: pointer">
       <img routerLink="/product/{{product.productId}}" [alt]="product.productName" [src]="product.medias[0].url | parseUrl">
       <mat-grid-tile-footer>
         <h3 mat-line><strong>{{product.productName}}</strong></h3>

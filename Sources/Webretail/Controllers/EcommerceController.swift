@@ -220,7 +220,8 @@ class EcommerceController {
     func ecommerceOrderHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            try self.repository.addOrder(customerId: Int(uniqueID)!, payment: "Cash")
+            let order = try self.repository.addOrder(customerId: Int(uniqueID)!, payment: "Cash")
+            try response.setJson(order)
             response.completed(status: .created)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

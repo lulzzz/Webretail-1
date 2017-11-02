@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Inject} from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ProductService } from './../services/product.service';
 import { Product } from './../shared/models';
 import { AppComponent } from 'app/app.component';
 import { ActivatedRoute } from '@angular/router';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   moduleId: module.id,
@@ -12,13 +13,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./app.products.scss']
 })
 export class ProductsComponent implements OnInit, OnDestroy {
+//  @ViewChild('gridproduct') private gridproduct: ElementRef;
   private sub: any;
   products: Product[];
+  filtered: Product[];
+  filter: string;
+  filtering: Boolean;
   fixedCols: number;
   fitListHeight: string;
   fitListWidth: string;
 
   constructor(
+    @Inject(DOCUMENT) private document: any,
     public snackBar: MatSnackBar,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute
@@ -29,6 +35,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.onResizeChanged(event.target);
+  }
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(even) {
+    const number = this.document.body.scrollTop;
+    if (number < 1) {
+      this.filtering = true;
+    }
   }
 
   ngOnInit() {
@@ -54,10 +67,24 @@ export class ProductsComponent implements OnInit, OnDestroy {
   loadProducts(categoryId: string, categoryName: string) {
     AppComponent.title = categoryName;
     AppComponent.setPage(categoryName, false);
-
+    this.filtering = false;
     this.productService.getByCategoryId(categoryId)
         .subscribe(result => {
+          this.filtered = result;
           this.products = result;
         }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));
+  }
+
+  onFilterChange(filter: string) {
+    if (filter === '') {
+      this.filtered = [];
+      this.filtered = this.products;
+      return;
+    }
+    this.filtered = this.products.filter(p => p.productName.indexOf(filter) >= 0);
+  }
+
+  toggleSearch() {
+    this.filtering = !this.filtering;
   }
 }

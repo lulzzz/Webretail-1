@@ -173,9 +173,14 @@ struct EcommerceRepository : EcommerceProtocol {
         try item.delete()
     }
     
-    func addOrder(customerId: Int, payment: String) throws {
+    func addOrder(customerId: Int, payment: String) throws -> Movement {
         let repository = ioCContainer.resolve() as MovementProtocol
         
+        let items = try self.getBasket(customerId: customerId)
+        if items.count == 0 {
+            throw StORMError.noRecordFound
+        }
+
         let customer = Customer()
         try customer.get(customerId)
         if customer.customerId == 0 {
@@ -207,7 +212,6 @@ struct EcommerceRepository : EcommerceProtocol {
         
         try repository.add(item: order)
         
-        let items = try self.getBasket(customerId: customerId)
         for item in items {
             let orderArticle = MovementArticle()
             orderArticle.movementId = order.movementId
@@ -224,13 +228,15 @@ struct EcommerceRepository : EcommerceProtocol {
         
         order.movementStatus = "Processing"
         try repository.update(id: order.movementId, item: order)
+        
+        return order;
     }
 
     func getOrders(customerId: Int) throws -> [Movement] {
         let items = Movement()
         try items.query(whereclause: "movementCustomer ->> 'customerId' = $1",
                         params: [customerId],
-                        orderby: ["movementDate"])
+                        orderby: ["movementId DESC"])
         
         return try items.rows()
     }

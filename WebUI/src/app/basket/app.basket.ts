@@ -45,6 +45,14 @@ export class BasketComponent implements OnInit {
 		}
 	}
 
+	updateClick(item: Basket) {
+		this.basketService
+			.update(item.basketId, item)
+			.subscribe(result => {
+				this.setTotals();
+			});
+	}
+
 	deleteClick(items: MatSelectionList) {
         this.dialogsService
 			.confirm('Confirm delete', 'Are you sure you want to delete selected items?')

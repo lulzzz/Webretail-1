@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-import { Customer } from '../shared/models';
+import { Customer, Movement } from '../shared/models';
 
 @Injectable()
 export class CustomerService {
@@ -19,5 +19,9 @@ export class CustomerService {
 
     delete(id: number): Observable<any> {
         return this.http.delete<any>('/api/ecommerce/customer');
+    }
+
+    getOrders(): Observable<Movement[]> {
+        return this.http.get<Movement[]>('/api/ecommerce/order');
     }
 }

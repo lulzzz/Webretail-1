@@ -1,0 +1,30 @@
+<mat-table #table [dataSource]="dataSource">       
+
+    <ng-container matColumnDef="number">
+        <mat-header-cell *matHeaderCellDef> N° </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.movementNumber}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.movementDate | date:'yyyy-MM-dd'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+        <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.movementAmount | currency: 'EUR' : true}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="payment">
+        <mat-header-cell *matHeaderCellDef> Payment </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.movementPayment}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.movementStatus}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

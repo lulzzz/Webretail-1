@@ -11,7 +11,7 @@
     <mat-list-option *ngFor="let item of basket" [value]="item">
         <table cellspacing="10" style="width: 100%">
             <tr>
-                <td rowspan="2">
+                <td rowspan="2" style="width: 100px">
                     <img height="100px" title="{{item.basketBarcode}}" [alt]="item.basketProduct.productName" [src]="item.basketProduct.medias[0].url | parseUrl">
                 </td>
                 <td colspan="2">
