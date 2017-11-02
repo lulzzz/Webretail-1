@@ -216,6 +216,10 @@ struct EcommerceRepository : EcommerceProtocol {
             orderArticle.movementArticlePrice = item.basketPrice
             orderArticle.movementArticleQuantity = item.basketQuantity
             orderArticle.movementArticleUpdated = Int.now()
+            try orderArticle.save {
+                id in orderArticle.movementArticleId = id as! Int
+            }
+            try item.delete()
         }
         
         order.movementStatus = "Processing"

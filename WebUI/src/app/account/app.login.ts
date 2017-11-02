@@ -36,6 +36,6 @@ export class LoginComponent implements OnInit {
 				} else {
 					this.snackBar.open(result.error, 'Close');
 				}
-			}, onerror => this.snackBar.open(onerror._body, 'Close'))
+			}, onerror => this.snackBar.open(JSON.stringify(onerror), 'Close'))
 	}
 }

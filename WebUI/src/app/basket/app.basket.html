@@ -1,18 +1,21 @@
 <mat-card>
-    <button mat-raised-button color="accent" routerLink="/checkout"><mat-icon>check_circle</mat-icon> Checkout</button>
-    <strong style="margin-left: 20px">{{count}} items {{amount | currency: 'EUR' : true}}</strong>
-    <button mat-raised-button (click)="deleteClick(items)" [disabled]="items.selectedOptions.selected.length===0" style="float: right; margin-right: 10px;"><mat-icon>delete_forever</mat-icon></button>
+    <button mat-raised-button color="accent" style="float: right" [disabled]="amount===0" routerLink="/checkout"><mat-icon>check_circle</mat-icon> Checkout</button>
+    <h3 style="margin-left: 20px">Total: {{amount | currency: 'EUR' : true}}</h3>
+</mat-card>
+
+<mat-card *ngIf="amount===0">
+    <h4 style="margin-left: 20px">The cart is empty</h4>
 </mat-card>
 
 <mat-selection-list #items>
     <mat-list-option *ngFor="let item of basket" [value]="item">
-        <table matLine style="width: 100%">
+        <table cellspacing="10" style="width: 100%">
             <tr>
-                <td rowspan="2" style="width: 100px">
+                <td rowspan="2">
                     <img height="100px" title="{{item.basketBarcode}}" [alt]="item.basketProduct.productName" [src]="item.basketProduct.medias[0].url | parseUrl">
                 </td>
                 <td colspan="2">
-                    <strong> {{item.basketProduct | articleInfo:item.basketBarcode}} </strong>
+                    <span> {{item.basketProduct | articleInfo:item.basketBarcode}} </span>
                 </td>
             </tr>
             <tr>
@@ -22,10 +25,14 @@
                     </mat-form-field>
                 </td>
                 <td>
-                    <strong>{{item.basketPrice | currency: 'EUR' : true}}</strong>
+                    <span>{{item.basketPrice | currency: 'EUR' : true}}</span>
                 </td>
             </tr>
         </table>
     </mat-list-option>
 </mat-selection-list>
-        
+ 
+<mat-card>
+    <strong style="margin-left: 20px">{{count}} items</strong>
+    <button mat-raised-button (click)="deleteClick(items)" [disabled]="items.selectedOptions.selected.length===0" style="float: right"><mat-icon>delete_forever</mat-icon></button>
+</mat-card>

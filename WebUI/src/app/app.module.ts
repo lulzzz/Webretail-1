@@ -32,6 +32,7 @@ import { RegisterComponent } from 'app/account/app.register';
 import { ProductsComponent } from 'app/products/app.products';
 import { ProductComponent } from 'app/products/app.product';
 import { BasketComponent } from 'app/basket/app.basket';
+import { CheckoutComponent } from 'app/basket/app.checkout';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { BasketComponent } from 'app/basket/app.basket';
     RegisterComponent,
     ProductsComponent,
     ProductComponent,
-    BasketComponent
+    BasketComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

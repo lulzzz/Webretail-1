@@ -59,5 +59,5 @@ export class ProductsComponent implements OnInit, OnDestroy {
         .subscribe(result => {
           this.products = result;
         }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));
-      }
+  }
 }

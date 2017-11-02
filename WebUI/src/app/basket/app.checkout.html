@@ -1,0 +1,40 @@
+<mat-horizontal-stepper>
+    <mat-step>
+        <ng-template matStepLabel>Fill out your information</ng-template>
+        <app-account [isCheckout]="true" #account></app-account>
+        <div>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Payment</ng-template>
+        <p>Items: <b>{{count}}</b></p>
+        <p>Amount: <b>{{amount | currency: 'EUR' : true}}</b></p>
+        <p>Shipping cost: <b>{{shippingCost | currency: 'EUR' : true}}</b></p>
+        <h3>Total: {{(shippingCost + amount) | currency: 'EUR' : true}}</h3>
+        <br/>
+        <p><span>Select the payment method:</span></p>
+        <mat-radio-group [(ngModel)]="paymentMethod">
+            <p><mat-radio-button value="Bank transfer"><b>Bank transfer</b></mat-radio-button></p>
+            <p><mat-radio-button value="PayPal"><b>PayPal / Credit Card</b></mat-radio-button></p>
+        </mat-radio-group>
+        <br/>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <h3>If the information is complete you can proceed with the order</h3>
+        <p>Account: <i *ngIf="this.account.isValid" class="material-icons">verified_user</i></p>
+        <p>Payment: <i *ngIf="this.paymentMethod !== ''" class="material-icons">verified_user</i> {{paymentMethod}}</p>
+        <br/>
+        <button mat-raised-button color="accent" [disabled]="!isValid" (click)="confirmClick()"><mat-icon>check_circle</mat-icon> Checkout</button>
+        <br/>
+        <br/>
+        <div>
+        <button mat-button matStepperPrevious>Back</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

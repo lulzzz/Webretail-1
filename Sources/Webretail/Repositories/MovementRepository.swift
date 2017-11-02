@@ -22,6 +22,7 @@ struct MovementRepository : MovementProtocol {
         status.append(ItemValue(value: "Cash"))
         status.append(ItemValue(value: "Credit card"))
         status.append(ItemValue(value: "Bank transfer"))
+        status.append(ItemValue(value: "PayPal"))
         status.append(ItemValue(value: "Carrier"))
         return status
     }

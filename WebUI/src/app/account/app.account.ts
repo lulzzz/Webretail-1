@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { DialogService } from 'app/services/dialog.service';
@@ -14,6 +14,7 @@ import { PasswordValidation } from 'app/shared/password.validation';
 })
 
 export class AccountComponent implements OnInit {
+    @Input('isCheckout') isCheckout: Boolean;
     account: Customer;
     dataform: FormGroup;
 
@@ -23,6 +24,7 @@ export class AccountComponent implements OnInit {
                 private customerService: CustomerService,
                 private fb: FormBuilder) {
         AppComponent.setPage('Account', false);
+        this.isCheckout = false;
     }
 
     ngOnInit() {
@@ -57,6 +59,8 @@ export class AccountComponent implements OnInit {
             });
     }
 
+    get isValid(): Boolean { return this.dataform.valid; }
+
     saveClick() {
         this.account.customerPassword = '';
         this.updateClick();
@@ -67,6 +71,9 @@ export class AccountComponent implements OnInit {
             .update(this.account.customerId, this.account)
             .subscribe(result => {
                 this.account.updatedAt = result.updatedAt;
+                this.snackBar.open('Update succesfully!', 'Close', {
+                    duration: 2000
+                  });
             }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));
         }
 

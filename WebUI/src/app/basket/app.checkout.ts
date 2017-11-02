@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar, MatSelectionList } from '@angular/material';
 import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
@@ -6,17 +6,20 @@ import { BasketService } from 'app/services/basket.service';
 import { Basket } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 import { Observable } from 'rxjs/Rx';
+import { AccountComponent } from 'app/account/app.account';
 
 @Component({
-	selector: 'app-basket',
-	templateUrl: 'app.basket.html',
-	styleUrls: ['app.basket.scss']
+	selector: 'app-checkout',
+	templateUrl: 'app.checkout.html',
+	styleUrls: ['app.checkout.scss']
 })
 
-export class BasketComponent implements OnInit {
-
+export class CheckoutComponent implements OnInit {
+    @ViewChild('account') account: AccountComponent;
 	amount = 0.0;
 	count = 0.0;
+	shippingCost = 10.0;
+	paymentMethod = '';
 
 	constructor(
 		public snackBar: MatSnackBar,
@@ -24,7 +27,7 @@ export class BasketComponent implements OnInit {
 		private sessionService: SessionService,
 		private basketService: BasketService) {
 
-		AppComponent.setPage('Basket', true);
+		AppComponent.setPage('Checkout', true);
 	}
 
 	ngOnInit() {
@@ -33,6 +36,8 @@ export class BasketComponent implements OnInit {
 		this.setTotals();
 	}
 
+    get isValid(): Boolean { return this.account.isValid && this.paymentMethod !== ''; }
+    set basket(value) { this.basketService.basket = value; }
     get basket(): Basket[] { return this.basketService.basket; }
 
 	setTotals() {
@@ -45,20 +50,17 @@ export class BasketComponent implements OnInit {
 		}
 	}
 
-	deleteClick(items: MatSelectionList) {
+	confirmClick() {
         this.dialogsService
-			.confirm('Confirm delete', 'Are you sure you want to delete selected items?')
+			.confirm('Confirm order', 'Are you sure you want to confirm this order?')
 			.subscribe(res => {
 				if (res) {
-					items.selectedOptions.selected.forEach(item => {
-						this.basketService
-						.delete(item.value.basketId)
-						.subscribe(result => {
-							const index = this.basket.indexOf(item.value);
-							this.basket.splice(index, 1);
-							this.setTotals();
+					this.basketService
+						.commit()
+						.subscribe(p => {
+							this.snackBar.open('Successfully registered order!', 'Close');
+							this.basket = [];
 						});
-					});
 				}
 			});
 	}

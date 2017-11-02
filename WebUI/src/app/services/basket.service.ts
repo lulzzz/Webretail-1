@@ -6,7 +6,16 @@ import { Basket } from '../shared/models';
 @Injectable()
 export class BasketService {
 
+	public basket: Basket[];
+
     constructor(private http: HttpClient) {
+        this.basket = [];
+    }
+
+    get count(): number {
+        return this.basket.length > 0
+            ? this.basket.map(p => p.basketQuantity).reduce((sum, current) => sum + current)
+            : 0;
     }
 
     get(): Observable<Basket[]> {
@@ -23,5 +32,9 @@ export class BasketService {
 
     delete(id: number): Observable<any> {
         return this.http.delete<any>('/api/ecommerce/basket/' + id);
+    }
+
+    commit(): Observable<any> {
+        return this.http.post<any>('/api/ecommerce/order', null);
     }
 }

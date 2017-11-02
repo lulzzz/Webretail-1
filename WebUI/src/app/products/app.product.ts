@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { ProductService } from 'app/services/product.service';
 import { BasketService } from 'app/services/basket.service';
 import { Product, Article, Basket } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
-import { ArticlePicker } from 'app/shared/article.picker';
 import { ParseUrlPipe } from 'app/pipes/parseurl.pipe';
 
 @Component({
@@ -15,7 +14,6 @@ import { ParseUrlPipe } from 'app/pipes/parseurl.pipe';
   styleUrls: ['app.product.scss']
 })
 export class ProductComponent implements OnInit, OnDestroy {
-  @ViewChild(ArticlePicker) inputComponent: ArticlePicker;
   private sub: any;
   product: Product;
   images: Array<any>;
@@ -53,15 +51,13 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   pickerClick(event: Article) {
-    // if (event.quantity === 0) {
-    //   this.snackBar.open('Sorry, but the item is not available.', 'Close')
-    //   return;
-    // }
-
     const model = new Basket();
     model.basketBarcode = event.articleBarcode;
     this.basketService
         .create(model)
-        .subscribe(result => this.snackBar.open(event.articleBarcode + ' added to basket!', 'Close'));
+        .subscribe(result => {
+          this.snackBar.open(event.articleBarcode + ' added to basket!', 'Close');
+          this.basketService.basket.push(result);
+        });
   }
 }

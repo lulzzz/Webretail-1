@@ -10,11 +10,12 @@ import {
   MatSidenavModule,
   MatGridListModule,
   MatCheckboxModule,
+  MatRadioModule,
   MatInputModule,
   MatDialogModule,
   MatSnackBarModule,
   MatSelectModule,
-  MatTableModule
+  MatStepperModule
 } from '@angular/material';
 
 @NgModule({
@@ -28,11 +29,12 @@ import {
     MatSidenavModule,
     MatGridListModule,
     MatCheckboxModule,
+    MatRadioModule,
     MatInputModule,
     MatDialogModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatTableModule
+    MatStepperModule
   ],
   exports: [
     MatExpansionModule,
@@ -44,11 +46,12 @@ import {
     MatSidenavModule,
     MatGridListModule,
     MatCheckboxModule,
+    MatRadioModule,
     MatInputModule,
     MatDialogModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatTableModule
+    MatStepperModule
   ]
 })
 export class MaterialModule { }

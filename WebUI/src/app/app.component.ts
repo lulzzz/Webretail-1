@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { BasketService } from './services/basket.service';
 import { ProductService } from './services/product.service';
 
 /**
@@ -49,8 +50,11 @@ export class AppComponent implements OnInit {
     return AppComponent.backButton;
   }
 
+  get itemsCount(): number { return this.basketService.count; }
+
   constructor(
     private location: Location,
+    private basketService: BasketService,
     private productService: ProductService,
     private _element: ElementRef
   ) { }
@@ -60,7 +64,15 @@ export class AppComponent implements OnInit {
       .subscribe(result => {
         result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryId + '/' + p.categoryName }));
       });
+      this.loadBasket();
   }
+
+	loadBasket() {
+		this.basketService.get()
+			.subscribe(result => {
+				this.basketService.basket = result;
+			});
+	}
 
   toggleFullscreen() {
     const elem = this._element.nativeElement.querySelector('.app-content');
