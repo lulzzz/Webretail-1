@@ -26,5 +26,9 @@
     </mat-card>
   </mat-expansion-panel>
   <article-picker [product]="product" (onPicked)="pickerClick($event)"></article-picker>
-  <image-slider [slides]="images"></image-slider>
+  <mat-card>
+    <mat-card-content>
+      <image-slider [slides]="images"></image-slider>
+    </mat-card-content>
+  </mat-card>
 </div>
