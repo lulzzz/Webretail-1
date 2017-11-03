@@ -240,5 +240,30 @@ struct EcommerceRepository : EcommerceProtocol {
         
         return try items.rows()
     }
+
+    func getOrder(customerId: Int, id: Int) throws -> Movement {
+        let item = Movement()
+        try item.query(whereclause: "movementCustomer ->> 'customerId' = $1 AND movementId = $2",
+                       params: [customerId, id],
+                       cursor: StORMCursor(limit: 1, offset: 0))
+
+        return item
+    }
+    
+    func getOrderItems(customerId: Int, id: Int) throws -> [MovementArticle] {
+        let items = MovementArticle()
+        let join = StORMDataSourceJoin(
+            table: "movements",
+            onCondition: "movementarticles.movementId = movements.movementId",
+            direction: StORMJoinType.RIGHT
+        )
+        try items.query(whereclause: "movements.movementCustomer ->> 'customerId' = $1 AND movementarticles.movementId = $2",
+                        params: [customerId, id],
+                        orderby: ["movementarticles.movementarticleId"],
+                        joins: [join]
+        )
+        
+        return items.rows()
+    }
 }
 

@@ -1183,6 +1183,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		56D7E5551FAC884300EE4061 /* Dockerfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
+		56D7E5561FAC884300EE4061 /* rasterize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rasterize.js; sourceTree = "<group>"; };
+		56D7E5571FAC884300EE4061 /* key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = key.pem; sourceTree = "<group>"; };
+		56D7E5581FAC884300EE4061 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		56D7E5591FAC884400EE4061 /* cert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cert.pem; sourceTree = "<group>"; };
+		56D7E55A1FAC884400EE4061 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		56D7E55B1FAC884400EE4061 /* buildlinux */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = buildlinux; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFilter.swift; sourceTree = "<group>"; };
 		OBJ_100 /* ArticleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleRepository.swift; sourceTree = "<group>"; };
@@ -2620,8 +2627,15 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
-				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
+				56D7E55B1FAC884400EE4061 /* buildlinux */,
+				56D7E5591FAC884400EE4061 /* cert.pem */,
+				56D7E5551FAC884300EE4061 /* Dockerfile */,
+				56D7E5571FAC884300EE4061 /* key.pem */,
+				56D7E55A1FAC884400EE4061 /* LICENSE */,
+				56D7E5561FAC884300EE4061 /* rasterize.js */,
+				56D7E5581FAC884300EE4061 /* README.md */,
+				OBJ_6 /* Package.swift */,
 				OBJ_121 /* Tests */,
 				OBJ_124 /* Dependencies */,
 				OBJ_609 /* Products */,

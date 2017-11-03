@@ -39,7 +39,7 @@ struct MovementRepository : MovementProtocol {
     
     func getAll() throws -> [Movement] {
         let items = Movement()
-        try items.query(cursor: StORMCursor.init(limit: 10000, offset: 0))
+        try items.query(cursor: StORMCursor.init(limit: 1000, offset: 0))
         
         return try items.rows()
     }

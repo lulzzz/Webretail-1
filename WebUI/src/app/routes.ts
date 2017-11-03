@@ -8,6 +8,8 @@ import { AccountComponent } from './account/app.account';
 import { BasketComponent } from 'app/basket/app.basket';
 import { CheckoutComponent } from 'app/basket/app.checkout';
 import { OrdersComponent } from 'app/order/app.orders';
+import { DocumentComponent } from 'app/order/app.document';
+
 
 export const APP_ROUTES: Routes = [
   {path: '', component: AppComponent, children: [
@@ -20,7 +22,8 @@ export const APP_ROUTES: Routes = [
     {path: 'product/:id', component: ProductComponent},
     {path: 'basket', component: BasketComponent},
     {path: 'checkout', component: CheckoutComponent},
-    {path: 'orders', component: OrdersComponent}
+    {path: 'orders', component: OrdersComponent},
+    {path: 'document/:id', component: DocumentComponent}
   ]}
 ];
 

@@ -1,8 +1,7 @@
 <div *ngIf="product">
-  <image-slider [slides]="images"></image-slider>
-  <mat-expansion-panel>
+   <mat-expansion-panel>
     <mat-expansion-panel-header>
-      <mat-panel-description>Information</mat-panel-description>
+      <mat-panel-description><b>Information</b></mat-panel-description>
       <mat-panel-title><b>ID: {{product.productCode}}</b></mat-panel-title>
     </mat-expansion-panel-header>
     <mat-card>
@@ -27,4 +26,5 @@
     </mat-card>
   </mat-expansion-panel>
   <article-picker [product]="product" (onPicked)="pickerClick($event)"></article-picker>
+  <image-slider [slides]="images"></image-slider>
 </div>

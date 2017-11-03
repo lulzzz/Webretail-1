@@ -1,7 +1,7 @@
 import {
     Component, ElementRef, Renderer, Input, Output,
     Optional, EventEmitter, ViewEncapsulation,
-    Pipe, PipeTransform
+    Pipe, PipeTransform, HostListener
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
 
@@ -28,7 +28,7 @@ export class SafeHtmlPipe implements PipeTransform {
         <div *ngIf="meta.sType=='ajaxDiv'">
             Loading...
         </div>
-        <img [src]="meta.imgSrc" *ngIf="meta.sType=='img'" style="width: 100%"/>
+        <img [src]="meta.imgSrc" *ngIf="meta.sType=='img'" class="slide"/>
     </li>
 </ul>
 </div>`,

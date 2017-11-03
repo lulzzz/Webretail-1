@@ -17,6 +17,7 @@ import { SessionService } from 'app/services/session.service';
 import { CustomerService } from 'app/services/customer.service';
 import { ProductService } from 'app/services/product.service';
 import { BasketService } from 'app/services/basket.service';
+import { DocumentService } from 'app/services/document.service';
 
 import { ParseUrlPipe } from 'app/pipes/parseurl.pipe';
 import { TranslatePipe } from 'app/pipes/translate.pipe';
@@ -34,6 +35,7 @@ import { ProductComponent } from 'app/products/app.product';
 import { BasketComponent } from 'app/basket/app.basket';
 import { CheckoutComponent } from 'app/basket/app.checkout';
 import { OrdersComponent } from 'app/order/app.orders';
+import { DocumentComponent } from 'app/order/app.document';
 
 
 @NgModule({
@@ -54,7 +56,8 @@ import { OrdersComponent } from 'app/order/app.orders';
     ProductComponent,
     BasketComponent,
     CheckoutComponent,
-    OrdersComponent
+    OrdersComponent,
+    DocumentComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,8 @@ import { OrdersComponent } from 'app/order/app.orders';
     SessionService,
     CustomerService,
     ProductService,
-    BasketService
+    BasketService,
+    DocumentService
   ],
   exports: [
     ArticlePicker,

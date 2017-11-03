@@ -30,5 +30,9 @@ protocol EcommerceProtocol {
     func addOrder(customerId: Int, payment: String) throws -> Movement
 
     func getOrders(customerId: Int) throws -> [Movement]
+
+    func getOrder(customerId: Int, id: Int) throws -> Movement
+
+    func getOrderItems(customerId: Int, id: Int) throws -> [MovementArticle]
 }
 

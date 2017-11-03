@@ -1,8 +1,8 @@
 <mat-table #table [dataSource]="dataSource">       
 
     <ng-container matColumnDef="number">
-        <mat-header-cell *matHeaderCellDef> N° </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.movementNumber}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef [ngClass]="'flex75'"> N° </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'flex75'"> {{element.movementNumber}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="date">
@@ -11,18 +11,25 @@
     </ng-container>
 
     <ng-container matColumnDef="amount">
-        <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.movementAmount | currency: 'EUR' : true}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef [ngClass]="'flex100Right'"> Amount </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'flex100Right'"> {{element.movementAmount | currency: 'EUR' : true}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="payment">
-        <mat-header-cell *matHeaderCellDef> Payment </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.movementPayment}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef [ngClass]="'flex100Center'"> Payment </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'flex100Center'"> {{element.movementPayment}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.movementStatus}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="doc">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'fix100Center'"></mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'fix100Center'">
+            <button mat-button routerLink="/document/{{element.movementId}}"><mat-icon>picture_as_pdf</mat-icon></button>
+        </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

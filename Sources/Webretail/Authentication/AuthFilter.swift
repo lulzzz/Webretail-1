@@ -49,7 +49,7 @@ public struct AuthFilter: HTTPRequestFilter {
         
         var checkCustomer = true
         if checkAuth, let uniqueID = request.user.authDetails?.account.uniqueID, uniqueID.length < 10 {
-            checkCustomer = request.path.contains(string: "ecommerce")
+            checkCustomer = request.path.contains(string: "api/ecommerce") || request.path.contains(string: "api/pdf")
         }
 		if checkAuth && request.user.authenticated && checkCustomer {
             callback(.continue(request, response))

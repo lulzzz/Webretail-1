@@ -1,4 +1,4 @@
-import { HttpHeaders } from '@angular/common/http';
+import { Headers } from '@angular/http';
 
 export class Helpers {
 
@@ -17,8 +17,8 @@ export class Helpers {
         return out;
     }
 
-    static getHeaders(): HttpHeaders {
-        const headers = new HttpHeaders();
+    static getHeaders(): Headers {
+        const headers = new Headers();
         headers.append('Authorization', `Bearer ${localStorage.getItem('token')}`);
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin', '*');

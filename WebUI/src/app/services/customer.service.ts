@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-import { Customer, Movement } from '../shared/models';
+import { Customer, Movement, MovementArticle } from '../shared/models';
 
 @Injectable()
 export class CustomerService {
@@ -23,5 +23,13 @@ export class CustomerService {
 
     getOrders(): Observable<Movement[]> {
         return this.http.get<Movement[]>('/api/ecommerce/order');
+    }
+
+    getOrderById(id: number): Observable<Movement> {
+        return this.http.get<Movement>('/api/ecommerce/order/' + id);
+    }
+
+    getItemsById(id: number): Observable<MovementArticle[]> {
+        return this.http.get<MovementArticle[]>('/api/ecommerce/order/' + id + '/items');
     }
 }

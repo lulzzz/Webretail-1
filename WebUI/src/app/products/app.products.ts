@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, Inject} from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ProductService } from './../services/product.service';
 import { Product } from './../shared/models';
@@ -13,7 +13,7 @@ import { DOCUMENT } from '@angular/platform-browser';
   styleUrls: ['./app.products.scss']
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-//  @ViewChild('gridproduct') private gridproduct: ElementRef;
+  // @ViewChild('content') private content: ElementRef;
   private sub: any;
   products: Product[];
   filtered: Product[];

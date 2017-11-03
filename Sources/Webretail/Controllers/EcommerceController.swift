@@ -38,7 +38,9 @@ class EcommerceController {
         routes.add(method: .put, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerPUT)
         routes.add(method: .delete, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerDELETE)
 
-        routes.add(method: .get, uri: "/api/ecommerce/order", handler: ecommerceOrderHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/order", handler: ecommerceOrdersHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/order/{id}", handler: ecommerceOrderHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/order/{id}/items", handler: ecommerceOrderItemsHandlerGET)
         routes.add(method: .post, uri: "/api/ecommerce/order", handler: ecommerceOrderHandlerPOST)
         
         return routes
@@ -206,7 +208,7 @@ class EcommerceController {
     
     /// Order
     
-    func ecommerceOrderHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    func ecommerceOrdersHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
             let items = try self.repository.getOrders(customerId: Int(uniqueID)!)
@@ -217,6 +219,34 @@ class EcommerceController {
         }
     }
     
+    func ecommerceOrderHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            guard let id = Int(request.urlVariables["id"]!) else {
+                throw PerfectError.apiError("id")
+            }
+            let item = try self.repository.getOrder(customerId: Int(uniqueID)!, id: id)
+            try response.setJson(item)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func ecommerceOrderItemsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            guard let id = Int(request.urlVariables["id"]!) else {
+                throw PerfectError.apiError("id")
+            }
+            let items = try self.repository.getOrderItems(customerId: Int(uniqueID)!, id: id)
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
     func ecommerceOrderHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
