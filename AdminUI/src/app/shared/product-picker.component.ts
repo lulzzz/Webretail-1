@@ -14,7 +14,6 @@ import { ProductService } from './../services/product.service';
 export class ProductPickerComponent {
     @ViewChild('dt') datatable: DataTable;
     totalRecords = 0;
-    products: Product[];
     selected: Product[];
     categories: SelectItem[];
     allbrands: SelectItem[];
@@ -29,18 +28,30 @@ export class ProductPickerComponent {
         this.isOpen = false;
     }
 
+    set products(value) { this.productService.products = value; }
+    get products(): Product[] { return this.productService.products; }
+
     public loadData() {
-        this.isOpen = true;
         if (!this.products) {
-            this.productService
-                .getProducts()
-                .subscribe(result => {
-                    this.products = result;
-                    this.totalRecords = this.products.length;
-                    this.buildFilter(result);
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
-            );
+            this.reloadData();
+        } else {
+            this.refreshControl();
         }
+    }
+
+    private reloadData() {
+        this.isOpen = true;
+        this.productService
+            .getProducts()
+            .subscribe(result => {
+                this.products = result;
+                this.refreshControl();
+            }, onerror => this.messageService.add({ severity: 'error', summary: 'Error', detail: onerror._body }));
+    }
+
+    private refreshControl() {
+        this.totalRecords = this.products.length;
+        this.buildFilter(this.products);
     }
 
     hidePickerClick() {

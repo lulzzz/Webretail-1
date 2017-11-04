@@ -14,7 +14,6 @@ import { MovementService } from './../services/movement.service';
 export class MovementPickerComponent {
     @ViewChild('dt') datatable: DataTable;
     totalRecords = 0;
-    movements: Movement[];
     selected: Movement[];
     stores: SelectItem[];
     storesFiltered: SelectItem[];
@@ -30,18 +29,30 @@ export class MovementPickerComponent {
         this.isOpen = false;
     }
 
+    set movements(value) { this.movementService.movements = value; }
+    get movements(): Movement[] { return this.movementService.movements; }
+
     public loadData(customerId: number) {
-        this.isOpen = true;
         if (!this.movements) {
-            this.movementService
-                .getByCustomerId(customerId)
-                .subscribe(result => {
-                    this.movements = result;
-                    this.totalRecords = this.movements.length;
-                    this.buildFilter(result);
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
-            );
+            this.reloadData(customerId);
+        } else {
+            this.refreshControl();
         }
+    }
+
+    private reloadData(customerId: number) {
+        this.isOpen = true;
+        this.movementService
+            .getByCustomerId(customerId)
+            .subscribe(result => {
+                this.movements = result;
+                this.refreshControl();
+            }, onerror => this.messageService.add({ severity: 'error', summary: 'Error', detail: onerror._body }));
+    }
+
+    private refreshControl() {
+        this.totalRecords = this.movements.length;
+        this.buildFilter(this.movements);
     }
 
     hidePickerClick() {

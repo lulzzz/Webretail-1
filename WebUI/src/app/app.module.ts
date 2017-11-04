@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+// import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'app/material.module';
@@ -64,7 +64,7 @@ import { DocumentComponent } from 'app/order/app.document';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
+    // HttpModule,
     HttpClientModule,
     RouterModule.forRoot(ALL_ROUTES),
     MaterialModule,
@@ -92,6 +92,6 @@ import { DocumentComponent } from 'app/order/app.document';
   entryComponents: [
     ConfirmDialog
   ],
-bootstrap: [AppComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

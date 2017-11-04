@@ -6,7 +6,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --target=production"
+    "build": "ng build --env=prod",
+    "build-dev": "ng build"
   },
   "private": true,
   "dependencies": {

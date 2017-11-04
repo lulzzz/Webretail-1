@@ -47,6 +47,7 @@
   </mat-sidenav>
 
   <div>
+    <img class="mat-toolbar-bg" src="/assets/latest.jpg" /> 
     <mat-toolbar id="toolbar" color="transparent">
       <button *ngIf="backButton" mat-icon-button (click)="backClick()">
         <mat-icon>arrow_back</mat-icon>
@@ -61,14 +62,14 @@
             <mat-icon>fullscreen</mat-icon>
           </button>
           <button mat-icon-button routerLink="/basket" title="Shopping Cart">
-            <mat-icon>shopping_cart</mat-icon>
             <span><b>{{itemsCount}}</b></span>
+            <mat-icon>shopping_cart</mat-icon>
           </button>
         </div>
       </div>
     </mat-toolbar>
 
-    <div #root="dir" dir="ltr" class="app-content" #content>
+    <div #root="dir" dir="ltr" class="app-content">
       <router-outlet></router-outlet>
     </div>
       

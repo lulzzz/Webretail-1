@@ -1,5 +1,5 @@
 <div *ngIf="product">
-   <mat-expansion-panel>
+    <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-description><b>Information</b></mat-panel-description>
       <mat-panel-title><b>ID: {{product.productCode}}</b></mat-panel-title>
@@ -24,11 +24,8 @@
         </ng-template>
       </mat-card-content>
     </mat-card>
+    <article-picker [product]="product" (onPicked)="pickerClick($event)"></article-picker>
   </mat-expansion-panel>
-  <article-picker [product]="product" (onPicked)="pickerClick($event)"></article-picker>
-  <mat-card>
-    <mat-card-content>
-      <image-slider [slides]="images"></image-slider>
-    </mat-card-content>
-  </mat-card>
+  <br/>
+  <image-slider [slides]="images"></image-slider>
 </div>

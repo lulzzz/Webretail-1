@@ -6,8 +6,6 @@ import { Product } from 'app/shared/models';
     moduleId: module.id,
     selector: 'article-picker',
     templateUrl: 'article.picker.html',
-    // inputs: ['product'],
-    // outputs: ['onPicked'],
     encapsulation: ViewEncapsulation.None
 })
 export class ArticlePicker implements OnInit {

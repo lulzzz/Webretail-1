@@ -1,12 +1,9 @@
 .slider{
     width:100%;
     height: 720px;
-    font-size: 500%;
-    color: #ffffff50;
-    z-index: 0;
+    font-size: 400%;
     position: relative;
 }
-
 .slider ul{
     display: flex;
     padding: 0;
@@ -27,7 +24,7 @@
     display: none;
     /*transition: cubic-bezier(0.6, -0.61, 0, 1.34) all 0.7s;*/
 }
-.slider ul li printslide,.slider ul li printslide img{
+.slider ul li printslide,.slider ul li printslide img {
     max-width:100%;
     width:100%;
     height: 100%;
@@ -56,6 +53,7 @@
 }
 .slider .sliderArrows{
     display:flex;
+    color: lightgrey;
     position: absolute;
     flex-flow:row wrap;
     justify-content:space-between;
@@ -150,9 +148,12 @@
 }
 
 .slide {
-    position:absolute; 
-    width:100%;
+    position:relative; 
+    height: 100%;
     top: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     -ms-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);

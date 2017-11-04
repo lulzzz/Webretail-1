@@ -68,6 +68,9 @@ export class AppComponent implements OnInit {
   }
 
 	loadBasket() {
+    if (localStorage.getItem('token') == null) {
+      return;
+    }
 		this.basketService.get()
 			.subscribe(result => {
 				this.basketService.basket = result;
