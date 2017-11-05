@@ -42,7 +42,7 @@ export class ProductsComponent implements OnInit {
 
         this.dataform = this.fb.group({
             'brand': new FormControl('', Validators.required),
-            'code': new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
+            'code': new FormControl('', Validators.required),
             'name': new FormControl('', Validators.required),
             'um': new FormControl('', Validators.required),
             'selling': new FormControl('', Validators.required),

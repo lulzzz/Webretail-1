@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { TreeNode, Message, MenuItem } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import {
-    Product, ProductCategory, Category, ProductAttribute, Attribute,
+    Product, ProductCategory, Category, ProductAttribute, Attribute, Barcode,
     ProductAttributeValue, Article, ArticleAttributeValue, AttributeValue, ArticleForm
 } from './../shared/models';
 import { Helpers } from './../shared/helpers';
@@ -342,12 +342,12 @@ export class ProductComponent implements OnInit, OnDestroy {
                     if (p.id > 0) {
                         const article = new Article();
                         article.articleId = p.id;
-                        article.articleBarcode = p.value;
+                        article.barcodes = [<Barcode>{ barcode: p.value, primaryKey: '', secondaryKey: '' }];
                         this.productService
                             .updateArticle(p.id, article)
                             .subscribe(result => {
                                 count++;
-                                if (result.articleBarcode === barcode) {
+                                if (result.barcodes.find(b => b.barcode === barcode)) {
                                     this.isBusy = false;
                                     this.messageService.add({
                                         severity: 'success',

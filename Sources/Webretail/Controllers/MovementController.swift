@@ -23,6 +23,7 @@ class MovementController {
         var routes = Routes()
         
 		routes.add(method: .get, uri: "/api/movementpayment", handler: movementPaymentsHandlerGET)
+        routes.add(method: .get, uri: "/api/movementkeys", handler: movementKeysHandlerGET)
 		routes.add(method: .get, uri: "/api/movementstatus", handler: movementStatusHandlerGET)
         routes.add(method: .get, uri: "/api/movement", handler: movementsHandlerGET)
 		routes.add(method: .post, uri: "/api/movementsales", handler: movementsSalesHandlerPOST)
@@ -48,7 +49,17 @@ class MovementController {
 		}
 	}
 	
-	func movementStatusHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    func movementKeysHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let status = try self.repository.getKeys()
+            try response.setJson(status)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func movementStatusHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
 			let status = self.repository.getStatus()
 			try response.setJson(status)

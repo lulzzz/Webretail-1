@@ -13,6 +13,7 @@ export class PublicationService {
     public product: Product;
 
     constructor(private http: Http) {
+        this.publication = new Publication(0);
     }
 
     getProduct(id: number): Observable<Product> {

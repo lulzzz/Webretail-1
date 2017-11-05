@@ -29,6 +29,8 @@ class Movement: PostgresSqlORM, Codable {
     public var movementCausal : Causal = Causal()
     public var movementCustomer : Customer = Customer()
     public var movementPayment : String = ""
+    public var movementPrimaryKey : String = ""
+    public var movementSecondaryKey : String = ""
     public var movementUpdated : Int = Int.now()
     
     public var _movementDate: String {
@@ -51,6 +53,8 @@ class Movement: PostgresSqlORM, Codable {
         case movementCausal
         case movementCustomer
         case movementPayment
+        case movementPrimaryKey
+        case movementSecondaryKey
         case _amount = "movementAmount"
         case _items = "movementItems"
         case movementUpdated = "updatedAt"
@@ -79,6 +83,8 @@ class Movement: PostgresSqlORM, Codable {
             }
         }
         movementPayment = this.data["movementpayment"] as? String ?? ""
+        movementPrimaryKey = this.data["movementprimarykey"] as? String ?? ""
+        movementSecondaryKey = this.data["movementsecondarykey"] as? String ?? ""
         movementUpdated = this.data["movementupdated"] as? Int ?? 0
     }
     
@@ -117,6 +123,8 @@ class Movement: PostgresSqlORM, Codable {
         movementCausal = try container.decode(Causal.self, forKey: .movementCausal)
         movementCustomer = try container.decodeIfPresent(Customer.self, forKey: .movementCustomer) ?? Customer()
         movementPayment = try container.decode(String.self, forKey: .movementPayment)
+        movementPrimaryKey = try container.decode(String.self, forKey: .movementPrimaryKey)
+        movementSecondaryKey = try container.decode(String.self, forKey: .movementSecondaryKey)
         _items = try container.decodeIfPresent([MovementArticle].self, forKey: ._items) ?? [MovementArticle]()
     }
     
@@ -135,6 +143,8 @@ class Movement: PostgresSqlORM, Codable {
         try container.encode(movementCausal, forKey: .movementCausal)
         try container.encode(movementCustomer, forKey: .movementCustomer)
         try container.encode(movementPayment, forKey: .movementPayment)
+        try container.encode(movementPrimaryKey, forKey: .movementPrimaryKey)
+        try container.encode(movementSecondaryKey, forKey: .movementSecondaryKey)
         try container.encode(_amount, forKey: ._amount)
         try container.encode(_items, forKey: ._items)
         try container.encode(movementUpdated, forKey: .movementUpdated)

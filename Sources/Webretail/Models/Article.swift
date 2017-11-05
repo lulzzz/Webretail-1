@@ -6,13 +6,14 @@
 //
 //
 
+import Foundation
 import StORM
 
 class Article: PostgresSqlORM, Codable {
     
     public var articleId : Int = 0
     public var productId : Int = 0
-    public var articleBarcode : String = ""
+    public var articleBarcodes : [Barcode] = [Barcode]()
     public var articleIsValid : Bool = false
     public var articleCreated : Int = Int.now()
     public var articleUpdated : Int = Int.now()
@@ -25,19 +26,22 @@ class Article: PostgresSqlORM, Codable {
     private enum CodingKeys: String, CodingKey {
         case articleId
         case productId
-        case articleBarcode
+        case articleBarcodes = "barcodes"
         case _quantity = "quantity"
         case _booked = "booked"
         case _attributeValues = "attributeValues"
     }
 
     open override func table() -> String { return "articles" }
-    open override func tableIndexes() -> [String] { return ["articleBarcode"] }
    
     open override func to(_ this: StORMRow) {
         articleId = this.data["articleid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0
-        articleBarcode = this.data["articlebarcode"] as? String ?? ""
+        if let barcodes = this.data["articlebarcodes"] {
+            let decoder = JSONDecoder()
+            let jsonData = try! JSONSerialization.data(withJSONObject: barcodes, options: [])
+            articleBarcodes = try! decoder.decode([Barcode].self, from: jsonData)
+        }
         articleIsValid = this.data["articleisvalid"] as? Bool ?? true
         articleCreated = this.data["articlecreated"] as? Int ?? 0
         articleUpdated = this.data["articleupdated"] as? Int ?? 0
@@ -94,14 +98,14 @@ class Article: PostgresSqlORM, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         articleId = try container.decode(Int.self, forKey: .articleId)
         productId = try container.decodeIfPresent(Int.self, forKey: .productId) ?? 0
-        articleBarcode = try container.decode(String.self, forKey: .articleBarcode)
+        articleBarcodes = try container.decodeIfPresent([Barcode].self, forKey: .articleBarcodes) ?? [Barcode]()
         _attributeValues = try container.decodeIfPresent([ArticleAttributeValue].self, forKey: ._attributeValues) ?? [ArticleAttributeValue]()
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(articleId, forKey: .articleId)
-        try container.encode(articleBarcode, forKey: .articleBarcode)
+        try container.encode(articleBarcodes, forKey: .articleBarcodes)
         try container.encode(_quantity, forKey: ._quantity)
         try container.encode(_booked, forKey: ._booked)
         try container.encode(_attributeValues, forKey: ._attributeValues)

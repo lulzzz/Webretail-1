@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { StoreService } from './../services/store.service';
 import { CausalService } from './../services/causal.service';
-import { CustomerService } from './../services/customer.service';
+import { RegistryService } from './../services/registry.service';
 import { MovementService } from './../services/movement.service';
 import { Movement, Device } from './../shared/models';
 import { Helpers } from './../shared/helpers';
@@ -30,6 +30,8 @@ export class MovementsComponent implements OnInit {
     customersFiltered: SelectItem[];
     status: SelectItem[];
     statusFiltered: SelectItem[];
+    primaryKeys: SelectItem[];
+    secondaryKeys: SelectItem[];
     payments: SelectItem[];
     currentStatus: string;
     displayPanel: boolean;
@@ -45,7 +47,7 @@ export class MovementsComponent implements OnInit {
                 private messageService: MessageService,
                 private storeService: StoreService,
                 private causalService: CausalService,
-                private customerService: CustomerService,
+                private registryService: RegistryService,
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -64,6 +66,8 @@ export class MovementsComponent implements OnInit {
             'customer': new FormControl('', Validators.nullValidator),
             'device': new FormControl('', Validators.nullValidator),
             'payment': new FormControl('', Validators.nullValidator),
+            'primaryKey': new FormControl('', Validators.nullValidator),
+            'secondaryKey': new FormControl('', Validators.nullValidator),
             'status': new FormControl('', Validators.required),
             'note': new FormControl('', Validators.nullValidator)
         });
@@ -94,6 +98,14 @@ export class MovementsComponent implements OnInit {
             }
         );
 
+        this.movementService
+            .getKeys()
+            .subscribe(result => {
+                this.primaryKeys = result.primary.map(p => Helpers.newSelectItem(p));
+                this.secondaryKeys = result.secondary.map(p => Helpers.newSelectItem(p));
+            }
+        );
+
         this.storeService
             .getAll()
             .subscribe(result => {
@@ -111,7 +123,7 @@ export class MovementsComponent implements OnInit {
             }
         );
 
-        this.customerService
+        this.registryService
             .getAll()
             .subscribe(result => {
                 this.customers = [];

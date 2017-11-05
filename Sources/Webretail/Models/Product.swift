@@ -197,7 +197,7 @@ class Product: PostgresSqlORM, Codable {
 	func makeArticle(barcode: String) throws {
 		let article = Article()
 		try article.query(
-			whereclause: "productId = $1 AND articleBarcode = $2",
+			whereclause: "productId = $1 AND articleBarcodes ->> 'barcode' = $2",
 			params: [self.productId, barcode]
 		)
 		self._articles = try article.rows()
@@ -215,7 +215,7 @@ class Product: PostgresSqlORM, Codable {
             direction: StORMJoinType.INNER
         )
         
-        try query(whereclause: "articles.articleBarcode = $1",
+        try query(whereclause: "articles.articleBarcodes ->> 'barcode' = $1",
                   params: [barcode],
                   cursor: StORMCursor(limit: 1, offset: 0),
                   joins: [brandJoin, articleJoin])

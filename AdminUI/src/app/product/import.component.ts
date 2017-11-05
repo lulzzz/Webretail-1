@@ -6,7 +6,7 @@ import { ImportService, CodartInfo, Translate, Image } from './../services/impor
 import {
     Product, Brand, Category, ProductCategory,
     Attribute, AttributeValue, ProductAttribute, ProductAttributeValue,
-    Article, ArticleAttributeValue, Media, Translation
+    Article, ArticleAttributeValue, Media, Translation, Barcode
 } from './../shared/models';
 import { Helpers } from '../shared/helpers';
 
@@ -114,7 +114,7 @@ export class ImportComponent implements OnInit  {
         const articles: Article[] = [];
         product.codarts.forEach(p => {
             const article = new Article();
-            article.articleBarcode = p.barcode;
+            article.barcodes = [<Barcode>{ barcode: p.barcode, primaryKey: '', secondaryKey: '' }];
             article.attributeValues = [
                 <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture, []) },
                 <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.colorId.trim(), p.color, []) },

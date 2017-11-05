@@ -161,14 +161,14 @@ export class Product {
 
 export class Article {
   public articleId: number;
-  public articleBarcode: string;
+  public barcodes: Barcode[];
   public quantity: number;
   public booked: number;
   public attributeValues: ArticleAttributeValue[];
 
   constructor() {
     this.articleId = 0;
-    this.articleBarcode = '';
+    this.barcodes = [];
     this.quantity = 0;
     this.booked = 0;
     this.attributeValues = [];
@@ -273,6 +273,8 @@ export class Movement {
   public movementDevice: string;
   public movementAmount: number;
   public movementPayment: string;
+  public movementPrimaryKey: string;
+  public movementSecondaryKey: string;
   public updatedAt: number;
 
   constructor() {
@@ -286,6 +288,8 @@ export class Movement {
     this.movementDevice = '';
     this.movementAmount = 0.0;
     this.movementPayment = '';
+    this.movementPrimaryKey = '';
+    this.movementSecondaryKey = '';
     this.updatedAt = 0;
   }
 }
@@ -436,6 +440,17 @@ export interface ArticleAttributeValue {
   // articleId: number;
   attributeValueId: number;
   attributeValue: AttributeValue;
+}
+
+export interface Barcode {
+  barcode: string;
+  primaryKey: string;
+  secondaryKey: string;
+}
+
+export interface Keys {
+  primary: string[];
+  secondary: string[];
 }
 
 export interface ItemValue {

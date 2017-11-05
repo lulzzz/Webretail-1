@@ -59,11 +59,15 @@ export class PublicationComponent implements OnInit, OnDestroy {
                 this.selectedArray = this.product.translations;
                 this.categories = this.publicationService.getCategories();
                 this.attributes = this.publicationService.getAttributes();
-                this.publicationService.getPublication(id).subscribe(res => {
-                    res.productId = result.productId;
-                    this.publicationService.publication = res;
-                    this.isBusy = false;
-                });
+                this.publicationService.getPublication(id)
+                    .subscribe(
+                        res => {
+                            res.productId = result.productId;
+                            this.publicationService.publication = res;
+                            this.isBusy = false;
+                        },
+                        onerror => console.log(onerror._body)
+                    );
             });
         });
 

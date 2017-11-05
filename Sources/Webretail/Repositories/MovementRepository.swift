@@ -27,6 +27,25 @@ struct MovementRepository : MovementProtocol {
         return status
     }
     
+    func getKeys() throws -> Keys {
+        let keys = Keys()
+        
+        let items = Movement()
+        let rows = try items.sqlRows("SELECT DISTINCT movementPrimaryKey, movementSecondaryKey FROM movements", params: [])
+        for row in rows {
+            let primaryKey = row.data["movementPrimaryKey"] as? String ?? ""
+            let secondaryKey = row.data["movementSecondaryKey"] as? String ?? ""
+            if !keys.primary.contains(primaryKey) {
+                keys.primary.append(primaryKey)
+            }
+            if !keys.secondary.contains(secondaryKey) {
+                keys.secondary.append(secondaryKey)
+            }
+        }
+
+        return keys
+    }
+
     func getStatus() -> [ItemValue] {
         var status = [ItemValue]()
         status.append(ItemValue(value: "New"))
@@ -149,6 +168,9 @@ struct MovementRepository : MovementProtocol {
             current.movementCausal = item.movementCausal
             current.movementStore = item.movementStore
             current.movementCustomer = item.movementCustomer
+            current.movementPayment = item.movementPayment
+            current.movementPrimaryKey = item.movementPrimaryKey
+            current.movementSecondaryKey = item.movementSecondaryKey
         }
         else if current.movementStatus == "New" && item.movementStatus == "Processing" {
             try process(movement: current, actionType: ActionType.Booking)
@@ -173,21 +195,46 @@ struct MovementRepository : MovementProtocol {
         try item.sql("DELETE FROM movementarticles WHERE movementId = $1", params: [String(id)])
     }
     
+    func makeBarcode(items: MovementArticle) {
+        
+    }
+    
     func process(movement: Movement, actionType: ActionType) throws {
         
+        let article = MovementArticle()
+        try article.query(whereclause: "movementId = $1",
+                          params: [movement.movementId])
+
         let storeId = movement.movementStore.storeId
         let quantity = movement.movementCausal.causalQuantity
         let booked = movement.movementCausal.causalBooked
         
-        let article = MovementArticle()
-        try article.query(whereclause: "movementId = $1",
-                          params: [movement.movementId],
-                          cursor: StORMCursor(limit: 1000, offset: 0))
+        let company = try (ioCContainer.resolve() as CompanyProtocol).get()!
+        
         for item in article.rows() {
             
             let articles = item.movementArticleProduct._articles;
-            let articleId = articles[0].articleId
             
+            /// make barcodes for keys if necessary
+            if !movement.movementPrimaryKey.isEmpty || !movement.movementSecondaryKey.isEmpty {
+                if let barcode = articles[0].articleBarcodes.first(
+                    where: { $0.primaryKey == movement.movementPrimaryKey && $0.secondaryKey == movement.movementSecondaryKey }
+                ) {
+                    item.movementArticleBarcode = barcode.barcode;
+                } else {
+                    company.barcodeCounter += 1
+                    let newBarcode = Barcode()
+                    newBarcode.barcode = String(company.barcodeCounter)
+                    newBarcode.primaryKey = movement.movementPrimaryKey
+                    newBarcode.secondaryKey = movement.movementSecondaryKey
+                    articles[0].articleBarcodes.append(newBarcode)
+                    try articles[0].save()
+                    item.movementArticleBarcode = newBarcode.barcode;
+                    try item.save()
+                }
+            }
+
+            let articleId = articles[0].articleId
             let stock = Stock()
             try stock.query(
                 whereclause: "articleId = $1 AND storeId = $2",
@@ -220,6 +267,8 @@ struct MovementRepository : MovementProtocol {
             }
             try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)
         }
+        
+        try company.save()
     }
     
     func clone(sourceId: Int) throws -> Movement {

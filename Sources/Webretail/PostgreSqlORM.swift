@@ -207,6 +207,9 @@ open class PostgresSqlORM: PostgresStORM {
                     let encoder = JSONEncoder()
                     let data: Data
                     switch value {
+                    case is [Barcode]:
+                        data = try! encoder.encode(value as? [Barcode])
+                        break
                     case is [Media]:
                         data = try! encoder.encode(value as? [Media])
                         break

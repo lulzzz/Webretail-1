@@ -5,7 +5,7 @@ import { ConfirmationService, SelectItem, MenuItem } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { InvoiceService } from './../services/invoice.service';
-import { CustomerService } from './../services/customer.service';
+import { RegistryService } from './../services/registry.service';
 import { Invoice } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
@@ -32,7 +32,7 @@ export class InvoicesComponent implements OnInit {
                 private messageService: MessageService,
                 private sessionService: SessionService,
                 private invoiceService: InvoiceService,
-                private customerService: CustomerService,
+                private registryService: RegistryService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
         sessionService.title = 'Invoices';
@@ -56,12 +56,13 @@ export class InvoicesComponent implements OnInit {
                 this.totalRecords = this.items.length;
                 this.customersFiltered = [];
                 this.customersFiltered.push({label: 'All', value: null});
-                let filterCustomer = Helpers.distinct(result.map((item: Invoice) => Helpers.newSelectItem(item.invoiceCustomer.customerName)));
+                const filterCustomer = Helpers.distinct(result.map((item: Invoice) =>
+                    Helpers.newSelectItem(item.invoiceCustomer.customerName)));
                 this.customersFiltered = this.customersFiltered.concat(filterCustomer);
              }
         );
 
-        this.customerService
+        this.registryService
             .getAll()
             .subscribe(result => {
                 this.customers = [];

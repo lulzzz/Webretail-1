@@ -36,7 +36,7 @@ import { AttributeComponent } from './attribute/attribute.component';
 import { BrandComponent } from './brand/brand.component';
 import { CategoryComponent } from './category/category.component';
 import { CausalComponent } from './causal/causal.component';
-import { CustomerComponent } from './customer/customer.component';
+import { RegistryComponent } from './registry/registry.component';
 import { StoreComponent } from './store/store.component';
 import { ProductsComponent } from './product/products.component';
 import { ProductComponent } from './product/product.component';
@@ -64,7 +64,7 @@ import { AttributeService } from './services/attribute.service';
 import { BrandService } from './services/brand.service';
 import { CategoryService } from './services/category.service';
 import { CausalService } from './services/causal.service';
-import { CustomerService } from './services/customer.service';
+import { RegistryService } from './services/registry.service';
 import { StoreService } from './services/store.service';
 import { DeviceService } from './services/device.service';
 import { ProductService } from './services/product.service';
@@ -121,7 +121,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         BrandComponent,
         CategoryComponent,
         CausalComponent,
-        CustomerComponent,
+        RegistryComponent,
         StoreComponent,
         ProductsComponent,
         ProductComponent,
@@ -151,7 +151,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         BrandService,
         CategoryService,
         CausalService,
-        CustomerService,
+        RegistryService,
         StoreService,
         DeviceService,
         ProductService,

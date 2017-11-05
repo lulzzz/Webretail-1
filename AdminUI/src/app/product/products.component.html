@@ -70,10 +70,7 @@
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
-                            <i class="fa fa-close"></i>
-                            <span *ngIf="dataform.controls['code'].errors['required']">Code is required</span>
-                            <span *ngIf="userform.controls['code'].errors['minlength']">Must be at least 5 characters</span>
-                            <span *ngIf="dataform.controls['code'].errors['maxlength']">Must be at most 10 characters</span>
+                            <i class="fa fa-close"></i> Code is required
                         </div>
                     </div>
                 </div>
@@ -91,8 +88,7 @@
                     <div class="ui-grid-col-8">
                         <p-dropdown [options]="allbrands" formControlName="brand" [(ngModel)]="selected.brand" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['brand'].valid&&dataform.controls['brand'].dirty">
-                            <i class="fa fa-close"></i>
-                            <span *ngIf="dataform.controls['brand'].errors['required']">Brand is required</span>
+                            <i class="fa fa-close"></i> Brand is required
                         </div>
                     </div>
                 </div>
@@ -101,8 +97,7 @@
                     <div class="ui-grid-col-8">
                         <p-dropdown [options]="ums" formControlName="um" [(ngModel)]="selected.productUm" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['um'].valid&&dataform.controls['um'].dirty">
-                            <i class="fa fa-close"></i>
-                            <span *ngIf="dataform.controls['um'].errors['required']">Unit of Measure is required</span>
+                            <i class="fa fa-close"></i> Unit of Measure is required
                         </div>
                     </div>
                 </div>

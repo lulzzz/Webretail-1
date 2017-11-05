@@ -96,7 +96,9 @@ struct ArticleRepository : ArticleProtocol {
                 // Add article
                 newArticle.productId = productId
                 company.barcodeCounter += 1
-                newArticle.articleBarcode = String(company.barcodeCounter)
+                let barcode = Barcode()
+                barcode.barcode = String(company.barcodeCounter)
+                newArticle.articleBarcodes = [barcode]
                 newArticle.articleIsValid = true;
                 try add(item: newArticle)
                 
@@ -230,9 +232,10 @@ struct ArticleRepository : ArticleProtocol {
 			var row = [ArticleItem]()
 			var isFirst = true;
 			for article in group.value {
+                let barcode = article.articleBarcodes.first(where: { $0.primaryKey.isEmpty && $0.secondaryKey.isEmpty })
 				let articleItem = ArticleItem(
 					id: article.articleId,
-					value: article.articleBarcode,
+					value: barcode?.barcode ?? "",
 					stock: article._quantity,
 					booked: article._booked,
 					data: 0.0
@@ -276,7 +279,7 @@ struct ArticleRepository : ArticleProtocol {
             throw StORMError.noRecordFound
         }
         
-        current.articleBarcode = item.articleBarcode
+        current.articleBarcodes = item.articleBarcodes
         current.articleUpdated = Int.now()
         try current.save()
     }

@@ -9,7 +9,7 @@ import { AttributeComponent } from './attribute/attribute.component';
 import { BrandComponent } from './brand/brand.component';
 import { CategoryComponent } from './category/category.component';
 import { CausalComponent } from './causal/causal.component';
-import { CustomerComponent } from './customer/customer.component';
+import { RegistryComponent } from './registry/registry.component';
 import { StoreComponent } from './store/store.component';
 import { ProductsComponent } from './product/products.component';
 import { ProductComponent } from './product/product.component';
@@ -43,7 +43,7 @@ export const routes: Routes = [
     { path: 'category', component: CategoryComponent },
     { path: 'attribute', component: AttributeComponent },
     { path: 'causal', component: CausalComponent },
-    { path: 'customer', component: CustomerComponent },
+    { path: 'registry', component: RegistryComponent },
     { path: 'product', component: ProductsComponent },
     { path: 'product/:id', component: ProductComponent },
     { path: 'product/:id/stock', component: StockComponent },

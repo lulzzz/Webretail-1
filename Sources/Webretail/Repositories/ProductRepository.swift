@@ -147,14 +147,10 @@ struct ProductRepository : ProductProtocol {
             }
             
             // Medias
-            var isDir: ObjCBool = false
-            if !FileManager.default.fileExists(atPath: "./webroot/media", isDirectory: &isDir) {
-                try FileManager.default.createDirectory(atPath: "./webroot/media", withIntermediateDirectories: true, attributes: nil)
-            }
             for m in item.productMedias {
                 let url = URL(string: "http://www.tessilnova.com/\(m.url)")
                 let data = try? Data(contentsOf: url!)
-                if !FileManager.default.createFile(atPath: "./webroot/media/\(m.name)", contents: data, attributes: nil) {
+                if !FileManager.default.createFile(atPath: "./Upload/Media/\(m.name)", contents: data, attributes: nil) {
                     throw StORMError.error("File \(m.url) not found")
                 }
             }
@@ -217,7 +213,7 @@ struct ProductRepository : ProductProtocol {
             
              if current.count > 0 {
                 article.to(current[0])
-                article.articleBarcode = a.articleBarcode
+                article.articleBarcodes = a.articleBarcodes
                 try article.save()
             }
         }
@@ -281,8 +277,8 @@ struct ProductRepository : ProductProtocol {
         
         for c in current.productMedias {
             if !item.productMedias.contains(where: { p in p.name == c.name }) {
-                if (FileManager.default.fileExists(atPath: "./webroot/\(c.url)")) {
-                    try FileManager.default.removeItem(atPath: "./webroot/\(c.url)")
+                if (FileManager.default.fileExists(atPath: "./Upload/\(c.url)")) {
+                    try FileManager.default.removeItem(atPath: "./Upload/\(c.url)")
                 }
             }
         }
