@@ -34,7 +34,7 @@ export class RegistryComponent implements OnInit {
             'name': new FormControl('', Validators.required),
             'email': new FormControl('', [Validators.required, Validators.email]),
             // 'password': new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
-            'phone': new FormControl('', Validators.nullValidator),
+            'phone': new FormControl('', Validators.required),
             'address': new FormControl('', Validators.required),
             'city': new FormControl('', Validators.required),
             'zip': new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),

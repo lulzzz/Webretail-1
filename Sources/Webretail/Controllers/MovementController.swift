@@ -126,7 +126,7 @@ class MovementController {
 	func movementHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             guard let item: Movement = request.getJson() else {
-                throw PerfectError.apiError("json decode")
+                throw PerfectError.apiError("model invalid")
             }
 			try self.repository.add(item: item)
             try response.setJson(item)
@@ -161,7 +161,7 @@ class MovementController {
         do {
 			let id = request.urlVariables["id"]!
             guard let item: Movement = request.getJson() else {
-                throw PerfectError.apiError("json decode")
+                throw PerfectError.apiError("model invalid")
             }
             try self.repository.update(id: Int(id)!, item: item)
             try response.setJson(item)

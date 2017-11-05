@@ -33,6 +33,7 @@ export class ArticlePickerComponent {
     get products(): Product[] { return this.productService.products; }
 
     public loadData() {
+        this.isOpen = true;
         if (!this.products) {
             this.reloadData();
         } else {
@@ -41,7 +42,6 @@ export class ArticlePickerComponent {
     }
 
     private reloadData() {
-        this.isOpen = true;
         this.productService
             .getProducts()
             .subscribe(result => {

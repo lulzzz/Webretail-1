@@ -116,7 +116,13 @@ export class MovementComponent implements OnInit, OnDestroy {
                         this.items.push(result);
                         this.barcodes.splice(this.barcodes.indexOf(data), 1);
                         this.reloadData();
-                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
+                    },
+                    onerror => this.messageService.add(
+                        {
+                            severity: 'error', summary: 'Attention',
+                            detail: onerror.status === 404 ? 'Barcode not found!' : onerror._body
+                        }
+                    ));
             }
         });
     }

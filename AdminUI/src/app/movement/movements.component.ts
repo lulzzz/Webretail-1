@@ -219,6 +219,8 @@ export class MovementsComponent implements OnInit {
         } else {
             this.selected.movementDevice = '';
         }
+        this.selected.movementPrimaryKey = '';
+        this.selected.movementSecondaryKey = '';
     }
 
     editClick() {

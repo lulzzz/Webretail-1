@@ -69,13 +69,7 @@ class MovementArticle: PostgresSqlORM, Codable {
         movementArticleId = try container.decodeIfPresent(Int.self, forKey: .movementArticleId) ?? 0
         movementId = try container.decodeIfPresent(Int.self, forKey: .movementId) ?? 0
         movementArticleBarcode = try container.decode(String.self, forKey: .movementArticleBarcode)
-        let product = Product()
-        try! product.get(barcode: movementArticleBarcode)
-        if product.productId > 0 {
-            movementArticleProduct = product
-        } else {
-            movementArticleProduct = try container.decode(Product.self, forKey: .movementArticleProduct)
-        }
+        movementArticleProduct = try container.decodeIfPresent(Product.self, forKey: .movementArticleProduct) ?? Product()
         movementArticleQuantity = try container.decode(Double.self, forKey: .movementArticleQuantity)
         movementArticlePrice = try container.decode(Double.self, forKey: .movementArticlePrice)
     }

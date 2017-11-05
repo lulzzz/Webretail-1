@@ -213,28 +213,9 @@ struct MovementRepository : MovementProtocol {
         
         for item in article.rows() {
             
-            let articles = item.movementArticleProduct._articles;
-            
-            /// make barcodes for keys if necessary
-            if !movement.movementPrimaryKey.isEmpty || !movement.movementSecondaryKey.isEmpty {
-                if let barcode = articles[0].articleBarcodes.first(
-                    where: { $0.primaryKey == movement.movementPrimaryKey && $0.secondaryKey == movement.movementSecondaryKey }
-                ) {
-                    item.movementArticleBarcode = barcode.barcode;
-                } else {
-                    company.barcodeCounter += 1
-                    let newBarcode = Barcode()
-                    newBarcode.barcode = String(company.barcodeCounter)
-                    newBarcode.primaryKey = movement.movementPrimaryKey
-                    newBarcode.secondaryKey = movement.movementSecondaryKey
-                    articles[0].articleBarcodes.append(newBarcode)
-                    try articles[0].save()
-                    item.movementArticleBarcode = newBarcode.barcode;
-                    try item.save()
-                }
-            }
+            let article = item.movementArticleProduct._articles.first!
 
-            let articleId = articles[0].articleId
+            let articleId = article.articleId
             let stock = Stock()
             try stock.query(
                 whereclause: "articleId = $1 AND storeId = $2",
@@ -263,6 +244,28 @@ struct MovementRepository : MovementProtocol {
                     stock.stockQuantity += item.movementArticleQuantity
                 } else if quantity < 0 {
                     stock.stockQuantity -= item.movementArticleQuantity
+                }
+                
+                /// make barcodes for keys if necessary
+                if !movement.movementPrimaryKey.isEmpty || !movement.movementSecondaryKey.isEmpty {
+                    if let barcode = article.articleBarcodes.first(
+                        where: { $0.primaryKey == movement.movementPrimaryKey && $0.secondaryKey == movement.movementSecondaryKey }
+                        ) {
+                        item.movementArticleBarcode = barcode.barcode;
+                    } else {
+                        company.barcodeCounter += 1
+                        let newBarcode = Barcode()
+                        newBarcode.barcode = String(company.barcodeCounter)
+                        newBarcode.primaryKey = movement.movementPrimaryKey
+                        newBarcode.secondaryKey = movement.movementSecondaryKey
+                        article.articleIsValid = true;
+                        article.productId = item.movementArticleProduct.productId
+                        article.articleBarcodes.append(newBarcode)
+                        article.articleUpdated = Int.now()
+                        try article.save()
+                        item.movementArticleBarcode = newBarcode.barcode;
+                        try item.save()
+                    }
                 }
             }
             try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)

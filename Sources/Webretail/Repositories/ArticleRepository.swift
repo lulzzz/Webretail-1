@@ -16,8 +16,7 @@ struct ArticleRepository : ArticleProtocol {
         var countAdded: Int = 0
         var countUpdated: Int = 0
         var countDeleted: Int = 0
-        
-        //TODO: complete this func
+
         let product = Product()
         try product.get(productId)
         
@@ -279,6 +278,11 @@ struct ArticleRepository : ArticleProtocol {
             throw StORMError.noRecordFound
         }
         
+        for b in current.articleBarcodes {
+            if !b.primaryKey.isEmpty || !b.secondaryKey.isEmpty {
+                item.articleBarcodes.append(b)
+            }
+        }
         current.articleBarcodes = item.articleBarcodes
         current.articleUpdated = Int.now()
         try current.save()
