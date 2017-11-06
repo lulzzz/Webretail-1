@@ -1,7 +1,7 @@
 <div class="app-grid-list">
 
   <mat-form-field *ngIf="filtering" style="width: 96%; padding: 0 2%;">
-    <input matInput mode="search" (ngModelChange)="onFilterChange($event)" [(ngModel)]="pippo" placeholder="Search">
+    <input matInput mode="search" (ngModelChange)="onFilterChange($event)" [(ngModel)]="filter" placeholder="Search">
     <mat-icon matSuffix (click)="toggleSearch()">search</mat-icon>
   </mat-form-field>
 
