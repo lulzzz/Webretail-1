@@ -62,7 +62,7 @@
             <mat-icon>fullscreen</mat-icon>
           </button>
           <button mat-icon-button routerLink="/basket" title="Shopping Cart">
-            <span style="color: red"><b>{{itemsCount}}</b></span>
+            <span *ngIf="itemsCount>0" style="color: red"><b>{{itemsCount}}</b></span>
             <mat-icon>shopping_cart</mat-icon>
           </button>
         </div>
