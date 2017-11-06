@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { PdfDocument } from '../shared/models';
 import { Helpers } from 'app/shared/helpers';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class DocumentService {
@@ -157,14 +158,14 @@ export class DocumentService {
 
     htmlToPdf(model: PdfDocument): Observable<Blob> {
         model.content = this.getHtml(model);
-        console.log(model.content);
-        return this.http.post('/api/pdf', model, { headers: Helpers.getHeaders(), responseType: ResponseContentType.Blob })
+        return this.http.post(environment.apiUrl + '/api/pdf', model,
+          { headers: Helpers.getHeaders(), responseType: ResponseContentType.Blob })
             .map(result => <Blob>result.blob());
     }
 
     sendMail(model: PdfDocument): Observable<PdfDocument> {
         model.content = this.getHtml(model);
-        return this.http.post('/api/pdf/email', model, { headers: Helpers.getHeaders() })
+        return this.http.post(environment.apiUrl + '/api/pdf/email', model, { headers: Helpers.getHeaders() })
             .map(result => <PdfDocument>result.json());
     }
 }

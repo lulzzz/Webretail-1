@@ -53,12 +53,12 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   pickerClick(event: Article) {
     const model = new Basket();
-    model.basketBarcode = event.articleBarcode;
+    model.basketBarcode = event.barcodes.find(p => p.primaryKey === '' && p.primaryKey === '').barcode;
     this.basketService
         .create(model)
         .subscribe(result => {
           this.snackBar
-          .open(event.articleBarcode + ' added to basket!', 'Show Basket', {
+          .open(model.basketBarcode + ' added to basket!', 'Show Basket', {
             duration: 5000
           })
           .onAction()

@@ -106,9 +106,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
             .htmlToPdf(model)
             .subscribe(
                 data => {
-                    // const blob = new Blob([data], {type: 'application/pdf'});
-                    // const url = window.URL.createObjectURL(blob);
-                    // window.location.href = url;
+                    const blob = new Blob([data], {type: 'application/pdf'});
+                    const url = window.URL.createObjectURL(blob);
+                    window.location.href = url;
                 },
                 err => {
                     const reader = new FileReader();
