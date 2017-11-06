@@ -23,7 +23,7 @@ export class OrdersComponent implements OnInit {
 		private sessionService: SessionService,
 		private customerService: CustomerService) {
 
-		AppComponent.setPage('Orders', true);
+		AppComponent.setPage('Orders', false);
 	}
 
 	ngOnInit() {
