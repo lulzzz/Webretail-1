@@ -156,6 +156,7 @@ struct ProductRepository : ProductProtocol {
             }
         }
 
+        item.productIsActive = true;
         item.productCreated = Int.now()
         item.productUpdated = Int.now()
         try item.save {
@@ -218,6 +219,16 @@ struct ProductRepository : ProductProtocol {
             }
         }
         
+        // Publication
+        let publication = Publication()
+        publication.productId = item.productId
+        publication.publicationFeatured = false
+        publication.publicationStartAt = "2017-11-01".DateToInt()
+        publication.publicationFinishAt = "2017-12-31".DateToInt()
+        try publication.save {
+            id in publication.publicationId = id as! Int
+        }
+
         return result;
     }
     

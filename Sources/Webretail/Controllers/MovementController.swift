@@ -159,10 +159,10 @@ class MovementController {
 
 	func movementHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-			let id = request.urlVariables["id"]!
             guard let item: Movement = request.getJson() else {
                 throw PerfectError.apiError("model invalid")
             }
+            let id = request.urlVariables["id"]!
             try self.repository.update(id: Int(id)!, item: item)
             try response.setJson(item)
             response.completed(status: .accepted)

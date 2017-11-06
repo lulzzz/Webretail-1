@@ -7,6 +7,7 @@
 //
 
 import PerfectHTTP
+import PerfectLib
 
 class ProductController {
     
@@ -117,8 +118,10 @@ class ProductController {
     
     func productPublicationHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
+            guard let item: Product = request.getJson() else {
+                throw PerfectError.apiError("model invalid")
+            }
             let id = request.urlVariables["id"]!
-            let item: Product = request.getJson()!
             try self.repository.publish(id: Int(id)!, item: item)
             try response.setJson(item)
             response.completed(status: .accepted)

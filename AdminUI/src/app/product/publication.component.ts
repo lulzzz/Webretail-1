@@ -62,7 +62,7 @@ export class PublicationComponent implements OnInit, OnDestroy {
                 this.publicationService.getPublication(id)
                     .subscribe(
                         res => {
-                            res.productId = result.productId;
+                            res.productId = id;
                             this.publicationService.publication = res;
                             this.isBusy = false;
                         },
@@ -212,12 +212,15 @@ export class PublicationComponent implements OnInit, OnDestroy {
             this.messageService.add({severity: 'success', summary: 'Product', detail: 'Successfully saved!'});
             if (this.publication.publicationStartAt) {
                 if (this.publication.publicationId === 0) {
+                    this.publication.productId = result.productId;
                     this.publicationService.create(this.publication)
                         .subscribe(response => {
+                            this.publication.publicationId = response.publicationId;
                             this.isBusy = false;
                             this.messageService.add({severity: 'success', summary: 'Publication', detail: 'Successfully published!'});
                         });
                 } else {
+                    this.publication.productId = result.productId;
                     this.publicationService.update(this.publication.publicationId, this.publication)
                         .subscribe(response => this.isBusy = false );
                 }

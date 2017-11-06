@@ -195,10 +195,6 @@ struct MovementRepository : MovementProtocol {
         try item.sql("DELETE FROM movementarticles WHERE movementId = $1", params: [String(id)])
     }
     
-    func makeBarcode(items: MovementArticle) {
-        
-    }
-    
     func process(movement: Movement, actionType: ActionType) throws {
         
         let article = MovementArticle()

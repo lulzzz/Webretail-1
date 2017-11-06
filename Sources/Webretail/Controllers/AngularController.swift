@@ -24,6 +24,7 @@ public class AngularController {
 		routes.add(method: .get, uri: "/attribute", handler: HTTPHandler.angularHandler())
 		routes.add(method: .get, uri: "/product", handler: HTTPHandler.angularHandler())
         routes.add(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler())
+        routes.add(method: .get, uri: "/product/{id}/publication", handler: HTTPHandler.angularHandler())
 		routes.add(method: .get, uri: "/product/{id}/stock", handler: HTTPHandler.angularHandler())
 		routes.add(method: .get, uri: "/registry", handler: HTTPHandler.angularHandler())
         routes.add(method: .get, uri: "/causal", handler: HTTPHandler.angularHandler())

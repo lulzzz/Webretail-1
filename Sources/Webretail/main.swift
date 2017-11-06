@@ -82,7 +82,7 @@ Threading.dispatch {
 //        ),
         .server(
             name: "",
-            port: 80,
+            port: 8080,
             routes: angularRoutes
         )
     )
