@@ -66,6 +66,11 @@ export class ProductComponent implements OnInit, OnDestroy {
             this.router.navigate(['basket']);
           });
           this.basketService.basket.push(result);
-        });
-  }
+        },
+        onerror => this.snackBar.open(onerror.status === 401 ? 'You must login before adding to cart' : onerror._body, 'Login')
+        .onAction()
+        .subscribe(() => {
+          this.router.navigate(['login']);
+        }));
+    }
 }
