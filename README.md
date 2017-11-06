@@ -2,9 +2,16 @@
 
 # Webretail - RMS
 
-Retail Management System developed with Swift 4.0, Angular 4.0 and PostgreSQL.
+Retail Management System and e-Commerce
+developed with Swift 4.0, Angular 4.0 and PostgreSQL 10.0.
 
 #### Under active development. Please do not use.
+
+Try Demo <a href="http://webretail.cloud:8181">Webretail</a>
+usr: admin
+pwd: admin
+
+Try WebApp for eCommerce <a href="http://webretail.cloud">e-Commerce</a>
 
 
 ## Build Notes
