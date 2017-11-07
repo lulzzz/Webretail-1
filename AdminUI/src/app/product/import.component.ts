@@ -114,7 +114,7 @@ export class ImportComponent implements OnInit  {
         const articles: Article[] = [];
         product.codarts.forEach(p => {
             const article = new Article();
-            article.barcodes = [<Barcode>{ barcode: p.barcode, primaryKey: '', secondaryKey: '' }];
+            article.barcodes = [<Barcode>{ barcode: p.barcode, tags: [] }];
             article.attributeValues = [
                 <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, product.producer.id.trim(), texture, []) },
                 <ArticleAttributeValue>{ attributeValue: new AttributeValue(0, 0, p.colorId.trim(), p.color, []) },

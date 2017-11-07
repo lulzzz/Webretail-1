@@ -114,6 +114,12 @@ extension Sequence where Iterator.Element: Hashable {
     }
 }
 
+extension Array where Element: Comparable {
+    func containsSameElements(as other: [Element]) -> Bool {
+        return self.count == other.count && self.sorted() == other.sorted()
+    }
+}
+
 extension HTTPHandler {
     public static func angularHandler(webapi: Bool = true) -> RequestHandler {
         return {

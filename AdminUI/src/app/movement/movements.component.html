@@ -144,31 +144,25 @@
                     </div>
                 </div>
                 <div *ngIf="!selected.movementCausal.causalIsPos" class="ui-grid-row">
-                    <div class="ui-grid-col-12"><hr></div>
-                </div>
-                <div *ngIf="!selected.movementCausal.causalIsPos" class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="primaryKey">Primary Key</label></div>
+                    <div class="ui-grid-col-4"><label for="tags" title="Tags for managing barcodes, traceability and statistics">Tags</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="primaryKeys" [editable]="true" formControlName="primaryKey" [disabled]="selected.movementStatus==='Completed'" [(ngModel)]="selected.movementPrimaryKey" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-autoComplete [(ngModel)]="tagsSelected" field="valueName" formControlName="tags" [suggestions]="tagsFiltered" (completeMethod)="filterTags($event)" [multiple]="true">
+                            <ng-template let-tag pTemplate="item">
+                                <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+                                    <div style="font-size:18px;float:right;margin:10px 10px 0 0">{{tag.groupName}} - {{tag.valueName}}</div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
                     </div>
-                </div>
-                <div *ngIf="!selected.movementCausal.causalIsPos" class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="secondaryKey">Secondary Key</label></div>
-                    <div class="ui-grid-col-8">
-                        <p-dropdown [options]="secondaryKeys" [editable]="true" formControlName="secondaryKey" [disabled]="selected.movementStatus==='Completed'" [(ngModel)]="selected.movementSecondaryKey" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
-                    </div>
-                </div>
-                <div *ngIf="!selected.movementCausal.causalIsPos" class="ui-grid-row">
-                    <div class="ui-grid-col-12">* Keys for managing barcodes, traceability and statistics</div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="payment">Payment</label></div>
                     <div class="ui-grid-col-8">
                         <p-dropdown [options]="payments" formControlName="payment" [disabled]="selected.movementStatus==='Completed'" [(ngModel)]="selected.movementPayment" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                     </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="status">Status</label></div>

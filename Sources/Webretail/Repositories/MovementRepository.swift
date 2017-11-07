@@ -26,25 +26,6 @@ struct MovementRepository : MovementProtocol {
         status.append(ItemValue(value: "Carrier"))
         return status
     }
-    
-    func getKeys() throws -> Keys {
-        let keys = Keys()
-        
-        let items = Movement()
-        let rows = try items.sqlRows("SELECT DISTINCT movementPrimaryKey, movementSecondaryKey FROM movements", params: [])
-        for row in rows {
-            let primaryKey = row.data["movementPrimaryKey"] as? String ?? ""
-            let secondaryKey = row.data["movementSecondaryKey"] as? String ?? ""
-            if !keys.primary.contains(primaryKey) {
-                keys.primary.append(primaryKey)
-            }
-            if !keys.secondary.contains(secondaryKey) {
-                keys.secondary.append(secondaryKey)
-            }
-        }
-
-        return keys
-    }
 
     func getStatus() -> [ItemValue] {
         var status = [ItemValue]()
@@ -169,8 +150,7 @@ struct MovementRepository : MovementProtocol {
             current.movementStore = item.movementStore
             current.movementCustomer = item.movementCustomer
             current.movementPayment = item.movementPayment
-            current.movementPrimaryKey = item.movementPrimaryKey
-            current.movementSecondaryKey = item.movementSecondaryKey
+            current.movementTags = item.movementTags
         }
         else if current.movementStatus == "New" && item.movementStatus == "Processing" {
             try process(movement: current, actionType: ActionType.Booking)
@@ -242,18 +222,17 @@ struct MovementRepository : MovementProtocol {
                     stock.stockQuantity -= item.movementArticleQuantity
                 }
                 
-                /// make barcodes for keys if necessary
-                if !movement.movementPrimaryKey.isEmpty || !movement.movementSecondaryKey.isEmpty {
+                /// make barcodes for tags if necessary
+                if movement.movementTags.count > 0 {
                     if let barcode = article.articleBarcodes.first(
-                        where: { $0.primaryKey == movement.movementPrimaryKey && $0.secondaryKey == movement.movementSecondaryKey }
+                        where: { $0.tags.containsSameElements(as: movement.movementTags) }
                         ) {
                         item.movementArticleBarcode = barcode.barcode;
                     } else {
                         company.barcodeCounter += 1
                         let newBarcode = Barcode()
                         newBarcode.barcode = String(company.barcodeCounter)
-                        newBarcode.primaryKey = movement.movementPrimaryKey
-                        newBarcode.secondaryKey = movement.movementSecondaryKey
+                        newBarcode.tags = movement.movementTags
                         article.articleIsValid = true;
                         article.productId = item.movementArticleProduct.productId
                         article.articleBarcodes.append(newBarcode)

@@ -7,7 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5665A15E1FAF1C5B008386A1 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5665A15D1FAF1C5B008386A1 /* Keys.swift */; };
+		568990901FB1B40700A646B2 /* TagGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689908F1FB1B40700A646B2 /* TagGroup.swift */; };
+		568990921FB1B53500A646B2 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568990911FB1B53500A646B2 /* TagValue.swift */; };
+		568990941FB1B66A00A646B2 /* TagGroupProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568990931FB1B66A00A646B2 /* TagGroupProtocol.swift */; };
+		568990961FB1B6D300A646B2 /* TagValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568990951FB1B6D200A646B2 /* TagValueProtocol.swift */; };
+		568990981FB1B71000A646B2 /* TagGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568990971FB1B71000A646B2 /* TagGroupRepository.swift */; };
+		5689909A1FB1B94400A646B2 /* TagValueRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568990991FB1B94400A646B2 /* TagValueRepository.swift */; };
+		5689909C1FB1BE8600A646B2 /* TagGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689909B1FB1BE8600A646B2 /* TagGroupController.swift */; };
+		5689909E1FB1BEC900A646B2 /* TagValueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689909D1FB1BEC900A646B2 /* TagValueController.swift */; };
+		568990A01FB2503200A646B2 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689909F1FB2503200A646B2 /* Tag.swift */; };
 		56A3C3801FAE67AD00E60C1B /* Barcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A3C37F1FAE67AD00E60C1B /* Barcode.swift */; };
 		OBJ_1005 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_184 /* Convenience.swift */; };
 		OBJ_1006 /* DataConverters.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_185 /* DataConverters.swift */; };
@@ -1185,7 +1193,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5665A15D1FAF1C5B008386A1 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		5689908F1FB1B40700A646B2 /* TagGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGroup.swift; sourceTree = "<group>"; };
+		568990911FB1B53500A646B2 /* TagValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValue.swift; sourceTree = "<group>"; };
+		568990931FB1B66A00A646B2 /* TagGroupProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGroupProtocol.swift; sourceTree = "<group>"; };
+		568990951FB1B6D200A646B2 /* TagValueProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValueProtocol.swift; sourceTree = "<group>"; };
+		568990971FB1B71000A646B2 /* TagGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGroupRepository.swift; sourceTree = "<group>"; };
+		568990991FB1B94400A646B2 /* TagValueRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValueRepository.swift; sourceTree = "<group>"; };
+		5689909B1FB1BE8600A646B2 /* TagGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGroupController.swift; sourceTree = "<group>"; };
+		5689909D1FB1BEC900A646B2 /* TagValueController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValueController.swift; sourceTree = "<group>"; };
+		5689909F1FB2503200A646B2 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		56A3C37F1FAE67AD00E60C1B /* Barcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Barcode.swift; sourceTree = "<group>"; };
 		56D7E5551FAC884300EE4061 /* Dockerfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
 		56D7E5561FAC884300EE4061 /* rasterize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rasterize.js; sourceTree = "<group>"; };
@@ -2203,6 +2219,8 @@
 				OBJ_37 /* PublicationController.swift */,
 				OBJ_38 /* StatisticController.swift */,
 				OBJ_39 /* StoreController.swift */,
+				5689909B1FB1BE8600A646B2 /* TagGroupController.swift */,
+				5689909D1FB1BEC900A646B2 /* TagValueController.swift */,
 				OBJ_40 /* UserController.swift */,
 			);
 			path = Controllers;
@@ -2620,10 +2638,12 @@
 				OBJ_69 /* ProductAttributeValue.swift */,
 				OBJ_70 /* ProductCategory.swift */,
 				OBJ_71 /* Publication.swift */,
-				5665A15D1FAF1C5B008386A1 /* Keys.swift */,
 				OBJ_72 /* Statistic.swift */,
 				OBJ_73 /* Stock.swift */,
 				OBJ_74 /* Store.swift */,
+				5689909F1FB2503200A646B2 /* Tag.swift */,
+				5689908F1FB1B40700A646B2 /* TagGroup.swift */,
+				568990911FB1B53500A646B2 /* TagValue.swift */,
 				OBJ_75 /* Translation.swift */,
 				OBJ_76 /* User.swift */,
 			);
@@ -2987,6 +3007,8 @@
 				OBJ_95 /* PublicationProtocol.swift */,
 				OBJ_96 /* StatisticProtocol.swift */,
 				OBJ_97 /* StoreProtocol.swift */,
+				568990931FB1B66A00A646B2 /* TagGroupProtocol.swift */,
+				568990951FB1B6D200A646B2 /* TagValueProtocol.swift */,
 				OBJ_98 /* UserProtocol.swift */,
 			);
 			path = Protocols;
@@ -3047,6 +3069,8 @@
 				OBJ_115 /* PublicationRepository.swift */,
 				OBJ_116 /* StatisticRepository.swift */,
 				OBJ_117 /* StoreRepository.swift */,
+				568990971FB1B71000A646B2 /* TagGroupRepository.swift */,
+				568990991FB1B94400A646B2 /* TagValueRepository.swift */,
 				OBJ_118 /* UserRepository.swift */,
 			);
 			path = Repositories;
@@ -4544,6 +4568,7 @@
 				OBJ_777 /* DiscountController.swift in Sources */,
 				OBJ_778 /* EcommerceController.swift in Sources */,
 				OBJ_779 /* InvoiceController.swift in Sources */,
+				5689909A1FB1B94400A646B2 /* TagValueRepository.swift in Sources */,
 				OBJ_780 /* MovementArticleController.swift in Sources */,
 				OBJ_781 /* MovementController.swift in Sources */,
 				OBJ_782 /* PdfController.swift in Sources */,
@@ -4555,8 +4580,10 @@
 				OBJ_788 /* Extensions.swift in Sources */,
 				OBJ_789 /* HTTPTurnstile.swift in Sources */,
 				OBJ_790 /* IoCContainer.swift in Sources */,
+				5689909E1FB1BEC900A646B2 /* TagValueController.swift in Sources */,
 				OBJ_791 /* AccessTokenStore.swift in Sources */,
 				OBJ_792 /* Article.swift in Sources */,
+				568990961FB1B6D300A646B2 /* TagValueProtocol.swift in Sources */,
 				OBJ_793 /* ArticleAttributeValue.swift in Sources */,
 				OBJ_794 /* Attribute.swift in Sources */,
 				OBJ_795 /* AttributeValue.swift in Sources */,
@@ -4570,6 +4597,7 @@
 				OBJ_802 /* Device.swift in Sources */,
 				OBJ_803 /* Discount.swift in Sources */,
 				OBJ_804 /* DiscountProduct.swift in Sources */,
+				568990A01FB2503200A646B2 /* Tag.swift in Sources */,
 				OBJ_805 /* Invoice.swift in Sources */,
 				OBJ_806 /* Login.swift in Sources */,
 				OBJ_807 /* Media.swift in Sources */,
@@ -4585,6 +4613,7 @@
 				OBJ_817 /* Publication.swift in Sources */,
 				OBJ_818 /* Statistic.swift in Sources */,
 				OBJ_819 /* Stock.swift in Sources */,
+				568990981FB1B71000A646B2 /* TagGroupRepository.swift in Sources */,
 				OBJ_820 /* Store.swift in Sources */,
 				OBJ_821 /* Translation.swift in Sources */,
 				OBJ_822 /* User.swift in Sources */,
@@ -4594,11 +4623,11 @@
 				OBJ_826 /* AttributeValueProtocol.swift in Sources */,
 				OBJ_827 /* BrandProtocol.swift in Sources */,
 				OBJ_828 /* CategoryProtocol.swift in Sources */,
+				568990901FB1B40700A646B2 /* TagGroup.swift in Sources */,
 				OBJ_829 /* CausalProtocol.swift in Sources */,
 				OBJ_830 /* CompanyProtocol.swift in Sources */,
 				OBJ_831 /* CustomerProtocol.swift in Sources */,
 				OBJ_832 /* DeviceProtocol.swift in Sources */,
-				5665A15E1FAF1C5B008386A1 /* Keys.swift in Sources */,
 				OBJ_833 /* DiscountProtocol.swift in Sources */,
 				OBJ_834 /* EcommerceProtocol.swift in Sources */,
 				OBJ_835 /* InvoiceProtocol.swift in Sources */,
@@ -4606,11 +4635,13 @@
 				OBJ_837 /* MovementArticleProtocol.swift in Sources */,
 				OBJ_838 /* MovementProtocol.swift in Sources */,
 				OBJ_839 /* ProductProtocol.swift in Sources */,
+				568990941FB1B66A00A646B2 /* TagGroupProtocol.swift in Sources */,
 				OBJ_840 /* PublicationProtocol.swift in Sources */,
 				OBJ_841 /* StatisticProtocol.swift in Sources */,
 				OBJ_842 /* StoreProtocol.swift in Sources */,
 				OBJ_843 /* UserProtocol.swift in Sources */,
 				OBJ_844 /* ArticleRepository.swift in Sources */,
+				5689909C1FB1BE8600A646B2 /* TagGroupController.swift in Sources */,
 				OBJ_845 /* AttributeRepository.swift in Sources */,
 				OBJ_846 /* AttributeValueRepository.swift in Sources */,
 				OBJ_847 /* BrandRepository.swift in Sources */,
@@ -4627,6 +4658,7 @@
 				OBJ_858 /* ProductRepository.swift in Sources */,
 				OBJ_859 /* PublicationRepository.swift in Sources */,
 				OBJ_860 /* StatisticRepository.swift in Sources */,
+				568990921FB1B53500A646B2 /* TagValue.swift in Sources */,
 				OBJ_861 /* StoreRepository.swift in Sources */,
 				OBJ_862 /* UserRepository.swift in Sources */,
 				OBJ_863 /* Setup.swift in Sources */,

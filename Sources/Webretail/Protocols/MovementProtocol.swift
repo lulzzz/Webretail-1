@@ -10,9 +10,7 @@ protocol MovementProtocol {
     
 	func getPayments() -> [ItemValue]
 
-    func getKeys() throws -> Keys
-    
-	func getStatus() -> [ItemValue]
+    func getStatus() -> [ItemValue]
 
 	func getAll() throws -> [Movement]
 	

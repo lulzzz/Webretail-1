@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { MyInfoComponent } from './account/myinfo.component';
 import { AttributeComponent } from './attribute/attribute.component';
+import { TagComponent } from './tag/tag.component';
 import { BrandComponent } from './brand/brand.component';
 import { CategoryComponent } from './category/category.component';
 import { CausalComponent } from './causal/causal.component';
@@ -42,6 +43,7 @@ export const routes: Routes = [
     { path: 'brand', component: BrandComponent },
     { path: 'category', component: CategoryComponent },
     { path: 'attribute', component: AttributeComponent },
+    { path: 'tag', component: TagComponent },
     { path: 'causal', component: CausalComponent },
     { path: 'registry', component: RegistryComponent },
     { path: 'product', component: ProductsComponent },

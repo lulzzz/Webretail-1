@@ -342,7 +342,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                     if (p.id > 0) {
                         const article = new Article();
                         article.articleId = p.id;
-                        article.barcodes = [<Barcode>{ barcode: p.value, primaryKey: '', secondaryKey: '' }];
+                        article.barcodes = [<Barcode>{ barcode: p.value, tags: [] }];
                         this.productService
                             .updateArticle(p.id, article)
                             .subscribe(result => {

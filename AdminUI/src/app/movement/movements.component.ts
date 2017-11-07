@@ -8,9 +8,9 @@ import { StoreService } from './../services/store.service';
 import { CausalService } from './../services/causal.service';
 import { RegistryService } from './../services/registry.service';
 import { MovementService } from './../services/movement.service';
-import { Movement, Device } from './../shared/models';
+import { TagService } from './../services/tag.service';
+import { Movement, Device, TagGroup, Tag, TagValue } from './../shared/models';
 import { Helpers } from './../shared/helpers';
-import * as FileSaver from 'file-saver';
 
 @Component({
     selector: 'app-movements-component',
@@ -30,8 +30,9 @@ export class MovementsComponent implements OnInit {
     customersFiltered: SelectItem[];
     status: SelectItem[];
     statusFiltered: SelectItem[];
-    primaryKeys: SelectItem[];
-    secondaryKeys: SelectItem[];
+    tags: TagGroup[];
+    tagsFiltered: Tag[];
+    tagsSelected: Tag[];
     payments: SelectItem[];
     currentStatus: string;
     displayPanel: boolean;
@@ -48,6 +49,7 @@ export class MovementsComponent implements OnInit {
                 private storeService: StoreService,
                 private causalService: CausalService,
                 private registryService: RegistryService,
+                private tagService: TagService,
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -66,8 +68,7 @@ export class MovementsComponent implements OnInit {
             'customer': new FormControl('', Validators.nullValidator),
             'device': new FormControl('', Validators.nullValidator),
             'payment': new FormControl('', Validators.nullValidator),
-            'primaryKey': new FormControl('', Validators.nullValidator),
-            'secondaryKey': new FormControl('', Validators.nullValidator),
+            'tags': new FormControl('', Validators.nullValidator),
             'status': new FormControl('', Validators.required),
             'note': new FormControl('', Validators.nullValidator)
         });
@@ -98,11 +99,10 @@ export class MovementsComponent implements OnInit {
             }
         );
 
-        this.movementService
-            .getKeys()
+        this.tagService
+            .getAll()
             .subscribe(result => {
-                this.primaryKeys = result.primary.map(p => Helpers.newSelectItem(p));
-                this.secondaryKeys = result.secondary.map(p => Helpers.newSelectItem(p));
+                this.tags = result;
             }
         );
 
@@ -190,7 +190,7 @@ export class MovementsComponent implements OnInit {
     private refreshControl() {
         this.totalRecords = this.items.length;
         this.buildFilter();
-}
+    }
 
     addClick() {
         this.selected = new Movement();
@@ -209,6 +209,7 @@ export class MovementsComponent implements OnInit {
         if (this.status.length > 0) {
             this.selected.movementStatus = this.status[0].value;
         }
+        this.tagsSelected = [];
         this.displayPanel = true;
     }
 
@@ -219,14 +220,14 @@ export class MovementsComponent implements OnInit {
         } else {
             this.selected.movementDevice = '';
         }
-        this.selected.movementPrimaryKey = '';
-        this.selected.movementSecondaryKey = '';
+        this.tagsSelected = [];
     }
 
     editClick() {
         if (!this.selected) {
             return;
         }
+        this.tagsSelected = this.selected.movementTags;
         this.currentStatus = this.selected.movementStatus;
         this.displayPanel = true;
     }
@@ -239,6 +240,7 @@ export class MovementsComponent implements OnInit {
     }
 
     saveClick() {
+        this.selected.movementTags = this.tagsSelected;
         if (this.isNew) {
             this.movementService.create(this.selected)
                 .subscribe(result => {
@@ -320,4 +322,22 @@ export class MovementsComponent implements OnInit {
     //         () => console.log('done')
     //     );
     // }
+
+    filterTags(event) {
+        this.tagsFiltered = [];
+        this.tags.forEach(p => {
+            if (event.query === ' ' || p.tagGroupName.toLowerCase().indexOf(event.query.toLowerCase()) === 0
+                || p.values.find(e => e.tagValueName.toLowerCase().indexOf(event.query.toLowerCase()) === 0)) {
+                p.values.forEach(f => {
+                    const tag = <Tag>{
+                        groupId: f.tagGroupId,
+                        groupName: p.tagGroupName,
+                        valueId: f.tagValueId,
+                        valueName: f.tagValueName
+                    };
+                    this.tagsFiltered.push(tag);
+                });
+            }
+        });
+    }
 }

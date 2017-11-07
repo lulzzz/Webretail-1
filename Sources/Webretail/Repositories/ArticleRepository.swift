@@ -231,7 +231,7 @@ struct ArticleRepository : ArticleProtocol {
 			var row = [ArticleItem]()
 			var isFirst = true;
 			for article in group.value {
-                let barcode = article.articleBarcodes.first(where: { $0.primaryKey.isEmpty && $0.secondaryKey.isEmpty })
+                let barcode = article.articleBarcodes.first(where: { $0.tags.count == 0 })
 				let articleItem = ArticleItem(
 					id: article.articleId,
 					value: barcode?.barcode ?? "",
@@ -278,8 +278,9 @@ struct ArticleRepository : ArticleProtocol {
             throw StORMError.noRecordFound
         }
         
+        // TODO: check this in test
         for b in current.articleBarcodes {
-            if !b.primaryKey.isEmpty || !b.secondaryKey.isEmpty {
+            if b.tags.count > 0 {
                 item.articleBarcodes.append(b)
             }
         }

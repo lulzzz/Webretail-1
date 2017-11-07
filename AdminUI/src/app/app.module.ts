@@ -14,7 +14,7 @@ import {
     SelectButtonModule, ChipsModule, InputTextareaModule,
     ContextMenuModule, TooltipModule, CalendarModule,
     FileUploadModule, ChartModule, CarouselModule,
-    SpinnerModule, StepsModule
+    SpinnerModule, StepsModule, AutoCompleteModule
 } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { NgxBarcodeModule } from 'ngx-barcode';
@@ -33,6 +33,7 @@ import { RegisterComponent } from './login/register.component';
 import { AccountComponent } from './account/account.component';
 import { MyInfoComponent } from './account/myinfo.component';
 import { AttributeComponent } from './attribute/attribute.component';
+import { TagComponent } from './tag/tag.component';
 import { BrandComponent } from './brand/brand.component';
 import { CategoryComponent } from './category/category.component';
 import { CausalComponent } from './causal/causal.component';
@@ -61,6 +62,7 @@ import { SessionService } from './services/session.service';
 import { CompanyService } from './services/company.service';
 import { AccountService } from './services/account.service';
 import { AttributeService } from './services/attribute.service';
+import { TagService } from './services/tag.service';
 import { BrandService } from './services/brand.service';
 import { CategoryService } from './services/category.service';
 import { CausalService } from './services/causal.service';
@@ -92,7 +94,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ButtonModule, InputTextModule, InputSwitchModule,
         PanelModule, SplitButtonModule, PickListModule, GrowlModule,
         ConfirmDialogModule, ToolbarModule, SelectButtonModule,
-        ChipsModule, InputTextareaModule, FileUploadModule,
+        ChipsModule, InputTextareaModule, FileUploadModule, AutoCompleteModule,
         ContextMenuModule, TooltipModule, CalendarModule, ChartModule,
         CarouselModule, SpinnerModule, StepsModule, NgxBarcodeModule,
         AppRoutes
@@ -118,6 +120,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         AccountComponent,
         MyInfoComponent,
         AttributeComponent,
+        TagComponent,
         BrandComponent,
         CategoryComponent,
         CausalComponent,
@@ -148,6 +151,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         CompanyService,
         AccountService,
         AttributeService,
+        TagService,
         BrandService,
         CategoryService,
         CausalService,

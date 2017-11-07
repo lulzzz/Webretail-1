@@ -193,6 +193,25 @@ export class AttributeValue {
   ) { }
 }
 
+export class TagGroup {
+  constructor(
+    public tagGroupId: number,
+    public tagGroupName: string,
+    public translations: Translation[],
+    public values: TagValue[]
+  ) { }
+}
+
+export class TagValue {
+  constructor(
+    public tagGroupId: number,
+    public tagValueId: number,
+    public tagValueCode: string,
+    public tagValueName: string,
+    public translations: Translation[]
+  ) { }
+}
+
 export class Publication {
   public publicationId: number;
   public productId: number;
@@ -205,9 +224,6 @@ export class Publication {
     this.publicationId = 0;
     this.productId = productId;
     this.publicationFeatured = false;
-    // this.publicationStartAt = new Date();
-    // this.publicationFinishAt = new Date();
-    // this.publicationUpdated = new Date();
   }}
 
 export class Causal {
@@ -273,8 +289,7 @@ export class Movement {
   public movementDevice: string;
   public movementAmount: number;
   public movementPayment: string;
-  public movementPrimaryKey: string;
-  public movementSecondaryKey: string;
+  public movementTags: Tag[];
   public updatedAt: number;
 
   constructor() {
@@ -288,8 +303,7 @@ export class Movement {
     this.movementDevice = '';
     this.movementAmount = 0.0;
     this.movementPayment = '';
-    this.movementPrimaryKey = '';
-    this.movementSecondaryKey = '';
+    this.movementTags = [];
     this.updatedAt = 0;
   }
 }
@@ -444,13 +458,14 @@ export interface ArticleAttributeValue {
 
 export interface Barcode {
   barcode: string;
-  primaryKey: string;
-  secondaryKey: string;
+  tags: Tag[];
 }
 
-export interface Keys {
-  primary: string[];
-  secondary: string[];
+export interface Tag {
+  groupId: number;
+  groupName: string;
+  valueId: number;
+  valueName: string;
 }
 
 export interface ItemValue {

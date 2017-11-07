@@ -213,6 +213,9 @@ open class PostgresSqlORM: PostgresStORM {
                     case is [Media]:
                         data = try! encoder.encode(value as? [Media])
                         break
+                    case is [Tag]:
+                        data = try! encoder.encode(value as? [Tag])
+                        break
                     default:
                         data = try! encoder.encode(value as? [Translation])
                         break

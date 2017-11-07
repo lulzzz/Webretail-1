@@ -36,6 +36,8 @@ func setupDatabase() throws {
 	try Category().setup()
 	try Attribute().setup()
 	try AttributeValue().setup()
+    try TagGroup().setup()
+    try TagValue().setup()
 	try Product().setup()
 	try ProductCategory().setup()
 	try ProductAttribute().setup()
@@ -64,6 +66,8 @@ func addIoC() {
 	ioCContainer.register { CategoryRepository() as CategoryProtocol }
 	ioCContainer.register { AttributeRepository() as AttributeProtocol }
 	ioCContainer.register { AttributeValueRepository() as AttributeValueProtocol }
+    ioCContainer.register { TagGroupRepository() as TagGroupProtocol }
+    ioCContainer.register { TagValueRepository() as TagValueProtocol }
 	ioCContainer.register { ProductRepository() as ProductProtocol }
 	ioCContainer.register { ArticleRepository() as ArticleProtocol }
 	ioCContainer.register { CustomerRepository() as CustomerProtocol }
@@ -91,6 +95,8 @@ func addRoutesAndHandlers() {
 	server.addRoutes(CategoryController().getRoutes())
 	server.addRoutes(AttributeController().getRoutes())
 	server.addRoutes(AttributeValueController().getRoutes())
+    server.addRoutes(TagGroupController().getRoutes())
+    server.addRoutes(TagValueController().getRoutes())
 	server.addRoutes(ProductController().getRoutes())
 	server.addRoutes(ArticleController().getRoutes())
 	server.addRoutes(CustomerController().getRoutes())

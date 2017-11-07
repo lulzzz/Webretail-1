@@ -38,9 +38,8 @@ class Article: PostgresSqlORM, Codable {
         articleId = this.data["articleid"] as? Int ?? 0
         productId = this.data["productid"] as? Int ?? 0
         if let barcodes = this.data["articlebarcodes"] {
-            let decoder = JSONDecoder()
             let jsonData = try! JSONSerialization.data(withJSONObject: barcodes, options: [])
-            articleBarcodes = try! decoder.decode([Barcode].self, from: jsonData)
+            articleBarcodes = try! JSONDecoder().decode([Barcode].self, from: jsonData)
         }
         articleIsValid = this.data["articleisvalid"] as? Bool ?? true
         articleCreated = this.data["articlecreated"] as? Int ?? 0
