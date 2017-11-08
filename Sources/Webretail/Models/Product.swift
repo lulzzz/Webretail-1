@@ -195,17 +195,12 @@ class Product: PostgresSqlORM, Codable {
 	}
 
 	func makeArticle(barcode: String) throws {
-		let article = Article()
-        let param = """
-        [{"barcode": "\(barcode)"}]
-        """
-		try article.query(
-			whereclause: """
-            productId = $1 AND articleBarcodes @> $2::jsonb
-            """,
-			params: [self.productId, param]
-		)
-		self._articles = try article.rows()
+        let article = Article()
+        article.to(self.results.rows[0])
+        let attributeValue = ArticleAttributeValue()
+        attributeValue.results = self.results
+        article._attributeValues = try attributeValue.rows()
+        self._articles = [article]
 	}
 
     func get(barcode: String) throws {
@@ -219,14 +214,20 @@ class Product: PostgresSqlORM, Codable {
             onCondition: "products.productId = articles.productId",
             direction: StORMJoinType.INNER
         )
-        
+        let articleAttributeJoin = StORMDataSourceJoin(
+            table: "articleattributevalues",
+            onCondition: "articleattributevalues.articleId = articles.articleId",
+            direction: StORMJoinType.INNER
+        )
+
         let param = """
         [{"barcode": "\(barcode)"}]
         """
         try query(whereclause: "articles.articleBarcodes @> $1::jsonb",
                   params: [param],
-                  cursor: StORMCursor(limit: 1, offset: 0),
-                  joins: [brandJoin, articleJoin])
+                  orderby: ["articleattributevalues.articleAttributeValueId"],
+                  joins: [brandJoin, articleJoin, articleAttributeJoin])
+        self.to(self.results.rows[0])
         if self.productId == 0 {
             return
         }

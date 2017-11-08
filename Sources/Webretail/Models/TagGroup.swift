@@ -32,8 +32,9 @@ class TagGroup: PostgresSqlORM, Codable {
     open override func to(_ this: StORMRow) {
         tagGroupId = this.data["taggroupid"] as? Int ?? 0
         tagGroupName = this.data["taggroupname"] as? String ?? ""
-        if let translates = this.data["taggrouptranslates"] as? Data {
-            tagGroupTranslates = try! JSONDecoder().decode([Translation].self, from: translates)
+        if let translates = this.data["taggrouptranslates"] as? [String:Any] {
+            let jsonData = try! JSONSerialization.data(withJSONObject: translates, options: [])
+            tagGroupTranslates = try! JSONDecoder().decode([Translation].self, from: jsonData)
         }
         tagGroupCreated = this.data["taggroupcreated"] as? Int ?? 0
         tagGroupUpdated = this.data["taggroupupdated"] as? Int ?? 0

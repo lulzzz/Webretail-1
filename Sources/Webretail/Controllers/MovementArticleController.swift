@@ -62,6 +62,7 @@ class MovementArticleController {
 				item.movementArticlePrice = product.productPurchasePrice
 			}
 			
+            item.movementArticleProduct = product
 			try self.movementRepository.add(item: item)
             try response.setJson(item)
             response.completed(status: .created)

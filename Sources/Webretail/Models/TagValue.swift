@@ -34,9 +34,9 @@ class TagValue: PostgresSqlORM, Codable {
         tagGroupId = this.data["taggroupid"] as? Int ?? 0
         tagValueCode = this.data["tagvaluecode"] as? String ?? ""
         tagValueName = this.data["tagvaluename"] as? String ?? ""
-        if let translates = this.data["tagvaluetranslates"] as? Data {
-            let decoder = JSONDecoder()
-            tagValueTranslates = try! decoder.decode([Translation].self, from: translates)
+        if let translates = this.data["tagvaluetranslates"] as? [String:Any] {
+            let jsonData = try! JSONSerialization.data(withJSONObject: translates, options: [])
+            tagValueTranslates = try! JSONDecoder().decode([Translation].self, from: jsonData)
         }
         tagValueCreated = this.data["tagvaluecreated"] as? Int ?? 0
         tagValueUpdated = this.data["tagvalueupdated"] as? Int ?? 0

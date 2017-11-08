@@ -80,7 +80,7 @@ class Movement: PostgresSqlORM, Codable {
                 movementCustomer = try! decoder.decode(Customer.self, from: jsonData)
             }
         }
-        if let json = this.data["movementtags"] as? [String:Any] {
+        if let json = this.data["movementtags"] as? [[String:Any]] {
             if json.count > 0 {
                 jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])
                 movementTags = try! decoder.decode([Tag].self, from: jsonData)
@@ -126,6 +126,7 @@ class Movement: PostgresSqlORM, Codable {
         movementCustomer = try container.decodeIfPresent(Customer.self, forKey: .movementCustomer) ?? Customer()
         movementTags = try container.decodeIfPresent([Tag].self, forKey: .movementTags) ?? [Tag]()
         movementPayment = try container.decode(String.self, forKey: .movementPayment)
+        _amount = try container.decode(Double.self, forKey: ._amount)
         _items = try container.decodeIfPresent([MovementArticle].self, forKey: ._items) ?? [MovementArticle]()
     }
     

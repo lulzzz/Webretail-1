@@ -146,10 +146,10 @@
                 <div *ngIf="!selected.movementCausal.causalIsPos" class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="tags" title="Tags for managing barcodes, traceability and statistics">Tags</label></div>
                     <div class="ui-grid-col-8">
-                        <p-autoComplete [(ngModel)]="tagsSelected" field="valueName" formControlName="tags" [suggestions]="tagsFiltered" (completeMethod)="filterTags($event)" [multiple]="true">
+                        <p-autoComplete [(ngModel)]="tagsSelected" field="valueName" formControlName="tags" [suggestions]="tagsFiltered" (completeMethod)="filterTags($event)" [multiple]="true" [disabled]="selected.movementStatus!=='New'">
                             <ng-template let-tag pTemplate="item">
-                                <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
-                                    <div style="font-size:18px;float:right;margin:10px 10px 0 0">{{tag.groupName}} - {{tag.valueName}}</div>
+                                <div class="ui-helper-clearfix">
+                                    <div style="font-size:16px;margin:10px 10px 0 0">{{tag.groupName}} - {{tag.valueName}}</div>
                                 </div>
                             </ng-template>
                         </p-autoComplete>
