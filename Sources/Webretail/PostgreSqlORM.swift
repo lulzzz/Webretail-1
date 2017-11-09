@@ -195,8 +195,8 @@ open class PostgresSqlORM: PostgresStORM {
                     case is Causal:
                         data = try! encoder.encode(value as? Causal)
                         break
-                    case is Customer:
-                        data = try! encoder.encode(value as? Customer)
+                    case is Registry:
+                        data = try! encoder.encode(value as? Registry)
                         break
                     default:
                         data = try! encoder.encode(value as? Product)

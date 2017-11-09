@@ -84,7 +84,7 @@ struct InvoiceRepository : InvoiceProtocol {
 		current.invoiceNumber = item.invoiceNumber
 		current.invoiceDate = item.invoiceDate
 		current.invoicePayment = item.invoicePayment
-		current.invoiceCustomer = item.invoiceCustomer
+		current.invoiceRegistry = item.invoiceRegistry
 		current.invoiceNote = item.invoiceNote
 		current.invoiceUpdated = item.invoiceUpdated
 		try current.save()

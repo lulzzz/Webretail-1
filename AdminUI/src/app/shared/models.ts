@@ -244,32 +244,32 @@ export class Causal {
   }
 }
 
-export class Customer {
-  public customerId: number;
-  public customerName: string;
-  public customerEmail: string;
-  public customerPassword: string;
-  public customerPhone: string;
-  public customerAddress: string;
-  public customerCity: string;
-  public customerZip: string;
-  public customerCountry: string;
-  public customerFiscalCode: string;
-  public customerVatNumber: string;
+export class Registry {
+  public registryId: number;
+  public registryName: string;
+  public registryEmail: string;
+  public registryPassword: string;
+  public registryPhone: string;
+  public registryAddress: string;
+  public registryCity: string;
+  public registryZip: string;
+  public registryCountry: string;
+  public registryFiscalCode: string;
+  public registryVatNumber: string;
   public updatedAt: number;
 
   constructor() {
-    this.customerId = 0;
-    this.customerName = '';
-    this.customerEmail = '';
-    this.customerPassword = '';
-    this.customerPhone = '';
-    this.customerAddress = '';
-    this.customerCity = '';
-    this.customerZip = '';
-    this.customerCountry = '';
-    this.customerFiscalCode = '';
-    this.customerVatNumber = '';
+    this.registryId = 0;
+    this.registryName = '';
+    this.registryEmail = '';
+    this.registryPassword = '';
+    this.registryPhone = '';
+    this.registryAddress = '';
+    this.registryCity = '';
+    this.registryZip = '';
+    this.registryCountry = '';
+    this.registryFiscalCode = '';
+    this.registryVatNumber = '';
     this.updatedAt = 0;
   }
 }
@@ -282,7 +282,7 @@ export class Movement {
   public movementDesc: string;
   public movementStore: Store;
   public movementCausal: Causal;
-  public movementCustomer: Customer;
+  public movementRegistry: Registry;
   public movementNote: string;
   public movementStatus: string;
   public movementUser: string;
@@ -314,6 +314,7 @@ export class MovementArticle {
   public movementArticleBarcode: string;
   public movementArticleProduct: Product;
   public movementArticleQuantity: number;
+  public movementArticleDelivered: number;
   public movementArticlePrice: number;
   public movementArticleAmount: number;
 
@@ -323,6 +324,7 @@ export class MovementArticle {
     this.movementArticleBarcode = '';
     this.movementArticleProduct = null;
     this.movementArticleQuantity = 1.0;
+    this.movementArticleDelivered = 0.0;
     this.movementArticlePrice = 0.0;
     this.movementArticleAmount = 0.0;
   }
@@ -332,7 +334,7 @@ export class Invoice {
   public invoiceId: number;
   public invoiceNumber: number;
   public invoiceDate: Date;
-  public invoiceCustomer: Customer;
+  public invoiceRegistry: Registry;
   public invoicePayment: string;
   public invoiceNote: string;
   public invoiceAmount: number;

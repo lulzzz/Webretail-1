@@ -142,9 +142,9 @@ struct EcommerceRepository : EcommerceProtocol {
         return item
     }
 
-    func getBasket(customerId: Int) throws -> [Basket] {
+    func getBasket(registryId: Int) throws -> [Basket] {
         let items = Basket()
-        try items.query(whereclause: "customerId = $1", params: [customerId])
+        try items.query(whereclause: "registryId = $1", params: [registryId])
         
         return items.rows()
     }
@@ -173,17 +173,17 @@ struct EcommerceRepository : EcommerceProtocol {
         try item.delete()
     }
     
-    func addOrder(customerId: Int, payment: String) throws -> Movement {
+    func addOrder(registryId: Int, payment: String) throws -> Movement {
         let repository = ioCContainer.resolve() as MovementProtocol
         
-        let items = try self.getBasket(customerId: customerId)
+        let items = try self.getBasket(registryId: registryId)
         if items.count == 0 {
             throw StORMError.noRecordFound
         }
 
-        let customer = Customer()
-        try customer.get(customerId)
-        if customer.customerId == 0 {
+        let registry = Registry()
+        try registry.get(registryId)
+        if registry.registryId == 0 {
             throw StORMError.noRecordFound
         }
         
@@ -204,8 +204,8 @@ struct EcommerceRepository : EcommerceProtocol {
         order.movementDate = Int.now()
         order.movementStore = store
         order.movementCausal = causal
-        order.movementCustomer = customer
-        order.movementUser = "Customer"
+        order.movementRegistry = registry
+        order.movementUser = "Registry"
         order.movementStatus = "New"
         order.movementPayment = payment
         order.movementDesc = "eCommerce order"
@@ -232,33 +232,33 @@ struct EcommerceRepository : EcommerceProtocol {
         return order;
     }
 
-    func getOrders(customerId: Int) throws -> [Movement] {
+    func getOrders(registryId: Int) throws -> [Movement] {
         let items = Movement()
-        try items.query(whereclause: "movementCustomer ->> 'customerId' = $1",
-                        params: [customerId],
+        try items.query(whereclause: "movementRegistry ->> 'registryId' = $1",
+                        params: [registryId],
                         orderby: ["movementId DESC"])
         
         return try items.rows()
     }
 
-    func getOrder(customerId: Int, id: Int) throws -> Movement {
+    func getOrder(registryId: Int, id: Int) throws -> Movement {
         let item = Movement()
-        try item.query(whereclause: "movementCustomer ->> 'customerId' = $1 AND movementId = $2",
-                       params: [customerId, id],
+        try item.query(whereclause: "movementRegistry ->> 'registryId' = $1 AND movementId = $2",
+                       params: [registryId, id],
                        cursor: StORMCursor(limit: 1, offset: 0))
 
         return item
     }
     
-    func getOrderItems(customerId: Int, id: Int) throws -> [MovementArticle] {
+    func getOrderItems(registryId: Int, id: Int) throws -> [MovementArticle] {
         let items = MovementArticle()
         let join = StORMDataSourceJoin(
             table: "movements",
             onCondition: "movementarticles.movementId = movements.movementId",
             direction: StORMJoinType.RIGHT
         )
-        try items.query(whereclause: "movements.movementCustomer ->> 'customerId' = $1 AND movementarticles.movementId = $2",
-                        params: [customerId, id],
+        try items.query(whereclause: "movements.movementRegistry ->> 'registryId' = $1 AND movementarticles.movementId = $2",
+                        params: [registryId, id],
                         orderby: ["movementarticles.movementarticleId"],
                         joins: [join]
         )

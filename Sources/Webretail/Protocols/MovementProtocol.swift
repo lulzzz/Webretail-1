@@ -20,7 +20,7 @@ protocol MovementProtocol {
 	
 	func getReceipted(period: Period) throws -> [Movement]
 	
-	func get(customerId: Int) throws -> [Movement]
+	func get(registryId: Int) throws -> [Movement]
 
 	func get(id: Int) throws -> Movement?
     
@@ -32,5 +32,5 @@ protocol MovementProtocol {
 
 	func clone(sourceId: Int) throws -> Movement
 	
-	func process(movement: Movement, actionType: ActionType) throws
+	func process(movement: Movement, actionTypes: [ActionType]) throws
 }

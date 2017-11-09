@@ -4,7 +4,7 @@ import { ConfirmationService, Paginator } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { RegistryService } from './../services/registry.service';
-import { Customer } from './../shared/models';
+import { Registry } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
@@ -14,8 +14,8 @@ import { Helpers } from './../shared/helpers';
 
 export class RegistryComponent implements OnInit {
     totalRecords = 0;
-    customers: Customer[];
-    selected: Customer;
+    registrys: Registry[];
+    selected: Registry;
     displayPanel: boolean;
     dataform: FormGroup;
 
@@ -45,15 +45,15 @@ export class RegistryComponent implements OnInit {
 
         this.registryService.getAll()
             .subscribe(result => {
-                this.customers = result;
-                this.totalRecords = this.customers.length;
+                this.registrys = result;
+                this.totalRecords = this.registrys.length;
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
-    get isNew(): boolean { return this.selected == null || this.selected.customerId === 0; }
+    get isNew(): boolean { return this.selected == null || this.selected.registryId === 0; }
 
-    get selectedIndex(): number { return this.customers.indexOf(this.selected); }
+    get selectedIndex(): number { return this.registrys.indexOf(this.selected); }
 
     onRowSelect(event: any) {
         this.displayPanel = true;
@@ -65,7 +65,7 @@ export class RegistryComponent implements OnInit {
     }
 
     addClick() {
-        this.selected = new Customer();
+        this.selected = new Registry();
         this.displayPanel = true;
     }
 
@@ -74,15 +74,15 @@ export class RegistryComponent implements OnInit {
             this.registryService
                 .create(this.selected)
                 .subscribe(result => {
-                    this.customers.push(result);
+                    this.registrys.push(result);
                     this.totalRecords++;
                     this.closeClick();
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.registryService
-                .update(this.selected.customerId, this.selected)
+                .update(this.selected.registryId, this.selected)
                 .subscribe(result => {
-                    this.customers[this.selectedIndex] = this.selected;
+                    this.registrys[this.selectedIndex] = this.selected;
                     this.closeClick();
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
@@ -93,9 +93,9 @@ export class RegistryComponent implements OnInit {
             message: 'Are you sure that you want to delete this registry?',
             accept: () => {
                 this.registryService
-                    .delete(this.selected.customerId)
+                    .delete(this.selected.registryId)
                     .subscribe(result => {
-                        this.customers.splice(this.selectedIndex, 1);
+                        this.registrys.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
                     }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));

@@ -10,7 +10,7 @@ class LoginUser: Codable {
     public var password: String = ""
 }
 
-class LoginCustomer: Codable {
+class LoginRegistry: Codable {
     public var email: String = ""
     public var password: String = ""
 }

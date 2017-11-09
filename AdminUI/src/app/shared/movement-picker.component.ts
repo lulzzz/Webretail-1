@@ -32,18 +32,18 @@ export class MovementPickerComponent {
     set movements(value) { this.movementService.movements = value; }
     get movements(): Movement[] { return this.movementService.movements; }
 
-    public loadData(customerId: number) {
+    public loadData(registryId: number) {
         if (!this.movements) {
-            this.reloadData(customerId);
+            this.reloadData(registryId);
         } else {
             this.refreshControl();
         }
     }
 
-    private reloadData(customerId: number) {
+    private reloadData(registryId: number) {
         this.isOpen = true;
         this.movementService
-            .getByCustomerId(customerId)
+            .getByRegistryId(registryId)
             .subscribe(result => {
                 this.movements = result;
                 this.refreshControl();

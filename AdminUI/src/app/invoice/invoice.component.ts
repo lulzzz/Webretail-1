@@ -85,7 +85,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     }
 
     showPickerClick() {
-        this.inputComponent.loadData(this.item.invoiceCustomer.customerId);
+        this.inputComponent.loadData(this.item.invoiceRegistry.registryId);
     }
 
     pickerClick(event: any) {

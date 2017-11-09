@@ -26,8 +26,8 @@ export class MovementsComponent implements OnInit {
     storesFiltered: SelectItem[];
     causals: SelectItem[];
     causalsFiltered: SelectItem[];
-    customers: SelectItem[];
-    customersFiltered: SelectItem[];
+    registrys: SelectItem[];
+    registrysFiltered: SelectItem[];
     status: SelectItem[];
     statusFiltered: SelectItem[];
     tags: TagGroup[];
@@ -65,7 +65,7 @@ export class MovementsComponent implements OnInit {
             'description': new FormControl('', Validators.nullValidator),
             'store': new FormControl('', Validators.required),
             'causal': new FormControl('', Validators.required),
-            'customer': new FormControl('', Validators.nullValidator),
+            'registry': new FormControl('', Validators.nullValidator),
             'device': new FormControl('', Validators.nullValidator),
             'payment': new FormControl('', Validators.nullValidator),
             'tags': new FormControl('', Validators.nullValidator),
@@ -126,9 +126,9 @@ export class MovementsComponent implements OnInit {
         this.registryService
             .getAll()
             .subscribe(result => {
-                this.customers = [];
-                this.customers.push({label: '', value: null});
-                this.customers = this.customers.concat(result.map(p => Helpers.newSelectItem(p, p.customerName)));
+                this.registrys = [];
+                this.registrys.push({label: '', value: null});
+                this.registrys = this.registrys.concat(result.map(p => Helpers.newSelectItem(p, p.registryName)));
             }
         );
 
@@ -149,11 +149,11 @@ export class MovementsComponent implements OnInit {
             Helpers.newSelectItem(item.movementCausal.causalName)));
         this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
 
-        this.customersFiltered = [];
-        this.customersFiltered.push({label: 'All', value: null});
-        const filterCustomer = Helpers.distinct(this.items.map((item: Movement) =>
-            Helpers.newSelectItem(item.movementCustomer.customerName)));
-        this.customersFiltered = this.customersFiltered.concat(filterCustomer);
+        this.registrysFiltered = [];
+        this.registrysFiltered.push({label: 'All', value: null});
+        const filterRegistry = Helpers.distinct(this.items.map((item: Movement) =>
+            Helpers.newSelectItem(item.movementRegistry.registryName)));
+        this.registrysFiltered = this.registrysFiltered.concat(filterRegistry);
 
         this.statusFiltered = [];
         this.statusFiltered.push({label: 'All', value: null});
@@ -203,8 +203,8 @@ export class MovementsComponent implements OnInit {
             this.selected.movementCausal = this.device ? this.causals.find(p => p.value.causalIsPos).value : this.causals[0].value;
             this.onCausalChange(null);
         }
-        if (this.customers.length > 0) {
-            this.selected.movementCustomer = this.customers[0].value;
+        if (this.registrys.length > 0) {
+            this.selected.movementRegistry = this.registrys[0].value;
         }
         if (this.status.length > 0) {
             this.selected.movementStatus = this.status[0].value;

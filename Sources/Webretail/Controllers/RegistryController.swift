@@ -1,5 +1,5 @@
 //
-//  CustomerController.swift
+//  RegistryController.swift
 //  Webretail
 //
 //  Created by Gerardo Grisolini on 13/03/17.
@@ -8,28 +8,28 @@
 
 import PerfectHTTP
 
-class CustomerController {
+class RegistryController {
 	
-	private let repository: CustomerProtocol
+	private let repository: RegistryProtocol
 	
 	init() {
-		self.repository = ioCContainer.resolve() as CustomerProtocol
+		self.repository = ioCContainer.resolve() as RegistryProtocol
 	}
 	
 	public func getRoutes() -> Routes {
 		var routes = Routes()
 		
-		routes.add(method: .get, uri: "/api/customer", handler: customersHandlerGET)
-		routes.add(method: .get, uri: "/api/customerfrom/{date}", handler: customersHandlerGET)
-		routes.add(method: .get, uri: "/api/customer/{id}", handler: customerHandlerGET)
-		routes.add(method: .post, uri: "/api/customer", handler: customerHandlerPOST)
-		routes.add(method: .put, uri: "/api/customer/{id}", handler: customerHandlerPUT)
-		routes.add(method: .delete, uri: "/api/customer/{id}", handler: customerHandlerDELETE)
+		routes.add(method: .get, uri: "/api/registry", handler: registrysHandlerGET)
+		routes.add(method: .get, uri: "/api/registryfrom/{date}", handler: registrysHandlerGET)
+		routes.add(method: .get, uri: "/api/registry/{id}", handler: registryHandlerGET)
+		routes.add(method: .post, uri: "/api/registry", handler: registryHandlerPOST)
+		routes.add(method: .put, uri: "/api/registry/{id}", handler: registryHandlerPUT)
+		routes.add(method: .delete, uri: "/api/registry/{id}", handler: registryHandlerDELETE)
 		
 		return routes
 	}
 	
-	func customersHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func registrysHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		let date = request.urlVariables["date"]
 		do {
 			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)
@@ -40,7 +40,7 @@ class CustomerController {
 		}
 	}
 	
-	func customerHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func registryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		let id = request.urlVariables["id"]!
 		do {
 			let item = try self.repository.get(id: Int(id)!)
@@ -51,9 +51,9 @@ class CustomerController {
 		}
 	}
 	
-	func customerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+	func registryHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-            let item: Customer = request.getJson()!
+            let item: Registry = request.getJson()!
 			try self.repository.add(item: item)
 			try response.setJson(item)
 			response.completed(status: .created)
@@ -62,10 +62,10 @@ class CustomerController {
 		}
 	}
 	
-	func customerHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+	func registryHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
 		let id = request.urlVariables["id"]!
 		do {
-            let item: Customer = request.getJson()!
+            let item: Registry = request.getJson()!
 			try self.repository.update(id: Int(id)!, item: item)
 			try response.setJson(item)
 			response.completed(status: .accepted)
@@ -74,7 +74,7 @@ class CustomerController {
 		}
 	}
 	
-	func customerHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+	func registryHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
 		let id = request.urlVariables["id"]!
 		do {
 			try self.repository.delete(id: Int(id)!)

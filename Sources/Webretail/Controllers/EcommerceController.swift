@@ -11,11 +11,11 @@ import PerfectLib
 class EcommerceController {
     
     private let repository: EcommerceProtocol
-    private let customerRepository: CustomerProtocol
+    private let registryRepository: RegistryProtocol
 
     init() {
         self.repository = ioCContainer.resolve() as EcommerceProtocol
-        self.customerRepository = ioCContainer.resolve() as CustomerProtocol
+        self.registryRepository = ioCContainer.resolve() as RegistryProtocol
     }
     
     func getRoutes() -> Routes {
@@ -28,10 +28,10 @@ class EcommerceController {
         routes.add(method: .get, uri: "/api/ecommerce/category/{id}", handler: ecommerceCategoryHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/product/{id}", handler: ecommerceProductHandlerGET)
 
-        /// Customer Api
-        routes.add(method: .get, uri: "/api/ecommerce/customer", handler: ecommerceCustomerHandlerGET)
-        routes.add(method: .put, uri: "/api/ecommerce/customer", handler: ecommerceCustomerHandlerPUT)
-        routes.add(method: .delete, uri: "/api/ecommerce/customer", handler: ecommerceCustomerHandlerDELETE)
+        /// Registry Api
+        routes.add(method: .get, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerGET)
+        routes.add(method: .put, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerPUT)
+        routes.add(method: .delete, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerDELETE)
 
         routes.add(method: .get, uri: "/api/ecommerce/basket", handler: ecommerceBasketHandlerGET)
         routes.add(method: .post, uri: "/api/ecommerce/basket", handler: ecommerceBasketHandlerPOST)
@@ -105,33 +105,33 @@ class EcommerceController {
         }
     }
 
-    /// Customer
+    /// Registry
 
-    func ecommerceCustomerHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    func ecommerceRegistryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let customer = try self.customerRepository.get(id: Int(uniqueID)!)
-            try response.setJson(customer)
+            let registry = try self.registryRepository.get(id: Int(uniqueID)!)
+            try response.setJson(registry)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
-    func ecommerceCustomerHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+    func ecommerceRegistryHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let customer: Customer = request.getJson()!
-            try self.customerRepository.update(id: Int(uniqueID)!, item: customer)
-            try response.setJson(customer)
+            let registry: Registry = request.getJson()!
+            try self.registryRepository.update(id: Int(uniqueID)!, item: registry)
+            try response.setJson(registry)
             response.completed(status: .accepted)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
-    func ecommerceCustomerHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
+    func ecommerceRegistryHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            try self.customerRepository.delete(id: Int(uniqueID)!)
+            try self.registryRepository.delete(id: Int(uniqueID)!)
             response.completed(status: .noContent)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -144,7 +144,7 @@ class EcommerceController {
     func ecommerceBasketHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let items = try self.repository.getBasket(customerId: Int(uniqueID)!)
+            let items = try self.repository.getBasket(registryId: Int(uniqueID)!)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
@@ -160,7 +160,7 @@ class EcommerceController {
             }
 
             let basket: Basket = request.getJson()!
-            basket.customerId = Int(uniqueID)!
+            basket.registryId = Int(uniqueID)!
             
             let product = Product()
             try product.get(barcode: basket.basketBarcode)
@@ -211,7 +211,7 @@ class EcommerceController {
     func ecommerceOrdersHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let items = try self.repository.getOrders(customerId: Int(uniqueID)!)
+            let items = try self.repository.getOrders(registryId: Int(uniqueID)!)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
@@ -225,7 +225,7 @@ class EcommerceController {
             guard let id = Int(request.urlVariables["id"]!) else {
                 throw PerfectError.apiError("id")
             }
-            let item = try self.repository.getOrder(customerId: Int(uniqueID)!, id: id)
+            let item = try self.repository.getOrder(registryId: Int(uniqueID)!, id: id)
             try response.setJson(item)
             response.completed(status: .ok)
         } catch {
@@ -239,7 +239,7 @@ class EcommerceController {
             guard let id = Int(request.urlVariables["id"]!) else {
                 throw PerfectError.apiError("id")
             }
-            let items = try self.repository.getOrderItems(customerId: Int(uniqueID)!, id: id)
+            let items = try self.repository.getOrderItems(registryId: Int(uniqueID)!, id: id)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
@@ -250,7 +250,7 @@ class EcommerceController {
     func ecommerceOrderHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let order = try self.repository.addOrder(customerId: Int(uniqueID)!, payment: "Cash")
+            let order = try self.repository.addOrder(registryId: Int(uniqueID)!, payment: "Cash")
             try response.setJson(order)
             response.completed(status: .created)
         } catch {

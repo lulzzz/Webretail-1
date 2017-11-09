@@ -16,6 +16,7 @@ class MovementArticle: PostgresSqlORM, Codable {
     public var movementArticleBarcode : String = ""
     public var movementArticleProduct : Product = Product()
     public var movementArticleQuantity : Double = 0
+    public var movementArticleDelivered : Double = 0
 	public var movementArticlePrice : Double = 0
 	public var movementArticleUpdated : Int = Int.now()
     
@@ -29,6 +30,7 @@ class MovementArticle: PostgresSqlORM, Codable {
         case movementArticleBarcode
         case movementArticleProduct
         case movementArticleQuantity
+        case movementArticleDelivered
         case movementArticlePrice
         case _movementArticleAmount = "movementArticleAmount"
     }
@@ -40,7 +42,8 @@ class MovementArticle: PostgresSqlORM, Codable {
         movementId = this.data["movementid"] as? Int ?? 0
         movementArticleBarcode = this.data["movementarticlebarcode"] as? String ?? ""
         movementArticleQuantity = Double(this.data["movementarticlequantity"] as? Float ?? 0)
-		movementArticlePrice = Double(this.data["movementarticleprice"] as? Float ?? 0)
+        movementArticleDelivered = Double(this.data["movementarticledelivered"] as? Float ?? 0)
+        movementArticlePrice = Double(this.data["movementarticleprice"] as? Float ?? 0)
 		movementArticleUpdated = this.data["movementarticleupdated"] as? Int ?? 0
         if let product = this.data["movementarticleproduct"] as? [String:Any] {
             let jsonData = try! JSONSerialization.data(withJSONObject: product, options: [])
@@ -71,6 +74,7 @@ class MovementArticle: PostgresSqlORM, Codable {
         movementArticleBarcode = try container.decode(String.self, forKey: .movementArticleBarcode)
         movementArticleProduct = try container.decodeIfPresent(Product.self, forKey: .movementArticleProduct) ?? Product()
         movementArticleQuantity = try container.decode(Double.self, forKey: .movementArticleQuantity)
+        movementArticleDelivered = try container.decode(Double.self, forKey: .movementArticleDelivered)
         movementArticlePrice = try container.decode(Double.self, forKey: .movementArticlePrice)
     }
     
@@ -81,6 +85,7 @@ class MovementArticle: PostgresSqlORM, Codable {
         try container.encode(movementArticleBarcode, forKey: .movementArticleBarcode)
         try container.encode(movementArticleProduct, forKey: .movementArticleProduct)
         try container.encode(movementArticleQuantity, forKey: .movementArticleQuantity)
+        try container.encode(movementArticleDelivered, forKey: .movementArticleDelivered)
         try container.encode(movementArticlePrice, forKey: .movementArticlePrice)
         try container.encode(_movementArticleAmount, forKey: ._movementArticleAmount)
     }

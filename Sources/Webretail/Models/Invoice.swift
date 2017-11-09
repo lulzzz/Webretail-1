@@ -14,7 +14,7 @@ class Invoice: PostgresSqlORM, Codable {
 	public var invoiceId : Int = 0
 	public var invoiceNumber : Int = 0
 	public var invoiceDate : Int = Int.now()
-	public var invoiceCustomer : Customer = Customer()
+	public var invoiceRegistry : Registry = Registry()
 	public var invoicePayment : String = ""
 	public var invoiceNote : String = ""
 	public var invoiceUpdated : Int = Int.now()
@@ -28,7 +28,7 @@ class Invoice: PostgresSqlORM, Codable {
         case invoiceId
         case invoiceNumber
         case invoiceDate
-        case invoiceCustomer
+        case invoiceRegistry
         case invoicePayment
         case invoiceNote
         case _invoiceAmount = "invoiceAmount"
@@ -40,7 +40,7 @@ class Invoice: PostgresSqlORM, Codable {
 		invoiceId = this.data["invoiceid"] as? Int ?? 0
 		invoiceNumber = this.data["invoicenumber"] as? Int ?? 0
 		invoiceDate = this.data["invoicedate"] as? Int ?? 0
-		invoiceCustomer = this.data["invoicecustomer"] as? Customer ?? Customer()
+		invoiceRegistry = this.data["invoiceregistry"] as? Registry ?? Registry()
 		invoicePayment = this.data["invoicepayment"] as? String ?? ""
 		invoiceNote = this.data["invoicenote"] as? String ?? ""
 		invoiceUpdated = this.data["invoiceupdated"] as? Int ?? 0
@@ -57,7 +57,7 @@ class Invoice: PostgresSqlORM, Codable {
         invoiceId = try container.decode(Int.self, forKey: .invoiceId)
         invoiceNumber = try container.decode(Int.self, forKey: .invoiceNumber)
         invoiceDate = try container.decode(String.self, forKey: .invoiceDate).DateToInt()
-        invoiceCustomer = try container.decodeIfPresent(Customer.self, forKey: .invoiceCustomer) ?? Customer()
+        invoiceRegistry = try container.decodeIfPresent(Registry.self, forKey: .invoiceRegistry) ?? Registry()
         invoicePayment = try container.decode(String.self, forKey: .invoicePayment)
         invoiceNote = try container.decode(String.self, forKey: .invoiceNote)
         _invoiceAmount = try container.decode(Double.self, forKey: ._invoiceAmount)
@@ -69,7 +69,7 @@ class Invoice: PostgresSqlORM, Codable {
         try container.encode(invoiceId, forKey: .invoiceId)
         try container.encode(invoiceNumber, forKey: .invoiceNumber)
         try container.encode(_invoiceDate, forKey: .invoiceDate)
-        try container.encode(invoiceCustomer, forKey: .invoiceCustomer)
+        try container.encode(invoiceRegistry, forKey: .invoiceRegistry)
         try container.encode(invoicePayment, forKey: .invoicePayment)
         try container.encode(invoiceNote, forKey: .invoiceNote)
         try container.encode(_invoiceAmount, forKey: ._invoiceAmount)

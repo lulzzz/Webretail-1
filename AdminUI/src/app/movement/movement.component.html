@@ -41,6 +41,11 @@
                 <input pInputText type="number" [disabled]="committed" [(ngModel)]="data.movementArticleQuantity" (change)="onUpdate(data)"/>
            </ng-template>
         </p-column>
+        <p-column *ngIf="committed" field="movementArticleDelivered" header="Delivered" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+            <ng-template let-col let-data="rowData" pTemplate="editor">
+                <input pInputText type="number" min="0" [disabled]="item.movementStatus==='Completed'" [(ngModel)]="data.movementArticleDelivered" (change)="onUpdate(data)"/>
+           </ng-template>
+        </p-column>
         <p-column header="Price ({{priceValue||'No Filter'}})" [editable]="true" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
             <ng-template pTemplate="filter" let-col>
                 <i class="fa fa-close" (click)="priceValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>

@@ -92,10 +92,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.location.back();
     }
 
-    // printClick() {
-    //     window.print();
-    // }
-
     pdfClick() {
         this.isBusy = true;
 
@@ -126,7 +122,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.isBusy = true;
 
         const model = new PdfDocument()
-        model.address = this.movement.movementCustomer.customerEmail;
+        model.address = this.movement.movementRegistry.registryEmail;
         model.subject = 'Document_' + this.movement.movementNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
         model.zoom = '0.53';

@@ -27,12 +27,12 @@
                         <td><strong>Date</strong></td> 
                         <td align="right">{{invoice.invoiceDate | date: 'yyyy-MM-dd'}}</td>
                         <td style="width: 20%">&nbsp;</td>
-                        <td><strong>Customer</strong></td>
+                        <td><strong>Registry</strong></td>
                         <td rowspan="3" align="right">
-                            {{invoice.invoiceCustomer.customerName}}
-                            <br/>{{invoice.invoiceCustomer.customerAddress}}
-                            <br/>{{invoice.invoiceCustomer.customerCity}}
-                            <br/>{{invoice.invoiceCustomer.customerVatNumber !== '' ? invoice.invoiceCustomer.customerVatNumber : invoice.invoiceCustomer.customerFiscalCode}}
+                            {{invoice.invoiceRegistry.registryName}}
+                            <br/>{{invoice.invoiceRegistry.registryAddress}}
+                            <br/>{{invoice.invoiceRegistry.registryCity}}
+                            <br/>{{invoice.invoiceRegistry.registryVatNumber !== '' ? invoice.invoiceRegistry.registryVatNumber : invoice.invoiceRegistry.registryFiscalCode}}
                         </td> 
                     </tr> 
                     <tr> 

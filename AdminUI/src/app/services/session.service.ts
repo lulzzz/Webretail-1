@@ -43,7 +43,7 @@ export class SessionService {
     }
 
     get isAuthenticated(): boolean {
-        return localStorage.getItem('token') != null && localStorage.getItem('role') !== 'Customer';
+        return localStorage.getItem('token') != null && localStorage.getItem('role') !== 'Registry';
     }
 
     get isAdmin(): boolean {

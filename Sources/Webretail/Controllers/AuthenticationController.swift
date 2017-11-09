@@ -17,7 +17,7 @@ public class AuthenticationController {
         
         routes.add(method: .post, uri: "/api/login", handler: loginHandlerPOST)
         routes.add(method: .post, uri: "/api/logout", handler: logoutHandlerPOST)
-        routes.add(method: .post, uri: "/api/register", handler: registerCustomerHandlerPOST)
+        routes.add(method: .post, uri: "/api/register", handler: registerRegistryHandlerPOST)
         routes.add(method: .get,  uri: "/api/authenticated", handler: authenticatedHandlerGET)
 
         return routes
@@ -30,8 +30,8 @@ public class AuthenticationController {
             
             if let login: LoginUser = request.getJson() {
                 credentials = UsernamePassword(username: login.username, password: login.password)
-            } else if let login: LoginCustomer = request.getJson() {
-                credentials = CustomerAccount(uniqueID: login.email, password: login.password)
+            } else if let login: LoginRegistry = request.getJson() {
+                credentials = RegistryAccount(uniqueID: login.email, password: login.password)
             } else {
                 resp["error"] = "Missing username or password"
                 try response.setBody(json: resp)
@@ -56,8 +56,8 @@ public class AuthenticationController {
                     resp["role"] = user.isAdmin ? "Admin" : "User"
                     LogFile.info("Login user: \(user.username)")
                 } else {
-                    resp["role"] = "Customer"
-                    LogFile.info("Login customer: \((credentials as! CustomerAccount).uniqueID)")
+                    resp["role"] = "Registry"
+                    LogFile.info("Login registry: \((credentials as! RegistryAccount).uniqueID)")
                 }
             } catch {
                 resp["error"] = "Invalid username or password"
@@ -91,17 +91,17 @@ public class AuthenticationController {
 		response.completed()
 	}
 
-	func registerCustomerHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+	func registerRegistryHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         var resp = [String: String]()
         do {
-            guard let login: LoginCustomer = request.getJson() else {
+            guard let login: LoginRegistry = request.getJson() else {
                 resp["error"] = "Missing email or password"
                 try response.setBody(json: resp)
                 response.completed()
                 return
             }
 
-            let credentials = CustomerAccount(uniqueID: login.email, password: login.password)
+            let credentials = RegistryAccount(uniqueID: login.email, password: login.password)
 
             try request.user.register(credentials: credentials)
             try request.user.login(credentials: credentials, persist: true)
@@ -113,7 +113,7 @@ public class AuthenticationController {
             resp["login"] = "ok"
             resp["token"] = token
 			resp["uniqueID"] = uniqueID
-            resp["role"] = "Customer"
+            resp["role"] = "Registry"
         
         } catch let e as TurnstileError {
             resp["error"] = e.description
@@ -146,7 +146,7 @@ public class AuthenticationController {
                     try user.get(uniqueID)
                     resp["role"] = user.isAdmin ? "Admin" : "User"
                 } else {
-                    resp["role"] = "Customer"
+                    resp["role"] = "Registry"
                 }
             }
         } catch {

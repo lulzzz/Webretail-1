@@ -44,6 +44,10 @@ export class MovementComponent implements OnInit, OnDestroy {
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {
+            if (!this.movementService.movements) {
+                this.cancelClick();
+                return;
+            }
             this.movementId = Number(params['id']);
             this.item = this.movementService.movements.find(p => p.movementId === this.movementId);
             this.committed = this.item.movementStatus !== 'New';

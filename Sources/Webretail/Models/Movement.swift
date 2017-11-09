@@ -27,7 +27,7 @@ class Movement: PostgresSqlORM, Codable {
     public var movementDevice : String = ""
     public var movementStore : Store = Store()
     public var movementCausal : Causal = Causal()
-    public var movementCustomer : Customer = Customer()
+    public var movementRegistry : Registry = Registry()
     public var movementTags : [Tag] = [Tag]()
     public var movementPayment : String = ""
     public var movementUpdated : Int = Int.now()
@@ -50,7 +50,7 @@ class Movement: PostgresSqlORM, Codable {
         case movementDevice
         case movementStore
         case movementCausal
-        case movementCustomer
+        case movementRegistry
         case movementPayment
         case movementTags
         case _amount = "movementAmount"
@@ -74,10 +74,10 @@ class Movement: PostgresSqlORM, Codable {
         movementStore = try! decoder.decode(Store.self, from: jsonData)
         jsonData = try! JSONSerialization.data(withJSONObject: this.data["movementcausal"]!, options: [])
         movementCausal = try! decoder.decode(Causal.self, from: jsonData)
-        if let json = this.data["movementcustomer"] as? [String:Any] {
+        if let json = this.data["movementregistry"] as? [String:Any] {
             if json.count > 0 {
                 jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])
-                movementCustomer = try! decoder.decode(Customer.self, from: jsonData)
+                movementRegistry = try! decoder.decode(Registry.self, from: jsonData)
             }
         }
         if let json = this.data["movementtags"] as? [[String:Any]] {
@@ -123,7 +123,7 @@ class Movement: PostgresSqlORM, Codable {
         movementDevice = try container.decode(String.self, forKey: .movementDevice)
         movementStore = try container.decode(Store.self, forKey: .movementStore)
         movementCausal = try container.decode(Causal.self, forKey: .movementCausal)
-        movementCustomer = try container.decodeIfPresent(Customer.self, forKey: .movementCustomer) ?? Customer()
+        movementRegistry = try container.decodeIfPresent(Registry.self, forKey: .movementRegistry) ?? Registry()
         movementTags = try container.decodeIfPresent([Tag].self, forKey: .movementTags) ?? [Tag]()
         movementPayment = try container.decode(String.self, forKey: .movementPayment)
         _amount = try container.decode(Double.self, forKey: ._amount)
@@ -143,7 +143,7 @@ class Movement: PostgresSqlORM, Codable {
         try container.encode(movementDevice, forKey: .movementDevice)
         try container.encode(movementStore, forKey: .movementStore)
         try container.encode(movementCausal, forKey: .movementCausal)
-        try container.encode(movementCustomer, forKey: .movementCustomer)
+        try container.encode(movementRegistry, forKey: .movementRegistry)
         try container.encode(movementTags, forKey: .movementTags)
         try container.encode(movementPayment, forKey: .movementPayment)
         try container.encode(_amount, forKey: ._amount)

@@ -18,8 +18,8 @@ export class InvoicesComponent implements OnInit {
     totalRecords = 0;
     items: Invoice[];
     selected: Invoice;
-    customers: SelectItem[];
-    customersFiltered: SelectItem[];
+    registrys: SelectItem[];
+    registrysFiltered: SelectItem[];
     payments: SelectItem[];
     buttons: MenuItem[];
     displayPanel: boolean;
@@ -44,7 +44,7 @@ export class InvoicesComponent implements OnInit {
         this.dataform = this.fb.group({
             'number': new FormControl('', Validators.required),
             'date': new FormControl('', Validators.required),
-            'customer': new FormControl('', Validators.required),
+            'registry': new FormControl('', Validators.required),
             'payment': new FormControl('', Validators.required),
             'note': new FormControl('', Validators.nullValidator)
         });
@@ -54,20 +54,20 @@ export class InvoicesComponent implements OnInit {
             .subscribe(result => {
                 this.items = result;
                 this.totalRecords = this.items.length;
-                this.customersFiltered = [];
-                this.customersFiltered.push({label: 'All', value: null});
-                const filterCustomer = Helpers.distinct(result.map((item: Invoice) =>
-                    Helpers.newSelectItem(item.invoiceCustomer.customerName)));
-                this.customersFiltered = this.customersFiltered.concat(filterCustomer);
+                this.registrysFiltered = [];
+                this.registrysFiltered.push({label: 'All', value: null});
+                const filterRegistry = Helpers.distinct(result.map((item: Invoice) =>
+                    Helpers.newSelectItem(item.invoiceRegistry.registryName)));
+                this.registrysFiltered = this.registrysFiltered.concat(filterRegistry);
              }
         );
 
         this.registryService
             .getAll()
             .subscribe(result => {
-                this.customers = [];
-                this.customers.push({label: '', value: null});
-                this.customers = this.customers.concat(result.map(p => Helpers.newSelectItem(p, p.customerName)));
+                this.registrys = [];
+                this.registrys.push({label: '', value: null});
+                this.registrys = this.registrys.concat(result.map(p => Helpers.newSelectItem(p, p.registryName)));
             }
         );
 

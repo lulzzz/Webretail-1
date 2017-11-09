@@ -129,7 +129,7 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
         this.isBusy = true;
 
         const model = new PdfDocument()
-        model.address = this.invoice.invoiceCustomer.customerEmail;
+        model.address = this.invoice.invoiceRegistry.registryEmail;
         model.subject = 'Invoice_' + this.invoice.invoiceNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
         model.zoom = '0.53';

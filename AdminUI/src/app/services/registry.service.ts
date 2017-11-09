@@ -2,7 +2,7 @@
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Customer } from '../shared/models';
+import { Registry } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -11,28 +11,28 @@ export class RegistryService {
     constructor(private http: Http) {
     }
 
-    getAll(): Observable<Customer[]> {
-        return this.http.get('/api/customer', { headers: Helpers.getHeaders() })
-            .map(result => <Customer[]>result.json());
+    getAll(): Observable<Registry[]> {
+        return this.http.get('/api/registry', { headers: Helpers.getHeaders() })
+            .map(result => <Registry[]>result.json());
     }
 
-    getById(id: number): Observable<Customer> {
-        return this.http.get('/api/customer/' + id, { headers: Helpers.getHeaders() })
-            .map(result => <Customer>result.json());
+    getById(id: number): Observable<Registry> {
+        return this.http.get('/api/registry/' + id, { headers: Helpers.getHeaders() })
+            .map(result => <Registry>result.json());
     }
 
-    create(model: Customer): Observable<Customer> {
-        return this.http.post('/api/customer', model, { headers: Helpers.getHeaders() })
-            .map(result => <Customer>result.json());
+    create(model: Registry): Observable<Registry> {
+        return this.http.post('/api/registry', model, { headers: Helpers.getHeaders() })
+            .map(result => <Registry>result.json());
     }
 
-    update(id: number, model: Customer): Observable<Customer> {
-        return this.http.put('/api/customer/' + id, model, { headers: Helpers.getHeaders() })
-            .map(result => <Customer>result.json());
+    update(id: number, model: Registry): Observable<Registry> {
+        return this.http.put('/api/registry/' + id, model, { headers: Helpers.getHeaders() })
+            .map(result => <Registry>result.json());
     }
 
     delete(id: number): Observable<any> {
-        return this.http.delete('/api/customer/' + id, { headers: Helpers.getHeaders() })
+        return this.http.delete('/api/registry/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());
     }
 }

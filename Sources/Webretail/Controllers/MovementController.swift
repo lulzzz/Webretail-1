@@ -29,7 +29,7 @@ class MovementController {
 		routes.add(method: .post, uri: "/api/movementreceipted", handler: movementsReceiptedHandlerPOST)
 		routes.add(method: .get, uri: "/api/movement/{id}", handler: movementHandlerGET)
 		routes.add(method: .get, uri: "/api/movementfrom/{date}", handler: movementFromHandlerGET)
-		routes.add(method: .get, uri: "/api/movementcustomer/{id}", handler: movementCustomerHandlerGET)
+		routes.add(method: .get, uri: "/api/movementregistry/{id}", handler: movementRegistryHandlerGET)
         routes.add(method: .post, uri: "/api/movement", handler: movementHandlerPOST)
 		routes.add(method: .post, uri: "/api/movement/{id}", handler: movementCloneHandlerPOST)
         routes.add(method: .put, uri: "/api/movement/{id}", handler: movementHandlerPUT)
@@ -101,10 +101,10 @@ class MovementController {
         }
     }
     
-	func movementCustomerHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func movementRegistryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
 			let id = request.urlVariables["id"]!
-			let items = try self.repository.get(customerId: Int(id)!)
+			let items = try self.repository.get(registryId: Int(id)!)
 			try response.setJson(items)
 			response.completed(status: .ok)
 		} catch {
@@ -125,7 +125,7 @@ class MovementController {
                 try self.articleRepository.add(item: row)
             }
 			if item.movementStatus == "Completed" {
-				try self.repository.process(movement: item, actionType: ActionType.Stoking)
+				try self.repository.process(movement: item, actionTypes: [.Delivering, .Stoking])
 			}
 			
             response.completed(status: .created)

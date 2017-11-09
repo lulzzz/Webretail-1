@@ -37,8 +37,8 @@ export class MovementService {
             .map(result => <Movement>result.json());
     }
 
-    getByCustomerId(id: number): Observable<Movement[]> {
-        return this.http.get('/api/movementcustomer/' + id, { headers: Helpers.getHeaders() })
+    getByRegistryId(id: number): Observable<Movement[]> {
+        return this.http.get('/api/movementregistry/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Movement[]>result.json());
     }
 

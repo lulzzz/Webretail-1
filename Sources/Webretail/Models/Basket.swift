@@ -19,7 +19,7 @@ import StORM
 class Basket: PostgresSqlORM, Codable {
     
     public var basketId : Int = 0
-    public var customerId : Int = 0
+    public var registryId : Int = 0
     public var basketBarcode : String = ""
     public var basketProduct : Product = Product()
     public var basketQuantity : Double = 0
@@ -32,7 +32,7 @@ class Basket: PostgresSqlORM, Codable {
     
     private enum CodingKeys: String, CodingKey {
         case basketId
-        case customerId
+        case registryId
         case basketBarcode
         case basketProduct
         case basketQuantity
@@ -44,7 +44,7 @@ class Basket: PostgresSqlORM, Codable {
     
     open override func to(_ this: StORMRow) {
         basketId = this.data["basketid"] as? Int ?? 0
-        customerId = this.data["customerid"] as? Int ?? 0
+        registryId = this.data["registryid"] as? Int ?? 0
         basketBarcode = this.data["basketbarcode"] as? String ?? ""
         basketQuantity = Double(this.data["basketquantity"] as? Float ?? 0)
         basketPrice = Double(this.data["basketprice"] as? Float ?? 0)
@@ -74,7 +74,7 @@ class Basket: PostgresSqlORM, Codable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         basketId = try container.decode(Int.self, forKey: .basketId)
-        customerId = try container.decode(Int.self, forKey: .customerId)
+        registryId = try container.decode(Int.self, forKey: .registryId)
         basketBarcode = try container.decode(String.self, forKey: .basketBarcode)
         let product = Product()
         try product.get(barcode: basketBarcode)
@@ -90,7 +90,7 @@ class Basket: PostgresSqlORM, Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(basketId, forKey: .basketId)
-        try container.encode(customerId, forKey: .customerId)
+        try container.encode(registryId, forKey: .registryId)
         try container.encode(basketBarcode, forKey: .basketBarcode)
         try container.encode(basketProduct, forKey: .basketProduct)
         try container.encode(basketQuantity, forKey: .basketQuantity)

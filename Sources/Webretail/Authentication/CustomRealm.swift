@@ -26,7 +26,7 @@ open class CustomRealm : Realm {
             return try authenticate(credentials: credentials)
 		case let credentials as APIKey:
 			return try authenticate(credentials: credentials)
-        case let credentials as CustomerAccount:
+        case let credentials as RegistryAccount:
             return try authenticate(credentials: credentials)
         default:
             throw UnsupportedCredentialsError()
@@ -43,9 +43,9 @@ open class CustomRealm : Realm {
 			}
 //            if token.userid.contains(string: "@") {
             if token.userid.length < 10 {
-                let customer = Customer()
-                try customer.get(token.userid)
-                return customer
+                let registry = Registry()
+                try registry.get(token.userid)
+                return registry
             } else {
                 let account = User()
                 try account.get(token.userid)
@@ -86,11 +86,11 @@ open class CustomRealm : Realm {
         }
     }
     
-    /// Used when a "CustomerAccount" onject is passed to the authenticate function. Returns an Account object.
-    private func authenticate(credentials: CustomerAccount) throws -> Account {
-        let customer = Customer()
+    /// Used when a "RegistryAccount" onject is passed to the authenticate function. Returns an Account object.
+    private func authenticate(credentials: RegistryAccount) throws -> Account {
+        let registry = Registry()
         do {
-            let thisAccount = try customer.get(credentials.uniqueID, credentials.password)
+            let thisAccount = try registry.get(credentials.uniqueID, credentials.password)
             return thisAccount
         } catch {
             throw IncorrectCredentialsError()
@@ -100,17 +100,17 @@ open class CustomRealm : Realm {
 	/// Registers PasswordCredentials against the AuthRealm.
     open func register(credentials: Credentials) throws -> Account {
         
-        let account = Customer()
-        let newAccount = Customer()
+        let account = Registry()
+        let newAccount = Registry()
 		
         switch credentials {
-        case let credentials as CustomerAccount:
+        case let credentials as RegistryAccount:
             do {
                 if account.exists(credentials.uniqueID) {
                     throw AccountTakenError()
                 }
-                newAccount.customerEmail = credentials.uniqueID
-                newAccount.customerPassword = credentials.password
+                newAccount.registryEmail = credentials.uniqueID
+                newAccount.registryPassword = credentials.password
             } catch {
                 throw AccountTakenError()
             }
@@ -118,16 +118,16 @@ open class CustomRealm : Realm {
             throw UnsupportedCredentialsError()
         }
         
-        newAccount.customerPassword = BCrypt.hash(password: newAccount.customerPassword)
+        newAccount.registryPassword = BCrypt.hash(password: newAccount.registryPassword)
         try newAccount.save {
-            id in newAccount.customerId = id as! Int
+            id in newAccount.registryId = id as! Int
         }
 
         return newAccount
     }
 }
 
-public struct CustomerAccount: Account, Credentials {
+public struct RegistryAccount: Account, Credentials {
     public let uniqueID: String
     public let password: String
 }

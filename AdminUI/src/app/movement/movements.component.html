@@ -38,9 +38,9 @@
                 <p-dropdown [options]="storesFiltered" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </ng-template>
         </p-column>
-        <p-column field="movementCustomer.customerName" header="Registry" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
+        <p-column field="movementRegistry.registryName" header="Registry" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <ng-template pTemplate="filter" let-col>
-                <p-dropdown [options]="customersFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+                <p-dropdown [options]="registrysFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </ng-template>
         </p-column>
         <p-column field="movementStatus" header="Status" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
@@ -126,9 +126,9 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="customer">Registry</label></div>
+                    <div class="ui-grid-col-4"><label for="registry">Registry</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="customers" formControlName="customer" [(ngModel)]="selected.movementCustomer" [disabled]="selected.movementStatus!=='New'" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="registrys" formControlName="registry" [(ngModel)]="selected.movementRegistry" [disabled]="selected.movementStatus!=='New'" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                     </div>
                 </div>
                 <div class="ui-grid-row">

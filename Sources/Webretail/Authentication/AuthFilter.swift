@@ -47,11 +47,11 @@ public struct AuthFilter: HTTPRequestFilter {
 			if request.path.startsWith(wInc.split("*")[0]) { checkAuth = false }
 		}
         
-        var checkCustomer = true
+        var checkRegistry = true
         if checkAuth, let uniqueID = request.user.authDetails?.account.uniqueID, uniqueID.length < 10 {
-            checkCustomer = request.path.contains(string: "api/ecommerce") || request.path.contains(string: "api/pdf")
+            checkRegistry = request.path.contains(string: "api/ecommerce") || request.path.contains(string: "api/pdf")
         }
-		if checkAuth && request.user.authenticated && checkCustomer {
+		if checkAuth && request.user.authenticated && checkRegistry {
             callback(.continue(request, response))
             return
 		} else if checkAuth {
