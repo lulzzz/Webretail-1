@@ -5,6 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
+    "i18n": "ng-xi18n --i18nFormat=xlf --project src",
     "start": "ng serve",
     "build": "ng build --target=production",
     "build-dev": "ng build"

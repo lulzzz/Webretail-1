@@ -25,8 +25,8 @@ class EcommerceController {
         routes.add(method: .get, uri: "/api/ecommerce", handler: ecommerceHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/featured", handler: ecommerceFeaturedHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category", handler: ecommerceCategoriesHandlerGET)
-        routes.add(method: .get, uri: "/api/ecommerce/category/{id}", handler: ecommerceCategoryHandlerGET)
-        routes.add(method: .get, uri: "/api/ecommerce/product/{id}", handler: ecommerceProductHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/category/{name}", handler: ecommerceCategoryHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/product/{name}", handler: ecommerceProductHandlerGET)
 
         /// Registry Api
         routes.add(method: .get, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerGET)
@@ -81,10 +81,10 @@ class EcommerceController {
     
     func ecommerceCategoryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            guard let id = Int(request.urlVariables["id"]!) else {
-                throw PerfectError.apiError("id")
+            guard let name = request.urlVariables["name"] else {
+                throw PerfectError.apiError("name")
             }
-            let items = try self.repository.getPublished(categoryId: id)
+            let items = try self.repository.getPublished(category: name)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
@@ -94,10 +94,10 @@ class EcommerceController {
 
     func ecommerceProductHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            guard let id = Int(request.urlVariables["id"]!) else {
+            guard let name = request.urlVariables["name"] else {
                 throw PerfectError.apiError("id")
             }
-            let items = try self.repository.getProduct(id: id)
+            let items = try self.repository.getProduct(name: name)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {

@@ -89,7 +89,7 @@ struct EcommerceRepository : EcommerceProtocol {
         return items.rows()
     }
     
-    func getPublished(categoryId: Int) throws -> [Product] {
+    func getPublished(category: String) throws -> [Product] {
         let publication = StORMDataSourceJoin(
             table: "publications",
             onCondition: "products.productId = publications.productId",
@@ -100,28 +100,39 @@ struct EcommerceRepository : EcommerceProtocol {
             onCondition: "products.brandId = brands.brandId",
             direction: StORMJoinType.INNER
         )
-        let categories = StORMDataSourceJoin(
+        let productCategories = StORMDataSourceJoin(
             table: "productcategories",
             onCondition: "products.productId = productcategories.productId",
             direction: StORMJoinType.LEFT
         )
-        
+        let categories = StORMDataSourceJoin(
+            table: "categories",
+            onCondition: "productcategories.categoryId = categories.categoryId",
+            direction: StORMJoinType.INNER
+        )
+
         let items = Product()
         try items.query(
-            whereclause: "productcategories.categoryId = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
-            params: [categoryId, Int.now(), true],
+            whereclause: "LOWER(categories.categoryName) = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
+            params: [self.normalize(name: category), Int.now(), true],
             orderby: ["products.productName"],
-            joins:  [publication, brand, categories]
+            joins:  [publication, brand, productCategories, categories]
         )
         
         return try items.rows(barcodes: false)
     }
     
-    func getProduct(id: Int) throws -> Product {
+    private func normalize(name: String) -> String {
+        return name.lowercased()
+            .replacingOccurrences(of: "-", with: " ")
+            .replacingOccurrences(of: "_", with: "/")
+    }
+    
+    func getProduct(name: String) throws -> Product {
         let item = Product()
         try item.query(
-            whereclause: "products.productId = $1",
-            params: [id],
+            whereclause: "LOWER(products.productName) = $1",
+            params: [self.normalize(name: name)],
             joins: [
                 StORMDataSourceJoin(
                     table: "brands",

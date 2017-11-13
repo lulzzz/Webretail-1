@@ -19,13 +19,13 @@ export class ProductService {
         return this.http.get<Category[]>('/api/ecommerce/category');
     }
 
-    getByCategoryId(id: string): Observable<Product[]> {
-        const url = id === 'featured' ? '/api/ecommerce/featured' : '/api/ecommerce/category/' + id;
+    getByCategoryName(name: string): Observable<Product[]> {
+        const url = name === 'featured' ? '/api/ecommerce/featured' : '/api/ecommerce/category/' + name;
         return this.http.get<Product[]>(url);
     }
 
-    getByProductId(id: number): Observable<Product> {
-        const url = '/api/ecommerce/product/' + id;
+    getByProductName(name: number): Observable<Product> {
+        const url = '/api/ecommerce/product/' + name;
         return this.http.get<Product>(url);
     }
 }

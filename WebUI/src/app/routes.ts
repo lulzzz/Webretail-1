@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { ProductsComponent } from './products/app.products';
-import { ProductComponent } from './products/app.product';
-import { AppComponent, HomeComponent } from './app.component';
-import { LoginComponent } from './account/app.login';
-import { RegisterComponent } from './account/app.register';
-import { AccountComponent } from './account/app.account';
+import { ProductsComponent } from 'app/products/app.products';
+import { ProductComponent } from 'app/products/app.product';
+import { AppComponent, HomeComponent } from 'app/app.component';
+import { LoginComponent } from 'app/account/app.login';
+import { RegisterComponent } from 'app/account/app.register';
+import { AccountComponent } from 'app/account/app.account';
 import { BasketComponent } from 'app/basket/app.basket';
 import { CheckoutComponent } from 'app/basket/app.checkout';
 import { OrdersComponent } from 'app/order/app.orders';

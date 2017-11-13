@@ -13,9 +13,9 @@ protocol EcommerceProtocol {
     
     func getCategories() throws -> [Category]
     
-    func getPublished(categoryId: Int) throws -> [Product]
+    func getPublished(category: String) throws -> [Product]
 
-    func getProduct(id: Int) throws -> Product
+    func getProduct(name: String) throws -> Product
 
     
     func getBasket(registryId: Int) throws -> [Basket]

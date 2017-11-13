@@ -19,7 +19,7 @@ import { ProductService } from 'app/services/product.service';
 import { BasketService } from 'app/services/basket.service';
 import { DocumentService } from 'app/services/document.service';
 
-import { ParseUrlPipe } from 'app/pipes/parseurl.pipe';
+import { ParseUrlPipe } from './pipes/parseurl.pipe';
 import { TranslatePipe } from 'app/pipes/translate.pipe';
 import { ArticleInfoPipe } from 'app/pipes/articleinfo.pipe';
 import { ArticlePicker } from 'app/shared/article.picker';
