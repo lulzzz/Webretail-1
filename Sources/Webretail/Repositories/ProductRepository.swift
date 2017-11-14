@@ -222,7 +222,6 @@ struct ProductRepository : ProductProtocol {
         // Publication
         let publication = Publication()
         publication.productId = item.productId
-        publication.publicationFeatured = false
         publication.publicationStartAt = "2017-11-01".DateToInt()
         publication.publicationFinishAt = "2017-12-31".DateToInt()
         try publication.save {

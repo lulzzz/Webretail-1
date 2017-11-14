@@ -37,6 +37,7 @@ struct PublicationRepository : PublicationProtocol {
         }
         
         current.publicationFeatured = item.publicationFeatured
+        current.publicationNew = item.publicationNew
         current.publicationStartAt = item.publicationStartAt
         current.publicationFinishAt = item.publicationFinishAt
 		current.publicationUpdated = Int.now()
