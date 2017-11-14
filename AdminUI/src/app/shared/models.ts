@@ -216,6 +216,7 @@ export class Publication {
   public publicationId: number;
   public productId: number;
   public publicationFeatured: boolean;
+  public publicationNew: boolean;
   public publicationStartAt: Date;
   public publicationFinishAt: Date;
   public publicationUpdated: Date;
@@ -224,6 +225,7 @@ export class Publication {
     this.publicationId = 0;
     this.productId = productId;
     this.publicationFeatured = false;
+    this.publicationNew = false;
   }}
 
 export class Causal {
