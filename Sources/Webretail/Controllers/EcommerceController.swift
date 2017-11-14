@@ -22,9 +22,10 @@ class EcommerceController {
         var routes = Routes()
         
         /// Guest Api
-        routes.add(method: .get, uri: "/api/ecommerce", handler: ecommerceHandlerGET)
-        routes.add(method: .get, uri: "/api/ecommerce/featured", handler: ecommerceFeaturedHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category", handler: ecommerceCategoriesHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/brand", handler: ecommerceBrandsHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/news", handler: ecommerceNewsHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/featured", handler: ecommerceFeaturedHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category/{name}", handler: ecommerceCategoryHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/product/{name}", handler: ecommerceProductHandlerGET)
 
@@ -49,16 +50,6 @@ class EcommerceController {
     
     /// Products
 
-    func ecommerceHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        do {
-            let items = try self.repository.getPublished()
-            try response.setJson(items)
-            response.completed(status: .ok)
-        } catch {
-            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-        }
-    }
-    
     func ecommerceCategoriesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             let items = try self.repository.getCategories()
@@ -68,10 +59,30 @@ class EcommerceController {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
+
+    func ecommerceBrandsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let items = try self.repository.getBrands()
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func ecommerceNewsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let items = try self.repository.getProductsNews()
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
     
     func ecommerceFeaturedHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let items = try self.repository.getFeatured()
+            let items = try self.repository.getProductsFeatured()
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
@@ -84,7 +95,7 @@ class EcommerceController {
             guard let name = request.urlVariables["name"] else {
                 throw PerfectError.apiError("name")
             }
-            let items = try self.repository.getPublished(category: name)
+            let items = try self.repository.getProducts(category: name)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {

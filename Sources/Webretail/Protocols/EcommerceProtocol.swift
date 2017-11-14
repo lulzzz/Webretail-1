@@ -7,13 +7,16 @@
 
 protocol EcommerceProtocol {
     
-    func getPublished() throws -> [Product]
-    
-    func getFeatured() throws -> [Product]
-    
     func getCategories() throws -> [Category]
+
+    func getBrands() throws -> [Brand]
+
     
-    func getPublished(category: String) throws -> [Product]
+    func getProductsNews() throws -> [Product]
+
+    func getProductsFeatured() throws -> [Product]
+
+    func getProducts(category: String) throws -> [Product]
 
     func getProduct(name: String) throws -> Product
 

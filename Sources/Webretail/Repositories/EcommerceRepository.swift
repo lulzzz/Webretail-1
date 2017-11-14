@@ -9,57 +9,6 @@ import StORM
 
 struct EcommerceRepository : EcommerceProtocol {
 
-    func getFeatured() throws -> [Product] {
-        let publication = StORMDataSourceJoin(
-            table: "publications",
-            onCondition: "products.productId = publications.productId",
-            direction: StORMJoinType.INNER
-        )
-        let brand = StORMDataSourceJoin(
-            table: "brands",
-            onCondition: "products.brandId = brands.brandId",
-            direction: StORMJoinType.INNER
-        )
-        
-        let items = Product()
-        try items.query(
-            whereclause: "publications.publicationFeatured = $1 AND products.productIsActive = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2",
-            params: [true, Int.now()],
-            orderby: ["publications.publicationStartAt DESC"],
-            joins: [publication, brand]
-        )
-        
-        return try items.rows(barcodes: false)
-    }
-    
-    func getPublished() throws -> [Product] {
-        let publication = StORMDataSourceJoin(
-            table: "publications",
-            onCondition: "products.productId = publications.productId",
-            direction: StORMJoinType.INNER
-        )
-        let brand = StORMDataSourceJoin(
-            table: "brands",
-            onCondition: "products.brandId = brands.brandId",
-            direction: StORMJoinType.INNER
-        )
-        let categories = StORMDataSourceJoin(
-            table: "productcategories",
-            onCondition: "products.productId = productcategories.productId",
-            direction: StORMJoinType.LEFT
-        )
-        
-        let items = Product()
-        try items.query(
-            whereclause: "publications.publicationStartAt <= $1 AND publications.publicationFinishAt >= $1 AND products.productIsActive = $2",
-            params: [Int.now(), true],
-            orderby: ["products.productName"],
-            joins:  [publication, brand, categories]
-        )
-        
-        return try items.rows(barcodes: false)
-    }
-    
     func getCategories() throws -> [Category] {
         let categories = StORMDataSourceJoin(
             table: "productcategories",
@@ -88,8 +37,79 @@ struct EcommerceRepository : EcommerceProtocol {
         
         return items.rows()
     }
+
+    func getBrands() throws -> [Brand] {
+        let product = StORMDataSourceJoin(
+            table: "products",
+            onCondition: "brands.productId = products.productId",
+            direction: StORMJoinType.INNER
+        )
+        let publication = StORMDataSourceJoin(
+            table: "publications",
+            onCondition: "products.productId = publications.productId",
+            direction: StORMJoinType.INNER
+        )
+        
+        let items = Brand()
+        try items.query(
+            columns: ["DISTINCT brands.*"],
+            whereclause: "publications.publicationStartAt <= $1 AND publications.publicationFinishAt >= $1 AND products.productIsActive = $2",
+            params: [Int.now(), true],
+            orderby: ["brands.brandName"],
+            joins:  [product, publication]
+        )
+        
+        return items.rows()
+    }
     
-    func getPublished(category: String) throws -> [Product] {
+    
+    func getProductsFeatured() throws -> [Product] {
+        let publication = StORMDataSourceJoin(
+            table: "publications",
+            onCondition: "products.productId = publications.productId",
+            direction: StORMJoinType.INNER
+        )
+        let brand = StORMDataSourceJoin(
+            table: "brands",
+            onCondition: "products.brandId = brands.brandId",
+            direction: StORMJoinType.INNER
+        )
+        
+        let items = Product()
+        try items.query(
+            whereclause: "publications.publicationFeatured = $1 AND products.productIsActive = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2",
+            params: [true, Int.now()],
+            orderby: ["publications.publicationStartAt DESC"],
+            joins: [publication, brand]
+        )
+        
+        return try items.rows(barcodes: false)
+    }
+    
+    func getProductsNews() throws -> [Product] {
+        let publication = StORMDataSourceJoin(
+            table: "publications",
+            onCondition: "products.productId = publications.productId",
+            direction: StORMJoinType.INNER
+        )
+        let brand = StORMDataSourceJoin(
+            table: "brands",
+            onCondition: "products.brandId = brands.brandId",
+            direction: StORMJoinType.INNER
+        )
+        
+        let items = Product()
+        try items.query(
+            whereclause: "publications.publicationNew = $1 AND products.productIsActive = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2",
+            params: [true, Int.now()],
+            orderby: ["publications.publicationStartAt DESC"],
+            joins: [publication, brand]
+        )
+        
+        return try items.rows(barcodes: false)
+    }
+
+    func getProducts(category: String) throws -> [Product] {
         let publication = StORMDataSourceJoin(
             table: "publications",
             onCondition: "products.productId = publications.productId",
