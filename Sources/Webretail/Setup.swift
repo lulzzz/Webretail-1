@@ -116,9 +116,10 @@ func addFilters() {
     authenticationConfig.exclude("/api/login")
 	authenticationConfig.exclude("/api/logout")
     authenticationConfig.exclude("/api/register")
-    authenticationConfig.exclude("/api/ecommerce")
-    authenticationConfig.exclude("/api/ecommerce/featured")
     authenticationConfig.exclude("/api/ecommerce/category")
+    authenticationConfig.exclude("/api/ecommerce/brand")
+    authenticationConfig.exclude("/api/ecommerce/featured")
+    authenticationConfig.exclude("/api/ecommerce/new")
     authenticationConfig.exclude("/api/ecommerce/category/*")
     authenticationConfig.exclude("/api/ecommerce/product/*")
 

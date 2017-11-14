@@ -24,7 +24,7 @@ class EcommerceController {
         /// Guest Api
         routes.add(method: .get, uri: "/api/ecommerce/category", handler: ecommerceCategoriesHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/brand", handler: ecommerceBrandsHandlerGET)
-        routes.add(method: .get, uri: "/api/ecommerce/news", handler: ecommerceNewsHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/new", handler: ecommerceNewsHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/featured", handler: ecommerceFeaturedHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category/{name}", handler: ecommerceCategoryHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/product/{name}", handler: ecommerceProductHandlerGET)
