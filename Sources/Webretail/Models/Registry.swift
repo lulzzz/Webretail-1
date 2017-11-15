@@ -98,12 +98,8 @@ class Registry: PostgresSqlORM, Codable, Account {
     /// Returns a true / false depending on if the email exits in the database.
     func exists(_ email: String) -> Bool {
         do {
-            try query(whereclause: "registryEmail = $1", params: [email], cursor: StORMCursor(limit: 1, offset: 0))
-            if results.rows.count == 1 {
-                return true
-            } else {
-                return false
-            }
+            try get(email: email)
+            return true
         } catch {
             return false
         }

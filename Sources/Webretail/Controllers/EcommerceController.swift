@@ -128,10 +128,13 @@ class EcommerceController {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
+    
     func ecommerceRegistryHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let registry: Registry = request.getJson()!
+            guard let registry: Registry = request.getJson() else {
+                throw PerfectError.apiError("model invalid")
+            }
             try self.registryRepository.update(id: Int(uniqueID)!, item: registry)
             try response.setJson(registry)
             response.completed(status: .accepted)
@@ -139,6 +142,7 @@ class EcommerceController {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
+    
     func ecommerceRegistryHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
