@@ -188,7 +188,9 @@ class EcommerceController {
                 return
             }
 
-            let basket: Basket = request.getJson()!
+            guard let basket: Basket = request.getJson() else {
+                throw PerfectError.apiError("ivalid model")
+            }
             basket.registryId = Int(uniqueID)!
             
             let product = Product()
@@ -213,7 +215,9 @@ class EcommerceController {
             guard let id = Int(request.urlVariables["id"]!) else {
                 throw PerfectError.apiError("id")
             }
-            let basket: Basket = request.getJson()!
+            guard let basket: Basket = request.getJson() else {
+                throw PerfectError.apiError("ivalid model")
+            }
             try self.repository.updateBasket(id: id, item: basket)
             try response.setJson(basket)
             response.completed(status: .accepted)
