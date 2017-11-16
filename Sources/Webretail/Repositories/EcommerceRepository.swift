@@ -142,6 +142,39 @@ struct EcommerceRepository : EcommerceProtocol {
         return try items.rows(barcodes: false)
     }
     
+    func getProducts(brand: String) throws -> [Product] {
+        let publication = StORMDataSourceJoin(
+            table: "publications",
+            onCondition: "products.productId = publications.productId",
+            direction: StORMJoinType.INNER
+        )
+        let brandJoin = StORMDataSourceJoin(
+            table: "brands",
+            onCondition: "products.brandId = brands.brandId",
+            direction: StORMJoinType.INNER
+        )
+        let productCategories = StORMDataSourceJoin(
+            table: "productcategories",
+            onCondition: "products.productId = productcategories.productId",
+            direction: StORMJoinType.LEFT
+        )
+        let categories = StORMDataSourceJoin(
+            table: "categories",
+            onCondition: "productcategories.categoryId = categories.categoryId",
+            direction: StORMJoinType.INNER
+        )
+
+        let items = Product()
+        try items.query(
+            whereclause: "LOWER(brands.brandName) = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
+            params: [self.normalize(name: brand), Int.now(), true],
+            orderby: ["products.productName"],
+            joins:  [publication, brandJoin, productCategories, categories]
+        )
+        
+        return try items.rows(barcodes: false)
+    }
+    
     private func normalize(name: String) -> String {
         return name.lowercased()
             .replacingOccurrences(of: "-", with: " ")

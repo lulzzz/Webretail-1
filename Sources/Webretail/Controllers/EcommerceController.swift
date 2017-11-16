@@ -27,6 +27,7 @@ class EcommerceController {
         routes.add(method: .get, uri: "/api/ecommerce/new", handler: ecommerceNewsHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/featured", handler: ecommerceFeaturedHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category/{name}", handler: ecommerceCategoryHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/brand/{name}", handler: ecommerceBrandHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/product/{name}", handler: ecommerceProductHandlerGET)
 
         /// Registry Api
@@ -96,6 +97,19 @@ class EcommerceController {
                 throw PerfectError.apiError("name")
             }
             let items = try self.repository.getProducts(category: name)
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func ecommerceBrandHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            guard let name = request.urlVariables["name"] else {
+                throw PerfectError.apiError("name")
+            }
+            let items = try self.repository.getProducts(brand: name)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
