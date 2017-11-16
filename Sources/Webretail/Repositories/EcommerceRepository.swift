@@ -41,7 +41,7 @@ struct EcommerceRepository : EcommerceProtocol {
     func getBrands() throws -> [Brand] {
         let product = StORMDataSourceJoin(
             table: "products",
-            onCondition: "brands.productId = products.productId",
+            onCondition: "brands.brandId = products.brandId",
             direction: StORMJoinType.INNER
         )
         let publication = StORMDataSourceJoin(
