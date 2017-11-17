@@ -73,13 +73,13 @@ class Basket: PostgresSqlORM, Codable {
         super.init()
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        basketId = try container.decode(Int.self, forKey: .basketId)
-        registryId = try container.decode(Int.self, forKey: .registryId)
+        basketId = try container.decodeIfPresent(Int.self, forKey: .basketId) ?? 0
+        registryId = try container.decodeIfPresent(Int.self, forKey: .registryId) ?? 0
         basketBarcode = try container.decode(String.self, forKey: .basketBarcode)
         basketProduct = try container.decodeIfPresent(Product.self, forKey: .basketProduct)
             ?? self.getProduct(barcode: basketBarcode)
         basketQuantity = try container.decode(Double.self, forKey: .basketQuantity)
-        basketPrice = try container.decode(Double.self, forKey: .basketPrice)
+        basketPrice = try container.decodeIfPresent(Double.self, forKey: .basketPrice) ?? 0
     }
 
     func getProduct(barcode: String) throws -> Product {
