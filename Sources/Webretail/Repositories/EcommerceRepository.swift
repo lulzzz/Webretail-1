@@ -210,7 +210,7 @@ struct EcommerceRepository : EcommerceProtocol {
     
     func updateBasket(id: Int, item: Basket) throws {
         let current = Basket()
-        try current.get(id)
+        try current.query(id: id)
         if current.basketId == 0 {
             throw StORMError.noRecordFound
         }
