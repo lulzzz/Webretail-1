@@ -120,7 +120,7 @@ class EcommerceController {
     func ecommerceProductHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             guard let name = request.urlVariables["name"] else {
-                throw PerfectError.apiError("id")
+                throw PerfectError.apiError("name")
             }
             let items = try self.repository.getProduct(name: name)
             try response.setJson(items)

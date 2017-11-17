@@ -7,6 +7,7 @@
 //
 
 import PerfectHTTP
+import PerfectLib
 
 class RegistryController {
 	
@@ -53,7 +54,9 @@ class RegistryController {
 	
 	func registryHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
-            let item: Registry = request.getJson()!
+            guard let item: Registry = request.getJson() else {
+                throw PerfectError.apiError("model invalid")
+            }
 			try self.repository.add(item: item)
 			try response.setJson(item)
 			response.completed(status: .created)
@@ -65,7 +68,9 @@ class RegistryController {
 	func registryHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
 		let id = request.urlVariables["id"]!
 		do {
-            let item: Registry = request.getJson()!
+            guard let item: Registry = request.getJson() else {
+                throw PerfectError.apiError("model invalid")
+            }
 			try self.repository.update(id: Int(id)!, item: item)
 			try response.setJson(item)
 			response.completed(status: .accepted)
