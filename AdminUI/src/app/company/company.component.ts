@@ -24,7 +24,7 @@ export class CompanyComponent implements OnInit {
        sessionService.title = 'Company';
        this.header = '/Media/header.png';
        this.paypalEnvs = [
-            {label: 'Sendbox', value: 'sendbox'},
+            {label: 'Sandbox', value: 'sandbox'},
             {label: 'Production', value: 'production'},
         ];
     }
@@ -50,7 +50,7 @@ export class CompanyComponent implements OnInit {
             'username': new FormControl('', Validators.nullValidator),
             'password': new FormControl('', Validators.nullValidator),
             'paypalenv': new FormControl('', Validators.nullValidator),
-            'paypalsendbox': new FormControl('', Validators.nullValidator),
+            'paypalsandbox': new FormControl('', Validators.nullValidator),
             'paypalproduction': new FormControl('', Validators.nullValidator),
             'barcode': new FormControl('', Validators.required)
         });
