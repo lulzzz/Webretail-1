@@ -236,8 +236,8 @@ struct EcommerceRepository : EcommerceProtocol {
 
     func getShippings() -> [Item] {
         var status = [Item]()
-        status.append(Item(id: "express", value: "Express"))
         status.append(Item(id: "standard", value: "Standard"))
+        status.append(Item(id: "express", value: "Express"))
         return status
     }
 
