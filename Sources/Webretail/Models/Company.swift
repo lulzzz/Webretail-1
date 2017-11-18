@@ -31,7 +31,7 @@ class Company: PostgresSqlORM, Codable {
 	public var smtpPassword : String = ""
 
     public var paypalEnv : String = ""
-    public var paypalSendbox : String = ""
+    public var paypalSandbox : String = ""
     public var paypalProduction : String = ""
 
     public var barcodeCounter : UInt64 = 1000000000001
@@ -59,7 +59,7 @@ class Company: PostgresSqlORM, Codable {
 		smtpPassword = this.data["smtppassword"] as? String ?? ""
 
         paypalEnv = this.data["paypalenv"] as? String ?? ""
-        paypalSendbox = this.data["paypalsendbox"] as? String ?? ""
+        paypalSandbox = this.data["paypalsandbox"] as? String ?? ""
         paypalProduction = this.data["paypalproduction"] as? String ?? ""
 
         barcodeCounter = UInt64(this.data["barcodecounter"] as! String) ?? barcodeCounter

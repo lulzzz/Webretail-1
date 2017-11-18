@@ -7,7 +7,7 @@
 
 struct PayPal: Codable {
     public var env : String = ""
-    public var sendbox : String = ""
+    public var sandbox : String = ""
     public var production : String = ""
     public var currency : String = ""
 }

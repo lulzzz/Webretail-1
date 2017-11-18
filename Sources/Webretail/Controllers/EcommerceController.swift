@@ -252,7 +252,7 @@ class EcommerceController {
             let item = try self.companyRepository.get()!
             let paypal = PayPal(
                 env: item.paypalEnv,
-                sendbox: item.paypalSendbox,
+                sandbox: item.paypalSandbox,
                 production: item.paypalProduction,
                 currency: item.companyCurrency
             )
