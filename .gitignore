@@ -46,5 +46,5 @@ StORMlog.txt
 node_modules/
 dist
 webroot
-Upload
+Media
 .DS_Store
