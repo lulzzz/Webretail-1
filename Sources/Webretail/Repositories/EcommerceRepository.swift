@@ -249,7 +249,12 @@ struct EcommerceRepository : EcommerceProtocol {
             content = try String(contentsOf: URL(fileURLWithPath: "./Upload/shippingcost_\(id).csv"))
         } catch {
             print("shippingcost_\(id).csv: \(error)")
-            content = try! String(contentsOf: URL(fileURLWithPath: "./Upload/shippingcost.csv"))
+            do {
+                content = try String(contentsOf: URL(fileURLWithPath: "./Upload/shippingcost.csv"))
+            } catch {
+                print("shippingcost.csv: \(error)")
+                return cost
+            }
         }
 
         let lines = content.split(separator: "\n")
