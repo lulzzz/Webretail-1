@@ -48,7 +48,7 @@ struct CompanyRepository : CompanyProtocol {
 		current.smtpPassword = item.smtpPassword
 
         current.paypalEnv = item.paypalEnv
-        current.paypalSendbox = item.paypalSendbox
+        current.paypalSandbox = item.paypalSandbox
         current.paypalProduction = item.paypalProduction
 
         current.barcodeCounter = item.barcodeCounter
