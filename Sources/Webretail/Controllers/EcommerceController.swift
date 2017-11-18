@@ -11,12 +11,12 @@ import PerfectLib
 class EcommerceController {
     
     private let repository: EcommerceProtocol
-    private let companyRepository: CompanyRepository
+    private let companyRepository: CompanyProtocol
     private let registryRepository: RegistryProtocol
 
     init() {
         self.repository = ioCContainer.resolve() as EcommerceProtocol
-        self.companyRepository = ioCContainer.resolve() as CompanyRepository
+        self.companyRepository = ioCContainer.resolve() as CompanyProtocol
         self.registryRepository = ioCContainer.resolve() as RegistryProtocol
     }
     
