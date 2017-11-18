@@ -19,7 +19,7 @@ export class Company {
   public smtpUsername: string;
   public smtpPassword: string;
   public paypalEnv: string;
-  public paypalSendobox: string;
+  public paypalSendbox: string;
   public paypalProduction: string;
   public barcodeCounter: number;
 
@@ -42,7 +42,7 @@ export class Company {
     this.smtpUsername = '';
     this.smtpPassword = '';
     this.paypalEnv = 'sendbox';
-    this.paypalSendobox = '<sendbox client id>';
+    this.paypalSendbox = '<sendbox client id>';
     this.paypalProduction = '<production client id>';
     this.barcodeCounter = 0;
   }

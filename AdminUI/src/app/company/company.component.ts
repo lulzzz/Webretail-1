@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { CompanyService } from './../services/company.service';
 import { Company } from './../shared/models';
+import { SelectItem } from 'primeng/primeng';
 
 @Component({
     selector: 'app-company-component',
@@ -14,6 +15,7 @@ export class CompanyComponent implements OnInit {
     company: Company;
     dataform: FormGroup;
     header: string;
+    paypalEnvs: SelectItem[];
 
     constructor(private sessionService: SessionService,
                 private messageService: MessageService,
@@ -21,6 +23,10 @@ export class CompanyComponent implements OnInit {
                 private fb: FormBuilder) {
        sessionService.title = 'Company';
        this.header = '/Media/header.png';
+       this.paypalEnvs = [
+            {label: 'Sendbox', value: 'sendbox'},
+            {label: 'Production', value: 'production'},
+        ];
     }
 
     ngOnInit() {

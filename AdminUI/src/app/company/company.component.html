@@ -77,6 +77,15 @@
                 </div>
             </div>
             <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="currency">Currency</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="currency" [(ngModel)]="company.companyCurrency"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['currency'].valid&&dataform.controls['currency'].dirty">
+                        <i class="fa fa-close"></i> Currency is required
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="fiscalCode">Fiscal Code</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="fiscalCode" [(ngModel)]="company.companyFiscalCode"/>
@@ -127,7 +136,7 @@
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="host">Environment</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="paypalenv" [(ngModel)]="company.paypalEnv"/>
+                    <p-selectButton formControlName="paypalenv" [options]="paypalEnvs" [(ngModel)]="company.paypalEnv"></p-selectButton>                        
                 </div>
             </div>
             <div class="ui-grid-row">
@@ -139,7 +148,7 @@
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="paypalproduction">Production Client ID</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="paypalproduction" [(ngModel)]="company.paypalproduction"/>
+                    <input pInputText formControlName="paypalproduction" [(ngModel)]="company.paypalProduction"/>
                 </div>
             </div>
             <div class="ui-grid-row">
