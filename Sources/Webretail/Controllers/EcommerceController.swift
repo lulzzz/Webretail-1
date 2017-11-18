@@ -11,10 +11,12 @@ import PerfectLib
 class EcommerceController {
     
     private let repository: EcommerceProtocol
+    private let companyRepository: CompanyRepository
     private let registryRepository: RegistryProtocol
 
     init() {
         self.repository = ioCContainer.resolve() as EcommerceProtocol
+        self.companyRepository = ioCContainer.resolve() as CompanyRepository
         self.registryRepository = ioCContainer.resolve() as RegistryProtocol
     }
     
@@ -40,6 +42,7 @@ class EcommerceController {
         routes.add(method: .put, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerPUT)
         routes.add(method: .delete, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerDELETE)
 
+        routes.add(method: .get, uri: "/api/ecommerce/paypal", handler: ecommercePayPalHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/payment", handler: ecommercePaymentsHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/shipping", handler: ecommerceShippingsHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/shipping/{id}/cost", handler: ecommerceShippingCostHandlerGET)
@@ -237,6 +240,24 @@ class EcommerceController {
             }
             try self.repository.deleteBasket(id: Int(id)!)
             response.completed(status: .noContent)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    /// PayPal
+    
+    func ecommercePayPalHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let item = try self.companyRepository.get()!
+            let paypal = PayPal(
+                env: item.paypalEnv,
+                sendbox: item.paypalSendbox,
+                production: item.paypalProduction,
+                currency: item.companyCurrency
+            )
+            try response.setJson(paypal)
+            response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }

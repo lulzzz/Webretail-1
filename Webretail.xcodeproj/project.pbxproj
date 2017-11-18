@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		567BFD0B1FC07E9800A4F05A /* PayPal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567BFD0A1FC07E9800A4F05A /* PayPal.swift */; };
 		568990901FB1B40700A646B2 /* TagGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689908F1FB1B40700A646B2 /* TagGroup.swift */; };
 		568990921FB1B53500A646B2 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568990911FB1B53500A646B2 /* TagValue.swift */; };
 		568990941FB1B66A00A646B2 /* TagGroupProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568990931FB1B66A00A646B2 /* TagGroupProtocol.swift */; };
@@ -1193,6 +1194,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		567BFD0A1FC07E9800A4F05A /* PayPal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPal.swift; sourceTree = "<group>"; };
 		5689908F1FB1B40700A646B2 /* TagGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGroup.swift; sourceTree = "<group>"; };
 		568990911FB1B53500A646B2 /* TagValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValue.swift; sourceTree = "<group>"; };
 		568990931FB1B66A00A646B2 /* TagGroupProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGroupProtocol.swift; sourceTree = "<group>"; };
@@ -2631,6 +2633,7 @@
 				OBJ_62 /* Model.swift */,
 				OBJ_63 /* Movement.swift */,
 				OBJ_64 /* MovementArticle.swift */,
+				567BFD0A1FC07E9800A4F05A /* PayPal.swift */,
 				OBJ_65 /* PdfDocument.swift */,
 				OBJ_66 /* Period.swift */,
 				OBJ_67 /* Product.swift */,
@@ -4634,6 +4637,7 @@
 				OBJ_836 /* JsonbProtocol.swift in Sources */,
 				OBJ_837 /* MovementArticleProtocol.swift in Sources */,
 				OBJ_838 /* MovementProtocol.swift in Sources */,
+				567BFD0B1FC07E9800A4F05A /* PayPal.swift in Sources */,
 				OBJ_839 /* ProductProtocol.swift in Sources */,
 				568990941FB1B66A00A646B2 /* TagGroupProtocol.swift in Sources */,
 				OBJ_840 /* PublicationProtocol.swift in Sources */,
