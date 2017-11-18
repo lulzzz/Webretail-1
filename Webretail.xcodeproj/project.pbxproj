@@ -18,6 +18,7 @@
 		5689909E1FB1BEC900A646B2 /* TagValueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689909D1FB1BEC900A646B2 /* TagValueController.swift */; };
 		568990A01FB2503200A646B2 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689909F1FB2503200A646B2 /* Tag.swift */; };
 		56A3C3801FAE67AD00E60C1B /* Barcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A3C37F1FAE67AD00E60C1B /* Barcode.swift */; };
+		56B40E341FC0A13600FE6A3A /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B40E331FC0A13600FE6A3A /* OrderModel.swift */; };
 		OBJ_1005 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_184 /* Convenience.swift */; };
 		OBJ_1006 /* DataConverters.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_185 /* DataConverters.swift */; };
 		OBJ_1007 /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_186 /* Delete.swift */; };
@@ -1205,6 +1206,7 @@
 		5689909D1FB1BEC900A646B2 /* TagValueController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValueController.swift; sourceTree = "<group>"; };
 		5689909F1FB2503200A646B2 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		56A3C37F1FAE67AD00E60C1B /* Barcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Barcode.swift; sourceTree = "<group>"; };
+		56B40E331FC0A13600FE6A3A /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 		56D7E5551FAC884300EE4061 /* Dockerfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
 		56D7E5561FAC884300EE4061 /* rasterize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rasterize.js; sourceTree = "<group>"; };
 		56D7E5571FAC884300EE4061 /* key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = key.pem; sourceTree = "<group>"; };
@@ -2633,6 +2635,7 @@
 				OBJ_62 /* Model.swift */,
 				OBJ_63 /* Movement.swift */,
 				OBJ_64 /* MovementArticle.swift */,
+				56B40E331FC0A13600FE6A3A /* OrderModel.swift */,
 				567BFD0A1FC07E9800A4F05A /* PayPal.swift */,
 				OBJ_65 /* PdfDocument.swift */,
 				OBJ_66 /* Period.swift */,
@@ -4555,6 +4558,7 @@
 				OBJ_761 /* CustomRealm.swift in Sources */,
 				OBJ_762 /* PerfectSessionManager.swift in Sources */,
 				OBJ_763 /* SessionConfig.swift in Sources */,
+				56B40E341FC0A13600FE6A3A /* OrderModel.swift in Sources */,
 				OBJ_764 /* TurnstileFilter.swift in Sources */,
 				OBJ_765 /* TurnstilePerfectRealm.swift in Sources */,
 				OBJ_766 /* AngularController.swift in Sources */,

@@ -227,18 +227,18 @@ struct EcommerceRepository : EcommerceProtocol {
     }
     
     func getPayments() -> [Item] {
-        var status = [Item]()
-        status.append(Item(id: "PayPal", value: "PayPal / Credit card"))
-        status.append(Item(id: "BankTransfer", value: "Bank transfer"))
-        status.append(Item(id: "CashOnDelivery", value: "Cash on delivery"))
-        return status
+        var items = [Item]()
+        items.append(Item(id: "PayPal", value: "PayPal - Credit card"))
+        items.append(Item(id: "BankTransfer", value: "Bank transfer"))
+        items.append(Item(id: "CashOnDelivery", value: "Cash on delivery"))
+        return items
     }
 
     func getShippings() -> [Item] {
-        var status = [Item]()
-        status.append(Item(id: "standard", value: "Standard"))
-        status.append(Item(id: "express", value: "Express"))
-        return status
+        var items = [Item]()
+        items.append(Item(id: "standard", value: "Standard"))
+        items.append(Item(id: "express", value: "Express"))
+        return items
     }
 
     func getShippingCost(id: String, registry: Registry) -> Cost {
@@ -280,7 +280,7 @@ struct EcommerceRepository : EcommerceProtocol {
         return cost
     }
 
-    func addOrder(registryId: Int, payment: String) throws -> Movement {
+    func addOrder(registryId: Int, order: OrderModel) throws -> Movement {
         let repository = ioCContainer.resolve() as MovementProtocol
         
         let items = try self.getBasket(registryId: registryId)
@@ -307,36 +307,39 @@ struct EcommerceRepository : EcommerceProtocol {
             throw StORMError.error("no causal found")
         }
         
-        let order = Movement()
-        order.movementDate = Int.now()
-        order.movementStore = store
-        order.movementCausal = causal
-        order.movementRegistry = registry
-        order.movementUser = "Registry"
-        order.movementStatus = "New"
-        order.movementPayment = payment
-        order.movementDesc = "eCommerce order"
+        let movement = Movement()
+        movement.movementDate = Int.now()
+        movement.movementStore = store
+        movement.movementCausal = causal
+        movement.movementRegistry = registry
+        movement.movementUser = "eCommerce"
+        movement.movementStatus = "New"
+        movement.movementPayment = order.payment
+        movement.movementShipping = order.shipping
+        movement.movementShippingCost = order.shippingCost
+        movement.movementNote = order.paypal.isEmpty ? "" : "paypal authorization: \(order.paypal)"
+        movement.movementDesc = "eCommerce order"
         
-        try repository.add(item: order)
+        try repository.add(item: movement)
         
         for item in items {
-            let orderArticle = MovementArticle()
-            orderArticle.movementId = order.movementId
-            orderArticle.movementArticleBarcode = item.basketBarcode
-            orderArticle.movementArticleProduct = item.basketProduct
-            orderArticle.movementArticlePrice = item.basketPrice
-            orderArticle.movementArticleQuantity = item.basketQuantity
-            orderArticle.movementArticleUpdated = Int.now()
-            try orderArticle.save {
-                id in orderArticle.movementArticleId = id as! Int
+            let movementArticle = MovementArticle()
+            movementArticle.movementId = movement.movementId
+            movementArticle.movementArticleBarcode = item.basketBarcode
+            movementArticle.movementArticleProduct = item.basketProduct
+            movementArticle.movementArticlePrice = item.basketPrice
+            movementArticle.movementArticleQuantity = item.basketQuantity
+            movementArticle.movementArticleUpdated = Int.now()
+            try movementArticle.save {
+                id in movementArticle.movementArticleId = id as! Int
             }
             try item.delete()
         }
         
-        order.movementStatus = "Processing"
-        try repository.update(id: order.movementId, item: order)
+        movement.movementStatus = "Processing"
+        try repository.update(id: movement.movementId, item: movement)
         
-        return order;
+        return movement;
     }
 
     func getOrders(registryId: Int) throws -> [Movement] {

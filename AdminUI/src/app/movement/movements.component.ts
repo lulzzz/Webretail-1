@@ -11,6 +11,7 @@ import { MovementService } from './../services/movement.service';
 import { TagService } from './../services/tag.service';
 import { Movement, Device, TagGroup, Tag, TagValue } from './../shared/models';
 import { Helpers } from './../shared/helpers';
+import { retry } from 'rxjs/operator/retry';
 
 @Component({
     selector: 'app-movements-component',
@@ -21,6 +22,7 @@ export class MovementsComponent implements OnInit {
     totalRecords = 0;
     selected: Movement;
     device: Device;
+    shippings: SelectItem[];
     cashregisters: SelectItem[];
     stores: SelectItem[];
     storesFiltered: SelectItem[];
@@ -67,8 +69,10 @@ export class MovementsComponent implements OnInit {
             'causal': new FormControl('', Validators.required),
             'registry': new FormControl('', Validators.nullValidator),
             'device': new FormControl('', Validators.nullValidator),
-            'payment': new FormControl('', Validators.nullValidator),
             'tags': new FormControl('', Validators.nullValidator),
+            'payment': new FormControl('', Validators.nullValidator),
+            'shipping': new FormControl('', Validators.nullValidator),
+            'shippingCost': new FormControl('', Validators.nullValidator),
             'status': new FormControl('', Validators.required),
             'note': new FormControl('', Validators.nullValidator)
         });
@@ -93,9 +97,16 @@ export class MovementsComponent implements OnInit {
         );
 
         this.movementService
+            .getShippings()
+            .subscribe(result => {
+                this.shippings = result.map(p => Helpers.newSelectItem(p.id, p.value));
+            }
+        );
+
+        this.movementService
             .getPayments()
             .subscribe(result => {
-                this.payments = result.map(p => Helpers.newSelectItem(p.value));
+                this.payments = result.map(p => Helpers.newSelectItem(p.id, p.value));
             }
         );
 
@@ -221,6 +232,16 @@ export class MovementsComponent implements OnInit {
             this.selected.movementDevice = '';
         }
         this.tagsSelected = [];
+    }
+
+    onShippingChange(event: any) {
+        if (event.value === 'none') {
+            this.selected.movementShippingCost = 0.0;
+            return;
+        }
+        this.movementService
+            .getShippingCost(event.value)
+            .subscribe(result => this.selected.movementShippingCost = result.value);
     }
 
     editClick() {

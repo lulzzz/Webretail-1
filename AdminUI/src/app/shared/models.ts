@@ -297,9 +297,11 @@ export class Movement {
   public movementStatus: string;
   public movementUser: string;
   public movementDevice: string;
-  public movementAmount: number;
-  public movementPayment: string;
   public movementTags: Tag[];
+  public movementPayment: string;
+  public movementShipping: string;
+  public movementShippingCost: number;
+  public movementAmount: number;
   public updatedAt: number;
 
   constructor() {
@@ -312,8 +314,11 @@ export class Movement {
     this.movementUser = '';
     this.movementDevice = '';
     this.movementAmount = 0.0;
-    this.movementPayment = '';
     this.movementTags = [];
+    this.movementPayment = '';
+    this.movementShipping = '';
+    this.movementShippingCost = 0.0;
+    this.movementAmount = 0.0;
     this.updatedAt = 0;
   }
 }
@@ -473,6 +478,10 @@ export interface Barcode {
   tags: Tag[];
 }
 
+export interface Cost {
+  value: number;
+}
+
 export interface Tag {
   groupId: number;
   groupName: string;
@@ -481,6 +490,11 @@ export interface Tag {
 }
 
 export interface ItemValue {
+  value: string;
+}
+
+export interface Item {
+  id: string;
   value: string;
 }
 

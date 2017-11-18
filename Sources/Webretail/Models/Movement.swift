@@ -30,13 +30,15 @@ class Movement: PostgresSqlORM, Codable {
     public var movementRegistry : Registry = Registry()
     public var movementTags : [Tag] = [Tag]()
     public var movementPayment : String = ""
+    public var movementShipping : String = ""
+    public var movementShippingCost : Double = 0
+    public var movementAmount : Double = 0
     public var movementUpdated : Int = Int.now()
     
     public var _movementDate: String {
         return movementDate.formatDateShort()
     }
 
-    public var _amount : Double = 0
     public var _items : [MovementArticle] = [MovementArticle]()
     
     private enum CodingKeys: String, CodingKey {
@@ -51,9 +53,11 @@ class Movement: PostgresSqlORM, Codable {
         case movementStore
         case movementCausal
         case movementRegistry
-        case movementPayment
         case movementTags
-        case _amount = "movementAmount"
+        case movementPayment
+        case movementShipping
+        case movementShippingCost
+        case movementAmount
         case _items = "movementItems"
         case movementUpdated = "updatedAt"
     }
@@ -87,6 +91,9 @@ class Movement: PostgresSqlORM, Codable {
             }
         }
         movementPayment = this.data["movementpayment"] as? String ?? ""
+        movementShipping = this.data["movementshipping"] as? String ?? ""
+        movementShippingCost = Double(this.data["movementshippingcost"] as? Float ?? 0)
+        movementAmount = Double(this.data["movementamount"] as? Float ?? 0)
         movementUpdated = this.data["movementupdated"] as? Int ?? 0
     }
     
@@ -95,10 +102,6 @@ class Movement: PostgresSqlORM, Codable {
         for i in 0..<self.results.rows.count {
             let row = Movement()
             row.to(self.results.rows[i])
-            
-            let sql = "SELECT SUM(movementArticleQuantity * movementArticlePrice) AS amount FROM movementArticles WHERE movementId = $1";
-            let getCount = try self.sqlRows(sql, params: [String(row.movementId)])
-            row._amount = Double(getCount.first?.data["amount"] as? Float ?? 0)
             
             rows.append(row)
         }
@@ -126,7 +129,9 @@ class Movement: PostgresSqlORM, Codable {
         movementRegistry = try container.decodeIfPresent(Registry.self, forKey: .movementRegistry) ?? Registry()
         movementTags = try container.decodeIfPresent([Tag].self, forKey: .movementTags) ?? [Tag]()
         movementPayment = try container.decode(String.self, forKey: .movementPayment)
-        _amount = try container.decode(Double.self, forKey: ._amount)
+        movementShipping = try container.decodeIfPresent(String.self, forKey: .movementShipping) ?? ""
+        movementShippingCost = try container.decodeIfPresent(Double.self, forKey: .movementShippingCost) ?? 0
+        movementAmount = try container.decodeIfPresent(Double.self, forKey: .movementAmount) ?? 0
         _items = try container.decodeIfPresent([MovementArticle].self, forKey: ._items) ?? [MovementArticle]()
     }
     
@@ -146,7 +151,9 @@ class Movement: PostgresSqlORM, Codable {
         try container.encode(movementRegistry, forKey: .movementRegistry)
         try container.encode(movementTags, forKey: .movementTags)
         try container.encode(movementPayment, forKey: .movementPayment)
-        try container.encode(_amount, forKey: ._amount)
+        try container.encode(movementShipping, forKey: .movementShipping)
+        try container.encode(movementShippingCost, forKey: .movementShippingCost)
+        try container.encode(movementAmount, forKey: .movementAmount)
         try container.encode(_items, forKey: ._items)
         try container.encode(movementUpdated, forKey: .movementUpdated)
     }
@@ -163,5 +170,11 @@ class Movement: PostgresSqlORM, Codable {
         }
         let getCount = try self.sqlRows(sql, params: params)
         self.movementNumber += getCount.first?.data["counter"] as? Int ?? 0
+    }
+    
+    func getAmount() throws {
+        let sql = "SELECT SUM(movementArticleQuantity * movementArticlePrice) AS amount FROM movementArticles WHERE movementId = $1";
+        let getCount = try self.sqlRows(sql, params: [String(movementId)])
+        self.movementAmount = Double(getCount.first?.data["amount"] as? Float ?? 0)
     }
 }

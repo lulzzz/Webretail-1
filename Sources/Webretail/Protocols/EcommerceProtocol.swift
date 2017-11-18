@@ -54,7 +54,7 @@ protocol EcommerceProtocol {
     func getShippingCost(id: String, registry: Registry) -> Cost
     
     
-    func addOrder(registryId: Int, payment: String) throws -> Movement
+    func addOrder(registryId: Int, order: OrderModel) throws -> Movement
 
     func getOrders(registryId: Int) throws -> [Movement]
 

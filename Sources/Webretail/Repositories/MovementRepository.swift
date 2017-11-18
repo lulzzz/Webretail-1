@@ -16,15 +16,22 @@ enum ActionType {
 }
 
 struct MovementRepository : MovementProtocol {
-    
-    func getPayments() -> [ItemValue] {
-        var status = [ItemValue]()
-        status.append(ItemValue(value: "None"))
-        status.append(ItemValue(value: "Cash"))
-        status.append(ItemValue(value: "Credit card"))
-        status.append(ItemValue(value: "Bank transfer"))
-        status.append(ItemValue(value: "PayPal"))
-        status.append(ItemValue(value: "Carrier"))
+
+    func getPayments() -> [Item] {
+        var items = [Item]()
+        items.append(Item(id: "None", value: "None"))
+        items.append(Item(id: "Cash", value: "Cash"))
+        items.append(Item(id: "PayPal", value: "PayPal - Credit card"))
+        items.append(Item(id: "BankTransfer", value: "Bank transfer"))
+        items.append(Item(id: "CashOnDelivery", value: "Cash on delivery"))
+        return items
+    }
+
+    func getShippings() -> [Item] {
+        var status = [Item]()
+        status.append(Item(id: "none", value: "Standard"))
+        status.append(Item(id: "standard", value: "Standard"))
+        status.append(Item(id: "express", value: "Express"))
         return status
     }
 
@@ -149,11 +156,14 @@ struct MovementRepository : MovementProtocol {
             current.movementCausal = item.movementCausal
             current.movementStore = item.movementStore
             current.movementRegistry = item.movementRegistry
-            current.movementPayment = item.movementPayment
             current.movementTags = item.movementTags
-        }
-        else if current.movementStatus == "New" && item.movementStatus == "Processing" {
+            current.movementPayment = item.movementPayment
+            current.movementShipping = item.movementShipping
+            current.movementShippingCost = item.movementShippingCost
+            try current.getAmount()
+        } else if current.movementStatus == "New" && item.movementStatus == "Processing" {
             try process(movement: current, actionTypes: [.Delivering, .Booking])
+            try current.getAmount()
         }
         else if current.movementStatus == "Processing" && item.movementStatus == "Canceled" {
             try process(movement: current, actionTypes: [.Unbooking])
@@ -167,6 +177,7 @@ struct MovementRepository : MovementProtocol {
                 actions = [.Unbooking, .Stoking]
             }
             try process(movement: current, actionTypes: actions)
+            try current.getAmount()
         }
         current.movementStatus = item.movementStatus
         current.movementNote = item.movementNote

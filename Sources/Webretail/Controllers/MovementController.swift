@@ -22,12 +22,14 @@ class MovementController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
-		routes.add(method: .get, uri: "/api/movementpayment", handler: movementPaymentsHandlerGET)
+        routes.add(method: .get, uri: "/api/movementshipping", handler: movementShippingsHandlerGET)
+        routes.add(method: .get, uri: "/api/movementpayment", handler: movementPaymentsHandlerGET)
 		routes.add(method: .get, uri: "/api/movementstatus", handler: movementStatusHandlerGET)
         routes.add(method: .get, uri: "/api/movement", handler: movementsHandlerGET)
 		routes.add(method: .post, uri: "/api/movementsales", handler: movementsSalesHandlerPOST)
 		routes.add(method: .post, uri: "/api/movementreceipted", handler: movementsReceiptedHandlerPOST)
 		routes.add(method: .get, uri: "/api/movement/{id}", handler: movementHandlerGET)
+        routes.add(method: .get, uri: "/api/movement/{id}/cost", handler: movementShippingCostHandlerGET)
 		routes.add(method: .get, uri: "/api/movementfrom/{date}", handler: movementFromHandlerGET)
 		routes.add(method: .get, uri: "/api/movementregistry/{id}", handler: movementRegistryHandlerGET)
         routes.add(method: .post, uri: "/api/movement", handler: movementHandlerPOST)
@@ -48,6 +50,30 @@ class MovementController {
 		}
 	}
 	
+    func movementShippingsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let status = self.repository.getShippings()
+            try response.setJson(status)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func movementShippingCostHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            guard let id = request.urlVariables["id"] else {
+                throw PerfectError.apiError("id")
+            }
+            let item = try self.repository.get(id: Int(id)!)!
+            let cost = (ioCContainer.resolve() as EcommerceProtocol).getShippingCost(id: id, registry: item.movementRegistry)
+            try response.setJson(cost)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
     func movementStatusHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
 			let status = self.repository.getStatus()

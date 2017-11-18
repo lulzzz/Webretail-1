@@ -8,7 +8,9 @@
 
 protocol MovementProtocol {
     
-	func getPayments() -> [ItemValue]
+    func getPayments() -> [Item]
+
+    func getShippings() -> [Item]
 
     func getStatus() -> [ItemValue]
 

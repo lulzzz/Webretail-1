@@ -102,7 +102,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="causal">Causal</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="causals" formControlName="causal" [(ngModel)]="selected.movementCausal" [disabled]="selected.movementStatus!=='New'" (onChange)="onCausalChange($event)" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="causals" formControlName="causal" [(ngModel)]="selected.movementCausal" [disabled]="selected.movementStatus!=='New'" (onChange)="onCausalChange($event)" [style]="{'width':'100%'}"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['causal'].valid&&dataform.controls['causal'].dirty">
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['causal'].errors['required']">Causal is required</span>
@@ -118,7 +118,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="store">Store</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="stores" formControlName="store" [(ngModel)]="selected.movementStore" [disabled]="selected.movementStatus!=='New'||selected.movementCausal.causalIsPos" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="stores" formControlName="store" [(ngModel)]="selected.movementStore" [disabled]="selected.movementStatus!=='New'||selected.movementCausal.causalIsPos" [style]="{'width':'100%'}"></p-dropdown>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['store'].valid&&dataform.controls['store'].dirty">
                             <i class="fa fa-close"></i>
                             <span *ngIf="dataform.controls['store'].errors['required']">Store is required</span>
@@ -128,7 +128,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="registry">Registry</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="registrys" formControlName="registry" [(ngModel)]="selected.movementRegistry" [disabled]="selected.movementStatus!=='New'" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="registrys" formControlName="registry" [(ngModel)]="selected.movementRegistry" [disabled]="selected.movementStatus!=='New'" [filter]="true" [style]="{'width':'100%'}"></p-dropdown>
                     </div>
                 </div>
                 <div class="ui-grid-row">
@@ -158,7 +158,19 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="payment">Payment</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="payments" formControlName="payment" [disabled]="selected.movementStatus==='Completed'" [(ngModel)]="selected.movementPayment" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="payments" formControlName="payment" [disabled]="selected.movementStatus==='Completed'" [(ngModel)]="selected.movementPayment" [style]="{'width':'100%'}"></p-dropdown>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="payment">Shipping</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-selectButton formControlName="shipping" [options]="shippings" [disabled]="selected.movementStatus==='Completed'" [(ngModel)]="selected.movementShipping" (onChange)="onShippingChange($event)" [style]="{'width':'100%'}"></p-selectButton>                        
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="payment">Shipping Cost</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText disabled="true" formControlName="shippingCost" [(ngModel)]="selected.movementShippingCost" [style]="{'width':'100%'}"/>
                     </div>
                 </div>
                 <div class="ui-grid-row">

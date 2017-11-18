@@ -2,7 +2,7 @@
 import { Http, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Movement, MovementArticle, ItemValue, Period } from '../shared/models';
+import { Movement, MovementArticle, Item, ItemValue, Cost, Period } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -87,9 +87,19 @@ export class MovementService {
             .map(result => <ItemValue[]>result.json());
     }
 
-    getPayments(): Observable<ItemValue[]> {
+    getPayments(): Observable<Item[]> {
         return this.http.get('/api/movementpayment', { headers: Helpers.getHeaders() })
-            .map(result => <ItemValue[]>result.json());
+            .map(result => <Item[]>result.json());
+    }
+
+    getShippings(): Observable<Item[]> {
+        return this.http.get('/api/movementshipping', { headers: Helpers.getHeaders() })
+            .map(result => <Item[]>result.json());
+    }
+
+    getShippingCost(id: string): Observable<Cost> {
+        return this.http.get('/api/movement/' + id + '/cost', { headers: Helpers.getHeaders() })
+            .map(result => <Cost>result.json());
     }
 
     getBarcode(movementId: number): Observable<Blob> {
