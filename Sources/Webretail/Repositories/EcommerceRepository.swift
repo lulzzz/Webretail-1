@@ -244,20 +244,21 @@ struct EcommerceRepository : EcommerceProtocol {
     func getShippingCost(id: String, registry: Registry) -> Cost {
         var cost = Cost(value: 0)
 
-        let content: String
-        do {
-            content = try String(contentsOf: URL(fileURLWithPath: "./Upload/shippingcost_\(id).csv"))
-        } catch {
-            print("shippingcost_\(id).csv: \(error)")
-            do {
-                content = try String(contentsOf: URL(fileURLWithPath: "./Upload/shippingcost.csv"))
-            } catch {
-                print("shippingcost.csv: \(error)")
+        var string: String
+        
+        let data = FileManager.default.contents(atPath: "./Upload/shippingcost_\(id).csv")
+        if let content = data {
+            string = String(data: content, encoding: .utf8)!
+        } else {
+            let defaultData = FileManager.default.contents(atPath: "./Upload/shippingcost.csv")
+            if let defaultContent = defaultData {
+                string = String(data: defaultContent, encoding: .utf8)!
+            } else {
                 return cost
             }
         }
 
-        let lines = content.split(separator: "\n")
+        let lines = string.split(separator: "\n")
         for line in lines {
             let columns = line.split(separator: ",", omittingEmptySubsequences: false)
             
