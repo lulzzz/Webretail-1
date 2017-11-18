@@ -40,10 +40,19 @@ struct CompanyRepository : CompanyProtocol {
 		current.companyCity = item.companyCity
 		current.companyZip = item.companyZip
 		current.companyCountry = item.companyCountry
-		current.smtpHost = item.smtpHost
+        current.companyCurrency = item.companyCurrency
+		
+        current.smtpHost = item.smtpHost
 		current.smtpSsl = item.smtpSsl
 		current.smtpUsername = item.smtpUsername
 		current.smtpPassword = item.smtpPassword
-		try current.save()
+
+        current.paypalEnv = item.paypalEnv
+        current.paypalSendbox = item.paypalSendbox
+        current.paypalProduction = item.paypalProduction
+
+        current.barcodeCounter = item.barcodeCounter
+
+        try current.save()
 	}
 }
