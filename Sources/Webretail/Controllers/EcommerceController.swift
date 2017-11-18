@@ -40,6 +40,10 @@ class EcommerceController {
         routes.add(method: .put, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerPUT)
         routes.add(method: .delete, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerDELETE)
 
+        routes.add(method: .get, uri: "/api/ecommerce/payment", handler: ecommercePaymentsHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/shipping", handler: ecommerceShippingsHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/shipping/{id}/cost", handler: ecommerceShippingCostHandlerGET)
+
         routes.add(method: .get, uri: "/api/ecommerce/order", handler: ecommerceOrdersHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/order/{id}", handler: ecommerceOrderHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/order/{id}/items", handler: ecommerceOrderItemsHandlerGET)
@@ -147,7 +151,7 @@ class EcommerceController {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
             guard let registry: Registry = request.getJson() else {
-                throw PerfectError.apiError("model invalid")
+                throw PerfectError.apiError("model invalid") //status 400
             }
             try self.registryRepository.update(id: Int(uniqueID)!, item: registry)
             try response.setJson(registry)
@@ -238,7 +242,45 @@ class EcommerceController {
         }
     }
 
+    /// Payment
     
+    func ecommercePaymentsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let items = try self.repository.getPayments()
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    /// Shipping
+    
+    func ecommerceShippingsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let items = try self.repository.getShippings()
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func ecommerceShippingCostHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        do {
+            guard let id = request.urlVariables["id"] else {
+                throw PerfectError.apiError("id")
+            }
+            let registry = try self.registryRepository.get(id: Int(uniqueID)!)!
+            let cost = self.repository.getShippingCost(id: id, registry: registry)
+            try response.setJson(cost)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
     /// Order
     
     func ecommerceOrdersHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {

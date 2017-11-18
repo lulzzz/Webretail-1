@@ -6,6 +6,7 @@
 //
 
 import StORM
+import Foundation
 
 struct EcommerceRepository : EcommerceProtocol {
 
@@ -225,6 +226,54 @@ struct EcommerceRepository : EcommerceProtocol {
         try item.delete()
     }
     
+    func getPayments() -> [Item] {
+        var status = [Item]()
+        status.append(Item(id: "PayPal", value: "PayPal / Credit card"))
+        status.append(Item(id: "BankTransfer", value: "Bank transfer"))
+        status.append(Item(id: "CashOnDelivery", value: "Cash on delivery"))
+        return status
+    }
+
+    func getShippings() -> [Item] {
+        var status = [Item]()
+        status.append(Item(id: "express", value: "Express"))
+        status.append(Item(id: "standard", value: "Standard"))
+        return status
+    }
+
+    func getShippingCost(id: String, registry: Registry) -> Cost {
+        var cost = Cost(value: 0)
+
+        let content: String
+        do {
+            content = try String(contentsOf: URL(fileURLWithPath: "./Upload/shippingcost_\(id).csv"))
+        } catch {
+            print("shippingcost_\(id).csv: \(error)")
+            content = try! String(contentsOf: URL(fileURLWithPath: "./Upload/shippingcost.csv"))
+        }
+
+        let lines = content.split(separator: "\n")
+        for line in lines {
+            let columns = line.split(separator: ",", omittingEmptySubsequences: false)
+            
+            if (columns[0] == registry.registryCountry || columns[0] == "*")
+            {
+                if let value = Double(columns[4]) {
+                    cost.value = value
+                }
+                if (columns[1] == registry.registryCity)
+                {
+                    if let value = Double(columns[4]) {
+                        cost.value = value
+                    }
+                    return cost;
+                }
+            }
+        }
+
+        return cost
+    }
+
     func addOrder(registryId: Int, payment: String) throws -> Movement {
         let repository = ioCContainer.resolve() as MovementProtocol
         

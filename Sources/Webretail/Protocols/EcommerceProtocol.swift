@@ -5,6 +5,21 @@
 //  Created by Gerardo Grisolini on 25/10/17.
 //
 
+struct Cost: Codable {
+    public var value: Double
+}
+
+struct Item: Codable {
+    public var id: String
+    public var value: String
+}
+
+struct Order: Codable {
+    public var shipping: String
+    public var shippingCost: Double
+    public var payment: String
+}
+
 protocol EcommerceProtocol {
     
     func getCategories() throws -> [Category]
@@ -32,6 +47,13 @@ protocol EcommerceProtocol {
     func deleteBasket(id: Int) throws
 
 
+    func getPayments() throws -> [Item]
+    
+    func getShippings() throws -> [Item]
+    
+    func getShippingCost(id: String, registry: Registry) -> Cost
+    
+    
     func addOrder(registryId: Int, payment: String) throws -> Movement
 
     func getOrders(registryId: Int) throws -> [Movement]
