@@ -42,6 +42,7 @@ export class CompanyComponent implements OnInit {
             'city': new FormControl('', Validators.required),
             'zip': new FormControl('', Validators.required),
             'country': new FormControl('', Validators.required),
+            'currency': new FormControl('', Validators.required),
             'fiscalCode': new FormControl('', Validators.required),
             'vatNumber': new FormControl('', Validators.required),
             'host': new FormControl('', Validators.nullValidator),
