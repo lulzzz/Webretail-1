@@ -42,6 +42,9 @@ export class CompanyComponent implements OnInit {
             'ssl': new FormControl('', Validators.nullValidator),
             'username': new FormControl('', Validators.nullValidator),
             'password': new FormControl('', Validators.nullValidator),
+            'paypalenv': new FormControl('', Validators.nullValidator),
+            'paypalsendbox': new FormControl('', Validators.nullValidator),
+            'paypalproduction': new FormControl('', Validators.nullValidator),
             'barcode': new FormControl('', Validators.required)
         });
 

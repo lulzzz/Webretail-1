@@ -122,6 +122,27 @@
                 </div>
             </div>
             <div class="ui-grid-row">
+                <div class="ui-grid-col-12"><h3>PayPal</h3></div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="host">Environment</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="paypalenv" [(ngModel)]="company.paypalEnv"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="paypalsendbox">Sendbox Client ID</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="paypalsendbox" [(ngModel)]="company.paypalSendbox"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="paypalproduction">Production Client ID</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="paypalproduction" [(ngModel)]="company.paypalproduction"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
                 <div class="ui-grid-col-12"><h3>Barcode counter</h3></div>
             </div>
             <div class="ui-grid-row">

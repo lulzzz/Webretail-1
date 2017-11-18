@@ -11,12 +11,16 @@ export class Company {
   public companyCity: string;
   public companyZip: string;
   public companyCountry: string;
+  public companyCurrency: string;
   public companyFiscalCode: string;
   public companyVatNumber: string;
   public smtpHost: string;
   public smtpSsl: boolean;
   public smtpUsername: string;
   public smtpPassword: string;
+  public paypalEnv: string;
+  public paypalSendobox: string;
+  public paypalProduction: string;
   public barcodeCounter: number;
 
   constructor() {
@@ -30,12 +34,16 @@ export class Company {
     this.companyCity = '';
     this.companyZip = '';
     this.companyCountry = '';
+    this.companyCurrency = 'EUR'
     this.companyFiscalCode = '';
     this.companyVatNumber = '';
     this.smtpHost = '';
     this.smtpSsl = false;
     this.smtpUsername = '';
     this.smtpPassword = '';
+    this.paypalEnv = 'sendbox';
+    this.paypalSendobox = '<sendbox client id>';
+    this.paypalProduction = '<production client id>';
     this.barcodeCounter = 0;
   }
 }

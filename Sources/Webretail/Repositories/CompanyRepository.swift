@@ -34,14 +34,14 @@ struct CompanyRepository : CompanyProtocol {
 		current.companyWebsite = item.companyWebsite
 		current.companyEmail = item.companyEmail
 		current.companyPhone = item.companyPhone
-		current.companyFiscalCode = item.companyFiscalCode
-		current.companyVatNumber = item.companyVatNumber
 		current.companyAddress = item.companyAddress
 		current.companyCity = item.companyCity
 		current.companyZip = item.companyZip
 		current.companyCountry = item.companyCountry
         current.companyCurrency = item.companyCurrency
-		
+        current.companyFiscalCode = item.companyFiscalCode
+        current.companyVatNumber = item.companyVatNumber
+
         current.smtpHost = item.smtpHost
 		current.smtpSsl = item.smtpSsl
 		current.smtpUsername = item.smtpUsername
