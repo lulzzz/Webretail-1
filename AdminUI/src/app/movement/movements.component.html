@@ -164,7 +164,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="payment">Shipping</label></div>
                     <div class="ui-grid-col-8">
-                        <p-selectButton formControlName="shipping" [options]="shippings" [disabled]="selected.movementStatus==='Completed'" [(ngModel)]="selected.movementShipping" (onChange)="onShippingChange($event)" [style]="{'width':'100%'}"></p-selectButton>                        
+                        <p-selectButton formControlName="shipping" [options]="shippings" [disabled]="selected.movementStatus==='Completed'" [(ngModel)]="selected.movementShipping" (onChange)="onShippingChange($event)"></p-selectButton>                        
                     </div>
                 </div>
                 <div class="ui-grid-row">

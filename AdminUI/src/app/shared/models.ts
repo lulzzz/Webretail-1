@@ -313,7 +313,6 @@ export class Movement {
     this.movementStatus = 'New';
     this.movementUser = '';
     this.movementDevice = '';
-    this.movementAmount = 0.0;
     this.movementTags = [];
     this.movementPayment = '';
     this.movementShipping = '';

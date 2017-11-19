@@ -29,7 +29,7 @@ struct MovementRepository : MovementProtocol {
 
     func getShippings() -> [Item] {
         var status = [Item]()
-        status.append(Item(id: "none", value: "Standard"))
+        status.append(Item(id: "none", value: "None"))
         status.append(Item(id: "standard", value: "Standard"))
         status.append(Item(id: "express", value: "Express"))
         return status
@@ -141,7 +141,6 @@ struct MovementRepository : MovementProtocol {
     }
     
     func update(id: Int, item: Movement) throws {
-        
         guard let current = try get(id: id) else {
             throw StORMError.noRecordFound
         }

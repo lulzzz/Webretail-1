@@ -29,7 +29,7 @@ class MovementController {
 		routes.add(method: .post, uri: "/api/movementsales", handler: movementsSalesHandlerPOST)
 		routes.add(method: .post, uri: "/api/movementreceipted", handler: movementsReceiptedHandlerPOST)
 		routes.add(method: .get, uri: "/api/movement/{id}", handler: movementHandlerGET)
-        routes.add(method: .get, uri: "/api/movement/{id}/cost", handler: movementShippingCostHandlerGET)
+        routes.add(method: .get, uri: "/api/movement/{id}/cost/{shippingId}", handler: movementShippingCostHandlerGET)
 		routes.add(method: .get, uri: "/api/movementfrom/{date}", handler: movementFromHandlerGET)
 		routes.add(method: .get, uri: "/api/movementregistry/{id}", handler: movementRegistryHandlerGET)
         routes.add(method: .post, uri: "/api/movement", handler: movementHandlerPOST)
@@ -65,8 +65,11 @@ class MovementController {
             guard let id = request.urlVariables["id"] else {
                 throw PerfectError.apiError("id")
             }
+            guard let shippingId = request.urlVariables["shippingId"] else {
+                throw PerfectError.apiError("shippingId")
+            }
             let item = try self.repository.get(id: Int(id)!)!
-            let cost = (ioCContainer.resolve() as EcommerceProtocol).getShippingCost(id: id, registry: item.movementRegistry)
+            let cost = (ioCContainer.resolve() as EcommerceProtocol).getShippingCost(id: shippingId, registry: item.movementRegistry)
             try response.setJson(cost)
             response.completed(status: .ok)
         } catch {
