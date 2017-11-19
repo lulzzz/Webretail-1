@@ -240,7 +240,7 @@ export class MovementsComponent implements OnInit {
             return;
         }
         this.movementService
-            .getShippingCost(event.value)
+            .getShippingCost(this.selected.movementId, event.value)
             .subscribe(result => this.selected.movementShippingCost = result.value);
     }
 
