@@ -285,6 +285,7 @@ struct ArticleRepository : ArticleProtocol {
             }
         }
         current.articleBarcodes = item.articleBarcodes
+        current.articlePackaging = item.articlePackaging
         current.articleUpdated = Int.now()
         try current.save()
     }

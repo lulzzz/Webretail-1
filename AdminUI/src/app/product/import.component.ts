@@ -4,9 +4,9 @@ import { SelectItem } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { ImportService, CodartInfo, Translate, Image } from './../services/import.service';
 import {
-    Product, Brand, Category, ProductCategory,
+    Product, Brand, Category, ProductCategory, Price, Tax,
     Attribute, AttributeValue, ProductAttribute, ProductAttributeValue,
-    Article, ArticleAttributeValue, Media, Translation, Barcode
+    Article, ArticleAttributeValue, Media, Translation, Barcode, Packaging, Discount
 } from './../shared/models';
 import { Helpers } from '../shared/helpers';
 
@@ -136,7 +136,13 @@ export class ImportComponent implements OnInit  {
         item.productCode = product.id;
         item.productName = product.name;
         item.productUm = 'QT';
-        item.productSellingPrice = product.price;
+        item.productType = 'Variant';
+        item.productTax = new Tax('Standard rate', 22);
+        const price = new Price();
+        price.selling = product.price;
+        item.price = price;
+        item.discount = new Discount();
+        item.packaging = new Packaging();
         item.brand = brand;
         item.categories = [
             <ProductCategory>{ productId: 0, category: category },

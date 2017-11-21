@@ -9,5 +9,7 @@ class Barcode: Codable, JsonbProtocol {
     
     public var barcode : String = ""
     public var tags : [Tag] = [Tag]()
+    public var price : Price = Price()
+    public var discount : Discount = Discount()
 }
 

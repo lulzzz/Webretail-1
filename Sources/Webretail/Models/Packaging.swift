@@ -1,0 +1,14 @@
+//
+//  Packaging.swift
+//  Webretail
+//
+//  Created by Gerardo Grisolini on 21/11/17.
+//
+
+class Packaging: Codable, JsonbProtocol {
+    public var weight : Double = 0.0
+    public var length : Double = 0.0
+    public var width : Double = 0.0
+    public var height : Double = 0.0
+}
+

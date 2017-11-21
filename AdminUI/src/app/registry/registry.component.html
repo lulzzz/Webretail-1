@@ -95,6 +95,17 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="province">Province</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="province" [(ngModel)]="selected.registryProvince"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['province'].valid&&dataform.controls['province'].dirty">
+                            <i class="fa fa-close"></i>
+                            <span *ngIf="dataform.controls['province'].errors['required']">Province is required</span>
+                            <span *ngIf="dataform.controls['province'].errors['minlength']||dataform.controls['province'].errors['maxlength']">Must be equals than 2 characters</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="country">Country</label></div>
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="country" [(ngModel)]="selected.registryCountry"/>

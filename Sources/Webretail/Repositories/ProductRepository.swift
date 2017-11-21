@@ -12,7 +12,23 @@ import PerfectLogger
 
 struct ProductRepository : ProductProtocol {
 
-	internal func getJoin() -> StORMDataSourceJoin {
+    func getTaxes() throws -> [Tax] {
+        var taxes = [Tax]()
+        taxes.append(Tax(name: "Standard rate", value: 22))
+        taxes.append(Tax(name: "Reduced rate", value: 10))
+        taxes.append(Tax(name: "Zero rate", value: 0))
+        return taxes
+    }
+    
+    func getProductTypes() throws -> [ItemValue] {
+        var types = [ItemValue]()
+        types.append(ItemValue(value: "Simple"))
+        types.append(ItemValue(value: "Grouped"))
+        types.append(ItemValue(value: "Variant"))
+        return types
+    }
+
+    internal func getJoin() -> StORMDataSourceJoin {
 		return StORMDataSourceJoin(
 			table: "brands",
 			onCondition: "products.brandId = brands.brandId",
@@ -42,7 +58,6 @@ struct ProductRepository : ProductProtocol {
             throw StORMError.noRecordFound
         }
         
-		try item.makeDiscount()
 		try item.makeCategories()
 		try item.makeAttributes()
 
@@ -237,9 +252,11 @@ struct ProductRepository : ProductProtocol {
         item.productUpdated = Int.now()
         current.productCode = item.productCode
         current.productName = item.productName
+        current.productType = item.productType
         current.productUm = item.productUm
-        current.productSellingPrice = item.productSellingPrice
-        current.productPurchasePrice = item.productPurchasePrice
+        current.productPrice = item.productPrice
+        current.productDiscount = item.productDiscount
+        current.productPackaging = item.productPackaging
         current.productIsActive = item.productIsActive
         current.brandId = item._brand.brandId
 		current.productUpdated = item.productUpdated

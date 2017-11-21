@@ -8,6 +8,10 @@
 
 protocol ProductProtocol {
     
+    func getTaxes() throws -> [Tax]
+    
+    func getProductTypes() throws -> [ItemValue]
+
     func getAll(date: Int) throws -> [Product]
     
     func get(id: Int) throws -> Product

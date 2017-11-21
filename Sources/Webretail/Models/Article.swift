@@ -14,6 +14,7 @@ class Article: PostgresSqlORM, Codable {
     public var articleId : Int = 0
     public var productId : Int = 0
     public var articleBarcodes : [Barcode] = [Barcode]()
+    public var articlePackaging : Packaging = Packaging()
     public var articleIsValid : Bool = false
     public var articleCreated : Int = Int.now()
     public var articleUpdated : Int = Int.now()
@@ -27,6 +28,7 @@ class Article: PostgresSqlORM, Codable {
         case articleId
         case productId
         case articleBarcodes = "barcodes"
+        case articlePackaging = "packaging"
         case _quantity = "quantity"
         case _booked = "booked"
         case _attributeValues = "attributeValues"
@@ -40,6 +42,10 @@ class Article: PostgresSqlORM, Codable {
         if let barcodes = this.data["articlebarcodes"] {
             let jsonData = try! JSONSerialization.data(withJSONObject: barcodes, options: [])
             articleBarcodes = try! JSONDecoder().decode([Barcode].self, from: jsonData)
+        }
+        if let packaging = this.data["articlepackaging"] {
+            let jsonData = try! JSONSerialization.data(withJSONObject: packaging, options: [])
+            articlePackaging = try! JSONDecoder().decode(Packaging.self, from: jsonData)
         }
         articleIsValid = this.data["articleisvalid"] as? Bool ?? true
         articleCreated = this.data["articlecreated"] as? Int ?? 0
@@ -98,6 +104,7 @@ class Article: PostgresSqlORM, Codable {
         articleId = try container.decode(Int.self, forKey: .articleId)
         productId = try container.decodeIfPresent(Int.self, forKey: .productId) ?? 0
         articleBarcodes = try container.decodeIfPresent([Barcode].self, forKey: .articleBarcodes) ?? [Barcode]()
+        articlePackaging = try container.decodeIfPresent(Packaging.self, forKey: .articlePackaging) ?? Packaging()
         _attributeValues = try container.decodeIfPresent([ArticleAttributeValue].self, forKey: ._attributeValues) ?? [ArticleAttributeValue]()
     }
     
@@ -105,6 +112,7 @@ class Article: PostgresSqlORM, Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(articleId, forKey: .articleId)
         try container.encode(articleBarcodes, forKey: .articleBarcodes)
+        try container.encode(articlePackaging, forKey: .articlePackaging)
         try container.encode(_quantity, forKey: ._quantity)
         try container.encode(_booked, forKey: ._booked)
         try container.encode(_attributeValues, forKey: ._attributeValues)

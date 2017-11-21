@@ -19,8 +19,11 @@ export class ProductsComponent implements OnInit {
     selected: Product;
     categories: SelectItem[];
     allbrands: SelectItem[];
-    ums: SelectItem[];
+    packagings: SelectItem[];
+    taxes: SelectItem[];
+    types: SelectItem[];
     brands: SelectItem[];
+    ums: SelectItem[];
     categoryValue: string;
     sliderValue: number;
     displayPanel: boolean;
@@ -44,9 +47,15 @@ export class ProductsComponent implements OnInit {
             'brand': new FormControl('', Validators.required),
             'code': new FormControl('', Validators.required),
             'name': new FormControl('', Validators.required),
+            'type': new FormControl('', Validators.required),
             'um': new FormControl('', Validators.required),
+            'tax': new FormControl('', Validators.required),
             'selling': new FormControl('', Validators.required),
             'purchase': new FormControl('', Validators.required),
+            'weight': new FormControl('', Validators.nullValidator),
+            'length': new FormControl('', Validators.nullValidator),
+            'width': new FormControl('', Validators.nullValidator),
+            'height': new FormControl('', Validators.nullValidator),
             'isActive': new FormControl('', Validators.required)
         });
 

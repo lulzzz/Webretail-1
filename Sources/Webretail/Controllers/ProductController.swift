@@ -20,6 +20,8 @@ class ProductController {
     func getRoutes() -> Routes {
         var routes = Routes()
         
+        routes.add(method: .get, uri: "/api/producttype", handler: productTypesHandlerGET)
+        routes.add(method: .get, uri: "/api/producttax", handler: productTaxesHandlerGET)
         routes.add(method: .get, uri: "/api/product", handler: productsHandlerGET)
 		routes.add(method: .get, uri: "/api/productfrom/{date}", handler: productsHandlerGET)
         routes.add(method: .get, uri: "/api/product/{id}", handler: productHandlerGET)
@@ -39,6 +41,26 @@ class ProductController {
         return routes
     }
     
+    func productTypesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let items = try self.repository.getProductTypes()
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func productTaxesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let items = try self.repository.getTaxes()
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
     func productsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		let date = request.urlVariables["date"]
 		do {

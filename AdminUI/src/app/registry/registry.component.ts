@@ -38,6 +38,7 @@ export class RegistryComponent implements OnInit {
             'address': new FormControl('', Validators.required),
             'city': new FormControl('', Validators.required),
             'zip': new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
+            'province': new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]),
             'country': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]),
             'fiscalCode': new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]),
             'vatNumber': new FormControl('', [Validators.nullValidator, Validators.minLength(11), Validators.maxLength(11)])

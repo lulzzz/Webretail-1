@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56247D561FC4BD500032312D /* Tax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56247D551FC4BD500032312D /* Tax.swift */; };
+		56247D581FC4BF7B0032312D /* Packaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56247D571FC4BF7B0032312D /* Packaging.swift */; };
+		56247D5A1FC4C1DB0032312D /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56247D591FC4C1DB0032312D /* Price.swift */; };
 		567BFD0B1FC07E9800A4F05A /* PayPal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567BFD0A1FC07E9800A4F05A /* PayPal.swift */; };
 		568990901FB1B40700A646B2 /* TagGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689908F1FB1B40700A646B2 /* TagGroup.swift */; };
 		568990921FB1B53500A646B2 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568990911FB1B53500A646B2 /* TagValue.swift */; };
@@ -1195,6 +1198,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		56247D551FC4BD500032312D /* Tax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tax.swift; sourceTree = "<group>"; };
+		56247D571FC4BF7B0032312D /* Packaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packaging.swift; sourceTree = "<group>"; };
+		56247D591FC4C1DB0032312D /* Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Price.swift; sourceTree = "<group>"; };
 		567BFD0A1FC07E9800A4F05A /* PayPal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPal.swift; sourceTree = "<group>"; };
 		5689908F1FB1B40700A646B2 /* TagGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagGroup.swift; sourceTree = "<group>"; };
 		568990911FB1B53500A646B2 /* TagValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValue.swift; sourceTree = "<group>"; };
@@ -2636,9 +2642,11 @@
 				OBJ_63 /* Movement.swift */,
 				OBJ_64 /* MovementArticle.swift */,
 				56B40E331FC0A13600FE6A3A /* OrderModel.swift */,
+				56247D571FC4BF7B0032312D /* Packaging.swift */,
 				567BFD0A1FC07E9800A4F05A /* PayPal.swift */,
 				OBJ_65 /* PdfDocument.swift */,
 				OBJ_66 /* Period.swift */,
+				56247D591FC4C1DB0032312D /* Price.swift */,
 				OBJ_67 /* Product.swift */,
 				OBJ_68 /* ProductAttribute.swift */,
 				OBJ_69 /* ProductAttributeValue.swift */,
@@ -2650,6 +2658,7 @@
 				5689909F1FB2503200A646B2 /* Tag.swift */,
 				5689908F1FB1B40700A646B2 /* TagGroup.swift */,
 				568990911FB1B53500A646B2 /* TagValue.swift */,
+				56247D551FC4BD500032312D /* Tax.swift */,
 				OBJ_75 /* Translation.swift */,
 				OBJ_76 /* User.swift */,
 			);
@@ -4609,6 +4618,7 @@
 				OBJ_806 /* Login.swift in Sources */,
 				OBJ_807 /* Media.swift in Sources */,
 				OBJ_808 /* Model.swift in Sources */,
+				56247D561FC4BD500032312D /* Tax.swift in Sources */,
 				OBJ_809 /* Movement.swift in Sources */,
 				OBJ_810 /* MovementArticle.swift in Sources */,
 				OBJ_811 /* PdfDocument.swift in Sources */,
@@ -4652,6 +4662,7 @@
 				5689909C1FB1BE8600A646B2 /* TagGroupController.swift in Sources */,
 				OBJ_845 /* AttributeRepository.swift in Sources */,
 				OBJ_846 /* AttributeValueRepository.swift in Sources */,
+				56247D581FC4BF7B0032312D /* Packaging.swift in Sources */,
 				OBJ_847 /* BrandRepository.swift in Sources */,
 				OBJ_848 /* CatgoryRepository.swift in Sources */,
 				OBJ_849 /* CausalRepository.swift in Sources */,
@@ -4659,6 +4670,7 @@
 				OBJ_851 /* RegistryRepository.swift in Sources */,
 				OBJ_852 /* DeviceRepository.swift in Sources */,
 				OBJ_853 /* DiscountRepository.swift in Sources */,
+				56247D5A1FC4C1DB0032312D /* Price.swift in Sources */,
 				OBJ_854 /* EcommerceRepository.swift in Sources */,
 				OBJ_855 /* InvoiceRepository.swift in Sources */,
 				OBJ_856 /* MovementArticleRepository.swift in Sources */,

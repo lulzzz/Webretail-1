@@ -15,9 +15,12 @@ class Product: PostgresSqlORM, Codable {
     public var brandId : Int = 0
     public var productCode : String = ""
     public var productName : String = ""
+    public var productType : String = ""
+    public var productTax : Tax = Tax()
     public var productUm : String = ""
-    public var productSellingPrice : Double = 0
-    public var productPurchasePrice : Double = 0
+    public var productPrice : Price = Price()
+    public var productDiscount : Discount = Discount()
+    public var productPackaging : Packaging = Packaging()
     public var productMedias: [Media] = [Media]()
     public var productTranslates: [Translation] = [Translation]()
     public var productIsActive : Bool = false
@@ -29,24 +32,25 @@ class Product: PostgresSqlORM, Codable {
     public var _categories: [ProductCategory] = [ProductCategory]()
     public var _attributes: [ProductAttribute] = [ProductAttribute]()
     public var _articles: [Article] = [Article]()
-	public var _discount : Discount?
 
     private enum CodingKeys: String, CodingKey {
         case productId
+        case brandId
         case productCode
         case productName
+        case productType
+        case productTax
         case productUm
-        case productSellingPrice
-        case productPurchasePrice
+        case productPrice = "price"
+        case productDiscount = "discount"
+        case productPackaging = "packaging"
         case productMedias = "medias"
         case productTranslates = "translations"
         case productIsActive
-        case brandId
         case _brand = "brand"
         case _categories = "categories"
         case _attributes = "attributes"
         case _articles = "articles"
-        case _discount = "discount"
         case productUpdated = "updatedAt"
     }
 
@@ -58,12 +62,26 @@ class Product: PostgresSqlORM, Codable {
         brandId = this.data["brandid"] as? Int ?? 0
         productCode = this.data["productcode"] as? String ?? ""
         productName = this.data["productname"] as? String ?? ""
+        productType = this.data["producttype"] as? String ?? ""
         productUm = this.data["productum"] as? String ?? ""
-        productSellingPrice = Double(this.data["productsellingprice"] as? Float ?? 0)
-        productPurchasePrice = Double(this.data["productpurchaseprice"] as? Float ?? 0)
-        
         let decoder = JSONDecoder()
         var jsonData: Data
+        if let price = this.data["productprice"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: price, options: [])
+            productPrice = try! decoder.decode(Price.self, from: jsonData)
+        }
+        if let discount = this.data["productdiscount"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: discount, options: [])
+            productDiscount = try! decoder.decode(Discount.self, from: jsonData)
+        }
+        if let packaging = this.data["productpackaging"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: packaging, options: [])
+            productPackaging = try! decoder.decode(Packaging.self, from: jsonData)
+        }
+        if let tax = this.data["producttax"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: tax, options: [])
+            productTax = try! decoder.decode(Tax.self, from: jsonData)
+        }
         if let medias = this.data["productmedias"] {
             jsonData = try! JSONSerialization.data(withJSONObject: medias, options: [])
             productMedias = try! decoder.decode([Media].self, from: jsonData)
@@ -85,8 +103,7 @@ class Product: PostgresSqlORM, Codable {
             let row = Product()
             row.to(self.results.rows[i])
 			
-            try row.makeDiscount();
-			try row.makeCategories();
+            try row.makeCategories();
 			
 			if barcodes {
 				try row.makeAttributes();
@@ -109,9 +126,12 @@ class Product: PostgresSqlORM, Codable {
         productId = try container.decode(Int.self, forKey: .productId)
         productCode = try container.decode(String.self, forKey: .productCode)
         productName = try container.decode(String.self, forKey: .productName)
+        productType = try container.decode(String.self, forKey: .productType)
         productUm = try container.decode(String.self, forKey: .productUm)
-        productSellingPrice = try container.decode(Double.self, forKey: .productSellingPrice)
-        productPurchasePrice = try container.decode(Double.self, forKey: .productPurchasePrice)
+        productTax = try container.decodeIfPresent(Tax.self, forKey: .productTax) ?? Tax()
+        productPrice = try container.decodeIfPresent(Price.self, forKey: .productPrice) ?? Price()
+        productDiscount = try container.decodeIfPresent(Discount.self, forKey: .productDiscount) ?? Discount()
+        productPackaging = try container.decodeIfPresent(Packaging.self, forKey: .productPackaging) ?? Packaging()
         productMedias = try container.decodeIfPresent([Media].self, forKey: .productMedias) ?? [Media]()
         productTranslates = try container.decodeIfPresent([Translation].self, forKey: .productTranslates) ?? [Translation]()
         productIsActive = try container.decode(Bool.self, forKey: .productIsActive)
@@ -121,7 +141,6 @@ class Product: PostgresSqlORM, Codable {
         _categories = try container.decodeIfPresent([ProductCategory].self, forKey: ._categories) ?? [ProductCategory]()
         _attributes = try container.decodeIfPresent([ProductAttribute].self, forKey: ._attributes) ?? [ProductAttribute]()
         _articles = try container.decodeIfPresent([Article].self, forKey: ._articles) ?? [Article]()
-        _discount = try container.decodeIfPresent(Discount.self, forKey: ._discount) ?? nil
    }
     
     func encode(to encoder: Encoder) throws {
@@ -129,9 +148,12 @@ class Product: PostgresSqlORM, Codable {
         try container.encode(productId, forKey: .productId)
         try container.encode(productCode, forKey: .productCode)
         try container.encode(productName, forKey: .productName)
+        try container.encode(productType, forKey: .productType)
         try container.encode(productUm, forKey: .productUm)
-        try container.encode(productSellingPrice, forKey: .productSellingPrice)
-        try container.encode(productPurchasePrice, forKey: .productPurchasePrice)
+        try container.encode(productTax, forKey: .productTax)
+        try container.encode(productPrice, forKey: .productPrice)
+        try container.encode(productDiscount, forKey: .productDiscount)
+        try container.encode(productPackaging, forKey: .productPackaging)
         try container.encode(productMedias, forKey: .productMedias)
         try container.encode(productTranslates, forKey: .productTranslates)
         try container.encode(productIsActive, forKey: .productIsActive)
@@ -139,18 +161,8 @@ class Product: PostgresSqlORM, Codable {
         try container.encode(_categories, forKey: ._categories)
         try container.encode(_attributes, forKey: ._attributes)
         try container.encode(_articles, forKey: ._articles)
-        try container.encodeIfPresent(_discount, forKey: ._discount)
         try container.encode(productUpdated, forKey: .productUpdated)
     }
-
-    func makeDiscount() throws {
-		let discount = Discount()
-		try discount.get(productId: self.productId)
-		if discount.discountId > 0 {
-			discount.makeDiscount(sellingPrice: self.productSellingPrice)
-			self._discount = discount
-		}
-	}
 
 	func makeCategories() throws {
 		var categoryJoin = StORMDataSourceJoin()
@@ -232,7 +244,6 @@ class Product: PostgresSqlORM, Codable {
             return
         }
         
-        try self.makeDiscount()
         try self.makeCategories()
         try self.makeAttributes()
         try self.makeArticle(barcode: barcode)

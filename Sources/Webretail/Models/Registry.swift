@@ -20,6 +20,7 @@ class Registry: PostgresSqlORM, Codable, Account {
 	public var registryAddress : String = ""
 	public var registryCity : String = ""
 	public var registryZip : String = ""
+    public var registryProvince : String = ""
 	public var registryCountry : String = ""
 	public var registryFiscalCode : String = ""
 	public var registryVatNumber : String = ""
@@ -39,6 +40,7 @@ class Registry: PostgresSqlORM, Codable, Account {
         case registryAddress
         case registryCity
         case registryZip
+        case registryProvince
         case registryCountry
         case registryFiscalCode
         case registryVatNumber
@@ -57,7 +59,8 @@ class Registry: PostgresSqlORM, Codable, Account {
 		registryAddress = this.data["registryaddress"] as? String ?? ""
 		registryCity = this.data["registrycity"] as? String ?? ""
 		registryZip = this.data["registryzip"] as? String ?? ""
-		registryCountry = this.data["registrycountry"] as? String ?? ""
+        registryProvince = this.data["registryprovince"] as? String ?? ""
+        registryCountry = this.data["registrycountry"] as? String ?? ""
 		registryFiscalCode = this.data["registryfiscalcode"] as? String ?? ""
 		registryVatNumber = this.data["registryvatnumber"] as? String ?? ""
 		registryCreated = this.data["registrycreated"] as? Int ?? 0

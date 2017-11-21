@@ -6,6 +6,7 @@
 //
 //
 
+import Foundation
 import StORM
 
 class ArticleAttributeValue: PostgresSqlORM, Codable {
@@ -13,12 +14,14 @@ class ArticleAttributeValue: PostgresSqlORM, Codable {
     public var articleAttributeValueId : Int = 0
     public var articleId : Int = 0
     public var attributeValueId : Int = 0
+    public var articleAttributeValueMedias: [Media] = [Media]()
 
     public var _attributeValue: AttributeValue = AttributeValue()
 
     private enum CodingKeys: String, CodingKey {
         case articleId
         case attributeValueId
+        case articleAttributeValueMedias = "medias"
         case _attributeValue = "attributeValue"
     }
 
@@ -28,6 +31,11 @@ class ArticleAttributeValue: PostgresSqlORM, Codable {
         articleAttributeValueId = this.data["articleattributevalueid"] as? Int ?? 0
         articleId = this.data["articleid"] as? Int ?? 0
         attributeValueId = this.data["attributevalueid"] as? Int ?? 0
+        let decoder = JSONDecoder()
+        if let medias = this.data["articleattributevaluemedias"] {
+            let jsonData = try! JSONSerialization.data(withJSONObject: medias, options: [])
+            articleAttributeValueMedias = try! decoder.decode([Media].self, from: jsonData)
+        }
     }
     
     func rows() throws -> [ArticleAttributeValue] {
@@ -51,11 +59,13 @@ class ArticleAttributeValue: PostgresSqlORM, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         articleId = try container.decodeIfPresent(Int.self, forKey: .articleId) ?? 0
         attributeValueId = try container.decodeIfPresent(Int.self, forKey: .attributeValueId) ?? 0
+        articleAttributeValueMedias = try container.decodeIfPresent([Media].self, forKey: .articleAttributeValueMedias) ?? [Media]()
         _attributeValue = try container.decodeIfPresent(AttributeValue.self, forKey: ._attributeValue) ?? AttributeValue()
 }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(attributeValueId, forKey: .attributeValueId)
+        try container.encode(articleAttributeValueMedias, forKey: .articleAttributeValueMedias)
     }
 }

@@ -207,7 +207,8 @@ class EcommerceController {
                 return
             }
             basket.basketProduct = product
-            basket.basketPrice = product._discount != nil ? product._discount!.discountPrice : product.productSellingPrice
+            basket.basketPrice = product.productDiscount.discountId > 0
+                ? product.productDiscount.discountPrice : product.productPrice.selling
 
             try self.repository.addBasket(item: basket)
             try response.setJson(basket)

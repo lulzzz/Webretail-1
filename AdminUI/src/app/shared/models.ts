@@ -135,12 +135,14 @@ export class Product {
   public productId: number;
   public productCode: string;
   public productName: string;
+  public productType: string;
   public productUm: string;
-  public productSellingPrice: number;
-  public productPurchasePrice: number;
+  public productTax: Tax;
+  public price: Price;
+  public discount: Discount;
+  public packaging: Packaging;
   public medias: Media[];
   public translations: Translation[];
-  public discount?: Discount;
   public brand: Brand;
   public categories: ProductCategory[];
   public attributes: ProductAttribute[];
@@ -153,9 +155,12 @@ export class Product {
     this.productId = 0;
     this.productCode = '';
     this.productName = '';
+    this.productType = '';
     this.productUm = '';
-    this.productSellingPrice = 0;
-    this.productPurchasePrice = 0;
+    this.productTax = new Tax('', 0);
+    this.price = new Price();
+    this.discount = new Discount();
+    this.packaging = new Packaging();
     this.medias = [];
     this.translations = [];
     this.categories = [];
@@ -170,6 +175,7 @@ export class Product {
 export class Article {
   public articleId: number;
   public barcodes: Barcode[];
+  public packaging: Packaging;
   public quantity: number;
   public booked: number;
   public attributeValues: ArticleAttributeValue[];
@@ -177,6 +183,7 @@ export class Article {
   constructor() {
     this.articleId = 0;
     this.barcodes = [];
+    this.packaging = new Packaging();
     this.quantity = 0;
     this.booked = 0;
     this.attributeValues = [];
@@ -218,6 +225,35 @@ export class TagValue {
     public tagValueName: string,
     public translations: Translation[]
   ) { }
+}
+
+export class Price {
+  public selling: number;
+  public purchase: number;
+  constructor() {
+    this.selling = 0;
+    this.purchase = 0;
+  }
+}
+
+export class Tax {
+  constructor(
+    public name: string,
+    public value: number,
+  ) { }
+}
+
+export class Packaging {
+  public weight: number;
+  public length: number;
+  public width: number;
+  public height: number;
+  constructor() {
+    this.weight = 0;
+    this.length = 0;
+    this.width = 0;
+    this.height = 0;
+  }
 }
 
 export class Publication {
@@ -263,6 +299,7 @@ export class Registry {
   public registryAddress: string;
   public registryCity: string;
   public registryZip: string;
+  public registryProvince: string;
   public registryCountry: string;
   public registryFiscalCode: string;
   public registryVatNumber: string;
@@ -277,6 +314,7 @@ export class Registry {
     this.registryAddress = '';
     this.registryCity = '';
     this.registryZip = '';
+    this.registryProvince = '';
     this.registryCountry = '';
     this.registryFiscalCode = '';
     this.registryVatNumber = '';
@@ -470,11 +508,14 @@ export interface ArticleAttributeValue {
   // articleId: number;
   attributeValueId: number;
   attributeValue: AttributeValue;
+  medias: Media[];
 }
 
 export interface Barcode {
   barcode: string;
   tags: Tag[];
+  price: Price;
+  discount: Discount;
 }
 
 export interface Cost {
