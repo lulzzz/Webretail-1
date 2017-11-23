@@ -60,6 +60,10 @@ extension Double {
 
 extension String {
 	func DateToInt() -> Int {
+        if self.isEmpty {
+            return 0
+        }
+        
 		let formatter = DateFormatter()
 		formatter.dateFormat = self.length > 10 ? "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" : "yyyy-MM-dd"
 		formatter.timeZone = TimeZone(abbreviation: "UTC")

@@ -10,5 +10,9 @@ class Packaging: Codable, JsonbProtocol {
     public var length : Double = 0.0
     public var width : Double = 0.0
     public var height : Double = 0.0
+    
+    func isEmpty() -> Bool {
+        return weight + length + width + height == 0
+    }
 }
 

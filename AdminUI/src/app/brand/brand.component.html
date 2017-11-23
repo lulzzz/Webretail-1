@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
 
-    <p-toolbar>
+    <p-toolbar *ngIf="!displayPanel">
         <div class="ui-toolbar-group-left">
             <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
         </div>
@@ -19,13 +19,14 @@
         [globalFilter]="gb" #dt>
         <p-column field="brandId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="brandName" header="Name" [sortable]="true"></p-column>
+        <p-column field="brandMedia.name" header="Media" [sortable]="true"></p-column>
     </p-dataTable>
 
     <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">
                 <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Brand</b></span>
-                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-warning" icon="fa-close"></button>
             </div>
         </p-header>
         <form [formGroup]="dataform">

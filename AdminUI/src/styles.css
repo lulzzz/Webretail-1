@@ -119,8 +119,12 @@ body .ui-toolbar-group-right i {
   background: white !important;
 }
 
-.ui-panel .ui-panel-content {
-    background: #fcfcfc !important;
+.ui-panel {
+  background: #fcfcfc !important;
+  border-color: #eee;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
 }
 
 .ui-steps {

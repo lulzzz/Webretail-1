@@ -11,4 +11,3 @@ struct PayPal: Codable {
     public var production : String = ""
     public var currency : String = ""
 }
-

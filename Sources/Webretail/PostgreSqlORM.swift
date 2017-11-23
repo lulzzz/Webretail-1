@@ -94,7 +94,7 @@ open class PostgresSqlORM: PostgresStORM {
                 try sql(createIndex, params: [])
             }
         } catch {
-            LogFile.error("Error setup: \(error)")
+            LogFile.error("setup: \(error)")
             throw StORMError.error("\(error)")
         }
     }
@@ -104,7 +104,7 @@ open class PostgresSqlORM: PostgresStORM {
 		do {
 			try query(whereclause: "\(idname.lowercased()) = $1", params: [id])
 		} catch {
-			LogFile.error("Error: \(error)")
+			LogFile.error("query: \(error)")
 			throw error
 		}
 	}
@@ -171,63 +171,79 @@ open class PostgresSqlORM: PostgresStORM {
 			
 			//return results
 		} catch {
-			LogFile.error("Error msg: \(error)")
+			LogFile.error("query: \(error)")
 			self.error = StORMError.error("\(error)")
 			throw error
 		}
 	}
-    
+
     /// Returns a [(String,Any)] object representation of the current object.
     /// If any object property begins with an underscore, or with "internal_" it is omitted from the response.
     private func asDataQuery(_ offset: Int = 0) -> [(String, Any)] {
         var c = [(String, Any)]()
-        var count = 0
-        let mirror = Mirror(reflecting: self)
-        for case let (label?, value) in mirror.children {
-            if count >= offset && !label.hasPrefix("internal_") && !label.hasPrefix("_") {
-                if value is StORM {
-                    let encoder = JSONEncoder()
-                    let data: Data
-                    switch value {
-                    case is Store:
-                        data = try! encoder.encode(value as? Store)
-                        break
-                    case is Causal:
-                        data = try! encoder.encode(value as? Causal)
-                        break
-                    case is Registry:
-                        data = try! encoder.encode(value as? Registry)
-                        break
-                    default:
-                        data = try! encoder.encode(value as? Product)
-                        break
+        do {
+            var count = 0
+            let mirror = Mirror(reflecting: self)
+            for case let (label?, value) in mirror.children {
+                if count >= offset && !label.hasPrefix("internal_") && !label.hasPrefix("_") {
+                    if value is StORM || value is [JsonbProtocol] || value is JsonbProtocol {
+                        let encoder = JSONEncoder()
+                        let data: Data
+                        switch value {
+                        case is Store:
+                            data = try encoder.encode(value as! Store)
+                            break
+                        case is Causal:
+                            data = try encoder.encode(value as! Causal)
+                            break
+                        case is Registry:
+                            data = try encoder.encode(value as! Registry)
+                            break
+                        case is Product:
+                            data = try encoder.encode(value as! Product)
+                            break
+                        case is [Barcode]:
+                            data = try encoder.encode(value as? [Barcode])
+                            break
+                        case is Media:
+                            data = try encoder.encode(value as? Media)
+                            break
+                        case is [Media]:
+                            data = try encoder.encode(value as? [Media])
+                            break
+                        case is [Tag]:
+                            data = try encoder.encode(value as? [Tag])
+                            break
+                        case is Tax:
+                            data = try encoder.encode(value as? Tax)
+                            break
+                        case is Price:
+                            data = try encoder.encode(value as? Price)
+                            break
+                        case is Packaging:
+                            data = try encoder.encode(value as? Packaging)
+                            break
+                        case is Discount:
+                            data = try encoder.encode(value as? Discount)
+                            break
+                        case is PayPal:
+                            data = try encoder.encode(value as? PayPal)
+                            break
+                        default:
+                            data = try encoder.encode(value as? [Translation])
+                            break
+                        }
+                        c.append((label, modifyValue(String(data: data, encoding: .utf8)!, forKey: label)))
+                    } else if value is [String] {
+                        c.append((label, modifyValue((value as! [String]).joined(separator: ","), forKey: label)))
+                    } else {
+                        c.append((label, modifyValue(value, forKey: label)))
                     }
-                    c.append((label, modifyValue(String(data: data, encoding: .utf8)!, forKey: label)))
-                } else if value is [JsonbProtocol] {
-                    let encoder = JSONEncoder()
-                    let data: Data
-                    switch value {
-                    case is [Barcode]:
-                        data = try! encoder.encode(value as? [Barcode])
-                        break
-                    case is [Media]:
-                        data = try! encoder.encode(value as? [Media])
-                        break
-                    case is [Tag]:
-                        data = try! encoder.encode(value as? [Tag])
-                        break
-                    default:
-                        data = try! encoder.encode(value as? [Translation])
-                        break
-                    }
-                    c.append((label, modifyValue(String(data: data, encoding: .utf8)!, forKey: label)))
-                } else if value is [String] {
-                    c.append((label, modifyValue((value as! [String]).joined(separator: ","), forKey: label)))
-                } else {
-                    c.append((label, modifyValue(value, forKey: label)))
                 }
+                count += 1
             }
-            count += 1
+        } catch {
+            LogFile.error("asDataQuery: \(error)")
         }
         return c
     }
@@ -246,7 +262,7 @@ open class PostgresSqlORM: PostgresStORM {
                 try update(data: asDataQuery(1), idName: idname, idValue: idval)
             }
         } catch {
-            LogFile.error("Error: \(error)")
+            LogFile.error("save: \(error)")
             throw StORMError.error("\(error)")
         }
     }
@@ -267,7 +283,7 @@ open class PostgresSqlORM: PostgresStORM {
                 try update(data: asDataQuery(1), idName: idname, idValue: idval)
             }
         } catch {
-            LogFile.error("Error on save: \(error)")
+            LogFile.error("save: \(error)")
             throw StORMError.error("\(error)")
         }
     }

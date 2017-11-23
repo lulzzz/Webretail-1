@@ -71,8 +71,8 @@ class Discount: PostgresSqlORM, Codable {
         discountName = try container.decode(String.self, forKey: .discountName)
         discountPercentage = try container.decode(Int.self, forKey: .discountPercentage)
         discountPrice = try container.decode(Double.self, forKey: .discountPrice)
-        discountStartAt = try container.decode(String.self, forKey: .discountStartAt).DateToInt()
-        discountFinishAt = try container.decode(String.self, forKey: .discountFinishAt).DateToInt()
+        discountStartAt = try container.decodeIfPresent(String.self, forKey: .discountStartAt)?.DateToInt() ?? 0
+        discountFinishAt = try container.decodeIfPresent(String.self, forKey: .discountFinishAt)?.DateToInt() ?? 0
     }
     
     func encode(to encoder: Encoder) throws {

@@ -36,9 +36,8 @@ class AttributeValue: PostgresSqlORM, Codable {
         attributeValueCode = this.data["attributevaluecode"] as? String ?? ""
         attributeValueName = this.data["attributevaluename"] as? String ?? ""
         if let translates = this.data["attributevaluetranslates"] {
-            let decoder = JSONDecoder()
             let jsonData = try! JSONSerialization.data(withJSONObject: translates, options: [])
-            attributeValueTranslates = try! decoder.decode([Translation].self, from: jsonData)
+            attributeValueTranslates = try! JSONDecoder().decode([Translation].self, from: jsonData)
         }
         attributeValueCreated = this.data["attributevaluecreated"] as? Int ?? 0
         attributeValueUpdated = this.data["attributevalueupdated"] as? Int ?? 0

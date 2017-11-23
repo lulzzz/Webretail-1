@@ -1,0 +1,56 @@
+<img *ngIf="!productInfo||!articleForm||isBusy" src="/assets/loading.gif" class="loading">
+
+<div *ngIf="!display" class="container-fluid">
+
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Products" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <button pButton type="button" label="Build variants" (click)="buildClick()" class="ui-button-primary" icon="fa-database"></button>
+        </div>
+    </p-toolbar>
+
+    <p-tree [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)"></p-tree>
+    <!--<div style="margin-top:8px">Selected Node => {{selectedNode ? selectedNode.type + ' : ' + selectedNode.data : 'none'}}</div>-->
+    
+    <p-toolbar>
+        <div class="ui-toolbar-group-left" style="background-color: whitesmoke;padding: 10px;"><strong>{{totalRecords}}</strong> variants</div>
+        <div class="ui-toolbar-group-right">
+            <button pButton type="button" label="Save barcodes" (click)="saveClick()" class="ui-button-secondary" icon="fa-barcode"></button>
+        </div>
+    </p-toolbar>
+
+    <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">
+        <thead>
+            <tr> 
+                <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
+            </tr>
+        </thead>
+        <tbody> 
+            <tr *ngFor="let item of articleForm.body"> 
+                <td *ngFor="let col of item" align="center">
+                    <input *ngIf="col.id>0" pInputText type="text" size="13" title="{{col.value}}" [(ngModel)]="col.value" />
+                    <span *ngIf="col.id===0" title="{{col.value}}">{{col.value}}</span> 
+                </td> 
+            </tr> 
+        </tbody>
+    </table>   
+</div>
+
+<div *ngIf="display" class="container-fluid">
+    <p-panel *ngIf="articleForm">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Edit node</span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-warning" icon="fa-close"></button>
+            </div>
+        </p-header>
+        <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" [showTargetControls]="false"
+            (onMoveToSource)="removeNodes($event)" (onMoveToTarget)="addNodes($event)">
+            <ng-template let-attr pTemplate="item">
+                <span>{{attr.data}}</span> | <span>{{attr.label}}</span>
+            </ng-template>
+        </p-pickList>
+    </p-panel>
+</div>

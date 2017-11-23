@@ -279,13 +279,14 @@ struct ArticleRepository : ArticleProtocol {
         }
         
         // TODO: check this in test
-        for b in current.articleBarcodes {
-            if b.tags.count > 0 {
-                item.articleBarcodes.append(b)
-            }
+        let itemBarcode = item.articleBarcodes.first(where: { $0.tags.count == 0 })
+        if let newBarcode = itemBarcode {
+            let currentBarcode = current.articleBarcodes.first(where: { $0.tags.count == 0 })
+            currentBarcode?.barcode = newBarcode.barcode
         }
-        current.articleBarcodes = item.articleBarcodes
-        current.articlePackaging = item.articlePackaging
+        if !item.articlePackaging.isEmpty() {
+            current.articlePackaging = item.articlePackaging
+        }
         current.articleUpdated = Int.now()
         try current.save()
     }

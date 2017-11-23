@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import {
     Product, ProductCategory, ProductAttribute,
-    ProductAttributeValue, Article, ArticleForm
+    ProductAttributeValue, Article, ArticleForm, Tax, ItemValue
 } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
@@ -14,6 +14,16 @@ export class ProductService {
     products: Product[];
 
     constructor(private http: Http) {
+    }
+
+    getTaxes(): Observable<Tax[]> {
+        return this.http.get('api/producttax', { headers: Helpers.getHeaders() })
+            .map(result => <Tax[]>result.json());
+    }
+
+    getTypes(): Observable<ItemValue[]> {
+        return this.http.get('api/producttype', { headers: Helpers.getHeaders() })
+            .map(result => <ItemValue[]>result.json());
     }
 
     getProducts(): Observable<Product[]> {
@@ -84,5 +94,9 @@ export class ProductService {
     build(id: number): Observable<any> {
         return this.http.get('/api/product/' + id + '/build', { headers: Helpers.getHeaders() })
             .map(result => result.json());
+    }
+
+    findById(id: number): Product {
+        return this.products.find(p => p.productId === id);
     }
 }

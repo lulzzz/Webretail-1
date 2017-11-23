@@ -29,10 +29,9 @@ class Attribute: PostgresSqlORM, Codable {
     open override func to(_ this: StORMRow) {
         attributeId = this.data["attributeid"] as? Int ?? 0
         attributeName = this.data["attributename"] as? String ?? ""
-        let decoder = JSONDecoder()
         if let translates = this.data["attributetranslates"] {
             let jsonData = try! JSONSerialization.data(withJSONObject: translates, options: [])
-            attributeTranslates = try! decoder.decode([Translation].self, from: jsonData)
+            attributeTranslates = try! JSONDecoder().decode([Translation].self, from: jsonData)
         }
         attributeCreated = this.data["attributecreated"] as? Int ?? 0
         attributeUpdated = this.data["attributeupdated"] as? Int ?? 0

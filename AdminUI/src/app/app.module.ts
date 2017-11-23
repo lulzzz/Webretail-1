@@ -41,6 +41,7 @@ import { RegistryComponent } from './registry/registry.component';
 import { StoreComponent } from './store/store.component';
 import { ProductsComponent } from './product/products.component';
 import { ProductComponent } from './product/product.component';
+import { DetailComponent } from './product/detail.component';
 import { ImportComponent } from './product/import.component';
 import { StockComponent } from './product/stock.component';
 import { PublicationComponent } from './product/publication.component';
@@ -128,6 +129,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         StoreComponent,
         ProductsComponent,
         ProductComponent,
+        DetailComponent,
         StockComponent,
         PublicationComponent,
         MovementsComponent,

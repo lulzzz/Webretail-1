@@ -72,11 +72,57 @@ struct ProductRepository : ProductProtocol {
 	}
 
     func add(item: Product) throws {
-        item.brandId = item._brand.brandId
+
+        // Brand
+        let brand = Brand()
+        try brand.query(
+            whereclause: "brandName = $1", params: [item._brand.brandName],
+            cursor: StORMCursor(limit: 1, offset: 0)
+        )
+        if brand.brandId == 0 {
+            brand.brandName = item._brand.brandName
+            brand.brandCreated = Int.now()
+            brand.brandUpdated = Int.now()
+            try brand.save {
+                id in brand.brandId = id as! Int
+            }
+        }
+        item.brandId = brand.brandId
+
+        // Categories
+        for c in item._categories.sorted(by: { $0._category.categoryIsPrimary.hashValue < $1._category.categoryIsPrimary.hashValue }) {
+            let category = Category()
+            try category.query(
+                whereclause: "categoryName = $1", params: [c._category.categoryName],
+                cursor: StORMCursor(limit: 1, offset: 0)
+            )
+            if category.categoryId == 0 {
+                category.categoryName = c._category.categoryName
+                category.categoryIsPrimary = c._category.categoryIsPrimary
+                category.categoryTranslates = c._category.categoryTranslates
+                category.categoryCreated = Int.now()
+                category.categoryUpdated = Int.now()
+                try category.save {
+                    id in category.categoryId = id as! Int
+                }
+            }
+            c.categoryId = category.categoryId
+        }
+        
         item.productCreated = Int.now()
         item.productUpdated = Int.now()
         try item.save {
             id in item.productId = id as! Int
+        }
+        
+        // ProductCategories
+        for c in item._categories {
+            let productCategory = ProductCategory()
+            productCategory.productId = item.productId
+            productCategory.categoryId = c.categoryId
+            try productCategory.save {
+                id in productCategory.productCategoryId = id as! Int
+            }
         }
     }
     
@@ -172,8 +218,8 @@ struct ProductRepository : ProductProtocol {
         }
 
         item.productIsActive = true;
-        item.productCreated = Int.now()
         item.productUpdated = Int.now()
+        item.productCreated = Int.now()
         try item.save {
             id in item.productId = id as! Int
         }
@@ -242,14 +288,13 @@ struct ProductRepository : ProductProtocol {
         try publication.save {
             id in publication.publicationId = id as! Int
         }
-
+        
         return result;
     }
     
     func update(id: Int, item: Product) throws {
         
         let current = try get(id: id)
-        item.productUpdated = Int.now()
         current.productCode = item.productCode
         current.productName = item.productName
         current.productType = item.productType
@@ -258,9 +303,60 @@ struct ProductRepository : ProductProtocol {
         current.productDiscount = item.productDiscount
         current.productPackaging = item.productPackaging
         current.productIsActive = item.productIsActive
-        current.brandId = item._brand.brandId
-		current.productUpdated = item.productUpdated
-		try current.save()
+
+        // Brand
+        let brand = Brand()
+        try brand.query(
+            whereclause: "brandName = $1", params: [item._brand.brandName],
+            cursor: StORMCursor(limit: 1, offset: 0)
+        )
+        if brand.brandId == 0 {
+            brand.brandName = item._brand.brandName
+            brand.brandCreated = Int.now()
+            brand.brandUpdated = Int.now()
+            try brand.save {
+                id in brand.brandId = id as! Int
+            }
+        }
+        item.brandId = brand.brandId
+        current.brandId = item.brandId
+        
+        // Categories
+        for c in item._categories.sorted(by: { $0._category.categoryIsPrimary.hashValue < $1._category.categoryIsPrimary.hashValue }) {
+            let category = Category()
+            try category.query(
+                whereclause: "categoryName = $1", params: [c._category.categoryName],
+                cursor: StORMCursor(limit: 1, offset: 0)
+            )
+            if category.categoryId == 0 {
+                category.categoryName = c._category.categoryName
+                category.categoryIsPrimary = c._category.categoryIsPrimary
+                category.categoryTranslates = c._category.categoryTranslates
+                category.categoryCreated = Int.now()
+                category.categoryUpdated = Int.now()
+                try category.save {
+                    id in category.categoryId = id as! Int
+                }
+            }
+            c.categoryId = category.categoryId
+        }
+        
+        // ProductCategories
+        for c in current._categories {
+            try c.delete()
+        }
+        for c in item._categories {
+            let productCategory = ProductCategory()
+            productCategory.productId = id
+            productCategory.categoryId = c.categoryId
+            try productCategory.save {
+                id in productCategory.productCategoryId = id as! Int
+            }
+        }
+        
+        item.productUpdated = Int.now()
+        current.productUpdated = item.productUpdated
+        try current.save()
     }
     
     func get(productId: Int) throws -> Publication {

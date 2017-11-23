@@ -1,11 +1,11 @@
 {
     "/api/**": {
-       "target": "http://www.webretail.cloud:8181",
+       "target": "http://localhost:8181",
        "secure": false,
        "logLevel": "debug"
     },
     "/Media/**": {
-        "target": "http://www.webretail.cloud:8181",
+        "target": "http://localhost:8181",
         "secure": false,
         "logLevel": "debug"
      }

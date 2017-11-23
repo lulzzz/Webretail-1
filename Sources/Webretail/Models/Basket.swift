@@ -82,12 +82,6 @@ class Basket: PostgresSqlORM, Codable {
         basketPrice = try container.decodeIfPresent(Double.self, forKey: .basketPrice) ?? 0
     }
 
-    func getProduct(barcode: String) throws -> Product {
-        let product = Product()
-        try product.get(barcode: barcode)
-        return product
-    }
-    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(basketId, forKey: .basketId)
@@ -97,6 +91,12 @@ class Basket: PostgresSqlORM, Codable {
         try container.encode(basketQuantity, forKey: .basketQuantity)
         try container.encode(basketPrice, forKey: .basketPrice)
         try container.encode(_basketAmount, forKey: ._basketAmount)
+    }
+
+    func getProduct(barcode: String) throws -> Product {
+        let product = Product()
+        try product.get(barcode: barcode)
+        return product
     }
 }
 

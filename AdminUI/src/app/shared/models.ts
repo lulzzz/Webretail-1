@@ -97,10 +97,12 @@ export class Store {
 export class Brand {
   public brandId: number;
   public brandName: string;
+  public brandMedia: Media;
 
   constructor() {
     this.brandId = 0;
     this.brandName = '';
+    this.brandMedia = new Media('', '', 0);
   }
 }
 

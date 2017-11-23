@@ -1,54 +1,169 @@
-<img *ngIf="!productInfo||!articleForm||isBusy" src="/assets/loading.gif" class="loading">
+﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
+<img *ngIf="!selected" src="/assets/loading.gif" class="loading">
 
-<div class="container-fluid">
-
-   <button pButton type="button" title="Products" style="position: absolute; top: 144px; left: 30px; width:50px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
-
+<div *ngIf="selected" class="container-fluid">
     <p-toolbar>
-        <div class="ui-toolbar-group-left" style="margin-left:60px">
-            Code: {{product?.productCode}}
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Products" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <p-splitButton label="Edit" icon="fa-edit" (onClick)="editClick()" [(disabled)]="isBusy" [model]="buttons"></p-splitButton>
+            <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+            <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
         </div>
     </p-toolbar>
+    <div class="ui-panel">
+        <form [formGroup]="dataform">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 20px">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Id</label></div>
+                    <div class="ui-grid-col-8">{{selected.productId}}</div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="type">Type</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" [style]="{'width':'100%'}"></p-selectButton>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
+                            <i class="fa fa-close"></i> Type is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="code">Code</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
+                            <i class="fa fa-close"></i> Code is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="name" [(ngModel)]="selected.productName"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                            <i class="fa fa-close"></i> Name is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="brand">Brand</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-autoComplete [(ngModel)]="selected.brand" field="brandName" formControlName="brand" [suggestions]="brandsFiltered" (completeMethod)="filterBrands($event)" [size]="30"
+                            [minLength]="1" placeholder="Hint: type for filter" [multiple]="false">
+                            <ng-template let-brand pTemplate="item">
+                                <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+                                    <div style="font-size:16px;float:right;margin:10px 10px 0 0">{{brand.brandName}}</div>
+                                    <img src="assets/showcase/images/demo/car/{{brand.brandName}}.png" style="width:32px;display:inline-block;margin:5px 0 2px 5px"/>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['brand'].valid&&dataform.controls['brand'].dirty">
+                            <i class="fa fa-close"></i> Brand is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="categories">Categories</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-autoComplete [(ngModel)]="categoriesSelected" field="categoryName" formControlName="categories" [suggestions]="categoriesFiltered" (completeMethod)="filterCategories($event)" 
+                            placeholder="Hint: type for filter" [multiple]="true">
+                            <ng-template let-category pTemplate="item">
+                                <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+                                    <div style="font-size:16px;margin:10px 10px 0 0">{{category.categoryName}}</div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Price</label></div>
+                    <div class="ui-grid-col-4"><label for="selling">Selling</label></div>
+                    <div class="ui-grid-col-4">
+                        <input pInputText type="number" min="0" formControlName="selling" [(ngModel)]="selected.price.selling"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['selling'].valid&&dataform.controls['selling'].dirty">
+                            <i class="fa fa-close"></i> Selling Price is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4"><label for="purchase">Purchase</label></div>
+                    <div class="ui-grid-col-4">
+                        <input pInputText type="number" min="0" formControlName="purchase" [(ngModel)]="selected.price.purchase"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['purchase'].valid&&dataform.controls['purchase'].dirty">
+                            <i class="fa fa-close"></i> Purchase Price is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4"><label for="tax">Tax</label></div>
+                    <div class="ui-grid-col-4">
+                        <p-dropdown [options]="taxes" formControlName="tax" [(ngModel)]="selected.productTax" [style]="{'width':'100%'}"></p-dropdown>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['tax'].valid&&dataform.controls['tax'].dirty">
+                            <i class="fa fa-close"></i> Tax is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Packaging</label></div>
+                    <div class="ui-grid-col-4"><label for="weight">Weight</label></div>
+                    <div class="ui-grid-col-4">
+                        <input pInputText type="number" min="0" formControlName="weight" [(ngModel)]="selected.packaging.weight"/>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4">
+                        <label for="length">Length</label>
+                    </div>
+                    <div class="ui-grid-col-4">
+                        <input pInputText type="number" min="0" formControlName="length" [(ngModel)]="selected.packaging.length"/>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4"><label for="width">Width</label></div>
+                    <div class="ui-grid-col-4">
+                        <input pInputText type="number" min="0" formControlName="width" [(ngModel)]="selected.packaging.width"/>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4"><label for="height">Height</label></div>
+                    <div class="ui-grid-col-4">
+                        <input pInputText type="number" min="0" formControlName="height" [(ngModel)]="selected.packaging.height"/>
+                    </div>
+                </div>
 
-    <p-tree *ngIf="!display" [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode"></p-tree>
-    <!--<div style="margin-top:8px">Selected Node => {{selectedNode ? selectedNode.type + ' : ' + selectedNode.data : 'none'}}</div>-->
-
-    <p-panel *ngIf="display">
-        <p-header>
-            <div class="ui-helper-clearfix">
-                <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Edit node</span>
-                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"></div>
+                    <div class="ui-grid-col-4"><label for="um">Unit of Measure</label></div>
+                    <div class="ui-grid-col-4">
+                        <p-dropdown [options]="ums" formControlName="um" [(ngModel)]="selected.productUm" [style]="{'width':'100%'}"></p-dropdown>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['um'].valid&&dataform.controls['um'].dirty">
+                            <i class="fa fa-close"></i> Unit of Measure is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="isActive">Active</label></div>
+                    <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="isActive" [(ngModel)]="selected.productIsActive"></p-inputSwitch></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="updated">Updated</label></div>
+                    <div class="ui-grid-col-8">{{selected.updatedAt | dateFormat}}</div>
+                </div>
             </div>
-        </p-header>
-        <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" [showTargetControls]="false"
-            (onMoveToSource)="removeNodes($event)" (onMoveToTarget)="addNodes($event)">
-            <ng-template let-attr pTemplate="item">
-                <span>{{attr.data}}</span> | <span>{{attr.label}}</span>
-            </ng-template>
-        </p-pickList>
-    </p-panel>
-
-    <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">
-        <thead>
-            <tr> 
-                <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
-            </tr>
-        </thead>
-        <tfoot>
-            <tr> 
-                <td style="background-color: whitesmoke;text-align: center;"><strong>{{totalRecords}}</strong><br/>items</td> 
-            </tr>
-        </tfoot>
-        <tbody> 
-            <tr *ngFor="let item of articleForm.body"> 
-                <td *ngFor="let col of item" align="center">
-                    <input *ngIf="col.id>0" pInputText type="text" size="13" title="{{col.value}}" [(ngModel)]="col.value" />
-                    <span *ngIf="col.id===0" title="{{col.value}}">{{col.value}}</span> 
-                </td> 
-            </tr> 
-        </tbody>
-    </table>
+        </form>
+    </div>
 </div>

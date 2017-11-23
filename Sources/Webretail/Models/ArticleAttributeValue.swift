@@ -31,10 +31,9 @@ class ArticleAttributeValue: PostgresSqlORM, Codable {
         articleAttributeValueId = this.data["articleattributevalueid"] as? Int ?? 0
         articleId = this.data["articleid"] as? Int ?? 0
         attributeValueId = this.data["attributevalueid"] as? Int ?? 0
-        let decoder = JSONDecoder()
         if let medias = this.data["articleattributevaluemedias"] {
             let jsonData = try! JSONSerialization.data(withJSONObject: medias, options: [])
-            articleAttributeValueMedias = try! decoder.decode([Media].self, from: jsonData)
+            articleAttributeValueMedias = try! JSONDecoder().decode([Media].self, from: jsonData)
         }
     }
     
