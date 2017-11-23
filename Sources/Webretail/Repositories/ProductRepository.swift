@@ -453,30 +453,6 @@ struct ProductRepository : ProductProtocol {
         try item.sql("DELETE FROM publications WHERE productId = $1", params: [productId])
     }
 
-    func addCategory(item: ProductCategory) throws {
-        //item.categoryId = item._category.categoryId
-        try item.save {
-            id in item.productCategoryId = id as! Int
-        }
-    }
-    
-	func removeCategory(item: ProductCategory) throws {
-		try item.query(whereclause: "productId = $1 AND categoryId = $2",
-		               params: [item.productId, item.categoryId],
-		               cursor: StORMCursor(limit: 1, offset: 0))
-		try item.delete()
-   }
-	
-	func removeCategories(productId: Int) throws {
-		let productCategory = ProductCategory()
-		try productCategory.query(whereclause: "productId = $1",
-								  params: [productId],
-								  cursor: StORMCursor(limit: 1, offset: 0))
-		for row in try productCategory.rows() {
-			try row.delete()
-		}
-	}
-
 	func addAttribute(item: ProductAttribute) throws {
         try item.save {
             id in item.productAttributeId = id as! Int

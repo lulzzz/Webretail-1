@@ -1,0 +1,41 @@
+<img *ngIf="!productInfo||!articleForm||isBusy" src="/assets/loading.gif" class="loading">
+
+<div *ngIf="!display" class="inputtext">
+    <div style="padding: 10px; text-align: center;">
+        <strong>{{totalRecords}}</strong> variants
+    </div>
+    <p-tree [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)"></p-tree>
+    <button pButton type="button" label="Rebuild variants" style="margin-top: 20px; margin-bottom: 30px;" (click)="buildClick()" class="ui-button-primary" icon="fa-database"></button>
+    <table *ngIf="articleForm" class="table" cellpadding="2" cellspacing="2">
+        <thead>
+            <tr> 
+                <td *ngFor="let h of articleForm.header" align="center" style="background-color: whitesmoke"><strong>{{h}}</strong></td> 
+            </tr>
+        </thead>
+        <tbody> 
+            <tr *ngFor="let item of articleForm.body"> 
+                <td *ngFor="let col of item" align="center">
+                    <input pInputText type="text" size="13" title="{{col.value}}" [(ngModel)]="col.value" />
+                </td> 
+            </tr> 
+        </tbody>
+    </table>   
+    <button pButton type="button" label="Update barcodes" (click)="saveClick()" class="ui-button-primary" icon="fa-barcode"></button>
+</div>
+
+<div *ngIf="display" class="inputtext">
+    <p-panel *ngIf="articleForm">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:18px;display:inline-block;margin-top:6px">Edit node</span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-warning" icon="fa-close"></button>
+            </div>
+        </p-header>
+        <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" [showTargetControls]="false"
+            (onMoveToSource)="removeNodes($event)" (onMoveToTarget)="addNodes($event)">
+            <ng-template let-attr pTemplate="item">
+                <span>{{attr.data}}</span> | <span>{{attr.label}}</span>
+            </ng-template>
+        </p-pickList>
+    </p-panel>
+</div>

@@ -7,7 +7,7 @@
             <button pButton type="button" label="Products" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-danger" (click)="deleteClick()" label="Delete"></button>
+            <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-promary" (click)="deleteClick()" label="Delete"></button>
             <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
         </div>
     </p-toolbar>
@@ -15,20 +15,22 @@
         <form [formGroup]="dataform">
             <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 20px">
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label>Id</label></div>
-                    <div class="ui-grid-col-8">{{selected.productId}}</div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="type">Type</label></div>
-                    <div class="ui-grid-col-8">
-                        <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" [style]="{'width':'100%'}"></p-selectButton>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
-                            <i class="fa fa-close"></i> Type is required
-                        </div>
+                    <div class="ui-grid-col-4"><label>Status</label></div>
+                    <div class="ui-grid-col-2">
+                        <p-inputSwitch onLabel="ON" offLabel="OFF" formControlName="isActive" [(ngModel)]="selected.productIsActive"></p-inputSwitch>
+                    </div>
+                    <div class="ui-grid-col-2" style="text-align: right">
+                        <label>Updated</label>
+                    </div>
+                    <div class="ui-grid-col-4" style="text-align: right">
+                        <span>{{selected.updatedAt | dateFormat}}</span>
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="code">Code</label></div>
+                    <div class="ui-grid-col-12"><hr></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="code">Code</label></div>
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
@@ -156,12 +158,19 @@
                     <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="isActive">Active</label></div>
-                    <div class="ui-grid-col-8"><p-inputSwitch onLabel="Yes" offLabel="No" formControlName="isActive" [(ngModel)]="selected.productIsActive"></p-inputSwitch></div>
+                    <div class="ui-grid-col-4"><label for="type">Type</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" (click)="onOptionClick()" [disabled]="!dataform.valid" [style]="{'width':'100%'}"></p-selectButton>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
+                            <i class="fa fa-close"></i> Type is required
+                        </div>
+                    </div>
                 </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="updated">Updated</label></div>
-                    <div class="ui-grid-col-8">{{selected.updatedAt | dateFormat}}</div>
+                <div *ngIf="selected.productId>0" class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+                        <app-simple *ngIf="selected.productType==='Simple'"></app-simple>
+                        <app-variant *ngIf="selected.productType==='Variant'"></app-variant>
+                    </div>
                 </div>
             </div>
         </form>

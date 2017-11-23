@@ -20,7 +20,6 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     private sub: any;
     dataform: FormGroup;
-    selected: Product;
     types: SelectItem[];
     taxes: SelectItem[];
     ums: SelectItem[];
@@ -75,8 +74,16 @@ export class ProductComponent implements OnInit, OnDestroy {
                             if (productId === 0) {
                                 this.addClick();
                             } else {
-                                this.selected = this.productService.findById(productId);
-                                this.categoriesSelected = this.selected.categories.map(p => p.category);
+                                this.productService.getProduct(productId)
+                                    .subscribe(
+                                        result => {
+                                            this.productService.product = result;
+                                            this.categoriesSelected = result.categories.map(p => p.category);
+                                        },
+                                        onerror => this.messageService.add({
+                                            severity: 'error', summary: 'get product', detail: onerror._body
+                                        })
+                                    );
                             }
                             this.brandService.getAll()
                                 .subscribe(result => {
@@ -94,22 +101,27 @@ export class ProductComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         // Clean sub to avoid memory leak
         this.sub.unsubscribe();
-        this.selected = null;
+        this.productService.product = null;
     }
 
+    get selected(): Product { return this.productService.product; }
     get isNew(): boolean { return this.selected == null || this.selected.productId === 0; }
-
     get selectedIndex(): number { return this.productService.products.indexOf(this.selected); }
 
     addClick() {
-        this.selected = new Product();
-        this.selected.productType =  this.types[0].value;
+        this.productService.product = new Product();
         this.selected.productTax =  this.taxes[0].value;
         this.selected.productUm =  this.ums[0].value;
     }
 
     closeClick() {
         this.location.back();
+    }
+
+    onOptionClick() {
+        if (this.selected.productId === 0) {
+            this.saveClick();
+        }
     }
 
     saveClick() {
@@ -124,7 +136,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         if (this.isNew) {
             this.productService.create(this.selected)
                 .subscribe(result => {
-                    this.selected = result;
+                    this.productService.product = result;
                     this.productService.products.push(this.selected);
                     this.messageService.add({severity: 'success', summary: 'Success', detail: 'Product created!'})
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));

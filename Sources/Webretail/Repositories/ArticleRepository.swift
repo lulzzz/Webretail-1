@@ -284,9 +284,6 @@ struct ArticleRepository : ArticleProtocol {
             let currentBarcode = current.articleBarcodes.first(where: { $0.tags.count == 0 })
             currentBarcode?.barcode = newBarcode.barcode
         }
-        if !item.articlePackaging.isEmpty() {
-            current.articlePackaging = item.articlePackaging
-        }
         current.articleUpdated = Int.now()
         try current.save()
     }

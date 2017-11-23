@@ -11,7 +11,8 @@ import { Helpers } from '../shared/helpers';
 @Injectable()
 export class ProductService {
 
-    products: Product[];
+    public product: Product;
+    public products: Product[];
 
     constructor(private http: Http) {
     }
@@ -39,6 +40,11 @@ export class ProductService {
     getArticles(id: number, storeIds: string): Observable<ArticleForm> {
         return this.http.get('/api/product/' + id + '/store/' + storeIds, { headers: Helpers.getHeaders() })
             .map(result => <ArticleForm>result.json());
+    }
+
+    addArticle(model: Article): Observable<Article> {
+        return this.http.post('/api/article', model, { headers: Helpers.getHeaders() })
+            .map(result => <Article>result.json());
     }
 
     updateArticle(id: number, model: Article): Observable<Article> {

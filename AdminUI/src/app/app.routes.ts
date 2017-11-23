@@ -14,7 +14,7 @@ import { RegistryComponent } from './registry/registry.component';
 import { StoreComponent } from './store/store.component';
 import { ProductsComponent } from './product/products.component';
 import { ProductComponent } from './product/product.component';
-import { DetailComponent } from './product/detail.component';
+import { VariantComponent } from './product/variant.component';
 import { ImportComponent } from './product/import.component';
 import { StockComponent } from './product/stock.component';
 import { PublicationComponent } from './product/publication.component';
@@ -49,7 +49,7 @@ export const routes: Routes = [
     { path: 'registry', component: RegistryComponent },
     { path: 'product', component: ProductsComponent },
     { path: 'product/:id', component: ProductComponent },
-    { path: 'product/:id/detail', component: DetailComponent },
+    { path: 'product/:id/variant', component: VariantComponent },
     { path: 'product/:id/stock', component: StockComponent },
     { path: 'product/:id/publication', component: PublicationComponent },
     { path: 'movement', component: MovementsComponent },

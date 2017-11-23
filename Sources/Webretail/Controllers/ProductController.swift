@@ -31,8 +31,6 @@ class ProductController {
         routes.add(method: .post, uri: "/api/product/import", handler: productImportHandlerPOST)
         routes.add(method: .put, uri: "/api/product/{id}", handler: productHandlerPUT)
         routes.add(method: .delete, uri: "/api/product/{id}", handler: productHandlerDELETE)
-        routes.add(method: .post, uri: "/api/productcategory", handler: productCategoryHandlerPOST)
-        routes.add(method: .put, uri: "/api/productcategory", handler: productCategoryHandlerPUT)
         routes.add(method: .post, uri: "/api/productattribute", handler: productAttributeHandlerPOST)
         routes.add(method: .put, uri: "/api/productattribute", handler: productAttributeHandlerPUT)
         routes.add(method: .post, uri: "/api/productattributevalue", handler: productAttributeValueHandlerPOST)
@@ -152,32 +150,6 @@ class ProductController {
         }
     }
     
-    func productCategoryHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        do {
-            let items: [ProductCategory] = request.getJson()!
-            for item in items {
-                try self.repository.addCategory(item: item)
-            }
-            try response.setJson(items)
-            response.completed(status: .created)
-        } catch {
-			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-        }
-    }
-
-    func productCategoryHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        do {
-            let items: [ProductCategory] = request.getJson()!
-            for item in items {
-                try self.repository.removeCategory(item: item)
-            }
-            try response.setJson(items)
-            response.completed(status: .noContent)
-        } catch {
-			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-        }
-    }
-
     func productAttributeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             let items: [ProductAttribute] = request.getJson()!
