@@ -71,6 +71,13 @@ struct ProductRepository : ProductProtocol {
 		return item
 	}
 
+    func get(barcode: String) throws -> Product {
+        let item = Product()
+        try item.get(barcode: barcode)
+        
+        return item
+    }
+
     func add(item: Product) throws {
 
         // Brand

@@ -8,7 +8,7 @@ import { Brand } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'app-brand-component',
+    selector: 'app-brand',
     templateUrl: 'brand.component.html'
 })
 

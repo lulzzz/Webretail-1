@@ -8,6 +8,8 @@ import { SessionService } from './../services/session.service';
 
 export class NavigationComponent {
 
+    menuActive: boolean;
+
     constructor(public sessionService: SessionService) {
     }
 
@@ -17,6 +19,11 @@ export class NavigationComponent {
 
     get isAdmin(): boolean {
         return this.sessionService.isAdmin;
+    }
+
+    onMenuButtonClick(event: Event) {
+        this.menuActive = !this.menuActive;
+        event.preventDefault();
     }
 
     logoutClick() {

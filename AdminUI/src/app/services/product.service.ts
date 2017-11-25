@@ -4,9 +4,11 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import {
     Product, ProductCategory, ProductAttribute,
-    ProductAttributeValue, Article, ArticleForm, Tax, ItemValue
+    ProductAttributeValue, Article, ArticleForm,
+    Tax, ItemValue, GroupItem
 } from '../shared/models';
 import { Helpers } from '../shared/helpers';
+import { ArticleInfoPipe } from '../pipes/articleinfo.pipe';
 
 @Injectable()
 export class ProductService {
@@ -37,19 +39,39 @@ export class ProductService {
             .map(result => <Product>result.json());
     }
 
-    getArticles(id: number, storeIds: string): Observable<ArticleForm> {
+    getBarcode(id: string): Observable<Product> {
+        return this.http.get('/api/product/barcode/' + id, { headers: Helpers.getHeaders() })
+            .map(result => <Product>result.json());
+    }
+
+    getArticles(id: number): Observable<Article[]> {
+        return this.http.get('/api/product/' + id + '/article', { headers: Helpers.getHeaders() })
+            .map(result => <Article[]>result.json());
+    }
+
+    getStock(id: number, storeIds: string): Observable<ArticleForm> {
         return this.http.get('/api/product/' + id + '/store/' + storeIds, { headers: Helpers.getHeaders() })
             .map(result => <ArticleForm>result.json());
     }
 
-    addArticle(model: Article): Observable<Article> {
+    getGroup(id: number): Observable<[GroupItem]> {
+        return this.http.get('/api/product/' + id + '/group', { headers: Helpers.getHeaders() })
+            .map(result => <[GroupItem]>result.json());
+    }
+
+    addArticle(model: Article): Observable<GroupItem> {
         return this.http.post('/api/article', model, { headers: Helpers.getHeaders() })
-            .map(result => <Article>result.json());
+            .map(result => <GroupItem>result.json());
     }
 
     updateArticle(id: number, model: Article): Observable<Article> {
         return this.http.put('/api/article/' + id, model, { headers: Helpers.getHeaders() })
             .map(result => <Article>result.json());
+    }
+
+    removeArticle(id: number): Observable<any> {
+        return this.http.delete('/api/article/' + id, { headers: Helpers.getHeaders() })
+            .map(result => <any>result.json());
     }
 
     create(model: Product): Observable<Product> {
@@ -100,9 +122,5 @@ export class ProductService {
     build(id: number): Observable<any> {
         return this.http.get('/api/product/' + id + '/build', { headers: Helpers.getHeaders() })
             .map(result => result.json());
-    }
-
-    findById(id: number): Product {
-        return this.products.find(p => p.productId === id);
     }
 }

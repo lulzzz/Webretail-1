@@ -72,7 +72,7 @@ export class StockComponent implements OnInit, OnDestroy {
         }
         this.totalStocks = 0;
         this.totalBookeds = 0;
-        this.productService.getArticles(this.product.productId, storeIds)
+        this.productService.getStock(this.product.productId, storeIds)
             .subscribe(result => {
                 this.articleForm = result;
                 this.articleForm.body.forEach(a => {

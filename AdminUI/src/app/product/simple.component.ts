@@ -12,7 +12,8 @@ import { ProductService } from './../services/product.service';
 
 export class SimpleComponent implements OnInit {
 
-    articleItem: ArticleItem;
+    item: Article;
+    barcode: string;
 
     constructor(private messageService: MessageService,
                 private sessionService: SessionService,
@@ -23,37 +24,26 @@ export class SimpleComponent implements OnInit {
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
-        this.createSheet();
-    }
-
-    createSheet() {
-        this.productService.getArticles(this.product.productId, '0')
+        this.productService.getArticles(this.product.productId)
             .subscribe(result => {
-                this.articleItem = result.body[0][0];
+                this.item = result[0];
+                this.barcode = this.item.barcodes.find(p => p.tags.length === 0).barcode;
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
     }
 
     saveClick() {
-        if (this.articleItem.id > 0) {
-            const article = new Article();
-            article.articleId = this.articleItem.id;
-            article.packaging = new Packaging();
-            article.barcodes = [<Barcode>{ barcode: this.articleItem.value, tags: [] }];
-            this.productService
-                .updateArticle(this.articleItem.id, article)
-                .subscribe(result => {
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Barcode',
-                        detail: 'Updated successfully!'
-                    });
+        const article = new Article();
+        article.articleId = this.item.articleId;
+        article.packaging = new Packaging();
+        article.barcodes = [<Barcode>{ barcode: this.barcode, tags: [] }];
+        this.productService
+            .updateArticle(this.item.articleId, article)
+            .subscribe(result => {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Barcode',
+                    detail: 'Updated successfully!'
                 });
-        } else {
-            this.messageService.add({
-                severity: 'warning',
-                summary: 'Barcode',
-                detail: 'Save product before update barcode!'
             });
-        }
     }
 }

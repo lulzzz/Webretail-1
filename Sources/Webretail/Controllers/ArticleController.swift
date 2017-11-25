@@ -20,10 +20,12 @@ class ArticleController {
         var routes = Routes()
         
         routes.add(method: .get, uri: "/api/product/{id}/build", handler: articleBuildHandlerGET)
-        routes.add(method: .get, uri: "/api/article", handler: articlesHandlerGET)
-        routes.add(method: .get, uri: "/api/product/{id}/store/{storeids}", handler: productArticleHandlerGET)
-        routes.add(method: .get, uri: "/api/article/{id}", handler: articleHandlerGET)
+        routes.add(method: .get, uri: "/api/product/{id}/article", handler: productArticleHandlerGET)
+        routes.add(method: .get, uri: "/api/product/{id}/group", handler: articleGroupHandlerGET)
+        routes.add(method: .get, uri: "/api/product/{id}/store/{storeids}", handler: articleStockHandlerGET)
+        
         routes.add(method: .post, uri: "/api/article", handler: articleHandlerPOST)
+        routes.add(method: .get, uri: "/api/article/{id}", handler: articleHandlerGET)
         routes.add(method: .put, uri: "/api/article/{id}", handler: articleHandlerPUT)
         routes.add(method: .delete, uri: "/api/article/{id}", handler: articleHandlerDELETE)
         routes.add(method: .post, uri: "/api/articleattributevalue", handler: articleAttributeValueHandlerPOST)
@@ -43,9 +45,10 @@ class ArticleController {
         }
     }
     
-    func articlesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+    func articleGroupHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let id = request.urlVariables["id"]!
         do {
-            let items = try self.repository.getAll()
+            let items = try self.repository.getGrouped(productId: Int(id)!)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
@@ -54,6 +57,17 @@ class ArticleController {
     }
     
     func productArticleHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let id = request.urlVariables["id"]!
+        do {
+            let item = try self.repository.get(productId: Int(id)!, storeIds: "0")
+            try response.setJson(item)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+    
+    func articleStockHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         let id = request.urlVariables["id"]!
 		let storeIds = request.urlVariables["storeids"]!
 		do {
@@ -79,8 +93,8 @@ class ArticleController {
     func articleHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             let item: Article = request.getJson()!
-            try self.repository.add(item: item)
-            try response.setJson(item)
+            let group = try self.repository.addGroup(item: item)
+            try response.setJson(group)
             response.completed(status: .created)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

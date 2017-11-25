@@ -12,15 +12,17 @@ protocol ArticleProtocol {
     
     func build(productId: Int) throws -> [String: Any]
 
-    func getAll() throws -> [Article]
-    
     func get(productId: Int, storeIds: String) throws -> [Article]
     
     func get(id: Int) throws -> Article?
     
 	func getStock(productId: Int, storeIds: String) throws -> ArticleForm
 
-	func add(item: Article) throws
+    func getGrouped(productId: Int) throws -> [GroupItem]
+
+    func add(item: Article) throws
+    
+    func addGroup(item: Article) throws -> GroupItem
     
     func update(id: Int, item: Article) throws
     
@@ -43,4 +45,10 @@ struct ArticleItem: Codable {
 	public var stock: Double
 	public var booked: Double
 	public var data: Double
+}
+
+struct GroupItem: Codable {
+    public var id: Int
+    public var barcode: String
+    public var product: Product
 }

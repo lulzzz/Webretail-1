@@ -1,4 +1,4 @@
-﻿import { Component, Input, EventEmitter, ViewChild } from '@angular/core';
+﻿import { Component, Input, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { DataTable, SelectItem, MenuItem } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { Product, ProductCategory, ProductAttributeValue, ArticleForm, ArticleItem } from './models';
@@ -11,7 +11,7 @@ import { ProductService } from './../services/product.service';
     outputs: ['onPicked']
 })
 
-export class ArticlePickerComponent {
+export class ArticlePickerComponent implements OnInit {
     @ViewChild('dt') datatable: DataTable;
     totalRecords = 0;
     selected: Product;
@@ -32,7 +32,7 @@ export class ArticlePickerComponent {
     set products(value) { this.productService.products = value; }
     get products(): Product[] { return this.productService.products; }
 
-    public loadData() {
+    ngOnInit() {
         this.isOpen = true;
         if (!this.products) {
             this.reloadData();
@@ -95,7 +95,7 @@ export class ArticlePickerComponent {
     getArticles(productId: number) {
         this.articleForm = null;
         // from server
-        this.productService.getArticles(productId, '0')
+        this.productService.getStock(productId, '0')
             .subscribe(result => {
                 this.articleForm = result;
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));

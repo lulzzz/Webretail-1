@@ -132,7 +132,7 @@ export class MovementComponent implements OnInit, OnDestroy {
     }
 
     showPickerClick() {
-        this.inputComponent.loadData();
+        this.inputComponent.isOpen = true;
     }
 
     pickerClick(event: any) {

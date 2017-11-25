@@ -19,7 +19,7 @@ class Article: PostgresSqlORM, Codable {
     public var articleCreated : Int = Int.now()
     public var articleUpdated : Int = Int.now()
 
-	public var _storeIds : String = ""
+	public var _storeIds : String = "0"
     public var _quantity : Double = 0
     public var _booked : Double = 0
     public var _attributeValues: [ArticleAttributeValue] = [ArticleAttributeValue]()
@@ -67,27 +67,29 @@ class Article: PostgresSqlORM, Codable {
             )
             row._attributeValues = try attributeValue.rows()
 
-			let stock = Stock()
-			var stocks = [Stock]()
-           	if _storeIds.isEmpty || _storeIds == "0" {
-				try stock.query(
-					whereclause: "articleId = $1",
-					params: [row.articleId]
-				)
-				stocks.append(contentsOf: stock.rows())
-			} else {
-				let rows = try self.sqlRows(
-					"SELECT * FROM stocks WHERE articleId = \(row.articleId) AND storeId IN (\(_storeIds))",
-					params: [])
-				for row in rows {
-					let stock = Stock()
-					stock.to(row)
-					stocks.append(stock)
-				}
-			}
-			row._quantity = stocks.reduce(0) { $0 + $1.stockQuantity }
-			row._booked = stocks.reduce(0) { $0 + $1.stockBooked }
-			
+            if _storeIds != "0" {
+                let stock = Stock()
+                var stocks = [Stock]()
+                if _storeIds.isEmpty {
+                    try stock.query(
+                        whereclause: "articleId = $1",
+                        params: [row.articleId]
+                    )
+                    stocks.append(contentsOf: stock.rows())
+                } else {
+                    let rows = try self.sqlRows(
+                        "SELECT * FROM stocks WHERE articleId = \(row.articleId) AND storeId IN (\(_storeIds))",
+                        params: [])
+                    for row in rows {
+                        let stock = Stock()
+                        stock.to(row)
+                        stocks.append(stock)
+                    }
+                }
+                row._quantity = stocks.reduce(0) { $0 + $1.stockQuantity }
+                row._booked = stocks.reduce(0) { $0 + $1.stockBooked }
+            }
+            
             rows.append(row)
         }
         return rows

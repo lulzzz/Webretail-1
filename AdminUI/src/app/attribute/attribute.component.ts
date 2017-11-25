@@ -8,21 +8,15 @@ import { Attribute, AttributeValue } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'app-attribute-component',
+    selector: 'app-attribute',
     templateUrl: 'attribute.component.html'
 })
 
 export class AttributeComponent implements OnInit {
     totalRecords = 0;
-    totalValues = 0;
     attributes: Attribute[];
-    values: AttributeValue[];
-    selected: Attribute;
-    selectedValue: AttributeValue;
     displayPanel: boolean;
-    displayPanelValue: boolean;
     dataform: FormGroup;
-    dataformValue: FormGroup;
 
     constructor(private messageService: MessageService,
                 private sessionService: SessionService,
@@ -32,15 +26,15 @@ export class AttributeComponent implements OnInit {
         sessionService.title = 'Attributes';
     }
 
+    set selected(value) { this.attributeService.selected = value; }
+    get selected(): Attribute { return this.attributeService.selected; }
+    get isNew(): boolean { return this.selected == null || this.selected.attributeId === 0; }
+    get selectedIndex(): number { return this.attributes.indexOf(this.selected); }
+
     ngOnInit() {
         this.sessionService.checkCredentials(false);
 
         this.dataform = this.fb.group({
-            'name': new FormControl('', Validators.required)
-        });
-
-        this.dataformValue = this.fb.group({
-            'code': new FormControl('', [Validators.required, Validators.maxLength(6)]),
             'name': new FormControl('', Validators.required)
         });
 
@@ -53,21 +47,12 @@ export class AttributeComponent implements OnInit {
         );
     }
 
-    get isNew(): boolean { return this.selected == null || this.selected.attributeId === 0; }
-
-    get isNewValue(): boolean { return this.selectedValue == null || this.selectedValue.attributeValueId === 0; }
-
-    get selectedIndex(): number { return this.attributes.indexOf(this.selected); }
-
-    get selectedValueIndex(): number { return this.values.indexOf(this.selectedValue); }
-
     onRowSelect(event: any) {
-        this.values = null;
+        this.attributeService.values = [];
         this.attributeService
             .getValueByAttributeId(this.selected.attributeId)
             .subscribe(result => {
-                this.values = result;
-                this.totalValues = this.values.length;
+                this.attributeService.values = result;
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
     }
 
@@ -103,7 +88,7 @@ export class AttributeComponent implements OnInit {
 
     deleteClick() {
         this.confirmationService.confirm({
-            message: 'All values of this attribute and related articles will be deleted. Are you sure that you want to delete this attribute?',
+            message: 'All values of this attribute and related articles will be deleted. Are you sure to delete this attribute?',
             accept: () => {
                 this.attributeService
                     .delete(this.selected.attributeId)
@@ -111,62 +96,8 @@ export class AttributeComponent implements OnInit {
                         this.attributes.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.selected = null;
-                        this.values.length = 0;
+                        this.attributeService.values.length = 0;
                         this.displayPanel = false;
-                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
-            }
-        });
-    }
-
-    onRowValueSelect(event: any) {
-        this.displayPanelValue = true;
-    }
-
-    addValueClick() {
-        if (this.selected && this.selected.attributeId > 0) {
-            this.selectedValue = new AttributeValue(this.selected.attributeId, 0, '', '', []);
-            this.displayPanelValue = true;
-        } else {
-            alert('Select a attribute before add value!');
-        }
-    }
-
-    editValueClick() {
-        this.displayPanelValue = true;
-    }
-
-    closeValueClick() {
-        this.displayPanelValue = false;
-        this.selectedValue = null;
-    }
-
-    saveValueClick() {
-        if (this.isNewValue) {
-            this.attributeService
-                .createValue(this.selectedValue)
-                .subscribe(result => {
-                    this.values.push(result);
-                    this.closeValueClick();
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
-        } else {
-            this.attributeService
-                .updateValue(this.selectedValue.attributeValueId, this.selectedValue)
-                .subscribe(result => {
-                    this.closeValueClick();
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
-        }
-    }
-
-    deleteValueClick() {
-        this.confirmationService.confirm({
-            message: 'All related articles of this attribute value will be deleted. Are you sure that you want to delete this attribute value?',
-            accept: () => {
-                this.attributeService
-                    .deleteValue(this.selectedValue.attributeValueId)
-                    .subscribe(result => {
-                        this.values.splice(this.selectedValueIndex, 1);
-                        this.totalValues--;
-                        this.closeValueClick();
                     }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });

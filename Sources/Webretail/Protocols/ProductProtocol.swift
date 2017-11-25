@@ -16,6 +16,8 @@ protocol ProductProtocol {
     
     func get(id: Int) throws -> Product
 
+    func get(barcode: String) throws -> Product
+
     func add(item: Product) throws
     
     func create(item: Product) throws -> [String : Any]

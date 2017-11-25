@@ -552,3 +552,9 @@ export interface ArticleItem {
   booked: number;
   data: number;
 }
+
+export interface GroupItem {
+  id: number;
+  barcode: string;
+  product: Product;
+}

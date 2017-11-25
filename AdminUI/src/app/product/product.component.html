@@ -1,6 +1,12 @@
 ﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
 <img *ngIf="!selected" src="/assets/loading.gif" class="loading">
-
+<p-sidebar [(visible)]="visibleSidebar"  styleClass="ui-sidebar-lg" position="top" [baseZIndex]="10000">
+    <h1 style="font-weight:normal">Brand</h1>
+    <app-brand></app-brand>
+    <button pButton type="button" (click)="visibleSidebar = false" label="Save" class="ui-button-success"></button>
+    <button pButton type="button" (click)="visibleSidebar = false" label="Cancel" class="ui-button-secondary"></button>
+</p-sidebar>
+    
 <div *ngIf="selected" class="container-fluid">
     <p-toolbar>
         <div class="ui-toolbar-group-left">
@@ -23,7 +29,7 @@
                         <label>Updated</label>
                     </div>
                     <div class="ui-grid-col-4" style="text-align: right">
-                        <span>{{selected.updatedAt | dateFormat}}</span>
+                        <span>{{selected.updatedAt}}</span>
                     </div>
                 </div>
                 <div class="ui-grid-row">
@@ -169,6 +175,7 @@
                 <div *ngIf="selected.productId>0" class="ui-grid-row">
                     <div class="ui-grid-col-12">
                         <app-simple *ngIf="selected.productType==='Simple'"></app-simple>
+                        <app-grouped *ngIf="selected.productType==='Grouped'"></app-grouped>
                         <app-variant *ngIf="selected.productType==='Variant'"></app-variant>
                     </div>
                 </div>

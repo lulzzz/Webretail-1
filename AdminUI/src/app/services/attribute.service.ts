@@ -8,6 +8,9 @@ import { Helpers } from '../shared/helpers';
 @Injectable()
 export class AttributeService {
 
+    public selected: Attribute;
+    public values: AttributeValue[];
+
     constructor(private http: Http) { }
 
     getAll(): Observable<Attribute[]> {

@@ -6,7 +6,8 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "../webroot",
+      "allowOutsideOutDir": true,
+      "outDir": "dist",
       "assets": [
         "assets",
         "favicon.ico"
@@ -19,15 +20,11 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.css",
-        "../node_modules/bootstrap/dist/css/bootstrap-theme.css",
         "../node_modules/primeng/resources/primeng.css",
         "../node_modules/primeng/resources/themes/pepper-grinder/theme.css",
-        "../node_modules/font-awesome/css/font-awesome.css"
+        "../node_modules/font-awesome/css/font-awesome.min.css"
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
         "../node_modules/chart.js/dist/Chart.min.js"
       ],
       "environmentSource": "environments/environment.ts",

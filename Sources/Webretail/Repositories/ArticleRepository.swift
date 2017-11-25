@@ -163,20 +163,12 @@ struct ArticleRepository : ArticleProtocol {
         return result
     }
     
-    func getAll() throws -> [Article] {
-        let items = Article()
-        try items.query()
-        
-        return try items.rows()
-    }
-    
 	func get(productId: Int, storeIds: String) throws -> [Article] {
         let items = Article()
 		items._storeIds = storeIds
 		try items.query(whereclause: "productId = $1",
 						params: [productId],
-						orderby: ["articleId"],
-						cursor: StORMCursor(limit: 10000, offset: 0))
+						orderby: ["articleId"])
 		
         return try items.rows()
     }
@@ -254,7 +246,9 @@ struct ArticleRepository : ArticleProtocol {
 						row.append(articleLabel);
 					}
 					isFirst = false;
-					row[row.count - 1] = articleItem;
+                    if row.count > 0 {
+                        row[row.count - 1] = articleItem;
+                    }
 				} else {
 					row.append(articleItem);
 				}
@@ -265,7 +259,38 @@ struct ArticleRepository : ArticleProtocol {
 		return ArticleForm(header: header, body: body)
 	}
 	
-	func add(item: Article) throws {
+    func getGrouped(productId: Int) throws -> [GroupItem] {
+        let article = Article()
+        try article.query(whereclause: "productId = $1",
+                          params: [productId],
+                          orderby: ["articleId"])
+        
+        var rows = [GroupItem]()
+        for i in 0..<article.results.rows.count {
+            let row = Article()
+            row.to(article.results.rows[i])
+            
+//            // get attributeValues
+//            let attributeValue = ArticleAttributeValue()
+//            try attributeValue.query(
+//                whereclause: "articleId = $1",
+//                params: [row.articleId],
+//                orderby: ["articleAttributeValueId"]
+//            )
+//            row._attributeValues = try attributeValue.rows()
+            
+            let data = row.articleBarcodes.first(where: { $0.tags.count == 0 })
+            if let barcode = data?.barcode {
+                let product = Product()
+                try product.get(barcode: barcode)
+                rows.append(GroupItem(id: row.articleId, barcode: barcode, product: product))
+            }
+        }
+
+        return rows
+    }
+
+    func add(item: Article) throws {
         item.articleCreated = Int.now()
         item.articleUpdated = Int.now()
         try item.save {
@@ -273,6 +298,21 @@ struct ArticleRepository : ArticleProtocol {
         }
     }
     
+    func addGroup(item: Article) throws -> GroupItem {
+        let barcode = item.articleBarcodes.first!.barcode
+        let product = Product()
+        try product.get(barcode: barcode)
+
+        item.productId = product.productId
+        item.articleCreated = Int.now()
+        item.articleUpdated = Int.now()
+        try item.save {
+            id in item.articleId = id as! Int
+        }
+        
+        return GroupItem(id: item.articleId, barcode: barcode, product: product)
+    }
+
     func update(id: Int, item: Article) throws {
         guard let current = try get(id: id) else {
             throw StORMError.noRecordFound

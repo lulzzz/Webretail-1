@@ -13,11 +13,11 @@ import {
     PanelModule, SplitButtonModule, PickListModule, GrowlModule,
     SelectButtonModule, ChipsModule, InputTextareaModule,
     ContextMenuModule, TooltipModule, CalendarModule,
-    FileUploadModule, ChartModule, CarouselModule,
+    FileUploadModule, ChartModule, CarouselModule, SidebarModule,
     SpinnerModule, StepsModule, AutoCompleteModule
 } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { NgxBarcodeModule } from 'ngx-barcode';
+// import { NgxBarcodeModule } from 'ngx-barcode';
 
 import { AppRoutes } from './app.routes';
 import { AppComponent } from './app.component';
@@ -33,6 +33,7 @@ import { RegisterComponent } from './login/register.component';
 import { AccountComponent } from './account/account.component';
 import { MyInfoComponent } from './account/myinfo.component';
 import { AttributeComponent } from './attribute/attribute.component';
+import { AttributeValueComponent } from './attribute/attributevalue.component';
 import { TagComponent } from './tag/tag.component';
 import { BrandComponent } from './brand/brand.component';
 import { CategoryComponent } from './category/category.component';
@@ -42,6 +43,7 @@ import { StoreComponent } from './store/store.component';
 import { ProductsComponent } from './product/products.component';
 import { ProductComponent } from './product/product.component';
 import { SimpleComponent } from './product/simple.component';
+import { GroupedComponent } from './product/grouped.component';
 import { VariantComponent } from './product/variant.component';
 import { ImportComponent } from './product/import.component';
 import { StockComponent } from './product/stock.component';
@@ -91,14 +93,14 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
     imports: [
         CommonModule, RouterModule, HttpModule, BrowserModule, BrowserAnimationsModule,
         FormsModule, ReactiveFormsModule,
-        DataTableModule, SharedModule, PaginatorModule,
+        DataTableModule, SharedModule, PaginatorModule, SidebarModule,
         MultiSelectModule, DropdownModule, SliderModule, TreeModule,
         ButtonModule, InputTextModule, InputSwitchModule,
         PanelModule, SplitButtonModule, PickListModule, GrowlModule,
         ConfirmDialogModule, ToolbarModule, SelectButtonModule,
         ChipsModule, InputTextareaModule, FileUploadModule, AutoCompleteModule,
         ContextMenuModule, TooltipModule, CalendarModule, ChartModule,
-        CarouselModule, SpinnerModule, StepsModule, NgxBarcodeModule,
+        CarouselModule, SpinnerModule, StepsModule,
         AppRoutes
     ],
     declarations: [
@@ -122,6 +124,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         AccountComponent,
         MyInfoComponent,
         AttributeComponent,
+        AttributeValueComponent,
         TagComponent,
         BrandComponent,
         CategoryComponent,
@@ -131,6 +134,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ProductsComponent,
         ProductComponent,
         SimpleComponent,
+        GroupedComponent,
         VariantComponent,
         StockComponent,
         PublicationComponent,
@@ -174,6 +178,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
     exports: [
         SimpleComponent,
         VariantComponent,
+        GroupedComponent,
         ArticlePickerComponent,
         ProductPickerComponent,
         MovementPickerComponent,

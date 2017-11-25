@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 		private messageService: MessageService,
 		private sessionService: SessionService,
 		private fb: FormBuilder) {
-		sessionService.title = 'Login';
+		sessionService.title = 'Authentication';
 	}
 
 	ngOnInit() {

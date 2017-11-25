@@ -29,6 +29,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     categories: Category[];
     categoriesFiltered: Category[];
     categoriesSelected: Category[];
+    visibleSidebar: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private messageService: MessageService,
@@ -44,7 +45,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
-
+        this.visibleSidebar = true;
         this.dataform = this.fb.group({
             'code': new FormControl('', Validators.required),
             'name': new FormControl('', Validators.required),

@@ -15,8 +15,8 @@ export class DateFilterPipe implements PipeTransform {
       return value;
     }
 
-    let dateStart = arg0;
-    let dateFinish = arg1;
+    const dateStart = arg0;
+    const dateFinish = arg1;
 
     if (arg1 != null) {
       return value.filter(item => this.getDate(item) >= dateStart && this.getDate(item) <= dateFinish);
@@ -25,7 +25,7 @@ export class DateFilterPipe implements PipeTransform {
     return value.filter(item => this.getDate(item).toDateString() === dateStart.toDateString());
   }
 
-  getDate(item: any) : Date {
+  getDate(item: any): Date {
     return new Date(item.movementDate ? item.movementDate.substring(0, 10) : item.invoiceDate.substring(0, 10));
   }
 }

@@ -25,6 +25,7 @@ class ProductController {
         routes.add(method: .get, uri: "/api/product", handler: productsHandlerGET)
 		routes.add(method: .get, uri: "/api/productfrom/{date}", handler: productsHandlerGET)
         routes.add(method: .get, uri: "/api/product/{id}", handler: productHandlerGET)
+        routes.add(method: .get, uri: "/api/product/barcode/{id}", handler: productBarcodeHandlerGET)
         routes.add(method: .get, uri: "/api/product/{id}/publication", handler: publicationProductHandlerGET)
         routes.add(method: .put, uri: "/api/product/{id}/publication", handler: productPublicationHandlerPUT)
 		routes.add(method: .post, uri: "/api/product", handler: productHandlerPOST)
@@ -81,6 +82,17 @@ class ProductController {
         }
     }
 
+    func productBarcodeHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let id = request.urlVariables["id"]!
+            let item = try self.repository.get(barcode: id)
+            try response.setJson(item)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+    
     func productHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             let item: Product = request.getJson()!

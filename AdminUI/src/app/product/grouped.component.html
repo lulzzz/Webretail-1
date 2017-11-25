@@ -1,0 +1,30 @@
+<img *ngIf="isBusy" src="/assets/loading.gif" class="loading">
+
+<div *ngIf="!display">
+    <div style="padding: 10px 0">
+        <button pButton type="button" label="Add article" (click)="addClick()" class="ui-button-info" icon="fa-search-plus"></button>
+    </div>
+    <table *ngIf="product" class="inputtext" cellpadding="2" cellspacing="2">
+        <thead>
+            <tr style="background-color: whitesmoke"> 
+                <td><strong>Barcode</strong></td> 
+                <td><strong>Article</strong></td> 
+                <td align="center" style="width: 80px"><strong>Remove</strong></td> 
+            </tr>
+        </thead>
+        <tbody> 
+            <tr *ngFor="let data of articleForm"> 
+                <td><span>{{data.barcode}}</span></td> 
+                <td><span>
+                    {{ data.product | articleInfo:data.barcode}}
+                </span></td> 
+                <td align="center">
+                    <button pButton type="button" (click)="removeClick(data.id)" class="ui-button-primary" icon="fa-trash-o"></button>
+                </td> 
+            </tr> 
+        </tbody>
+    </table>   
+    <div style="text-align: center"><strong>{{totalRecords}}</strong> articles</div>
+</div>
+
+<article-picker *ngIf="display" (onPicked)="pickerClick($event)"></article-picker>

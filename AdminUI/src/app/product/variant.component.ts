@@ -10,6 +10,7 @@ import { Helpers } from './../shared/helpers';
 import { SessionService } from './../services/session.service';
 import { ProductService } from './../services/product.service';
 import { AttributeService } from './../services/attribute.service';
+import { fail } from 'assert';
 
 @Component({
     selector: 'app-variant',
@@ -65,7 +66,7 @@ export class VariantComponent implements OnInit {
 
     createSheet() {
         this.totalRecords = this.product.articles.length;
-        this.productService.getArticles(this.product.productId, '0')
+        this.productService.getStock(this.product.productId, '0')
             .subscribe(result => {
                 this.articleForm = result;
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
@@ -200,6 +201,10 @@ export class VariantComponent implements OnInit {
                         detail: 'Removed ' + productAttributeValues.length + ' attribute values'
                     }), onerror => this.messageService.add({severity: 'error', summary: 'Remove attribute Values', detail: onerror._body}));
         }
+    }
+
+    closeClick() {
+        this.display = false;
     }
 
     buildClick() {
