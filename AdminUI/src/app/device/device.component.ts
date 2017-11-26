@@ -27,11 +27,11 @@ export class DeviceComponent implements OnInit {
                 private storeService: StoreService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-       sessionService.title = 'Devices';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Devices');
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

@@ -29,11 +29,11 @@ export class TagComponent implements OnInit {
                 private tagService: TagService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        sessionService.title = 'Tags';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Tags');
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required)

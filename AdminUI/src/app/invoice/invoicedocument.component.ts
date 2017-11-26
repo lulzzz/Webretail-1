@@ -32,11 +32,11 @@ export class InvoiceDocumentComponent implements OnInit, OnDestroy {
                 private sessionService: SessionService,
                 private companyService: CompanyService,
                 private invoiceService: InvoiceService) {
-        sessionService.title = 'Invoice';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Invoice');
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

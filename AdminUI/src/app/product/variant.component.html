@@ -24,7 +24,7 @@
 <div *ngIf="display" class="inputtext">
     <p-panel *ngIf="articleForm">
         <p-header>
-            <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-warning" icon="fa-close"></button>
+            <button pButton type="button" label="Close" (click)="closeClick()" class="ui-button-warning" icon="fa-close"></button>
         </p-header>
         <p-pickList [source]="nodesSource" [target]="nodesTarget" [responsive]="true" [showTargetControls]="false"
             (onMoveToSource)="removeNodes($event)" (onMoveToTarget)="addNodes($event)">
@@ -32,5 +32,6 @@
                 <span>{{attr.data}}</span> | <span>{{attr.label}}</span>
             </ng-template>
         </p-pickList>
+        <button pButton type="button" label="Open" (click)="openSidebarClick()" class="ui-button-secondary" icon="fa-folder-open-o"></button>
     </p-panel>
 </div>

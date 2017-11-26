@@ -21,7 +21,6 @@ export class CompanyComponent implements OnInit {
                 private messageService: MessageService,
                 private companyService: CompanyService,
                 private fb: FormBuilder) {
-       sessionService.title = 'Company';
        this.header = '/Media/header.png';
        this.paypalEnvs = [
             {label: 'Sandbox', value: 'sandbox'},
@@ -31,6 +30,7 @@ export class CompanyComponent implements OnInit {
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Company');
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

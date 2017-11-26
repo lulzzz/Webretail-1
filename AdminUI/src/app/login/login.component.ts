@@ -17,10 +17,10 @@ export class LoginComponent implements OnInit {
 		private messageService: MessageService,
 		private sessionService: SessionService,
 		private fb: FormBuilder) {
-		sessionService.title = 'Authentication';
 	}
 
 	ngOnInit() {
+        this.sessionService.setTitle('Authentication');
 		this.userform = this.fb.group({
 			'username': new FormControl('', Validators.required),
 			'password': new FormControl('', Validators.required)
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 		this.sessionService.login(this.user)
 			.subscribe(result => {
 				if (result.login === 'ok') {
-					this.sessionService.grantCredentials(result);
+					this.sessionService.grantCredentials(this.user.username, result);
 				} else {
 					this.messageService.add({ severity: 'warn', summary: 'Authentication', detail: result.error });
 				}

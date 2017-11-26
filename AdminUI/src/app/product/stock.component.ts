@@ -33,11 +33,11 @@ export class StockComponent implements OnInit, OnDestroy {
                 private productService: ProductService,
                 private storeService: StoreService,
                 private location: Location) {
-        sessionService.title = 'Stock';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Stock');
 
         this.isBusy = true;
 

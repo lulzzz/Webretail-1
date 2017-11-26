@@ -8,10 +8,11 @@ import { SessionService } from './../services/session.service';
 
 export class NavigationComponent {
 
-    menuActive: boolean;
-
     constructor(public sessionService: SessionService) {
     }
+
+    set menuActive(value) { this.sessionService.menuActive = value; }
+    get menuActive(): boolean { return this.sessionService.menuActive; }
 
     get isAuthenticated(): boolean {
         return this.sessionService.isAuthenticated;
@@ -24,6 +25,15 @@ export class NavigationComponent {
     onMenuButtonClick(event: Event) {
         this.menuActive = !this.menuActive;
         event.preventDefault();
+    }
+
+    onMenuItemClick() {
+        const width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+        if (width < 1024) {
+            this.menuActive = false;
+        }
     }
 
     logoutClick() {

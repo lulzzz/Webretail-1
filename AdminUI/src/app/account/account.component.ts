@@ -24,11 +24,11 @@ export class AccountComponent implements OnInit {
                 private accountService: AccountService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-       sessionService.title = 'Accounts';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(true);
+        this.sessionService.setTitle('Accounts');
 
         this.dataform = this.fb.group({
             'firstname': new FormControl('', Validators.required),

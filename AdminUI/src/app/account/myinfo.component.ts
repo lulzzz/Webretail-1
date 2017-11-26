@@ -18,10 +18,10 @@ export class MyInfoComponent implements OnInit {
                 private sessionService: SessionService,
                 private accountService: AccountService,
                 private fb: FormBuilder) {
-       sessionService.title = 'My Info';
     }
 
     ngOnInit() {
+        this.sessionService.setTitle('My Info');
         this.sessionService.getCredentials()
             .subscribe(p => {
                 this.accountService.getById(p.uniqueID)

@@ -32,11 +32,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
                 private sessionService: SessionService,
                 private companyService: CompanyService,
                 private movementService: MovementService) {
-        sessionService.title = 'Document';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Document');
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

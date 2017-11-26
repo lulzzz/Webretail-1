@@ -8,7 +8,7 @@ import { Category } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
-    selector: 'app-category-component',
+    selector: 'app-category',
     templateUrl: 'category.component.html'
 })
 
@@ -24,11 +24,11 @@ export class CategoryComponent implements OnInit {
                 private categoryService: CategoryService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-       sessionService.title = 'Categories';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Categories');
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

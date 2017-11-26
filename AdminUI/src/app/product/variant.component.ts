@@ -10,7 +10,10 @@ import { Helpers } from './../shared/helpers';
 import { SessionService } from './../services/session.service';
 import { ProductService } from './../services/product.service';
 import { AttributeService } from './../services/attribute.service';
-import { fail } from 'assert';
+import { AttributeComponent } from '../attribute/attribute.component';
+import { AttributeValueComponent } from '../attribute/attributevalue.component';
+import { EventEmitter } from 'events';
+import { ProductComponent } from './product.component';
 
 @Component({
     selector: 'app-variant',
@@ -18,7 +21,6 @@ import { fail } from 'assert';
 })
 
 export class VariantComponent implements OnInit {
-
     articleForm: ArticleForm;
     totalRecords = 0;
     selected: any;
@@ -41,6 +43,12 @@ export class VariantComponent implements OnInit {
         this.sessionService.checkCredentials(false);
         this.createTree();
         this.createSheet();
+    }
+
+    openSidebarClick() {
+        this.display = false;
+        this.attributeService.selected = new Attribute(this.selectedNode.data, this.selectedNode.label, []);
+        ProductComponent.instance.openSidebarClick(this.selectedNode.label);
     }
 
     createTree() {

@@ -7,7 +7,7 @@
             <button pButton type="button" label="Refresh" (click)="refreshClick()" class="ui-button-primary" icon="fa-refresh"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <p-splitButton label="Details" icon="fa-bars" (onClick)="detailClick()" [model]="buttons" [disabled]="!selected"></p-splitButton>
+            <p-splitButton label="Open" icon="fa-edit" (onClick)="openClick()" [model]="buttons" [disabled]="!selected"></p-splitButton>
         </div>
     </p-toolbar>
     <p-dataTable [responsive]="true" [value]="products | priceFilter:sliderValue:'price' | categoryFilter:categoryValue" 

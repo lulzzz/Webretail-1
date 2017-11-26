@@ -1,4 +1,4 @@
-﻿import { Component, Input, EventEmitter, ViewChild } from '@angular/core';
+﻿import { Component, Input, EventEmitter, ViewChild, Output } from '@angular/core';
 import { DataTable, SelectItem, MenuItem } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { Movement } from './models';
@@ -7,11 +7,11 @@ import { MovementService } from './../services/movement.service';
 
 @Component({
     selector: 'movement-picker',
-    templateUrl: 'movement-picker.component.html',
-    outputs: ['onPicked']
+    templateUrl: 'movement-picker.component.html'
 })
 
 export class MovementPickerComponent {
+    @Output() onPicked = new EventEmitter();
     @ViewChild('dt') datatable: DataTable;
     totalRecords = 0;
     selected: Movement[];
@@ -19,7 +19,6 @@ export class MovementPickerComponent {
     storesFiltered: SelectItem[];
     causals: SelectItem[];
     causalsFiltered: SelectItem[];
-    onPicked = new EventEmitter();
     dateStartValue: Date;
     dateFinishValue: Date;
     public isOpen: boolean;

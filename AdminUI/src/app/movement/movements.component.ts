@@ -55,11 +55,11 @@ export class MovementsComponent implements OnInit {
                 private movementService: MovementService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        sessionService.title = 'Movements';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Movements');
 
         this.dataform = this.fb.group({
             'number': new FormControl('', Validators.required),

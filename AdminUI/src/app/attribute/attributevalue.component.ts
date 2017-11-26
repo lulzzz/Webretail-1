@@ -23,7 +23,6 @@ export class AttributeValueComponent implements OnInit {
                 private attributeService: AttributeService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        sessionService.title = 'Attribute values';
     }
 
     get selected(): Attribute { return this.attributeService.selected; }
@@ -32,6 +31,8 @@ export class AttributeValueComponent implements OnInit {
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Attribute values');
+
         this.dataformValue = this.fb.group({
             'code': new FormControl('', [Validators.required, Validators.maxLength(6)]),
             'name': new FormControl('', Validators.required)

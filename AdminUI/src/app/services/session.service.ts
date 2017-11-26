@@ -9,10 +9,31 @@ import { Helpers } from '../shared/helpers';
 @Injectable()
 export class SessionService {
 
-    title: string;
-
+    private title: string;
+    username: string;
+    menuActive: boolean;
+    titleSidebar: string;
+ 
     constructor(private router: Router, private http: Http) {
         this.title = '';
+        this.titleSidebar = '';
+        this.username = localStorage.getItem('username');
+        this.initMenu();
+    }
+
+    get visibleSidebar(): boolean { return this.titleSidebar !== '' };
+
+    initMenu() {
+        const width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+        this.menuActive = width > 1024;
+    }
+
+    setTitle(title) {
+        if (!this.visibleSidebar) {
+            this.title = title;
+        }
     }
 
     login(user: Login): Observable<Token> {
@@ -24,11 +45,13 @@ export class SessionService {
         const body = { token: localStorage.getItem('token') };
         this.http.post('/api/logout', body, { headers: Helpers.getHeaders() })
             .map((response) => response.json())
-            .subscribe(result => result);
+            .subscribe(result => this.username = '');
         this.removeCredentials();
     }
 
-    grantCredentials(data: any) {
+    grantCredentials(username: string, data: any) {
+        this.username = username;
+        localStorage.setItem('username', username);
         localStorage.setItem('uniqueID', data.uniqueID);
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.role);
@@ -36,6 +59,7 @@ export class SessionService {
     }
 
     removeCredentials() {
+        localStorage.removeItem('username');
         localStorage.removeItem('uniqueID');
         localStorage.removeItem('token');
         localStorage.removeItem('role');

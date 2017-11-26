@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, ViewContainerRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
@@ -10,6 +10,10 @@ import { SessionService } from './../services/session.service';
 import { BrandService } from './../services/brand.service';
 import { CategoryService } from './../services/category.service';
 import { ProductService } from './../services/product.service';
+import { BrandComponent } from '../brand/brand.component';
+import { CategoryComponent } from '../category/category.component';
+import { AttributeComponent } from '../attribute/attribute.component';
+import { AttributeValueComponent } from '../attribute/attributevalue.component';
 
 @Component({
     selector: 'app-product',
@@ -17,7 +21,9 @@ import { ProductService } from './../services/product.service';
 })
 
 export class ProductComponent implements OnInit, OnDestroy {
+    public static instance: ProductComponent = null;
 
+    @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) divContainer;
     private sub: any;
     dataform: FormGroup;
     types: SelectItem[];
@@ -37,15 +43,17 @@ export class ProductComponent implements OnInit, OnDestroy {
                 private productService: ProductService,
                 private brandService: BrandService,
                 private categoryService: CategoryService,
+                private componentFactoryResolver: ComponentFactoryResolver,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder,
                 private location: Location) {
-        sessionService.title = 'Product';
+        ProductComponent.instance = this;
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
-        this.visibleSidebar = true;
+        this.sessionService.setTitle('Product');
+
         this.dataform = this.fb.group({
             'code': new FormControl('', Validators.required),
             'name': new FormControl('', Validators.required),
@@ -86,14 +94,8 @@ export class ProductComponent implements OnInit, OnDestroy {
                                         })
                                     );
                             }
-                            this.brandService.getAll()
-                                .subscribe(result => {
-                                    this.brands = result;
-                                    this.categoryService.getAll()
-                                        .subscribe(categories => {
-                                            this.categories = categories;
-                                        });
-                                });
+                            this.getBrands();
+                            this.getCategories();
                         });
                 });
         });
@@ -109,6 +111,20 @@ export class ProductComponent implements OnInit, OnDestroy {
     get isNew(): boolean { return this.selected == null || this.selected.productId === 0; }
     get selectedIndex(): number { return this.productService.products.indexOf(this.selected); }
 
+    getBrands() {
+        this.brandService.getAll()
+            .subscribe(result => {
+                this.brands = result;
+            });
+    }
+
+    getCategories() {
+        this.categoryService.getAll()
+            .subscribe(result => {
+                this.categories = result;
+            });
+    }
+
     addClick() {
         this.productService.product = new Product();
         this.selected.productTax =  this.taxes[0].value;
@@ -117,6 +133,40 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     closeClick() {
         this.location.back();
+    }
+
+    openSidebarClick($event) {
+        this.sessionService.titleSidebar = $event;
+        this.divContainer.clear();
+        let component: any;
+        switch ($event) {
+            case 'Brands':
+                component = BrandComponent
+                break;
+            case 'Categories':
+                component = CategoryComponent
+                break;
+            case 'Attributes':
+                component = AttributeComponent
+                break;
+            default:
+                component = AttributeValueComponent
+                break;
+        }
+        const factory = this.componentFactoryResolver.resolveComponentFactory(component);
+        this.divContainer.createComponent(factory);
+    }
+
+    closeSidebarClick(event) {
+        switch (this.sessionService.titleSidebar) {
+            case 'Brands':
+                this.getBrands();
+                break;
+            case 'Categories':
+                this.getCategories();
+                break;
+        }
+        this.sessionService.titleSidebar = '';
     }
 
     onOptionClick() {

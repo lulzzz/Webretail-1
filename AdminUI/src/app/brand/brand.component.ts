@@ -24,11 +24,11 @@ export class BrandComponent implements OnInit {
                 private brandService: BrandService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-       sessionService.title = 'Brands';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Brands');
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required)

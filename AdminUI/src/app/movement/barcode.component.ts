@@ -28,11 +28,11 @@ export class BarcodeComponent implements OnInit, OnDestroy {
                 private sessionService: SessionService,
                 private companyService: CompanyService,
                 private movementService: MovementService) {
-        sessionService.title = 'Barcode';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Barcode');
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

@@ -18,10 +18,10 @@ export class RegisterComponent implements OnInit {
 		private messageService: MessageService,
 		private sessionService: SessionService,
 		private fb: FormBuilder) {
-       	sessionService.title = 'Register';
     }
 
 	ngOnInit() {
+        this.sessionService.setTitle('Register');
         this.userform = this.fb.group({
             'username': new FormControl('', Validators.required),
             'password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),

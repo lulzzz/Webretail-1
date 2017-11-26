@@ -1,10 +1,7 @@
-﻿<p-confirmDialog header="Confirmation delete on cascade" icon="fa-trash-o" [responsive]="true"></p-confirmDialog>
-<img *ngIf="!selected" src="/assets/loading.gif" class="loading">
-<p-sidebar [(visible)]="visibleSidebar"  styleClass="ui-sidebar-lg" position="top" [baseZIndex]="10000">
-    <h1 style="font-weight:normal">Brand</h1>
-    <app-brand></app-brand>
-    <button pButton type="button" (click)="visibleSidebar = false" label="Save" class="ui-button-success"></button>
-    <button pButton type="button" (click)="visibleSidebar = false" label="Cancel" class="ui-button-secondary"></button>
+﻿<img *ngIf="!selected" src="/assets/loading.gif" class="loading">
+<p-sidebar [(visible)]="sessionService.visibleSidebar" (onHide)="closeSidebarClick($event)" styleClass="ui-sidebar-lg" position="right" [baseZIndex]="99999">
+    <h1>{{sessionService.titleSidebar}}</h1>
+    <div #dynamicComponentContainer></div>
 </p-sidebar>
     
 <div *ngIf="selected" class="container-fluid">
@@ -55,7 +52,7 @@
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="brand">Brand</label></div>
-                    <div class="ui-grid-col-8">
+                    <div class="ui-grid-col-7">
                         <p-autoComplete [(ngModel)]="selected.brand" field="brandName" formControlName="brand" [suggestions]="brandsFiltered" (completeMethod)="filterBrands($event)" [size]="30"
                             [minLength]="1" placeholder="Hint: type for filter" [multiple]="false">
                             <ng-template let-brand pTemplate="item">
@@ -64,15 +61,18 @@
                                     <img src="assets/showcase/images/demo/car/{{brand.brandName}}.png" style="width:32px;display:inline-block;margin:5px 0 2px 5px"/>
                                 </div>
                             </ng-template>
-                        </p-autoComplete>
+                        </p-autoComplete>    
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['brand'].valid&&dataform.controls['brand'].dirty">
                             <i class="fa fa-close"></i> Brand is required
                         </div>
                     </div>
+                    <div class="ui-grid-col-1">
+                        <button type="button" pButton icon="fa-folder-open-o" style="height: 30px" class="ui-button-secondary" (click)="openSidebarClick('Brands')"></button>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="categories">Categories</label></div>
-                    <div class="ui-grid-col-8">
+                    <div class="ui-grid-col-7">
                         <p-autoComplete [(ngModel)]="categoriesSelected" field="categoryName" formControlName="categories" [suggestions]="categoriesFiltered" (completeMethod)="filterCategories($event)" 
                             placeholder="Hint: type for filter" [multiple]="true">
                             <ng-template let-category pTemplate="item">
@@ -81,6 +81,9 @@
                                 </div>
                             </ng-template>
                         </p-autoComplete>
+                    </div>
+                    <div class="ui-grid-col-1">
+                        <button type="button" pButton icon="fa-folder-open-o" style="height: 30px" class="ui-button-secondary" (click)="openSidebarClick('Categories')"></button>
                     </div>
                 </div>
                 <div class="ui-grid-row">
@@ -149,7 +152,6 @@
                         <input pInputText type="number" min="0" formControlName="height" [(ngModel)]="selected.packaging.height"/>
                     </div>
                 </div>
-
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"></div>
                     <div class="ui-grid-col-4"><label for="um">Unit of Measure</label></div>
@@ -166,7 +168,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="type">Type</label></div>
                     <div class="ui-grid-col-8">
-                        <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" (click)="onOptionClick()" [disabled]="!dataform.valid" [style]="{'width':'100%'}"></p-selectButton>
+                        <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" (click)="onOptionClick()" [style]="{'width':'100%'}"></p-selectButton>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
                             <i class="fa fa-close"></i> Type is required
                         </div>

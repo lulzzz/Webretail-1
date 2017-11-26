@@ -24,11 +24,11 @@ export class StoreComponent implements OnInit {
                 private storeService: StoreService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        sessionService.title = 'Stores';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Stores');
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

@@ -25,11 +25,11 @@ export class StatisticsComponent implements OnInit {
 
     constructor(private sessionService: SessionService,
                 private statisticService: StatisticService) {
-        sessionService.title = 'Statistics';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(true);
+        this.sessionService.setTitle('Statistics');
 
         this.deviceOptions = {
             title: {

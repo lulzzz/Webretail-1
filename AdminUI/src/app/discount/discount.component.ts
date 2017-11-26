@@ -34,11 +34,11 @@ export class DiscountComponent implements OnInit, OnDestroy {
                 private location: Location) {
         this.codes = [];
         this.itemsSelected = [];
-        sessionService.title = 'Discount';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Discount');
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

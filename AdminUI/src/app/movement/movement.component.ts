@@ -36,11 +36,11 @@ export class MovementComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private location: Location) {
         this.barcodes = [];
-        sessionService.title = 'Movement';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Movement');
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

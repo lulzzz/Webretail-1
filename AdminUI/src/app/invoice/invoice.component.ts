@@ -40,11 +40,11 @@ export class InvoiceComponent implements OnInit, OnDestroy {
                 private location: Location) {
         this.codes = [];
         this.itemsSelected = [];
-        sessionService.title = 'Invoice';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Invoice');
 
         // Subscribe to route params
         this.sub = this.activatedRoute.params.subscribe(params => {

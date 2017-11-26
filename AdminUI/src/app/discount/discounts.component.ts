@@ -29,11 +29,11 @@ export class DiscountsComponent implements OnInit {
                 private discountService: DiscountService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        sessionService.title = 'Discounts';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Discounts');
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

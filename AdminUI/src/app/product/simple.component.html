@@ -1,21 +1,19 @@
-<div class="inputtext">
-    <table class="table" cellpadding="2" cellspacing="2">
-        <thead>
-            <tr> 
-                <td style="background-color: whitesmoke"><strong>Barcode</strong></td> 
-            </tr>
-        </thead>
-        <tfoot>
-            <tr> 
-                <td><button pButton type="button" label="Update" (click)="saveClick()" class="ui-button-info" icon="fa-barcode"></button></td> 
-            </tr>
-        </tfoot>
-        <tbody> 
-            <tr> 
-                <td>
-                    <input pInputText type="text" size="13" [(ngModel)]="barcode" />
-                </td> 
-            </tr> 
-        </tbody>
-    </table>    
-</div>
+<table class="ui-datatable inputtext" cellpadding="2" cellspacing="2">
+    <thead>
+        <tr> 
+            <td style="background-color: whitesmoke"><strong>Barcode</strong></td> 
+        </tr>
+    </thead>
+    <tfoot>
+        <tr> 
+            <td><button pButton type="button" label="Update" (click)="saveClick()" class="ui-button-info" icon="fa-barcode"></button></td> 
+        </tr>
+    </tfoot>
+    <tbody> 
+        <tr> 
+            <td>
+                <input pInputText type="text" class="inputtext" [(ngModel)]="barcode" />
+            </td> 
+        </tr> 
+    </tbody>
+</table>    

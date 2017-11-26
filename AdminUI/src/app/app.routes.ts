@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 // import { RegisterComponent } from './login/register.component';
 import { AccountComponent } from './account/account.component';
 import { MyInfoComponent } from './account/myinfo.component';
-import { AttributeComponent } from './attribute/attribute.component';
+import { AttributesComponent } from './attribute/attributes.component';
 import { TagComponent } from './tag/tag.component';
 import { BrandComponent } from './brand/brand.component';
 import { CategoryComponent } from './category/category.component';
@@ -42,7 +42,7 @@ export const routes: Routes = [
     { path: 'store', component: StoreComponent },
     { path: 'brand', component: BrandComponent },
     { path: 'category', component: CategoryComponent },
-    { path: 'attribute', component: AttributeComponent },
+    { path: 'attribute', component: AttributesComponent },
     { path: 'tag', component: TagComponent },
     { path: 'causal', component: CausalComponent },
     { path: 'registry', component: RegistryComponent },

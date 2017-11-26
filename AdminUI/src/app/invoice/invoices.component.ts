@@ -35,11 +35,11 @@ export class InvoicesComponent implements OnInit {
                 private registryService: RegistryService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-        sessionService.title = 'Invoices';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Invoices');
 
         this.dataform = this.fb.group({
             'number': new FormControl('', Validators.required),

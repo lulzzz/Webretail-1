@@ -23,11 +23,11 @@ export class ReportSalesComponent implements OnInit {
     constructor(private messageService: MessageService,
                 private sessionService: SessionService,
                 private movementService: MovementService) {
-        sessionService.title = 'Sales';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(true);
+        this.sessionService.setTitle('Sales');
 
         this.period = new Period();
         this.getData();

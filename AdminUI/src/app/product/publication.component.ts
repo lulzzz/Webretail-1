@@ -33,9 +33,6 @@ export class PublicationComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private publicationService: PublicationService,
                 private location: Location) {
-
-        sessionService.title = 'Publication';
-
         this.countries = [];
         this.countries.push({label: 'English', value: 'EN'});
         this.countries.push({label: 'Italian', value: 'IT'});
@@ -47,6 +44,7 @@ export class PublicationComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.sessionService.checkCredentials(true);
+        this.sessionService.setTitle('Publication');
 
         this.translation = new Translation(this.countries[0].value, '');
         this.selectedKey = 'Description';

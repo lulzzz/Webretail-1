@@ -25,14 +25,11 @@ export class ImportComponent implements OnInit  {
     constructor(private messageService: MessageService,
                 private sessionService: SessionService,
                 private importService: ImportService) {
-        sessionService.title = 'Import';
     }
 
     ngOnInit() {
-        if (!this.sessionService.isAuthenticated) {
-            return;
-        }
-
+        this.sessionService.checkCredentials(true);
+        this.sessionService.setTitle('Import');
         this.getProducts();
      }
 

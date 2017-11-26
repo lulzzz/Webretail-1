@@ -32,6 +32,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 import { AccountComponent } from './account/account.component';
 import { MyInfoComponent } from './account/myinfo.component';
+import { AttributesComponent } from './attribute/attributes.component';
 import { AttributeComponent } from './attribute/attribute.component';
 import { AttributeValueComponent } from './attribute/attributevalue.component';
 import { TagComponent } from './tag/tag.component';
@@ -123,6 +124,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         RegisterComponent,
         AccountComponent,
         MyInfoComponent,
+        AttributesComponent,
         AttributeComponent,
         AttributeValueComponent,
         TagComponent,
@@ -175,10 +177,11 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         PublicationService,
         ImportService
     ],
+    entryComponents: [
+        AttributeComponent,
+        AttributeValueComponent
+    ],
     exports: [
-        SimpleComponent,
-        VariantComponent,
-        GroupedComponent,
         ArticlePickerComponent,
         ProductPickerComponent,
         MovementPickerComponent,

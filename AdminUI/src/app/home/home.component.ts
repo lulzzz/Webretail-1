@@ -13,10 +13,10 @@ export class HomeComponent implements OnInit  {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private sessionService: SessionService) {
-        sessionService.title = 'Home';
     }
 
     ngOnInit() {
+        this.sessionService.setTitle('Home');
 
         if (this.sessionService.isAuthenticated) {
             this.token = localStorage.getItem('token');

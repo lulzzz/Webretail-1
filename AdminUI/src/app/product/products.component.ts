@@ -29,15 +29,14 @@ export class ProductsComponent implements OnInit {
                 private sessionService: SessionService,
                 private productService: ProductService,
                 private brandService: BrandService) {
-        sessionService.title = 'Products';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Products');
 
         this.buttons = [
-            { label: 'Edit', icon: 'fa-edit', command: (event) => this.openClick() },
-            { label: 'Detail', icon: 'fa-bars', command: (event) => this.detailClick() },
+            { label: 'Open', icon: 'fa-edit', command: (event) => this.openClick() },
             { label: 'Stock', icon: 'fa-list-ol', command: (event) => this.stockClick() },
             { label: 'Publication', icon: 'fa-shopping-cart', command: (event) => this.publicationClick() }
         ];
@@ -96,10 +95,6 @@ export class ProductsComponent implements OnInit {
 
     openClick() {
         this.router.navigateByUrl('product/' + this.selected.productId);
-    }
-
-    detailClick() {
-        this.router.navigateByUrl('product/' + this.selected.productId + '/detail');
     }
 
     stockClick() {

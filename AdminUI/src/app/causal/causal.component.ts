@@ -25,11 +25,11 @@ export class CausalComponent implements OnInit {
                 private causalService: CausalService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
-       sessionService.title = 'Causals';
     }
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
+        this.sessionService.setTitle('Causals');
 
         this.operators = [];
         this.operators.push({label: '-1', value: -1});

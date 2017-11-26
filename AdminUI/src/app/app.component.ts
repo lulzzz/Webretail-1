@@ -1,5 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { SessionService } from './services/session.service';
 
 @Component({
     selector: 'app-component',
@@ -19,4 +20,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ],
   })
 
-export class AppComponent { }
+export class AppComponent {
+    constructor(public sessionService: SessionService) {
+    }
+    get menuActive(): boolean { return this.sessionService.menuActive; }
+}

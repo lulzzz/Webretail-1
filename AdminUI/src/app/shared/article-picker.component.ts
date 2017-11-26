@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit, EventEmitter, ViewChild } from '@angular/core';
+﻿import { Component, OnInit, EventEmitter, ViewChild, Output } from '@angular/core';
 import { DataTable, SelectItem, MenuItem } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { Product, ProductCategory, ProductAttributeValue, ArticleForm, ArticleItem } from './models';
@@ -7,11 +7,11 @@ import { ProductService } from './../services/product.service';
 
 @Component({
     selector: 'article-picker',
-    templateUrl: 'article-picker.component.html',
-    outputs: ['onPicked']
+    templateUrl: 'article-picker.component.html'
 })
 
 export class ArticlePickerComponent implements OnInit {
+    @Output() onPicked = new EventEmitter();
     @ViewChild('dt') datatable: DataTable;
     totalRecords = 0;
     selected: Product;
@@ -21,7 +21,6 @@ export class ArticlePickerComponent implements OnInit {
     categoryValue: string;
     sliderValue: number;
     articleForm: ArticleForm;
-    onPicked = new EventEmitter();
     public isOpen: boolean;
 
     constructor(private messageService: MessageService,
