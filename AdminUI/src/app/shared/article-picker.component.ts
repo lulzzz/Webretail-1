@@ -21,18 +21,15 @@ export class ArticlePickerComponent implements OnInit {
     categoryValue: string;
     sliderValue: number;
     articleForm: ArticleForm;
-    public isOpen: boolean;
 
     constructor(private messageService: MessageService,
                 private productService: ProductService) {
-        this.isOpen = false;
     }
 
     set products(value) { this.productService.products = value; }
     get products(): Product[] { return this.productService.products; }
 
     ngOnInit() {
-        this.isOpen = true;
         if (!this.products) {
             this.reloadData();
         } else {
@@ -54,10 +51,6 @@ export class ArticlePickerComponent implements OnInit {
         this.buildFilter(this.products);
     }
 
-    hidePickerClick() {
-        this.isOpen = false;
-    }
-
     pickerClick() {
         const data: string[] = [];
         this.articleForm.body
@@ -67,7 +60,6 @@ export class ArticlePickerComponent implements OnInit {
                 }
             }));
         this.onPicked.emit(data);
-        this.isOpen = false;
     }
 
     buildFilter(items: Product[]) {

@@ -1,14 +1,7 @@
-﻿<p-dataTable *ngIf="isOpen" [responsive]="true" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
+﻿<p-dataTable [responsive]="true" [value]="products | priceFilter:sliderValue | categoryFilter:categoryValue" 
     selectionMode="single" (onRowSelect)="onRowSelect($event)"
     rowExpandMode="single" expandableRows="true" (onRowExpand)="onRowExpand($event)"
     [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" #dt>
-    <p-header>
-        <div class="ui-helper-clearfix" style="text-align: left">
-            <span style="font-size:20px;display:inline-block;margin-top:3px"><b>Article picker</b></span>
-            <button pButton type="button" label="Close" (click)="hidePickerClick()" style="float: right" class="ui-button-warning" icon="fa-close"></button>
-        </div>
-    </p-header>
-    <p-column field="productCode" header="Code" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     <p-column field="productName" header="Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
     <p-column field="brand.brandName" header="Brand" [sortable]="true" [filter]="true" filterMatchMode="equals" [style]="{'overflow':'visible'}" >
         <ng-template pTemplate="filter" let-col>
@@ -29,13 +22,13 @@
             <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000"></p-slider>
         </ng-template>
         <ng-template let-col let-data="rowData" pTemplate="body">
-            <div *ngIf="data.discount;then discount_content else price_content"></div>
+            <div *ngIf="data.discount.discountId>0;then discount_content else price_content"></div>
             <ng-template #discount_content>
                 <span class="percentage">-{{data.discount.discountPercentage}}%</span>
-                <del>{{data.productSellingPrice | currency: 'EUR' : true}}</del><br><strong>{{data.discount.discountPrice | currency: 'EUR' : true}}</strong>
+                <del>{{data.price.selling | currency: 'EUR' : true}}</del><br><strong>{{data.discount.discountPrice | currency: 'EUR' : true}}</strong>
             </ng-template>
             <ng-template #price_content>
-                {{data.productSellingPrice | currency: 'EUR' : true}}
+                {{data.price.selling | currency: 'EUR' : true}}
             </ng-template>
         </ng-template>
     </p-column>
@@ -55,7 +48,7 @@
                     </tr> 
                 </tbody>
             </table>
-            <button pButton label="Pickup" type="button" (click)="pickerClick()" class="ui-button-success" icon="fa-reply-all"></button>
+            <button pButton label="Pickup" type="button" (click)="pickerClick()" class="inputtext ui-button-info" icon="fa-reply-all"></button>
         </div>
     </ng-template>
 </p-dataTable>

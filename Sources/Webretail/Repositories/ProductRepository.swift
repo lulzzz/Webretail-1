@@ -23,8 +23,8 @@ struct ProductRepository : ProductProtocol {
     func getProductTypes() throws -> [ItemValue] {
         var types = [ItemValue]()
         types.append(ItemValue(value: "Simple"))
-        types.append(ItemValue(value: "Grouped"))
         types.append(ItemValue(value: "Variant"))
+        types.append(ItemValue(value: "Grouped"))
         return types
     }
 

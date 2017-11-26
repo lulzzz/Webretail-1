@@ -8,6 +8,9 @@ import {
 import { Helpers } from './../shared/helpers';
 import { SessionService } from './../services/session.service';
 import { ProductService } from './../services/product.service';
+import { ProductComponent } from './product.component';
+import { ArticlePickerComponent } from '../shared/article-picker.component';
+import { EventEmitter } from 'events';
 
 @Component({
     selector: 'app-grouped',
@@ -15,10 +18,8 @@ import { ProductService } from './../services/product.service';
 })
 
 export class GroupedComponent implements OnInit {
-
     articleForm: [GroupItem];
     totalRecords = 0;
-    display: boolean;
 
     constructor(private messageService: MessageService,
                 private confirmationService: ConfirmationService,
@@ -38,43 +39,37 @@ export class GroupedComponent implements OnInit {
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
     }
 
-    addClick() {
-        this.display = true;
+    openSidebarClick() {
+        const comp = ProductComponent.instance.openSidebarClick('Articles');
+        comp.instance.onPicked.subscribe((data) => this.pickerClick(data));
     }
 
     pickerClick(data) {
         data.forEach(element => {
             const array = element.split('#');
             const barcode = array[0];
-            const article = new Article();
-            article.packaging = new Packaging();
-            article.barcodes = [<Barcode>{ barcode: barcode, tags: [] }];
             this.productService
-                .addArticle(article)
+                .getBarcode(barcode)
                 .subscribe(result => {
-                    this.articleForm.push(result);
+                    const group = <GroupItem>{ id: 0, barcode: barcode, product: result };
+                    this.articleForm.push(group);
                     this.totalRecords++;
                     this.messageService.add({
                         severity: 'success',
-                        summary: 'Product',
+                        summary: 'Articles',
                         detail: 'Added successfully!'
                     });
                 });
         });
-        this.display = false;
     }
 
-    removeClick(id) {
+    removeClick(barcode) {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to remove this article?',
             accept: () => {
-                this.productService
-                .removeArticle(id)
-                .subscribe(result => {
-                    const index = this.articleForm.findIndex(p => p.id === id);
-                    this.articleForm.splice(index, 1);
-                    this.totalRecords--;
-                });
+                const index = this.articleForm.findIndex(p => p.barcode === barcode);
+                this.articleForm.splice(index, 1);
+                this.totalRecords--;
             }
         });
     }

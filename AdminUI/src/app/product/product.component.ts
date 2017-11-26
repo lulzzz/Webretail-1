@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { Product, Brand, ProductCategory, Category } from './../shared/models';
+import { Product, Brand, ProductCategory, Category, Barcode, Article } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 import { SessionService } from './../services/session.service';
 import { BrandService } from './../services/brand.service';
@@ -12,8 +12,10 @@ import { CategoryService } from './../services/category.service';
 import { ProductService } from './../services/product.service';
 import { BrandComponent } from '../brand/brand.component';
 import { CategoryComponent } from '../category/category.component';
-import { AttributeComponent } from '../attribute/attribute.component';
+import { AttributesComponent } from '../attribute/attributes.component';
 import { AttributeValueComponent } from '../attribute/attributevalue.component';
+import { ArticlePickerComponent } from '../shared/article-picker.component';
+import { join } from 'path';
 
 @Component({
     selector: 'app-product',
@@ -25,6 +27,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) divContainer;
     private sub: any;
+    barcode: string;
     dataform: FormGroup;
     types: SelectItem[];
     taxes: SelectItem[];
@@ -56,6 +59,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         this.dataform = this.fb.group({
             'code': new FormControl('', Validators.required),
+            'barcode': new FormControl('', Validators.required),
             'name': new FormControl('', Validators.required),
             'type': new FormControl('', Validators.required),
             'brand': new FormControl('', Validators.required),
@@ -64,10 +68,10 @@ export class ProductComponent implements OnInit, OnDestroy {
             'tax': new FormControl('', Validators.required),
             'selling': new FormControl('', Validators.required),
             'purchase': new FormControl('', Validators.required),
-            'weight': new FormControl('', Validators.nullValidator),
-            'length': new FormControl('', Validators.nullValidator),
-            'width': new FormControl('', Validators.nullValidator),
-            'height': new FormControl('', Validators.nullValidator),
+            'weight': new FormControl('', Validators.required),
+            'length': new FormControl('', Validators.required),
+            'width': new FormControl('', Validators.required),
+            'height': new FormControl('', Validators.required),
             'isActive': new FormControl('', Validators.required)
         });
 
@@ -88,6 +92,10 @@ export class ProductComponent implements OnInit, OnDestroy {
                                         result => {
                                             this.productService.product = result;
                                             this.categoriesSelected = result.categories.map(p => p.category);
+                                            const article = this.productService.product.articles.find(p => p.attributeValues.length === 0);
+                                            if (article) {
+                                                this.barcode = article.barcodes.find(p => p.tags.length === 0).barcode;
+                                            }
                                         },
                                         onerror => this.messageService.add({
                                             severity: 'error', summary: 'get product', detail: onerror._body
@@ -99,6 +107,12 @@ export class ProductComponent implements OnInit, OnDestroy {
                         });
                 });
         });
+
+        // this.productService.getArticles(this.product.productId)
+        //     .subscribe(result => {
+        //         this.productService.product.articles = result;
+        //     }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
+
     }
 
     ngOnDestroy() {
@@ -127,15 +141,15 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     addClick() {
         this.productService.product = new Product();
-        this.selected.productTax =  this.taxes[0].value;
-        this.selected.productUm =  this.ums[0].value;
+        this.selected.productTax = this.taxes[0].value;
+        this.selected.productUm = this.ums[0].value;
     }
 
     closeClick() {
         this.location.back();
     }
 
-    openSidebarClick($event) {
+    openSidebarClick($event): any {
         this.sessionService.titleSidebar = $event;
         this.divContainer.clear();
         let component: any;
@@ -147,14 +161,17 @@ export class ProductComponent implements OnInit, OnDestroy {
                 component = CategoryComponent
                 break;
             case 'Attributes':
-                component = AttributeComponent
+                component = AttributesComponent
+                break;
+            case 'Articles':
+                component = ArticlePickerComponent
                 break;
             default:
                 component = AttributeValueComponent
                 break;
         }
         const factory = this.componentFactoryResolver.resolveComponentFactory(component);
-        this.divContainer.createComponent(factory);
+        return this.divContainer.createComponent(factory);
     }
 
     closeSidebarClick(event) {
@@ -169,12 +186,6 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.sessionService.titleSidebar = '';
     }
 
-    onOptionClick() {
-        if (this.selected.productId === 0) {
-            this.saveClick();
-        }
-    }
-
     saveClick() {
         this.selected.categories = [];
         this.categoriesSelected.forEach(c => {
@@ -184,11 +195,22 @@ export class ProductComponent implements OnInit, OnDestroy {
             };
             this.selected.categories.push(productCategory);
         });
+
+        let article = this.selected.articles.find(p => p.attributeValues.length === 0);
+        if (!article) {
+            article = new Article();
+            article.barcodes.push(<Barcode>{ barcode: this.barcode });
+        } else {
+            const barcode = article.barcodes.find(p => p.tags.length === 0);
+            barcode.barcode = this.barcode;
+        }
+        console.log(JSON.stringify(this.selected));
+        /*
         if (this.isNew) {
             this.productService.create(this.selected)
                 .subscribe(result => {
                     this.productService.product = result;
-                    this.productService.products.push(this.selected);
+                    this.productService.products.push(result);
                     this.messageService.add({severity: 'success', summary: 'Success', detail: 'Product created!'})
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
@@ -198,6 +220,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                     this.messageService.add({severity: 'success', summary: 'Success', detail: 'Product updated!'})
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
+        */
     }
 
     deleteClick() {

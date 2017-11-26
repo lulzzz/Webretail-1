@@ -207,8 +207,8 @@ export class AttributeValue {
     public attributeValueCode: string,
     public attributeValueName: string,
     public translations: Translation[]
-  ) { }
-}
+    ) { }
+  }
 
 export class TagGroup {
   constructor(
@@ -557,4 +557,10 @@ export interface GroupItem {
   id: number;
   barcode: string;
   product: Product;
+}
+
+export interface AttributeForm {
+  id: number;
+  name: string;
+  values: string[];
 }

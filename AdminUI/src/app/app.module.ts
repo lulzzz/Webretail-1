@@ -178,13 +178,11 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ImportService
     ],
     entryComponents: [
-        AttributeComponent,
-        AttributeValueComponent
-    ],
-    exports: [
         ArticlePickerComponent,
         ProductPickerComponent,
-        MovementPickerComponent,
+        MovementPickerComponent
+    ],
+    exports: [
         CategoryFilterPipe,
         PriceFilterPipe,
         ArticleInfoPipe,
