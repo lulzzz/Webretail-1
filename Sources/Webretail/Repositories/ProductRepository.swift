@@ -77,10 +77,10 @@ struct ProductRepository : ProductProtocol {
         
         return item
     }
-
+    
     func add(item: Product) throws {
 
-        // Brand
+        /// Brand
         let brand = Brand()
         try brand.query(
             whereclause: "brandName = $1", params: [item._brand.brandName],
@@ -96,7 +96,7 @@ struct ProductRepository : ProductProtocol {
         }
         item.brandId = brand.brandId
 
-        // Categories
+        /// Categories
         for c in item._categories.sorted(by: { $0._category.categoryIsPrimary.hashValue < $1._category.categoryIsPrimary.hashValue }) {
             let category = Category()
             try category.query(
@@ -116,13 +116,14 @@ struct ProductRepository : ProductProtocol {
             c.categoryId = category.categoryId
         }
         
+        /// Product
         item.productCreated = Int.now()
         item.productUpdated = Int.now()
         try item.save {
             id in item.productId = id as! Int
         }
         
-        // ProductCategories
+        /// ProductCategories
         for c in item._categories {
             let productCategory = ProductCategory()
             productCategory.productId = item.productId
@@ -131,91 +132,11 @@ struct ProductRepository : ProductProtocol {
                 id in productCategory.productCategoryId = id as! Int
             }
         }
-    }
-    
-    func create(item: Product) throws -> [String : Any] {
 
-        // Brand
-        let brand = Brand()
-        try brand.query(
-            whereclause: "brandName = $1", params: [item._brand.brandName],
-            cursor: StORMCursor(limit: 1, offset: 0)
-        )
-        if brand.brandId == 0 {
-            brand.brandName = item._brand.brandName
-            brand.brandCreated = Int.now()
-            brand.brandUpdated = Int.now()
-            try brand.save {
-                id in item.brandId = id as! Int
-            }
-        } else {
-            item.brandId = brand.brandId
-        }
-        
-        // Categories
-        for c in item._categories.sorted(by: { $0._category.categoryIsPrimary.hashValue < $1._category.categoryIsPrimary.hashValue }) {
-            let category = Category()
-            try category.query(
-                whereclause: "categoryName = $1", params: [c._category.categoryName],
-                cursor: StORMCursor(limit: 1, offset: 0)
-            )
-            if category.categoryId == 0 {
-                category.categoryName = c._category.categoryName
-                category.categoryIsPrimary = c._category.categoryIsPrimary
-                category.categoryTranslates = c._category.categoryTranslates
-                category.categoryCreated = Int.now()
-                category.categoryUpdated = Int.now()
-                try category.save {
-                    id in c.categoryId = id as! Int
-                }
-            } else {
-                c.categoryId = category.categoryId
-            }
-        }
-        
-        // Attributes
-        for a in item._attributes {
-            let attribute = Attribute()
-            try attribute.query(
-                whereclause: "attributeName = $1", params: [a._attribute.attributeName],
-                cursor: StORMCursor(limit: 1, offset: 0)
-            )
-            if attribute.attributeId == 0 {
-                attribute.attributeName = a._attribute.attributeName
-                attribute.attributeTranslates = a._attribute.attributeTranslates
-                attribute.attributeCreated = Int.now()
-                attribute.attributeUpdated = Int.now()
-                try attribute.save {
-                    id in a.attributeId = id as! Int
-                }
-            } else {
-                a.attributeId = attribute.attributeId
-            }
-            
-            // AttributeValues
-            for v in a._attributeValues.sorted(by: { $0._attributeValue.attributeValueCode < $1._attributeValue.attributeValueCode }) {
-                let attributeValue = AttributeValue()
-                try attributeValue.query(
-                    whereclause: "attributeId = $1 AND attributeValueName = $2", params: [attribute.attributeId, v._attributeValue.attributeValueName],
-                    cursor: StORMCursor(limit: 1, offset: 0)
-                )
-                if attributeValue.attributeValueId == 0 {
-                    attributeValue.attributeId = a.attributeId
-                    attributeValue.attributeValueCode = v._attributeValue.attributeValueCode
-                    attributeValue.attributeValueName = v._attributeValue.attributeValueName
-                    attributeValue.attributeValueTranslates = v._attributeValue.attributeValueTranslates
-                    attributeValue.attributeValueCreated = Int.now()
-                    attributeValue.attributeValueUpdated = Int.now()
-                    try attributeValue.save {
-                        id in v.attributeValueId = id as! Int
-                    }
-                } else {
-                    v.attributeValueId = attributeValue.attributeValueId
-                }
-            }
-            
-            // Medias
-            for m in item.productMedias {
+        /// Medias
+        for m in item.productMedias {
+            if m.url.startsWith("http") || m.url.startsWith("ftp") {
+                //let url = URL(string: m.url)
                 let url = URL(string: "http://www.tessilnova.com/\(m.url)")
                 let data = try? Data(contentsOf: url!)
                 if !FileManager.default.createFile(atPath: "./Upload/Media/\(m.name)", contents: data, attributes: nil) {
@@ -223,84 +144,19 @@ struct ProductRepository : ProductProtocol {
                 }
             }
         }
-
-        item.productIsActive = true;
-        item.productUpdated = Int.now()
-        item.productCreated = Int.now()
-        try item.save {
-            id in item.productId = id as! Int
-        }
         
-        // ProductCategories
-        for c in item._categories {
-            let productCategory = ProductCategory()
-            productCategory.productId = item.productId
-            productCategory.categoryId = c.categoryId
-            try productCategory.save {
-                id in productCategory.productCategoryId = id as! Int
+        /// Articles
+        for article in item._articles {
+            article.articleIsValid = true
+            article.articleCreated = Int.now()
+            article.articleUpdated = Int.now()
+            try article.save {
+                id in article.articleId = id as! Int
             }
         }
-
-        // ProductAttributes
-        for a in item._attributes {
-            let productAttribute = ProductAttribute()
-            productAttribute.productId = item.productId
-            productAttribute.attributeId = a.attributeId
-            try productAttribute.save {
-                id in a.productAttributeId = id as! Int
-            }
-            
-            // ProductAttributeValues
-            for v in a._attributeValues {
-                let productAttributeValue = ProductAttributeValue()
-                productAttributeValue.productAttributeId = a.productAttributeId
-                productAttributeValue.attributeValueId = v.attributeValueId
-                try productAttributeValue.save {
-                    id in v.productAttributeValueId = id as! Int
-                }
-            }
-        }
-        
-        // Build articles
-        let result = try (ioCContainer.resolve() as ArticleProtocol).build(productId: item.productId)
-
-        // Sync barcodes
-        for a in item._articles {
-            var values = a._attributeValues.map({ a in a._attributeValue.attributeValueCode })
-            values.append("\(item.productId)")
-            values.append("\(item._attributes.count)")
-            
-            let article = Article()
-            let current = try article.sqlRows("""
-                SELECT a.*
-                FROM articles as a
-                LEFT JOIN articleattributevalues as b ON a.articleId = b.articleId
-                LEFT JOIN attributevalues as c ON b.attributeValueId = c.attributeValueId
-                WHERE c.attributeValueCode IN ($1, $2, $3) AND a.productId = $4
-                GROUP BY a.articleId HAVING count(b.attributeValueId) = $5
-                """, params: values)
-            
-             if current.count > 0 {
-                article.to(current[0])
-                article.articleBarcodes = a.articleBarcodes
-                try article.save()
-            }
-        }
-        
-        // Publication
-        let publication = Publication()
-        publication.productId = item.productId
-        publication.publicationStartAt = "2017-11-01".DateToInt()
-        publication.publicationFinishAt = "2017-12-31".DateToInt()
-        try publication.save {
-            id in publication.publicationId = id as! Int
-        }
-        
-        return result;
     }
     
     func update(id: Int, item: Product) throws {
-        
         let current = try get(id: id)
         current.productCode = item.productCode
         current.productName = item.productName
@@ -310,8 +166,8 @@ struct ProductRepository : ProductProtocol {
         current.productDiscount = item.productDiscount
         current.productPackaging = item.productPackaging
         current.productIsActive = item.productIsActive
-
-        // Brand
+        
+        /// Brand
         let brand = Brand()
         try brand.query(
             whereclause: "brandName = $1", params: [item._brand.brandName],
@@ -328,7 +184,7 @@ struct ProductRepository : ProductProtocol {
         item.brandId = brand.brandId
         current.brandId = item.brandId
         
-        // Categories
+        /// Categories
         for c in item._categories.sorted(by: { $0._category.categoryIsPrimary.hashValue < $1._category.categoryIsPrimary.hashValue }) {
             let category = Category()
             try category.query(
@@ -348,7 +204,7 @@ struct ProductRepository : ProductProtocol {
             c.categoryId = category.categoryId
         }
         
-        // ProductCategories
+        /// ProductCategories
         for c in current._categories {
             try c.delete()
         }
@@ -361,9 +217,170 @@ struct ProductRepository : ProductProtocol {
             }
         }
         
+        /// Product
         item.productUpdated = Int.now()
         current.productUpdated = item.productUpdated
         try current.save()
+        
+//        /// Barcode
+//        let article = current._articles.first(where: { $0._attributeValues.count == 0 })
+//        if let article = article {
+//            let barcode = article.articleBarcodes.first(where: { $0.tags.count == 0 })
+//            article.articleBarcodes = [barcode]
+//            article.articleIsValid = true
+//            article.articleCreated = Int.now()
+//            article.articleUpdated = Int.now()
+//            try article.save {
+//                id in article.articleId = id as! Int
+//            }
+//        }
+    }
+
+    func sync(item: Product) throws -> [String : Any] {
+        
+        /// Attributes
+        for a in item._attributes {
+            let attribute = Attribute()
+            try attribute.query(
+                whereclause: "attributeName = $1",
+                params: [a._attribute.attributeName],
+                cursor: StORMCursor(limit: 1, offset: 0)
+            )
+            if attribute.attributeId == 0 {
+                attribute.attributeName = a._attribute.attributeName
+                attribute.attributeTranslates = a._attribute.attributeTranslates
+                attribute.attributeCreated = Int.now()
+                attribute.attributeUpdated = Int.now()
+                try attribute.save {
+                    id in attribute.attributeId = id as! Int
+                }
+            }
+            a.attributeId = attribute.attributeId
+
+            /// AttributeValues
+            for v in a._attributeValues.sorted(by: { $0._attributeValue.attributeValueCode < $1._attributeValue.attributeValueCode }) {
+                let attributeValue = AttributeValue()
+                try attributeValue.query(
+                    whereclause: "attributeId = $1 AND attributeValueName = $2",
+                    params: [a.attributeId, v._attributeValue.attributeValueName],
+                    cursor: StORMCursor(limit: 1, offset: 0)
+                )
+                if attributeValue.attributeValueId == 0 {
+                    attributeValue.attributeId = a.attributeId
+                    attributeValue.attributeValueCode = v._attributeValue.attributeValueCode
+                    attributeValue.attributeValueName = v._attributeValue.attributeValueName
+                    attributeValue.attributeValueTranslates = v._attributeValue.attributeValueTranslates
+                    attributeValue.attributeValueCreated = Int.now()
+                    attributeValue.attributeValueUpdated = Int.now()
+                    try attributeValue.save {
+                        id in attributeValue.attributeValueId = id as! Int
+                    }
+                }
+                v.attributeValueId = attributeValue.attributeValueId
+            }
+        }
+
+        /// Get current attributes and values
+        let attribute = ProductAttribute()
+        try attribute.query(
+            whereclause: "productId = $1",
+            params: [item.productId]
+        )
+        let attributes = try attribute.rows()
+        for a in attributes {
+            let attributeValue = ProductAttributeValue()
+            try attributeValue.query(
+                whereclause: "productAttributeId = $1",
+                params: [a.productAttributeId]
+            )
+            a._attributeValues = try attributeValue.rows()
+        }
+
+        /// ProductAttributes
+        for a in item._attributes {
+            let productAttribute = ProductAttribute()
+            try productAttribute.query(
+                whereclause: "productId = $1 AND attributeId = $2",
+                params: [item.productId, a.attributeId],
+                cursor: StORMCursor(limit: 1, offset: 0)
+            )
+            if productAttribute.productAttributeId == 0 {
+                productAttribute.productId = item.productId
+                productAttribute.attributeId = a.attributeId
+                try productAttribute.save {
+                    id in productAttribute.productAttributeId = id as! Int
+                 }
+            }
+            
+            /// ProductAttributeValues
+            for v in a._attributeValues {
+                let productAttributeValue = ProductAttributeValue()
+                try productAttributeValue.query(
+                    whereclause: "productAttributeId = $1 AND attributeValueId = $2",
+                    params: [a.productAttributeId, v.attributeValueId],
+                    cursor: StORMCursor(limit: 1, offset: 0)
+                )
+                if productAttributeValue.productAttributeValueId == 0 {
+                    productAttributeValue.productAttributeId = a.productAttributeId
+                    productAttributeValue.attributeValueId = v.attributeValueId
+                    try productAttributeValue.save {
+                        id in productAttributeValue.productAttributeValueId = id as! Int
+                    }
+                }
+                let current = attributes.first(where: { $0.attributeId == a.attributeId })
+                current?._attributeValues.remove(object: productAttributeValue)
+            }
+        }
+        
+        /// Clean attributes
+        for a in attributes {
+            if a._attributeValues.count == 0 {
+                try a.delete()
+                continue
+            }
+            for v in a._attributeValues {
+                try v.delete()
+            }
+        }
+        
+        /// Build articles
+        return try (ioCContainer.resolve() as ArticleProtocol).build(productId: item.productId)
+    }
+    
+    func syncImport(item: Product) throws {
+
+        /// Sync barcodes
+        for a in item._articles {
+            var values = a._attributeValues.map({ a in a._attributeValue.attributeValueCode })
+            values.append("\(item.productId)")
+            values.append("\(item._attributes.count)")
+            
+            let article = Article()
+            let current = try article.sqlRows("""
+                SELECT a.*
+                FROM articles as a
+                LEFT JOIN articleattributevalues as b ON a.articleId = b.articleId
+                LEFT JOIN attributevalues as c ON b.attributeValueId = c.attributeValueId
+                WHERE c.attributeValueCode IN ($1, $2, $3) AND a.productId = $4
+                GROUP BY a.articleId HAVING count(b.attributeValueId) = $5
+                """, params: values)
+            
+            if current.count > 0 {
+                article.to(current[0])
+                article.articleBarcodes = a.articleBarcodes
+                try article.save()
+            }
+        }
+        
+        
+        /// Publication
+        let publication = Publication()
+        publication.productId = item.productId
+        publication.publicationStartAt = "2017-11-01".DateToInt()
+        publication.publicationFinishAt = "2017-12-31".DateToInt()
+        try publication.save {
+            id in publication.publicationId = id as! Int
+        }
     }
     
     func get(productId: Int) throws -> Publication {
@@ -460,6 +477,7 @@ struct ProductRepository : ProductProtocol {
         try item.sql("DELETE FROM publications WHERE productId = $1", params: [productId])
     }
 
+    /*
 	func addAttribute(item: ProductAttribute) throws {
         try item.save {
             id in item.productAttributeId = id as! Int
@@ -489,6 +507,7 @@ struct ProductRepository : ProductProtocol {
         try item.delete()
         try setValid(productAttributeId: item.productAttributeId, valid: false)
     }
+    */
     
     internal func setValid(productId: Int, valid: Bool) throws {
         let product = try get(id: productId)

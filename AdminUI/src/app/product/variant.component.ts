@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService, TreeNode, Message } from 'primeng/primeng';
 import { Product, Attribute, AttributeValue, AttributeForm } from './../shared/models';
 import { SessionService } from './../services/session.service';
 import { ProductService } from './../services/product.service';
 import { AttributeService } from './../services/attribute.service';
 import { ProductComponent } from './product.component';
+import { Helpers } from '../shared/helpers';
 
 @Component({
     selector: 'app-variant',
@@ -14,9 +15,12 @@ import { ProductComponent } from './product.component';
 
 export class VariantComponent implements OnInit {
     isBusy: boolean;
+    totalRecords = 0;
     forms: AttributeForm[];
     formsSelected: AttributeForm[];
     filteredNames: string[];
+    productInfo: TreeNode[];
+    selectedNode: TreeNode;
 
     constructor(private messageService: MessageService,
                 private confirmationService: ConfirmationService,
@@ -32,11 +36,16 @@ export class VariantComponent implements OnInit {
 
         this.forms = [];
         this.formsSelected = [];
+        this.totalRecords = this.product.articles.length;
 
         this.product.attributes.forEach(p => {
             const values = p.attributeValues.map(v => v.attributeValue.attributeValueName);
             this.formsSelected.push(<AttributeForm>{ id: p.attribute.attributeId, name: p.attribute.attributeName, values: values });
         });
+
+        if (this.formsSelected.length === 0) {
+            this.addClick();
+        }
 
         this.attributeService.getValueAll()
             .subscribe(data => {
@@ -46,8 +55,30 @@ export class VariantComponent implements OnInit {
                         const values = data.filter(v => v.attributeId === p.attributeId).map(v => v.attributeValueName);
                         this.forms.push(<AttributeForm>{ id: p.attributeId, name: p.attributeName, values: values });
                     });
+                    this.createTree();
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Attributes', detail: onerror._body}));
             }, onerror => this.messageService.add({severity: 'error', summary: 'Attribute values', detail: onerror._body}));
+    }
+
+    createTree() {
+        const attributesNode = Helpers.newNode('Attributes', '[]', 'attributes');
+        this.product.attributes.forEach(elem => {
+            const node = Helpers.newNode(
+                elem.attribute.attributeName, elem.attribute.attributeId.toString(),
+                `attribute:${elem.productAttributeId}`
+            );
+            elem.attributeValues.forEach(e =>
+                node.children.push(Helpers.newNode(
+                    e.attributeValue.attributeValueName,
+                    e.attributeValue.attributeValueId.toString(),
+                    'attributeValue')
+                )
+            );
+            node.expanded = false; // node.children.length > 0;
+            attributesNode.children.push(node);
+        });
+        attributesNode.expanded = attributesNode.children.length > 0;
+        this.productInfo = [attributesNode];
     }
 
     filterAttributes(event) {
@@ -93,7 +124,12 @@ export class VariantComponent implements OnInit {
         });
     }
 
-    openSidebarClick() {
+    openAttributesClick() {
         ProductComponent.instance.openSidebarClick('Attributes');
     }
+
+    nodeSelect(event) {
+        ProductComponent.instance.openSidebarClick('Change for: ' + this.selectedNode.label);
+    }
+
 }

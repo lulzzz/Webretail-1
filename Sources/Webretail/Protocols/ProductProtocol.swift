@@ -20,8 +20,10 @@ protocol ProductProtocol {
 
     func add(item: Product) throws
     
-    func create(item: Product) throws -> [String : Any]
+    func sync(item: Product) throws -> [String : Any]
 
+    func syncImport(item: Product) throws
+    
     func update(id: Int, item: Product) throws
     
     func get(productId: Int) throws -> Publication
@@ -30,6 +32,7 @@ protocol ProductProtocol {
 
     func delete(id: Int) throws
 
+    /*
 	func addAttribute(item: ProductAttribute) throws
     
     func removeAttribute(item: ProductAttribute) throws
@@ -37,4 +40,5 @@ protocol ProductProtocol {
     func addAttributeValue(item: ProductAttributeValue) throws
     
     func removeAttributeValue(item: ProductAttributeValue) throws
+    */
 }

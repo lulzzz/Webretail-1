@@ -4,7 +4,7 @@
             <td style="width: 20%"><label>Attribute</label></td> 
             <td><label>Values</label></td>
             <td style="width: 60px">
-                <button pButton type="button" (click)="openSidebarClick()" class="ui-button-secondary" icon="fa-folder-open-o"></button>
+                <button pButton type="button" (click)="openAttributesClick()" class="ui-button-secondary" icon="fa-folder-open-o"></button>
             </td>
         </tr>
     </thead>
@@ -25,10 +25,15 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"></td>
+            <td colspan="2"><strong>{{totalRecords}}</strong> variants</td>
             <td>
                 <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>                    
             </td>
         </tr>
     </tbody>
-</table>   
+</table>
+
+<p *ngIf="product.productId>0">
+    <span>* Change pricing, discounts, media and translations by attribute values</span>
+    <p-tree [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)"></p-tree>        
+ </p>

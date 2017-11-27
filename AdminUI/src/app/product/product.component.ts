@@ -83,14 +83,15 @@ export class ProductComponent implements OnInit, OnDestroy {
                     this.taxes = taxes.map(p => Helpers.newSelectItem(p, p.name));
                     this.productService.getTypes()
                         .subscribe(types => {
-                            this.types = types.map(p => Helpers.newSelectItem(p.value));
                             if (productId === 0) {
+                                this.types = types.map(p => Helpers.newSelectItem(p.value));
                                 this.addClick();
                             } else {
                                 this.productService.getProduct(productId)
                                     .subscribe(
                                         result => {
                                             this.productService.product = result;
+                                            this.types = [Helpers.newSelectItem(result.productType)];
                                             this.categoriesSelected = result.categories.map(p => p.category);
                                             const article = this.productService.product.articles.find(p => p.attributeValues.length === 0);
                                             if (article) {
@@ -204,23 +205,26 @@ export class ProductComponent implements OnInit, OnDestroy {
             const barcode = article.barcodes.find(p => p.tags.length === 0);
             barcode.barcode = this.barcode;
         }
-        console.log(JSON.stringify(this.selected));
-        /*
+
+        // console.log(JSON.stringify(this.selected));
         if (this.isNew) {
             this.productService.create(this.selected)
                 .subscribe(result => {
                     this.productService.product = result;
-                    this.productService.products.push(result);
                     this.messageService.add({severity: 'success', summary: 'Success', detail: 'Product created!'})
+                    if (this.productService.products) {
+                        this.productService.products.push(result);
+                    }
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.productService.update(this.selected.productId, this.selected)
                 .subscribe(result => {
-                    this.productService.products[this.selectedIndex] = result;
                     this.messageService.add({severity: 'success', summary: 'Success', detail: 'Product updated!'})
+                    if (this.productService.products) {
+                        this.productService.products[this.selectedIndex] = result;
+                    }
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
-        */
     }
 
     deleteClick() {

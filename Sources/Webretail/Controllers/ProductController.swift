@@ -32,10 +32,10 @@ class ProductController {
         routes.add(method: .post, uri: "/api/product/import", handler: productImportHandlerPOST)
         routes.add(method: .put, uri: "/api/product/{id}", handler: productHandlerPUT)
         routes.add(method: .delete, uri: "/api/product/{id}", handler: productHandlerDELETE)
-        routes.add(method: .post, uri: "/api/productattribute", handler: productAttributeHandlerPOST)
-        routes.add(method: .put, uri: "/api/productattribute", handler: productAttributeHandlerPUT)
-        routes.add(method: .post, uri: "/api/productattributevalue", handler: productAttributeValueHandlerPOST)
-        routes.add(method: .put, uri: "/api/productattributevalue", handler: productAttributeValueHandlerPUT)
+//        routes.add(method: .post, uri: "/api/productattribute", handler: productAttributeHandlerPOST)
+//        routes.add(method: .put, uri: "/api/productattribute", handler: productAttributeHandlerPUT)
+//        routes.add(method: .post, uri: "/api/productattributevalue", handler: productAttributeValueHandlerPOST)
+//        routes.add(method: .put, uri: "/api/productattributevalue", handler: productAttributeValueHandlerPUT)
         
         return routes
     }
@@ -95,9 +95,17 @@ class ProductController {
     
     func productHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: Product = request.getJson()!
+            guard let item: Product = request.getJson() else {
+                throw PerfectError.apiError("model invalid")
+            }
+
             try self.repository.add(item: item)
-            try response.setJson(item)
+            if item.productType != "Variant" {
+                try response.setJson(item)
+            } else {
+                let result = try self.repository.sync(item: item)
+                try response.setBody(json: result)
+            }
             response.completed(status: .created)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -106,8 +114,13 @@ class ProductController {
 
     func productImportHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let item: Product = request.getJson()!
-            let result = try self.repository.create(item: item)
+            guard let item: Product = request.getJson() else {
+                throw PerfectError.apiError("model invalid")
+            }
+
+            try self.repository.add(item: item)
+            let result = try self.repository.sync(item: item)
+            try self.repository.syncImport(item: item)
             try response.setBody(json: result)
             response.completed(status: .created)
         } catch {
@@ -117,10 +130,18 @@ class ProductController {
 
     func productHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
         do {
+            guard let item: Product = request.getJson() else {
+                throw PerfectError.apiError("model invalid")
+            }
 			let id = request.urlVariables["id"]!
-            let item: Product = request.getJson()!
+            
             try self.repository.update(id: Int(id)!, item: item)
-            try response.setJson(item)
+            if item.productType != "Variant" {
+                try response.setJson(item)
+            } else {
+                let result = try self.repository.sync(item: item)
+                try response.setBody(json: result)
+            }
             response.completed(status: .accepted)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -130,6 +151,7 @@ class ProductController {
     func productHandlerDELETE(request: HTTPRequest, _ response: HTTPResponse) {
         do {
 			let id = request.urlVariables["id"]!
+            
             try self.repository.delete(id: Int(id)!)
             response.completed(status: .noContent)
         } catch {
@@ -162,6 +184,7 @@ class ProductController {
         }
     }
     
+    /*
     func productAttributeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             let items: [ProductAttribute] = request.getJson()!
@@ -211,4 +234,5 @@ class ProductController {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
+    */
 }

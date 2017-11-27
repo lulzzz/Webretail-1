@@ -124,6 +124,14 @@ extension Array where Element: Comparable {
     }
 }
 
+extension Array where Element: Equatable {
+    mutating func remove(object: Element) {
+        if let index = index(of: object) {
+            remove(at: index)
+        }
+    }
+}
+
 extension HTTPHandler {
     public static func angularHandler(webapi: Bool = true) -> RequestHandler {
         return {

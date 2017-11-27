@@ -3,8 +3,8 @@
 <table *ngIf="product" class="table" cellpadding="2" cellspacing="0">
     <thead>
         <tr style="background-color: whitesmoke"> 
-            <td style="width: 160px"><strong>Barcode</strong></td> 
-            <td><strong>Article</strong></td> 
+            <td style="width: 160px"><strong>Sku</strong></td> 
+            <td><strong>Description</strong></td> 
             <td style="width: 60px">
                 <button pButton type="button" (click)="openSidebarClick()" class="ui-button-secondary" icon="fa-folder-open-o"></button>
             </td>
@@ -23,4 +23,4 @@
     </tbody>
 </table>   
 
-<div style="text-align: center"><strong>{{totalRecords}}</strong> articles</div>
+<div style="text-align: center"><strong>{{totalRecords}}</strong> items</div>

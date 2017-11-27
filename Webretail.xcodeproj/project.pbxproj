@@ -3828,6 +3828,62 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0910;
+				TargetAttributes = {
+					"PerfectCURL::PerfectCURL" = {
+						LastSwiftMigration = 0910;
+					};
+					"PerfectCrypto::PerfectCrypto" = {
+						LastSwiftMigration = 0910;
+					};
+					"PerfectHTTP::PerfectHTTP" = {
+						LastSwiftMigration = 0910;
+					};
+					"PerfectLib::PerfectLib" = {
+						LastSwiftMigration = 0910;
+					};
+					"PerfectLogger::PerfectLogger" = {
+						LastSwiftMigration = 0910;
+					};
+					"PerfectNet::PerfectNet" = {
+						LastSwiftMigration = 0910;
+					};
+					"PerfectPostgreSQL::PerfectPostgreSQL" = {
+						LastSwiftMigration = 0910;
+					};
+					"PerfectSMTP::PerfectSMTP" = {
+						LastSwiftMigration = 0910;
+					};
+					"PerfectThread::PerfectThread" = {
+						LastSwiftMigration = 0910;
+					};
+					"PerfectXML::PerfectXML" = {
+						LastSwiftMigration = 0910;
+					};
+					"PostgresStORM::PostgresStORM" = {
+						LastSwiftMigration = 0910;
+					};
+					"StORM::StORM" = {
+						LastSwiftMigration = 0910;
+					};
+					"SwiftMoment::SwiftMoment" = {
+						LastSwiftMigration = 0910;
+					};
+					"SwiftRandom::SwiftRandom" = {
+						LastSwiftMigration = 0910;
+					};
+					"SwiftString::SwiftString" = {
+						LastSwiftMigration = 0910;
+					};
+					"Turnstile::Turnstile" = {
+						LastSwiftMigration = 0910;
+					};
+					"Turnstile::TurnstileCrypto" = {
+						LastSwiftMigration = 0910;
+					};
+					"Turnstile::TurnstileWeb" = {
+						LastSwiftMigration = 0910;
+					};
+				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "Webretail" */;
 			compatibilityVersion = "Xcode 3.2";

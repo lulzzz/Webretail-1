@@ -8,7 +8,11 @@
 
 import StORM
 
-class ProductAttributeValue: PostgresSqlORM, Codable {
+class ProductAttributeValue: PostgresSqlORM, Codable, Equatable {
+    
+    static func ==(lhs: ProductAttributeValue, rhs: ProductAttributeValue) -> Bool {
+        return lhs.productAttributeValueId == rhs.productAttributeValueId
+    }
     
     public var productAttributeValueId	: Int = 0
     public var productAttributeId : Int = 0
