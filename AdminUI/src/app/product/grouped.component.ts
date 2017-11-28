@@ -53,6 +53,7 @@ export class GroupedComponent implements OnInit {
                 .subscribe(result => {
                     const group = <GroupItem>{ id: 0, barcode: barcode, product: result };
                     this.articleForm.push(group);
+                    this.product.articles.push(result.articles[0]);
                     this.totalRecords++;
                     this.messageService.add({
                         severity: 'success',
@@ -67,8 +68,10 @@ export class GroupedComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to remove this article?',
             accept: () => {
-                const index = this.articleForm.findIndex(p => p.barcode === barcode);
+                let index = this.articleForm.findIndex(p => p.barcode === barcode);
                 this.articleForm.splice(index, 1);
+                index = this.product.articles.findIndex(p => p.barcodes.map(b => b.barcode) === barcode);
+                this.product.articles.splice(index, 1);
                 this.totalRecords--;
             }
         });

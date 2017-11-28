@@ -15,7 +15,6 @@ import { CategoryComponent } from '../category/category.component';
 import { AttributesComponent } from '../attribute/attributes.component';
 import { AttributeValueComponent } from '../attribute/attributevalue.component';
 import { ArticlePickerComponent } from '../shared/article-picker.component';
-import { join } from 'path';
 
 @Component({
     selector: 'app-product',
@@ -27,6 +26,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) divContainer;
     private sub: any;
+    isBusy: boolean;
     barcode: string;
     dataform: FormGroup;
     types: SelectItem[];
@@ -142,6 +142,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     addClick() {
         this.productService.product = new Product();
+        this.selected.productType = this.types[0].value;
         this.selected.productTax = this.taxes[0].value;
         this.selected.productUm = this.ums[0].value;
     }
@@ -188,6 +189,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     saveClick() {
+        this.isBusy = true;
         this.selected.categories = [];
         this.categoriesSelected.forEach(c => {
             const productCategory = <ProductCategory>{
@@ -197,14 +199,13 @@ export class ProductComponent implements OnInit, OnDestroy {
             this.selected.categories.push(productCategory);
         });
 
-        let article = this.selected.articles.find(p => p.attributeValues.length === 0);
-        if (!article) {
-            article = new Article();
-            article.barcodes.push(<Barcode>{ barcode: this.barcode });
-        } else {
-            const barcode = article.barcodes.find(p => p.tags.length === 0);
-            barcode.barcode = this.barcode;
+        const index = this.selected.articles.findIndex(p => p.attributeValues.length === 0);
+        if (index >= 0) {
+            this.selected.articles.slice(index, 1);
         }
+        const article = new Article();
+        article.barcodes.push(<Barcode>{ barcode: this.barcode });
+        this.selected.articles.push(article);
 
         // console.log(JSON.stringify(this.selected));
         if (this.isNew) {
@@ -215,6 +216,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                     if (this.productService.products) {
                         this.productService.products.push(result);
                     }
+                    this.isBusy = false;
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.productService.update(this.selected.productId, this.selected)
@@ -223,6 +225,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                     if (this.productService.products) {
                         this.productService.products[this.selectedIndex] = result;
                     }
+                    this.isBusy = false;
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }

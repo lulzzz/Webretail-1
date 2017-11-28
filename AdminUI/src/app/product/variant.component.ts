@@ -14,7 +14,6 @@ import { Helpers } from '../shared/helpers';
 })
 
 export class VariantComponent implements OnInit {
-    isBusy: boolean;
     totalRecords = 0;
     forms: AttributeForm[];
     formsSelected: AttributeForm[];

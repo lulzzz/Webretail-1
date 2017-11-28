@@ -1,4 +1,5 @@
-﻿<img *ngIf="!selected" src="/assets/loading.gif" class="loading">
+﻿<img *ngIf="!selected||isBusy" src="/assets/loading.gif" class="loading">
+
 <p-sidebar [(visible)]="sessionService.visibleSidebar" (onHide)="closeSidebarClick($event)" styleClass="ui-sidebar-lg" position="right" [baseZIndex]="99999">
     <h1>{{sessionService.titleSidebar}}</h1>
     <div #dynamicComponentContainer></div>
@@ -21,7 +22,7 @@
                 <div class="ui-grid-col-4"><label for="brand">Brand</label></div>
                 <div class="ui-grid-col-7">
                     <p-autoComplete [(ngModel)]="selected.brand" field="brandName" formControlName="brand" [suggestions]="brandsFiltered" (completeMethod)="filterBrands($event)" [size]="30"
-                        [minLength]="1" placeholder="Hint: type for filter" [dropdown]="true">
+                        [minLength]="1" placeholder="Hint: type for filter">
                         <ng-template let-brand pTemplate="item">
                             <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
                                 <div style="font-size:16px;float:right;margin:10px 10px 0 0">{{brand.brandName}}</div>

@@ -134,7 +134,10 @@ struct ArticleRepository : ArticleProtocol {
                 try item.delete()
                 articles.remove(at: i - countDeleted)
                 countDeleted += 1
-                try item.sql("DELETE FROM articleattributevalues WHERE articleId = $1", params: [String(item.articleId)])
+                try item.sql(
+                    "DELETE FROM articleattributevalues WHERE articleId = $1",
+                    params: [String(item.articleId)]
+                )
             }
         }
         
@@ -270,14 +273,15 @@ struct ArticleRepository : ArticleProtocol {
             let row = Article()
             row.to(article.results.rows[i])
             
-//            // get attributeValues
-//            let attributeValue = ArticleAttributeValue()
-//            try attributeValue.query(
-//                whereclause: "articleId = $1",
-//                params: [row.articleId],
-//                orderby: ["articleAttributeValueId"]
-//            )
-//            row._attributeValues = try attributeValue.rows()
+            /// get attributeValues
+            let attributeValue = ArticleAttributeValue()
+            try attributeValue.query(
+                whereclause: "articleId = $1",
+                params: [row.articleId]
+            )
+            if attributeValue.results.rows.count == 0 {
+                continue
+            }
             
             let data = row.articleBarcodes.first(where: { $0.tags.count == 0 })
             if let barcode = data?.barcode {

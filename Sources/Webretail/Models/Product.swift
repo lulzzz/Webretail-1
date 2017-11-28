@@ -239,11 +239,11 @@ class Product: PostgresSqlORM, Codable {
                   params: [param],
                   orderby: ["articleattributevalues.articleAttributeValueId"],
                   joins: [brandJoin, articleJoin, articleAttributeJoin])
-        self.to(self.results.rows[0])
-        if self.productId == 0 {
+        if self.results.rows.count == 0 {
             return
         }
-        
+        self.to(self.results.rows[0])
+
         try self.makeCategories()
         try self.makeAttributes()
         try self.makeArticle(barcode: barcode)

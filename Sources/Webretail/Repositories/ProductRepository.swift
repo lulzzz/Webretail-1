@@ -147,6 +147,7 @@ struct ProductRepository : ProductProtocol {
         
         /// Articles
         for article in item._articles {
+            article.productId = item.productId
             article.articleIsValid = true
             article.articleCreated = Int.now()
             article.articleUpdated = Int.now()
@@ -185,7 +186,8 @@ struct ProductRepository : ProductProtocol {
         current.brandId = item.brandId
         
         /// Categories
-        for c in item._categories.sorted(by: { $0._category.categoryIsPrimary.hashValue < $1._category.categoryIsPrimary.hashValue }) {
+        for c in item._categories.sorted(by: { $0._category.categoryIsPrimary.hashValue < $1._category.categoryIsPrimary.hashValue }
+            ) {
             let category = Category()
             try category.query(
                 whereclause: "categoryName = $1", params: [c._category.categoryName],
@@ -209,11 +211,42 @@ struct ProductRepository : ProductProtocol {
             try c.delete()
         }
         for c in item._categories {
-            let productCategory = ProductCategory()
-            productCategory.productId = id
-            productCategory.categoryId = c.categoryId
-            try productCategory.save {
-                id in productCategory.productCategoryId = id as! Int
+            c.productCategoryId = 0
+            c.productId = id
+            try c.save {
+                id in c.productCategoryId = id as! Int
+            }
+        }
+        
+        /// Articles
+        if let itemArticle = item._articles.first(where: { $0._attributeValues.count == 0 }) {
+            if let itemBarcode = itemArticle.articleBarcodes.first(where: { $0.tags.count == 0 }) {
+                if let currentArticle = current._articles.first(where: { $0._attributeValues.count == 0 }) {
+                    let currentBarcode = currentArticle.articleBarcodes.first(where: { $0.tags.count == 0 })!
+                    currentBarcode.barcode = itemBarcode.barcode
+                    try currentArticle.save()
+                } else {
+                    itemArticle.articleIsValid = true
+                    itemArticle.articleId = 0
+                    itemArticle.productId = id
+                    itemArticle.articleUpdated = Int.now()
+                    try itemArticle.save {
+                        id in itemArticle.articleId = id as! Int
+                    }
+                }
+            }
+        }
+        
+        if item.productType == "Grouped" {
+            for a in current._articles.filter({ $0._attributeValues.count > 0 }) {
+                try a.delete()
+            }
+            for a in item._articles.filter({ $0._attributeValues.count > 0 }) {
+                a.articleId = 0
+                a.productId = id
+                try a.save {
+                    id in a.articleId = id as! Int
+                }
             }
         }
         
@@ -221,19 +254,6 @@ struct ProductRepository : ProductProtocol {
         item.productUpdated = Int.now()
         current.productUpdated = item.productUpdated
         try current.save()
-        
-//        /// Barcode
-//        let article = current._articles.first(where: { $0._attributeValues.count == 0 })
-//        if let article = article {
-//            let barcode = article.articleBarcodes.first(where: { $0.tags.count == 0 })
-//            article.articleBarcodes = [barcode]
-//            article.articleIsValid = true
-//            article.articleCreated = Int.now()
-//            article.articleUpdated = Int.now()
-//            try article.save {
-//                id in article.articleId = id as! Int
-//            }
-//        }
     }
 
     func sync(item: Product) throws -> [String : Any] {
@@ -311,6 +331,10 @@ struct ProductRepository : ProductProtocol {
                     id in productAttribute.productAttributeId = id as! Int
                  }
             }
+            a.productAttributeId = productAttribute.productAttributeId
+            
+            let current = attributes.first(where: { $0.attributeId == a.attributeId })
+            current?.productId = 0
             
             /// ProductAttributeValues
             for v in a._attributeValues {
@@ -327,14 +351,15 @@ struct ProductRepository : ProductProtocol {
                         id in productAttributeValue.productAttributeValueId = id as! Int
                     }
                 }
-                let current = attributes.first(where: { $0.attributeId == a.attributeId })
+                v.productAttributeValueId = productAttributeValue.productAttributeValueId
+
                 current?._attributeValues.remove(object: productAttributeValue)
             }
         }
         
         /// Clean attributes
         for a in attributes {
-            if a._attributeValues.count == 0 {
+            if a.productId > 0 {
                 try a.delete()
                 continue
             }
