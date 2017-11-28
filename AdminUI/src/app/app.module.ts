@@ -14,7 +14,7 @@ import {
     SelectButtonModule, ChipsModule, InputTextareaModule,
     ContextMenuModule, TooltipModule, CalendarModule,
     FileUploadModule, ChartModule, CarouselModule, SidebarModule,
-    SpinnerModule, StepsModule, AutoCompleteModule
+    SpinnerModule, StepsModule, AutoCompleteModule, TabViewModule, AccordionModule
 } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 // import { NgxBarcodeModule } from 'ngx-barcode';
@@ -101,7 +101,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ConfirmDialogModule, ToolbarModule, SelectButtonModule,
         ChipsModule, InputTextareaModule, FileUploadModule, AutoCompleteModule,
         ContextMenuModule, TooltipModule, CalendarModule, ChartModule,
-        CarouselModule, SpinnerModule, StepsModule,
+        CarouselModule, SpinnerModule, StepsModule, TabViewModule, AccordionModule,
         AppRoutes
     ],
     declarations: [

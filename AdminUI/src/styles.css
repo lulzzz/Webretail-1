@@ -361,7 +361,11 @@ body .ui-widget-header {
   background-color: #f8f7f6;
   padding: 10px 0;
 }
+body .ui-tabview {
+  border: 0 !important;
+}
 
+body .ui-tabview-nav,
 body .ui-toolbar {
   background-color: #ffffff !important;
 }

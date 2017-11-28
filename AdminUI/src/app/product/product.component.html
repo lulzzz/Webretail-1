@@ -5,198 +5,195 @@
     <div id="right-sidebar" #dynamicComponentContainer></div>
 </p-sidebar>
     
-<div *ngIf="selected" class="ui-panel">
-    <button pButton type="button" label="Back to products" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
-    <form [formGroup]="dataform">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 20px">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="name">Name</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="name" [(ngModel)]="selected.productName"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
-                        <i class="fa fa-close"></i> Name is required
+<div *ngIf="selected">
+<form [formGroup]="dataform">
+    <button pButton type="button" label="Back to products" style="float:right;" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
+    <p-tabView>
+        <p-tabPanel header="Information">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 20px">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label>Status</label></div>
+                    <div class="ui-grid-col-2">
+                        <p-inputSwitch onLabel="ON" offLabel="OFF" formControlName="isActive" [(ngModel)]="selected.productIsActive"></p-inputSwitch>
+                    </div>
+                    <div class="ui-grid-col-2" style="text-align: right">
+                        <label>Updated</label>
+                    </div>
+                    <div class="ui-grid-col-4" style="text-align: right">
+                        <span>{{selected.updatedAt}}</span>
                     </div>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="brand">Brand</label></div>
-                <div class="ui-grid-col-7">
-                    <p-autoComplete [(ngModel)]="selected.brand" field="brandName" formControlName="brand" [suggestions]="brandsFiltered" (completeMethod)="filterBrands($event)" [size]="30"
-                        [minLength]="1" placeholder="Hint: type for filter">
-                        <ng-template let-brand pTemplate="item">
-                            <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
-                                <div style="font-size:16px;float:right;margin:10px 10px 0 0">{{brand.brandName}}</div>
-                                <img src="/Upload/Media/{{brand.brandName}}.png" style="width:32px;display:inline-block;margin:5px 0 2px 5px"/>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="name">Name</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="name" [(ngModel)]="selected.productName"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
+                            <i class="fa fa-close"></i> Name is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="brand">Brand</label></div>
+                    <div class="ui-grid-col-7">
+                        <p-autoComplete [(ngModel)]="selected.brand" field="brandName" formControlName="brand" [suggestions]="brandsFiltered" (completeMethod)="filterBrands($event)" [size]="30"
+                            [minLength]="1" placeholder="Hint: type for filter">
+                            <ng-template let-brand pTemplate="item">
+                                <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+                                    <div style="font-size:16px;float:right;margin:10px 10px 0 0">{{brand.brandName}}</div>
+                                    <img src="/Upload/Media/{{brand.brandName}}.png" style="width:32px;display:inline-block;margin:5px 0 2px 5px"/>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>    
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['brand'].valid&&dataform.controls['brand'].dirty">
+                            <i class="fa fa-close"></i> Brand is required
+                        </div>
+                    </div>
+                    <div class="ui-grid-col-1">
+                        <button type="button" pButton icon="fa-folder-open-o" style="height: 30px" class="ui-button-secondary" (click)="openSidebarClick('Brands')"></button>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="categories">Categories</label></div>
+                    <div class="ui-grid-col-7">
+                        <p-autoComplete [(ngModel)]="categoriesSelected" field="categoryName" formControlName="categories" [suggestions]="categoriesFiltered" (completeMethod)="filterCategories($event)" 
+                            placeholder="Hint: type for filter" [multiple]="true">
+                            <ng-template let-category pTemplate="item">
+                                <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+                                    <div style="font-size:16px;margin:10px 10px 0 0">{{category.categoryName}}</div>
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                    </div>
+                    <div class="ui-grid-col-1">
+                        <button type="button" pButton icon="fa-folder-open-o" style="height: 30px" class="ui-button-secondary" (click)="openSidebarClick('Categories')"></button>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="type">Type</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" (click)="onOptionClick()" [style]="{'width':'100%'}"></p-selectButton>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
+                            <i class="fa fa-close"></i> Type is required
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="selected.productType!=='Simple'" class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+                        <app-grouped *ngIf="selected.productType==='Grouped'"></app-grouped>
+                        <app-variant *ngIf="selected.productType==='Variant'" (onMenuClick)="openSidebarClick($event)"></app-variant>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="code">Code</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
+                            <i class="fa fa-close"></i> Code is required
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="barcode">Barcode</label></div>
+                    <div class="ui-grid-col-8">
+                        <input pInputText type="text" formControlName="barcode" class="inputtext" [(ngModel)]="barcode" />
+                    </div>
+                </div>
+                <p-accordion>
+                    <p-accordionTab header="Price" [selected]="true">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="selling">Selling</label></div>
+                            <div class="ui-grid-col-8">
+                                <input pInputText type="number" min="0" formControlName="selling" [(ngModel)]="selected.price.selling"/>
+                                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['selling'].valid&&dataform.controls['selling'].dirty">
+                                    <i class="fa fa-close"></i> Selling Price is required
+                                </div>
                             </div>
-                        </ng-template>
-                    </p-autoComplete>    
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['brand'].valid&&dataform.controls['brand'].dirty">
-                        <i class="fa fa-close"></i> Brand is required
-                    </div>
-                </div>
-                <div class="ui-grid-col-1">
-                    <button type="button" pButton icon="fa-folder-open-o" style="height: 30px" class="ui-button-secondary" (click)="openSidebarClick('Brands')"></button>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="categories">Categories</label></div>
-                <div class="ui-grid-col-7">
-                    <p-autoComplete [(ngModel)]="categoriesSelected" field="categoryName" formControlName="categories" [suggestions]="categoriesFiltered" (completeMethod)="filterCategories($event)" 
-                        placeholder="Hint: type for filter" [multiple]="true">
-                        <ng-template let-category pTemplate="item">
-                            <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
-                                <div style="font-size:16px;margin:10px 10px 0 0">{{category.categoryName}}</div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="purchase">Purchase</label></div>
+                            <div class="ui-grid-col-8">
+                                <input pInputText type="number" min="0" formControlName="purchase" [(ngModel)]="selected.price.purchase"/>
+                                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['purchase'].valid&&dataform.controls['purchase'].dirty">
+                                    <i class="fa fa-close"></i> Purchase Price is required
+                                </div>
                             </div>
-                        </ng-template>
-                    </p-autoComplete>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="tax">Tax</label></div>
+                            <div class="ui-grid-col-8">
+                                <p-dropdown [options]="taxes" formControlName="tax" [(ngModel)]="selected.productTax" [style]="{'width':'100%'}"></p-dropdown>
+                                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['tax'].valid&&dataform.controls['tax'].dirty">
+                                    <i class="fa fa-close"></i> Tax is required
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Packaging">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="weight">Weight</label></div>
+                            <div class="ui-grid-col-8">
+                                <input pInputText type="number" min="0" formControlName="weight" [(ngModel)]="selected.packaging.weight"/>
+                            </div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="length">Length</label></div>
+                            <div class="ui-grid-col-8">
+                                <input pInputText type="number" min="0" formControlName="length" [(ngModel)]="selected.packaging.length"/>
+                            </div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="width">Width</label></div>
+                            <div class="ui-grid-col-8">
+                                <input pInputText type="number" min="0" formControlName="width" [(ngModel)]="selected.packaging.width"/>
+                            </div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="height">Height</label></div>
+                            <div class="ui-grid-col-8">
+                                <input pInputText type="number" min="0" formControlName="height" [(ngModel)]="selected.packaging.height"/>
+                            </div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="um">Unit of Measure</label></div>
+                            <div class="ui-grid-col-8">
+                                <p-dropdown [options]="ums" formControlName="um" [(ngModel)]="selected.productUm" [style]="{'width':'100%'}"></p-dropdown>
+                                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['um'].valid&&dataform.controls['um'].dirty">
+                                    <i class="fa fa-close"></i> Unit of Measure is required
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
                 </div>
-                <div class="ui-grid-col-1">
-                    <button type="button" pButton icon="fa-folder-open-o" style="height: 30px" class="ui-button-secondary" (click)="openSidebarClick('Categories')"></button>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                    </div>
                 </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12"><hr></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="type">Type</label></div>
-                <div class="ui-grid-col-8">
-                    <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" (click)="onOptionClick()" [style]="{'width':'100%'}"></p-selectButton>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
-                        <i class="fa fa-close"></i> Type is required
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+                        <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-promary" (click)="deleteClick()" label="Delete"></button>
                     </div>
                 </div>
             </div>
-            <div *ngIf="selected.productType!=='Simple'" class="ui-grid-row">
-                <div class="ui-grid-col-12">
-                    <app-grouped *ngIf="selected.productType==='Grouped'"></app-grouped>
-                    <app-variant *ngIf="selected.productType==='Variant'" (onMenuClick)="openSidebarClick($event)"></app-variant>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12"><hr></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="code">Code</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
-                        <i class="fa fa-close"></i> Code is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="barcode">Barcode</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText type="text" formControlName="barcode" class="inputtext" [(ngModel)]="barcode" />
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12"><hr></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Price</label></div>
-                <div class="ui-grid-col-4"><label for="selling">Selling</label></div>
-                <div class="ui-grid-col-4">
-                    <input pInputText type="number" min="0" formControlName="selling" [(ngModel)]="selected.price.selling"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['selling'].valid&&dataform.controls['selling'].dirty">
-                        <i class="fa fa-close"></i> Selling Price is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4"><label for="purchase">Purchase</label></div>
-                <div class="ui-grid-col-4">
-                    <input pInputText type="number" min="0" formControlName="purchase" [(ngModel)]="selected.price.purchase"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['purchase'].valid&&dataform.controls['purchase'].dirty">
-                        <i class="fa fa-close"></i> Purchase Price is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4"><label for="tax">Tax</label></div>
-                <div class="ui-grid-col-4">
-                    <p-dropdown [options]="taxes" formControlName="tax" [(ngModel)]="selected.productTax" [style]="{'width':'100%'}"></p-dropdown>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['tax'].valid&&dataform.controls['tax'].dirty">
-                        <i class="fa fa-close"></i> Tax is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12"><hr></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Packaging</label></div>
-                <div class="ui-grid-col-4"><label for="weight">Weight</label></div>
-                <div class="ui-grid-col-4">
-                    <input pInputText type="number" min="0" formControlName="weight" [(ngModel)]="selected.packaging.weight"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4">
-                    <label for="length">Length</label>
-                </div>
-                <div class="ui-grid-col-4">
-                    <input pInputText type="number" min="0" formControlName="length" [(ngModel)]="selected.packaging.length"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4"><label for="width">Width</label></div>
-                <div class="ui-grid-col-4">
-                    <input pInputText type="number" min="0" formControlName="width" [(ngModel)]="selected.packaging.width"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4"><label for="height">Height</label></div>
-                <div class="ui-grid-col-4">
-                    <input pInputText type="number" min="0" formControlName="height" [(ngModel)]="selected.packaging.height"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4"><label for="um">Unit of Measure</label></div>
-                <div class="ui-grid-col-4">
-                    <p-dropdown [options]="ums" formControlName="um" [(ngModel)]="selected.productUm" [style]="{'width':'100%'}"></p-dropdown>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['um'].valid&&dataform.controls['um'].dirty">
-                        <i class="fa fa-close"></i> Unit of Measure is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12"><hr></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label>Status</label></div>
-                <div class="ui-grid-col-2">
-                    <p-inputSwitch onLabel="ON" offLabel="OFF" formControlName="isActive" [(ngModel)]="selected.productIsActive"></p-inputSwitch>
-                </div>
-                <div class="ui-grid-col-2" style="text-align: right">
-                    <label>Updated</label>
-                </div>
-                <div class="ui-grid-col-4" style="text-align: right">
-                    <span>{{selected.updatedAt}}</span>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12"><hr></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12">
-                    <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12"><hr></div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12">
-                    <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-promary" (click)="deleteClick()" label="Delete"></button>
-                </div>
-            </div>
-        </div>
-    </form>
+        </p-tabPanel>
+        <p-tabPanel header="Description">
+            Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy, killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows.
+        </p-tabPanel>
+        <p-tabPanel header="Media">
+            After a break of more than  15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family. Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate.
+        </p-tabPanel>
+    </p-tabView>
+</form>
 </div>
