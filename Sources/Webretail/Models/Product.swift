@@ -229,7 +229,7 @@ class Product: PostgresSqlORM, Codable {
         let articleAttributeJoin = StORMDataSourceJoin(
             table: "articleattributevalues",
             onCondition: "articleattributevalues.articleId = articles.articleId",
-            direction: StORMJoinType.INNER
+            direction: StORMJoinType.LEFT
         )
 
         let param = """

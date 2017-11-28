@@ -273,21 +273,13 @@ struct ArticleRepository : ArticleProtocol {
             let row = Article()
             row.to(article.results.rows[i])
             
-            /// get attributeValues
-            let attributeValue = ArticleAttributeValue()
-            try attributeValue.query(
-                whereclause: "articleId = $1",
-                params: [row.articleId]
-            )
-            if attributeValue.results.rows.count == 0 {
-                continue
-            }
-            
             let data = row.articleBarcodes.first(where: { $0.tags.count == 0 })
             if let barcode = data?.barcode {
                 let product = Product()
                 try product.get(barcode: barcode)
-                rows.append(GroupItem(id: row.articleId, barcode: barcode, product: product))
+                if product.productId != productId {
+                    rows.append(GroupItem(id: row.articleId, barcode: barcode, product: product))
+                }
             }
         }
 

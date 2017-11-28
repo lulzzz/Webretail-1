@@ -204,6 +204,12 @@ box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
   z-index: 9999;
 }
 
+.right-sidebar {
+  margin: 0;
+  z-index: 9999;
+  overflow-y: auto;
+}
+
 #layout-sidebar.active {
   left: 0;
 }
@@ -347,6 +353,7 @@ footer {
 
 .ui-growl {
   margin-top: 60px;
+  z-index: 10000;
 }
 
 body .ui-widget-header {

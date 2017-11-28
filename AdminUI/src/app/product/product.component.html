@@ -2,7 +2,7 @@
 
 <p-sidebar [(visible)]="sessionService.visibleSidebar" (onHide)="closeSidebarClick($event)" styleClass="ui-sidebar-lg" position="right" [baseZIndex]="99999">
     <h1>{{sessionService.titleSidebar}}</h1>
-    <div #dynamicComponentContainer></div>
+    <div id="right-sidebar" #dynamicComponentContainer></div>
 </p-sidebar>
     
 <div *ngIf="selected" class="ui-panel">

@@ -35,7 +35,7 @@ export class VariantComponent implements OnInit {
 
         this.forms = [];
         this.formsSelected = [];
-        this.totalRecords = this.product.articles.length;
+        this.totalRecords = this.product.articles.filter(p => p.attributeValues.length > 0).length;
 
         this.product.attributes.forEach(p => {
             const values = p.attributeValues.map(v => v.attributeValue.attributeValueName);
