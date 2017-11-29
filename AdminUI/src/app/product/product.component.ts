@@ -73,7 +73,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             'width': new FormControl('', Validators.required),
             'height': new FormControl('', Validators.required),
             'isActive': new FormControl('', Validators.required)
-        });
+       });
 
         this.sub = this.activatedRoute.params.subscribe(params => {
             const productId = Number(params['id']);

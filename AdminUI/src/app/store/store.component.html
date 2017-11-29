@@ -1,4 +1,4 @@
-﻿<img *ngIf="!stores" src="/assets/loading.gif" class="loading">
+﻿<p-progressSpinner *ngIf="!stores" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
 
 <div class="container-fluid">
 
@@ -26,7 +26,7 @@
         <p-header>
             <div class="ui-helper-clearfix">
                 <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Store</b></span>
-                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-warning" icon="fa-close"></button>
             </div>
         </p-header>
         <form [formGroup]="dataform">

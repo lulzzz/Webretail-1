@@ -1,0 +1,26 @@
+<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-12">
+            <p-fileUpload mode="advanced" url="/api/media" multiple="multiple" accept="image/*" maxFileSize="1000000" 
+            (onBeforeUpload)="onBeforeUpload($event)" (onUpload)="onUpload($event)"></p-fileUpload>
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+            <p-orderList [value]="medias" dragdrop="true" dragdropScope="medias" [responsive]="true">
+                <ng-template let-media pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <span>{{media.name}}</span>
+                        <img (click)="selectMedia(media.url);" src="{{media.url}}" style="display:inline-block;margin:2px 0 2px 2px;" width="100%">
+                        <button type="button" pButton icon="fa-trash" style="margin-right: 30px" (click)="deleteMediaClick(media)"></button>
+                    </div>
+                </ng-template>
+            </p-orderList>
+        </div>
+        <div class="ui-grid-col-8">
+            <p-panel header="{{selectedMedia}}">
+                <img src="{{selectedMedia}}" width="100%" *ngIf="selectedMedia"/>
+            </p-panel>
+        </div>
+    </div>
+</div>    

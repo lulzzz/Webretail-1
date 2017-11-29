@@ -45,7 +45,7 @@ export class ReportReceiptsComponent implements OnInit {
     calculateGroupTotal(device: string) {
         let total = 0;
         if (this.items) {
-            for (let movemet of this.items) {
+            for (const movemet of this.items) {
                 if (movemet.movementDevice === device) {
                     total += movemet.movementAmount;
                 }

@@ -166,6 +166,7 @@ struct ProductRepository : ProductProtocol {
         current.productPrice = item.productPrice
         current.productDiscount = item.productDiscount
         current.productPackaging = item.productPackaging
+        current.productSeo = item.productSeo
         current.productIsActive = item.productIsActive
         
         /// Brand

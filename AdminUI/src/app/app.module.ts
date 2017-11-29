@@ -14,7 +14,8 @@ import {
     SelectButtonModule, ChipsModule, InputTextareaModule,
     ContextMenuModule, TooltipModule, CalendarModule,
     FileUploadModule, ChartModule, CarouselModule, SidebarModule,
-    SpinnerModule, StepsModule, AutoCompleteModule, TabViewModule, AccordionModule
+    SpinnerModule, StepsModule, AutoCompleteModule, TabViewModule,
+    AccordionModule, ProgressSpinnerModule, OrderListModule
 } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 // import { NgxBarcodeModule } from 'ngx-barcode';
@@ -43,11 +44,13 @@ import { RegistryComponent } from './registry/registry.component';
 import { StoreComponent } from './store/store.component';
 import { ProductsComponent } from './product/products.component';
 import { ProductComponent } from './product/product.component';
-import { SimpleComponent } from './product/simple.component';
 import { GroupedComponent } from './product/grouped.component';
 import { VariantComponent } from './product/variant.component';
 import { ImportComponent } from './product/import.component';
 import { StockComponent } from './product/stock.component';
+import { SeoComponent } from './product/seo.component';
+import { MediaComponent } from './shared/media.component';
+import { TranslationComponent } from './shared/translation.component';
 import { PublicationComponent } from './product/publication.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
@@ -96,9 +99,9 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         FormsModule, ReactiveFormsModule,
         DataTableModule, SharedModule, PaginatorModule, SidebarModule,
         MultiSelectModule, DropdownModule, SliderModule, TreeModule,
-        ButtonModule, InputTextModule, InputSwitchModule,
+        ButtonModule, InputTextModule, InputSwitchModule, ProgressSpinnerModule,
         PanelModule, SplitButtonModule, PickListModule, GrowlModule,
-        ConfirmDialogModule, ToolbarModule, SelectButtonModule,
+        ConfirmDialogModule, ToolbarModule, SelectButtonModule, OrderListModule,
         ChipsModule, InputTextareaModule, FileUploadModule, AutoCompleteModule,
         ContextMenuModule, TooltipModule, CalendarModule, ChartModule,
         CarouselModule, SpinnerModule, StepsModule, TabViewModule, AccordionModule,
@@ -135,10 +138,12 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         StoreComponent,
         ProductsComponent,
         ProductComponent,
-        SimpleComponent,
+        MediaComponent,
+        TranslationComponent,
         GroupedComponent,
         VariantComponent,
         StockComponent,
+        SeoComponent,
         PublicationComponent,
         MovementsComponent,
         MovementComponent,
@@ -178,9 +183,14 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         ImportService
     ],
     entryComponents: [
+        AttributeComponent,
+        AttributeValueComponent,
         ArticlePickerComponent,
         ProductPickerComponent,
-        MovementPickerComponent
+        MovementPickerComponent,
+        MediaComponent,
+        TranslationComponent,
+        SeoComponent
     ],
     exports: [
         CategoryFilterPipe,

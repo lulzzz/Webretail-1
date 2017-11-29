@@ -23,6 +23,7 @@ class Product: PostgresSqlORM, Codable {
     public var productPackaging : Packaging = Packaging()
     public var productMedias: [Media] = [Media]()
     public var productTranslates: [Translation] = [Translation]()
+    public var productSeo : Seo = Seo()
     public var productIsActive : Bool = false
     public var productIsValid : Bool = false
     public var productCreated : Int = Int.now()
@@ -46,6 +47,7 @@ class Product: PostgresSqlORM, Codable {
         case productPackaging = "packaging"
         case productMedias = "medias"
         case productTranslates = "translations"
+        case productSeo = "seo"
         case productIsActive
         case _brand = "brand"
         case _categories = "categories"
@@ -89,6 +91,10 @@ class Product: PostgresSqlORM, Codable {
         if let translates = this.data["producttranslates"] {
             jsonData = try! JSONSerialization.data(withJSONObject: translates, options: [])
             productTranslates = try! decoder.decode([Translation].self, from: jsonData)
+        }
+        if let seo = this.data["seo"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: seo, options: [])
+            productSeo = try! decoder.decode(Seo.self, from: jsonData)
         }
         productIsActive = this.data["productisactive"] as? Bool ?? false
         productIsValid = this.data["productisvalid"] as? Bool ?? false
@@ -134,6 +140,7 @@ class Product: PostgresSqlORM, Codable {
         productPackaging = try container.decodeIfPresent(Packaging.self, forKey: .productPackaging) ?? Packaging()
         productMedias = try container.decodeIfPresent([Media].self, forKey: .productMedias) ?? [Media]()
         productTranslates = try container.decodeIfPresent([Translation].self, forKey: .productTranslates) ?? [Translation]()
+        productSeo = try container.decodeIfPresent(Seo.self, forKey: .productSeo) ?? Seo()
         productIsActive = try container.decode(Bool.self, forKey: .productIsActive)
         _brand = try container.decodeIfPresent(Brand.self, forKey: ._brand) ?? Brand()
         brandId = try container.decodeIfPresent(Int.self, forKey: .brandId) ?? _brand.brandId
@@ -156,6 +163,7 @@ class Product: PostgresSqlORM, Codable {
         try container.encode(productPackaging, forKey: .productPackaging)
         try container.encode(productMedias, forKey: .productMedias)
         try container.encode(productTranslates, forKey: .productTranslates)
+        try container.encode(productSeo, forKey: .productSeo)
         try container.encode(productIsActive, forKey: .productIsActive)
         try container.encode(_brand, forKey: ._brand)
         try container.encode(_categories, forKey: ._categories)

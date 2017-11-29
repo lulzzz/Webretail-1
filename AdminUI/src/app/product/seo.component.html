@@ -1,0 +1,33 @@
+<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-4"><label>Permalink</label></div>
+        <div class="ui-grid-col-8">
+            <input pInputText type="text" [(ngModel)]="selected.seo.permalink"/>
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-12"><hr></div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-4"><label>Keywords</label></div>
+        <div class="ui-grid-col-8">
+            <textarea pInputTextarea [(ngModel)]="selected.seo.keywords"></textarea>
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-4"><label>Short Description</label></div>
+        <div class="ui-grid-col-8">
+            <textarea pInputTextarea [(ngModel)]="selected.seo.description"></textarea>
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-12"><hr></div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-4"><label>Full Description</label></div>
+        <div class="ui-grid-col-8">
+            <textarea [rows]="10" [cols]="30" pInputTextarea autoResize="autoResize" [(ngModel)]="selected.seo.description"></textarea>
+        </div>
+    </div>
+</div>
+

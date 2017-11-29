@@ -1,4 +1,4 @@
-<table *ngIf="formsSelected" class="table" cellpadding="2" cellspacing="0">
+<table *ngIf="formsSelected" class="ui-datatable" cellpadding="5" cellspacing="0">
     <thead>
         <tr style="background-color: whitesmoke"> 
             <td style="width: 20%"><label>Attribute</label></td> 
@@ -8,6 +8,14 @@
             </td>
         </tr>
     </thead>
+    <tfoot>
+        <tr>
+            <td colspan="2"><strong>{{totalRecords}}</strong> variants</td>
+            <td>
+                <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>                    
+            </td>
+        </tr>
+    </tfoot>
     <tbody> 
         <tr *ngFor="let item of formsSelected"> 
             <td>
@@ -22,12 +30,6 @@
             </td>
             <td>
                 <button pButton type="button" (click)="removeClick()" class="ui-button-primary" icon="fa-times"></button>                    
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2"><strong>{{totalRecords}}</strong> variants</td>
-            <td>
-                <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>                    
             </td>
         </tr>
     </tbody>

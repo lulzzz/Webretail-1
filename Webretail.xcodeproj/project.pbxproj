@@ -22,6 +22,7 @@
 		568990A01FB2503200A646B2 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689909F1FB2503200A646B2 /* Tag.swift */; };
 		56A3C3801FAE67AD00E60C1B /* Barcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A3C37F1FAE67AD00E60C1B /* Barcode.swift */; };
 		56B40E341FC0A13600FE6A3A /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B40E331FC0A13600FE6A3A /* OrderModel.swift */; };
+		56E9D5F81FCE273800A45709 /* Seo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9D5F71FCE273800A45709 /* Seo.swift */; };
 		OBJ_1005 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_184 /* Convenience.swift */; };
 		OBJ_1006 /* DataConverters.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_185 /* DataConverters.swift */; };
 		OBJ_1007 /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_186 /* Delete.swift */; };
@@ -1220,6 +1221,7 @@
 		56D7E5591FAC884400EE4061 /* cert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cert.pem; sourceTree = "<group>"; };
 		56D7E55A1FAC884400EE4061 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		56D7E55B1FAC884400EE4061 /* buildlinux */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = buildlinux; sourceTree = "<group>"; };
+		56E9D5F71FCE273800A45709 /* Seo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seo.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFilter.swift; sourceTree = "<group>"; };
 		OBJ_100 /* ArticleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleRepository.swift; sourceTree = "<group>"; };
@@ -2652,6 +2654,7 @@
 				OBJ_69 /* ProductAttributeValue.swift */,
 				OBJ_70 /* ProductCategory.swift */,
 				OBJ_71 /* Publication.swift */,
+				56E9D5F71FCE273800A45709 /* Seo.swift */,
 				OBJ_72 /* Statistic.swift */,
 				OBJ_73 /* Stock.swift */,
 				OBJ_74 /* Store.swift */,
@@ -4655,6 +4658,7 @@
 				5689909E1FB1BEC900A646B2 /* TagValueController.swift in Sources */,
 				OBJ_791 /* AccessTokenStore.swift in Sources */,
 				OBJ_792 /* Article.swift in Sources */,
+				56E9D5F81FCE273800A45709 /* Seo.swift in Sources */,
 				568990961FB1B6D300A646B2 /* TagValueProtocol.swift in Sources */,
 				OBJ_793 /* ArticleAttributeValue.swift in Sources */,
 				OBJ_794 /* Attribute.swift in Sources */,

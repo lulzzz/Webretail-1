@@ -1,189 +1,23 @@
-<img *ngIf="isBusy" src="/assets/loading.gif" class="loading">
-
-<div class="container-fluid" *ngIf="product">
-
-    <button pButton type="button" title="Products" style="position: absolute; top: 154px; left: 30px; width:50px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
-        
-    <p-toolbar>
-        <div class="ui-toolbar-group-left" style="margin-left:80px; margin-top:-12px;">
-            <h3><strong>{{product.productName}}</strong>: {{status}}</h3>
-        </div>
-        <div class="ui-toolbar-group-right" style="text-align: right">
-            <button pButton type="button" label="Save" icon="fa-save" class="ui-button-success" style="margin-right: 20px" (click)="saveClick()"></button>
-        </div>
-    </p-toolbar>
-
-    <p-steps [model]="items" [(activeIndex)]="activeIndex" styleClass="steps-custom" [readonly]="false"></p-steps>
-
-    <div class="steps-container">
-
-        <table *ngIf="activeIndex<3" class='table' cellpadding="2" cellspacing="2">
-            <tr>
-                <td colspan="3">Selected Key: <strong>{{selectedKey}}</strong></td>
-            </tr>
-            <tr>
-                <td style="width: 100px"><p-dropdown [options]="countries" [(ngModel)]="translation.country"></p-dropdown></td>
-                <td><textarea pInputTextarea class="inputtext" [(ngModel)]="translation.value"></textarea></td>
-                <td style="width: 50px"><button type="button" label="Add" pButton (click)="addTranslateClick()" icon="fa-plus-circle"></button></td>
-            </tr>
-        </table>
-        
-        <div *ngIf="activeIndex===0">
-            <span class="steps-status">
-                <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
-                {{publicationService.step2}}
-            </span>
-            <p-panel header="Translated descriptions">
-                <table class='table' cellpadding="2" cellspacing="2">
-                    <tbody>
-                        <tr *ngFor="let item of product.translations">
-                            <td>{{item.country === "EN" ? 'English' : 'Italian'}}</td>
-                            <td><textarea pInputTextarea class="inputtext" [(ngModel)]="item.value">{{item.value}}</textarea></td>
-                            <td>
-                                <button type="button" pButton (click)="updateTranslateClick(product.translations, item)" icon="fa-save"></button>
-                                <button type="button" pButton (click)="deleteTranslateClick(product.translations, item)" icon="fa-trash"></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </p-panel>
-        </div>
-
-        <div *ngIf="activeIndex===1">
-            <div class="steps-status">
-                <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
-                {{publicationService.step1}}
-            </div>
-            <p-panel header="Translated categories">
-                <table *ngFor="let c of product.categories" class='table' style="margin-bottom: 5px; background-color: white;" cellpadding="2" cellspacing="2">
-                    <thead>
-                        <tr>
-                            <td colspan="2"><strong>{{c.category.categoryName}}</strong></td>
-                            <td style="width: 100px; text-align: right;">
-                                    <button type="button" label="Select" pButton (click)="selectTranslateClick(c.category.translations, c.category.categoryName)" icon="fa-plus-circle"></button>
-                                </td>
-                            </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of c.category.translations">
-                            <td>{{item.country === "EN" ? 'English' : 'Italian'}}</td>
-                            <td><input type="text" pInputText class="inputtext" [(ngModel)]="item.value"/></td>
-                            <td>
-                                <button type="button" pButton (click)="updateTranslateClick(c.category.translations, item)" icon="fa-save"></button>
-                                <button type="button" pButton (click)="deleteTranslateClick(c.category.translations, item)" icon="fa-trash"></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </p-panel>    
-        </div>
-
-        <div *ngIf="activeIndex===2">
-            <span class="steps-status">
-                <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
-                Optional
-            </span>
-            <p-panel header="Translated attributes">
-                <table *ngFor="let a of product.attributes" class='table' style="margin-bottom: 5px; background-color: white;" cellpadding="2" cellspacing="2">
-                    <tr>
-                        <td colspan="2"><strong>{{a.attribute.attributeName}}</strong></td>
-                        <td style="width: 100px; text-align: right;">
-                            <button type="button" label="Select" pButton (click)="selectTranslateClick(a.attribute.translations, a.attribute.attributeName)" icon="fa-plus-circle"></button>
-                        </td>
-                    </tr>
-                    <tr *ngFor="let item of a.attribute.translations">
-                        <td>{{item.country === "EN" ? 'English' : 'Italian'}}</td>
-                        <td><input type="text" pInputText class="inputtext" [(ngModel)]="item.value"/></td>
-                        <td>
-                            <button type="button" pButton (click)="updateTranslateClick(a.attribute.translations, item)" icon="fa-save"></button>
-                            <button type="button" pButton (click)="deleteTranslateClick(a.attribute.translations, item)" icon="fa-trash"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <table *ngFor="let b of a.attributeValues" class='table' style="margin-bottom: 5px; background-color: white;" cellpadding="2" cellspacing="2">
-                                <tr>
-                                    <td colspan="2"><strong>{{b.attributeValue.attributeValueName}}</strong></td>
-                                    <td style="width: 100px; text-align: right;">
-                                        <button type="button" label="Select" pButton (click)="selectTranslateClick(b.attributeValue.translations, b.attributeValue.attributeValueName)" icon="fa-plus-circle"></button>
-                                    </td>
-                                </tr>
-                                <tr *ngFor="let item of b.attributeValue.translations">
-                                    <td>{{item.country === "EN" ? 'English' : 'Italian'}}</td>
-                                    <td><input type="text" pInputText class="inputtext" [(ngModel)]="item.value"/></td>
-                                    <td>
-                                        <button type="button" pButton (click)="updateTranslateClick(b.attributeValue.translations, item)" icon="fa-save"></button>
-                                        <button type="button" pButton (click)="deleteTranslateClick(b.attributeValue.translations, item)" icon="fa-trash"></button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </p-panel>   
-        </div>
-
-        <div *ngIf="activeIndex===3">
-            <span class="steps-status">
-                <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
-                {{publicationService.step4}}
-            </span>
-            <p-carousel headerText="Medias" [value]="product.medias">
-                <ng-template let-media pTemplate="item">
-                    <div class="ui-grid ui-grid-responsive" style="background-color: white">
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-12"><img src="{{media.url}}" height="240px" width="100%" (click)="selectMedia(media.url);"/></div>
-                        </div>
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-12">
-                                <button type="button" pButton icon="fa-trash" style="margin-right: 30px" (click)="deleteMediaClick(media)"></button>
-                                <span>N°</span>
-                                <p-spinner size="5" [(ngModel)]="media.number"></p-spinner>
-                                <button type="button" pButton icon="fa-save" style="margin-left: 10px" (click)="updateMediaClick(media)"></button>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </p-carousel>
-            
-            <p-fileUpload name="files" url="/api/media" multiple="multiple" accept="image/*" maxFileSize="1000000" 
-                (onBeforeUpload)="onBeforeUpload($event)" (onUpload)="onUpload($event)"></p-fileUpload>
-
-            <p-panel header="{{selectedMedia}}">
-                <img src="{{selectedMedia}}" width="100%" *ngIf="selectedMedia"/>
-            </p-panel>
-        </div>
-
-        <div *ngIf="activeIndex===4">
-            <span class="steps-status">
-                <i class="fa fa-info-circle" style="margin:4px 4px 0 0"></i>
-                {{status}}
-            </span>
-            <p-panel header="Publish in the store">
-                <div style="padding: 30px">
-                    <p>
-                        <strong>Start</strong>
-                        <br/>
-                        <p-calendar [(ngModel)]="publication.publicationStartAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
-                    </p>
-                    <p>
-                        <strong>Finish</strong>
-                        <br/>
-                        <p-calendar [(ngModel)]="publication.publicationFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
-                    </p>
-                    <br/>
-                    <p>
-                        <strong>Featured</strong>
-                        <br/>
-                        <p-inputSwitch [(ngModel)]="publication.publicationFeatured"></p-inputSwitch>
-                    </p>
-                    <p>
-                        <strong>New</strong>
-                        <br/>
-                        <p-inputSwitch [(ngModel)]="publication.publicationNew"></p-inputSwitch>
-                    </p>
-                </div>
-            </p-panel>
-        </div>
-    </div>
+<div *ngIf="publication">
+    <p>
+        <strong>Start</strong>
+        <br/>
+        <p-calendar [(ngModel)]="publication.publicationStartAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+    </p>
+    <p>
+        <strong>Finish</strong>
+        <br/>
+        <p-calendar [(ngModel)]="publication.publicationFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+    </p>
+    <br/>
+    <p>
+        <strong>Featured</strong>
+        <br/>
+        <p-inputSwitch [(ngModel)]="publication.publicationFeatured"></p-inputSwitch>
+    </p>
+    <p>
+        <strong>New</strong>
+        <br/>
+        <p-inputSwitch [(ngModel)]="publication.publicationNew"></p-inputSwitch>
+    </p>
 </div>

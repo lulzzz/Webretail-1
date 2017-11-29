@@ -1,6 +1,6 @@
-<img *ngIf="isBusy" src="/assets/loading.gif" class="loading">
+<p-progressSpinner *ngIf="isBusy" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
 
-<table *ngIf="product" class="table" cellpadding="2" cellspacing="0">
+<table *ngIf="product" class="ui-datatable container-fluid" cellpadding="5" cellspacing="0">
     <thead>
         <tr style="background-color: whitesmoke"> 
             <td style="width: 160px"><strong>Sku</strong></td> 
@@ -10,6 +10,14 @@
             </td>
         </tr>
     </thead>
+    <tfoot>
+        <tr>
+            <td colspan="2"><strong>{{totalRecords}}</strong> items</td>
+            <td>
+                <button pButton type="button" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>                    
+            </td>
+        </tr>
+    </tfoot>
     <tbody> 
         <tr *ngFor="let data of articleForm"> 
             <td><span>{{data.barcode}}</span></td> 
@@ -22,5 +30,3 @@
         </tr> 
     </tbody>
 </table>   
-
-<div style="text-align: center"><strong>{{totalRecords}}</strong> items</div>

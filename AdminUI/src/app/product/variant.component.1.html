@@ -1,4 +1,4 @@
-<img *ngIf="!productInfo||!articleForm||isBusy" src="/assets/loading.gif" class="loading">
+<p-progressSpinner *ngIf="!productInfo||!articleForm||isBusy" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
 
 <div *ngIf="!display" class="inputtext">
     <p-tree [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)"></p-tree>

@@ -133,6 +133,18 @@ export class Translation {
     public value: string) { }
 }
 
+export class Seo {
+  public permalink: String;
+  public keywords: Translation[];
+  public description: Translation[];
+
+  constructor() {
+    this.permalink = '';
+    this.keywords = [];
+    this.description = [];
+  }
+}
+
 export class Product {
   public productId: number;
   public productCode: string;
@@ -145,6 +157,7 @@ export class Product {
   public packaging: Packaging;
   public medias: Media[];
   public translations: Translation[];
+  public seo: Seo;
   public brand: Brand;
   public categories: ProductCategory[];
   public attributes: ProductAttribute[];
@@ -163,6 +176,7 @@ export class Product {
     this.price = new Price();
     this.discount = new Discount();
     this.packaging = new Packaging();
+    this.seo = new Seo();
     this.medias = [];
     this.translations = [];
     this.categories = [];

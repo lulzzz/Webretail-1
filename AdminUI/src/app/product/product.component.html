@@ -1,4 +1,4 @@
-﻿<img *ngIf="!selected||isBusy" src="/assets/loading.gif" class="loading">
+﻿<p-progressSpinner *ngIf="!selected||isBusy" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
 
 <p-sidebar [(visible)]="sessionService.visibleSidebar" (onHide)="closeSidebarClick($event)" styleClass="ui-sidebar-lg" position="right" [baseZIndex]="99999">
     <h1>{{sessionService.titleSidebar}}</h1>
@@ -6,20 +6,28 @@
 </p-sidebar>
     
 <div *ngIf="selected">
+<p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <button pButton type="button" label="Back to products" style="float:right;" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
+    </div>
+    <div class="ui-toolbar-group-right">
+        <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-promary" (click)="deleteClick()" label="Delete"></button>
+        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save All" [disabled]="!dataform.valid"></button>
+    </div>
+</p-toolbar>
 <form [formGroup]="dataform">
-    <button pButton type="button" label="Back to products" style="float:right;" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
     <p-tabView>
         <p-tabPanel header="Information">
-            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 20px">
+            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label>Status</label></div>
-                    <div class="ui-grid-col-2">
+                    <div class="ui-grid-col-4">
                         <p-inputSwitch onLabel="ON" offLabel="OFF" formControlName="isActive" [(ngModel)]="selected.productIsActive"></p-inputSwitch>
                     </div>
                     <div class="ui-grid-col-2" style="text-align: right">
                         <label>Updated</label>
                     </div>
-                    <div class="ui-grid-col-4" style="text-align: right">
+                    <div class="ui-grid-col-2" style="text-align: right">
                         <span>{{selected.updatedAt}}</span>
                     </div>
                 </div>
@@ -72,24 +80,6 @@
                     <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="type">Type</label></div>
-                    <div class="ui-grid-col-8">
-                        <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" (click)="onOptionClick()" [style]="{'width':'100%'}"></p-selectButton>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
-                            <i class="fa fa-close"></i> Type is required
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="selected.productType!=='Simple'" class="ui-grid-row">
-                    <div class="ui-grid-col-12">
-                        <app-grouped *ngIf="selected.productType==='Grouped'"></app-grouped>
-                        <app-variant *ngIf="selected.productType==='Variant'" (onMenuClick)="openSidebarClick($event)"></app-variant>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-12"><hr></div>
-                </div>
-                <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="code">Code</label></div>
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
@@ -104,8 +94,24 @@
                         <input pInputText type="text" formControlName="barcode" class="inputtext" [(ngModel)]="barcode" />
                     </div>
                 </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4"><label for="type">Type</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" (click)="onOptionClick()" [style]="{'width':'100%'}"></p-selectButton>
+                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
+                            <i class="fa fa-close"></i> Type is required
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="selected.productType!=='Simple'" class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+                        <app-grouped *ngIf="selected.productType==='Grouped'"></app-grouped>
+                        <app-variant *ngIf="selected.productType==='Variant'" (onMenuClick)="openSidebarClick($event)"></app-variant>
+                    </div>
+                </div>
                 <p-accordion>
                     <p-accordionTab header="Price" [selected]="true">
+                    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
                         <div class="ui-grid-row">
                             <div class="ui-grid-col-4"><label for="selling">Selling</label></div>
                             <div class="ui-grid-col-8">
@@ -133,8 +139,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </p-accordionTab>
                     <p-accordionTab header="Packaging">
+                    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
                         <div class="ui-grid-row">
                             <div class="ui-grid-col-4"><label for="weight">Weight</label></div>
                             <div class="ui-grid-col-8">
@@ -168,31 +176,19 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </p-accordionTab>
                 </p-accordion>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-12"><hr></div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-12">
-                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-12"><hr></div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-12">
-                        <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-promary" (click)="deleteClick()" label="Delete"></button>
-                    </div>
-                </div>
             </div>
         </p-tabPanel>
-        <p-tabPanel header="Description">
-            Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy, killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows.
-        </p-tabPanel>
         <p-tabPanel header="Media">
-            After a break of more than  15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family. Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate.
+            <app-media [medias]="selected.medias"></app-media>
+        </p-tabPanel>
+        <p-tabPanel header="SEO">
+            <app-seo></app-seo>
+        </p-tabPanel>
+        <p-tabPanel header="Publication">
+            <app-publication></app-publication>
         </p-tabPanel>
     </p-tabView>
 </form>

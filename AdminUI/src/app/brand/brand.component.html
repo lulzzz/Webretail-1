@@ -1,8 +1,8 @@
-﻿<img *ngIf="!brands" src="/assets/loading.gif" class="loading">
+﻿<p-progressSpinner *ngIf="!brands" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
 
 <div class="container-fluid">
 
-    <p-toolbar *ngIf="!displayPanel">
+    <p-toolbar>
         <div class="ui-toolbar-group-left">
             <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
         </div>

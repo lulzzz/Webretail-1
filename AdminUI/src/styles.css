@@ -17,7 +17,6 @@ body {
   font-size: 1em;
 }
 
-
 label {
   font-weight: 600;
 }
@@ -331,24 +330,26 @@ footer {
 .loading {
   position: fixed;
   top: 10px;
-  right: 40px;
-  height: 50px;
+  right: 20px;
   z-index: 10000;
 }
 
-.table {
-  width: 100%;
-  background-color: white;
-  padding: 2px;
-}
-
-.table tr:hover {
+.ui-datatable tr:hover {
   background-color: #f8f7f6;
 }
 
 .percentage {
   float: right;
   height: 10px;
+}
+
+.ui-orderlist-list-container {
+  width: 100% !important;
+}
+
+.ui-orderlist,
+.ui-orderlist-list {
+  height: 100% !important;
 }
 
 .ui-growl {
@@ -361,8 +362,11 @@ body .ui-widget-header {
   background-color: #f8f7f6;
   padding: 10px 0;
 }
+
 body .ui-tabview {
   border: 0 !important;
+  padding: 0;
+  margin: 0;
 }
 
 body .ui-tabview-nav,
@@ -423,6 +427,7 @@ body .ui-toolbar-group-right i {
   border: 1px solid #eee !important;
   color: #1f1f1f !important;
   background: white !important;
+  border-radius: 5px;
 }
 
 .ui-panel {
@@ -481,8 +486,17 @@ body .ui-toolbar-group-right i {
   border-radius: 5px;
 }
 
+.container-fluid,
 .inputtext {
   width: 100%;
+}
+
+.ui-fileupload {
+  text-align: center;
+}
+
+.ui-fluid .ui-fileupload .ui-button {
+  width: 160px !important;
 }
 
 .ui-grid-row .ui-grid-col-12 {
