@@ -39,7 +39,7 @@ export class GroupedComponent implements OnInit {
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
     }
 
-    openSidebarClick() {
+    addClick() {
         const comp = ProductComponent.instance.openSidebarClick('Articles');
         comp.instance.onPicked.subscribe((data) => this.pickerClick(data));
     }

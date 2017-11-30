@@ -15,44 +15,57 @@
             <span><i class="fa fa-database"></i>&nbsp;&nbsp;Product</span>
         </a>
         <div [ngClass]="{'submenushow': (productmenu.id == activeMenuId), 'submenuhide': (productmenu.id != activeMenuId)}">
-            <a [routerLink]="['/product']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-th"></i>Products</a>
-            <a [routerLink]="['/brand']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-th-list"></i>Brands</a>
-            <a [routerLink]="['/category']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-th-list"></i>Categories</a>
-            <a [routerLink]="['/attribute']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-th-list"></i>Attributes</a>
-            <a [routerLink]="['/discount']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-scissors"></i>Discounts</a>
-            <a [routerLink]="['/import']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-download"></i>Import</a>
+            <a [routerLink]="['/product']" (click)="onMenuItemClick()"><i class="fa fa-database"></i>&nbsp;&nbsp;Products</a>
+            <a [routerLink]="['/brand']" (click)="onMenuItemClick()"><i class="fa fa-registered"></i>&nbsp;&nbsp;Brands</a>
+            <a [routerLink]="['/category']" (click)="onMenuItemClick()"><i class="fa fa-object-group"></i>&nbsp;&nbsp;Categories</a>
+            <a [routerLink]="['/attribute']" (click)="onMenuItemClick()"><i class="fa fa-tag"></i>&nbsp;&nbsp;Attributes</a>
+            <a [routerLink]="['/discount']" (click)="onMenuItemClick()"><i class="fa fa-money"></i>&nbsp;&nbsp;Discounts</a>
+            <a [routerLink]="['/import']" (click)="onMenuItemClick()"><i class="fa fa-download"></i>&nbsp;&nbsp;Import</a>
         </div>
 
         <a id="movementmenu" #movementmenu [class.active-menuitem]="movementmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === movementmenu.id ? null : movementmenu.id)">
             <span><i class="fa fa-gamepad"></i>&nbsp;&nbsp;Movement</span>
         </a>
         <div [ngClass]="{'submenushow': (movementmenu.id == activeMenuId), 'submenuhide': (movementmenu.id != activeMenuId)}">
-            <a [routerLink]="['/movement']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-indent-left"></i>Movements</a>
-            <a [routerLink]="['/causal']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-th-list"></i>Causals</a>
-            <a [routerLink]="['/tag']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-tag"></i>Tags</a>
-            <a [routerLink]="['/registry']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-user"></i>Registries</a>
-            <a [routerLink]="['/invoice']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-list-alt"></i>Invoices</a>
+            <a [routerLink]="['/movement']" (click)="onMenuItemClick()"><i class="fa fa-gamepad"></i>&nbsp;&nbsp;Movements</a>
+            <a [routerLink]="['/causal']" (click)="onMenuItemClick()"><i class="fa fa-sliders"></i>&nbsp;&nbsp;Causals</a>
+            <a [routerLink]="['/tag']" (click)="onMenuItemClick()"><i class="fa fa-tags"></i>&nbsp;&nbsp;Tags</a>
+            <a [routerLink]="['/registry']" (click)="onMenuItemClick()"><i class="fa fa-address-book"></i>&nbsp;&nbsp;Registries</a>
+            <a [routerLink]="['/invoice']" (click)="onMenuItemClick()"><i class="fa fa-file-text"></i>&nbsp;&nbsp;Invoices</a>
         </div>
 
         <a id="reportmenu" #reportmenu [class.active-menuitem]="reportmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === reportmenu.id ? null : reportmenu.id)">
             <span><i class="fa fa-line-chart"></i>&nbsp;&nbsp;Report</span>
         </a>
         <div [ngClass]="{'submenushow': (reportmenu.id == activeMenuId), 'submenuhide': (reportmenu.id != activeMenuId)}">
-            <a [routerLink]="['/report/receipts']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-modal-window"></i>Receipts</a>
-            <a [routerLink]="['/report/sales']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-scale"></i>Sales</a>
-            <a [routerLink]="['/report/statistics']" (click)="onMenuItemClick()"><i class="glyphicon glyphicon-dashboard"></i>Statistics</a>
+            <a [routerLink]="['/report/statistics']" (click)="onMenuItemClick()"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;Statistics</a>
+            <a [routerLink]="['/report/receipts']" (click)="onMenuItemClick()"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Receipts</a>
+            <a [routerLink]="['/report/sales']" (click)="onMenuItemClick()"><i class="fa fa-tachometer"></i>&nbsp;&nbsp;Sales</a>
+        </div>
+
+        <a id="channelmenu" #channelmenu [class.active-menuitem]="channelmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === channelmenu.id ? null : channelmenu.id)">
+            <span><i class="fa fa-sitemap"></i>&nbsp;&nbsp;Sales Channels</span>
+        </a>
+        <div [ngClass]="{'submenushow': (channelmenu.id == activeMenuId), 'submenuhide': (channelmenu.id != activeMenuId)}">
+            <a [routerLink]="['/webapp']"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Webretail App</a>
+            <a [routerLink]="['/pos']"><i class="fa fa-mobile"></i>&nbsp;&nbsp;Webretail POS</a>
+            <a [routerLink]="['/wordpress']"><i class="fa fa-wordpress"></i>&nbsp;&nbsp;Wordpress</a>
+            <a [routerLink]="['/amazon']"><i class="fa fa-amazon"></i>&nbsp;&nbsp;Amazon</a>
+            <a [routerLink]="['/facebook']"><i class="fa fa-facebook"></i>&nbsp;&nbsp;Facebook</a>
+            <a [routerLink]="['/ebay']"><i class="fa fa-shopping-bag"></i>&nbsp;&nbsp;eBay</a>
         </div>
 
         <a id="settingmenu" #settingmenu [class.active-menuitem]="settingmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === settingmenu.id ? null : settingmenu.id)">
             <span><i class="fa fa-cog"></i>&nbsp;&nbsp;Setting</span>
         </a>
         <div [ngClass]="{'submenushow': (settingmenu.id == activeMenuId), 'submenuhide': (settingmenu.id != activeMenuId)}">
-            <a *ngIf="!isAdmin" [routerLink]="['/account/myinfo']"><i class="glyphicon glyphicon-user"></i>Account</a>
-            <a *ngIf="isAdmin" [routerLink]="['/company']"><i class="glyphicon glyphicon-home"></i>Company</a>
-            <a *ngIf="isAdmin" [routerLink]="['/account']"><i class="glyphicon glyphicon-user"></i>Accounts</a>
-            <a [routerLink]="['/store']"><i class="glyphicon glyphicon-inbox"></i>Stores</a>
-            <a [routerLink]="['/device']"><i class="glyphicon glyphicon-phone"></i>Devices</a>
+            <a *ngIf="!isAdmin" [routerLink]="['/account/myinfo']"><i class="fa fa-user"></i>&nbsp;&nbsp;Account</a>
+            <a *ngIf="isAdmin" [routerLink]="['/company']"><i class="fa fa-cogs"></i>&nbsp;&nbsp;Company</a>
+            <a *ngIf="isAdmin" [routerLink]="['/account']"><i class="fa fa-user"></i>&nbsp;&nbsp;Accounts</a>
+            <a [routerLink]="['/store']"><i class="fa fa-cube"></i>&nbsp;&nbsp;Stores</a>
+            <a [routerLink]="['/device']"><i class="fa fa-mobile"></i>&nbsp;&nbsp;Devices</a>
         </div>
+
         <a (click)="logoutClick()">
             <span><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Logout</span>
         </a>

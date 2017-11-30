@@ -134,13 +134,13 @@ export class Translation {
 }
 
 export class Seo {
-  public permalink: String;
-  public keywords: Translation[];
+  public url: String;
+  public title: Translation[];
   public description: Translation[];
 
   constructor() {
-    this.permalink = '';
-    this.keywords = [];
+    this.url = '';
+    this.title = [];
     this.description = [];
   }
 }
@@ -149,6 +149,7 @@ export class Product {
   public productId: number;
   public productCode: string;
   public productName: string;
+  public description: Translation[];
   public productType: string;
   public productUm: string;
   public productTax: Tax;
@@ -156,7 +157,6 @@ export class Product {
   public discount: Discount;
   public packaging: Packaging;
   public medias: Media[];
-  public translations: Translation[];
   public seo: Seo;
   public brand: Brand;
   public categories: ProductCategory[];
@@ -178,7 +178,7 @@ export class Product {
     this.packaging = new Packaging();
     this.seo = new Seo();
     this.medias = [];
-    this.translations = [];
+    this.description = [];
     this.categories = [];
     this.attributes = [];
     this.articles = [];
@@ -211,7 +211,9 @@ export class Attribute {
     public attributeId: number,
     public attributeName: string,
     public translations: Translation[]
-  ) { }
+  ) {
+    this.translations = [];
+  }
 }
 
 export class AttributeValue {
@@ -221,7 +223,9 @@ export class AttributeValue {
     public attributeValueCode: string,
     public attributeValueName: string,
     public translations: Translation[]
-    ) { }
+    ) {
+      this.translations = [];
+    }
   }
 
 export class TagGroup {
@@ -230,7 +234,9 @@ export class TagGroup {
     public tagGroupName: string,
     public translations: Translation[],
     public values: TagValue[]
-  ) { }
+  ) {
+    this.translations = [];
+  }
 }
 
 export class TagValue {
@@ -240,7 +246,9 @@ export class TagValue {
     public tagValueCode: string,
     public tagValueName: string,
     public translations: Translation[]
-  ) { }
+  ) {
+    this.translations = [];
+  }
 }
 
 export class Price {

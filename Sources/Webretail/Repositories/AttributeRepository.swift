@@ -48,6 +48,7 @@ struct AttributeRepository : AttributeProtocol {
         }
         
         current.attributeName = item.attributeName
+        current.attributeTranslates = item.attributeTranslates
         current.attributeUpdated = Int.now()
         try current.save()
     }

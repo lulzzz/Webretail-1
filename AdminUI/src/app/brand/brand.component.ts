@@ -4,7 +4,7 @@ import { ConfirmationService } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { BrandService } from './../services/brand.service';
-import { Brand } from './../shared/models';
+import { Brand, Media } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 
 @Component({
@@ -92,5 +92,11 @@ export class BrandComponent implements OnInit {
                     }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
+    }
+    onBasicUpload(event) {
+        for (const file of event.files) {
+            this.selected.brandMedia = new Media(file.name, '/Media/' + file.name, 0);
+        }
+        this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
     }
 }

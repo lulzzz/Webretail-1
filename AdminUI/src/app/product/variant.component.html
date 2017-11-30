@@ -36,6 +36,6 @@
 </table>
 
 <p *ngIf="product.productId>0">
-    <span>* Change pricing, discounts, media and translations by attribute values</span>
+    <span>* Click for change pricing, packaging, etc. by attribute values</span>
     <p-tree [value]="productInfo" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)"></p-tree>        
  </p>

@@ -41,6 +41,7 @@ export class AttributeValueComponent implements OnInit {
         if (!this.selected) {
             return;
         }
+
         this.attributeService
             .getValueByAttributeId(this.selected.attributeId)
             .subscribe(result => {

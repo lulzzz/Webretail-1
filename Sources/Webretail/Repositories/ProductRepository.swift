@@ -457,7 +457,7 @@ struct ProductRepository : ProductProtocol {
         }
         
         current.productMedias = item.productMedias
-        current.productTranslates = item.productTranslates
+        current.productDescription = item.productDescription
         current.productUpdated = Int.now()
         
         try current.save()

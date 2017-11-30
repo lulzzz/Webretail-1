@@ -6,15 +6,7 @@
 </p-sidebar>
     
 <div *ngIf="selected">
-<p-toolbar>
-    <div class="ui-toolbar-group-left">
-        <button pButton type="button" label="Back to products" style="float:right;" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
-    </div>
-    <div class="ui-toolbar-group-right">
-        <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-promary" (click)="deleteClick()" label="Delete"></button>
-        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save All" [disabled]="!dataform.valid"></button>
-    </div>
-</p-toolbar>
+<button pButton type="button" label="Back to products" style="float:right;" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
 <form [formGroup]="dataform">
     <p-tabView>
         <p-tabPanel header="Information">
@@ -30,6 +22,9 @@
                     <div class="ui-grid-col-2" style="text-align: right">
                         <span>{{selected.updatedAt}}</span>
                     </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="name">Name</label></div>
@@ -75,16 +70,16 @@
                     <div class="ui-grid-col-1">
                         <button type="button" pButton icon="fa-folder-open-o" style="height: 30px" class="ui-button-secondary" (click)="openSidebarClick('Categories')"></button>
                     </div>
-                </div>
+                </div> 
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="code">Code</label></div>
+                    <div class="ui-grid-col-4"><label for="code">SKU</label></div>
                     <div class="ui-grid-col-8">
                         <input pInputText formControlName="code" [(ngModel)]="selected.productCode"/>
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['code'].valid&&dataform.controls['code'].dirty">
-                            <i class="fa fa-close"></i> Code is required
+                            <i class="fa fa-close"></i> SKU is required
                         </div>
                     </div>
                 </div>
@@ -95,22 +90,13 @@
                     </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label for="type">Type</label></div>
-                    <div class="ui-grid-col-8">
-                        <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" (click)="onOptionClick()" [style]="{'width':'100%'}"></p-selectButton>
-                        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
-                            <i class="fa fa-close"></i> Type is required
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="selected.productType!=='Simple'" class="ui-grid-row">
-                    <div class="ui-grid-col-12">
-                        <app-grouped *ngIf="selected.productType==='Grouped'"></app-grouped>
-                        <app-variant *ngIf="selected.productType==='Variant'" (onMenuClick)="openSidebarClick($event)"></app-variant>
-                    </div>
+                    <div class="ui-grid-col-12"><hr></div>
                 </div>
                 <p-accordion>
-                    <p-accordionTab header="Price" [selected]="true">
+                    <p-accordionTab header="Description" [selected]="true">
+                        <app-translation [(translations)]="selected.description"></app-translation>
+                    </p-accordionTab>
+                    <p-accordionTab header="Price">
                     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
                         <div class="ui-grid-row">
                             <div class="ui-grid-col-4"><label for="selling">Selling</label></div>
@@ -178,6 +164,24 @@
                         </div>
                     </div>
                     </p-accordionTab>
+                    <p-accordionTab header="Type">
+                    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12">
+                                <p-selectButton [options]="types" formControlName="type" [(ngModel)]="selected.productType" (click)="onOptionClick()" [style]="{'width':'100%'}"></p-selectButton>
+                                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['type'].valid&&dataform.controls['type'].dirty">
+                                    <i class="fa fa-close"></i> Type is required
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="selected.productType!=='Simple'" class="ui-grid-row">
+                            <div class="ui-grid-col-12">
+                                <app-grouped *ngIf="selected.productType==='Grouped'"></app-grouped>
+                                <app-variant *ngIf="selected.productType==='Variant'" (onMenuClick)="openSidebarClick($event)"></app-variant>
+                            </div>
+                        </div>
+                    </div>
+                    </p-accordionTab>
                 </p-accordion>
             </div>
         </p-tabPanel>
@@ -191,5 +195,15 @@
             <app-publication></app-publication>
         </p-tabPanel>
     </p-tabView>
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-6">
+                <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+            </div>
+            <div class="ui-grid-col-6">
+                <button type="button" pButton icon="fa-save" class="ui-button-primary" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+            </div>
+        </div>
+    </div>
 </form>
 </div>

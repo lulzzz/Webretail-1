@@ -54,7 +54,7 @@ export class PublicationComponent implements OnInit, OnDestroy {
             const id = params['id'];
             this.publicationService.getProduct(id).subscribe(result => {
                 this.publicationService.product = result;
-                this.selectedArray = this.product.translations;
+                this.selectedArray = this.product.description;
                 this.categories = this.publicationService.getCategories();
                 this.attributes = this.publicationService.getAttributes();
                 this.publicationService.getPublication(id)
@@ -112,7 +112,7 @@ export class PublicationComponent implements OnInit, OnDestroy {
         switch (this.activeIndex) {
             case 0:
                 this.selectedKey = 'Description';
-                this.selectedArray = this.product.translations;
+                this.selectedArray = this.product.description;
                 break;
             case 1:
                 this.selectedKey = this.product.categories[0].category.categoryName;

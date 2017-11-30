@@ -49,6 +49,7 @@ import { VariantComponent } from './product/variant.component';
 import { ImportComponent } from './product/import.component';
 import { StockComponent } from './product/stock.component';
 import { SeoComponent } from './product/seo.component';
+import { DetailComponent } from './product/detail.component';
 import { MediaComponent } from './shared/media.component';
 import { TranslationComponent } from './shared/translation.component';
 import { PublicationComponent } from './product/publication.component';
@@ -138,6 +139,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         StoreComponent,
         ProductsComponent,
         ProductComponent,
+        DetailComponent,
         MediaComponent,
         TranslationComponent,
         GroupedComponent,
@@ -190,7 +192,8 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         MovementPickerComponent,
         MediaComponent,
         TranslationComponent,
-        SeoComponent
+        SeoComponent,
+        DetailComponent
     ],
     exports: [
         CategoryFilterPipe,

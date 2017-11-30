@@ -37,8 +37,7 @@ export class ProductsComponent implements OnInit {
 
         this.buttons = [
             { label: 'Open', icon: 'fa-edit', command: (event) => this.openClick() },
-            { label: 'Stock', icon: 'fa-list-ol', command: (event) => this.stockClick() },
-            { label: 'Publication', icon: 'fa-shopping-cart', command: (event) => this.publicationClick() }
+            { label: 'Stock', icon: 'fa-list-ol', command: (event) => this.stockClick() }
         ];
 
         if (this.products == null) {
@@ -99,9 +98,5 @@ export class ProductsComponent implements OnInit {
 
     stockClick() {
         this.router.navigateByUrl('product/' + this.selected.productId + '/stock');
-    }
-
-    publicationClick() {
-        this.router.navigateByUrl('product/' + this.selected.productId + '/publication');
     }
 }

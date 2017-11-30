@@ -24,15 +24,11 @@
         <p-header>
             <div class="ui-helper-clearfix">
                 <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Attribute Value</b></span>
-                <button pButton type="button" label="Close" (click)="closeValueClick()" style="float: right" class="ui-button-warning" icon="fa-close"></button>
+                <button pButton type="button" label="Cancel" (click)="closeValueClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
         <form [formGroup]="dataformValue">
             <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label>Id</label></div>
-                    <div class="ui-grid-col-8">{{selectedValue.attributeValueId}}</div>
-                </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="id">Attribute</label></div>
                     <div class="ui-grid-col-8">{{selected.attributeName}}</div>
@@ -57,13 +53,13 @@
                         </div>
                     </div>
                 </div>
+                <app-translation [(translations)]="selectedValue.translations"></app-translation>                            
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4">
-                        <button *ngIf="selectedValue.attributeValueId>0" type="button" pButton icon="fa-trash-o" class="ui-button-primary" (click)="deleteValueClick()" label="Delete"></button>
+                    <div class="ui-grid-col-6">
+                        <button *ngIf="selectedValue.attributeValueId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteValueClick()" label="Delete"></button>
                     </div>
-                    <div class="ui-grid-col-4"></div>
-                    <div class="ui-grid-col-4">
-                        <button type="button" pButton icon="fa-save" (click)="saveValueClick()"  class="ui-button-info" label="Save" [disabled]="!dataformValue.valid"></button>
+                    <div class="ui-grid-col-6">
+                        <button type="button" pButton icon="fa-save" (click)="saveValueClick()"  class="ui-button-primary" label="Save" [disabled]="!dataformValue.valid"></button>
                     </div>
                 </div>
             </div>

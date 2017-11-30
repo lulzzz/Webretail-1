@@ -25,15 +25,11 @@
         <p-header>
             <div class="ui-helper-clearfix">
                 <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Brand</b></span>
-                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-warning" icon="fa-close"></button>
+                <button pButton type="button" label="Cancel" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
             </div>
         </p-header>
         <form [formGroup]="dataform">
             <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label>Id</label></div>
-                    <div class="ui-grid-col-8">{{selected.brandId}}</div>
-                </div>
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="name">Name</label></div>
                     <div class="ui-grid-col-8">
@@ -41,15 +37,25 @@
                         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
                             <i class="fa fa-close"></i> Name is required
                         </div>
-                </div>
+                    </div>
                 </div>
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4">
+                    <div class="ui-grid-col-4"><label>Media</label></div>
+                    <div class="ui-grid-col-8">
+                        <p-fileUpload mode="basic" url="/api/media" accept="image/*" maxFileSize="10000" (onUpload)="onBasicUpload($event)"></p-fileUpload>
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12" style="text-align: center">
+                        <img src="{{this.selected.brandMedia.url}}" height="300px">
+                    </div>
+                </div>
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-6">
                         <button *ngIf="selected.brandId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
                     </div>
-                    <div class="ui-grid-col-4"></div>
-                    <div class="ui-grid-col-4">
-                        <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+                    <div class="ui-grid-col-6">
+                        <button type="button" pButton icon="fa-save" class="ui-button-primary" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
                     </div>
                 </div>
             </div>

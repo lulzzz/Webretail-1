@@ -6,7 +6,7 @@ import { ImportService, CodartInfo, Translate, Image } from './../services/impor
 import {
     Product, Brand, Category, ProductCategory, Price, Tax,
     Attribute, AttributeValue, ProductAttribute, ProductAttributeValue,
-    Article, ArticleAttributeValue, Media, Translation, Barcode, Packaging, Discount
+    Article, ArticleAttributeValue, Media, Translation, Barcode, Packaging, Discount, Seo
 } from './../shared/models';
 import { Helpers } from '../shared/helpers';
 
@@ -141,6 +141,7 @@ export class ImportComponent implements OnInit  {
         item.price = price;
         item.discount = new Discount();
         item.packaging = new Packaging();
+        item.seo = new Seo();
         item.brand = brand;
         item.categories = [
             <ProductCategory>{ productId: 0, category: category },
@@ -149,7 +150,7 @@ export class ImportComponent implements OnInit  {
         item.attributes = [ textureAttribute, colorAttribute, sizeAttribute ];
         item.articles = articles;
         item.medias = medias;
-        item.translations = product.translates.filter(p => p.key === product.id).map(p => new Translation(p.code, p.value));
+        item.description = product.translates.filter(p => p.key === product.id).map(p => new Translation(p.code, p.value));
 
         return item;
     }

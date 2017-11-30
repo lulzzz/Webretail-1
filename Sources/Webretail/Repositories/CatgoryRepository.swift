@@ -40,6 +40,7 @@ struct CategoryRepository : CategoryProtocol {
         
         current.categoryName = item.categoryName
         current.categoryIsPrimary = item.categoryIsPrimary
+        current.categoryTranslates = item.categoryTranslates
         current.categoryUpdated = Int.now()
         try current.save()
     }

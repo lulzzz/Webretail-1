@@ -46,7 +46,7 @@ export class PublicationService {
             .map(result => result.json());
     }
 
-    get translateDescriptions(): Translation[] { return this.product.translations; }
+    get translateDescriptions(): Translation[] { return this.product.description; }
     get translateAttributes(): Translation[] {
         const items: Translation[] = [];
         this.product.attributes.forEach(p => {
@@ -57,7 +57,7 @@ export class PublicationService {
     }
     get published() { return this.publication != null && this.publication.publicationId > 0; }
 
-    get step1() { return this.product.translations.length === 2 ? 'Completed' : 'In progress'; }
+    get step1() { return this.product.description.length === 2 ? 'Completed' : 'In progress'; }
     get step2() { return this.product.categories.map(p => p.category.translations.length === 2) ? 'Completed' : 'In progress'; }
     get step4() { return this.product.medias.length > 0 ? 'Completed' : 'In progress'; }
 

@@ -25,6 +25,10 @@ export class PublicationComponent implements OnInit {
         this.sessionService.checkCredentials(false);
 
         const productId = this.productService.product.productId;
+        if (productId === 0) {
+            this.publicationService.publication = new Publication(0);
+            return;
+        }
         this.publicationService.getPublication(productId)
             .subscribe(
                 res => {

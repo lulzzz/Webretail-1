@@ -15,6 +15,7 @@ class Product: PostgresSqlORM, Codable {
     public var brandId : Int = 0
     public var productCode : String = ""
     public var productName : String = ""
+    public var productDescription: [Translation] = [Translation]()
     public var productType : String = ""
     public var productTax : Tax = Tax()
     public var productUm : String = ""
@@ -22,7 +23,6 @@ class Product: PostgresSqlORM, Codable {
     public var productDiscount : Discount = Discount()
     public var productPackaging : Packaging = Packaging()
     public var productMedias: [Media] = [Media]()
-    public var productTranslates: [Translation] = [Translation]()
     public var productSeo : Seo = Seo()
     public var productIsActive : Bool = false
     public var productIsValid : Bool = false
@@ -46,7 +46,7 @@ class Product: PostgresSqlORM, Codable {
         case productDiscount = "discount"
         case productPackaging = "packaging"
         case productMedias = "medias"
-        case productTranslates = "translations"
+        case productDescription = "description"
         case productSeo = "seo"
         case productIsActive
         case _brand = "brand"
@@ -88,9 +88,9 @@ class Product: PostgresSqlORM, Codable {
             jsonData = try! JSONSerialization.data(withJSONObject: medias, options: [])
             productMedias = try! decoder.decode([Media].self, from: jsonData)
         }
-        if let translates = this.data["producttranslates"] {
-            jsonData = try! JSONSerialization.data(withJSONObject: translates, options: [])
-            productTranslates = try! decoder.decode([Translation].self, from: jsonData)
+        if let descriptions = this.data["productdescription"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: descriptions, options: [])
+            productDescription = try! decoder.decode([Translation].self, from: jsonData)
         }
         if let seo = this.data["seo"] {
             jsonData = try! JSONSerialization.data(withJSONObject: seo, options: [])
@@ -132,6 +132,7 @@ class Product: PostgresSqlORM, Codable {
         productId = try container.decode(Int.self, forKey: .productId)
         productCode = try container.decode(String.self, forKey: .productCode)
         productName = try container.decode(String.self, forKey: .productName)
+        productDescription = try container.decodeIfPresent([Translation].self, forKey: .productDescription) ?? [Translation]()
         productType = try container.decode(String.self, forKey: .productType)
         productUm = try container.decode(String.self, forKey: .productUm)
         productTax = try container.decodeIfPresent(Tax.self, forKey: .productTax) ?? Tax()
@@ -139,7 +140,6 @@ class Product: PostgresSqlORM, Codable {
         productDiscount = try container.decodeIfPresent(Discount.self, forKey: .productDiscount) ?? Discount()
         productPackaging = try container.decodeIfPresent(Packaging.self, forKey: .productPackaging) ?? Packaging()
         productMedias = try container.decodeIfPresent([Media].self, forKey: .productMedias) ?? [Media]()
-        productTranslates = try container.decodeIfPresent([Translation].self, forKey: .productTranslates) ?? [Translation]()
         productSeo = try container.decodeIfPresent(Seo.self, forKey: .productSeo) ?? Seo()
         productIsActive = try container.decode(Bool.self, forKey: .productIsActive)
         _brand = try container.decodeIfPresent(Brand.self, forKey: ._brand) ?? Brand()
@@ -155,6 +155,7 @@ class Product: PostgresSqlORM, Codable {
         try container.encode(productId, forKey: .productId)
         try container.encode(productCode, forKey: .productCode)
         try container.encode(productName, forKey: .productName)
+        try container.encode(productDescription, forKey: .productDescription)
         try container.encode(productType, forKey: .productType)
         try container.encode(productUm, forKey: .productUm)
         try container.encode(productTax, forKey: .productTax)
@@ -162,7 +163,6 @@ class Product: PostgresSqlORM, Codable {
         try container.encode(productDiscount, forKey: .productDiscount)
         try container.encode(productPackaging, forKey: .productPackaging)
         try container.encode(productMedias, forKey: .productMedias)
-        try container.encode(productTranslates, forKey: .productTranslates)
         try container.encode(productSeo, forKey: .productSeo)
         try container.encode(productIsActive, forKey: .productIsActive)
         try container.encode(_brand, forKey: ._brand)

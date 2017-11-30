@@ -1,32 +1,31 @@
-<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+<div *ngIf="selected.seo" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
     <div class="ui-grid-row">
-        <div class="ui-grid-col-4"><label>Permalink</label></div>
+        <div class="ui-grid-col-4"><label>URL</label></div>
         <div class="ui-grid-col-8">
-            <input pInputText type="text" [(ngModel)]="selected.seo.permalink"/>
+            <input pInputText type="text" [(ngModel)]="selected.seo.url"/>
         </div>
     </div>
     <div class="ui-grid-row">
         <div class="ui-grid-col-12"><hr></div>
     </div>
     <div class="ui-grid-row">
-        <div class="ui-grid-col-4"><label>Keywords</label></div>
+        <div class="ui-grid-col-4">
+            <label>Translation</label>
+        </div>
         <div class="ui-grid-col-8">
-            <textarea pInputTextarea [(ngModel)]="selected.seo.keywords"></textarea>
+            <p-dropdown [options]="countries" (onChange)="onCountryChanged($event)" [(ngModel)]="country" [style]="{'width':'100%'}"></p-dropdown>
         </div>
     </div>
     <div class="ui-grid-row">
-        <div class="ui-grid-col-4"><label>Short Description</label></div>
+        <div class="ui-grid-col-4"><label>Title</label></div>
         <div class="ui-grid-col-8">
-            <textarea pInputTextarea [(ngModel)]="selected.seo.description"></textarea>
+            <textarea pInputTextarea placeholder="0 of 70 characters used" [(ngModel)]="title.value"></textarea>
         </div>
     </div>
     <div class="ui-grid-row">
-        <div class="ui-grid-col-12"><hr></div>
-    </div>
-    <div class="ui-grid-row">
-        <div class="ui-grid-col-4"><label>Full Description</label></div>
+        <div class="ui-grid-col-4"><label>Meta Description</label></div>
         <div class="ui-grid-col-8">
-            <textarea [rows]="10" [cols]="30" pInputTextarea autoResize="autoResize" [(ngModel)]="selected.seo.description"></textarea>
+            <textarea pInputTextarea placeholder="0 of 160 characters used" [(ngModel)]="description.value"></textarea>
         </div>
     </div>
 </div>

@@ -13,7 +13,7 @@ import { ProductService } from './../services/product.service';
 import { BrandComponent } from '../brand/brand.component';
 import { CategoryComponent } from '../category/category.component';
 import { AttributesComponent } from '../attribute/attributes.component';
-import { AttributeValueComponent } from '../attribute/attributevalue.component';
+import { DetailComponent } from './detail.component';
 import { ArticlePickerComponent } from '../shared/article-picker.component';
 
 @Component({
@@ -61,6 +61,8 @@ export class ProductComponent implements OnInit, OnDestroy {
             'code': new FormControl('', Validators.required),
             'barcode': new FormControl('', Validators.required),
             'name': new FormControl('', Validators.required),
+            'country': new FormControl('', Validators.nullValidator),
+            'description': new FormControl('', Validators.nullValidator),
             'type': new FormControl('', Validators.required),
             'brand': new FormControl('', Validators.required),
             'categories': new FormControl('', Validators.nullValidator),
@@ -108,12 +110,6 @@ export class ProductComponent implements OnInit, OnDestroy {
                         });
                 });
         });
-
-        // this.productService.getArticles(this.product.productId)
-        //     .subscribe(result => {
-        //         this.productService.product.articles = result;
-        //     }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
-
     }
 
     ngOnDestroy() {
@@ -169,7 +165,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                 component = ArticlePickerComponent
                 break;
             default:
-                component = AttributeValueComponent
+                component = DetailComponent
                 break;
         }
         const factory = this.componentFactoryResolver.resolveComponentFactory(component);

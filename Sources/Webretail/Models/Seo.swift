@@ -6,8 +6,8 @@
 //
 
 class Seo: Codable, JsonbProtocol {
-    public var permalink : String = ""
-    public var keywords : [Translation] = [Translation]()
+    public var url : String = ""
+    public var title : [Translation] = [Translation]()
     public var description : [Translation] = [Translation]()
 }
 
