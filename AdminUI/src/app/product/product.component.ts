@@ -42,7 +42,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private messageService: MessageService,
-                private sessionService: SessionService,
+                public sessionService: SessionService,
                 private productService: ProductService,
                 private brandService: BrandService,
                 private categoryService: CategoryService,

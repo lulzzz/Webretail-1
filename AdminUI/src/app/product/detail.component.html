@@ -22,12 +22,7 @@
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="tax">Tax</label></div>
-            <div class="ui-grid-col-8">
-                <p-dropdown [options]="taxes" formControlName="tax" [(ngModel)]="selected.productTax" [style]="{'width':'100%'}"></p-dropdown>
-                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailform.controls['tax'].valid&&detailform.controls['tax'].dirty">
-                    <i class="fa fa-close"></i> Tax is required
-                </div>
-            </div>
+            <div class="ui-grid-col-8"><span>{{selected.productTax}}</span></div>
         </div>
     </div>
     </p-accordionTab>
@@ -58,13 +53,8 @@
             </div>
         </div>
         <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="um">Unit of Measure</label></div>
-            <div class="ui-grid-col-8">
-                <p-dropdown [options]="ums" formControlName="um" [(ngModel)]="selected.productUm" [style]="{'width':'100%'}"></p-dropdown>
-                <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!detailform.controls['um'].valid&&detailform.controls['um'].dirty">
-                    <i class="fa fa-close"></i> Unit of Measure is required
-                </div>
-            </div>
+            <div class="ui-grid-col-4"><label>Unit of Measure</label></div>
+            <div class="ui-grid-col-8"><span>{{selected.productUm}}</span></div>
         </div>
     </div>
     </p-accordionTab>

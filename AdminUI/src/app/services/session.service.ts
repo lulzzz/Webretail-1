@@ -9,7 +9,7 @@ import { Helpers } from '../shared/helpers';
 @Injectable()
 export class SessionService {
 
-    private title: string;
+    title: string;
     username: string;
     menuActive: boolean;
     titleSidebar: string;

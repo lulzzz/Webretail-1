@@ -1,6 +1,6 @@
-<p-progressSpinner *ngIf="isBusy" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+<p-progressSpinner *ngIf="!articleForm" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
 
-<table *ngIf="product" class="ui-datatable container-fluid" cellpadding="5" cellspacing="0">
+<table *ngIf="articleForm" class="ui-datatable container-fluid" cellpadding="5" cellspacing="0">
     <thead>
         <tr style="background-color: whitesmoke"> 
             <td style="width: 160px"><strong>Sku</strong></td> 
