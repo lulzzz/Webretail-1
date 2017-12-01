@@ -43,9 +43,7 @@ class PublicationController {
         let id = request.urlVariables["id"]!
         do {
             let item = try self.repository.get(id: Int(id)!)
-            if item!.publicationId > 0 {
-                try response.setJson(item)
-            }
+            try response.setJson(item)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

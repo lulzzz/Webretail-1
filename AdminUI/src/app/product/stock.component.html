@@ -2,32 +2,27 @@
 
 <div class="container-fluid">
 
-   <button pButton type="button" title="Products" style="position: absolute; top: 144px; left: 30px; width:50px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
-    
     <p-toolbar>
         <div class="ui-toolbar-group-left" style="margin-left:60px">
-            <ul *ngIf="product">
-                <li><strong>Product</strong> {{product.productName}}</li>
-                <li><strong>Brand</strong> {{product.brand.brandName}}</li>
-                <li><strong>Category</strong>
-                    <ul>
-                        <li *ngFor="let item of product.categories">{{ item.category.categoryName }}</li>
-                    </ul>
-                </li>
-                <li><strong>Inventory</strong>
-                    <ul>
-                        <li>Items: <strong>{{totalRecords}}</strong></li>
-                        <li>Stock: <strong>{{totalStocks}}</strong></li>
-                        <li>Booked: <strong>{{totalBookeds}}</strong></li>
-                    </ul>
-                </li>
-            </ul>
+            <button pButton type="button" label="Products" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
         </div>
         <div class="ui-toolbar-group-right">
             <p-multiSelect [options]="stores" defaultLabel="All stores" (onChange)="onStoreChanged($event)"></p-multiSelect>
         </div>
     </p-toolbar>
 
+    <ul *ngIf="product">
+        <li>Product <strong>{{product.productName}}</strong></li>
+        <li>Brand <strong>{{product.brand.brandName}}</strong></li>
+        <li><strong>Inventory</strong>
+            <ul>
+                <li>Items: <strong>{{totalRecords}}</strong></li>
+                <li>Stock: <strong>{{totalStocks}}</strong></li>
+                <li>Booked: <strong>{{totalBookeds}}</strong></li>
+            </ul>
+        </li>
+    </ul>
+    
     <table *ngIf="articleForm" class="ui-datatable container-fluid" cellpadding="2" cellspacing="2">    
         <thead>
             <tr> 

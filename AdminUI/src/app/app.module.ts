@@ -52,7 +52,6 @@ import { SeoComponent } from './product/seo.component';
 import { DetailComponent } from './product/detail.component';
 import { MediaComponent } from './shared/media.component';
 import { TranslationComponent } from './shared/translation.component';
-import { PublicationComponent } from './product/publication.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { BarcodeComponent } from './movement/barcode.component';
@@ -146,7 +145,6 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         VariantComponent,
         StockComponent,
         SeoComponent,
-        PublicationComponent,
         MovementsComponent,
         MovementComponent,
         DocumentComponent,

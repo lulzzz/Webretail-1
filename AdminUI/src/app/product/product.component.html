@@ -4,17 +4,26 @@
     <h1>{{sessionService.titleSidebar}}</h1>
     <div id="right-sidebar" #dynamicComponentContainer></div>
 </p-sidebar>
-    
+
 <div *ngIf="selected">
-<button pButton type="button" label="Back to products" style="float:right;" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
-<form [formGroup]="dataform">
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Products" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
+        </div>
+        <div class="ui-toolbar-group-right">
+            <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()"></button>
+            <button type="button" pButton icon="fa-save" class="ui-button-primary" (click)="saveClick()" label="Save All" [disabled]="!dataform.valid"></button>
+        </div>
+    </p-toolbar>
+
     <p-tabView>
         <p-tabPanel header="Information">
+        <form [formGroup]="dataform">
             <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label>Status</label></div>
+                    <div class="ui-grid-col-4"><label>Enabled</label></div>
                     <div class="ui-grid-col-4">
-                        <p-inputSwitch onLabel="ON" offLabel="OFF" formControlName="isActive" [(ngModel)]="selected.productIsActive"></p-inputSwitch>
+                        <p-inputSwitch onLabel="YES" offLabel="NO" formControlName="isActive" [(ngModel)]="selected.productIsActive"></p-inputSwitch>
                     </div>
                     <div class="ui-grid-col-2" style="text-align: right">
                         <label>Updated</label>
@@ -184,6 +193,7 @@
                     </p-accordionTab>
                 </p-accordion>
             </div>
+        </form>
         </p-tabPanel>
         <p-tabPanel header="Media">
             <app-media [medias]="selected.medias"></app-media>
@@ -192,18 +202,29 @@
             <app-seo></app-seo>
         </p-tabPanel>
         <p-tabPanel header="Publication">
-            <app-publication></app-publication>
+            <div *ngIf="publication">
+                <p>
+                    <strong>Start</strong>
+                    <br/>
+                    <p-calendar [(ngModel)]="publication.publicationStartAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                </p>
+                <p>
+                    <strong>Finish</strong>
+                    <br/>
+                    <p-calendar [(ngModel)]="publication.publicationFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                </p>
+                <br/>
+                <p>
+                    <strong>Featured</strong>
+                    <br/>
+                    <p-inputSwitch onLabel="YES" offLabel="NO" [(ngModel)]="publication.publicationFeatured"></p-inputSwitch>
+                </p>
+                <p>
+                    <strong>New</strong>
+                    <br/>
+                    <p-inputSwitch onLabel="YES" offLabel="NO" [(ngModel)]="publication.publicationNew"></p-inputSwitch>
+                </p>
+            </div>
         </p-tabPanel>
     </p-tabView>
-    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-6">
-                <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
-            </div>
-            <div class="ui-grid-col-6">
-                <button type="button" pButton icon="fa-save" class="ui-button-primary" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
-            </div>
-        </div>
-    </div>
-</form>
 </div>

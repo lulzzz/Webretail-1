@@ -131,13 +131,15 @@ struct ArticleRepository : ArticleProtocol {
         var articles = try get(productId: productId, storeIds: "0")
         for (i, item) in articles.enumerated() {
             if !item.articleIsValid {
+                if item._attributeValues.count == 0 {
+                    item.articleIsValid = true
+                    try item.save()
+                    continue
+                }
+                try ArticleAttributeValue().delete(item.articleId, idName: "articleId")
                 try item.delete()
                 articles.remove(at: i - countDeleted)
                 countDeleted += 1
-                try item.sql(
-                    "DELETE FROM articleattributevalues WHERE articleId = $1",
-                    params: [String(item.articleId)]
-                )
             }
         }
         
@@ -146,7 +148,7 @@ struct ArticleRepository : ArticleProtocol {
         for attribute in productAttributes {
             count *= attribute._attributeValues.count
         }
-        if articles.count != count {
+        if articles.count - 1 != count {
             throw StORMError.error("Integrity error: \(count) budgeted items and \(articles.count) items found")
         }
 

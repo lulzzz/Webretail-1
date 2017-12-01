@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { Product, Brand, ProductCategory, Category, Barcode, Article } from './../shared/models';
+import { Product, Brand, ProductCategory, Category, Barcode, Article, Publication } from './../shared/models';
 import { Helpers } from './../shared/helpers';
 import { SessionService } from './../services/session.service';
 import { BrandService } from './../services/brand.service';
@@ -15,6 +15,7 @@ import { CategoryComponent } from '../category/category.component';
 import { AttributesComponent } from '../attribute/attributes.component';
 import { DetailComponent } from './detail.component';
 import { ArticlePickerComponent } from '../shared/article-picker.component';
+import { PublicationService } from '../services/publication.service';
 
 @Component({
     selector: 'app-product',
@@ -46,6 +47,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                 private productService: ProductService,
                 private brandService: BrandService,
                 private categoryService: CategoryService,
+                private publicationService: PublicationService,
                 private componentFactoryResolver: ComponentFactoryResolver,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder,
@@ -75,7 +77,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             'width': new FormControl('', Validators.required),
             'height': new FormControl('', Validators.required),
             'isActive': new FormControl('', Validators.required)
-       });
+        });
 
         this.sub = this.activatedRoute.params.subscribe(params => {
             const productId = Number(params['id']);
@@ -99,6 +101,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                                             if (article) {
                                                 this.barcode = article.barcodes.find(p => p.tags.length === 0).barcode;
                                             }
+                                            this.getPublication();
                                         },
                                         onerror => this.messageService.add({
                                             severity: 'error', summary: 'get product', detail: onerror._body
@@ -121,6 +124,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     get selected(): Product { return this.productService.product; }
     get isNew(): boolean { return this.selected == null || this.selected.productId === 0; }
     get selectedIndex(): number { return this.productService.products.indexOf(this.selected); }
+    set publication(value) { this.publicationService.publication = value; }
+    get publication(): Publication { return this.publicationService.publication; }
 
     getBrands() {
         this.brandService.getAll()
@@ -136,11 +141,22 @@ export class ProductComponent implements OnInit, OnDestroy {
             });
     }
 
+    getPublication() {
+        this.publicationService.getPublication(this.selected.productId)
+            .subscribe(
+                result => {
+                    // result.productId = this.selected.productId;
+                    this.publication = result;
+                }, onerror => this.publication = new Publication(0)
+            );
+    }
+
     addClick() {
         this.productService.product = new Product();
         this.selected.productType = this.types[0].value;
         this.selected.productTax = this.taxes[0].value;
         this.selected.productUm = this.ums[0].value;
+        this.publication = new Publication(0);
     }
 
     closeClick() {
@@ -212,6 +228,9 @@ export class ProductComponent implements OnInit, OnDestroy {
                     if (this.productService.products) {
                         this.productService.products.push(result);
                     }
+                    if (this.publication.publicationStartAt) {
+                        this.createPublication();
+                    }
                     this.isBusy = false;
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
@@ -221,9 +240,26 @@ export class ProductComponent implements OnInit, OnDestroy {
                     if (this.productService.products) {
                         this.productService.products[this.selectedIndex] = result;
                     }
+                    if (this.publication.publicationId > 0) {
+                        this.publicationService.update()
+                            .subscribe(res => {
+                                this.publication = res;
+                                this.messageService.add({severity: 'success', summary: 'Success', detail: 'Publication updated!'})
+                            });
+                    } else {
+                        this.createPublication();
+                    }
                     this.isBusy = false;
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
+    }
+
+    createPublication() {
+        this.publicationService.create(this.selected.productId)
+        .subscribe(res => {
+            this.publication = res;
+            this.messageService.add({severity: 'success', summary: 'Success', detail: 'Publication created!'})
+        });
     }
 
     deleteClick() {

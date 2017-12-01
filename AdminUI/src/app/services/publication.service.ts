@@ -2,23 +2,16 @@
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { SelectItem } from 'primeng/primeng';
-import { Product, Media, Translation, Publication } from '../shared/models'
+import { Publication } from '../shared/models'
 import { Helpers } from '../shared/helpers'
 
 @Injectable()
 export class PublicationService {
 
     public publication: Publication;
-    public product: Product;
 
     constructor(private http: Http) {
         this.publication = new Publication(0);
-    }
-
-    getProduct(id: number): Observable<Product> {
-        return this.http.get('api/product/' + id, { headers: Helpers.getHeaders() })
-            .map(result => <Product>result.json());
     }
 
     getPublication(productId: number): Observable<Publication> {
@@ -26,24 +19,31 @@ export class PublicationService {
             .map(result => <Publication>result.json());
     }
 
-    saveProduct(): Observable<Product> {
-        return this.http.put('api/product/' + this.product.productId + '/publication', this.product, { headers: Helpers.getHeaders() })
+    create(productId: number): Observable<Publication> {
+        this.publication.productId = productId;
+        return this.http.post('/api/publication', this.publication, { headers: Helpers.getHeaders() })
+            .map(result => <Publication>result.json());
+    }
+
+    update(): Observable<Publication> {
+        return this.http.put('/api/publication/' + this.publication.publicationId, this.publication, { headers: Helpers.getHeaders() })
+            .map(result => <Publication>result.json());
+    }
+
+    /*
+    delete(): Observable<any> {
+        return this.http.delete('/api/publication/' + this.publication.publicationId, { headers: Helpers.getHeaders() })
+            .map(result => result.json());
+    }
+
+    getProduct(id: number): Observable<Product> {
+        return this.http.get('api/product/' + id, { headers: Helpers.getHeaders() })
             .map(result => <Product>result.json());
     }
 
-    create(model: Publication): Observable<Publication> {
-        return this.http.post('/api/publication', model, { headers: Helpers.getHeaders() })
-            .map(result => <Publication>result.json());
-    }
-
-    update(id: number, model: Publication): Observable<Publication> {
-        return this.http.put('/api/publication/' + id, model, { headers: Helpers.getHeaders() })
-            .map(result => <Publication>result.json());
-    }
-
-    delete(id: number): Observable<any> {
-        return this.http.delete('/api/publication/' + id, { headers: Helpers.getHeaders() })
-            .map(result => result.json());
+    saveProduct(): Observable<Product> {
+        return this.http.put('api/product/' + this.product.productId + '/publication', this.product, { headers: Helpers.getHeaders() })
+            .map(result => <Product>result.json());
     }
 
     get translateDescriptions(): Translation[] { return this.product.description; }
@@ -116,4 +116,5 @@ export class PublicationService {
         const index = this.product.medias.indexOf(item);
         this.product.medias.splice(index, 1);
     }
+    */
 }

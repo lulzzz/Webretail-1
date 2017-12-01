@@ -146,7 +146,10 @@ struct ProductRepository : ProductProtocol {
         }
         
         /// Articles
-        for article in item._articles {
+        let articles = item.productType == "Variant"
+            ? item._articles.filter({ $0._attributeValues.count == 0 })
+            : item._articles
+        for article in articles {
             article.productId = item.productId
             article.articleIsValid = true
             article.articleCreated = Int.now()
@@ -376,8 +379,8 @@ struct ProductRepository : ProductProtocol {
     func syncImport(item: Product) throws {
 
         /// Sync barcodes
-        for a in item._articles {
-            var values = a._attributeValues.map({ a in a._attributeValue.attributeValueCode })
+        for a in item._articles.filter({ $0._attributeValues.count > 0 }) {
+            var values = a._attributeValues.map({ a in a._attributeValue.attributeValueName })
             values.append("\(item.productId)")
             values.append("\(item._attributes.count)")
             
@@ -387,7 +390,7 @@ struct ProductRepository : ProductProtocol {
                 FROM articles as a
                 LEFT JOIN articleattributevalues as b ON a.articleId = b.articleId
                 LEFT JOIN attributevalues as c ON b.attributeValueId = c.attributeValueId
-                WHERE c.attributeValueCode IN ($1, $2, $3) AND a.productId = $4
+                WHERE attributeValueName IN ($1, $2, $3) AND a.productId = $4
                 GROUP BY a.articleId HAVING count(b.attributeValueId) = $5
                 """, params: values)
             

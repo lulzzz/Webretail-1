@@ -109,6 +109,11 @@ export class ImportComponent implements OnInit  {
 
         // Articles
         const articles: Article[] = [];
+        const defaultArticle = new Article();
+        defaultArticle.barcodes = [<Barcode>{ barcode: product.id, tags: [], price: new Price(), discount: new Discount() }];
+        defaultArticle.packaging = new Packaging();
+        defaultArticle.attributeValues = [];
+        articles.push(defaultArticle);
         product.codarts.forEach(p => {
             const article = new Article();
             article.barcodes = [<Barcode>{ barcode: p.barcode, tags: [], price: new Price(), discount: new Discount() }];
