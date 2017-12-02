@@ -38,14 +38,14 @@ SessionConfig.CORS.maxAge = 3000
 LogFile.location = "./StORMlog.txt"
 
 // Certs
-//let cert = (sslCert: "cert.pem", sslKey: "key.pem")
+let cert = (sslCert: "cert.pem", sslKey: "key.pem")
 
 // Create HTTP server.
 let server = HTTPServer()
 server.serverPort = 8181
 server.documentRoot = "./webroot"
-//server.ssl = cert
-//server.alpnSupport = [.http11, .http2]
+server.ssl = cert
+server.alpnSupport = [.http11, .http2]
 
 // Register dependency injection
 addIoC()

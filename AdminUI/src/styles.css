@@ -10,9 +10,9 @@ body {
   padding: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  color: #404C51;
   font-family: 'Roboto', "Trebuchet MS", Arial, Helvetica, sans-serif;
   font-weight: normal;
-  color: #404C51;
   -webkit-font-smoothing: antialiased;
   font-size: 1em;
 }
@@ -421,6 +421,13 @@ body .ui-toolbar-group-right i {
 .ui-datatable .ui-datatable-data .ui-state-highlight {
   background: lightyellow !important;
   color: #333 !important;
+}
+
+.ui-widget {
+  font-family: 'Roboto', "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  font-size: 1em;
 }
 
 .ui-widget-content {
