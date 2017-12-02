@@ -38,14 +38,14 @@ SessionConfig.CORS.maxAge = 3000
 LogFile.location = "./StORMlog.txt"
 
 // Certs
-let cert = (sslCert: "cert.pem", sslKey: "key.pem")
+//let cert = (sslCert: "cert.pem", sslKey: "key.pem")
 
 // Create HTTP server.
 let server = HTTPServer()
 server.serverPort = 8181
 server.documentRoot = "./webroot"
-server.ssl = cert
-server.alpnSupport = [.http11, .http2]
+//server.ssl = cert
+//server.alpnSupport = [.http11, .http2]
 
 // Register dependency injection
 addIoC()
@@ -74,12 +74,12 @@ let angularRoutes = [
 // Launch the Web server.
 Threading.dispatch {
     _ = try? HTTPServer.launch(
-        .secureServer(
-            TLSConfiguration(certPath: cert.sslCert, keyPath: cert.sslKey, alpnSupport: server.alpnSupport),
-            name: "",
-            port: 8282,
-            routes: angularRoutes
-        ),
+//        .secureServer(
+//            TLSConfiguration(certPath: cert.sslCert, keyPath: cert.sslKey, alpnSupport: server.alpnSupport),
+//            name: "",
+//            port: 8282,
+//            routes: angularRoutes
+//        ),
         .server(
             name: "",
             port: 8080,
