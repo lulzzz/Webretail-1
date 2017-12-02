@@ -142,7 +142,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     getPublication() {
-        this.publicationService.getPublication(this.selected.productId)
+        this.publicationService.getByProductId(this.selected.productId)
             .subscribe(
                 result => {
                     // result.productId = this.selected.productId;
