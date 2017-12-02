@@ -1,5 +1,5 @@
 <div id="home">
-
+{{}}
 <h2 style="text-align: center">Featured</h2>
 <div *ngIf="featured" class="app-grid-list">    
     <mat-grid-list [cols]="fixedCols" [rowHeight]="fitListHeight" [style.height]="fitListHeight" [style.width]="fitListWidth">
@@ -49,8 +49,8 @@
 <h2 style="text-align: center">Brands</h2>
 <div *ngIf="brands">    
     <div class="brand" *ngFor="let b of brands">
-        <span>{{b.brandName}}</span>
-        <br/><img routerLink="/brand/{{b.brandName}}" [src]="b.brandMedia.url | parseUrl">
+        <img routerLink="/brand/{{b.brandName}}" [src]="b.brandMedia.url | parseUrl">
+        <br/><span>{{b.brandName}}</span>
     </div>
 </div>
 

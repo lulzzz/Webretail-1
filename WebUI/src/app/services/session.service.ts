@@ -3,11 +3,28 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import { Login, Token } from '../shared/models';
+import { CookieService, CookieOptions } from 'ngx-cookie';
 
 @Injectable()
 export class SessionService {
 
-    constructor(private router: Router, private http: HttpClient) {
+    constructor(
+        private router: Router,
+        private http: HttpClient,
+        private cookieService: CookieService) {
+    }
+
+    getCookie(key: string) {
+        return this.cookieService.get(key);
+    }
+
+    setCookie(key: string, value: string) {
+        const cookieOptions = <CookieOptions>{ domain: 'webretail.cloud', expires: '1', path: '/' };
+        this.cookieService.put(key, value, cookieOptions);
+    }
+
+    removeCookie(key: string) {
+        return this.cookieService.remove(key);
     }
 
     login(account: Login): Observable<Token> {
@@ -25,6 +42,7 @@ export class SessionService {
     }
 
     grantCredentials(data: any) {
+        this.setCookie('access_token', data.token);
         localStorage.setItem('uniqueID', data.uniqueID);
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.role);
@@ -37,6 +55,7 @@ export class SessionService {
     }
 
     removeCredentials() {
+        this.removeCookie('access_token');
         localStorage.removeItem('uniqueID');
         localStorage.removeItem('token');
         localStorage.removeItem('role');

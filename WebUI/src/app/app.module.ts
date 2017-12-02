@@ -8,6 +8,7 @@ import { MaterialModule } from 'app/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FullscreenOverlayContainer, OverlayContainer } from '@angular/cdk/overlay';
 import { LayoutModule } from '@angular/cdk/layout';
+import { CookieModule } from 'ngx-cookie';
 
 import { ALL_ROUTES } from 'app/routes';
 
@@ -66,9 +67,10 @@ import { DocumentComponent } from 'app/order/app.document';
     ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
-    RouterModule.forRoot(ALL_ROUTES),
     MaterialModule,
-    LayoutModule
+    LayoutModule,
+    RouterModule.forRoot(ALL_ROUTES),
+    CookieModule.forRoot()
   ],
   providers: [
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },

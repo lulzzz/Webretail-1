@@ -39,13 +39,14 @@ LogFile.location = "./StORMlog.txt"
 
 // Certs
 let cert = (sslCert: "cert.pem", sslKey: "key.pem")
+let alpn: [HTTPServer.ALPNSupport] = [.http11, .http2]
 
 // Create HTTP server.
 let server = HTTPServer()
 server.serverPort = 8181
 server.documentRoot = "./webroot"
 server.ssl = cert
-server.alpnSupport = [.http11, .http2]
+server.alpnSupport = alpn
 
 // Register dependency injection
 addIoC()
@@ -75,17 +76,17 @@ let angularRoutes = [
 // Launch the Web server.
 Threading.dispatch {
     _ = try? HTTPServer.launch(
-//        .secureServer(
-//            TLSConfiguration(certPath: cert.sslCert, keyPath: cert.sslKey, alpnSupport: server.alpnSupport),
-//            name: "",
-//            port: 8282,
-//            routes: angularRoutes
-//        ),
-        .server(
+        .secureServer(
+            TLSConfiguration(certPath: cert.sslCert, keyPath: cert.sslKey, alpnSupport: alpn),
             name: "",
             port: 8080,
             routes: angularRoutes
         )
+//        .server(
+//            name: "",
+//            port: 8080,
+//            routes: angularRoutes
+//        )
     )
 }
 
