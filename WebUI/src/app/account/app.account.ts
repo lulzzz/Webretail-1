@@ -3,8 +3,8 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 import { MatSnackBar } from '@angular/material';
 import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
-import { CustomerService } from 'app/services/customer.service';
-import { Customer } from 'app/shared/models';
+import { RegistryService } from 'app/services/registry.service';
+import { Registry } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 import { PasswordValidation } from 'app/shared/password.validation';
 
@@ -15,13 +15,13 @@ import { PasswordValidation } from 'app/shared/password.validation';
 
 export class AccountComponent implements OnInit {
     @Input('isCheckout') isCheckout: Boolean;
-    account: Customer;
+    account: Registry;
     dataform: FormGroup;
 
     constructor(public snackBar: MatSnackBar,
                 private dialogsService: DialogService,
                 private sessionService: SessionService,
-                private customerService: CustomerService,
+                private registryService: RegistryService,
                 private fb: FormBuilder) {
     }
 
@@ -39,6 +39,7 @@ export class AccountComponent implements OnInit {
             'address': new FormControl('', Validators.required),
             'city': new FormControl('', Validators.required),
             'zip': new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
+            'province': new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]),
             'country': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]),
             'fiscalCode': new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]),
             'vatNumber': new FormControl('', [Validators.nullValidator, Validators.minLength(11), Validators.maxLength(11)]),
@@ -49,7 +50,7 @@ export class AccountComponent implements OnInit {
         });
 
         const cutomerId = Number(localStorage.getItem('uniqueID'));
-        this.customerService
+        this.registryService
             .getById(cutomerId)
             .subscribe(result => {
                 this.account = result;
@@ -62,13 +63,13 @@ export class AccountComponent implements OnInit {
     }
 
     saveClick() {
-        this.account.customerPassword = '';
+        this.account.registryPassword = '';
         this.updateClick();
     }
 
     updateClick() {
-        this.customerService
-            .update(this.account.customerId, this.account)
+        this.registryService
+            .update(this.account.registryId, this.account)
             .subscribe(result => {
                 this.account.updatedAt = result.updatedAt;
                 this.snackBar.open('Update succesfully!', 'Close', {
@@ -82,8 +83,8 @@ export class AccountComponent implements OnInit {
             .confirm('Confirm delete', 'Are you sure you want to delete your account?')
             .subscribe(res => {
                 if (res) {
-                    this.customerService
-                    .delete(this.account.customerId)
+                    this.registryService
+                    .delete(this.account.registryId)
                     .subscribe(result => {
                         this.sessionService.removeCredentials();
                     }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));

@@ -187,6 +187,7 @@ struct EcommerceRepository : EcommerceProtocol {
             throw StORMError.noRecordFound
         }
         
+        try item.makeCategories()
         try item.makeAttributes()
         try item.makeArticles()
         

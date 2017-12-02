@@ -26,12 +26,12 @@ class ProductController {
 		routes.add(method: .get, uri: "/api/productfrom/{date}", handler: productsHandlerGET)
         routes.add(method: .get, uri: "/api/product/{id}", handler: productHandlerGET)
         routes.add(method: .get, uri: "/api/product/barcode/{id}", handler: productBarcodeHandlerGET)
-        routes.add(method: .get, uri: "/api/product/{id}/publication", handler: publicationProductHandlerGET)
-        routes.add(method: .put, uri: "/api/product/{id}/publication", handler: productPublicationHandlerPUT)
 		routes.add(method: .post, uri: "/api/product", handler: productHandlerPOST)
         routes.add(method: .post, uri: "/api/product/import", handler: productImportHandlerPOST)
         routes.add(method: .put, uri: "/api/product/{id}", handler: productHandlerPUT)
         routes.add(method: .delete, uri: "/api/product/{id}", handler: productHandlerDELETE)
+//        routes.add(method: .get, uri: "/api/product/{id}/publication", handler: publicationProductHandlerGET)
+//        routes.add(method: .put, uri: "/api/product/{id}/publication", handler: productPublicationHandlerPUT)
 //        routes.add(method: .post, uri: "/api/productattribute", handler: productAttributeHandlerPOST)
 //        routes.add(method: .put, uri: "/api/productattribute", handler: productAttributeHandlerPUT)
 //        routes.add(method: .post, uri: "/api/productattributevalue", handler: productAttributeValueHandlerPOST)
@@ -159,6 +159,7 @@ class ProductController {
         }
     }
 
+    /*
     func publicationProductHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         let id = request.urlVariables["id"]!
         do {
@@ -184,7 +185,6 @@ class ProductController {
         }
     }
     
-    /*
     func productAttributeHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             let items: [ProductAttribute] = request.getJson()!

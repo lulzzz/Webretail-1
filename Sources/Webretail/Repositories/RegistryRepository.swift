@@ -53,7 +53,8 @@ struct RegistryRepository : RegistryProtocol {
 		current.registryAddress = item.registryAddress
 		current.registryCity = item.registryCity
 		current.registryZip = item.registryZip
-		current.registryCountry = item.registryCountry
+        current.registryProvince = item.registryProvince
+        current.registryCountry = item.registryCountry
 		current.registryFiscalCode = item.registryFiscalCode
 		current.registryVatNumber = item.registryVatNumber
 		current.registryUpdated = Int.now()

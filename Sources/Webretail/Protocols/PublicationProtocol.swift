@@ -12,6 +12,8 @@ protocol PublicationProtocol {
     
     func get(id: Int) throws -> Publication?
     
+    func getByProduct(productId: Int) throws -> Publication?
+
     func add(item: Publication) throws
     
     func update(id: Int, item: Publication) throws

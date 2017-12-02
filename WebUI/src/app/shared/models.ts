@@ -29,10 +29,12 @@ export class Store {
 export class Brand {
   public brandId: number;
   public brandName: string;
+  public brandMedia: Media;
 
   constructor() {
     this.brandId = 0;
     this.brandName = '';
+    this.brandMedia = new Media('', '', 0);
   }
 }
 
@@ -63,16 +65,60 @@ export class Translation {
     public value: string) { }
 }
 
+export class Seo {
+  public permalink: String;
+  public title: Translation[];
+  public description: Translation[];
+
+  constructor() {
+    this.permalink = '';
+    this.title = [];
+    this.description = [];
+  }
+}
+
+export class Price {
+  public selling: number;
+  public purchase: number;
+  constructor() {
+    this.selling = 0;
+    this.purchase = 0;
+  }
+}
+
+export class Tax {
+  constructor(
+    public name: string,
+    public value: number,
+  ) { }
+}
+
+export class Packaging {
+  public weight: number;
+  public length: number;
+  public width: number;
+  public height: number;
+  constructor() {
+    this.weight = 0;
+    this.length = 0;
+    this.width = 0;
+    this.height = 0;
+  }
+}
+
 export class Product {
   public productId: number;
   public productCode: string;
   public productName: string;
+  public description: Translation[];
+  public productType: string;
   public productUm: string;
-  public productSellingPrice: number;
-  public productPurchasePrice: number;
+  public productTax: Tax;
+  public price: Price;
+  public discount: Discount;
+  public packaging: Packaging;
   public medias: Media[];
-  public translations: Translation[];
-  public discount?: Discount;
+  public seo: Seo;
   public brand: Brand;
   public categories: ProductCategory[];
   public attributes: ProductAttribute[];
@@ -85,11 +131,15 @@ export class Product {
     this.productId = 0;
     this.productCode = '';
     this.productName = '';
+    this.productType = '';
     this.productUm = '';
-    this.productSellingPrice = 0;
-    this.productPurchasePrice = 0;
+    this.productTax = new Tax('', 0);
+    this.price = new Price();
+    this.discount = new Discount();
+    this.packaging = new Packaging();
+    this.seo = new Seo();
     this.medias = [];
-    this.translations = [];
+    this.description = [];
     this.categories = [];
     this.attributes = [];
     this.articles = [];
@@ -99,9 +149,11 @@ export class Product {
   }
 }
 
+
 export class Article {
   public articleId: number;
   public barcodes: Barcode[];
+  public packaging: Packaging;
   public quantity: number;
   public booked: number;
   public attributeValues: ArticleAttributeValue[];
@@ -109,6 +161,7 @@ export class Article {
   constructor() {
     this.articleId = 0;
     this.barcodes = [];
+    this.packaging = new Packaging();
     this.quantity = 0;
     this.booked = 0;
     this.attributeValues = [];
@@ -150,33 +203,34 @@ export class Causal {
     this.updatedAt = 0;
   }
 }
-
-export class Customer {
-  public customerId: number;
-  public customerName: string;
-  public customerEmail: string;
-  public customerPassword: string;
-  public customerPhone: string;
-  public customerAddress: string;
-  public customerCity: string;
-  public customerZip: string;
-  public customerCountry: string;
-  public customerFiscalCode: string;
-  public customerVatNumber: string;
+export class Registry {
+  public registryId: number;
+  public registryName: string;
+  public registryEmail: string;
+  public registryPassword: string;
+  public registryPhone: string;
+  public registryAddress: string;
+  public registryCity: string;
+  public registryZip: string;
+  public registryProvince: string;
+  public registryCountry: string;
+  public registryFiscalCode: string;
+  public registryVatNumber: string;
   public updatedAt: number;
 
   constructor() {
-    this.customerId = 0;
-    this.customerName = '';
-    this.customerEmail = '';
-    this.customerPassword = '';
-    this.customerPhone = '';
-    this.customerAddress = '';
-    this.customerCity = '';
-    this.customerZip = '';
-    this.customerCountry = '';
-    this.customerFiscalCode = '';
-    this.customerVatNumber = '';
+    this.registryId = 0;
+    this.registryName = '';
+    this.registryEmail = '';
+    this.registryPassword = '';
+    this.registryPhone = '';
+    this.registryAddress = '';
+    this.registryCity = '';
+    this.registryZip = '';
+    this.registryProvince = '';
+    this.registryCountry = '';
+    this.registryFiscalCode = '';
+    this.registryVatNumber = '';
     this.updatedAt = 0;
   }
 }
@@ -189,13 +243,16 @@ export class Movement {
   public movementDesc: string;
   public movementStore: Store;
   public movementCausal: Causal;
-  public movementCustomer: Customer;
+  public movementRegistry: Registry;
   public movementNote: string;
   public movementStatus: string;
   public movementUser: string;
   public movementDevice: string;
-  public movementAmount: number;
+  public movementTags: Tag[];
   public movementPayment: string;
+  public movementShipping: string;
+  public movementShippingCost: number;
+  public movementAmount: number;
   public updatedAt: number;
 
   constructor() {
@@ -207,8 +264,11 @@ export class Movement {
     this.movementStatus = 'New';
     this.movementUser = '';
     this.movementDevice = '';
-    this.movementAmount = 0.0;
+    this.movementTags = [];
     this.movementPayment = '';
+    this.movementShipping = '';
+    this.movementShippingCost = 0.0;
+    this.movementAmount = 0.0;
     this.updatedAt = 0;
   }
 }
@@ -237,7 +297,7 @@ export class Invoice {
   public invoiceId: number;
   public invoiceNumber: number;
   public invoiceDate: Date;
-  public invoiceCustomer: Customer;
+  public invoiceRegistry: Registry;
   public invoicePayment: string;
   public invoiceNote: string;
   public invoiceAmount: number;
@@ -313,6 +373,13 @@ export class Basket {
   }
 }
 
+export class Order {
+  public shipping: string;
+  public shippingCost: number;
+  public payment: string;
+  public paypal: string;
+}
+
 export class PdfDocument {
   public address: string;
   public subject: string;
@@ -367,12 +434,29 @@ export interface ArticleAttributeValue {
 
 export interface Barcode {
   barcode: string;
-  primaryKey: string;
-  secondaryKey: string;
+  tags: Tag[];
+  price: Price;
+  discount: Discount;
+}
+
+export interface Tag {
+  groupId: number;
+  groupName: string;
+  valueId: number;
+  valueName: string;
+}
+
+export interface Item {
+  id: string;
+  value: string;
 }
 
 export interface ItemValue {
   value: string;
+}
+
+export interface Cost {
+  value: number;
 }
 
 export interface ArticleForm {
@@ -386,4 +470,11 @@ export interface ArticleItem {
   stock: number;
   booked: number;
   data: number;
+}
+
+export interface PayPal {
+  env: string;
+  sandbox: string;
+  production: string;
+  currency: string;
 }

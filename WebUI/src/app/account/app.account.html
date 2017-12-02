@@ -3,14 +3,14 @@
     <mat-card>
         <mat-card-content>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerName" formControlName="name" placeholder="Full Name"/>
+                <input matInput [(ngModel)]="account.registryName" formControlName="name" placeholder="Full Name"/>
                 <div *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
                     <i class="material-icons">warning</i>
                     <mat-error *ngIf="dataform.controls['name'].errors['required']">Full Name is required</mat-error>
                 </div>
             </mat-form-field>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerEmail" type="email" formControlName="email" placeholder="Email"/>
+                <input matInput [(ngModel)]="account.registryEmail" type="email" formControlName="email" placeholder="Email"/>
                 <div *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
                     <i class="material-icons">warning</i>
                     <mat-error *ngIf="dataform.controls['email'].errors['required']">Email is required</mat-error>
@@ -18,28 +18,28 @@
                 </div>
             </mat-form-field>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerPhone" formControlName="phone" placeholder="Phone"/>
+                <input matInput [(ngModel)]="account.registryPhone" formControlName="phone" placeholder="Phone"/>
                 <div *ngIf="!dataform.controls['phone'].valid&&dataform.controls['phone'].dirty">
                     <i class="material-icons">warning</i>
                     <mat-error *ngIf="dataform.controls['phone'].errors['required']">Phone is required</mat-error>
                 </div>
             </mat-form-field>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerAddress" formControlName="address" placeholder="Address"/>
+                <input matInput [(ngModel)]="account.registryAddress" formControlName="address" placeholder="Address"/>
                 <div *ngIf="!dataform.controls['address'].valid&&dataform.controls['address'].dirty">
                     <i class="material-icons">warning</i>
                     <mat-error *ngIf="dataform.controls['address'].errors['required']">Address is required</mat-error>
                 </div>
             </mat-form-field>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerCity" formControlName="city" placeholder="City"/>
+                <input matInput [(ngModel)]="account.registryCity" formControlName="city" placeholder="City"/>
                 <div *ngIf="!dataform.controls['city'].valid&&dataform.controls['city'].dirty">
                     <i class="material-icons">warning</i>
                     <mat-error *ngIf="dataform.controls['city'].errors['required']">City is required</mat-error>
                 </div>
             </mat-form-field>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerZip" formControlName="zip" placeholder="Zip"/>
+                <input matInput [(ngModel)]="account.registryZip" formControlName="zip" placeholder="Zip"/>
                 <div *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
                     <i class="material-icons">warning</i>
                     <mat-error *ngIf="dataform.controls['zip'].errors['required']">Zip is required</mat-error>
@@ -47,7 +47,15 @@
                 </div>
             </mat-form-field>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerCountry" formControlName="country" placeholder="Country"/>
+                <input matInput [(ngModel)]="account.registryProvince" formControlName="province" placeholder="Province"/>
+                <div *ngIf="!dataform.controls['province'].valid&&dataform.controls['province'].dirty">
+                    <i class="material-icons">warning</i>
+                    <mat-error *ngIf="dataform.controls['province'].errors['required']">Province is required</mat-error>
+                    <mat-error *ngIf="dataform.controls['province'].errors['minlength']||dataform.controls['province'].errors['maxlength']">Must be equals than 2 characters</mat-error>
+                </div>
+            </mat-form-field>
+            <mat-form-field style="width: 100%">
+                <input matInput [(ngModel)]="account.registryCountry" formControlName="country" placeholder="Country"/>
                 <div *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
                     <i class="material-icons">warning</i>
                     <mat-error *ngIf="dataform.controls['country'].errors['required']">Country is required</mat-error>
@@ -55,7 +63,7 @@
                 </div>
             </mat-form-field>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerFiscalCode" formControlName="fiscalCode" placeholder="Fiscal Code"/>
+                <input matInput [(ngModel)]="account.registryFiscalCode" formControlName="fiscalCode" placeholder="Fiscal Code"/>
                 <div *ngIf="!dataform.controls['fiscalCode'].valid&&dataform.controls['fiscalCode'].dirty">
                     <i class="material-icons">warning</i>
                     <mat-error *ngIf="dataform.controls['fiscalCode'].errors['required']">Fiscal Code is required</mat-error>
@@ -63,10 +71,9 @@
                 </div>
             </mat-form-field>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerVatNumber" formControlName="vatNumber" placeholder="VAT Number"/>
+                <input matInput [(ngModel)]="account.registryVatNumber" formControlName="vatNumber" placeholder="VAT Number (optional)"/>
                 <div *ngIf="!dataform.controls['vatNumber'].valid&&dataform.controls['vatNumber'].dirty">
                     <i class="material-icons">warning</i>
-                    <mat-error *ngIf="dataform.controls['vatNumber'].errors['required']">VAT Number is required</mat-error>
                     <mat-error *ngIf="dataform.controls['vatNumber'].errors['minlength']||dataform.controls['vatNumber'].errors['maxlength']">Must be equals than 11 characters</mat-error>
                 </div>
             </mat-form-field>
@@ -76,7 +83,7 @@
     <mat-card *ngIf="!isCheckout">
         <mat-card-content>
             <mat-form-field style="width: 100%">
-                <input matInput [(ngModel)]="account.customerPassword" type="password" formControlName="password" placeholder="New password"/>
+                <input matInput [(ngModel)]="account.registryPassword" type="password" formControlName="password" placeholder="New password"/>
                 <div *ngIf="!dataform.controls['password'].valid&&dataform.controls['password'].dirty">
                     <i class="material-icons">warning</i>
                     <mat-error *ngIf="dataform.controls['password'].errors['required']">Password is required</mat-error>
@@ -99,7 +106,7 @@
 <mat-card *ngIf="!isCheckout">
     <mat-card-content>
         <button mat-raised-button color="primary" (click)="logoutClick()"><mat-icon>exit_to_app</mat-icon> Logout</button>
-        <button *ngIf="account.customerId>0" mat-raised-button (click)="deleteClick()" style="float: right"><mat-icon>delete_forever</mat-icon> Delete</button>
+        <button *ngIf="account.registryId>0" mat-raised-button (click)="deleteClick()" style="float: right"><mat-icon>delete_forever</mat-icon> Delete</button>
     </mat-card-content>
 </mat-card>
 </div>

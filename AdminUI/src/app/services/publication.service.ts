@@ -14,7 +14,13 @@ export class PublicationService {
         this.publication = new Publication(0);
     }
 
-    getPublication(productId: number): Observable<Publication> {
+    get(id: number): Observable<Publication> {
+        return this.http.get('/api/publication/' + id, { headers: Helpers.getHeaders() })
+            .map(result => <Publication>result.json());
+    }
+
+
+    getByProductId(productId: number): Observable<Publication> {
         return this.http.get('/api/product/' + productId + '/publication', { headers: Helpers.getHeaders() })
             .map(result => <Publication>result.json());
     }

@@ -21,7 +21,21 @@ struct PublicationRepository : PublicationProtocol {
         let item = Publication()
 		try item.query(id: id)
 
-        return item
+        return item.publicationId == 0 ? nil : item
+    }
+
+    func getByProduct(productId: Int) throws -> Publication? {
+        let item = Publication()
+        try item.query(
+            whereclause: "productId = $1", params: [productId],
+            cursor: StORMCursor(limit: 1, offset: 0)
+        )
+        
+        if (item.publicationId == 0) {
+            throw StORMError.noRecordFound
+        }
+        
+        return item.publicationId == 0 ? nil : item
     }
 
     func add(item: Publication) throws {

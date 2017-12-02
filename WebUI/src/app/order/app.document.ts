@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material';
 import { SessionService } from 'app/services/session.service';
-import { CustomerService } from 'app/services/customer.service';
+import { RegistryService } from 'app/services/registry.service';
 import { DocumentService } from 'app/services/document.service';
 import { Movement, MovementArticle, PdfDocument } from './../shared/models';
 import { AppComponent } from 'app/app.component';
@@ -33,7 +33,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
                 private activatedRoute: ActivatedRoute,
                 private sessionService: SessionService,
                 private documentService: DocumentService,
-                private customerService: CustomerService) {
+                private registryService: RegistryService) {
         AppComponent.setPage('Document', true);
     }
 
@@ -44,13 +44,13 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.movementId = Number(params['id']);
 
-            this.customerService.getOrderById(this.movementId)
+            this.registryService.getOrderById(this.movementId)
                 .subscribe(
                     result => this.movement = result,
                     onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close')
                 );
 
-            this.customerService.getItemsById(this.movementId)
+            this.registryService.getItemsById(this.movementId)
                 .subscribe(
                     result => {
                         this.groups = [];
@@ -124,7 +124,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.isBusy = true;
 
         const model = new PdfDocument()
-        model.address = this.movement.movementCustomer.customerEmail;
+        model.address = this.movement.movementRegistry.registryEmail;
         model.subject = 'Document_' + this.movement.movementNumber + '.pdf';
         model.content = this.doc.nativeElement.innerHTML;
         model.zoom = '0.53';

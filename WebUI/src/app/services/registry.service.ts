@@ -1,24 +1,24 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-import { Customer, Movement, MovementArticle } from '../shared/models';
+import { Registry, Movement, MovementArticle } from '../shared/models';
 
 @Injectable()
-export class CustomerService {
+export class RegistryService {
 
     constructor(private http: HttpClient) {
     }
 
-    getById(id: number): Observable<Customer> {
-        return this.http.get<Customer>('/api/ecommerce/customer');
+    getById(id: number): Observable<Registry> {
+        return this.http.get<Registry>('/api/ecommerce/registry');
     }
 
-    update(id: number, model: Customer): Observable<Customer> {
-        return this.http.put<Customer>('/api/ecommerce/customer', model);
+    update(id: number, model: Registry): Observable<Registry> {
+        return this.http.put<Registry>('/api/ecommerce/registry', model);
     }
 
     delete(id: number): Observable<any> {
-        return this.http.delete<any>('/api/ecommerce/customer');
+        return this.http.delete<any>('/api/ecommerce/registry');
     }
 
     getOrders(): Observable<Movement[]> {

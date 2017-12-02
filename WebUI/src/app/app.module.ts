@@ -14,7 +14,7 @@ import { ALL_ROUTES } from 'app/routes';
 import { UrlInterceptor } from 'app/services/url.interceptor';
 import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
-import { CustomerService } from 'app/services/customer.service';
+import { RegistryService } from 'app/services/registry.service';
 import { ProductService } from 'app/services/product.service';
 import { BasketService } from 'app/services/basket.service';
 import { DocumentService } from 'app/services/document.service';
@@ -36,7 +36,6 @@ import { BasketComponent } from 'app/basket/app.basket';
 import { CheckoutComponent } from 'app/basket/app.checkout';
 import { OrdersComponent } from 'app/order/app.orders';
 import { DocumentComponent } from 'app/order/app.document';
-
 
 @NgModule({
   declarations: [
@@ -75,7 +74,7 @@ import { DocumentComponent } from 'app/order/app.document';
     { provide: HTTP_INTERCEPTORS, useClass: UrlInterceptor, multi: true },
     DialogService,
     SessionService,
-    CustomerService,
+    RegistryService,
     ProductService,
     BasketService,
     DocumentService

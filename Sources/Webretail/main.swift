@@ -38,14 +38,14 @@ SessionConfig.CORS.maxAge = 3000
 LogFile.location = "./StORMlog.txt"
 
 // Certs
-// let cert = (sslCert: "cert.pem", sslKey: "key.pem")
+let cert = (sslCert: "cert.pem", sslKey: "key.pem")
 
 // Create HTTP server.
 let server = HTTPServer()
 server.serverPort = 8181
 server.documentRoot = "./webroot"
-// server.ssl = cert
-// server.alpnSupport = [.http11, .http2]
+server.ssl = cert
+server.alpnSupport = [.http11, .http2]
 
 // Register dependency injection
 addIoC()
@@ -56,37 +56,37 @@ addFilters()
 // Register routes and handlers
 addRoutesAndHandlers()
 
-//// Angular routes
-//let angularRoutes = [
-//    Route(method: .get, uri: "/**", handler: try! HTTPHandler.staticFiles(data: ["documentRoot": "./WebUI/dist"])),
-//    Route(method: .get, uri: "/home", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/account", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/login", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/register", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/products/{id}/{name}", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/basket", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/checkout", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/orders", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/document/{id}", handler: HTTPHandler.angularHandler(webapi: false))
-//]
-//
-//// Launch the Web server.
-//Threading.dispatch {
-//    _ = try? HTTPServer.launch(
-//        .secureServer(
-//            TLSConfiguration(certPath: cert.sslCert, keyPath: cert.sslKey, alpnSupport: server.alpnSupport),
-//            name: "",
-//            port: 443,
-//            routes: angularRoutes
-//        ),
-//        .server(
-//            name: "",
-//            port: 80,
-//            routes: angularRoutes
-//        )
-//    )
-//}
+// Angular routes
+let angularRoutes = [
+    Route(method: .get, uri: "/**", handler: try! HTTPHandler.staticFiles(data: ["documentRoot": "./WebUI/dist"])),
+    Route(method: .get, uri: "/home", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/account", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/login", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/register", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/products/{id}/{name}", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/basket", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/checkout", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/orders", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/document/{id}", handler: HTTPHandler.angularHandler(webapi: false))
+]
+
+// Launch the Web server.
+Threading.dispatch {
+    _ = try? HTTPServer.launch(
+        .secureServer(
+            TLSConfiguration(certPath: cert.sslCert, keyPath: cert.sslKey, alpnSupport: server.alpnSupport),
+            name: "",
+            port: 8282,
+            routes: angularRoutes
+        ),
+        .server(
+            name: "",
+            port: 8080,
+            routes: angularRoutes
+        )
+    )
+}
 
 do {
     // Setup database

@@ -411,60 +411,6 @@ struct ProductRepository : ProductProtocol {
             id in publication.publicationId = id as! Int
         }
     }
-    
-    func get(productId: Int) throws -> Publication {
-        let item = Publication()
-        try item.query(
-            whereclause: "productId = $1", params: [productId],
-            cursor: StORMCursor(limit: 1, offset: 0)
-        )
-        
-        if (item.publicationId == 0) {
-            throw StORMError.noRecordFound
-        }
-        
-        return item
-    }
-
-    func publish(id: Int, item: Product) throws {
-        
-        let current = try get(id: id)
-        
-        for c in item._categories {
-            let category = Category()
-            try category.query(id: c._category.categoryId)
-            category.categoryTranslates = c._category.categoryTranslates
-            try category.save()
-        }
-        
-        for a in item._attributes {
-            let attribute = Attribute()
-            try attribute.query(id: a._attribute.attributeId)
-            attribute.attributeTranslates = a._attribute.attributeTranslates
-            try attribute.save()
-            
-            for v in a._attributeValues {
-                let attributeValue = AttributeValue()
-                try attributeValue.query(id: v._attributeValue.attributeValueId)
-                attributeValue.attributeValueTranslates = v._attributeValue.attributeValueTranslates
-                try attributeValue.save()
-            }
-        }
-        
-        for c in current.productMedias {
-            if !item.productMedias.contains(where: { p in p.name == c.name }) {
-                if (FileManager.default.fileExists(atPath: "./Upload/\(c.url)")) {
-                    try FileManager.default.removeItem(atPath: "./Upload/\(c.url)")
-                }
-            }
-        }
-        
-        current.productMedias = item.productMedias
-        current.productDescription = item.productDescription
-        current.productUpdated = Int.now()
-        
-        try current.save()
-    }
 
     func delete(id: Int) throws {
         let item = Product()

@@ -20,11 +20,11 @@ export class ProductService {
     }
 
     getByCategoryName(name: string): Observable<Product[]> {
-        const url = name === 'featured' ? '/api/ecommerce/featured' : '/api/ecommerce/category/' + name;
+        const url = name === 'Featured' ? '/api/ecommerce/featured' : '/api/ecommerce/category/' + name;
         return this.http.get<Product[]>(url);
     }
 
-    getByProductName(name: number): Observable<Product> {
+    getByProductName(name: string): Observable<Product> {
         const url = '/api/ecommerce/product/' + name;
         return this.http.get<Product>(url);
     }

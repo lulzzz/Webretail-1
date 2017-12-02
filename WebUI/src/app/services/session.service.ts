@@ -25,6 +25,7 @@ export class SessionService {
     }
 
     grantCredentials(data: any) {
+        alert(JSON.stringify(data));
         localStorage.setItem('uniqueID', data.uniqueID);
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.role);
@@ -39,7 +40,7 @@ export class SessionService {
     }
 
     get isAuthenticated(): boolean {
-        return localStorage.getItem('token') != null && localStorage.getItem('role') === 'Customer';
+        return localStorage.getItem('token') != null && localStorage.getItem('role') === 'Registry';
     }
 
     checkCredentials(): boolean {

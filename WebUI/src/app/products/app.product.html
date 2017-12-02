@@ -10,17 +10,17 @@
         <p><span mat-line>CATEGORIES<br/>
           <li *ngFor="let c of product.categories"><b>{{c.category.translations | translate : c.category.categoryName}}</b></li>
         </span></p>
-        <p><span mat-line>DESCRIPTION<br/><b>{{product.translations | translate : product.productName}}</b></span></p>
-        <div *ngIf="product.discount;then discount_content else price_content"></div>
+        <p><span mat-line>DESCRIPTION<br/><b>{{product.description | translate : product.productName}}</b></span></p>
+        <div *ngIf="product.discount.discountId>0;then discount_content else price_content"></div>
         <ng-template #discount_content>
           <p><span mat-line>PRICE<br/>
           <span class="percentage">-{{product.discount.discountPercentage}}%</span>
-          <del>{{product.productSellingPrice | currency: 'EUR' : true}}</del>
+          <del>{{product.price.selling | currency: 'EUR' : true}}</del>
           <br/><b>{{product.discount.discountPrice | currency: 'EUR' : true}}</b>
           </span></p>
         </ng-template>
         <ng-template #price_content>
-          <p><span mat-line>PRICE<br/><b>{{product.productSellingPrice | currency: 'EUR' : true}}</b></span></p>
+          <p><span mat-line>PRICE<br/><b>{{product.price.selling | currency: 'EUR' : true}}</b></span></p>
         </ng-template>
       </mat-card-content>
     </mat-card>

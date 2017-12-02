@@ -39,8 +39,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  loadProduct(id: number) {
-    this.productService.getByProductId(id)
+  loadProduct(name: string) {
+    this.productService.getByProductName(name)
         .subscribe(result => {
           this.product = result;
           AppComponent.setPage(result.productName, true);
@@ -53,7 +53,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   pickerClick(event: Article) {
     const model = new Basket();
-    model.basketBarcode = event.barcodes.find(p => p.primaryKey === '' && p.primaryKey === '').barcode;
+    model.basketBarcode = event.barcodes.find(p => p.tags.length === 0).barcode;
     this.basketService
         .create(model)
         .subscribe(result => {

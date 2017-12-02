@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { MatSnackBar } from '@angular/material';
 import { SessionService } from 'app/services/session.service';
-import { CustomerService } from 'app/services/customer.service';
+import { RegistryService } from 'app/services/registry.service';
 import { Movement } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 import { Observable } from 'rxjs/Rx';
@@ -21,7 +21,7 @@ export class OrdersComponent implements OnInit {
 	constructor(
 		public snackBar: MatSnackBar,
 		private sessionService: SessionService,
-		private customerService: CustomerService) {
+		private registryService: RegistryService) {
 
 		AppComponent.setPage('Orders', false);
 	}
@@ -33,7 +33,7 @@ export class OrdersComponent implements OnInit {
 	}
 
 	loadOrders() {
-		this.customerService.getOrders()
+		this.registryService.getOrders()
 			.subscribe(result => {
 				this.dataSource = new OrderDataSource(result);
 			},

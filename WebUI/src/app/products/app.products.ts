@@ -68,7 +68,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     AppComponent.title = categoryName;
     AppComponent.setPage(categoryName, false);
     this.filtering = false;
-    this.productService.getByCategoryId(categoryId)
+    this.productService.getByCategoryName(categoryName)
         .subscribe(result => {
           this.filtered = result;
           this.products = result;
