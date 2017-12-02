@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import {
     Product, ProductCategory, Category, ProductAttribute,
-    ProductAttributeValue, Article, ArticleForm
+    ProductAttributeValue, Article, ArticleForm, Brand
 } from '../shared/models';
 
 @Injectable()
@@ -11,16 +11,29 @@ export class ProductService {
     constructor(private http: HttpClient) {
     }
 
-    getPublished(): Observable<Product[]> {
-        return this.http.get<Product[]>('/api/ecommerce');
+    getBrands(): Observable<Brand[]> {
+        return this.http.get<Brand[]>('/api/ecommerce/brand');
+    }
+
+    getFeatured(): Observable<Product[]> {
+        return this.http.get<Product[]>('/api/ecommerce/featured');
+    }
+
+    getNews(): Observable<Product[]> {
+        return this.http.get<Product[]>('/api/ecommerce/new');
     }
 
     getCategories(): Observable<Category[]> {
         return this.http.get<Category[]>('/api/ecommerce/category');
     }
 
+    getByBrandName(name: string): Observable<Product[]> {
+        const url = '/api/ecommerce/brand/' + name;
+        return this.http.get<Product[]>(url);
+    }
+
     getByCategoryName(name: string): Observable<Product[]> {
-        const url = name === 'Featured' ? '/api/ecommerce/featured' : '/api/ecommerce/category/' + name;
+        const url = '/api/ecommerce/category/' + name;
         return this.http.get<Product[]>(url);
     }
 

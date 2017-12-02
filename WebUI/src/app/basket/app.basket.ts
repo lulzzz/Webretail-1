@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar, MatSelectionList } from '@angular/material';
 import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
@@ -6,6 +6,7 @@ import { BasketService } from 'app/services/basket.service';
 import { Basket } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 import { Observable } from 'rxjs/Rx';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-basket',
@@ -13,8 +14,8 @@ import { Observable } from 'rxjs/Rx';
 	styleUrls: ['app.basket.scss']
 })
 
-export class BasketComponent implements OnInit {
-
+export class BasketComponent implements OnInit, OnDestroy {
+	private sub: any;
 	amount = 0.0;
 	count = 0.0;
 
@@ -22,18 +23,32 @@ export class BasketComponent implements OnInit {
 		public snackBar: MatSnackBar,
 		private dialogsService: DialogService,
 		private sessionService: SessionService,
-		private basketService: BasketService) {
+		private basketService: BasketService,
+		private activatedRoute: ActivatedRoute) {
 
-		AppComponent.setPage('Basket', true);
+		AppComponent.setPage('Basket', false);
 	}
 
 	ngOnInit() {
-		if (!this.sessionService.checkCredentials()) { return; }
-
-		this.setTotals();
+		this.sub = this.activatedRoute.params.subscribe(params => {
+			const barcode = params['barcode'];
+			if (barcode) {
+				localStorage.setItem('barcode', barcode);
+			}
+			if (this.sessionService.checkCredentials()) {
+				if (barcode) {
+					this.addClick(barcode);
+				}
+			}
+		});
 	}
 
-    get basket(): Basket[] { return this.basketService.basket; }
+	ngOnDestroy() {
+		// Clean sub to avoid memory leak
+		this.sub.unsubscribe();
+	}
+
+	get basket(): Basket[] { return this.basketService.basket; }
 
 	setTotals() {
 		if (this.basket.length > 0) {
@@ -43,6 +58,28 @@ export class BasketComponent implements OnInit {
 			this.count = 0.0;
 			this.amount = 0.0;
 		}
+	}
+
+	addClick(barcode: string) {
+		const model = new Basket();
+		model.basketBarcode = barcode;
+		this.basketService
+			.create(model)
+			.subscribe(result => {
+			  this.snackBar
+				.open(model.basketBarcode + ' added to basket!', 'Close', {
+					duration: 5000
+				});
+				const basket = this.basketService.basket.find(p => p.basketBarcode === model.basketBarcode);
+				if (basket) {
+					basket.basketQuantity = result.basketQuantity;
+				} else {
+					this.basketService.basket.push(result);
+				}
+				this.setTotals();
+				localStorage.removeItem('barcode');
+			},
+			onerror => this.snackBar.open(onerror._body, 'Close'));
 	}
 
 	updateClick(item: Basket) {

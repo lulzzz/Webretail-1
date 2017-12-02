@@ -26,7 +26,8 @@ import { ArticlePicker } from 'app/shared/article.picker';
 import { ConfirmDialog } from 'app/shared/confirm.dialog';
 import { ImageSlider, SafeHtmlPipe } from 'app/shared/image.slider';
 
-import { AppComponent, HomeComponent } from 'app/app.component';
+import { AppComponent } from 'app/app.component';
+import { HomeComponent } from 'app/home/home.component';
 import { AccountComponent } from 'app/account/app.account';
 import { LoginComponent } from 'app/account/app.login';
 import { RegisterComponent } from 'app/account/app.register';

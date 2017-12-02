@@ -66,6 +66,7 @@ let angularRoutes = [
     Route(method: .get, uri: "/products/{id}/{name}", handler: HTTPHandler.angularHandler(webapi: false)),
     Route(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler(webapi: false)),
     Route(method: .get, uri: "/basket", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/basket/{barcode}", handler: HTTPHandler.angularHandler(webapi: false)),
     Route(method: .get, uri: "/checkout", handler: HTTPHandler.angularHandler(webapi: false)),
     Route(method: .get, uri: "/orders", handler: HTTPHandler.angularHandler(webapi: false)),
     Route(method: .get, uri: "/document/{id}", handler: HTTPHandler.angularHandler(webapi: false))

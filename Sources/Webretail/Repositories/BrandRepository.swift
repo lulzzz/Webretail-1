@@ -39,6 +39,7 @@ struct BrandRepository : BrandProtocol {
         }
         
         current.brandName = item.brandName
+        current.brandMedia = item.brandMedia
         current.brandUpdated = Int.now()
         try current.save()
     }

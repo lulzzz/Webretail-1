@@ -52,6 +52,7 @@ import { SeoComponent } from './product/seo.component';
 import { DetailComponent } from './product/detail.component';
 import { MediaComponent } from './shared/media.component';
 import { TranslationComponent } from './shared/translation.component';
+import { FrameComponent } from './shared/frame.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { BarcodeComponent } from './movement/barcode.component';
@@ -141,6 +142,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         DetailComponent,
         MediaComponent,
         TranslationComponent,
+        FrameComponent,
         GroupedComponent,
         VariantComponent,
         StockComponent,
@@ -190,6 +192,7 @@ import { PeriodFilterPipe } from './pipes/period-filter.pipe';
         MovementPickerComponent,
         MediaComponent,
         TranslationComponent,
+        FrameComponent,
         SeoComponent,
         DetailComponent
     ],

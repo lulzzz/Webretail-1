@@ -46,9 +46,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.activatedRoute.params.subscribe(params => {
-      const id = params['id'];
       const name = params['name'];
-      this.loadProducts(id, name);
+      this.loadProducts(name);
     });
   }
 
@@ -64,7 +63,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.fitListHeight = (w / this.fixedCols * 1.2) + 'px';
   }
 
-  loadProducts(categoryId: string, categoryName: string) {
+  loadProducts(categoryName: string) {
     AppComponent.title = categoryName;
     AppComponent.setPage(categoryName, false);
     this.filtering = false;

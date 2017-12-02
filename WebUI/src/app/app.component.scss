@@ -37,6 +37,19 @@ body {
     box-sizing: border-box;
   }
   
+  .app-grid-list {
+    margin: 0;
+    padding: 0;
+    
+    img {
+      width: 100%;
+    }
+  }
+
+  .mat-grid-list.mat-grid-list {
+    width: 100% !important;
+  }
+
   .mat-toolbar-bg {
     position: fixed;
     top: 0;
@@ -67,10 +80,22 @@ body {
     }
   }
 
-  h1 {
-    font-size: 20px;
+  #home {
+    padding-top: 5px;
+    color: silver;
   }
   
+  .brand { 
+    cursor: pointer;
+    float: left;
+    padding: 10px;
+    background-color: whitesmoke;
+
+    img {
+      height: 60px;      
+    }
+  }
+
   .done {
     position: fixed;
     bottom: 20px;

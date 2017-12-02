@@ -4,24 +4,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { BasketService } from './services/basket.service';
 import { ProductService } from './services/product.service';
 
-/**
- * Home component for welcome message in App.
- */
-@Component({
-  selector: 'app-home',
-  template: `
-    <p>&nbsp;&nbsp;Welcome to the Webretail eCommerce!</p>
-    <span class="done">
-    <a mat-fab routerLink="/products/featured/Featured" style="float: right"><mat-icon>shopping_cart</mat-icon></a>
-  </span>
-  `
-})
-export class HomeComponent {
-  constructor() {
-    AppComponent.setPage('Home', false);
-  }
-}
-
 @Component({
   moduleId: module.id,
   selector: 'app-root',
@@ -33,9 +15,7 @@ export class HomeComponent {
 export class AppComponent implements OnInit {
   static title = 'Webretail';
   static backButton = false;
-  navItems = [
-    { name: 'Featured', route: '/products/featured/Featured' }
-  ];
+  navItems = [];
 
   static setPage(title: string, backButton: boolean) {
     AppComponent.title = title;
@@ -62,7 +42,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.productService.getCategories()
       .subscribe(result => {
-        result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryId + '/' + p.categoryName }));
+        result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryName }));
       });
       this.loadBasket();
   }

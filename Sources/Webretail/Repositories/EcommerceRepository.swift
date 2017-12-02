@@ -202,6 +202,17 @@ struct EcommerceRepository : EcommerceProtocol {
     }
     
     func addBasket(item: Basket) throws {
+        let items = try getBasket(registryId: item.registryId)
+        let basket = items.first(where: { $0.basketBarcode == item.basketBarcode})
+        if let current = basket {
+            current.basketQuantity += 1
+            current.basketUpdated = Int.now()
+            try current.save()
+            item.basketId = current.basketId
+            item.basketQuantity = current.basketQuantity
+            return
+        }
+        
         item.basketUpdated = Int.now()
         try item.save {
             id in item.basketId = id as! Int

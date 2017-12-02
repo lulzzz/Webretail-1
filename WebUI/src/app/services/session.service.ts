@@ -25,10 +25,14 @@ export class SessionService {
     }
 
     grantCredentials(data: any) {
-        alert(JSON.stringify(data));
         localStorage.setItem('uniqueID', data.uniqueID);
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.role);
+        const barcode = localStorage.getItem('barcode');
+        if (barcode) {
+            this.router.navigate(['basket/' + barcode]);
+            return;
+        }
         this.router.navigate(['home']);
     }
 

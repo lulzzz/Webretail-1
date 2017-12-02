@@ -29,8 +29,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.images = [];
     this.sub = this.activatedRoute.params.subscribe(params => {
-      const id = params['id'];
-      this.loadProduct(id);
+      const name = params['name'];
+      this.loadProduct(name);
     });
   }
 
@@ -65,7 +65,12 @@ export class ProductComponent implements OnInit, OnDestroy {
           .subscribe(() => {
             this.router.navigate(['basket']);
           });
-          this.basketService.basket.push(result);
+          const basket = this.basketService.basket.find(p => p.basketBarcode === model.basketBarcode);
+          if (basket) {
+            basket.basketQuantity += 1.0;
+          } else {
+            this.basketService.basket.push(result);
+          }
         },
         onerror => this.snackBar.open(onerror.status === 401 ? 'You must login before adding to cart' : onerror._body, 'Login')
         .onAction()

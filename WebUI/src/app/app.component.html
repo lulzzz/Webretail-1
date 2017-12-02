@@ -13,6 +13,24 @@
         <span><mat-icon>home</mat-icon></span>
         &nbsp;&nbsp;Home
       </a>
+      <a *ngFor="let navItem of navItems"
+        mat-list-item
+        (click)="start.close()"
+        routerLinkActive
+        #routerLinkActiveInstance="routerLinkActive"
+        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
+        [routerLink]="[navItem.route]">
+        <span><mat-icon>library_books</mat-icon></span>
+        &nbsp;&nbsp;{{navItem.name}}
+      </a>
+      <a mat-list-item
+        tabindex="-1"
+        (click)="start.close()"
+        routerLinkActive
+        #routerLinkActiveInstance="routerLinkActive"
+        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1">
+        &nbsp;
+      </a>
       <a mat-list-item
         tabindex="-1"
         (click)="start.close()"
@@ -32,16 +50,6 @@
         [routerLink]="['/orders']">
         <span><mat-icon>description</mat-icon></span>
         &nbsp;&nbsp;Orders
-      </a>
-      <a *ngFor="let navItem of navItems"
-        mat-list-item
-        (click)="start.close()"
-        routerLinkActive
-        #routerLinkActiveInstance="routerLinkActive"
-        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
-        [routerLink]="[navItem.route]">
-        <span><mat-icon>library_books</mat-icon></span>
-        &nbsp;&nbsp;{{navItem.name}}
       </a>
     </mat-nav-list>
   </mat-sidenav>

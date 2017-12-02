@@ -29,6 +29,7 @@ import { DeviceComponent } from './device/device.component';
 import { ReportReceiptsComponent } from './report/receipts.component';
 import { ReportSalesComponent } from './report/sales.component';
 import { StatisticsComponent } from './report/statistics.component';
+import { FrameComponent } from './shared/frame.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -61,7 +62,8 @@ export const routes: Routes = [
     { path: 'report/receipts', component: ReportReceiptsComponent },
     { path: 'report/sales', component: ReportSalesComponent },
     { path: 'report/statistics', component: StatisticsComponent },
-    { path: 'import', component: ImportComponent }
+    { path: 'import', component: ImportComponent },
+    { path: 'frame', component: FrameComponent }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);

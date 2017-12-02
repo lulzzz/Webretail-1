@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { ProductsComponent } from 'app/products/app.products';
 import { ProductComponent } from 'app/products/app.product';
-import { AppComponent, HomeComponent } from 'app/app.component';
+import { AppComponent } from 'app/app.component';
+import { HomeComponent } from 'app/home/home.component';
 import { LoginComponent } from 'app/account/app.login';
 import { RegisterComponent } from 'app/account/app.register';
 import { AccountComponent } from 'app/account/app.account';
@@ -18,9 +19,10 @@ export const APP_ROUTES: Routes = [
     {path: 'account', component: AccountComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'products/:id/:name', component: ProductsComponent},
-    {path: 'product/:id', component: ProductComponent},
+    {path: 'products/:name', component: ProductsComponent},
+    {path: 'product/:name', component: ProductComponent},
     {path: 'basket', component: BasketComponent},
+    {path: 'basket/:barcode', component: BasketComponent},
     {path: 'checkout', component: CheckoutComponent},
     {path: 'orders', component: OrdersComponent},
     {path: 'document/:id', component: DocumentComponent}

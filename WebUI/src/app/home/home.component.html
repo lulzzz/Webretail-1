@@ -1,0 +1,61 @@
+<div id="home">
+
+<h2 style="text-align: center">Featured</h2>
+<div *ngIf="featured" class="app-grid-list">    
+    <mat-grid-list [cols]="fixedCols" [rowHeight]="fitListHeight" [style.height]="fitListHeight" [style.width]="fitListWidth">
+    <mat-grid-tile *ngFor="let product of featured" style="cursor: pointer">
+        <img routerLink="/product/{{product.productName}}" [alt]="product.productName" [src]="product.medias[0].url | parseUrl">
+        <mat-grid-tile-footer>
+        <h3 mat-line><strong>{{product.productName}}</strong></h3>
+        <span mat-line>{{product.brand.brandName}}</span>
+        <div *ngIf="product.discount.dicountId>0;then discount_content else price_content"></div>
+        <ng-template #discount_content>
+            <p><span class="percentage">-{{product.discount.discountPercentage}}%</span>
+            <del>{{product.price.selling | currency: 'EUR' : true}}</del>
+            <b>{{product.discount.discountPrice | currency: 'EUR' : true}}</b>
+            </p>
+        </ng-template>
+        <ng-template #price_content>
+            <p><span mat-line><b>{{product.price.selling | currency: 'EUR' : true}}</b></span></p>
+        </ng-template>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    </mat-grid-list>
+</div>
+
+<h2 style="text-align: center">News</h2>
+<div *ngIf="news" class="app-grid-list">    
+    <mat-grid-list [cols]="fixedCols" [rowHeight]="fitListHeight" [style.height]="fitListHeight" [style.width]="fitListWidth">
+    <mat-grid-tile *ngFor="let product of news" style="cursor: pointer">
+        <img routerLink="/product/{{product.productName}}" [alt]="product.productName" [src]="product.medias[0].url | parseUrl">
+        <mat-grid-tile-footer>
+        <h3 mat-line><strong>{{product.productName}}</strong></h3>
+        <span mat-line>{{product.brand.brandName}}</span>
+        <div *ngIf="product.discount.dicountId>0;then discount_content else price_content"></div>
+        <ng-template #discount_content>
+            <p><span class="percentage">-{{product.discount.discountPercentage}}%</span>
+            <del>{{product.price.selling | currency: 'EUR' : true}}</del>
+            <b>{{product.discount.discountPrice | currency: 'EUR' : true}}</b>
+            </p>
+        </ng-template>
+        <ng-template #price_content>
+            <p><span mat-line><b>{{product.price.selling | currency: 'EUR' : true}}</b></span></p>
+        </ng-template>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    </mat-grid-list>
+</div>
+
+<h2 style="text-align: center">Brands</h2>
+<div *ngIf="brands">    
+    <div class="brand" *ngFor="let b of brands">
+        <span>{{b.brandName}}</span>
+        <br/><img routerLink="/brand/{{b.brandName}}" [src]="b.brandMedia.url | parseUrl">
+    </div>
+</div>
+
+<span class="done">
+    <a mat-fab routerLink="/basket" style="float: right"><mat-icon>shopping_cart</mat-icon></a>
+</span>
+
+</div>

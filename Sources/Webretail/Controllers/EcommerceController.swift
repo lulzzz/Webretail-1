@@ -180,7 +180,11 @@ class EcommerceController {
     func ecommerceBasketHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            let items = try self.repository.getBasket(registryId: Int(uniqueID)!)
+            guard let id = Int(uniqueID) else {
+                response.completed(status: .unauthorized)
+                return
+            }
+            let items = try self.repository.getBasket(registryId: id)
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
@@ -189,8 +193,9 @@ class EcommerceController {
     }
     
     func ecommerceBasketHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
         do {
-            guard let uniqueID = request.user.authDetails?.account.uniqueID else {
+            guard let id = Int(uniqueID) else {
                 response.completed(status: .unauthorized)
                 return
             }
@@ -198,7 +203,7 @@ class EcommerceController {
             guard let basket: Basket = request.getJson() else {
                 throw PerfectError.apiError("invalid model")
             }
-            basket.registryId = Int(uniqueID)!
+            basket.registryId = id
             
             let product = Product()
             try product.get(barcode: basket.basketBarcode)
