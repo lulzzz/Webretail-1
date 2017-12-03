@@ -4,7 +4,7 @@ import { MatSnackBar, MatSelectionList } from '@angular/material';
 import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
 import { BasketService } from 'app/services/basket.service';
-import { Basket, Order, PayPal, Item } from 'app/shared/models';
+import { Basket, Order, PayPal, Item, Registry } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 import { Observable } from 'rxjs/Rx';
 import { AccountComponent } from 'app/account/app.account';
@@ -20,10 +20,8 @@ declare let paypal: any;
 export class CheckoutComponent implements OnInit {
     @ViewChild('account') component: AccountComponent;
 	paypalInfo: PayPal
-	payments: Item[];
-	shippings: Item[];
-	amount = 0.0;
-	count = 0.0;
+	payments: Item[] = [];
+	shippings: Item[] = [];
 	shippingCost = 0.0;
 	shippingMethod = '';
 	paymentMethod = '';
@@ -41,12 +39,6 @@ export class CheckoutComponent implements OnInit {
 	ngOnInit() {
 		if (!this.sessionService.checkCredentials()) { return; }
 
-		this.basketService.get()
-			.subscribe(result => {
-				this.basketService.basket = result;
-				this.setTotals();
-			});
-
 		this.basketService
 			.getPayments()
 			.subscribe(result => this.payments = result);
@@ -60,21 +52,32 @@ export class CheckoutComponent implements OnInit {
 			.subscribe(result => this.paypalInfo = result);
 	}
 
-	get isValidAccount(): Boolean { return this.component.account != null && this.component.dataform.valid; }
+	get customer(): string { return this.component.account ? this.component.account.registryName : ''; }
+
+	get isValidAccount(): Boolean { return this.component.dataform.valid; }
 	get isValidShipping(): Boolean { return this.shippingMethod !== ''; }
 	get isValidPayment(): Boolean { return this.paymentMethod !== ''; }
 
-    set basket(value) { this.basketService.basket = value; }
     get basket(): Basket[] { return this.basketService.basket; }
-
-	setTotals() {
-		if (this.basket.length > 0) {
-			this.count = this.basket.map(p => p.basketQuantity).reduce((sum, current) => sum + current);
-			this.amount = this.basket.map(p => p.basketQuantity * p.basketPrice).reduce((sum, current) => sum + current);
-		} else {
-			this.count = 0.0;
-			this.amount = 0.0;
-		}
+	get count(): number {
+		return this.basket.length > 0
+		? this.basket.map(p => p.basketQuantity).reduce((sum, current) => sum + current)
+		: 0;
+	}
+	get amount(): number {
+		return this.basket.length > 0
+		? this.basket.map(p => p.basketQuantity * p.basketPrice).reduce((sum, current) => sum + current)
+		: 0;
+	}
+    get shipping(): string {
+		const item = this.shippings.find(p => p.id === this.shippingMethod);
+		return item ? item.value : '';
+	}
+    get payment(): string {
+		const item = this.payments.find(p => p.id === this.paymentMethod);
+		return item
+		? item.value
+		: '';
 	}
 
 	paymentClick(event) {
@@ -88,7 +91,6 @@ export class CheckoutComponent implements OnInit {
 			.getShippingCost(this.shippingMethod)
 			.subscribe(result => {
 				this.shippingCost = result.value;
-				this.setTotals();
 			});
 	}
 

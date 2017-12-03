@@ -9,9 +9,9 @@
     <mat-step>
         <ng-template matStepLabel>Shipping and Payment</ng-template>
         <p>Items: <b>{{count}}</b></p>
-        <p>Amount: <b>{{amount | currency: 'EUR' : true}}</b></p>
-        <p>Shipping cost: <b>{{shippingCost | currency: 'EUR' : true}}</b></p>
-        <h3>Total: {{(shippingCost + amount) | currency: 'EUR' : true}}</h3>
+        <p>Amount: <b>{{amount | currency: 'EUR' : 'symbol'}}</b></p>
+        <p>Shipping cost: <b>{{shippingCost | currency: 'EUR' : 'symbol'}}</b></p>
+        <h3>Total: {{(shippingCost + amount) | currency: 'EUR' : 'symbol'}}</h3>
         <br/>
         <p><span>Select the shipping method:</span></p>
         <mat-radio-group [(ngModel)]="shippingMethod" (change)="shippingClick($event)">
@@ -31,11 +31,11 @@
     <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <h3>If the information is complete you can proceed with the order</h3>
-        <p>Account: <i class="material-icons">{{isValidAccount ? 'verified_user' : 'error'}}</i></p>
-        <p>Shipping: <i class="material-icons">{{isValidShipping ? 'verified_user' : 'error'}}</i> {{shippingMethod}}</p>
-        <p>Payment: <i class="material-icons">{{isValidPayment ? 'verified_user' : 'error'}}</i> {{paymentMethod}}</p>
+        <p>Account: <i class="material-icons">verified_user</i> <b>{{customer}}</b></p>
+        <p>Shipping: <i class="material-icons">{{isValidShipping ? 'verified_user' : 'error'}}</i> <b>{{shipping}}</b></p>
+        <p>Payment: <i class="material-icons">{{isValidPayment ? 'verified_user' : 'error'}}</i> <b>{{payment}}</b></p>
         <br/>
-        <h3>Total: {{(shippingCost + amount) | currency: 'EUR' : true}}</h3>
+        <h3>Total: {{(shippingCost + amount) | currency: 'EUR' : 'symbol'}}</h3>
         <br/>
         <button *ngIf="paymentMethod!=='PayPal'" mat-raised-button color="accent" [disabled]="!isValidAccount||!isValidPayment" (click)="confirmClick()"><mat-icon>check_circle</mat-icon> Checkout</button>
         <br/>

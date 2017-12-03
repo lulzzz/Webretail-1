@@ -40,18 +40,19 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadBasket();
     this.productService.getCategories()
       .subscribe(result => {
         result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryName }));
       });
-      this.loadBasket();
   }
 
 	loadBasket() {
-    if (localStorage.getItem('token') == null) {
+    const uniqueID = localStorage.getItem('uniqueID');
+    if (uniqueID == null) {
       return;
     }
-		this.basketService.get()
+		this.basketService.get(uniqueID)
 			.subscribe(result => {
 				this.basketService.basket = result;
 			});

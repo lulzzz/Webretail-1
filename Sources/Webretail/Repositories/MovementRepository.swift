@@ -29,9 +29,9 @@ struct MovementRepository : MovementProtocol {
 
     func getShippings() -> [Item] {
         var status = [Item]()
-        status.append(Item(id: "none", value: "None"))
-        status.append(Item(id: "standard", value: "Standard"))
-        status.append(Item(id: "express", value: "Express"))
+        status.append(Item(id: "None", value: "None"))
+        status.append(Item(id: "Standard", value: "Standard"))
+        status.append(Item(id: "Express", value: "Express"))
         return status
     }
 

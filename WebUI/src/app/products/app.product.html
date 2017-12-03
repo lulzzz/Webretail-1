@@ -15,12 +15,12 @@
         <ng-template #discount_content>
           <p><span mat-line>PRICE<br/>
           <span class="percentage">-{{product.discount.discountPercentage}}%</span>
-          <del>{{product.price.selling | currency: 'EUR' : true}}</del>
-          <br/><b>{{product.discount.discountPrice | currency: 'EUR' : true}}</b>
+          <del>{{product.price.selling | currency: 'EUR' : 'symbol'}}</del>
+          <br/><b>{{product.discount.discountPrice | currency: 'EUR' : 'symbol'}}</b>
           </span></p>
         </ng-template>
         <ng-template #price_content>
-          <p><span mat-line>PRICE<br/><b>{{product.price.selling | currency: 'EUR' : true}}</b></span></p>
+          <p><span mat-line>PRICE<br/><b>{{product.price.selling | currency: 'EUR' : 'symbol'}}</b></span></p>
         </ng-template>
       </mat-card-content>
     </mat-card>

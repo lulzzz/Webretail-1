@@ -7,19 +7,19 @@
 
   <mat-grid-list [cols]="fixedCols" [rowHeight]="fitListHeight" [style.height]="fitListHeight" [style.width]="fitListWidth">
     <mat-grid-tile *ngFor="let product of filtered" style="cursor: pointer">
-      <img routerLink="/product/{{product.productName}}" [alt]="product.productName" [src]="product.medias[0].url | parseUrl">
+      <img routerLink="/product/{{product.productName}}" [alt]="product.productName" [src]="product.medias | parseUrl">
       <mat-grid-tile-footer>
         <h3 mat-line><strong>{{product.productName}}</strong></h3>
         <span mat-line>{{product.brand.brandName}}</span>
         <div *ngIf="product.discount.dicountId>0;then discount_content else price_content"></div>
         <ng-template #discount_content>
           <p><span class="percentage">-{{product.discount.discountPercentage}}%</span>
-          <del>{{product.price.selling | currency: 'EUR' : true}}</del>
-          <b>{{product.discount.discountPrice | currency: 'EUR' : true}}</b>
+          <del>{{product.price.selling | currency: 'EUR' : 'symbol'}}</del>
+          <b>{{product.discount.discountPrice | currency: 'EUR' : 'symbol'}}</b>
           </p>
         </ng-template>
         <ng-template #price_content>
-          <p><span mat-line><b>{{product.price.selling | currency: 'EUR' : true}}</b></span></p>
+          <p><span mat-line><b>{{product.price.selling | currency: 'EUR' : 'symbol'}}</b></span></p>
         </ng-template>
       </mat-grid-tile-footer>
     </mat-grid-tile>

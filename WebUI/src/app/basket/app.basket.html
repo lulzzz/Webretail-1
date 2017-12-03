@@ -1,6 +1,6 @@
 <mat-card>
     <button mat-raised-button color="accent" style="float: right" [disabled]="amount===0" routerLink="/checkout"><mat-icon>check_circle</mat-icon> Checkout</button>
-    <h3 style="margin-left: 20px">Total: {{amount | currency: 'EUR' : true}}</h3>
+    <h3 style="margin-left: 20px">Total: {{amount | currency: 'EUR' : 'symbol'}}</h3>
 </mat-card>
 
 <mat-card *ngIf="amount===0">
@@ -12,7 +12,7 @@
         <table cellspacing="10" style="width: 100%">
             <tr>
                 <td rowspan="2" style="width: 100px">
-                    <img height="100px" title="{{item.basketBarcode}}" [alt]="item.basketProduct.productName" [src]="item.basketProduct.medias[0].url | parseUrl">
+                    <img height="100px" title="{{item.basketBarcode}}" [alt]="item.basketProduct.productName" [src]="item.basketProduct.medias | parseUrl">
                 </td>
                 <td colspan="2">
                     <span> {{item.basketProduct | articleInfo:item.basketBarcode}} </span>
@@ -25,7 +25,7 @@
                     </mat-form-field>
                 </td>
                 <td>
-                    <span>{{item.basketPrice | currency: 'EUR' : true}}</span>
+                    <span>{{item.basketPrice | currency: 'EUR' : 'symbol'}}</span>
                 </td>
             </tr>
         </table>

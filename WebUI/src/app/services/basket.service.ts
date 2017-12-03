@@ -18,8 +18,8 @@ export class BasketService {
             : 0;
     }
 
-    get(): Observable<Basket[]> {
-        return this.http.get<Basket[]>('/api/ecommerce/basket');
+    get(registryId: string): Observable<Basket[]> {
+        return this.http.get<Basket[]>('/api/ecommerce/basket/' + registryId);
     }
 
     create(model: Basket): Observable<Basket> {

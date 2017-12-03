@@ -16,8 +16,6 @@ import { ActivatedRoute } from '@angular/router';
 
 export class BasketComponent implements OnInit, OnDestroy {
 	private sub: any;
-	amount = 0.0;
-	count = 0.0;
 
 	constructor(
 		public snackBar: MatSnackBar,
@@ -49,15 +47,15 @@ export class BasketComponent implements OnInit, OnDestroy {
 	}
 
 	get basket(): Basket[] { return this.basketService.basket; }
-
-	setTotals() {
-		if (this.basket.length > 0) {
-			this.count = this.basket.map(p => p.basketQuantity).reduce((sum, current) => sum + current);
-			this.amount = this.basket.map(p => p.basketQuantity * p.basketPrice).reduce((sum, current) => sum + current);
-		} else {
-			this.count = 0.0;
-			this.amount = 0.0;
-		}
+	get count(): number {
+		return this.basket.length > 0
+		? this.basket.map(p => p.basketQuantity).reduce((sum, current) => sum + current)
+		: 0;
+	}
+	get amount(): number {
+		return this.basket.length > 0
+		? this.basket.map(p => p.basketQuantity * p.basketPrice).reduce((sum, current) => sum + current)
+		: 0;
 	}
 
 	addClick(barcode: string) {
@@ -76,7 +74,6 @@ export class BasketComponent implements OnInit, OnDestroy {
 				} else {
 					this.basketService.basket.push(result);
 				}
-				this.setTotals();
 				localStorage.removeItem('barcode');
 			},
 			onerror => this.snackBar.open(onerror._body, 'Close'));
@@ -86,7 +83,8 @@ export class BasketComponent implements OnInit, OnDestroy {
 		this.basketService
 			.update(item.basketId, item)
 			.subscribe(result => {
-				this.setTotals();
+				const index = this.basket.indexOf(item);
+				this.basketService.basket[index] = item;
 			});
 	}
 
@@ -101,7 +99,6 @@ export class BasketComponent implements OnInit, OnDestroy {
 						.subscribe(result => {
 							const index = this.basket.indexOf(item.value);
 							this.basket.splice(index, 1);
-							this.setTotals();
 						});
 					});
 				}

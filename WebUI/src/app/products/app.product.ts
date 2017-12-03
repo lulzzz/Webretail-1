@@ -44,8 +44,9 @@ export class ProductComponent implements OnInit, OnDestroy {
         .subscribe(result => {
           this.product = result;
           AppComponent.setPage(result.productName, true);
+
           this.product.medias.forEach(m => {
-            this.images.push({'sType': 'img', 'imgSrc': new ParseUrlPipe().transform(m.url)});
+            this.images.push({'sType': 'img', 'imgSrc': new ParseUrlPipe().transform([m])});
           });
         }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close')
       );
