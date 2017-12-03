@@ -5,6 +5,7 @@ import { SessionService } from './../services/session.service';
 import { CompanyService } from './../services/company.service';
 import { Company } from './../shared/models';
 import { SelectItem } from 'primeng/primeng';
+import { Helpers } from '../shared/helpers';
 
 @Component({
     selector: 'app-company-component',
@@ -58,6 +59,7 @@ export class CompanyComponent implements OnInit {
         this.companyService.get()
             .subscribe(result => {
                 this.company = result;
+                Helpers.currency = result.companyCurrency;
             }, onerror => this.messageService.add({severity: 'error', summary: 'Get company', detail: onerror._body})
         );
     }

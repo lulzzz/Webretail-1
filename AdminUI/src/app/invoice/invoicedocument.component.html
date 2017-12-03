@@ -57,16 +57,16 @@
                 <tfoot style="background-color: whitesmoke">
                     <tr>
                         <td colspan="2">Amount</td>
-                        <td colspan="3" align="right">{{amount | currency: 'EUR' : true}}</td>
+                        <td colspan="3" align="right">{{amount | currencyFormat}}</td>
                     </tr>
                     <tr>
                         <td colspan="2">Tax 22%</td>
-                        <td colspan="3" align="right">{{total - amount | currency: 'EUR' : true}}</td>
+                        <td colspan="3" align="right">{{total - amount | currencyFormat}}</td>
                     </tr>
                     <tr>
                         <td colspan="2"><strong>Totals</strong></td>
                         <td align="center"><strong>{{totalItems}}</strong></td>
-                        <td colspan="2" align="right"><strong>{{total | currency: 'EUR' : true}}</strong></td>
+                        <td colspan="2" align="right"><strong>{{total | currencyFormat}}</strong></td>
                     </tr>
                 </tfoot>
                 <tbody> 
@@ -74,8 +74,8 @@
                         <td><span>{{item.movementArticleBarcode}}</span></td> 
                         <td><span>{{item.movementArticleProduct | articleInfo:item.movementArticleBarcode}}</span></td> 
                         <td align="center"><span>{{item.movementArticleBarcode ? item.movementArticleQuantity : ''}}</span></td> 
-                        <td align="right"><span>{{!item.movementArticleBarcode ? '' : item.movementArticlePrice | currency: 'EUR' : true}}</span></td> 
-                        <td align="right"><span>{{!item.movementArticleBarcode ? '' : item.movementArticleAmount | currency: 'EUR' : true}}</span></td> 
+                        <td align="right"><span>{{!item.movementArticleBarcode ? '' : item.movementArticlePrice | currencyFormat}}</span></td> 
+                        <td align="right"><span>{{!item.movementArticleBarcode ? '' : item.movementArticleAmount | currencyFormat}}</span></td> 
                     </tr> 
                 </tbody>
             </table>

@@ -6,12 +6,11 @@
   "apps": [
     {
       "root": "src",
-      "allowOutsideOutDir": true,
       "outDir": "dist",
       "assets": [
-        "assets",
-        "favicon.ico"
-      ],
+  "assets",
+  "favicon.ico"
+],
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",

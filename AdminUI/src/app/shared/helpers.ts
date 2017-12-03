@@ -3,6 +3,9 @@ import { SelectItem, TreeNode } from 'primeng/primeng';
 
 export class Helpers {
 
+    static currency = 'USD';
+    static utc = 'UTC';
+
     static distinct(a: any[]): any[] {
         const seen: any = {};
         const out: any[] = [];

@@ -22,7 +22,7 @@
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="sliderValue" [min]="5" [max]="1000" styleClass="ui-column-filter"></p-slider>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.discountPercentage > 0 ? data.discountPercentage + '%' : data.discountPrice | currency: 'EUR' : true}}
+                {{data.discountPercentage > 0 ? data.discountPercentage + '%' : data.discountPrice | currencyFormat}}
             </ng-template>
         </p-column>
         <p-column field="discountStartAt" header="Start" [sortable]="true" [filter]="false" [style]="{'overflow':'visible'}">

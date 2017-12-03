@@ -13,7 +13,7 @@
         <div class="ui-toolbar-group-right" style="text-align: right">
             <br>
             <span *ngIf="item.discountPercentage>0"><b>percentage</b>: {{item.discountPercentage}}%</span>
-            <span *ngIf="item.discountPrice>0"><b>fixed price</b>: {{item.discountPrice | currency: 'EUR' : true}}</span>
+            <span *ngIf="item.discountPrice>0"><b>fixed price</b>: {{item.discountPrice | currencyFormat}}</span>
         </div>
     </p-toolbar>
 
@@ -39,10 +39,10 @@
             <ng-template let-col let-data="rowData" pTemplate="body">
                 <div *ngIf="item.discountPercentage===0;then discount_content else price_content"></div>
                 <ng-template #discount_content>
-                    {{(data.discountProduct.productSellingPrice - item.discountPrice) / data.discountProduct.productSellingPrice * 100.0}}%
+                    {{(data.discountProduct.price.selling - item.discountPrice) / data.discountProduct.price.selling * 100.0}}%
                 </ng-template>
                 <ng-template #price_content>
-                    {{data.discountProduct.productSellingPrice - (data.discountProduct.productSellingPrice * item.discountPercentage / 100) | currency: 'EUR' : true}}
+                    {{data.discountProduct.price.selling - (data.discountProduct.price.selling * item.discountPercentage / 100) | currencyFormat}}
                 </ng-template>
             </ng-template>
         </p-column>

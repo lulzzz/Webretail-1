@@ -23,7 +23,7 @@
         </p-header>
         <p-footer>
             <span style="float: left"><b>{{totalRecords}}</b> rows</span>
-            <span style="float: right">items <b>{{totalItems}}</b> amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
+            <span style="float: right">items <b>{{totalItems}}</b> amount <b>{{totalAmount | currencyFormat}}</b></span>
             <p>&nbsp;</p>
         </p-footer>
         <p-column field="movementArticleBarcode" header="Barcode" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
@@ -54,7 +54,7 @@
                 <input pInputText type="number" min="0" [disabled]="committed" [(ngModel)]="data.movementArticlePrice" (change)="onUpdate(data)"/>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.movementArticlePrice | currency: 'EUR' : true}}
+                {{data.movementArticlePrice | currencyFormat}}
             </ng-template>
         </p-column>
         <p-column header="Amount ({{amountValue||'No Filter'}})" [editable]="false" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
@@ -63,7 +63,7 @@
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="amountValue" [min]="5" [max]="10000"></p-slider>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.movementArticleAmount | currency: 'EUR' : true}}
+                {{data.movementArticleAmount | currencyFormat}}
             </ng-template>
         </p-column>
     </p-dataTable>

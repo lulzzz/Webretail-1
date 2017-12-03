@@ -11,7 +11,7 @@
         <div *ngFor="let item of items" class="pdfBarcode">
             <hr style="background-color: transparent; height: 1px; border: 0;">
             <span style="font-size: 16px; float: right;">
-                <strong>{{item.movementArticlePrice | currency: 'EUR' : true}}</strong>
+                <strong>{{item.movementArticlePrice | currencyFormat}}</strong>
             </span>
             <span style="font-size: 16px; margin-left: 10px;">
                 {{item.movementArticleProduct.productName}}

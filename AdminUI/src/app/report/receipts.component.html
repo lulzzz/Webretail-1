@@ -15,7 +15,7 @@
         [responsive]="true">
         <p-footer>
             <span style="float: left"><b>{{totalItems}}</b> receipts</span>
-            <span style="float: right">Total amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
+            <span style="float: right">Total amount <b>{{totalAmount | currencyFormat}}</b></span>
             <p>&nbsp;</p>
         </p-footer>
         <ng-template pTemplate="rowgroupheader" let-rowData>{{rowData['movementDevice']}}</ng-template>
@@ -23,12 +23,12 @@
         <p-column field="movementDate" header="Date" [sortable]="true"></p-column>
         <p-column field="movementAmount" header="Amount" [sortable]="true">
             <ng-template let-col let-data="rowData" pTemplate="body">
-                <span>{{data[col.field] | currency: 'EUR' : true}}</span>
+                <span>{{data[col.field] | currencyFormat}}</span>
             </ng-template>
         </p-column>
         <ng-template pTemplate="rowgroupfooter" let-data>
             <td colspan="2" style="text-align:right">Subtotal amount</td>
-            <td><b>{{calculateGroupTotal(data['movementDevice']) | currency: 'EUR' : true }}</b></td>
+            <td><b>{{calculateGroupTotal(data['movementDevice']) | currencyFormat }}</b></td>
         </ng-template>
     </p-dataTable>
 

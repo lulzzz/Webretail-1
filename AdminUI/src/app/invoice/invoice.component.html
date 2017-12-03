@@ -24,7 +24,7 @@
         </p-header>
         <p-footer>
             <span style="float: left"><b>{{totalRecords}}</b> rows</span>
-            <span style="float: right">amount <b>{{totalAmount | currency: 'EUR' : true}}</b></span>
+            <span style="float: right">amount <b>{{totalAmount | currencyFormat}}</b></span>
             <p>&nbsp;</p>
         </p-footer>
         <p-column [style]="{'width':'50px'}" selectionMode="multiple"></p-column>
@@ -55,7 +55,7 @@
                 <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="amountValue" [min]="5" [max]="1000"></p-slider>
             </ng-template>
             <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.movementAmount | currency: 'EUR' : true}}
+                {{data.movementAmount | currencyFormat}}
             </ng-template>
         </p-column>
     </p-dataTable>
