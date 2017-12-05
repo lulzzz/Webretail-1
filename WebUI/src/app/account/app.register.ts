@@ -20,8 +20,8 @@ export class RegisterComponent implements OnInit {
 		public snackBar: MatSnackBar,
 		private sessionService: SessionService,
 		private fb: FormBuilder) {
-		AppComponent.setPage('Registration', true);
-	}
+		AppComponent.setPage('Registration');
+		}
 
 	ngOnInit() {
 		this.dataform = this.fb.group({

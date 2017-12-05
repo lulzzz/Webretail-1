@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatSelectionList } from '@angular/material';
 import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
@@ -6,7 +6,6 @@ import { BasketService } from 'app/services/basket.service';
 import { Basket } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 import { Observable } from 'rxjs/Rx';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-basket',
@@ -14,36 +13,28 @@ import { ActivatedRoute } from '@angular/router';
 	styleUrls: ['app.basket.scss']
 })
 
-export class BasketComponent implements OnInit, OnDestroy {
+export class BasketComponent implements OnInit {
 	private sub: any;
 
 	constructor(
 		public snackBar: MatSnackBar,
 		private dialogsService: DialogService,
 		private sessionService: SessionService,
-		private basketService: BasketService,
-		private activatedRoute: ActivatedRoute) {
-
-		AppComponent.setPage('Basket', false);
+		private basketService: BasketService) {
+		AppComponent.setPage('Basket');
 	}
+
+	get isIframe(): boolean { return AppComponent.inIframe(); }
 
 	ngOnInit() {
-		this.sub = this.activatedRoute.params.subscribe(params => {
-			const barcode = params['barcode'];
-			if (barcode) {
-				localStorage.setItem('barcode', barcode);
-			}
-			if (this.sessionService.checkCredentials()) {
-				if (barcode) {
-					this.addClick(barcode);
-				}
-			}
-		});
-	}
+		if (!this.sessionService.checkCredentials()) { return; }
 
-	ngOnDestroy() {
-		// Clean sub to avoid memory leak
-		this.sub.unsubscribe();
+		if (this.isIframe) {
+			this.basketService.get()
+				.subscribe(result => {
+					this.basketService.basket = result;
+				});
+		}
 	}
 
 	get basket(): Basket[] { return this.basketService.basket; }
@@ -58,33 +49,13 @@ export class BasketComponent implements OnInit, OnDestroy {
 		: 0;
 	}
 
-	addClick(barcode: string) {
-		const model = new Basket();
-		model.basketBarcode = barcode;
-		this.basketService
-			.create(model)
-			.subscribe(result => {
-			  this.snackBar
-				.open(model.basketBarcode + ' added to basket!', 'Close', {
-					duration: 5000
-				});
-				const basket = this.basketService.basket.find(p => p.basketBarcode === model.basketBarcode);
-				if (basket) {
-					basket.basketQuantity = result.basketQuantity;
-				} else {
-					this.basketService.basket.push(result);
-				}
-				localStorage.removeItem('barcode');
-			},
-			onerror => this.snackBar.open(onerror._body, 'Close'));
-	}
-
 	updateClick(item: Basket) {
 		this.basketService
 			.update(item.basketId, item)
 			.subscribe(result => {
 				const index = this.basket.indexOf(item);
 				this.basketService.basket[index] = item;
+				window.parent.postMessage('token:' + localStorage.getItem('token'), '*');
 			});
 	}
 
@@ -99,6 +70,7 @@ export class BasketComponent implements OnInit, OnDestroy {
 						.subscribe(result => {
 							const index = this.basket.indexOf(item.value);
 							this.basket.splice(index, 1);
+							window.parent.postMessage('token:' + localStorage.getItem('token'), '*');
 						});
 					});
 				}

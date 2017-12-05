@@ -22,8 +22,7 @@ export class OrdersComponent implements OnInit {
 		public snackBar: MatSnackBar,
 		private sessionService: SessionService,
 		private registryService: RegistryService) {
-
-		AppComponent.setPage('Orders', false);
+		AppComponent.setPage('Orders');
 	}
 
 	ngOnInit() {

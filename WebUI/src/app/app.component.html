@@ -9,37 +9,19 @@
         routerLinkActive
         #routerLinkActiveInstance="routerLinkActive"
         [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
-        [routerLink]="['/home']">
-        <span><mat-icon>home</mat-icon></span>
-        &nbsp;&nbsp;Home
-      </a>
-      <a *ngFor="let navItem of navItems"
-        mat-list-item
-        (click)="start.close()"
-        routerLinkActive
-        #routerLinkActiveInstance="routerLinkActive"
-        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
-        [routerLink]="[navItem.route]">
-        <span><mat-icon>library_books</mat-icon></span>
-        &nbsp;&nbsp;{{navItem.name}}
-      </a>
-      <a mat-list-item
-        tabindex="-1"
-        (click)="start.close()"
-        routerLinkActive
-        #routerLinkActiveInstance="routerLinkActive"
-        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1">
-        &nbsp;
-      </a>
-      <a mat-list-item
-        tabindex="-1"
-        (click)="start.close()"
-        routerLinkActive
-        #routerLinkActiveInstance="routerLinkActive"
-        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
         [routerLink]="['/account']">
         <span><mat-icon>account_box</mat-icon></span>
         &nbsp;&nbsp;Account
+      </a>
+      <a mat-list-item
+        tabindex="-1"
+        (click)="start.close()"
+        routerLinkActive
+        #routerLinkActiveInstance="routerLinkActive"
+        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
+        [routerLink]="['/basket']">
+        <span><mat-icon>shopping_cart</mat-icon></span>
+        &nbsp;&nbsp;Basket
       </a>
       <a mat-list-item
         tabindex="-1"
@@ -51,25 +33,35 @@
         <span><mat-icon>description</mat-icon></span>
         &nbsp;&nbsp;Orders
       </a>
+      <a *ngFor="let navItem of navItems"
+        mat-list-item
+        (click)="start.close()"
+        routerLinkActive
+        #routerLinkActiveInstance="routerLinkActive"
+        [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
+        [routerLink]="[navItem.route]">
+        <span><mat-icon>library_books</mat-icon></span>
+        &nbsp;&nbsp;{{navItem.name}}
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
   <div>
-    <img class="mat-toolbar-bg" src="/assets/latest.jpg" /> 
-    <mat-toolbar id="toolbar" color="transparent">
+    <!-- <img class="mat-toolbar-bg" src="/assets/latest.jpg" />  -->
+    <mat-toolbar id="toolbar">
       <button *ngIf="backButton" mat-icon-button (click)="backClick()">
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <button *ngIf="!backButton" mat-icon-button (click)="start.open()">
+      <button *ngIf="menuActive&&!backButton" mat-icon-button (click)="start.open()">
         <mat-icon>menu</mat-icon>
       </button>
       <div class="app-toolbar">
         <h1>{{title}}</h1>
-        <div>
+        <div *ngIf="!isIframe">
           <button mat-icon-button (click)="toggleFullscreen()" title="Toggle fullscreen">
             <mat-icon>fullscreen</mat-icon>
           </button>
-          <button mat-icon-button routerLink="/basket" title="Shopping Cart">
+          <button mat-icon-button routerLink="/basket" title="Shopping Basket">
             <span *ngIf="itemsCount>0" style="color: red"><b>{{itemsCount}}</b></span>
             <mat-icon>shopping_cart</mat-icon>
           </button>
@@ -80,6 +72,7 @@
     <div #root="dir" dir="ltr" class="app-content">
       <router-outlet></router-outlet>
     </div>
-      
+
   </div>
+      
 </mat-sidenav-container>

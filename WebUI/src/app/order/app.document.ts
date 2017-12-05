@@ -34,8 +34,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
                 private sessionService: SessionService,
                 private documentService: DocumentService,
                 private registryService: RegistryService) {
-        AppComponent.setPage('Document', true);
-    }
+            AppComponent.setPage('Document', true);
+        }
 
     ngOnInit() {
         this.sessionService.checkCredentials();

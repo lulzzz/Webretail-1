@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { SessionService } from 'app/services/session.service';
+import { BasketService } from 'app/services/basket.service';
 import { Login } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 
@@ -17,8 +18,9 @@ export class LoginComponent implements OnInit {
 	constructor(
 		public snackBar: MatSnackBar,
 		private sessionService: SessionService,
+		private basketService: BasketService,
 		private fb: FormBuilder) {
-		AppComponent.setPage('Login', false);
+		AppComponent.setPage('Login');
 	}
 
 	ngOnInit() {
@@ -33,9 +35,17 @@ export class LoginComponent implements OnInit {
 			.subscribe(result => {
 				if (result.login === 'ok') {
 					this.sessionService.grantCredentials(result);
+					this.loadBasket();
 				} else {
 					this.snackBar.open(result.error, 'Close');
 				}
 			}, onerror => this.snackBar.open(JSON.stringify(onerror), 'Close'))
+	}
+
+	loadBasket() {
+		this.basketService.get()
+			.subscribe(result => {
+				this.basketService.basket = result;
+			});
 	}
 }

@@ -1,8 +1,9 @@
 <div *ngIf="product">
-    <mat-expansion-panel>
+  <article-picker [product]="product" (onPicked)="pickerClick($event)"></article-picker>
+  <mat-expansion-panel *ngIf="!isIframe">
     <mat-expansion-panel-header>
-      <mat-panel-description><b>Information</b></mat-panel-description>
-      <mat-panel-title><b>ID: {{product.productCode}}</b></mat-panel-title>
+      <mat-panel-description>Information</mat-panel-description>
+      <mat-panel-title><b>SKU: {{product.productCode}}</b></mat-panel-title>
     </mat-expansion-panel-header>
     <mat-card>
       <mat-card-content>
@@ -22,10 +23,8 @@
         <ng-template #price_content>
           <p><span mat-line>PRICE<br/><b>{{product.price.selling | currency: 'EUR' : 'symbol'}}</b></span></p>
         </ng-template>
+        <image-slider [slides]="images"></image-slider>
       </mat-card-content>
     </mat-card>
-    <article-picker [product]="product" (onPicked)="pickerClick($event)"></article-picker>
   </mat-expansion-panel>
-  <br/>
-  <image-slider [slides]="images"></image-slider>
 </div>

@@ -37,7 +37,7 @@ class EcommerceController {
         routes.add(method: .put, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerPUT)
         routes.add(method: .delete, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerDELETE)
 
-        routes.add(method: .get, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/basket", handler: ecommerceBasketHandlerGET)
         routes.add(method: .post, uri: "/api/ecommerce/basket", handler: ecommerceBasketHandlerPOST)
         routes.add(method: .put, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerPUT)
         routes.add(method: .delete, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerDELETE)
@@ -178,9 +178,11 @@ class EcommerceController {
     /// Basket
 
     func ecommerceBasketHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
         do {
-            guard let id = Int(request.urlVariables["id"]!) else {
-                throw PerfectError.apiError("id")
+            guard let id = Int(uniqueID) else {
+                response.completed(status: .unauthorized)
+                return
             }
             let items = try self.repository.getBasket(registryId: id)
             try response.setJson(items)
@@ -191,7 +193,7 @@ class EcommerceController {
     }
     
     func ecommerceBasketHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        let uniqueID = request.user.authDetails?.account.uniqueID ?? "0"
+        let uniqueID = request.user.authDetails?.account.uniqueID ?? ""
         do {
             guard let id = Int(uniqueID) else {
                 response.completed(status: .unauthorized)

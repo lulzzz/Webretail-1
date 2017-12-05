@@ -32,7 +32,6 @@ export class CheckoutComponent implements OnInit {
 		private dialogsService: DialogService,
 		private sessionService: SessionService,
 		private basketService: BasketService) {
-
 		AppComponent.setPage('Checkout', true);
 	}
 

@@ -3,28 +3,13 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import { Login, Token } from '../shared/models';
-import { CookieService, CookieOptions } from 'ngx-cookie';
 
 @Injectable()
 export class SessionService {
 
     constructor(
         private router: Router,
-        private http: HttpClient,
-        private cookieService: CookieService) {
-    }
-
-    getCookie(key: string) {
-        return this.cookieService.get(key);
-    }
-
-    setCookie(key: string, value: string) {
-        const cookieOptions = <CookieOptions>{ domain: 'webretail.cloud', expires: '1', path: '/' };
-        this.cookieService.put(key, value, cookieOptions);
-    }
-
-    removeCookie(key: string) {
-        return this.cookieService.remove(key);
+        private http: HttpClient) {
     }
 
     login(account: Login): Observable<Token> {
@@ -42,20 +27,21 @@ export class SessionService {
     }
 
     grantCredentials(data: any) {
-        this.setCookie('access_token', data.token);
+        window.parent.postMessage('token:' + data.token, '*');
+
         localStorage.setItem('uniqueID', data.uniqueID);
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.role);
-        const barcode = localStorage.getItem('barcode');
-        if (barcode) {
-            this.router.navigate(['basket/' + barcode]);
-            return;
-        }
-        this.router.navigate(['home']);
+
+        const origin = localStorage.getItem('origin');
+        this.router.navigate([origin ? origin : 'basket']);
+        localStorage.removeItem('origin');
     }
 
     removeCredentials() {
-        this.removeCookie('access_token');
+        window.parent.postMessage('token:', '*');
+
+        localStorage.removeItem('origin');
         localStorage.removeItem('uniqueID');
         localStorage.removeItem('token');
         localStorage.removeItem('role');

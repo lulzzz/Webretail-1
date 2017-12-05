@@ -22,7 +22,6 @@ export const APP_ROUTES: Routes = [
     {path: 'products/:name', component: ProductsComponent},
     {path: 'product/:name', component: ProductComponent},
     {path: 'basket', component: BasketComponent},
-    {path: 'basket/:barcode', component: BasketComponent},
     {path: 'checkout', component: CheckoutComponent},
     {path: 'orders', component: OrdersComponent},
     {path: 'document/:id', component: DocumentComponent}

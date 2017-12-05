@@ -10,8 +10,10 @@ body {
   }
 
   .mat-sidenav {
+    border-top: thin ridge #ececec;
+    border-left: thin ridge #ececec;
     width: 50vw;
-    max-width: 400px;
+    max-width: 300px;
     padding: 1vw;
     z-index: 102;
     
@@ -27,8 +29,12 @@ body {
       margin: 24px 0;
     }
     .mat-list-item {
-      border-bottom: thin ridge gray;
+      border-bottom: thin ridge #ececec;
     }
+  }
+
+  .app-root {
+    background-color: white;
   }
 
   .app-content {
@@ -60,7 +66,6 @@ body {
   }
 
   .mat-toolbar {
-    background-color: transparent;
     position: fixed;
     top: 0;
     left: 0;

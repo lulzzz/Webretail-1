@@ -13,13 +13,24 @@ import { ProductService } from './services/product.service';
   preserveWhitespaces: false,
 })
 export class AppComponent implements OnInit {
-  static title = 'Webretail';
-  static backButton = false;
+  private static title = 'Webretail';
+  private static backButton = false;
+  private static menuActive = true;
+  isIframe = false;
   navItems = [];
 
-  static setPage(title: string, backButton: boolean) {
+  static setPage(title: string, backButton = false, menuActive = true) {
     AppComponent.title = title;
     AppComponent.backButton = backButton;
+    AppComponent.menuActive = menuActive;
+  }
+
+  static inIframe() {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
   }
 
   get title(): string {
@@ -28,6 +39,10 @@ export class AppComponent implements OnInit {
 
   get backButton(): boolean {
     return AppComponent.backButton;
+  }
+
+  get menuActive(): boolean {
+    return AppComponent.menuActive;
   }
 
   get itemsCount(): number { return this.basketService.count; }
@@ -40,11 +55,15 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadBasket();
-    this.productService.getCategories()
-      .subscribe(result => {
-        result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryName }));
-      });
+    this.isIframe = AppComponent.inIframe();
+    if (!this.isIframe) {
+      this.loadBasket();
+      this.navItems.push({ name: 'Home', route: '/home' });
+      this.productService.getCategories()
+        .subscribe(result => {
+          result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryName }));
+        });
+    }
   }
 
 	loadBasket() {
@@ -52,7 +71,7 @@ export class AppComponent implements OnInit {
     if (uniqueID == null) {
       return;
     }
-		this.basketService.get(uniqueID)
+		this.basketService.get()
 			.subscribe(result => {
 				this.basketService.basket = result;
 			});
