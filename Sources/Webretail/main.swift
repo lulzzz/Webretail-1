@@ -57,38 +57,38 @@ addFilters()
 // Register routes and handlers
 addRoutesAndHandlers()
 
-//// Angular routes
-//let angularRoutes = [
-//    Route(method: .get, uri: "/**", handler: try! HTTPHandler.staticFiles(data: ["documentRoot": "./WebUI/dist"])),
-//    Route(method: .get, uri: "/home", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/account", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/login", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/register", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/products/{id}/{name}", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/basket", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/basket/{barcode}", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/checkout", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/orders", handler: HTTPHandler.angularHandler(webapi: false)),
-//    Route(method: .get, uri: "/document/{id}", handler: HTTPHandler.angularHandler(webapi: false))
-//]
-//
-//// Launch the Web server.
-//Threading.dispatch {
-//    _ = try? HTTPServer.launch(
-//        .secureServer(
-//            TLSConfiguration(certPath: cert.sslCert, keyPath: cert.sslKey, alpnSupport: alpn),
+// Angular routes
+let angularRoutes = [
+    Route(method: .get, uri: "/**", handler: try! HTTPHandler.staticFiles(data: ["documentRoot": "./WebUI/dist"])),
+    Route(method: .get, uri: "/home", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/account", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/login", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/register", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/products/{id}/{name}", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/product/{id}", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/basket", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/basket/{barcode}", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/checkout", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/orders", handler: HTTPHandler.angularHandler(webapi: false)),
+    Route(method: .get, uri: "/document/{id}", handler: HTTPHandler.angularHandler(webapi: false))
+]
+
+// Launch the Web server.
+Threading.dispatch {
+    _ = try? HTTPServer.launch(
+        .secureServer(
+            TLSConfiguration(certPath: cert.sslCert, keyPath: cert.sslKey, alpnSupport: alpn),
+            name: "",
+            port: 8080,
+            routes: angularRoutes
+        )
+//        .server(
 //            name: "",
 //            port: 8080,
 //            routes: angularRoutes
 //        )
-////        .server(
-////            name: "",
-////            port: 8080,
-////            routes: angularRoutes
-////        )
-//    )
-//}
+    )
+}
 
 
 do {
