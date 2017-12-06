@@ -33,6 +33,13 @@ export class AppComponent implements OnInit {
     }
   }
 
+  constructor(
+    private location: Location,
+    private basketService: BasketService,
+    private productService: ProductService,
+    private _element: ElementRef
+  ) { }
+
   get title(): string {
     return AppComponent.title;
   }
@@ -46,13 +53,6 @@ export class AppComponent implements OnInit {
   }
 
   get itemsCount(): number { return this.basketService.count; }
-
-  constructor(
-    private location: Location,
-    private basketService: BasketService,
-    private productService: ProductService,
-    private _element: ElementRef
-  ) { }
 
   ngOnInit() {
     this.isIframe = AppComponent.inIframe();

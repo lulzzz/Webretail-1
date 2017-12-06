@@ -26,14 +26,10 @@ export class AccountComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (!this.sessionService.checkCredentials()) {
-            localStorage.setItem('origin', 'account');
-            return;
-        }
+        if (!this.sessionService.checkCredentials()) { return; }
 
-        if (!this.isCheckout) {
-            AppComponent.setPage('Account');
-        }
+        window.parent.postMessage('iframe:980', '*');
+        if (!this.isCheckout) { AppComponent.setPage('Account'); }
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),

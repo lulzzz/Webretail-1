@@ -12,7 +12,7 @@
 
     <ng-container matColumnDef="amount">
         <mat-header-cell *matHeaderCellDef [ngClass]="'flex100Right'"> Amount </mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'flex100Right'"> {{element.movementAmount | currency: 'EUR' : true}} </mat-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'flex100Right'"> {{element.movementAmount | currency: 'EUR' : 'symbol'}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="payment">

@@ -35,6 +35,8 @@ export class OrdersComponent implements OnInit {
 		this.registryService.getOrders()
 			.subscribe(result => {
 				this.dataSource = new OrderDataSource(result);
+				const height = (result.length * 50) + 255;
+				window.parent.postMessage('iframe:' + height, '*');
 			},
 			onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'))
 	}

@@ -33,9 +33,11 @@ export class BasketComponent implements OnInit {
 			this.basketService.get()
 				.subscribe(result => {
 					this.basketService.basket = result;
+					const height = (result.length * 120) + 255;
+					window.parent.postMessage('iframe:' + height, '*');
 				});
 		}
-	}
+	  }
 
 	get basket(): Basket[] { return this.basketService.basket; }
 	get count(): number {
