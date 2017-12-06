@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
       this.navItems.push({ name: 'Home', route: '/home' });
       this.productService.getCategories()
         .subscribe(result => {
-          result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryName }));
+          result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryName.toLowerCase() }));
         });
     }
   }
