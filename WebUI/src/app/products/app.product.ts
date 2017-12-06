@@ -53,6 +53,9 @@ export class ProductComponent implements OnInit, OnDestroy {
 					this.product.medias.forEach(m => {
 						this.images.push({ 'sType': 'img', 'imgSrc': new ParseUrlPipe().transform([m]) });
 					});
+				} else {
+					const height = (result.attributes.length * 100) + 100;
+					window.parent.postMessage('iframe:' + height, '*');
 				}
 			}, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));
   }
@@ -66,8 +69,8 @@ pickerClick(event: Article) {
 		model.basketBarcode = localStorage.getItem('barcode');
 	}
 	this.basketService
-      .create(model)
-      .subscribe(result => {
+		.create(model)
+		.subscribe(result => {
 			localStorage.removeItem('barcode');
 			this.snackBar
 					.open(model.basketBarcode + ' added to basket!', 'Show Basket', {
@@ -75,24 +78,25 @@ pickerClick(event: Article) {
 					})
 			.onAction()
 			.subscribe(() => {
-            if (this.isIframe) {
-					window.parent.postMessage('basket', '*');
-            } else {
-              	this.router.navigate(['basket']);
-            }
+				if (this.isIframe) {
+						window.parent.postMessage('basket', '*');
+				} else {
+					this.router.navigate(['basket']);
+				}
 			});
 
         	if (!this.isIframe) {
           	const basket = this.basketService.basket.find(p => p.basketBarcode === model.basketBarcode);
           	if (basket) {
-					basket.basketQuantity += 1.0;
+				basket.basketQuantity += 1.0;
           	} else {
             	this.basketService.basket.push(result);
 				}
         	} else {
 				window.parent.postMessage('token:' + localStorage.getItem('token'), '*');
 			}
-		}, onerror => this.snackBar.open(onerror.status === 401 ? 'You must login before adding to basket' : onerror._body, 'Login')
+		},
+		onerror => this.snackBar.open(onerror.status === 401 ? 'You must login before adding to basket' : onerror._body, 'Login')
 		.onAction()
 		.subscribe(() => {
 			localStorage.setItem('origin', this.router.url);
