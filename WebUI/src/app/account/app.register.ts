@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
 		private fb: FormBuilder) {
 		AppComponent.setPage('Registration');
 		this.translate.get(this.close).subscribe((res: string) => this.close = res);
+        window.parent.postMessage('iframe:400', '*');
 	}
 
 	ngOnInit() {

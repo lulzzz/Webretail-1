@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
 	) {
 		AppComponent.setPage('Authentication');
 		this.translate.get(this.close).subscribe((res: string) => this.close = res);
+		window.parent.postMessage('iframe:300', '*');
 	}
 
 	ngOnInit() {
