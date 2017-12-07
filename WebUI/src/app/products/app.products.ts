@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, HostListener, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DOCUMENT } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 import { ProductService } from './../services/product.service';
 import { Product } from './../shared/models';
 import { AppComponent } from 'app/app.component';
-import { ActivatedRoute } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   moduleId: module.id,
@@ -21,13 +22,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
   fixedCols: number;
   fitListHeight: string;
   fitListWidth: string;
+	close = 'Close';
 
   constructor(
     @Inject(DOCUMENT) private document: any,
     public snackBar: MatSnackBar,
+    private translate: TranslateService,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute
   ) {
+    this.translate.get(this.close).subscribe((res: string) => this.close = res);
     this.onResizeChanged(window);
   }
 
@@ -69,7 +73,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         .subscribe(result => {
           this.filtered = result;
           this.products = result;
-        }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));
+        }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, this.close));
   }
 
   onFilterChange(filter: string) {

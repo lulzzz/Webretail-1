@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { MatSnackBar } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 import { SessionService } from 'app/services/session.service';
 import { RegistryService } from 'app/services/registry.service';
 import { Movement } from 'app/shared/models';
@@ -20,6 +21,7 @@ export class OrdersComponent implements OnInit {
 
 	constructor(
 		public snackBar: MatSnackBar,
+		private translate: TranslateService,
 		private sessionService: SessionService,
 		private registryService: RegistryService) {
 		AppComponent.setPage('Orders');
@@ -38,7 +40,11 @@ export class OrdersComponent implements OnInit {
 				const height = (result.length * 50) + 255;
 				window.parent.postMessage('iframe:' + height, '*');
 			},
-			onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'))
+			onerror => {
+				this.translate.get('Close').subscribe((close: string) =>
+					this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, close)
+				);
+			});
 	}
 }
 

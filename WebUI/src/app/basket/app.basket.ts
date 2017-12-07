@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatSelectionList } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
 import { BasketService } from 'app/services/basket.service';
@@ -18,6 +19,7 @@ export class BasketComponent implements OnInit {
 
 	constructor(
 		public snackBar: MatSnackBar,
+		private translate: TranslateService,
 		private dialogsService: DialogService,
 		private sessionService: SessionService,
 		private basketService: BasketService) {
@@ -62,20 +64,26 @@ export class BasketComponent implements OnInit {
 	}
 
 	deleteClick(items: MatSelectionList) {
-        this.dialogsService
-			.confirm('Confirm delete', 'Are you sure you want to delete selected items?')
-			.subscribe(res => {
-				if (res) {
-					items.selectedOptions.selected.forEach(item => {
-						this.basketService
-						.delete(item.value.basketId)
-						.subscribe(result => {
-							const index = this.basket.indexOf(item.value);
-							this.basket.splice(index, 1);
-							window.parent.postMessage('token:' + localStorage.getItem('token'), '*');
+        this.translate.get('Confirm delete')
+		.subscribe((title: string) => {
+			this.translate.get('Are you sure you want to delete selected items?')
+				.subscribe((message: string) => {
+					this.dialogsService
+						.confirm(title, message)
+						.subscribe(res => {
+							if (res) {
+								items.selectedOptions.selected.forEach(item => {
+									this.basketService
+									.delete(item.value.basketId)
+									.subscribe(result => {
+										const index = this.basket.indexOf(item.value);
+										this.basket.splice(index, 1);
+										window.parent.postMessage('token:' + localStorage.getItem('token'), '*');
+									});
+								});
+							}
 						});
-					});
-				}
-			});
+				});
+		});
 	}
 }

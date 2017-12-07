@@ -5,8 +5,8 @@
                 <input matInput [(ngModel)]="user.email" type="email" formControlName="email" placeholder="{{ 'Email' | translate }}"/>
                 <div *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
                     <i class="alert alert-danger"></i>
-                    <mat-error *ngIf="dataform.controls['email'].errors['required']">{{ 'Email is required' | translate }}</mat-error>
-                    <mat-error *ngIf="dataform.controls['email'].errors['email']">{{ 'Must be a valid email address' | translate }}</mat-error>
+                    <mat-error *ngIf="dataform.controls['email'].errors['required']" [innerHTML]="'Email is required' | translate"></mat-error>
+                    <mat-error *ngIf="dataform.controls['email'].errors['email']" [innerHTML]="'Must be a valid email address' | translate"></mat-error>
                 </div>
             </mat-form-field>
             
@@ -14,7 +14,7 @@
                 <input matInput [(ngModel)]="user.password" type="password" formControlName="password" placeholder="{{ 'Password' | translate }}"/>
                 <div *ngIf="!dataform.controls['password'].valid&&dataform.controls['password'].dirty">
                     <i class="alert alert-danger"></i>
-                    <mat-error *ngIf="dataform.controls['password'].errors['required']">{{ 'Password is required' | translate }}</mat-error>
+                    <mat-error *ngIf="dataform.controls['password'].errors['required']" [innerHTML]="'Password is required' | translate"></mat-error>
                 </div>
             </mat-form-field>
 

@@ -34,7 +34,7 @@ export class AccountComponent implements OnInit {
 
         window.parent.postMessage('iframe:980', '*');
         if (!this.isCheckout) {
-            this.translate.get('Account').subscribe((res: string) => AppComponent.setPage(res));
+            AppComponent.setPage('Account');
         }
 
         this.dataform = this.fb.group({
@@ -77,23 +77,31 @@ export class AccountComponent implements OnInit {
             .update(this.account.registryId, this.account)
             .subscribe(result => {
                 this.account.updatedAt = result.updatedAt;
-                this.snackBar.open('Update succesfully!', this.close, {
-                    duration: 2000
-                  });
+                this.translate.get('Update succesfully!')
+                    .subscribe((res: string) => {
+                        this.snackBar.open(res, this.close, { duration: 2000 });
+                    });
             }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, this.close));
         }
 
     deleteClick() {
-        this.dialogsService
-            .confirm('Confirm delete', 'Are you sure you want to delete your account?')
-            .subscribe(res => {
-                if (res) {
-                    this.registryService
-                    .delete(this.account.registryId)
-                    .subscribe(result => {
-                        this.sessionService.removeCredentials();
-                    }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, this.close));
-                }
+        this.translate.get('Confirm delete')
+            .subscribe((title: string) => {
+                this.translate.get('Are you sure you want to delete your account?')
+                    .subscribe((message: string) => {
+                        this.dialogsService
+                            .confirm(title, message)
+                            .subscribe(res => {
+                                if (res) {
+                                    this.registryService
+                                    .delete(this.account.registryId)
+                                    .subscribe(result => {
+                                        this.sessionService.removeCredentials();
+                                    }, onerror =>
+                                        this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, this.close));
+                                }
+                        });
+                    });
             });
     }
 

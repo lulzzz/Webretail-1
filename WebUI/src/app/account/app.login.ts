@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 		private basketService: BasketService,
 		private fb: FormBuilder
 	) {
-		this.translate.get('Authentication').subscribe((res: string) => AppComponent.setPage(res));
+		AppComponent.setPage('Authentication');
 		this.translate.get(this.close).subscribe((res: string) => this.close = res);
 	}
 

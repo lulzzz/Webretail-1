@@ -17,6 +17,7 @@ import { Helpers } from 'app/shared/helpers';
 })
 export class AppComponent implements OnInit {
   public static setting: Setting;
+  private static translate: TranslateService;
   private static title = '';
   private static backButton = false;
   private static menuActive = true;
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   navItems = [];
 
   static setPage(title: string, backButton = false, menuActive = true) {
-    AppComponent.title = title;
+		this.translate.get(title).subscribe((res: string) => AppComponent.title = res);
     AppComponent.backButton = backButton;
     AppComponent.menuActive = menuActive;
   }
@@ -44,11 +45,13 @@ export class AppComponent implements OnInit {
     private productService: ProductService,
     private _element: ElementRef
   ) {
+    AppComponent.translate = this.translate;
+
     const country = navigator.language.substring(0, 2).toLowerCase();
     // this language will be used as a fallback when a translation isn't found in the current language
-    this.translate.setDefaultLang(country);
+    // this.translate.setDefaultLang('en');
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    // this.translate.use(country);
+    this.translate.use(country);
   }
 
   get title(): string {

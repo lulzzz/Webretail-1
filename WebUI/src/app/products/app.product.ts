@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from 'app/services/product.service';
 import { BasketService } from 'app/services/basket.service';
 import { Product, Article, Basket } from 'app/shared/models';
@@ -21,10 +22,11 @@ export class ProductComponent implements OnInit, OnDestroy {
 	constructor(
 		private router: Router,
 		private snackBar: MatSnackBar,
+		private translate: TranslateService,
 		private productService: ProductService,
 		private basketService: BasketService,
 		private activatedRoute: ActivatedRoute
-	) { }
+	) {	}
 
 	get isIframe(): boolean { return AppComponent.inIframe(); }
 
@@ -57,50 +59,66 @@ export class ProductComponent implements OnInit, OnDestroy {
 					const height = (result.attributes.length * 100) + 100;
 					window.parent.postMessage('iframe:' + height, '*');
 				}
-			}, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));
-  }
-
-pickerClick(event: Article) {
-	const model = new Basket();
-	if (event !== null) {
-		model.basketBarcode = event.barcodes.find(p => p.tags.length === 0).barcode;
-		localStorage.setItem('barcode', model.basketBarcode);
-	} else {
-		model.basketBarcode = localStorage.getItem('barcode');
-	}
-	this.basketService
-		.create(model)
-		.subscribe(result => {
-			localStorage.removeItem('barcode');
-			this.snackBar
-					.open(model.basketBarcode + ' added to basket!', 'Show Basket', {
-						duration: 5000
-					})
-			.onAction()
-			.subscribe(() => {
-				if (this.isIframe) {
-						window.parent.postMessage('basket', '*');
-				} else {
-					this.router.navigate(['basket']);
-				}
+			}, onerror => {
+				this.translate.get('Close').subscribe((res: string) =>
+					this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, res)
+				);
 			});
-
-        	if (!this.isIframe) {
-          	const basket = this.basketService.basket.find(p => p.basketBarcode === model.basketBarcode);
-          	if (basket) {
-				basket.basketQuantity += 1.0;
-          	} else {
-            	this.basketService.basket.push(result);
-				}
-        	} else {
-				window.parent.postMessage('token:' + localStorage.getItem('token'), '*');
-			}
-		},
-		onerror => this.snackBar.open(onerror.status === 401 ? 'You must login before adding to basket' : onerror._body, 'Login')
-		.onAction()
-		.subscribe(() => {
-			localStorage.setItem('origin', this.router.url);
-			this.router.navigate(['login']);
-		}));
   }
+
+	pickerClick(event: Article) {
+		const model = new Basket();
+		if (event !== null) {
+			model.basketBarcode = event.barcodes.find(p => p.tags.length === 0).barcode;
+			localStorage.setItem('barcode', model.basketBarcode);
+		} else {
+			model.basketBarcode = localStorage.getItem('barcode');
+		}
+		this.basketService
+			.create(model)
+			.subscribe(result => {
+				localStorage.removeItem('barcode');
+				this.translate.get('added to basket!')
+					.subscribe((message: string) => {
+						this.translate.get('Show Basket')
+							.subscribe((action: string) => {
+								this.snackBar.open(model.basketBarcode + ' ' + message, action, {
+									duration: 5000
+								})
+								.onAction()
+								.subscribe(() => {
+									if (this.isIframe) {
+											window.parent.postMessage('basket', '*');
+									} else {
+										this.router.navigate(['basket']);
+									}
+								});
+							});
+					});
+				if (!this.isIframe) {
+				const basket = this.basketService.basket.find(p => p.basketBarcode === model.basketBarcode);
+				if (basket) {
+					basket.basketQuantity += 1.0;
+				} else {
+					this.basketService.basket.push(result);
+					}
+				} else {
+					window.parent.postMessage('token:' + localStorage.getItem('token'), '*');
+				}
+			},
+			onerror => {
+				this.translate.get('You must login before adding to basket')
+					.subscribe((message: string) => {
+						this.translate.get('Login')
+							.subscribe((login: string) => {
+								this.snackBar.open(onerror.status === 401 ? message : onerror._body, login)
+									.onAction()
+									.subscribe(() => {
+										localStorage.setItem('origin', this.router.url);
+										this.router.navigate(['login']);
+									});
+							});
+					});
+			});
+	}
 }

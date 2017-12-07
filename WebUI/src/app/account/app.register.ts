@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
 		public snackBar: MatSnackBar,
 		private sessionService: SessionService,
 		private fb: FormBuilder) {
-		this.translate.get('Registration').subscribe((res: string) => AppComponent.setPage(res));
+		AppComponent.setPage('Registration');
 		this.translate.get(this.close).subscribe((res: string) => this.close = res);
 	}
 

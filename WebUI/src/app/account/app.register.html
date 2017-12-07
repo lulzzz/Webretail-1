@@ -5,8 +5,8 @@
                 <input matInput [(ngModel)]="user.email" type="email" formControlName="email" placeholder="{{ 'Email' | translate }}"/>
                 <div *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
                     <i class="alert alert-danger"></i>
-                    <mat-error *ngIf="dataform.controls['email'].errors['required']">{{ 'Email is required' | translate }}</mat-error>
-                    <mat-error *ngIf="dataform.controls['email'].errors['email']">{{ 'Must be a valid email address' | translate }}</mat-error>
+                    <mat-error *ngIf="dataform.controls['email'].errors['required']" [innerHTML]="'Email is required' | translate "></mat-error>
+                    <mat-error *ngIf="dataform.controls['email'].errors['email']" [innerHTML]="'Must be a valid email address' | translate"></mat-error>
                 </div>
             </mat-form-field>
             
@@ -14,9 +14,9 @@
                 <input matInput [(ngModel)]="user.password" type="password" formControlName="password" placeholder="{{ 'Password' | translate }}"/>
                 <div *ngIf="!dataform.controls['password'].valid&&dataform.controls['password'].dirty">
                     <i class="alert alert-danger"></i>
-                    <mat-error *ngIf="dataform.controls['password'].errors['required']">{{ 'Password is required' | translate }}</mat-error>
-                    <mat-error *ngIf="dataform.controls['password'].errors['minlength']">{{ 'Must be longer than 8 characters' | translate }}</mat-error>
-                    <mat-error *ngIf="dataform.controls['password'].errors['maxlength']">{{ 'Must be at most 20 characters' | translate }}</mat-error>
+                    <mat-error *ngIf="dataform.controls['password'].errors['required']" [innerHTML]="'Password is required' | translate"></mat-error>
+                    <mat-error *ngIf="dataform.controls['password'].errors['minlength']" [innerHTML]="'Must be longer than 8 characters' | translate"></mat-error>
+                    <mat-error *ngIf="dataform.controls['password'].errors['maxlength']" [innerHTML]="'Must be at most 20 characters' | translate"></mat-error>
                 </div>
             </mat-form-field>
 
@@ -24,8 +24,8 @@
                 <input matInput type="password" formControlName="confirmPassword" placeholder="{{ 'Confirm password' | translate }}"/>
                 <div *ngIf="!dataform.controls['confirmPassword'].valid&&dataform.controls['confirmPassword'].dirty">
                     <i class="alert alert-danger"></i>
-                    <mat-error *ngIf="dataform.controls['confirmPassword'].errors['required']">{{ 'Confirm Password is required' | translate }}</mat-error>
-                    <mat-error *ngIf="dataform.controls['confirmPassword'].errors['matchPassword']">{{ 'Password not match' | translate }}</mat-error>
+                    <mat-error *ngIf="dataform.controls['confirmPassword'].errors['required']" [innerHTML]="'Confirm Password is required' | translate"></mat-error>
+                    <mat-error *ngIf="dataform.controls['confirmPassword'].errors['matchPassword']" [innerHTML]="'Password not match' | translate"></mat-error>
                 </div>
             </mat-form-field>
 
