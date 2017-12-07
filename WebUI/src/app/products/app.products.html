@@ -14,12 +14,12 @@
         <div *ngIf="product.discount.dicountId>0;then discount_content else price_content"></div>
         <ng-template #discount_content>
           <p><span class="percentage">-{{product.discount.discountPercentage}}%</span>
-          <del>{{product.price.selling | currency: 'EUR' : 'symbol'}}</del>
-          <b>{{product.discount.discountPrice | currency: 'EUR' : 'symbol'}}</b>
+          <del>{{product.price.selling | currencyFormat}}</del>
+          <b>{{product.discount.discountPrice | currencyFormat}}</b>
           </p>
         </ng-template>
         <ng-template #price_content>
-          <p><span mat-line><b>{{product.price.selling | currency: 'EUR' : 'symbol'}}</b></span></p>
+          <p><span mat-line><strong>{{product.price.selling | currencyFormat}}</strong></span></p>
         </ng-template>
       </mat-grid-tile-footer>
     </mat-grid-tile>

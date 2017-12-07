@@ -10,6 +10,7 @@ export class Company {
   public companyAddress: string;
   public companyCity: string;
   public companyZip: string;
+  public companyProvince: string;
   public companyCountry: string;
   public companyCurrency: string;
   public companyFiscalCode: string;
@@ -33,6 +34,7 @@ export class Company {
     this.companyAddress = '';
     this.companyCity = '';
     this.companyZip = '';
+    this.companyProvince = '';
     this.companyCountry = '';
     this.companyCurrency = 'EUR'
     this.companyFiscalCode = '';

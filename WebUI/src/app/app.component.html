@@ -11,7 +11,7 @@
         [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
         [routerLink]="['/account']">
         <span><mat-icon>account_box</mat-icon></span>
-        &nbsp;&nbsp;Account
+        &nbsp;&nbsp;{{ 'Account' | translate }}
       </a>
       <a mat-list-item
         tabindex="-1"
@@ -21,7 +21,7 @@
         [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
         [routerLink]="['/basket']">
         <span><mat-icon>shopping_cart</mat-icon></span>
-        &nbsp;&nbsp;Basket
+        &nbsp;&nbsp;{{ 'Basket' | translate }}
       </a>
       <a mat-list-item
         tabindex="-1"
@@ -31,7 +31,7 @@
         [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
         [routerLink]="['/orders']">
         <span><mat-icon>description</mat-icon></span>
-        &nbsp;&nbsp;Orders
+        &nbsp;&nbsp;{{ 'Orders' | translate}}
       </a>
       <a *ngFor="let navItem of navItems"
         mat-list-item

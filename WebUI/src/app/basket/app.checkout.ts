@@ -4,7 +4,7 @@ import { MatSnackBar, MatSelectionList } from '@angular/material';
 import { DialogService } from 'app/services/dialog.service';
 import { SessionService } from 'app/services/session.service';
 import { BasketService } from 'app/services/basket.service';
-import { Basket, Order, PayPal, Item, Registry } from 'app/shared/models';
+import { Basket, Order, Item, Registry, Setting } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 import { Observable } from 'rxjs/Rx';
 import { AccountComponent } from 'app/account/app.account';
@@ -19,7 +19,6 @@ declare let paypal: any;
 
 export class CheckoutComponent implements OnInit {
     @ViewChild('account') component: AccountComponent;
-	paypalInfo: PayPal
 	payments: Item[] = [];
 	shippings: Item[] = [];
 	shippingCost = 0.0;
@@ -45,10 +44,6 @@ export class CheckoutComponent implements OnInit {
 		this.basketService
 			.getShippings()
 			.subscribe(result => this.shippings = result);
-
-		this.basketService
-			.getPayPal()
-			.subscribe(result => this.paypalInfo = result);
 	}
 
 	get customer(): string { return this.component.account ? this.component.account.registryName : ''; }
@@ -81,7 +76,7 @@ export class CheckoutComponent implements OnInit {
 
 	paymentClick(event) {
 		if (this.isValidAccount && this.paymentMethod === 'PayPal') {
-			this.showPayPal(this.paypalInfo, this.amount + this.shippingCost);
+			this.showPayPal(AppComponent.setting, this.amount + this.shippingCost);
 		}
 	}
 
@@ -93,19 +88,19 @@ export class CheckoutComponent implements OnInit {
 			});
 	}
 
-	showPayPal(info: PayPal, total: number) {
+	showPayPal(info: Setting, total: number) {
 		paypal.Button.render({
 			style: {
 				size: 'responsive',
 				label: 'checkout'
 			},
 			// sandbox | production
-			env: info.env,
+			env: info.paypalEnv,
 			// PayPal Client IDs - replace with your own
 			// Create a PayPal app: https://developer.paypal.com/developer/applications/create
 			client: {
-				sandbox:    info.sandbox, // 'ARVxxnTeHt9gA6rK6n6WFx-3XuJuof9qJuK-FeZi_Xnq0hc8acg8jWs2P8jWaZS-4N23Pa2SzG80ZCCH'
-				production: info.production // 'AXHnIw3mLFqSrPVVraoRWewhBWTEGNsbrGjSzYS8r9wmyydLv2AUR2rUswKGZvKwHyyYrGSuuY2I9afp'
+				sandbox:    info.paypalSandbox, // 'ARVxxnTeHt9gA6rK6n6WFx-3XuJuof9qJuK-FeZi_Xnq0hc8acg8jWs2P8jWaZS-4N23Pa2SzG80ZCCH'
+				production: info.paypalProduction // 'AXHnIw3mLFqSrPVVraoRWewhBWTEGNsbrGjSzYS8r9wmyydLv2AUR2rUswKGZvKwHyyYrGSuuY2I9afp'
 			},
 			// Show the buyer a 'Pay Now' button in the checkout flow
 			commit: true,
@@ -115,7 +110,7 @@ export class CheckoutComponent implements OnInit {
 				return actions.payment.create({
 					payment: {
 						transactions: [{
-							amount: { total: total, currency: info.currency }
+							amount: { total: total, currency: info.companyCurrency }
 						}]
 					}
 				});

@@ -13,7 +13,6 @@ import { DOCUMENT } from '@angular/platform-browser';
   styleUrls: ['./app.products.scss']
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  // @ViewChild('content') private content: ElementRef;
   private sub: any;
   products: Product[];
   filtered: Product[];

@@ -7,6 +7,7 @@ import { RegistryService } from 'app/services/registry.service';
 import { Registry } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
 import { PasswordValidation } from 'app/shared/password.validation';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-account',
@@ -17,19 +18,24 @@ export class AccountComponent implements OnInit {
     @Input('isCheckout') isCheckout: Boolean;
     account: Registry;
     dataform: FormGroup;
+	close = 'Close';
 
     constructor(public snackBar: MatSnackBar,
+                private translate: TranslateService,
                 private dialogsService: DialogService,
                 private sessionService: SessionService,
                 private registryService: RegistryService,
                 private fb: FormBuilder) {
+        this.translate.get(this.close).subscribe((res: string) => this.close = res);
     }
 
     ngOnInit() {
         if (!this.sessionService.checkCredentials()) { return; }
 
         window.parent.postMessage('iframe:980', '*');
-        if (!this.isCheckout) { AppComponent.setPage('Account'); }
+        if (!this.isCheckout) {
+            this.translate.get('Account').subscribe((res: string) => AppComponent.setPage(res));
+        }
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
@@ -57,7 +63,7 @@ export class AccountComponent implements OnInit {
                 if (onerror.status === 401) {
                     this.sessionService.logout();
                 }
-                this.snackBar.open(onerror._body, 'Close');
+                this.snackBar.open(onerror._body, this.close);
             });
     }
 
@@ -71,10 +77,10 @@ export class AccountComponent implements OnInit {
             .update(this.account.registryId, this.account)
             .subscribe(result => {
                 this.account.updatedAt = result.updatedAt;
-                this.snackBar.open('Update succesfully!', 'Close', {
+                this.snackBar.open('Update succesfully!', this.close, {
                     duration: 2000
                   });
-            }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));
+            }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, this.close));
         }
 
     deleteClick() {
@@ -86,7 +92,7 @@ export class AccountComponent implements OnInit {
                     .delete(this.account.registryId)
                     .subscribe(result => {
                         this.sessionService.removeCredentials();
-                    }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, 'Close'));
+                    }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, this.close));
                 }
             });
     }

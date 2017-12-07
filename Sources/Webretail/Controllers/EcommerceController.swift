@@ -24,6 +24,7 @@ class EcommerceController {
         var routes = Routes()
         
         /// Guest Api
+        routes.add(method: .get, uri: "/api/ecommerce/setting", handler: ecommerceCompanyHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category", handler: ecommerceCategoriesHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/brand", handler: ecommerceBrandsHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/new", handler: ecommerceNewsHandlerGET)
@@ -42,7 +43,6 @@ class EcommerceController {
         routes.add(method: .put, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerPUT)
         routes.add(method: .delete, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerDELETE)
 
-        routes.add(method: .get, uri: "/api/ecommerce/paypal", handler: ecommercePayPalHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/payment", handler: ecommercePaymentsHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/shipping", handler: ecommerceShippingsHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/shipping/{id}/cost", handler: ecommerceShippingCostHandlerGET)
@@ -55,6 +55,37 @@ class EcommerceController {
         return routes
     }
 
+    
+    /// Company
+    
+    func ecommerceCompanyHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let item = try self.companyRepository.get()!
+            let setting = Setting()
+            setting.companyId = item.companyId
+            setting.companyName = item.companyName
+            setting.companyDesc = item.companyDesc
+            setting.companyEmail = item.companyEmail
+            setting.companyPhone = item.companyPhone
+            setting.companyAddress = item.companyAddress
+            setting.companyCity = item.companyCity
+            setting.companyZip = item.companyZip
+            setting.companyProvince = item.companyProvince
+            setting.companyCountry = item.companyCountry
+            
+            setting.companyCurrency = item.companyCurrency
+            setting.companyUtc = item.companyUtc
+
+            setting.paypalEnv = item.paypalEnv
+            setting.paypalSandbox = item.paypalSandbox
+            setting.paypalProduction = item.paypalProduction
+            
+            try response.setJson(setting)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
     
     /// Products
 
@@ -246,24 +277,6 @@ class EcommerceController {
             }
             try self.repository.deleteBasket(id: Int(id)!)
             response.completed(status: .noContent)
-        } catch {
-            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-        }
-    }
-
-    /// PayPal
-    
-    func ecommercePayPalHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        do {
-            let item = try self.companyRepository.get()!
-            let paypal = PayPal(
-                env: item.paypalEnv,
-                sandbox: item.paypalSandbox,
-                production: item.paypalProduction,
-                currency: item.companyCurrency
-            )
-            try response.setJson(paypal)
-            response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }

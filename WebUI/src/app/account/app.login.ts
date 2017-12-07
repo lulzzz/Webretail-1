@@ -5,6 +5,7 @@ import { SessionService } from 'app/services/session.service';
 import { BasketService } from 'app/services/basket.service';
 import { Login } from 'app/shared/models';
 import { AppComponent } from 'app/app.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-login',
@@ -14,13 +15,17 @@ import { AppComponent } from 'app/app.component';
 export class LoginComponent implements OnInit {
 	dataform: FormGroup;
 	public user = new Login('', '');
+	close = 'Close';
 
 	constructor(
+		private translate: TranslateService,
 		public snackBar: MatSnackBar,
 		private sessionService: SessionService,
 		private basketService: BasketService,
-		private fb: FormBuilder) {
-		AppComponent.setPage('Login');
+		private fb: FormBuilder
+	) {
+		this.translate.get('Authentication').subscribe((res: string) => AppComponent.setPage(res));
+		this.translate.get(this.close).subscribe((res: string) => this.close = res);
 	}
 
 	ngOnInit() {
@@ -37,9 +42,9 @@ export class LoginComponent implements OnInit {
 					this.sessionService.grantCredentials(result);
 					this.loadBasket();
 				} else {
-					this.snackBar.open(result.error, 'Close');
+					this.snackBar.open(result.error, this.close);
 				}
-			}, onerror => this.snackBar.open(JSON.stringify(onerror), 'Close'))
+			}, onerror => this.snackBar.open(JSON.stringify(onerror), this.close))
 	}
 
 	loadBasket() {

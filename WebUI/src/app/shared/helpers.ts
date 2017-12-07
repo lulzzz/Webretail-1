@@ -2,6 +2,9 @@ import { Headers } from '@angular/http';
 
 export class Helpers {
 
+    static currency = 'EUR';
+    static utc = 'UTC';
+
     static distinct(a: any[]): any[] {
         const seen: any = {};
         const out: any[] = [];

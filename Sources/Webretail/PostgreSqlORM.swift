@@ -226,9 +226,6 @@ open class PostgresSqlORM: PostgresStORM {
                         case is Discount:
                             data = try encoder.encode(value as? Discount)
                             break
-                        case is PayPal:
-                            data = try encoder.encode(value as? PayPal)
-                            break
                         case is Seo:
                             data = try encoder.encode(value as? Seo)
                             break

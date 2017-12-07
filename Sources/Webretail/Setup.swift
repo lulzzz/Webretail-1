@@ -116,6 +116,7 @@ func addFilters() {
     authenticationConfig.exclude("/api/login")
 	authenticationConfig.exclude("/api/logout")
     authenticationConfig.exclude("/api/register")
+    authenticationConfig.exclude("/api/ecommerce/setting")
     authenticationConfig.exclude("/api/ecommerce/category")
     authenticationConfig.exclude("/api/ecommerce/brand")
     authenticationConfig.exclude("/api/ecommerce/featured")

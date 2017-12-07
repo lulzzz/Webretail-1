@@ -1,8 +1,11 @@
 import { Component, OnInit, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { TranslateService } from '@ngx-translate/core';
 import { BasketService } from './services/basket.service';
 import { ProductService } from './services/product.service';
+import { Setting } from 'app/shared/models';
+import { Helpers } from 'app/shared/helpers';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +16,8 @@ import { ProductService } from './services/product.service';
   preserveWhitespaces: false,
 })
 export class AppComponent implements OnInit {
-  private static title = 'Webretail';
+  public static setting: Setting;
+  private static title = '';
   private static backButton = false;
   private static menuActive = true;
   isIframe = false;
@@ -34,11 +38,18 @@ export class AppComponent implements OnInit {
   }
 
   constructor(
+    private translate: TranslateService,
     private location: Location,
     private basketService: BasketService,
     private productService: ProductService,
     private _element: ElementRef
-  ) { }
+  ) {
+    const country = navigator.language.substring(0, 2).toLowerCase();
+    // this language will be used as a fallback when a translation isn't found in the current language
+    this.translate.setDefaultLang(country);
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    // this.translate.use(country);
+  }
 
   get title(): string {
     return AppComponent.title;
@@ -57,13 +68,30 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.isIframe = AppComponent.inIframe();
     if (!this.isIframe) {
+      // this.loadSetting();
       this.loadBasket();
-      this.navItems.push({ name: 'Home', route: '/home' });
-      this.productService.getCategories()
-        .subscribe(result => {
-          result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryName.toLowerCase() }));
-        });
+      this.loadCategories();
     }
+  }
+
+  loadSetting() {
+    if (AppComponent.setting != null) {
+      return;
+    }
+		this.basketService.getSetting()
+        .subscribe(result => {
+          AppComponent.setting = result;
+          Helpers.currency = result.companyCurrency;
+          Helpers.utc = result.companyUtc;
+        });
+  }
+
+  loadCategories() {
+    this.navItems.push({ name: 'Home', route: '/home' });
+    this.productService.getCategories()
+      .subscribe(result => {
+        result.forEach(p => this.navItems.push({ name: p.categoryName, route: '/products/' + p.categoryName.toLowerCase() }));
+      });
   }
 
 	loadBasket() {

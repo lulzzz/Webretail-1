@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-import { Basket, Movement, PayPal, Item, Order, Cost } from '../shared/models';
+import { Basket, Movement, Item, Order, Cost, Setting } from '../shared/models';
 
 @Injectable()
 export class BasketService {
@@ -34,16 +34,16 @@ export class BasketService {
         return this.http.delete<any>('/api/ecommerce/basket/' + id);
     }
 
+    getSetting(): Observable<Setting> {
+        return this.http.get<Setting>('/api/ecommerce/setting');
+    }
+
     getPayments(): Observable<Item[]> {
         return this.http.get<Item[]>('/api/ecommerce/payment');
     }
 
     getShippings(): Observable<Item[]> {
         return this.http.get<Item[]>('/api/ecommerce/shipping');
-    }
-
-    getPayPal(): Observable<PayPal> {
-        return this.http.get<PayPal>('/api/ecommerce/paypal');
     }
 
     getShippingCost(id: string): Observable<Cost> {

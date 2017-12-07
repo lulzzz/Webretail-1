@@ -6,6 +6,54 @@ export class Login {
     public password: string) { }
 }
 
+export class Setting {
+  public companyId: number;
+  public companyName: string;
+  public companyDesc: string;
+  public companyEmail: string;
+  public companyPhone: string;
+  public companyAddress: string;
+  public companyCity: string;
+  public companyZip: string;
+  public companyProvince: string;
+  public companyCountry: string;
+
+  public companyFiscalCode: string;
+  public companyVatNumber: string;
+
+  public companyWebsite: string;
+  public companyCurrency: string;
+  public companyUtc: string;
+
+  public paypalEnv: string;
+  public paypalSandbox: string;
+  public paypalProduction: string;
+
+  constructor() {
+    this.companyId = 0;
+    this.companyName = '';
+    this.companyDesc = '';
+    this.companyEmail = '';
+    this.companyPhone = '';
+    this.companyAddress = '';
+    this.companyCity = '';
+    this.companyZip = '';
+    this.companyProvince = '';
+    this.companyCountry = '';
+
+    this.companyFiscalCode = '';
+    this.companyVatNumber = '';
+
+    this.companyWebsite = ''
+    this.companyCurrency = ''
+    this.companyUtc = ''
+
+    this.paypalEnv = '';
+    this.paypalSandbox = '';
+    this.paypalProduction = '';
+  }
+}
+
 export class Store {
   public storeId: number;
   public storeName: string;
@@ -470,11 +518,4 @@ export interface ArticleItem {
   stock: number;
   booked: number;
   data: number;
-}
-
-export interface PayPal {
-  env: string;
-  sandbox: string;
-  production: string;
-  currency: string;
 }

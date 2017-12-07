@@ -1,14 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from 'app/material.module';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MaterialModule } from 'app/material.module';
 import { FullscreenOverlayContainer, OverlayContainer } from '@angular/cdk/overlay';
 import { LayoutModule } from '@angular/cdk/layout';
-import { CookieModule } from 'ngx-cookie';
 
 import { ALL_ROUTES } from 'app/routes';
 
@@ -20,8 +20,9 @@ import { ProductService } from 'app/services/product.service';
 import { BasketService } from 'app/services/basket.service';
 import { DocumentService } from 'app/services/document.service';
 
+import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
 import { ParseUrlPipe } from './pipes/parseurl.pipe';
-import { TranslatePipe } from 'app/pipes/translate.pipe';
+import { MyTranslatePipe } from 'app/pipes/mytranslate.pipe';
 import { ArticleInfoPipe } from 'app/pipes/articleinfo.pipe';
 import { ArticlePicker } from 'app/shared/article.picker';
 import { ConfirmDialog } from 'app/shared/confirm.dialog';
@@ -39,10 +40,17 @@ import { CheckoutComponent } from 'app/basket/app.checkout';
 import { OrdersComponent } from 'app/order/app.orders';
 import { DocumentComponent } from 'app/order/app.document';
 
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  // return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [
+    CurrencyFormatPipe,
     ParseUrlPipe,
-    TranslatePipe,
+    MyTranslatePipe,
     ArticleInfoPipe,
     SafeHtmlPipe,
     ArticlePicker,
@@ -65,12 +73,17 @@ import { DocumentComponent } from 'app/order/app.document';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
-    HttpClientModule,
     MaterialModule,
     LayoutModule,
+    HttpClientModule,
     RouterModule.forRoot(ALL_ROUTES),
-    CookieModule.forRoot()
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
@@ -85,9 +98,10 @@ import { DocumentComponent } from 'app/order/app.document';
   exports: [
     ArticlePicker,
     ConfirmDialog,
+    CurrencyFormatPipe,
     ParseUrlPipe,
     SafeHtmlPipe,
-    TranslatePipe,
+    MyTranslatePipe,
     ArticleInfoPipe,
     ImageSlider
   ],
@@ -97,3 +111,4 @@ import { DocumentComponent } from 'app/order/app.document';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

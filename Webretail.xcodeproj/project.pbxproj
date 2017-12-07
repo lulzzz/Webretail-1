@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		560EB6031FD89B2900AC10E2 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560EB6021FD89B2900AC10E2 /* Setting.swift */; };
 		OBJ_1005 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_202 /* Convenience.swift */; };
 		OBJ_1006 /* DataConverters.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_203 /* DataConverters.swift */; };
 		OBJ_1007 /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_204 /* Delete.swift */; };
@@ -478,7 +479,6 @@
 		OBJ_796 /* MovementArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_66 /* MovementArticle.swift */; };
 		OBJ_797 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_67 /* OrderModel.swift */; };
 		OBJ_798 /* Packaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_68 /* Packaging.swift */; };
-		OBJ_799 /* PayPal.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_69 /* PayPal.swift */; };
 		OBJ_800 /* PdfDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_70 /* PdfDocument.swift */; };
 		OBJ_801 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_71 /* Period.swift */; };
 		OBJ_802 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_72 /* Price.swift */; };
@@ -1164,6 +1164,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		560EB6021FD89B2900AC10E2 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFilter.swift; sourceTree = "<group>"; };
 		OBJ_100 /* EcommerceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceProtocol.swift; sourceTree = "<group>"; };
@@ -1664,7 +1665,6 @@
 		OBJ_66 /* MovementArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementArticle.swift; sourceTree = "<group>"; };
 		OBJ_67 /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 		OBJ_68 /* Packaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packaging.swift; sourceTree = "<group>"; };
-		OBJ_69 /* PayPal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPal.swift; sourceTree = "<group>"; };
 		OBJ_70 /* PdfDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfDocument.swift; sourceTree = "<group>"; };
 		OBJ_71 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		OBJ_72 /* Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Price.swift; sourceTree = "<group>"; };
@@ -2568,7 +2568,6 @@
 				OBJ_66 /* MovementArticle.swift */,
 				OBJ_67 /* OrderModel.swift */,
 				OBJ_68 /* Packaging.swift */,
-				OBJ_69 /* PayPal.swift */,
 				OBJ_70 /* PdfDocument.swift */,
 				OBJ_71 /* Period.swift */,
 				OBJ_72 /* Price.swift */,
@@ -2579,6 +2578,7 @@
 				OBJ_77 /* Publication.swift */,
 				OBJ_78 /* Registry.swift */,
 				OBJ_79 /* Seo.swift */,
+				560EB6021FD89B2900AC10E2 /* Setting.swift */,
 				OBJ_80 /* Statistic.swift */,
 				OBJ_81 /* Stock.swift */,
 				OBJ_82 /* Store.swift */,
@@ -2636,7 +2636,7 @@
 			path = ".build/checkouts/SwiftMoment.git--2912679366309029826/Sources/SwiftMoment";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2645,7 +2645,6 @@
 				OBJ_142 /* Dependencies */,
 				OBJ_593 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_507 /* PerfectXML 3.0.0 */ = {
@@ -3729,7 +3728,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_593 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -4463,6 +4462,7 @@
 				OBJ_783 /* Basket.swift in Sources */,
 				OBJ_784 /* Brand.swift in Sources */,
 				OBJ_785 /* Category.swift in Sources */,
+				560EB6031FD89B2900AC10E2 /* Setting.swift in Sources */,
 				OBJ_786 /* Causal.swift in Sources */,
 				OBJ_787 /* Company.swift in Sources */,
 				OBJ_788 /* Device.swift in Sources */,
@@ -4476,7 +4476,6 @@
 				OBJ_796 /* MovementArticle.swift in Sources */,
 				OBJ_797 /* OrderModel.swift in Sources */,
 				OBJ_798 /* Packaging.swift in Sources */,
-				OBJ_799 /* PayPal.swift in Sources */,
 				OBJ_800 /* PdfDocument.swift in Sources */,
 				OBJ_801 /* Period.swift in Sources */,
 				OBJ_802 /* Price.swift in Sources */,
