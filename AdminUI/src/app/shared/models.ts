@@ -12,16 +12,21 @@ export class Company {
   public companyZip: string;
   public companyProvince: string;
   public companyCountry: string;
-  public companyCurrency: string;
   public companyFiscalCode: string;
   public companyVatNumber: string;
+
+  public companyCurrency: string;
+  public companyUtc: string;
+
   public smtpHost: string;
   public smtpSsl: boolean;
   public smtpUsername: string;
   public smtpPassword: string;
+
   public paypalEnv: string;
   public paypalSandbox: string;
   public paypalProduction: string;
+
   public barcodeCounter: number;
 
   constructor() {
@@ -36,9 +41,10 @@ export class Company {
     this.companyZip = '';
     this.companyProvince = '';
     this.companyCountry = '';
-    this.companyCurrency = 'EUR'
     this.companyFiscalCode = '';
     this.companyVatNumber = '';
+    this.companyCurrency = 'EUR'
+    this.companyUtc = 'UTC'
     this.smtpHost = '';
     this.smtpSsl = false;
     this.smtpUsername = '';
@@ -99,26 +105,34 @@ export class Store {
 export class Brand {
   public brandId: number;
   public brandName: string;
-  public brandMedia: Media;
+  public translations: Translation[];
+  public media: Media;
+  public seo: Seo;
 
   constructor() {
     this.brandId = 0;
     this.brandName = '';
-    this.brandMedia = new Media('', '', 0);
+    this.translations = [];
+    this.media = new Media('', '', 0);
+    this.seo = new Seo();
   }
 }
 
 export class Category {
   public categoryId: number;
-  public categoryName: string;
   public categoryIsPrimary: boolean;
+  public categoryName: string;
   public translations: Translation[];
+  public media: Media;
+  public seo: Seo;
 
   constructor(categoryId: number, categoryName: string) {
     this.categoryId = categoryId;
-    this.categoryName = categoryName;
     this.categoryIsPrimary = false;
+    this.categoryName = categoryName;
     this.translations = [];
+    this.media = new Media('', '', 0);
+    this.seo = new Seo();
   }
 }
 
@@ -136,12 +150,12 @@ export class Translation {
 }
 
 export class Seo {
-  public url: String;
+  public permalink: String;
   public title: Translation[];
   public description: Translation[];
 
   constructor() {
-    this.url = '';
+    this.permalink = '';
     this.title = [];
     this.description = [];
   }
@@ -151,13 +165,13 @@ export class Product {
   public productId: number;
   public productCode: string;
   public productName: string;
-  public description: Translation[];
   public productType: string;
   public productUm: string;
   public productTax: Tax;
   public price: Price;
   public discount: Discount;
   public packaging: Packaging;
+  public translations: Translation[];
   public medias: Media[];
   public seo: Seo;
   public brand: Brand;
@@ -179,8 +193,8 @@ export class Product {
     this.discount = new Discount();
     this.packaging = new Packaging();
     this.seo = new Seo();
+    this.translations = [];
     this.medias = [];
-    this.description = [];
     this.categories = [];
     this.attributes = [];
     this.articles = [];

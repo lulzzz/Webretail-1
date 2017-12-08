@@ -15,13 +15,13 @@ class Product: PostgresSqlORM, Codable {
     public var brandId : Int = 0
     public var productCode : String = ""
     public var productName : String = ""
-    public var productDescription: [Translation] = [Translation]()
     public var productType : String = ""
     public var productTax : Tax = Tax()
     public var productUm : String = ""
     public var productPrice : Price = Price()
     public var productDiscount : Discount = Discount()
     public var productPackaging : Packaging = Packaging()
+    public var productDescription: [Translation] = [Translation]()
     public var productMedias: [Media] = [Media]()
     public var productSeo : Seo = Seo()
     public var productIsActive : Bool = false
@@ -45,8 +45,8 @@ class Product: PostgresSqlORM, Codable {
         case productPrice = "price"
         case productDiscount = "discount"
         case productPackaging = "packaging"
+        case productDescription = "translations"
         case productMedias = "medias"
-        case productDescription = "description"
         case productSeo = "seo"
         case productIsActive
         case _brand = "brand"
@@ -84,15 +84,15 @@ class Product: PostgresSqlORM, Codable {
             jsonData = try! JSONSerialization.data(withJSONObject: tax, options: [])
             productTax = try! decoder.decode(Tax.self, from: jsonData)
         }
-        if let medias = this.data["productmedias"] {
-            jsonData = try! JSONSerialization.data(withJSONObject: medias, options: [])
-            productMedias = try! decoder.decode([Media].self, from: jsonData)
-        }
         if let descriptions = this.data["productdescription"] {
             jsonData = try! JSONSerialization.data(withJSONObject: descriptions, options: [])
             productDescription = try! decoder.decode([Translation].self, from: jsonData)
         }
-        if let seo = this.data["seo"] {
+        if let medias = this.data["productmedias"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: medias, options: [])
+            productMedias = try! decoder.decode([Media].self, from: jsonData)
+        }
+        if let seo = this.data["productseo"] {
             jsonData = try! JSONSerialization.data(withJSONObject: seo, options: [])
             productSeo = try! decoder.decode(Seo.self, from: jsonData)
         }

@@ -238,6 +238,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     this.messageService.add({severity: 'success', summary: 'Success', detail: 'Product updated!'})
                     if (this.productService.products) {
+                        this.productService.product = result;
                         this.productService.products[this.selectedIndex] = result;
                     }
                     if (this.publication.publicationId > 0) {

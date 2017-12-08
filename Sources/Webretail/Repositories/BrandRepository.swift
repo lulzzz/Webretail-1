@@ -25,6 +25,11 @@ struct BrandRepository : BrandProtocol {
     }
     
     func add(item: Brand) throws {
+        if (item.brandSeo.permalink.isEmpty) {
+            item.brandSeo.permalink = item.brandName.permalink()
+        }
+        item.brandSeo.description = item.brandSeo.description.filter({ !$0.value.isEmpty })
+        item.brandDescription = item.brandDescription.filter({ !$0.value.isEmpty })
         item.brandCreated = Int.now()
         item.brandUpdated = Int.now()
         try item.save {
@@ -33,13 +38,18 @@ struct BrandRepository : BrandProtocol {
     }
     
     func update(id: Int, item: Brand) throws {
-        
         guard let current = try get(id: id) else {
             throw StORMError.noRecordFound
         }
         
         current.brandName = item.brandName
+        if (item.brandSeo.permalink.isEmpty) {
+            item.brandSeo.permalink = item.brandName.permalink()
+        }
+        current.brandSeo.description = item.brandSeo.description.filter({ !$0.value.isEmpty })
+        current.brandDescription = item.brandDescription.filter({ !$0.value.isEmpty })
         current.brandMedia = item.brandMedia
+        current.brandSeo = item.brandSeo
         current.brandUpdated = Int.now()
         try current.save()
     }

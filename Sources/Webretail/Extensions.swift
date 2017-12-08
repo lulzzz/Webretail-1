@@ -72,6 +72,14 @@ extension String {
 		return Int(date.timeIntervalSinceReferenceDate)
 	}
     
+    func permalink() -> String {
+        let data = self
+            .stringByReplacing(string: " ", withString: "-")
+            .stringByReplacing(string: "/", withString: "_")
+            .lowercased()
+        return data
+    }
+    
 //    #if os(OSX)
 //    func toBarcode() -> NSImage? {
 //        let data = self.data(using: String.Encoding.ascii)

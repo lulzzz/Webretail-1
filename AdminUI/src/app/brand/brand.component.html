@@ -4,30 +4,30 @@
 
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button *ngIf="!selected" pButton type="button" label="Add to {{totalRecords}} items" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button *ngIf="selected" pButton type="button" label="Close" (click)="closeClick()" class="ui-button-secondary" icon="fa-close"></button>
         </div>
-        <div class="ui-toolbar-group-right">
+        <div *ngIf="!selected" class="ui-toolbar-group-right">
             <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
             <input #gb type="text" pInputText placeholder="Search" style="width: 180px">
         </div>
+        <div *ngIf="selected" class="ui-toolbar-group-right">
+            <button *ngIf="selected.brandId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+            <button type="button" pButton icon="fa-save" class="ui-button-primary" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
+        </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="brands"
-        selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)"
+    <p-dataTable *ngIf="!selected" [responsive]="true" [value]="brands"
+        selectionMode="single" [(selection)]="selected"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
         [globalFilter]="gb" #dt>
         <p-column field="brandId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="brandName" header="Name" [sortable]="true"></p-column>
-        <p-column field="brandMedia.name" header="Media" [sortable]="true"></p-column>
+        <p-column field="media.name" header="Media" [sortable]="true"></p-column>
     </p-dataTable>
 
-    <p-panel *ngIf="displayPanel">
-        <p-header>
-            <div class="ui-helper-clearfix">
-                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Brand</b></span>
-                <button pButton type="button" label="Cancel" (click)="closeClick()" style="float: right" class="ui-button-secondary" icon="fa-close"></button>
-            </div>
-        </p-header>
+    <p-tabView *ngIf="selected">
+        <p-tabPanel header="Brand">
         <form [formGroup]="dataform">
             <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
                 <div class="ui-grid-row">
@@ -39,27 +39,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4"><label>Media</label></div>
-                    <div class="ui-grid-col-8">
-                        <p-fileUpload url="/api/media" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUpload($event)"></p-fileUpload>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-12" style="text-align: center">
-                        <img src="{{this.selected.brandMedia.url}}" height="300px">
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-6">
-                        <button *ngIf="selected.brandId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
-                    </div>
-                    <div class="ui-grid-col-6">
-                        <button type="button" pButton icon="fa-save" class="ui-button-primary" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
-                    </div>
-                </div>
+                <app-translation [(translations)]="selected.translations"></app-translation>
             </div>
         </form>
-    </p-panel>
+        </p-tabPanel>
+        <p-tabPanel header="Media">
+            <app-media [media]="selected.media"></app-media>
+        </p-tabPanel>
+        <p-tabPanel header="SEO">
+            <app-seo [seo]="selected.seo" [path]="'brand'"></app-seo>
+        </p-tabPanel>
+    </p-tabView>
 
 </div>

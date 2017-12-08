@@ -1,6 +1,8 @@
 ﻿import { Component } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SessionService } from './services/session.service';
+import { CompanyService } from './services/company.service';
+import { Helpers } from './shared/helpers';
 
 @Component({
     selector: 'app-component',
@@ -21,7 +23,13 @@ import { SessionService } from './services/session.service';
   })
 
 export class AppComponent {
-    constructor(public sessionService: SessionService) {
+    constructor(public sessionService: SessionService,
+                public companyService: CompanyService) {
+        this.companyService.get().subscribe(p => {
+            Helpers.utc = p.companyUtc;
+            Helpers.currency = p.companyCurrency;
+        });
     }
+
     get menuActive(): boolean { return this.sessionService.menuActive; }
 }

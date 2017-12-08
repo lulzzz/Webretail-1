@@ -48,7 +48,7 @@ import { GroupedComponent } from './product/grouped.component';
 import { VariantComponent } from './product/variant.component';
 import { ImportComponent } from './product/import.component';
 import { StockComponent } from './product/stock.component';
-import { SeoComponent } from './product/seo.component';
+import { SeoComponent } from './shared/seo.component';
 import { DetailComponent } from './product/detail.component';
 import { MediaComponent } from './shared/media.component';
 import { TranslationComponent } from './shared/translation.component';
@@ -194,8 +194,8 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         MovementPickerComponent,
         MediaComponent,
         TranslationComponent,
-        FrameComponent,
         SeoComponent,
+        FrameComponent,
         DetailComponent
     ],
     exports: [

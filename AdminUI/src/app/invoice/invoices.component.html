@@ -4,8 +4,8 @@
 
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <button pButton type="button" label="{{totalRecords}} items" title="Add item" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
-            <button pButton type="button" label="Edit" title="Edit item" (click)="editClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-edit"></button>
+            <button pButton type="button" label="Add to {{totalRecords}} items" (click)="addClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" label="Edit" (click)="editClick()" [disabled]="!selected" class="ui-button-primary" icon="fa-edit"></button>
         </div>
         <div class="ui-toolbar-group-right">
             <p-splitButton label="Details" icon="fa-bars" (onClick)="openClick()" [model]="buttons" [disabled]="!selected"></p-splitButton>

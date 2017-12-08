@@ -127,7 +127,8 @@ export class ImportComponent implements OnInit  {
         });
 
         // Medias
-        const medias = product.medias.map(p => new Media(p.filename, p.url, p.number));
+        const base = 'http://www.tessilnova.com/';
+        const medias = product.medias.map(p => new Media(p.filename, base + p.url, p.number));
 
         // Translations
         const translations = product
@@ -155,7 +156,7 @@ export class ImportComponent implements OnInit  {
         item.attributes = [ textureAttribute, colorAttribute, sizeAttribute ];
         item.articles = articles;
         item.medias = medias;
-        item.description = product.translates.filter(p => p.key === product.id).map(p => new Translation(p.code, p.value));
+        item.translations = product.translates.filter(p => p.key === product.id).map(p => new Translation(p.code, p.value));
 
         return item;
     }

@@ -4,7 +4,7 @@
     
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <button pButton type="button" label="{{totalValues}} values" title="Add value" (click)="addValueClick()" class="ui-button-primary" icon="fa-plus"></button>
+            <button pButton type="button" label="Add to {{totalValues}} items" title="Add value" (click)="addValueClick()" class="ui-button-primary" icon="fa-plus"></button>
         </div>
         <div class="ui-toolbar-group-right">
             <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
@@ -12,15 +12,14 @@
         </div>
     </p-toolbar>
 
-    <p-dataTable *ngIf="!displayPanelValue" [responsive]="true" [value]="values"
-        selectionMode="single" [(selection)]="selectedValue" (onRowSelect)="onRowValueSelect($event)"
-        [globalFilter]="gbv" #dt>
+    <p-dataTable *ngIf="!selectedValue" [responsive]="true" [value]="values"
+        selectionMode="single" [(selection)]="selectedValue" [globalFilter]="gbv" #dt>
         <p-column field="attributeValueId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
         <p-column field="attributeValueCode" header="Code" [sortable]="true"></p-column>
         <p-column field="attributeValueName" header="Name" [sortable]="true"></p-column>
     </p-dataTable>
 
-    <p-panel *ngIf="displayPanelValue">
+    <p-panel *ngIf="selectedValue">
         <p-header>
             <div class="ui-helper-clearfix">
                 <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Attribute Value</b></span>

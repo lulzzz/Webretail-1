@@ -8,11 +8,11 @@
 <div *ngIf="selected">
     <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <button pButton type="button" label="Products" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
+            <button pButton type="button" label="Back" (click)="closeClick()" class="ui-button-secondary" icon="fa-reply"></button>
         </div>
         <div class="ui-toolbar-group-right">
-            <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()"></button>
-            <button type="button" pButton icon="fa-save" class="ui-button-primary" (click)="saveClick()" label="Save All" [disabled]="!dataform.valid"></button>
+            <button *ngIf="selected.productId>0" type="button" pButton icon="fa-trash-o" class="ui-button-secondary" (click)="deleteClick()" label="Delete"></button>
+            <button type="button" pButton icon="fa-save" class="ui-button-primary" (click)="saveClick()" label="Save" [disabled]="!dataform.valid"></button>
         </div>
     </p-toolbar>
 
@@ -100,7 +100,7 @@
                 </div>
                 <p-accordion>
                     <p-accordionTab header="Description" [selected]="true">
-                        <app-translation [(translations)]="selected.description"></app-translation>
+                        <app-translation [(translations)]="selected.translations"></app-translation>
                     </p-accordionTab>
                     <p-accordionTab header="Price">
                     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
@@ -196,7 +196,7 @@
             <app-media [medias]="selected.medias"></app-media>
         </p-tabPanel>
         <p-tabPanel header="SEO">
-            <app-seo></app-seo>
+            <app-seo [seo]="selected.seo" [path]="'product'"></app-seo>
         </p-tabPanel>
         <p-tabPanel header="Publication">
             <div *ngIf="publication">

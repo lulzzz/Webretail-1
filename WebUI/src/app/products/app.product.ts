@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title, Meta } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from 'app/services/product.service';
@@ -20,6 +21,8 @@ export class ProductComponent implements OnInit, OnDestroy {
 	images: Array<any>;
 
 	constructor(
+		private titleService: Title,
+		private metaService: Meta,
 		private router: Router,
 		private snackBar: MatSnackBar,
 		private translate: TranslateService,
@@ -52,6 +55,18 @@ export class ProductComponent implements OnInit, OnDestroy {
 				this.product = result;
 				AppComponent.setPage(result.productName, !this.isIframe, !this.isIframe);
 				if (!this.isIframe) {
+					/// SEO
+					const country = navigator.language.substring(0, 2).toUpperCase();
+					// Changing title
+					const title = result.seo.title.find(p => p.country === country).value;
+					this.titleService.setTitle(title);
+					// Changing meta with name="description"
+					const description = result.seo.description.find(p => p.country === country).value;
+					const tag = { name: 'description', content: description };
+					const attributeSelector = 'name="description"';
+					this.metaService.removeTag(attributeSelector);
+					this.metaService.addTag(tag, false);
+
 					this.product.medias.forEach(m => {
 						this.images.push({ 'sType': 'img', 'imgSrc': new ParseUrlPipe().transform([m]) });
 					});

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT, Title, Meta } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 import { ProductService } from './../services/product.service';
@@ -26,6 +26,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(DOCUMENT) private document: any,
+    private titleService: Title,
+    private metaService: Meta,
     public snackBar: MatSnackBar,
     private translate: TranslateService,
     private productService: ProductService,

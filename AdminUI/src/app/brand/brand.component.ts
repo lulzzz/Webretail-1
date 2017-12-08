@@ -4,8 +4,7 @@ import { ConfirmationService } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { BrandService } from './../services/brand.service';
-import { Brand, Media } from './../shared/models';
-import { Helpers } from './../shared/helpers';
+import { Brand } from './../shared/models';
 
 @Component({
     selector: 'app-brand',
@@ -16,7 +15,6 @@ export class BrandComponent implements OnInit {
     totalRecords = 0;
     brands: Brand[];
     selected: Brand;
-    displayPanel: boolean;
     dataform: FormGroup;
 
     constructor(private messageService: MessageService,
@@ -49,15 +47,9 @@ export class BrandComponent implements OnInit {
 
     addClick() {
         this.selected = new Brand();
-        this.displayPanel = true;
-    }
-
-    onRowSelect(event: any) {
-        this.displayPanel = true;
     }
 
     closeClick() {
-        this.displayPanel = false;
         this.selected = null;
     }
 
@@ -92,11 +84,5 @@ export class BrandComponent implements OnInit {
                     }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });
-    }
-    onBasicUpload(event) {
-        for (const file of event.files) {
-            this.selected.brandMedia = new Media(file.name, '/Media/' + file.name, 0);
-        }
-        this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
     }
 }

@@ -15,8 +15,8 @@ export class TranslationComponent implements OnInit {
 
     constructor() {
         this.countries = [];
-        this.countries.push({label: 'English', value: 'EN'});
         this.countries.push({label: 'Italian', value: 'IT'});
+        this.countries.push({label: 'English', value: 'EN'});
     }
 
     ngOnInit() {

@@ -15,8 +15,8 @@ import { Helpers } from './../shared/helpers';
 export class AttributeComponent implements OnInit {
     totalRecords = 0;
     attributes: Attribute[];
-    displayPanel: boolean;
     dataform: FormGroup;
+    display: boolean;
 
     constructor(private messageService: MessageService,
                 private sessionService: SessionService,
@@ -58,15 +58,16 @@ export class AttributeComponent implements OnInit {
 
     addClick() {
         this.selected = new Attribute(0, '', []);
-        this.displayPanel = true;
+        this.display = true;
     }
 
     editClick() {
-        this.displayPanel = true;
+        this.display = true;
     }
 
     closeClick() {
-        this.displayPanel = false;
+        this.display = false;
+        this.selected = null;
     }
 
     saveClick() {
@@ -75,13 +76,13 @@ export class AttributeComponent implements OnInit {
                 .create(this.selected)
                 .subscribe(result => {
                     this.attributes.push(result);
-                    this.displayPanel = false;
+                    this.closeClick();
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
             this.attributeService
                 .update(this.selected.attributeId, this.selected)
                 .subscribe(result => {
-                    this.displayPanel = false;
+                    this.closeClick();
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
     }
@@ -97,7 +98,7 @@ export class AttributeComponent implements OnInit {
                         this.totalRecords--;
                         this.selected = null;
                         this.attributeService.values.length = 0;
-                        this.displayPanel = false;
+                        this.closeClick();
                     }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
             }
         });

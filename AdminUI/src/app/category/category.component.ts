@@ -5,7 +5,6 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { CategoryService } from './../services/category.service';
 import { Category } from './../shared/models';
-import { Helpers } from './../shared/helpers';
 
 @Component({
     selector: 'app-category',
@@ -16,7 +15,6 @@ export class CategoryComponent implements OnInit {
     totalRecords = 0;
     categories: Category[];
     selected: Category;
-    displayPanel: boolean;
     dataform: FormGroup;
 
     constructor(private messageService: MessageService,
@@ -50,19 +48,14 @@ export class CategoryComponent implements OnInit {
 
     addClick() {
         this.selected = new Category(0, '');
-        this.displayPanel = true;
-    }
-
-    onRowSelect(event: any) {
-        this.displayPanel = true;
     }
 
     closeClick() {
-        this.displayPanel = false;
         this.selected = null;
     }
 
     saveClick() {
+        alert(this.selected.media.name);
         if (this.isNew) {
             this.categoryService
                 .create(this.selected)

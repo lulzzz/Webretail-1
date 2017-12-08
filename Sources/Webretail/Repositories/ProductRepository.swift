@@ -88,6 +88,9 @@ struct ProductRepository : ProductProtocol {
         )
         if brand.brandId == 0 {
             brand.brandName = item._brand.brandName
+            brand.brandDescription = item._brand.brandDescription
+            brand.brandMedia = item._brand.brandMedia
+            brand.brandSeo = item._brand.brandSeo
             brand.brandCreated = Int.now()
             brand.brandUpdated = Int.now()
             try brand.save {
@@ -106,7 +109,9 @@ struct ProductRepository : ProductProtocol {
             if category.categoryId == 0 {
                 category.categoryName = c._category.categoryName
                 category.categoryIsPrimary = c._category.categoryIsPrimary
-                category.categoryTranslates = c._category.categoryTranslates
+                category.categoryDescription = c._category.categoryDescription
+                category.categoryMedia = c._category.categoryMedia
+                category.categorySeo = c._category.categorySeo
                 category.categoryCreated = Int.now()
                 category.categoryUpdated = Int.now()
                 try category.save {
@@ -116,7 +121,14 @@ struct ProductRepository : ProductProtocol {
             c.categoryId = category.categoryId
         }
         
+        /// Seo
+        if (item.productSeo.permalink.isEmpty) {
+            item.productSeo.permalink = item.productName.permalink()
+        }
+        item.productSeo.description = item.productSeo.description.filter({ !$0.value.isEmpty })
+
         /// Product
+        item.productDescription = item.productDescription.filter({ !$0.value.isEmpty })
         item.productCreated = Int.now()
         item.productUpdated = Int.now()
         try item.save {
@@ -136,8 +148,7 @@ struct ProductRepository : ProductProtocol {
         /// Medias
         for m in item.productMedias {
             if m.url.startsWith("http") || m.url.startsWith("ftp") {
-                //let url = URL(string: m.url)
-                let url = URL(string: "http://www.tessilnova.com/\(m.url)")
+                let url = URL(string: m.url)
                 let data = try? Data(contentsOf: url!)
                 if !FileManager.default.createFile(atPath: "./Upload/Media/\(m.name)", contents: data, attributes: nil) {
                     throw StORMError.error("File \(m.url) not found")
@@ -169,9 +180,8 @@ struct ProductRepository : ProductProtocol {
         current.productPrice = item.productPrice
         current.productDiscount = item.productDiscount
         current.productPackaging = item.productPackaging
-        current.productSeo = item.productSeo
         current.productIsActive = item.productIsActive
-        
+
         /// Brand
         let brand = Brand()
         try brand.query(
@@ -180,6 +190,9 @@ struct ProductRepository : ProductProtocol {
         )
         if brand.brandId == 0 {
             brand.brandName = item._brand.brandName
+            brand.brandDescription = item._brand.brandDescription
+            brand.brandMedia = item._brand.brandMedia
+            brand.brandSeo = item._brand.brandSeo
             brand.brandCreated = Int.now()
             brand.brandUpdated = Int.now()
             try brand.save {
@@ -200,7 +213,9 @@ struct ProductRepository : ProductProtocol {
             if category.categoryId == 0 {
                 category.categoryName = c._category.categoryName
                 category.categoryIsPrimary = c._category.categoryIsPrimary
-                category.categoryTranslates = c._category.categoryTranslates
+                category.categoryDescription = c._category.categoryDescription
+                category.categoryMedia = c._category.categoryMedia
+                category.categorySeo = c._category.categorySeo
                 category.categoryCreated = Int.now()
                 category.categoryUpdated = Int.now()
                 try category.save {
@@ -254,7 +269,15 @@ struct ProductRepository : ProductProtocol {
             }
         }
         
+        /// Seo
+        if (item.productSeo.permalink.isEmpty) {
+            item.productSeo.permalink = item.productName.permalink()
+        }
+        item.productSeo.description = item.productSeo.description.filter({ !$0.value.isEmpty })
+        current.productSeo = item.productSeo
+        
         /// Product
+        current.productDescription = item.productDescription.filter({ !$0.value.isEmpty })
         item.productUpdated = Int.now()
         current.productUpdated = item.productUpdated
         try current.save()

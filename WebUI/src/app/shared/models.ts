@@ -77,26 +77,34 @@ export class Store {
 export class Brand {
   public brandId: number;
   public brandName: string;
-  public brandMedia: Media;
+  public translations: Translation[];
+  public media: Media;
+  public seo: Seo;
 
   constructor() {
     this.brandId = 0;
     this.brandName = '';
-    this.brandMedia = new Media('', '', 0);
+    this.translations = [];
+    this.media = new Media('', '', 0);
+    this.seo = new Seo();
   }
 }
 
 export class Category {
   public categoryId: number;
-  public categoryName: string;
   public categoryIsPrimary: boolean;
+  public categoryName: string;
   public translations: Translation[];
+  public media: Media;
+  public seo: Seo;
 
   constructor(categoryId: number, categoryName: string) {
     this.categoryId = categoryId;
-    this.categoryName = categoryName;
     this.categoryIsPrimary = false;
+    this.categoryName = categoryName;
     this.translations = [];
+    this.media = new Media('', '', 0);
+    this.seo = new Seo();
   }
 }
 

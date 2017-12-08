@@ -525,7 +525,7 @@
 		OBJ_843 /* AttributeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_115 /* AttributeRepository.swift */; };
 		OBJ_844 /* AttributeValueRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_116 /* AttributeValueRepository.swift */; };
 		OBJ_845 /* BrandRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_117 /* BrandRepository.swift */; };
-		OBJ_846 /* CatgoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_118 /* CatgoryRepository.swift */; };
+		OBJ_846 /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_118 /* CategoryRepository.swift */; };
 		OBJ_847 /* CausalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_119 /* CausalRepository.swift */; };
 		OBJ_848 /* CompanyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_120 /* CompanyRepository.swift */; };
 		OBJ_849 /* DeviceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_121 /* DeviceRepository.swift */; };
@@ -1185,7 +1185,7 @@
 		OBJ_115 /* AttributeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeRepository.swift; sourceTree = "<group>"; };
 		OBJ_116 /* AttributeValueRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeValueRepository.swift; sourceTree = "<group>"; };
 		OBJ_117 /* BrandRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepository.swift; sourceTree = "<group>"; };
-		OBJ_118 /* CatgoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatgoryRepository.swift; sourceTree = "<group>"; };
+		OBJ_118 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
 		OBJ_119 /* CausalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CausalRepository.swift; sourceTree = "<group>"; };
 		OBJ_12 /* CORS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CORS.swift; sourceTree = "<group>"; };
 		OBJ_120 /* CompanyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyRepository.swift; sourceTree = "<group>"; };
@@ -1969,7 +1969,7 @@
 				OBJ_115 /* AttributeRepository.swift */,
 				OBJ_116 /* AttributeValueRepository.swift */,
 				OBJ_117 /* BrandRepository.swift */,
-				OBJ_118 /* CatgoryRepository.swift */,
+				OBJ_118 /* CategoryRepository.swift */,
 				OBJ_119 /* CausalRepository.swift */,
 				OBJ_120 /* CompanyRepository.swift */,
 				OBJ_121 /* DeviceRepository.swift */,
@@ -4522,7 +4522,7 @@
 				OBJ_843 /* AttributeRepository.swift in Sources */,
 				OBJ_844 /* AttributeValueRepository.swift in Sources */,
 				OBJ_845 /* BrandRepository.swift in Sources */,
-				OBJ_846 /* CatgoryRepository.swift in Sources */,
+				OBJ_846 /* CategoryRepository.swift in Sources */,
 				OBJ_847 /* CausalRepository.swift in Sources */,
 				OBJ_848 /* CompanyRepository.swift in Sources */,
 				OBJ_849 /* DeviceRepository.swift in Sources */,

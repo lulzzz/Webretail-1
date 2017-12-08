@@ -10,6 +10,7 @@ import { SessionService } from './../services/session.service';
 })
 
 export class MediaComponent implements OnInit {
+    @Input() media: Media;
     @Input() medias: Media[];
     selectedMedia: string;
 
@@ -21,6 +22,10 @@ export class MediaComponent implements OnInit {
     ngOnInit() {
         this.sessionService.checkCredentials(false);
 
+        if (this.media) {
+            this.medias = [];
+            this.medias.push(this.media);
+        }
         if (this.medias.length > 0) {
             this.selectedMedia = this.medias[0].url;
         }
@@ -39,7 +44,13 @@ export class MediaComponent implements OnInit {
             index++;
             const media = new Media(file.name, 'Media/' + file.name, index);
             this.medias.push(media);
+            // this.media.number = media.number;
+            // this.media.url = media.url;
+            // this.media.name = media.name;
+            this.media = media;
+            this.selectedMedia = media.url;
         });
+        this.messageService.add({severity: 'info', summary: 'Files Uploaded', detail: this.media.name});
     }
 
     deleteMediaClick(item) {

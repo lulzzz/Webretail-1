@@ -15,7 +15,6 @@ import { Helpers } from './../shared/helpers';
 export class AttributeValueComponent implements OnInit {
     totalValues = 0;
     selectedValue: AttributeValue;
-    displayPanelValue: boolean;
     dataformValue: FormGroup;
 
     constructor(private messageService: MessageService,
@@ -55,25 +54,15 @@ export class AttributeValueComponent implements OnInit {
 
     get selectedValueIndex(): number { return this.values.indexOf(this.selectedValue); }
 
-    onRowValueSelect(event: any) {
-        this.displayPanelValue = true;
-    }
-
     addValueClick() {
         if (this.selected && this.selected.attributeId > 0) {
             this.selectedValue = new AttributeValue(this.selected.attributeId, 0, '', '', []);
-            this.displayPanelValue = true;
         } else {
             alert('Select a attribute before add value!');
         }
     }
 
-    editValueClick() {
-        this.displayPanelValue = true;
-    }
-
     closeValueClick() {
-        this.displayPanelValue = false;
         this.selectedValue = null;
     }
 
