@@ -61,27 +61,27 @@ class Brand: PostgresSqlORM, Codable {
         return rows
     }
 
-//    override init() {
-//        super.init()
-//    }
-//    
-//    required init(from decoder: Decoder) throws {
-//        super.init()
-//        
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        brandId = try container.decode(Int.self, forKey: .brandId)
-//        brandName = try container.decode(String.self, forKey: .brandName)
-//        brandDescription = try container.decodeIfPresent([Translation].self, forKey: .brandDescription) ?? [Translation]()
-//        brandMedia = try container.decodeIfPresent(Media.self, forKey: .brandMedia) ?? Media()
-//        brandSeo = try container.decodeIfPresent(Seo.self, forKey: .brandSeo) ?? Seo()
-//    }
-//    
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(brandId, forKey: .brandId)
-//        try container.encode(brandName, forKey: .brandName)
-//        try container.encode(brandDescription, forKey: .brandDescription)
-//        try container.encode(brandMedia, forKey: .brandMedia)
-//        try container.encode(brandSeo, forKey: .brandSeo)
-//    }
+    override init() {
+        super.init()
+    }
+    
+    required init(from decoder: Decoder) throws {
+        super.init()
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        brandId = try container.decode(Int.self, forKey: .brandId)
+        brandName = try container.decode(String.self, forKey: .brandName)
+        brandDescription = try container.decodeIfPresent([Translation].self, forKey: .brandDescription) ?? [Translation]()
+        brandMedia = try container.decodeIfPresent(Media.self, forKey: .brandMedia) ?? Media()
+        brandSeo = try container.decodeIfPresent(Seo.self, forKey: .brandSeo) ?? Seo()
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(brandId, forKey: .brandId)
+        try container.encode(brandName, forKey: .brandName)
+        try container.encode(brandDescription, forKey: .brandDescription)
+        try container.encode(brandMedia, forKey: .brandMedia)
+        try container.encode(brandSeo, forKey: .brandSeo)
+    }
 }
