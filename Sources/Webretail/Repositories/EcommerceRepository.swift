@@ -124,7 +124,7 @@ struct EcommerceRepository : EcommerceProtocol {
         
         let items = Product()
         try items.query(
-            whereclause: "products.productIsActive = $1 AND products.productDiscount ->> 'discountId' > 0 AND products.productDiscount ->> 'discountStartAt <= $2 AND products.productDiscount ->> 'discountFinishAt >= $2 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2",
+            whereclause: "products.productIsActive = $1 AND products.productDiscount <> NULL AND (products.productDiscount ->> 'discountId')::int > 0 AND (products.productDiscount ->> 'discountStartAt')::int <= $2 AND products.productDiscount ->> 'discountFinishAt' >= $2 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2",
             params: [true, Int.now()],
             orderby: ["publications.publicationStartAt DESC"],
             joins: [publication, brand]
