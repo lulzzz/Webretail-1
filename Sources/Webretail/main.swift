@@ -43,6 +43,7 @@ let alpn: [HTTPServer.ALPNSupport] = [.http11, .http2]
 
 // Create HTTP server.
 let server = HTTPServer()
+server.serverName = "www.webretail.cloud"
 server.serverPort = 8181
 server.documentRoot = "./webroot"
 server.ssl = cert
@@ -78,7 +79,7 @@ Threading.dispatch {
     _ = try? HTTPServer.launch(
         .secureServer(
             TLSConfiguration(certPath: cert.sslCert, keyPath: cert.sslKey, alpnSupport: alpn),
-            name: "",
+            name: "www.webretail.cloud",
             port: 8080,
             routes: angularRoutes
         )
