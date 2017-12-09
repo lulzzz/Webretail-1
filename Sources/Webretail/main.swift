@@ -38,7 +38,7 @@ SessionConfig.CORS.maxAge = 3000
 LogFile.location = "./StORMlog.txt"
 
 // Certs
-let cert = (sslCert: "cert.pem", sslKey: "key.pem")
+let cert = (sslCert: "certificate.crt", sslKey: "private.pem")
 let alpn: [HTTPServer.ALPNSupport] = [.http11, .http2]
 
 // Create HTTP server.
