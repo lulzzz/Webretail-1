@@ -31,6 +31,8 @@ protocol EcommerceProtocol {
 
     func getProductsFeatured() throws -> [Product]
 
+    func getProductsDiscount() throws -> [Product]
+
     func getProducts(category: String) throws -> [Product]
 
     func getProducts(brand: String) throws -> [Product]

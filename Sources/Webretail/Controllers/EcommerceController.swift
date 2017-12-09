@@ -28,6 +28,7 @@ class EcommerceController {
         routes.add(method: .get, uri: "/api/ecommerce/category", handler: ecommerceCategoriesHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/brand", handler: ecommerceBrandsHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/new", handler: ecommerceNewsHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/sale", handler: ecommerceSaleHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/featured", handler: ecommerceFeaturedHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/category/{name}", handler: ecommerceCategoryHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/brand/{name}", handler: ecommerceBrandHandlerGET)
@@ -112,6 +113,16 @@ class EcommerceController {
     func ecommerceNewsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
             let items = try self.repository.getProductsNews()
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+    
+    func ecommerceSaleHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let items = try self.repository.getProductsDiscount()
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {
