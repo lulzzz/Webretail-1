@@ -37,7 +37,7 @@ export class CheckoutComponent implements OnInit {
 	ngOnInit() {
 		if (!this.sessionService.checkCredentials()) { return; }
 
-		window.parent.postMessage('iframe:700', '*');
+		window.parent.postMessage('iframe:900', '*');
 
 		this.basketService
 			.getPayments()
