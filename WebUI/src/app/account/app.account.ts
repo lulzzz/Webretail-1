@@ -27,7 +27,7 @@ export class AccountComponent implements OnInit {
                 private registryService: RegistryService,
                 private fb: FormBuilder) {
         this.translate.get(this.close).subscribe((res: string) => this.close = res);
-        window.parent.postMessage('iframe:980', '*');
+        window.parent.postMessage('iframe:1000', '*');
     }
 
     ngOnInit() {

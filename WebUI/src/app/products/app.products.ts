@@ -69,12 +69,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   loadProducts(categoryName: string) {
-    AppComponent.setPage(categoryName);
+    // AppComponent.setPage(categoryName);
     this.filtering = false;
     this.productService.getByCategoryName(categoryName)
         .subscribe(result => {
           this.filtered = result;
           this.products = result;
+          const name = this.products[0].categories.find(p => p.category.seo.permalink === categoryName).category.categoryName
+          AppComponent.setPage(name);
         }, onerror => this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, this.close));
   }
 

@@ -166,7 +166,7 @@ export class Product {
   public productId: number;
   public productCode: string;
   public productName: string;
-  public description: Translation[];
+  public translations: Translation[];
   public productType: string;
   public productUm: string;
   public productTax: Tax;
@@ -195,7 +195,7 @@ export class Product {
     this.packaging = new Packaging();
     this.seo = new Seo();
     this.medias = [];
-    this.description = [];
+    this.translations = [];
     this.categories = [];
     this.attributes = [];
     this.articles = [];

@@ -11,7 +11,7 @@
         <p><span mat-line>{{ 'Categories' | translate }}<br/>
           <li *ngFor="let c of product.categories"><b>{{c.category.translations | mytranslate : c.category.categoryName}}</b></li>
         </span></p>
-        <p><span mat-line>{{ 'Description' | translate }}<br/><b>{{product.description | mytranslate : product.productName}}</b></span></p>
+        <p><span mat-line>{{ 'Description' | translate }}<br/><b>{{product.translations | mytranslate : product.productName}}</b></span></p>
         <div *ngIf="product.discount.discountId>0;then discount_content else price_content"></div>
         <ng-template #discount_content>
           <p><span mat-line>{{ 'Price' | translate }}<br/>

@@ -58,14 +58,17 @@ export class ProductComponent implements OnInit, OnDestroy {
 					/// SEO
 					const country = navigator.language.substring(0, 2).toUpperCase();
 					// Changing title
-					const title = result.seo.title.find(p => p.country === country).value;
+					let title = result.productName;
+					if (result.seo.title.length > 0) {
+						title = result.seo.title.find(p => p.country === country).value;
+					}
 					this.titleService.setTitle(title);
 					// Changing meta with name="description"
-					const description = result.seo.description.find(p => p.country === country).value;
-					const tag = { name: 'description', content: description };
-					const attributeSelector = 'name="description"';
-					this.metaService.removeTag(attributeSelector);
-					this.metaService.addTag(tag, false);
+					if (result.seo.description.length > 0) {
+						const description = result.seo.description.find(p => p.country === country).value;
+						this.metaService.removeTag('name="description"');
+						this.metaService.addTag({ name: 'description', content: description }, false);
+					}
 
 					this.product.medias.forEach(m => {
 						this.images.push({ 'sType': 'img', 'imgSrc': new ParseUrlPipe().transform([m]) });
