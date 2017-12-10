@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.isIframe = AppComponent.inIframe();
     if (!this.isIframe) {
-      // this.loadSetting();
+      this.loadSetting();
       this.loadBasket();
       this.loadCategories();
     }
