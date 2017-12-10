@@ -136,7 +136,7 @@ struct EcommerceRepository : EcommerceProtocol {
     func getProducts(brand: String) throws -> [Product] {
         let items = Product()
         try items.query(
-            whereclause: "LOWER(brands.brandName) = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
+            whereclause: "brands.brandSeo ->> 'permalink' = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
             params: [brand, Int.now(), true],
             orderby: ["products.productName"],
             joins:  [
@@ -178,7 +178,7 @@ struct EcommerceRepository : EcommerceProtocol {
 
         let items = Product()
         try items.query(
-            whereclause: "LOWER(categories.categoryName) = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
+            whereclause: "categories.categorySeo ->> 'permalink' = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
             params: [category, Int.now(), true],
             orderby: ["products.productName"],
             joins:  [publication, brand, productCategories, categories]
@@ -192,7 +192,6 @@ struct EcommerceRepository : EcommerceProtocol {
         try items.query(
             whereclause: "LOWER(products.productName) LIKE $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
             params: ["%\(text.lowercased())%", Int.now(), true],
-            orderby: ["products.productName"],
             joins:  [
                 StORMDataSourceJoin(
                     table: "publications",
@@ -211,7 +210,7 @@ struct EcommerceRepository : EcommerceProtocol {
     func getProduct(name: String) throws -> Product {
         let item = Product()
         try item.query(
-            whereclause: "LOWER(products.productName) = $1",
+            whereclause: "products.productSeo ->> 'permalink' = $1",
             params: [name],
             joins: [
                 StORMDataSourceJoin(
