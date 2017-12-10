@@ -27,7 +27,6 @@ export class AccountComponent implements OnInit {
                 private registryService: RegistryService,
                 private fb: FormBuilder) {
         this.translate.get(this.close).subscribe((res: string) => this.close = res);
-        window.parent.postMessage('iframe:1000', '*');
     }
 
     ngOnInit() {
@@ -35,6 +34,7 @@ export class AccountComponent implements OnInit {
 
         if (!this.isCheckout) {
             AppComponent.setPage('Account');
+            window.parent.postMessage('iframe:1000', '*');
         }
 
         this.dataform = this.fb.group({
