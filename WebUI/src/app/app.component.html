@@ -47,8 +47,8 @@
   </mat-sidenav>
 
   <div>
-    <!-- <img class="mat-toolbar-bg" src="/assets/latest.jpg" />  -->
     <mat-toolbar id="toolbar">
+      <!-- <img *ngIf="!isIframe" class="mat-toolbar-bg" src="/assets/latest.jpg" />  -->
       <button *ngIf="backButton" mat-icon-button (click)="backClick()">
         <mat-icon>arrow_back</mat-icon>
       </button>

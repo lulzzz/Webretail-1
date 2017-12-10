@@ -29,7 +29,7 @@ body {
       margin: 24px 0;
     }
     .mat-list-item {
-      border-bottom: thin ridge #ececec;
+      border-bottom: thin dotted silver;
     }
   }
 
@@ -62,7 +62,6 @@ body {
     left: 0;
     width: 100%;
     height: 65px;
-    z-index: 100;
   }
 
   .mat-toolbar {
@@ -72,6 +71,8 @@ body {
     width: 100%;
     height: 65px;
     z-index: 101;
+    background-color: white;
+    border-bottom: thin dotted silver;
     
     .mat-icon {
       cursor: pointer;
