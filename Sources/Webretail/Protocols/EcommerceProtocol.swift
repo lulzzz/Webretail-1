@@ -39,6 +39,7 @@ protocol EcommerceProtocol {
 
     func getProduct(name: String) throws -> Product
 
+    func findProducts(text: String) throws -> [Product]
     
     func getBasket(registryId: Int) throws -> [Basket]
     

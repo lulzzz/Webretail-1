@@ -33,6 +33,7 @@ class EcommerceController {
         routes.add(method: .get, uri: "/api/ecommerce/category/{name}", handler: ecommerceCategoryHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/brand/{name}", handler: ecommerceBrandHandlerGET)
         routes.add(method: .get, uri: "/api/ecommerce/product/{name}", handler: ecommerceProductHandlerGET)
+        routes.add(method: .get, uri: "/api/ecommerce/search/{text}", handler: ecommerceSearchHandlerGET)
 
         /// Registry Api
         routes.add(method: .get, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerGET)
@@ -179,6 +180,19 @@ class EcommerceController {
         }
     }
 
+    func ecommerceSearchHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            guard let text = request.urlVariables["text"] else {
+                throw PerfectError.apiError("text")
+            }
+            let items = try self.repository.findProducts(text: text)
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+    
     /// Registry
 
     func ecommerceRegistryHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {

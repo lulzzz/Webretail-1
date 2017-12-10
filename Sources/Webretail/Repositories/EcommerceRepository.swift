@@ -137,7 +137,7 @@ struct EcommerceRepository : EcommerceProtocol {
         let items = Product()
         try items.query(
             whereclause: "LOWER(brands.brandName) = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
-            params: [self.normalize(name: brand), Int.now(), true],
+            params: [brand, Int.now(), true],
             orderby: ["products.productName"],
             joins:  [
                 StORMDataSourceJoin(
@@ -179,7 +179,7 @@ struct EcommerceRepository : EcommerceProtocol {
         let items = Product()
         try items.query(
             whereclause: "LOWER(categories.categoryName) = $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
-            params: [self.normalize(name: category), Int.now(), true],
+            params: [category, Int.now(), true],
             orderby: ["products.productName"],
             joins:  [publication, brand, productCategories, categories]
         )
@@ -187,17 +187,32 @@ struct EcommerceRepository : EcommerceProtocol {
         return try items.rows(barcodes: false)
     }
 
-    private func normalize(name: String) -> String {
-        return name.lowercased()
-            .replacingOccurrences(of: "-", with: " ")
-            .replacingOccurrences(of: "_", with: "/")
+    func findProducts(text: String) throws -> [Product] {
+        let items = Product()
+        try items.query(
+            whereclause: "LOWER(products.productName) LIKE $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND products.productIsActive = $3",
+            params: ["%\(text.lowercased())%", Int.now(), true],
+            orderby: ["products.productName"],
+            joins:  [
+                StORMDataSourceJoin(
+                    table: "publications",
+                    onCondition: "products.productId = publications.productId",
+                    direction: StORMJoinType.INNER),
+                StORMDataSourceJoin(
+                    table: "brands",
+                    onCondition: "products.brandId = brands.brandId",
+                    direction: StORMJoinType.INNER)
+            ]
+        )
+        
+        return try items.rows(barcodes: false)
     }
-    
+
     func getProduct(name: String) throws -> Product {
         let item = Product()
         try item.query(
             whereclause: "LOWER(products.productName) = $1",
-            params: [self.normalize(name: name)],
+            params: [name],
             joins: [
                 StORMDataSourceJoin(
                     table: "brands",
