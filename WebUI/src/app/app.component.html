@@ -47,26 +47,32 @@
   </mat-sidenav>
 
   <div>
-    <mat-toolbar id="toolbar">
-      <button *ngIf="backButton" mat-icon-button (click)="backClick()">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <button *ngIf="menuActive&&!backButton" mat-icon-button (click)="start.open()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <div class="app-toolbar">
-        <h1>{{title}}</h1>
-        <div *ngIf="!isIframe">
-          <button mat-icon-button (click)="toggleFullscreen()" title="Toggle fullscreen">
-            <mat-icon>fullscreen</mat-icon>
+
+    <mat-card>
+      <mat-card-content>
+        <mat-toolbar id="toolbar">
+            <button *ngIf="backButton" mat-icon-button (click)="backClick()">
+            <mat-icon>arrow_back</mat-icon>
           </button>
-          <button mat-icon-button routerLink="/basket" title="Shopping Basket">
-            <span *ngIf="itemsCount>0" style="color: red"><b>{{itemsCount}}</b></span>
-            <mat-icon>shopping_cart</mat-icon>
+          <button *ngIf="menuActive&&!backButton" mat-icon-button (click)="start.open()">
+            <mat-icon>menu</mat-icon>
           </button>
-        </div>
-      </div>
-    </mat-toolbar>
+          <div class="app-toolbar">
+            <h1>{{title}}</h1>
+            <div *ngIf="!isIframe">
+              <button mat-icon-button (click)="toggleFullscreen()" title="Toggle fullscreen">
+                <mat-icon>fullscreen</mat-icon>
+              </button>
+              <button mat-icon-button routerLink="/basket" title="Shopping Basket">
+                <span *ngIf="itemsCount>0" style="color: red"><b>{{itemsCount}}</b></span>
+                <mat-icon>shopping_cart</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-toolbar>
+        <br/>
+      </mat-card-content>
+    </mat-card>
 
     <div #root="dir" dir="ltr" class="app-content">
       <router-outlet></router-outlet>
