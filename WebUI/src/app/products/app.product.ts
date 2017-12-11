@@ -79,7 +79,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 						this.images.push({ 'sType': 'img', 'imgSrc': new ParseUrlPipe().transform([m]) });
 					});
 				} else {
-					const height = (result.attributes.length * 100) + 300;
+					const height = (result.attributes.length * 100) + 160;
 					window.parent.postMessage('iframe:' + height, '*');
 				}
 		}, onerror => {
