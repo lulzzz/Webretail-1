@@ -60,24 +60,29 @@ export class ProductComponent implements OnInit, OnDestroy {
 					// Changing title
 					let title = result.productName;
 					if (result.seo.title.length > 0) {
-						title = result.seo.title.find(p => p.country === country).value;
+						const translate = result.seo.title.find(p => p.country === country);
+						if (translate) {
+							title = translate.value;
+						}
 					}
 					this.titleService.setTitle(title);
 					// Changing meta with name="description"
 					if (result.seo.description.length > 0) {
-						const description = result.seo.description.find(p => p.country === country).value;
-						this.metaService.removeTag('name="description"');
-						this.metaService.addTag({ name: 'description', content: description }, false);
+						const translate = result.seo.description.find(p => p.country === country);
+						if (translate) {
+							this.metaService.removeTag('name="description"');
+							this.metaService.addTag({ name: 'description', content: translate.value }, false);
+						}
 					}
 
 					this.product.medias.forEach(m => {
 						this.images.push({ 'sType': 'img', 'imgSrc': new ParseUrlPipe().transform([m]) });
 					});
 				} else {
-					const height = (result.attributes.length * 100) + 100;
+					const height = (result.attributes.length * 100) + 300;
 					window.parent.postMessage('iframe:' + height, '*');
 				}
-			}, onerror => {
+		}, onerror => {
 				this.translate.get('Close').subscribe((res: string) =>
 					this.snackBar.open(onerror.status === 401 ? '401 - Unauthorized' : onerror._body, res)
 				);
