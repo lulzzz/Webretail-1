@@ -8,6 +8,9 @@ build/
 DerivedData/
 .build_lin/
 PADockerfile_build
+PADockerfile_deploy
+.package_lin.pins
+.package_lin.resolved
 
 ## Various settings
 *.pbxuser
