@@ -12,8 +12,8 @@ struct CategoryRepository : CategoryProtocol {
 
     func getAll() throws -> [Category] {
         let items = Category()
-        try items.query()
-        
+        try items.query(orderby: ["categoryId"])
+
         return items.rows()
     }
     

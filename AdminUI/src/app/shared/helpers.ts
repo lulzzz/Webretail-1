@@ -1,10 +1,12 @@
 import { Headers } from '@angular/http';
 import { SelectItem, TreeNode } from 'primeng/primeng';
+import { Company, Translation } from './models';
 
 export class Helpers {
 
     static currency = 'USD';
     static utc = 'UTC';
+    static locales: Translation[] = [];
 
     static distinct(a: any[]): any[] {
         const seen: any = {};
@@ -47,5 +49,17 @@ export class Helpers {
             Helpers.newSelectItem('MT', 'Meter'),
             Helpers.newSelectItem('KG', 'Kilogram')
         ];
+    }
+
+    static setInfos(company: Company) {
+        this.currency = company.companyCurrency;
+        this.utc = company.companyUtc;
+        if (company.companyLocales.length > 0) {
+            this.locales = company.companyLocales;
+        } else {
+            this.locales.push(new Translation('EN', 'English'));
+            this.locales.push(new Translation('IT', 'Italian'));
+            company.companyLocales = this.locales;
+        }
     }
 }

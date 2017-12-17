@@ -27,17 +27,24 @@ class Company: PostgresSqlORM, Codable {
 
     public var companyCurrency : String = ""
     public var companyUtc : String = ""
+    public var companyLocales : [Translation] = [Translation]()
 
-	public var smtpHost : String = ""
+    public var barcodeCounter : UInt64 = 1000000000001
+
+    public var smtpHost : String = ""
 	public var smtpSsl : Bool = false
 	public var smtpUsername : String = ""
 	public var smtpPassword : String = ""
 
+    public var bankName : String = ""
+    public var bankIban : String = ""
     public var paypalEnv : String = ""
     public var paypalSandbox : String = ""
     public var paypalProduction : String = ""
+    public var cashOnDelivery : Bool = false
 
-    public var barcodeCounter : UInt64 = 1000000000001
+    public var shippingStandard : Bool = false
+    public var shippingExpress : Bool = false
 
     open override func table() -> String { return "company" }
 	

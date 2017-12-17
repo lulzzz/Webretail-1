@@ -12,8 +12,8 @@ struct BrandRepository : BrandProtocol {
 
     func getAll() throws -> [Brand] {
         let items = Brand()
-        try items.query()
-        
+        try items.query(orderby: ["brandId"])
+
         return items.rows()
     }
     

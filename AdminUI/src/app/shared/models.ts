@@ -1,3 +1,5 @@
+import { fail } from "assert";
+
 // Classes
 
 export class Company {
@@ -17,15 +19,22 @@ export class Company {
 
   public companyCurrency: string;
   public companyUtc: string;
+  public companyLocales: Translation[];
 
   public smtpHost: string;
   public smtpSsl: boolean;
   public smtpUsername: string;
   public smtpPassword: string;
 
+  public cashOnDelivery: boolean;
   public paypalEnv: string;
   public paypalSandbox: string;
   public paypalProduction: string;
+  public bankName: string;
+  public backIban: string;
+
+  public shippingStandard: boolean;
+  public shippingExpress: boolean;
 
   public barcodeCounter: number;
 
@@ -43,16 +52,27 @@ export class Company {
     this.companyCountry = '';
     this.companyFiscalCode = '';
     this.companyVatNumber = '';
+
+    this.barcodeCounter = 0;
+
     this.companyCurrency = 'EUR'
     this.companyUtc = 'UTC'
+    this.companyLocales = [];
+
     this.smtpHost = '';
     this.smtpSsl = false;
     this.smtpUsername = '';
     this.smtpPassword = '';
+
+    this.cashOnDelivery = false;
     this.paypalEnv = 'sendbox';
     this.paypalSandbox = '<sendbox client id>';
     this.paypalProduction = '<production client id>';
-    this.barcodeCounter = 0;
+    this.bankName = '';
+    this.backIban = '';
+
+    this.shippingStandard = false;
+    this.shippingExpress = false;
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { ConfirmationService, Message } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { Media } from './../shared/models';
@@ -10,7 +10,7 @@ import { SessionService } from './../services/session.service';
 })
 
 export class MediaComponent implements OnInit {
-    @Input() media: Media;
+    @Output() @Input() media: Media;
     @Input() medias: Media[];
     selectedMedia: string;
 
@@ -44,10 +44,10 @@ export class MediaComponent implements OnInit {
             index++;
             const media = new Media(file.name, 'Media/' + file.name, index);
             this.medias.push(media);
-            // this.media.number = media.number;
-            // this.media.url = media.url;
-            // this.media.name = media.name;
-            this.media = media;
+            this.media.number = media.number;
+            this.media.url = media.url;
+            this.media.name = media.name;
+            // this.media = media;
             this.selectedMedia = media.url;
         });
         this.messageService.add({severity: 'info', summary: 'Files Uploaded', detail: this.media.name});

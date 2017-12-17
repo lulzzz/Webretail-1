@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { Translation } from './../shared/models';
 import { SelectItem } from 'primeng/primeng';
+import { Helpers } from './helpers';
 
 @Component({
     selector: 'app-translation',
@@ -10,17 +11,15 @@ import { SelectItem } from 'primeng/primeng';
 export class TranslationComponent implements OnInit {
     @Output() @Input() translations: Translation[];
     country: string;
-    countries: SelectItem[];
+    countries: Translation[];
     translation: Translation;
 
     constructor() {
-        this.countries = [];
-        this.countries.push({label: 'Italian', value: 'IT'});
-        this.countries.push({label: 'English', value: 'EN'});
+        this.countries = Helpers.locales;
     }
 
     ngOnInit() {
-        this.country = this.countries[1].value;
+        this.country = this.countries[0].value;
         this.onCountryChanged(null);
     }
 

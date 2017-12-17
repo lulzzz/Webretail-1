@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Translation, Seo } from './../shared/models';
 import { SelectItem } from 'primeng/primeng';
 import { Helpers } from './helpers';
@@ -10,7 +10,7 @@ import { Helpers } from './helpers';
 
 export class SeoComponent implements OnInit {
     @Input() path: string;
-    @Input() seo: Seo;
+    @Output() @Input() seo: Seo;
     country: string;
     countries: SelectItem[];
     title: Translation;
@@ -28,7 +28,7 @@ export class SeoComponent implements OnInit {
     }
 
     onCountryChanged(event) {
-        if (!this.seo.title) {
+        if (!this.seo.permalink) {
             this.seo = new Seo();
         }
 

@@ -55,7 +55,6 @@ export class CategoryComponent implements OnInit {
     }
 
     saveClick() {
-        alert(this.selected.media.name);
         if (this.isNew) {
             this.categoryService
                 .create(this.selected)
@@ -65,6 +64,7 @@ export class CategoryComponent implements OnInit {
                     this.closeClick();
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         } else {
+            alert(this.selected.media.url);
             this.categoryService
                 .update(this.selected.categoryId, this.selected)
                 .subscribe(result => {

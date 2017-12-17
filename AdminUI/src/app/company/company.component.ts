@@ -3,7 +3,7 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { CompanyService } from './../services/company.service';
-import { Company } from './../shared/models';
+import { Company, Translation } from './../shared/models';
 import { SelectItem } from 'primeng/primeng';
 import { Helpers } from '../shared/helpers';
 
@@ -17,6 +17,7 @@ export class CompanyComponent implements OnInit {
     dataform: FormGroup;
     header: string;
     paypalEnvs: SelectItem[];
+    translation: Translation;
 
     constructor(private sessionService: SessionService,
                 private messageService: MessageService,
@@ -32,6 +33,7 @@ export class CompanyComponent implements OnInit {
     ngOnInit() {
         this.sessionService.checkCredentials(false);
         this.sessionService.setTitle('Company');
+        this.translation = new Translation('', '');
 
         this.dataform = this.fb.group({
             'name': new FormControl('', Validators.required),
@@ -45,22 +47,34 @@ export class CompanyComponent implements OnInit {
             'country': new FormControl('', Validators.required),
             'fiscalCode': new FormControl('', Validators.required),
             'vatNumber': new FormControl('', Validators.required),
+
             'currency': new FormControl('', Validators.required),
             'utc': new FormControl('', Validators.required),
+            'localecode': new FormControl('', Validators.required),
+            'localename': new FormControl('', Validators.required),
+
             'host': new FormControl('', Validators.nullValidator),
             'ssl': new FormControl('', Validators.nullValidator),
             'username': new FormControl('', Validators.nullValidator),
             'password': new FormControl('', Validators.nullValidator),
+
+            'bankname': new FormControl('', Validators.nullValidator),
+            'bankiban': new FormControl('', Validators.nullValidator),
             'paypalenv': new FormControl('', Validators.nullValidator),
             'paypalsandbox': new FormControl('', Validators.nullValidator),
             'paypalproduction': new FormControl('', Validators.nullValidator),
+            'cashondelivery': new FormControl('', Validators.nullValidator),
+
+            'shippingstandard': new FormControl('', Validators.required),
+            'shippingexpress': new FormControl('', Validators.required),
+
             'barcode': new FormControl('', Validators.required)
         });
 
         this.companyService.get()
             .subscribe(result => {
                 this.company = result;
-                Helpers.currency = result.companyCurrency;
+                Helpers.setInfos(result);
             }, onerror => this.messageService.add({severity: 'error', summary: 'Get company', detail: onerror._body})
         );
     }

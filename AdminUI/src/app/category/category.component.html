@@ -48,10 +48,10 @@
         </form>
         </p-tabPanel>
         <p-tabPanel header="Media">
-            <app-media [media]="selected.media"></app-media>
+            <app-media [(media)]="selected.media"></app-media>
         </p-tabPanel>
         <p-tabPanel header="SEO">
-            <app-seo [seo]="selected.seo" [path]="'products'"></app-seo>
+            <app-seo [(seo)]="selected.seo" [path]="'category'"></app-seo>
         </p-tabPanel>
     </p-tabView>
 

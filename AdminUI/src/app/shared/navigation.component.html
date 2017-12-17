@@ -60,8 +60,8 @@
         </a>
         <div [ngClass]="{'submenushow': (settingmenu.id == activeMenuId), 'submenuhide': (settingmenu.id != activeMenuId)}">
             <a *ngIf="!isAdmin" [routerLink]="['/account/myinfo']"><i class="fa fa-user"></i>&nbsp;&nbsp;Account</a>
-            <a *ngIf="isAdmin" [routerLink]="['/company']"><i class="fa fa-cogs"></i>&nbsp;&nbsp;Company</a>
             <a *ngIf="isAdmin" [routerLink]="['/account']"><i class="fa fa-user"></i>&nbsp;&nbsp;Accounts</a>
+            <a *ngIf="isAdmin" [routerLink]="['/company']"><i class="fa fa-home"></i>&nbsp;&nbsp;Company</a>
             <a [routerLink]="['/store']"><i class="fa fa-cube"></i>&nbsp;&nbsp;Stores</a>
          </div>
 

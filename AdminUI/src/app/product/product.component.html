@@ -196,7 +196,7 @@
             <app-media [medias]="selected.medias"></app-media>
         </p-tabPanel>
         <p-tabPanel header="SEO">
-            <app-seo [seo]="selected.seo" [path]="'product'"></app-seo>
+            <app-seo [(seo)]="selected.seo" [path]="'product'"></app-seo>
         </p-tabPanel>
         <p-tabPanel header="Publication">
             <div *ngIf="publication">
