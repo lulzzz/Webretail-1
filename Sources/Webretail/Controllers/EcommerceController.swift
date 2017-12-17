@@ -66,22 +66,32 @@ class EcommerceController {
             let setting = Setting()
             setting.companyId = item.companyId
             setting.companyName = item.companyName
-            setting.companyDesc = item.companyDesc
-            setting.companyEmail = item.companyEmail
-            setting.companyPhone = item.companyPhone
             setting.companyAddress = item.companyAddress
             setting.companyCity = item.companyCity
             setting.companyZip = item.companyZip
             setting.companyProvince = item.companyProvince
             setting.companyCountry = item.companyCountry
             
+            setting.companyDescription = item.companyDescription
+            
+            setting.companyPhone = item.companyPhone
+            setting.companyEmailInfo = item.companyEmailInfo
+            setting.companyEmailSales = item.companyEmailSales
+            setting.companyEmailSupport = item.companyEmailSupport
+            
             setting.companyCurrency = item.companyCurrency
             setting.companyUtc = item.companyUtc
 
+            setting.cashOnDelivery = item.cashOnDelivery
             setting.paypalEnv = item.paypalEnv
             setting.paypalSandbox = item.paypalSandbox
             setting.paypalProduction = item.paypalProduction
-            
+            setting.bankName = item.bankName
+            setting.bankIban = item.bankIban
+
+            setting.shippingStandard = item.shippingStandard
+            setting.shippingExpress = item.shippingExpress
+
             try response.setJson(setting)
             response.completed(status: .ok)
         } catch {

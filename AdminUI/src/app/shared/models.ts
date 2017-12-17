@@ -1,14 +1,9 @@
-import { fail } from "assert";
-
 // Classes
 
 export class Company {
   public companyId: number;
   public companyName: string;
-  public companyDesc: string;
   public companyWebsite: string;
-  public companyEmail: string;
-  public companyPhone: string;
   public companyAddress: string;
   public companyCity: string;
   public companyZip: string;
@@ -16,6 +11,13 @@ export class Company {
   public companyCountry: string;
   public companyFiscalCode: string;
   public companyVatNumber: string;
+
+  public companyDescription: Translation[];
+
+  public companyPhone: string;
+  public companyEmailInfo: string;
+  public companyEmailSales: string;
+  public companyEmailSupport: string;
 
   public companyCurrency: string;
   public companyUtc: string;
@@ -41,10 +43,7 @@ export class Company {
   constructor() {
     this.companyId = 0;
     this.companyName = '';
-    this.companyDesc = '';
     this.companyWebsite = '';
-    this.companyEmail = '';
-    this.companyPhone = '';
     this.companyAddress = '';
     this.companyCity = '';
     this.companyZip = '';
@@ -52,6 +51,13 @@ export class Company {
     this.companyCountry = '';
     this.companyFiscalCode = '';
     this.companyVatNumber = '';
+
+    this.companyDescription = [];
+
+    this.companyPhone = '';
+    this.companyEmailInfo = '';
+    this.companyEmailSales = '';
+    this.companyEmailSupport = '';
 
     this.barcodeCounter = 0;
 

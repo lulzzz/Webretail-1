@@ -10,15 +10,12 @@ import { Helpers } from './helpers';
 
 export class TranslationComponent implements OnInit {
     @Output() @Input() translations: Translation[];
+    countries: SelectItem[];
     country: string;
-    countries: Translation[];
     translation: Translation;
 
-    constructor() {
-        this.countries = Helpers.locales;
-    }
-
     ngOnInit() {
+        this.countries = Helpers.locales;
         this.country = this.countries[0].value;
         this.onCountryChanged(null);
     }

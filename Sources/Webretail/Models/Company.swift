@@ -13,18 +13,21 @@ class Company: PostgresSqlORM, Codable {
 	
 	public var companyId : Int = 0
 	public var companyName : String = ""
-	public var companyDesc : String = ""
 	public var companyWebsite : String = ""
-	public var companyEmail : String = ""
-	public var companyPhone : String = ""
-	public var companyFiscalCode : String = ""
-	public var companyVatNumber : String = ""
 	public var companyAddress : String = ""
 	public var companyCity : String = ""
 	public var companyZip : String = ""
     public var companyProvince : String = ""
     public var companyCountry : String = ""
+    public var companyVatNumber : String = ""
+    
+    public var companyDescription: [Translation] = [Translation]()
 
+    public var companyPhone : String = ""
+    public var companyEmailInfo : String = ""
+    public var companyEmailSales : String = ""
+    public var companyEmailSupport : String = ""
+    
     public var companyCurrency : String = ""
     public var companyUtc : String = ""
     public var companyLocales : [Translation] = [Translation]()
@@ -51,31 +54,49 @@ class Company: PostgresSqlORM, Codable {
 	open override func to(_ this: StORMRow) {
 		companyId = this.data["companyid"] as? Int ?? 0
 		companyName = this.data["companyname"] as? String ?? ""
-		companyDesc = this.data["companydesc"] as? String ?? ""
 		companyWebsite = this.data["companywebsite"] as? String ?? ""
-		companyEmail = this.data["companyemail"] as? String ?? ""
-		companyPhone = this.data["companyphone"] as? String ?? ""
-		companyFiscalCode = this.data["companyfiscalcode"] as? String ?? ""
-		companyVatNumber = this.data["companyvatnumber"] as? String ?? ""
 		companyAddress = this.data["companyaddress"] as? String ?? ""
 		companyCity = this.data["companycity"] as? String ?? ""
 		companyZip = this.data["companyzip"] as? String ?? ""
         companyProvince = this.data["companyprovince"] as? String ?? ""
         companyCountry = this.data["companycountry"] as? String ?? ""
+        companyVatNumber = this.data["companyvatnumber"] as? String ?? ""
 
+        let decoder = JSONDecoder()
+        var jsonData: Data
+        if let descriptions = this.data["companydescription"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: descriptions, options: [])
+            companyDescription = try! decoder.decode([Translation].self, from: jsonData)
+        }
+
+        barcodeCounter = UInt64(this.data["barcodecounter"] as! String) ?? barcodeCounter
+
+        companyPhone = this.data["companyphone"] as? String ?? ""
+        companyEmailInfo = this.data["companyemailinfo"] as? String ?? ""
+        companyEmailSales = this.data["companyemailsales"] as? String ?? ""
+        companyEmailSupport = this.data["companyemailsupport"] as? String ?? ""
+        
         companyCurrency = this.data["companycurrency"] as? String ?? ""
         companyUtc = this.data["companyutc"] as? String ?? ""
+        if let locales = this.data["companylocales"] {
+            jsonData = try! JSONSerialization.data(withJSONObject: locales, options: [])
+            companyLocales = try! decoder.decode([Translation].self, from: jsonData)
+        }
 
 		smtpHost = this.data["smtphost"] as? String ?? ""
 		smtpSsl = this.data["smtpssl"] as? Bool ?? false
 		smtpUsername = this.data["smtpusername"] as? String ?? ""
 		smtpPassword = this.data["smtppassword"] as? String ?? ""
 
+        cashOnDelivery = this.data["cashondelivery"] as? Bool ?? false
         paypalEnv = this.data["paypalenv"] as? String ?? ""
         paypalSandbox = this.data["paypalsandbox"] as? String ?? ""
         paypalProduction = this.data["paypalproduction"] as? String ?? ""
+        bankName = this.data["bankname"] as? String ?? ""
+        bankIban = this.data["bankiban"] as? String ?? ""
 
-        barcodeCounter = UInt64(this.data["barcodecounter"] as! String) ?? barcodeCounter
+        shippingStandard = this.data["shippingstandard"] as? Bool ?? false
+        shippingExpress = this.data["shippingexpress"] as? Bool ?? false
     }
 	
 	func rows() -> [Company] {

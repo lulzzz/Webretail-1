@@ -8,15 +8,6 @@
                 <div class="ui-grid-col-4"><label for="name">Name</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="name" [(ngModel)]="company.companyName"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['name'].valid&&dataform.controls['name'].dirty">
-                        <i class="fa fa-close"></i> Name is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="desc">Description</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="desc" [(ngModel)]="company.companyDesc"/>
                 </div>
             </div>
             <div class="ui-grid-row">
@@ -26,36 +17,15 @@
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="email">Email</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="email" [(ngModel)]="company.companyEmail" type="email"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['email'].valid&&dataform.controls['email'].dirty">
-                        <i class="fa fa-close"></i> Email is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="phone">Phone</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="phone" [(ngModel)]="company.companyPhone"/>
-                </div>
-            </div>
-            <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="address">Address</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="address" [(ngModel)]="company.companyAddress"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['address'].valid&&dataform.controls['address'].dirty">
-                        <i class="fa fa-close"></i> Address is required
-                    </div>
                 </div>
             </div>
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="city">City</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="city" [(ngModel)]="company.companyCity"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['city'].valid&&dataform.controls['city'].dirty">
-                        <i class="fa fa-close"></i> City is required
-                    </div>
                 </div>
             </div>
             <div class="ui-grid-row">
@@ -63,26 +33,24 @@
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="zip" [(ngModel)]="company.companyZip"/>
                     <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['zip'].valid&&dataform.controls['zip'].dirty">
-                        <i class="fa fa-close"></i> Zip is required
+                        <span *ngIf="dataform.controls['zip'].errors['minlength']||dataform.controls['zip'].errors['maxlength']">Must be equals than 5 characters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="province">Province</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="province" [(ngModel)]="company.companyProvince"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['province'].valid&&dataform.controls['province'].dirty">
+                        <i class="fa fa-close"></i>
+                        <span *ngIf="dataform.controls['province'].errors['minlength']||dataform.controls['province'].errors['maxlength']">Must be equals than 2 characters</span>
                     </div>
                 </div>
             </div>
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="country">Country</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="country" [(ngModel)]="company.companyCountry"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['country'].valid&&dataform.controls['country'].dirty">
-                        <i class="fa fa-close"></i> Country is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="fiscalCode">Fiscal Code</label></div>
-                <div class="ui-grid-col-8">
-                    <input pInputText formControlName="fiscalCode" [(ngModel)]="company.companyFiscalCode"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['fiscalCode'].valid&&dataform.controls['fiscalCode'].dirty">
-                        <i class="fa fa-close"></i> Fiscal Code is required
-                    </div>
+                    <p-dropdown [options]="countries" formControlName="country" [(ngModel)]="company.companyCountry" [filter]="true" [style]="{'width':'100%'}"></p-dropdown>
                 </div>
             </div>
             <div class="ui-grid-row">
@@ -90,7 +58,49 @@
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="vatNumber" [(ngModel)]="company.companyVatNumber"/>
                     <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['vatNumber'].valid&&dataform.controls['vatNumber'].dirty">
-                        <i class="fa fa-close"></i> VAT number is required
+                        <span *ngIf="dataform.controls['vatNumber'].errors['minlength']||dataform.controls['vatNumber'].errors['maxlength']">Must be equals than 11 characters</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p-accordion>
+            <p-accordionTab header="Description" [selected]="true">
+                <app-translation *ngIf="countries" [(translations)]="company.companyDescription"></app-translation>
+            </p-accordionTab>
+        </p-accordion>
+    </p-tabPanel>
+    <p-tabPanel header="Contacts">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="phone">Phone number</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="phone" [(ngModel)]="company.companyPhone"/>
+                </div>
+            </div>
+             <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="emailInfo">Email info</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="emailInfo" [(ngModel)]="company.companyEmailInfo" type="email"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['emailInfo'].valid&&dataform.controls['emailInfo'].dirty">
+                        <span *ngIf="dataform.controls['emailInfo'].errors['email']">Must be a valid email address</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="emailSales">Email sales</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="emailSales" [(ngModel)]="company.companyEmailSales" type="email"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['emailSales'].valid&&dataform.controls['emailSales'].dirty">
+                        <span *ngIf="dataform.controls['emailSales'].errors['email']">Must be a valid email address</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="emailSupport">Email support</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="emailSupport" [(ngModel)]="company.companyEmailSupport" type="email"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['emailSupport'].valid&&dataform.controls['emailSupport'].dirty">
+                        <span *ngIf="dataform.controls['emailSupport'].errors['email']">Must be a valid email address</span>
                     </div>
                 </div>
             </div>
@@ -101,44 +111,41 @@
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="currency">Currency</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="currency" [(ngModel)]="company.companyCurrency"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['currency'].valid&&dataform.controls['currency'].dirty">
-                        <i class="fa fa-close"></i> Currency is required
-                    </div>
+                    <p-dropdown [options]="currencies" formControlName="currency" [(ngModel)]="company.companyCurrency" [filter]="true" [style]="{'width':'100%'}"></p-dropdown>
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="utc">Time Zome</label></div>
+                <div class="ui-grid-col-4"><label for="timezones">Time Zome</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="utc" [(ngModel)]="company.companyUtc"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['utc'].valid&&dataform.controls['utc'].dirty">
-                        <i class="fa fa-close"></i> Time Zome is required
-                    </div>
+                    <p-dropdown [options]="timezones" formControlName="utc" [(ngModel)]="company.companyUtc" [filter]="true" [style]="{'width':'100%'}"></p-dropdown>
                 </div>
             </div>
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="locales">Locale</label></div>
-                <div class="ui-grid-col-4">
-                    <input pInputText formControlName="localecode" [(ngModel)]="translation.country" placeholder="Code"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['localecode'].valid&&dataform.controls['localecode'].dirty">
-                        <i class="fa fa-close"></i> Code is required
+                <div class="ui-grid-col-2">
+                    <input pInputText formControlName="localeCode" [(ngModel)]="translation.country" placeholder="Code"/>
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['localeCode'].valid&&dataform.controls['localeCode'].dirty">
+                        <span *ngIf="dataform.controls['localeCode'].errors['minlength']||dataform.controls['localeCode'].errors['maxlength']">Must be equals than 2 characters</span>
                     </div>
                 </div>
                 <div class="ui-grid-col-4">
-                    <input pInputText formControlName="localename" [(ngModel)]="translation.value" placeholder="Name"/>
-                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['localename'].valid&&dataform.controls['localename'].dirty">
-                        <i class="fa fa-close"></i> Name is required
-                    </div>
+                    <input pInputText formControlName="localeName" [(ngModel)]="translation.value" placeholder="Name"/>
+                </div>
+                <div class="ui-grid-col-2">
+                    <button type="button" pButton icon="fa-plus" (click)="addClick()" class="ui-button-secondary"></button>
                 </div>
             </div>
             <div *ngFor="let locale of company.companyLocales" class="ui-grid-row">
                 <div class="ui-grid-col-4"></div>
-                <div class="ui-grid-col-4">{{ locale.country }}</div>
+                <div class="ui-grid-col-2">{{ locale.country }}</div>
                 <div class="ui-grid-col-4">{{ locale.value }}</div>
+                <div class="ui-grid-col-2">
+                    <button type="button" pButton icon="fa-minus" (click)="removeClick()" class="ui-button-secondary"></button>
+                </div>
             </div>
         </div>
     </p-tabPanel>
-    <p-tabPanel header="Outgoing Mail">
+    <p-tabPanel header="Mail">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="host">Ssl</label></div>
@@ -147,7 +154,7 @@
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="host">Host</label></div>
+                <div class="ui-grid-col-4"><label for="host">SMTP Host</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="host" [(ngModel)]="company.smtpHost"/>
                 </div>
@@ -166,7 +173,7 @@
             </div>
         </div>
     </p-tabPanel>
-    <p-tabPanel header="Barcode counter">
+    <p-tabPanel header="Barcode">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="host">Number</label></div>
@@ -176,7 +183,7 @@
             </div>
         </div>
     </p-tabPanel>
-    <p-tabPanel header="Document Header">
+    <p-tabPanel header="Header">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
                 <div class="ui-grid-col-12">
@@ -193,24 +200,24 @@
     <p-tabPanel header="Payments">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="cashondelivery">Cash On Delivery</label></div>
+                <div class="ui-grid-col-4"><label for="cashOnDelivery">Cash On Delivery</label></div>
                 <div class="ui-grid-col-8">
-                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="cashondelivery" [(ngModel)]="company.cashOnDelivery"></p-inputSwitch>
+                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="cashOnDelivery" [(ngModel)]="company.cashOnDelivery"></p-inputSwitch>
                 </div>
             </div>
             <div class="ui-grid-row">
                 <div class="ui-grid-col-12"><h3>Bank Transfer</h3></div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="bankname">Bank</label></div>
+                <div class="ui-grid-col-4"><label for="bankName">Bank Name</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="bankname" [(ngModel)]="company.bankName"/>
+                    <input pInputText formControlName="bankName" [(ngModel)]="company.bankName"/>
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="bankiban">IBAN</label></div>
+                <div class="ui-grid-col-4"><label for="bankIban">Iban</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="bankiban" [(ngModel)]="company.bankIban"/>
+                    <input pInputText formControlName="bankIban" [(ngModel)]="company.bankIban"/>
                 </div>
             </div>
             <div class="ui-grid-row">
@@ -219,19 +226,19 @@
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="host">Environment</label></div>
                 <div class="ui-grid-col-8">
-                    <p-selectButton formControlName="paypalenv" [options]="paypalEnvs" [(ngModel)]="company.paypalEnv"></p-selectButton>                        
+                    <p-selectButton formControlName="paypalEnv" [options]="paypalEnvs" [(ngModel)]="company.paypalEnv"></p-selectButton>                        
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="paypalsandbox">Sandbox Client ID</label></div>
+                <div class="ui-grid-col-4"><label for="paypalSandbox">Sandbox Client ID</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="paypalsandbox" [(ngModel)]="company.paypalSandbox"/>
+                    <input pInputText formControlName="paypalSandbox" [(ngModel)]="company.paypalSandbox"/>
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="paypalproduction">Production Client ID</label></div>
+                <div class="ui-grid-col-4"><label for="paypalProduction">Production Client ID</label></div>
                 <div class="ui-grid-col-8">
-                    <input pInputText formControlName="paypalproduction" [(ngModel)]="company.paypalProduction"/>
+                    <input pInputText formControlName="paypalProduction" [(ngModel)]="company.paypalProduction"/>
                 </div>
             </div>
         </div>
@@ -239,15 +246,15 @@
     <p-tabPanel header="Shippins">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="shippingstandard">Standard</label></div>
+                <div class="ui-grid-col-4"><label for="shippingStandard">Standard</label></div>
                 <div class="ui-grid-col-8">
-                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="shippingstandard" [(ngModel)]="company.shippingStandard"></p-inputSwitch>
+                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="shippingStandard" [(ngModel)]="company.shippingStandard"></p-inputSwitch>
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="shippingexpress">Express</label></div>
+                <div class="ui-grid-col-4"><label for="shippingExpress">Express</label></div>
                 <div class="ui-grid-col-8">
-                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="shippingexpress" [(ngModel)]="company.shippingExpress"></p-inputSwitch>
+                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="shippingExpress" [(ngModel)]="company.shippingExpress"></p-inputSwitch>
                 </div>
             </div>
         </div>

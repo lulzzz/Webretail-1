@@ -85,6 +85,7 @@ import { InvoiceService } from './services/invoice.service';
 import { StatisticService } from './services/statistic.service';
 import { PublicationService } from './services/publication.service';
 import { ImportService } from './services/import.service';
+import { CountryService } from './services/country.service';
 
 import { CategoryFilterPipe } from './pipes/category-filter.pipe';
 import { PriceFilterPipe } from './pipes/price-filter.pipe';
@@ -184,7 +185,8 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         ConfirmationService,
         StatisticService,
         PublicationService,
-        ImportService
+        ImportService,
+        CountryService
     ],
     entryComponents: [
         AttributeComponent,

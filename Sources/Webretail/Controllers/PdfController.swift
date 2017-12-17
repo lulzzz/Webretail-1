@@ -61,7 +61,7 @@ class PdfController {
             }
             
             let company = try self.repository.get()!
-            if company.companyEmail.isEmpty {
+            if company.companyEmailInfo.isEmpty {
                 throw PerfectError.apiError("email address from is empty")
             }
             
@@ -75,7 +75,7 @@ class PdfController {
             let email = EMail(client: client)
             
             email.to.append(Recipient(address: item.address))
-            email.from = Recipient(address: company.companyEmail)
+            email.from = Recipient(address: company.companyEmailInfo)
             email.subject = item.subject
             email.content = item.content
             email.attachments = ["/tmp/\(item.subject)"]

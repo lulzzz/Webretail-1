@@ -6,7 +6,7 @@ export class Helpers {
 
     static currency = 'USD';
     static utc = 'UTC';
-    static locales: Translation[] = [];
+    static locales: SelectItem[] = [];
 
     static distinct(a: any[]): any[] {
         const seen: any = {};
@@ -52,14 +52,15 @@ export class Helpers {
     }
 
     static setInfos(company: Company) {
+        this.locales = [];
         this.currency = company.companyCurrency;
         this.utc = company.companyUtc;
         if (company.companyLocales.length > 0) {
-            this.locales = company.companyLocales;
+            this.locales = company.companyLocales.map(p => this.newSelectItem(p.country, p.value));
         } else {
-            this.locales.push(new Translation('EN', 'English'));
-            this.locales.push(new Translation('IT', 'Italian'));
-            company.companyLocales = this.locales;
+            this.locales.push(this.newSelectItem('EN', 'English'));
+            this.locales.push(this.newSelectItem('IT', 'Italian'));
+            company.companyLocales = this.locales.map(p => new Translation(p.value, p.label));
         }
     }
 }

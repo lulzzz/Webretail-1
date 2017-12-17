@@ -1,11 +1,13 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { SessionService } from './../services/session.service';
-import { CompanyService } from './../services/company.service';
-import { Company, Translation } from './../shared/models';
 import { SelectItem } from 'primeng/primeng';
+import { CountryService, Country } from '../services/country.service';
+import { SessionService } from '../services/session.service';
+import { CompanyService } from '../services/company.service';
+import { Company, Translation } from '../shared/models';
 import { Helpers } from '../shared/helpers';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'app-company-component',
@@ -18,9 +20,13 @@ export class CompanyComponent implements OnInit {
     header: string;
     paypalEnvs: SelectItem[];
     translation: Translation;
+    countries: SelectItem[];
+    currencies: SelectItem[];
+    timezones: SelectItem[];
 
     constructor(private sessionService: SessionService,
                 private messageService: MessageService,
+                private countryService: CountryService,
                 private companyService: CompanyService,
                 private fb: FormBuilder) {
        this.header = '/Media/header.png';
@@ -28,6 +34,9 @@ export class CompanyComponent implements OnInit {
             {label: 'Sandbox', value: 'sandbox'},
             {label: 'Production', value: 'production'},
         ];
+        this.countries = [];
+        this.currencies = [];
+        this.timezones = [];
     }
 
     ngOnInit() {
@@ -36,37 +45,40 @@ export class CompanyComponent implements OnInit {
         this.translation = new Translation('', '');
 
         this.dataform = this.fb.group({
-            'name': new FormControl('', Validators.required),
+            'name': new FormControl('', Validators.nullValidator),
             'desc': new FormControl('', Validators.nullValidator),
             'site': new FormControl('', Validators.nullValidator),
-            'email': new FormControl('', Validators.required),
-            'phone': new FormControl('', Validators.required),
-            'address': new FormControl('', Validators.required),
-            'city': new FormControl('', Validators.required),
-            'zip': new FormControl('', Validators.required),
-            'country': new FormControl('', Validators.required),
-            'fiscalCode': new FormControl('', Validators.required),
-            'vatNumber': new FormControl('', Validators.required),
+            'address': new FormControl('', Validators.nullValidator),
+            'city': new FormControl('', Validators.nullValidator),
+            'zip': new FormControl('', [Validators.nullValidator, Validators.minLength(5), Validators.maxLength(5)]),
+            'province': new FormControl('', [Validators.nullValidator, Validators.minLength(2), Validators.maxLength(2)]),
+            'country': new FormControl('', [Validators.nullValidator, Validators.minLength(3), Validators.maxLength(3)]),
+            'vatNumber': new FormControl('', [Validators.nullValidator, Validators.minLength(11), Validators.maxLength(11)]),
 
-            'currency': new FormControl('', Validators.required),
-            'utc': new FormControl('', Validators.required),
-            'localecode': new FormControl('', Validators.required),
-            'localename': new FormControl('', Validators.required),
+            'emailInfo': new FormControl('', [Validators.nullValidator, Validators.email]),
+            'emailSales': new FormControl('', [Validators.nullValidator, Validators.email]),
+            'emailSupport': new FormControl('', [Validators.nullValidator, Validators.email]),
+            'phone': new FormControl('', Validators.nullValidator),
+
+            'currency': new FormControl('', [Validators.nullValidator, Validators.minLength(3), Validators.maxLength(3)]),
+            'utc': new FormControl('', Validators.nullValidator),
+            'localeCode': new FormControl('', [Validators.nullValidator, Validators.minLength(2), Validators.maxLength(2)]),
+            'localeName': new FormControl('', Validators.nullValidator),
 
             'host': new FormControl('', Validators.nullValidator),
             'ssl': new FormControl('', Validators.nullValidator),
             'username': new FormControl('', Validators.nullValidator),
             'password': new FormControl('', Validators.nullValidator),
 
-            'bankname': new FormControl('', Validators.nullValidator),
-            'bankiban': new FormControl('', Validators.nullValidator),
-            'paypalenv': new FormControl('', Validators.nullValidator),
-            'paypalsandbox': new FormControl('', Validators.nullValidator),
-            'paypalproduction': new FormControl('', Validators.nullValidator),
-            'cashondelivery': new FormControl('', Validators.nullValidator),
+            'bankName': new FormControl('', Validators.nullValidator),
+            'bankIban': new FormControl('', Validators.nullValidator),
+            'paypalEnv': new FormControl('', Validators.nullValidator),
+            'paypalSandbox': new FormControl('', Validators.nullValidator),
+            'paypalProduction': new FormControl('', Validators.nullValidator),
+            'cashOnDelivery': new FormControl('', Validators.nullValidator),
 
-            'shippingstandard': new FormControl('', Validators.required),
-            'shippingexpress': new FormControl('', Validators.required),
+            'shippingStandard': new FormControl('', Validators.required),
+            'shippingExpress': new FormControl('', Validators.required),
 
             'barcode': new FormControl('', Validators.required)
         });
@@ -77,9 +89,33 @@ export class CompanyComponent implements OnInit {
                 Helpers.setInfos(result);
             }, onerror => this.messageService.add({severity: 'error', summary: 'Get company', detail: onerror._body})
         );
+
+        this.countryService.get()
+            .subscribe(result => {
+                this.loadCountries(result);
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Get countries', detail: onerror._body})
+        );
     }
 
     get isNew(): boolean { return this.company == null || this.company.companyId === 0; }
+
+    loadCountries(countries: Country[]) {
+        this.countries = countries.map(p => Helpers.newSelectItem(p.alpha3Code, p.alpha3Code + ' - ' + p.name));
+        this.currencies = countries.map(p =>
+            Helpers.newSelectItem(p.currencies[0].code, p.currencies[0].name + ' (' + p.name + ')'));
+        this.timezones = countries.map(p => Helpers.newSelectItem(p.timezones[0], p.timezones[0] + ' (' + p.name + ')'));
+    }
+
+    addClick() {
+        this.company.companyLocales.push(this.translation);
+        this.translation = new Translation('', '');
+        this.dataform.reset();
+    }
+
+    removeClick(item: Translation) {
+        const index = this.company.companyLocales.indexOf(item);
+        this.company.companyLocales.splice(index, 1);
+    }
 
     saveClick() {
         if (this.isNew) {
