@@ -25,10 +25,11 @@ import { Helpers } from './shared/helpers';
 export class AppComponent {
     constructor(public sessionService: SessionService,
                 public companyService: CompanyService) {
-        this.companyService.get().subscribe(p => {
-            Helpers.utc = p.companyUtc;
-            Helpers.currency = p.companyCurrency;
-        });
+        this.companyService.get()
+            .subscribe(result => {
+                Helpers.setInfos(result);
+            }, onerror => console.log(onerror)
+        );
     }
 
     get menuActive(): boolean { return this.sessionService.menuActive; }

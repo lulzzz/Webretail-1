@@ -45,6 +45,7 @@ export class GroupedComponent implements OnInit {
     }
 
     pickerClick(data) {
+        ProductComponent.instance.closeSidebarClick(null);
         data.forEach(element => {
             const array = element.split('#');
             const barcode = array[0];

@@ -122,12 +122,14 @@ export class CompanyComponent implements OnInit {
             this.companyService
                 .create(this.company)
                 .subscribe(result => {
+                    Helpers.setInfos(result);
                     this.messageService.add({severity: 'success', summary: 'Success', detail: 'Company created'});
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Create company', detail: onerror._body}));
         } else {
             this.companyService
                 .update(this.company)
                 .subscribe(result => {
+                    Helpers.setInfos(result);
                     this.messageService.add({severity: 'success', summary: 'Success', detail: 'Company updated'});
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Update company', detail: onerror._body}));
         }

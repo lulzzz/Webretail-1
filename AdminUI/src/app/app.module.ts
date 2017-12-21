@@ -18,7 +18,7 @@ import {
     AccordionModule, ProgressSpinnerModule, OrderListModule
 } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
-// import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 import { AppRoutes } from './app.routes';
 import { AppComponent } from './app.component';
@@ -52,7 +52,6 @@ import { SeoComponent } from './shared/seo.component';
 import { DetailComponent } from './product/detail.component';
 import { MediaComponent } from './shared/media.component';
 import { TranslationComponent } from './shared/translation.component';
-import { FrameComponent } from './shared/frame.component';
 import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { BarcodeComponent } from './movement/barcode.component';
@@ -99,7 +98,7 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
 @NgModule({
     imports: [
         CommonModule, RouterModule, HttpModule, BrowserModule, BrowserAnimationsModule,
-        FormsModule, ReactiveFormsModule,
+        FormsModule, ReactiveFormsModule, NgxBarcodeModule,
         DataTableModule, SharedModule, PaginatorModule, SidebarModule,
         MultiSelectModule, DropdownModule, SliderModule, TreeModule,
         ButtonModule, InputTextModule, InputSwitchModule, ProgressSpinnerModule,
@@ -145,7 +144,6 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         DetailComponent,
         MediaComponent,
         TranslationComponent,
-        FrameComponent,
         GroupedComponent,
         VariantComponent,
         StockComponent,
@@ -197,7 +195,6 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         MediaComponent,
         TranslationComponent,
         SeoComponent,
-        FrameComponent,
         DetailComponent
     ],
     exports: [

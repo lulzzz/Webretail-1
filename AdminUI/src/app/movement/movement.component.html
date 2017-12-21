@@ -1,72 +1,71 @@
 ﻿<p-progressSpinner *ngIf="!items" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
 
-<div class="container-fluid">
+<p-sidebar [visible]="sessionService.visibleSidebar" (onHide)="closeSidebarClick($event)" styleClass="ui-sidebar-lg" position="right" [baseZIndex]="99999">
+    <h1>{{sessionService.titleSidebar}}</h1>
+    <div id="right-sidebar" #dynamicComponentContainer></div>
+</p-sidebar>
 
-    <button pButton type="button" title="Movements" style="position: absolute; top: 154px; left: 30px; width:50px;" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
-  
-    <p-toolbar *ngIf="item">
-        <div class="ui-toolbar-group-left" style="margin-left:60px;">
-            <span><b>n°</b> {{item.movementNumber}}</span> <span><b>date</b>: {{item.movementDate | date: 'yyyy-MM-dd'}}</span>
-            <br/><span><b>causal</b>: {{item.movementCausal.causalName}}</span>
-            <br/><span><b>store</b>: {{item.movementStore.storeName}}</span>
-        </div>
-        <div class="ui-toolbar-group-right" style="text-align: right;">
-            <span><b>status</b>: {{item.movementStatus}}</span>
-            <br/><button *ngIf="item.movementStatus!=='Completed'" type="button" pButton icon="fa-save" class="ui-button-success" (click)="completedClick()" label="Completed" style="margin-top: 10px"></button>
-        </div>
-    </p-toolbar>
+<p-toolbar *ngIf="item">
+    <div class="ui-toolbar-group-left">
+        <button pButton type="button" title="Movements" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+        <span><b>n°</b> {{item.movementNumber}}</span> <span><b>date</b>: {{item.movementDate | date: 'yyyy-MM-dd'}}</span>
+        <br/><span><b>causal</b>: {{item.movementCausal.causalName}}</span>
+        <br/><span><b>store</b>: {{item.movementStore.storeName}}</span>
+    </div>
+    <div class="ui-toolbar-group-right" style="text-align: right;">
+        <span><b>status</b>: {{item.movementStatus}}</span>
+        <br/><button *ngIf="item.movementStatus!=='Completed'" type="button" pButton icon="fa-save" class="ui-button-success" (click)="completedClick()" label="Completed" style="margin-top: 10px"></button>
+    </div>
+</p-toolbar>
 
-    <p-dataTable [rows]="15" [responsive]="true" [editable]="true" [totalRecords]="totalRecords" [value]="items | priceFilter:priceValue:'movement':amountValue | articleFilter:articleValue" #dt>
-        <p-header *ngIf="!committed">
-            <button pButton style="position: absolute;left: 10px; top: 6px;" type="button" title="Article picker" (click)="showPickerClick()" class="ui-button-primary" icon="fa-search-plus"></button>
-            <p-chips [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
-        </p-header>
-        <p-footer>
-            <span style="float: left"><b>{{totalRecords}}</b> rows</span>
-            <span style="float: right">items <b>{{totalItems}}</b> amount <b>{{totalAmount | currencyFormat}}</b></span>
-            <p>&nbsp;</p>
-        </p-footer>
-        <p-column field="movementArticleBarcode" header="Barcode" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
-        <p-column field="movementArticleProduct" header="Product" [editable]="false" [sortable]="true" [filter]="true">
-            <ng-template pTemplate="filter" let-col>
-                <input pInputText [(ngModel)]="articleValue" placeholder="Search" style="width: 100%;margin-top: 4px;" styleClass="ui-column-filter"/>
-            </ng-template>
-            <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.movementArticleProduct | articleInfo:data.movementArticleBarcode}}
-            </ng-template>
-        </p-column>
-        <p-column field="movementArticleQuantity" header="Quantity" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
-            <ng-template let-col let-data="rowData" pTemplate="editor">
-                <input pInputText type="number" [disabled]="committed" [(ngModel)]="data.movementArticleQuantity" (change)="onUpdate(data)"/>
-           </ng-template>
-        </p-column>
-        <p-column *ngIf="committed" field="movementArticleDelivered" header="Delivered" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
-            <ng-template let-col let-data="rowData" pTemplate="editor">
-                <input pInputText type="number" min="0" [disabled]="item.movementStatus==='Completed'" [(ngModel)]="data.movementArticleDelivered" (change)="onUpdate(data)"/>
-           </ng-template>
-        </p-column>
-        <p-column header="Price ({{priceValue||'No Filter'}})" [editable]="true" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
-            <ng-template pTemplate="filter" let-col>
-                <i class="fa fa-close" (click)="priceValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
-                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="priceValue" [min]="5" [max]="1000"></p-slider>
-            </ng-template>
-            <ng-template let-col let-data="rowData" pTemplate="editor">
-                <input pInputText type="number" min="0" [disabled]="committed" [(ngModel)]="data.movementArticlePrice" (change)="onUpdate(data)"/>
-            </ng-template>
-            <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.movementArticlePrice | currencyFormat}}
-            </ng-template>
-        </p-column>
-        <p-column header="Amount ({{amountValue||'No Filter'}})" [editable]="false" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
-            <ng-template pTemplate="filter" let-col>
-                <i class="fa fa-close" (click)="amountValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
-                <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="amountValue" [min]="5" [max]="10000"></p-slider>
-            </ng-template>
-            <ng-template let-col let-data="rowData" pTemplate="body">
-                {{data.movementArticleAmount | currencyFormat}}
-            </ng-template>
-        </p-column>
-    </p-dataTable>
-
-    <!-- <article-picker (onPicked)="pickerClick($event)"></article-picker> -->
-</div>
+<p-dataTable [rows]="15" [responsive]="true" [editable]="true" [totalRecords]="totalRecords" [value]="items | priceFilter:priceValue:'movement':amountValue | articleFilter:articleValue" #dt>
+    <p-header *ngIf="!committed">
+        <button pButton style="position: absolute;left: 10px; top: 4px;" type="button" title="Article picker" (click)="openSidebarClick()" class="ui-button-primary" icon="fa-search-plus"></button>
+        <p-chips [(ngModel)]="barcodes" placeholder="barcode reading" (onAdd)="addBarcode()"></p-chips>
+    </p-header>
+    <p-footer>
+        <span style="float: left"><b>{{totalRecords}}</b> rows</span>
+        <span style="float: right">items <b>{{totalItems}}</b> amount <b>{{totalAmount | currencyFormat}}</b></span>
+        <p>&nbsp;</p>
+    </p-footer>
+    <p-column field="movementArticleBarcode" header="Barcode" [editable]="false" [sortable]="true" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
+    <p-column field="movementArticleProduct" header="Product" [editable]="false" [sortable]="true" [filter]="true">
+        <ng-template pTemplate="filter" let-col>
+            <input pInputText [(ngModel)]="articleValue" placeholder="Search" style="width: 100%;margin-top: 4px;" styleClass="ui-column-filter"/>
+        </ng-template>
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            {{data.movementArticleProduct | articleInfo:data.movementArticleBarcode}}
+        </ng-template>
+    </p-column>
+    <p-column field="movementArticleQuantity" header="Quantity" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        <ng-template let-col let-data="rowData" pTemplate="editor">
+            <input pInputText type="number" [disabled]="committed" [(ngModel)]="data.movementArticleQuantity" (change)="onUpdate(data)"/>
+       </ng-template>
+    </p-column>
+    <p-column *ngIf="committed" field="movementArticleDelivered" header="Delivered" [editable]="true" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        <ng-template let-col let-data="rowData" pTemplate="editor">
+            <input pInputText type="number" min="0" [disabled]="item.movementStatus==='Completed'" [(ngModel)]="data.movementArticleDelivered" (change)="onUpdate(data)"/>
+       </ng-template>
+    </p-column>
+    <p-column header="Price ({{priceValue||'No Filter'}})" [editable]="true" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
+        <ng-template pTemplate="filter" let-col>
+            <i class="fa fa-close" (click)="priceValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+            <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="priceValue" [min]="5" [max]="1000"></p-slider>
+        </ng-template>
+        <ng-template let-col let-data="rowData" pTemplate="editor">
+            <input pInputText type="number" min="0" [disabled]="committed" [(ngModel)]="data.movementArticlePrice" (change)="onUpdate(data)"/>
+        </ng-template>
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            {{data.movementArticlePrice | currencyFormat}}
+        </ng-template>
+    </p-column>
+    <p-column header="Amount ({{amountValue||'No Filter'}})" [editable]="false" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
+        <ng-template pTemplate="filter" let-col>
+            <i class="fa fa-close" (click)="amountValue=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+            <p-slider [style]="{'margin-top':'14px','margin-bottom':'5px'}" [(ngModel)]="amountValue" [min]="5" [max]="10000"></p-slider>
+        </ng-template>
+        <ng-template let-col let-data="rowData" pTemplate="body">
+            {{data.movementArticleAmount | currencyFormat}}
+        </ng-template>
+    </p-column>
+</p-dataTable>

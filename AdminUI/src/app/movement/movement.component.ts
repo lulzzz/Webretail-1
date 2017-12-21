@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, Input, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ConfirmationService, SelectItem } from 'primeng/primeng';
@@ -15,7 +15,7 @@ import { ArticlePickerComponent } from './../shared/article-picker.component';
 })
 
 export class MovementComponent implements OnInit, OnDestroy {
-    @ViewChild(ArticlePickerComponent) inputComponent: ArticlePickerComponent;
+    @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) divContainer;
     private sub: any;
     movementId: number;
     totalRecords = 0;
@@ -33,6 +33,7 @@ export class MovementComponent implements OnInit, OnDestroy {
                 private sessionService: SessionService,
                 private messageService: MessageService,
                 private movementService: MovementService,
+                private componentFactoryResolver: ComponentFactoryResolver,
                 private confirmationService: ConfirmationService,
                 private location: Location) {
         this.barcodes = [];
@@ -131,11 +132,21 @@ export class MovementComponent implements OnInit, OnDestroy {
         });
     }
 
-    showPickerClick() {
-        // this.inputComponent.isOpen = true;
+    openSidebarClick(): any {
+        this.sessionService.titleSidebar = 'Article picker';
+        this.divContainer.clear();
+        const factory = this.componentFactoryResolver.resolveComponentFactory(ArticlePickerComponent);
+        const comp = this.divContainer.createComponent(factory);
+        comp.instance.onPicked.subscribe((data) => this.pickerClick(data));
+        return comp;
+    }
+
+    closeSidebarClick(event) {
+        this.sessionService.titleSidebar = '';
     }
 
     pickerClick(event: any) {
+        this.sessionService.titleSidebar = '';
         this.barcodes = this.barcodes.concat(event);
         this.addBarcode();
     }
