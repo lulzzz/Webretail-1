@@ -30,7 +30,7 @@ export class MovementComponent implements OnInit, OnDestroy {
     committed: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
-                private sessionService: SessionService,
+                public sessionService: SessionService,
                 private messageService: MessageService,
                 private movementService: MovementService,
                 private componentFactoryResolver: ComponentFactoryResolver,
