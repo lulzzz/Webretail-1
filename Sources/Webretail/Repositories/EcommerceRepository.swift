@@ -293,11 +293,11 @@ struct EcommerceRepository : EcommerceProtocol {
 
         var string: String
         
-        let data = FileManager.default.contents(atPath: "./Upload/shippingcost_\(id).csv")
+        let data = FileManager.default.contents(atPath: "./upload/csv/shippingcost_\(id).csv")
         if let content = data {
             string = String(data: content, encoding: .utf8)!
         } else {
-            let defaultData = FileManager.default.contents(atPath: "./Upload/shippingcost.csv")
+            let defaultData = FileManager.default.contents(atPath: "./upload/csv/shippingcost.csv")
             if let defaultContent = defaultData {
                 string = String(data: defaultContent, encoding: .utf8)!
             } else {
