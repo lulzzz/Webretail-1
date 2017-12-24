@@ -5,9 +5,10 @@ import { SelectItem } from 'primeng/primeng';
 import { CountryService, Country } from '../services/country.service';
 import { SessionService } from '../services/session.service';
 import { CompanyService } from '../services/company.service';
-import { Company, Translation } from '../shared/models';
+import { Company, Translation, PdfDocument } from '../shared/models';
 import { Helpers } from '../shared/helpers';
-import { forEach } from '@angular/router/src/utils/collection';
+import * as FileSaver from 'file-saver';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-company-component',
@@ -23,13 +24,14 @@ export class CompanyComponent implements OnInit {
     countries: SelectItem[];
     currencies: SelectItem[];
     timezones: SelectItem[];
+    emailTest: string;
 
     constructor(private sessionService: SessionService,
                 private messageService: MessageService,
                 private countryService: CountryService,
                 private companyService: CompanyService,
                 private fb: FormBuilder) {
-       this.header = '/Media/header.png';
+       this.header = '/media/header.png';
        this.paypalEnvs = [
             {label: 'Sandbox', value: 'sandbox'},
             {label: 'Production', value: 'production'},
@@ -55,9 +57,9 @@ export class CompanyComponent implements OnInit {
             'country': new FormControl('', [Validators.nullValidator, Validators.minLength(3), Validators.maxLength(3)]),
             'vatNumber': new FormControl('', [Validators.nullValidator, Validators.minLength(11), Validators.maxLength(11)]),
 
-            'emailInfo': new FormControl('', [Validators.nullValidator, Validators.email]),
-            'emailSales': new FormControl('', [Validators.nullValidator, Validators.email]),
-            'emailSupport': new FormControl('', [Validators.nullValidator, Validators.email]),
+            'emailInfo': new FormControl('', Validators.nullValidator),
+            'emailSales': new FormControl('', Validators.nullValidator),
+            'emailSupport': new FormControl('', Validators.nullValidator),
             'phone': new FormControl('', Validators.nullValidator),
 
             'currency': new FormControl('', [Validators.nullValidator, Validators.minLength(3), Validators.maxLength(3)]),
@@ -69,6 +71,7 @@ export class CompanyComponent implements OnInit {
             'ssl': new FormControl('', Validators.nullValidator),
             'username': new FormControl('', Validators.nullValidator),
             'password': new FormControl('', Validators.nullValidator),
+            'emailTest': new FormControl('', Validators.nullValidator),
 
             'bankName': new FormControl('', Validators.nullValidator),
             'bankIban': new FormControl('', Validators.nullValidator),
@@ -83,13 +86,6 @@ export class CompanyComponent implements OnInit {
             'barcode': new FormControl('', Validators.required)
         });
 
-        this.companyService.get()
-            .subscribe(result => {
-                this.company = result;
-                Helpers.setInfos(result);
-            }, onerror => this.messageService.add({severity: 'error', summary: 'Get company', detail: onerror._body})
-        );
-
         this.countryService.get()
             .subscribe(result => {
                 this.loadCountries(result);
@@ -101,9 +97,56 @@ export class CompanyComponent implements OnInit {
 
     loadCountries(countries: Country[]) {
         this.countries = countries.map(p => Helpers.newSelectItem(p.alpha3Code, p.alpha3Code + ' - ' + p.name));
-        this.currencies = countries.map(p =>
-            Helpers.newSelectItem(p.currencies[0].code, p.currencies[0].name + ' (' + p.name + ')'));
-        this.timezones = countries.map(p => Helpers.newSelectItem(p.timezones[0], p.timezones[0] + ' (' + p.name + ')'));
+
+        let current: Country;
+        const names: string[] = [];
+        countries.sort((n1, n2) => {
+            if (n1.currencies[0].code > n2.currencies[0].code) {
+                return 1;
+            }
+            if (n1.currencies[0].code < n2.currencies[0].code) {
+                return -1;
+            }
+            return 0;
+        }).forEach(p => {
+            if (names.length > 0 && current.currencies[0].code !== p.currencies[0].code) {
+                const item = Helpers.newSelectItem(current.currencies[0].code, current.currencies[0].code + ' (' + names.join(',') + ')');
+                this.currencies.push(item);
+                names.length = 0;
+            }
+            current = p;
+            names.push(p.name);
+        });
+
+        names.length = 0;
+        countries.sort((n1, n2) => {
+            if (n1.timezones[0] > n2.timezones[0]) {
+                return 1;
+            }
+            if (n1.timezones[0] < n2.timezones[0]) {
+                return -1;
+            }
+            return 0;
+        }).forEach(p => {
+            if (names.length > 0 && current.timezones[0] !== p.timezones[0]) {
+                const item = Helpers.newSelectItem(current.timezones[0], current.timezones[0] + ' (' + names.join(',') + ')');
+                this.timezones.push(item);
+                names.length = 0;
+            }
+            current = p;
+            names.push(p.name);
+        });
+
+        // this.currencies = countries.map(p =>
+        //     Helpers.newSelectItem(p.currencies[0].code, p.currencies[0].name + ' (' + p.name + ')'));
+        // this.timezones = countries.map(p => Helpers.newSelectItem(p.timezones[0], p.timezones[0] + ' (' + p.name + ')'));
+
+        this.companyService.get()
+            .subscribe(result => {
+                this.company = result;
+                Helpers.setInfos(result);
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Get company', detail: onerror._body})
+        );
     }
 
     addClick() {
@@ -140,6 +183,41 @@ export class CompanyComponent implements OnInit {
         // for(let file of event.files) {
         // }
         this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
-        this.header = '/Media/header.png?' + Date().length
+        this.header = '/media/header.png?' + Date().length
+    }
+
+    download(fileName: string) {
+        this.companyService
+            .downloadCsv(fileName)
+            .subscribe(
+                data => {
+                    const blob = new Blob([data], {type: 'text/csv'});
+                    FileSaver.saveAs(blob, fileName);
+                },
+                err => {
+                    const reader = new FileReader();
+                    reader.addEventListener('loadend', (e) =>
+                        this.messageService.add({severity: 'error', summary: 'Error', detail: reader.result}));
+                    reader.readAsText(err._body);
+                }
+            );
+    }
+
+    sendMailClick() {
+        if (this.dataform.controls['emailTest'].invalid) {
+            this.messageService.add({severity: 'warning', summary: 'Attention', detail: 'Mail address is required'});
+            return;
+        }
+
+        const model = new PdfDocument()
+        model.address = this.emailTest;
+        model.subject = 'Test message';
+        model.content = '<h1>Webretail SMTP server message</h1>';
+
+        this.companyService.sendHtmlMail(model)
+            .subscribe(
+                result => this.messageService.add({severity: 'success', summary: 'Success', detail: result.content}),
+                onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
+            );
     }
 }

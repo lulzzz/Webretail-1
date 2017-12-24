@@ -121,7 +121,10 @@
                 </div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="locales">Locale</label></div>
+                <div class="ui-grid-col-12"><hr></div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="locales">Locales</label></div>
                 <div class="ui-grid-col-2">
                     <input pInputText formControlName="localeCode" [(ngModel)]="translation.country" placeholder="Code"/>
                     <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!dataform.controls['localeCode'].valid&&dataform.controls['localeCode'].dirty">
@@ -135,8 +138,8 @@
                     <button type="button" pButton icon="fa-plus" (click)="addClick()" class="ui-button-secondary"></button>
                 </div>
             </div>
-            <div *ngFor="let locale of company.companyLocales" class="ui-grid-row">
-                <div class="ui-grid-col-4"></div>
+            <div *ngFor="let locale of company.companyLocales" class="ui-grid-row ui-panel">
+                <div class="ui-grid-col-4">/{{ locale.country.toLowerCase() }}</div>
                 <div class="ui-grid-col-2">{{ locale.country }}</div>
                 <div class="ui-grid-col-4">{{ locale.value }}</div>
                 <div class="ui-grid-col-2">
@@ -145,7 +148,7 @@
             </div>
         </div>
     </p-tabPanel>
-    <p-tabPanel header="Mail">
+    <p-tabPanel header="SMTP">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
                 <div class="ui-grid-col-4"><label for="host">Ssl</label></div>
@@ -171,12 +174,22 @@
                     <input pInputText type="password" formControlName="password" [(ngModel)]="company.smtpPassword"/>
                 </div>
             </div>
+            <div class="ui-grid-row">
+                    <div class="ui-grid-col-12"><hr></div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label for="emailTest">Test mail</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText formControlName="emailTest" placeholder="email address" [(ngModel)]="emailTest"/>
+                    <button type="button" pButton icon="fa-send" label="Send mail" (click)="sendMailClick()" class="ui-button-secondary"></button>
+                </div>
+            </div>                
         </div>
     </p-tabPanel>
     <p-tabPanel header="Barcode">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="host">Number</label></div>
+                <div class="ui-grid-col-4"><label for="host">Counter</label></div>
                 <div class="ui-grid-col-8">
                     <input pInputText formControlName="barcode" [(ngModel)]="company.barcodeCounter"/>
                 </div>
@@ -243,27 +256,45 @@
             </div>
         </div>
     </p-tabPanel>
-    <p-tabPanel header="Shippins">
+    <p-tabPanel header="Shippings">
         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="shippingStandard">Standard</label></div>
-                <div class="ui-grid-col-8">
-                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="shippingStandard" [(ngModel)]="company.shippingStandard"></p-inputSwitch>
-                </div>
+                <div class="ui-grid-col-4"><label>Standard</label></div>
+                <div class="ui-grid-col-8"><label>shippingcost.csv</label></div>
             </div>
             <div class="ui-grid-row">
-                <div class="ui-grid-col-4"><label for="shippingExpress">Express</label></div>
-                <div class="ui-grid-col-8">
+                <div class="ui-grid-col-4">
+                    <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="shippingStandard" [(ngModel)]="company.shippingStandard"></p-inputSwitch>
+                </div>
+                <div class="ui-grid-col-4">
+                    <p-fileUpload mode="basic" name="shippingcost" url="/api/csv" accept="text/csv" maxFileSize="1000000" (onUpload)="onBasicUpload($event)"></p-fileUpload>
+                </div>
+                <div class="ui-grid-col-4">
+                    <button type="button" (click)="download('shippingcost.csv')" pButton icon="fa-download" class="ui-button-secondary" label="Download"></button>
+                </div>
+            </div>
+            <br>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>Express</label></div>
+                <div class="ui-grid-col-8"><label>shippingcost_express.csv</label></div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
                     <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="shippingExpress" [(ngModel)]="company.shippingExpress"></p-inputSwitch>
+                </div>
+                <div class="ui-grid-col-4">
+                    <p-fileUpload mode="basic" name="shippingcost_express" url="/api/csv" accept="text/csv" maxFileSize="1000000" (onUpload)="onBasicUpload($event)"></p-fileUpload>
+                </div>
+                <div class="ui-grid-col-4">
+                    <button type="button" (click)="download('shippingcost_express.csv')" pButton icon="fa-download" class="ui-button-secondary" label="Download"></button>
                 </div>
             </div>
         </div>
     </p-tabPanel>
     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
         <div class="ui-grid-row">
-            <div class="ui-grid-col-8"></div>
-            <div class="ui-grid-col-4">
-                <button type="button" pButton icon="fa-save" (click)="saveClick()" class="ui-button-success" label="Save" [disabled]="!dataform.valid"></button>
+            <div class="ui-grid-col-12">
+                <button type="button" pButton icon="fa-save" (click)="saveClick()" class="ui-button-primary" label="Save All" [disabled]="!dataform.valid"></button>
             </div>
         </div>
     </div>

@@ -10,12 +10,14 @@ import Foundation
 import PerfectHTTP
 import PerfectLib
 import PerfectLogger
+import PerfectSMTP
 
 class CompanyController {
 	
-    let mediaRoot = "./Upload"
-    let mediaDir = "./Upload/Media"
-    
+    let uploadRoot = "./upload"
+    let mediaDir = "/media"
+    let csvDir = "/csv"
+
     private let repository: CompanyProtocol
 	
 	init() {
@@ -28,24 +30,36 @@ class CompanyController {
 		routes.add(method: .get, uri: "/api/company", handler: companyHandlerGET)
 		routes.add(method: .post, uri: "/api/company", handler: companyHandlerPOST)
 		routes.add(method: .put, uri: "/api/company", handler: companyHandlerPUT)
-		routes.add(method: .post, uri: "/api/media", handler: uploadHandlerPOST)
-		
+		routes.add(method: .post, uri: "/api/media", handler: uploadMediaHandlerPOST)
+        routes.add(method: .post, uri: "/api/csv", handler: uploadCsvHandlerPOST)
+        routes.add(method: .post, uri: "/api/email", handler: emailHandlerPOST)
+
         do {
-            var dir = Dir(mediaRoot)
+            var dir = Dir(uploadRoot)
             if !dir.exists {
                 try dir.create()
             }
-            dir = Dir(mediaDir)
+            dir = Dir(dir.path + mediaDir)
+            if !dir.exists {
+                try dir.create()
+            }
+            dir = Dir(dir.path + csvDir)
             if !dir.exists {
                 try dir.create()
             }
         } catch {
-            Log.terminal(message: "The document root \(mediaRoot) could not be created.")
+            Log.terminal(message: "The document root \(uploadRoot) could not be created.")
         }
         
-        routes.add(method: .get, uri: "/Media/**", handler: {
+        routes.add(method: .get, uri: "/media/**", handler: {
             req, resp in
-            StaticFileHandler(documentRoot: self.mediaRoot, allowResponseFilters: false)
+            StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
+                .handleRequest(request: req, response: resp)
+        })
+
+        routes.add(method: .get, uri: "/csv/**", handler: {
+            req, resp in
+            StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
                 .handleRequest(request: req, response: resp)
         })
 
@@ -83,24 +97,72 @@ class CompanyController {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
 		}
 	}
+    
+    func uploadMediaHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        uploadFunc(uploadRoot + mediaDir, request, response)
+    }
+    
+    func uploadCsvHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        uploadFunc(uploadRoot + csvDir, request, response)
+    }
 
-	func uploadHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-		do {
-
-			if let uploads = request.postFileUploads {
+    fileprivate func uploadFunc(_ dir: String, _ request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            if let uploads = request.postFileUploads {
                 for upload in uploads {
-                    let path = "\(mediaDir)/\(upload.fileName)"
+                    let path = "\(dir)/\(upload.fileName)"
                     if (FileManager.default.fileExists(atPath: path)) {
                         try FileManager.default.removeItem(atPath: path)
                     }
-					try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: "\(mediaDir)/\(upload.fileName)")
-					LogFile.info("Uploaded file \(upload.fileName)")
-				}
+                    try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: "\(dir)/\(upload.fileName)")
+                    LogFile.info("Uploaded file \(upload.fileName)")
+                }
                 response.completed(status: .created)
                 return
-			}
-		} catch {
-			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-		}
+            }
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func emailHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let item: PdfDocument = request.getJson()!
+            if item.address.isEmpty {
+                throw PerfectError.apiError("email address to is empty")
+            }
+            
+            let company = try self.repository.get()!
+            if company.companyEmailInfo.isEmpty {
+                throw PerfectError.apiError("email address from is empty")
+            }
+            
+            let url = "\(company.smtpSsl ? "smtps" : "smtp")://\(company.smtpHost)"
+            let client = SMTPClient(url: url, username: company.smtpUsername, password: company.smtpPassword)
+            let email = EMail(client: client)
+            
+            email.to.append(Recipient(address: item.address))
+            email.from = Recipient(address: company.companyEmailInfo)
+            email.subject = item.subject
+            email.content = item.content
+            
+            try email.send() { code, header, body in
+                
+                if code != 0 {
+                    response.badRequest(error: "\(request.uri) \(request.method): \(header)")
+                    return
+                }
+                
+                do {
+                    item.content = "Email successfully sent"
+                    try response.setJson(item)
+                    response.completed(status: .accepted)
+                } catch {
+                    print(error)
+                }
+            }
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
 }

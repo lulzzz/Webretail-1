@@ -188,4 +188,15 @@ export class CompanyService {
         return this.http.post('/api/pdf/email', model, { headers: Helpers.getHeaders() })
             .map(result => <PdfDocument>result.json());
     }
+
+    sendHtmlMail(model: PdfDocument): Observable<PdfDocument> {
+        model.content = this.getHtml(model);
+        return this.http.post('/api/email', model, { headers: Helpers.getHeaders() })
+            .map(result => <PdfDocument>result.json());
+    }
+
+    downloadCsv(fileName: String): Observable<Blob> {
+      return this.http.get('/csv/' + fileName, { headers: Helpers.getHeaders(), responseType: ResponseContentType.Blob })
+          .map(result => <Blob>result.blob());
+    }
 }

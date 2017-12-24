@@ -150,7 +150,7 @@ struct ProductRepository : ProductProtocol {
             if m.url.startsWith("http") || m.url.startsWith("ftp") {
                 let url = URL(string: m.url)
                 let data = try? Data(contentsOf: url!)
-                if !FileManager.default.createFile(atPath: "./Upload/Media/\(m.name)", contents: data, attributes: nil) {
+                if !FileManager.default.createFile(atPath: "./upload/media/\(m.name)", contents: data, attributes: nil) {
                     throw StORMError.error("File \(m.url) not found")
                 }
             }
