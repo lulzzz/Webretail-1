@@ -11,6 +11,8 @@ import PerfectHTTP
 import PerfectLib
 import PerfectLogger
 import PerfectSMTP
+import SwiftGD
+import SwiftRandom
 
 class CompanyController {
 	
@@ -41,6 +43,8 @@ class CompanyController {
             }
             dir = Dir(dir.path + mediaDir)
             if !dir.exists {
+                try dir.create()
+                dir = Dir(dir.path + "/thumb")
                 try dir.create()
             }
             dir = Dir(dir.path + csvDir)
@@ -99,14 +103,42 @@ class CompanyController {
 	}
     
     func uploadMediaHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        uploadFunc(uploadRoot + mediaDir, request, response)
+        let dir = uploadRoot + mediaDir
+        do {
+            if let uploads = request.postFileUploads {
+                var medias = [Media]()
+                let rand = URandom()
+                
+                for upload in uploads {
+                    
+                    let media = Media()
+                    media.name = rand.secureToken + upload.fileName.stripExtension()
+                    media.url = "\(mediaDir)/\(media.name)"
+                    media.contentType = upload.contentType
+                    medias.append(media)
+
+                    let atPath = URL(fileURLWithPath: upload.tmpFileName)
+                    let toPath = URL(fileURLWithPath: "\(dir)/\(media.name)")
+                    let toThumb = URL(fileURLWithPath: "\(dir)/thumb/\(media.name)")
+                    
+                    let image = Image(url: atPath)
+                    image?.write(to: toPath)
+                    let thumb = image?.resizedTo(height: 300)
+                    thumb?.write(to: toThumb)
+                    
+                    LogFile.info("Uploaded file \(upload.fileName) => \(media.name)")
+                }
+
+                try response.setJson(medias)
+                response.completed(status: .created)
+            }
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
     }
     
     func uploadCsvHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        uploadFunc(uploadRoot + csvDir, request, response)
-    }
-
-    fileprivate func uploadFunc(_ dir: String, _ request: HTTPRequest, _ response: HTTPResponse) {
+        let dir = uploadRoot + csvDir
         do {
             if let uploads = request.postFileUploads {
                 for upload in uploads {
@@ -118,7 +150,6 @@ class CompanyController {
                     LogFile.info("Uploaded file \(upload.fileName)")
                 }
                 response.completed(status: .created)
-                return
             }
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

@@ -8,6 +8,6 @@
 class Media: Codable, JsonbProtocol {
     public var name : String = ""
     public var url : String = ""
-    public var number : Int = 0
+    public var contentType : String = ""
 }
 

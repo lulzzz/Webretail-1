@@ -9,6 +9,9 @@
 import Foundation
 import StORM
 import PerfectLogger
+import SwiftGD
+import SwiftRandom
+import PerfectHTTP
 
 struct ProductRepository : ProductProtocol {
 
@@ -121,6 +124,25 @@ struct ProductRepository : ProductProtocol {
             c.categoryId = category.categoryId
         }
         
+        /// Medias
+        let rand = URandom()
+        for m in item.productMedias {
+            if m.url.startsWith("http") || m.url.startsWith("ftp") {
+                
+                let image = Image(url: URL(string: m.url)!)
+                
+                m.name = rand.secureToken + m.name.stripExtension()
+                m.url = "media/\(m.name)"
+                
+                let toPath = URL(fileURLWithPath: "./upload/media/\(m.name)")
+                image?.write(to: toPath)
+                
+                let thumb = image?.resizedTo(height: 300)
+                let toThumb = URL(fileURLWithPath: "./upload/media/thumb/\(m.name)")
+                thumb?.write(to: toThumb)
+            }
+        }
+
         /// Seo
         if (item.productSeo.permalink.isEmpty) {
             item.productSeo.permalink = item.productName.permalink()
@@ -142,17 +164,6 @@ struct ProductRepository : ProductProtocol {
             productCategory.categoryId = c.categoryId
             try productCategory.save {
                 id in productCategory.productCategoryId = id as! Int
-            }
-        }
-
-        /// Medias
-        for m in item.productMedias {
-            if m.url.startsWith("http") || m.url.startsWith("ftp") {
-                let url = URL(string: m.url)
-                let data = try? Data(contentsOf: url!)
-                if !FileManager.default.createFile(atPath: "./upload/media/\(m.name)", contents: data, attributes: nil) {
-                    throw StORMError.error("File \(m.url) not found")
-                }
             }
         }
         

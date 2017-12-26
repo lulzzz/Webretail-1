@@ -80,6 +80,12 @@ extension String {
         return data
     }
     
+    func stripExtension(_ extensionSeperator: Character = ".") -> String {
+        let selfReversed = self.reversed()
+        guard let extensionPosition = selfReversed.index(of: extensionSeperator) else {  return self  }
+        return String(self[..<self.index(before: (extensionPosition.base.samePosition(in: self)!))])
+    }
+
 //    #if os(OSX)
 //    func toBarcode() -> NSImage? {
 //        let data = self.data(using: String.Encoding.ascii)
