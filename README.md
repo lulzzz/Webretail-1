@@ -46,10 +46,10 @@ To install postgres:
 brew install postgres
 ```
 
-To install nodejs and phantomjs:
+To install nodejs. libgd and phantomjs:
 
 ```
-brew install node phantomjs
+brew install node gd phantomjs
 ```
 
 ### Linux
@@ -60,10 +60,10 @@ Ensure that you have installed libxml2-dev and pkg-config.
 sudo apt-get install libxml2-dev pkg-config
 ```
 
-To install libpq-dev
+To install libpq-dev libgd-dev
 
 ```
-sudo apt-get install libpq-dev
+sudo apt-get install libpq-dev libgd-dev
 ```
 
 To install nodejs and phantomjs:

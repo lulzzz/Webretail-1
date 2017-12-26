@@ -1175,6 +1175,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		568195501FF1CE77002470EF /* Dockerfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
+		568195511FF1CE77002470EF /* rasterize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rasterize.js; sourceTree = "<group>"; };
+		568195521FF1CE77002470EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFilter.swift; sourceTree = "<group>"; };
 		OBJ_100 /* EcommerceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceProtocol.swift; sourceTree = "<group>"; };
@@ -2656,16 +2659,18 @@
 			path = ".build/checkouts/Perfect-Thread.git-6541237758607105655/Sources";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				568195501FF1CE77002470EF /* Dockerfile */,
+				568195511FF1CE77002470EF /* rasterize.js */,
+				568195521FF1CE77002470EF /* README.md */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_137 /* Tests */,
 				OBJ_142 /* Dependencies */,
 				OBJ_598 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_503 /* SwiftMoment 0.9.1 */ = {
@@ -3804,7 +3809,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_598 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
