@@ -9,6 +9,7 @@
 import Foundation
 import PerfectHTTP
 import PerfectHTTPServer
+import SwiftRandom
 //#if os(OSX)
 //    import Quartz
 //#endif
@@ -80,10 +81,10 @@ extension String {
         return data
     }
     
-    func stripExtension(_ extensionSeperator: Character = ".") -> String {
-        let selfReversed = self.reversed()
-        guard let extensionPosition = selfReversed.index(of: extensionSeperator) else {  return self  }
-        return String(self[..<self.index(before: (extensionPosition.base.samePosition(in: self)!))])
+    func uniqueName() -> String {
+        let extensionPosition = self.lastIndexRaw(of: ".")!
+        let stripExtension = String(self[extensionPosition...])
+        return URandom().secureToken + stripExtension
     }
 
 //    #if os(OSX)

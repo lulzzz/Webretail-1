@@ -16,14 +16,9 @@ export class SeoComponent implements OnInit {
     title: Translation;
     description: Translation;
 
-    constructor() {
-        this.countries = [];
-        this.countries.push({label: 'Italian', value: 'IT'});
-        this.countries.push({label: 'English', value: 'EN'});
-    }
-
     ngOnInit() {
-        this.country = this.countries[1].value;
+        this.countries = Helpers.locales;
+        this.country = this.countries[0].value;
         this.onCountryChanged(null);
     }
 

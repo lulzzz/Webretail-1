@@ -58,14 +58,21 @@
         <a id="settingmenu" #settingmenu [class.active-menuitem]="settingmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === settingmenu.id ? null : settingmenu.id)">
             <span><i class="fa fa-cog"></i>&nbsp;&nbsp;Setting</span>
         </a>
-        <div [ngClass]="{'submenushow': (settingmenu.id == activeMenuId), 'submenuhide': (settingmenu.id != activeMenuId)}">
+        <div *ngIf="!isAdmin" [ngClass]="{'submenushow': (settingmenu.id == activeMenuId), 'submenuhide': (settingmenu.id != activeMenuId)}">
             <a *ngIf="!isAdmin" [routerLink]="['/account/myinfo']"><i class="fa fa-user"></i>&nbsp;&nbsp;Account</a>
-            <a *ngIf="isAdmin" [routerLink]="['/account']"><i class="fa fa-user"></i>&nbsp;&nbsp;Accounts</a>
-            <a *ngIf="isAdmin" [routerLink]="['/company']"><i class="fa fa-home"></i>&nbsp;&nbsp;Company</a>
             <a [routerLink]="['/store']"><i class="fa fa-cube"></i>&nbsp;&nbsp;Stores</a>
+        </div>
+        <a *ngIf="!isAdmin" [routerLink]="['/account/myinfo']"><i class="fa fa-user"></i>&nbsp;&nbsp;Account</a>
+        <div *ngIf="isAdmin" [ngClass]="{'submenushow': (settingmenu.id == activeMenuId), 'submenuhide': (settingmenu.id != activeMenuId)}">
+            <a [routerLink]="['/account']"><i class="fa fa-user"></i>&nbsp;&nbsp;Accounts</a>
+            <a [routerLink]="['/company']"><i class="fa fa-home"></i>&nbsp;&nbsp;Company</a>
+            <a [routerLink]="['/store']"><i class="fa fa-cube"></i>&nbsp;&nbsp;Stores</a>
+            <a [routerLink]="['/localization']"><i class="fa fa-globe"></i>&nbsp;&nbsp;Localization</a>
+            <a [routerLink]="['/smtp']"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Smtp</a>
+            <a [routerLink]="['/payment']"><i class="fa fa-money"></i>&nbsp;&nbsp;Payment</a>
+            <a [routerLink]="['/shipping']"><i class="fa fa-truck"></i>&nbsp;&nbsp;Shipping</a>
          </div>
-
-        <a (click)="logoutClick()">
+         <a (click)="logoutClick()">
             <span><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Logout</span>
         </a>
     </div>

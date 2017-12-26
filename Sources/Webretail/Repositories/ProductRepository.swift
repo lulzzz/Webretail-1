@@ -10,7 +10,6 @@ import Foundation
 import StORM
 import PerfectLogger
 import SwiftGD
-import SwiftRandom
 import PerfectHTTP
 
 struct ProductRepository : ProductProtocol {
@@ -125,21 +124,22 @@ struct ProductRepository : ProductProtocol {
         }
         
         /// Medias
-        let rand = URandom()
         for m in item.productMedias {
-            if m.url.startsWith("http") || m.url.startsWith("ftp") {
+            if m.name.startsWith("http") || m.name.startsWith("ftp") {
                 
-                let image = Image(url: URL(string: m.url)!)
+                let url = URL(string: m.name)
+                let data = try? Data(contentsOf: url!)
                 
-                m.name = rand.secureToken + m.name.stripExtension()
-                m.url = "media/\(m.name)"
+                m.name = m.name.uniqueName();
+                let toMedia = "./upload/media/\(m.name)"
+                if !FileManager.default.createFile(atPath: toMedia, contents: data, attributes: nil) {
+                    throw StORMError.error("File \(m.name) not found")
+                }
                 
-                let toPath = URL(fileURLWithPath: "./upload/media/\(m.name)")
-                image?.write(to: toPath)
-                
-                let thumb = image?.resizedTo(height: 300)
-                let toThumb = URL(fileURLWithPath: "./upload/media/thumb/\(m.name)")
-                thumb?.write(to: toThumb)
+                let image = Image(url: URL(string: toMedia)!)
+                let thumb = image!.resizedTo(width: 480)
+                let toThumb = URL(fileURLWithPath: "./upload/thumb/\(m.name)")
+                thumb!.write(to: toThumb)
             }
         }
 
@@ -280,6 +280,27 @@ struct ProductRepository : ProductProtocol {
             }
         }
         
+        /// Medias
+        for m in item.productMedias {
+            if m.name.startsWith("http") || m.name.startsWith("ftp") {
+                
+                let url = URL(string: m.name)
+                let data = try? Data(contentsOf: url!)
+
+                m.name = m.name.uniqueName();
+                let toMedia = "./upload/media/\(m.name)"
+                if !FileManager.default.createFile(atPath: toMedia, contents: data, attributes: nil) {
+                    throw StORMError.error("File \(m.name) not found")
+                }
+                
+                let image = Image(url: URL(string: toMedia)!)
+                let thumb = image!.resizedTo(width: 480)
+                let toThumb = URL(fileURLWithPath: "./upload/thumb/\(m.name)")
+                thumb!.write(to: toThumb)
+            }
+        }
+        current.productMedias = item.productMedias
+
         /// Seo
         if (item.productSeo.permalink.isEmpty) {
             item.productSeo.permalink = item.productName.permalink()
@@ -440,7 +461,7 @@ struct ProductRepository : ProductProtocol {
         let publication = Publication()
         publication.productId = item.productId
         publication.publicationStartAt = "2017-11-01".DateToInt()
-        publication.publicationFinishAt = "2017-12-31".DateToInt()
+        publication.publicationFinishAt = "2018-12-31".DateToInt()
         try publication.save {
             id in publication.publicationId = id as! Int
         }

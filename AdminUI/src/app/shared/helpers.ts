@@ -23,10 +23,10 @@ export class Helpers {
         return out;
     }
 
-    static getHeaders(): Headers {
+    static getHeaders(contentType = 'application/json'): Headers {
         const headers = new Headers();
         headers.append('Authorization', `Bearer ${localStorage.getItem('token')}`);
-        headers.append('Content-Type', 'application/json');
+        headers.append('Content-Type', contentType);
         return headers;
     }
 

@@ -28,7 +28,13 @@ import { ArticlePickerComponent } from './shared/article-picker.component';
 import { ProductPickerComponent } from './shared/product-picker.component';
 import { MovementPickerComponent } from './shared/movement-picker.component';
 import { HomeComponent } from './home/home.component';
-import { CompanyComponent } from './company/company.component';
+
+import { PaymentComponent } from './setting/payment.component';
+import { ShippingComponent } from './setting/shipping.component';
+import { SmtpComponent } from './setting/smtp.component';
+import { LocalizationComponent } from './setting/localization.component';
+import { CompanyComponent } from './setting/company.component';
+
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 import { AccountComponent } from './account/account.component';
@@ -125,7 +131,13 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         ProductPickerComponent,
         MovementPickerComponent,
         HomeComponent,
+
+        ShippingComponent,
+        PaymentComponent,
+        SmtpComponent,
+        LocalizationComponent,
         CompanyComponent,
+
         LoginComponent,
         RegisterComponent,
         AccountComponent,

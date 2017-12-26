@@ -3,7 +3,7 @@
 # Webretail - RMS
 
 Retail Management System and e-Commerce
-developed with Swift 4.0, Angular 4.0 and PostgreSQL 10.0.
+developed with Swift 4.0, Angular 5.1 and PostgreSQL 10.0.
 
 #### Under active development. Please do not use.
 
@@ -20,18 +20,6 @@ Ensure you have installed Xcode 9.0 or later.
 
 
 ### macOS
-
-If you receive a compile error that says the following, you need to install and link libxml2
-
-```
-note: you may be able to install libxml-2.0 using your system-packager:
-
-    brew install libxml2
-
-Compile Swift Module 'PerfectXML' (2 sources)
-<module-includes>:1:9: note: in file included from <module-includes>:1:
-#import "libxml2.h"
-```
 
 To install and link libxml2 with homebrew, use the following two commands
 
@@ -103,7 +91,7 @@ To run this project from Xcode, edit the Scheme, Under "Options" for "run", chec
 [INFO] Starting HTTP server on 0.0.0.0:80 with document root ./webroot
 ```
 
-## Angular 4 - Terminal
+## Angular 5 - Terminal
 
 Steps for the development UI:
 
@@ -134,5 +122,5 @@ docker run -p 5432:5432 --name db -e POSTGRES_DB=webretail -e POSTGRES_PASSWORD=
 
 ```
 docker build -t webretail .
-docker run -d -p 80:8181 --link db -t webretail
+docker run -d -p 8181:8181 --link db -t webretail
 ```

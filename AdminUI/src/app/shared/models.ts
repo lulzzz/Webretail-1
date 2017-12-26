@@ -139,7 +139,7 @@ export class Brand {
     this.brandId = 0;
     this.brandName = '';
     this.translations = [];
-    this.media = new Media('', '', 0);
+    this.media = new Media('', '');
     this.seo = new Seo();
   }
 }
@@ -157,7 +157,7 @@ export class Category {
     this.categoryIsPrimary = false;
     this.categoryName = categoryName;
     this.translations = [];
-    this.media = new Media('', '', 0);
+    this.media = new Media('', '');
     this.seo = new Seo();
   }
 }
@@ -165,8 +165,7 @@ export class Category {
 export class Media {
   constructor(
     public name: string,
-    public url: string,
-    public number: number) { }
+    public contentType: string) { }
 }
 
 export class Translation {

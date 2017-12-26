@@ -1,8 +1,13 @@
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { CompanyComponent } from './company/company.component';
 import { LoginComponent } from './login/login.component';
 // import { RegisterComponent } from './login/register.component';
+import { PaymentComponent } from './setting/payment.component';
+import { ShippingComponent } from './setting/shipping.component';
+import { LocalizationComponent } from './setting/localization.component';
+import { SmtpComponent } from './setting/smtp.component';
+import { CompanyComponent } from './setting/company.component';
+
 import { AccountComponent } from './account/account.component';
 import { MyInfoComponent } from './account/myinfo.component';
 import { AttributesComponent } from './attribute/attributes.component';
@@ -33,9 +38,13 @@ import { StatisticsComponent } from './report/statistics.component';
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent, pathMatch: 'full' },
-    { path: 'company', component: CompanyComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent, pathMatch: 'full' },
     // { path: 'login/register', component: RegisterComponent, pathMatch: 'full' },
+    { path: 'company', component: CompanyComponent, pathMatch: 'full' },
+    { path: 'payment', component: PaymentComponent, pathMatch: 'full' },
+    { path: 'shipping', component: ShippingComponent, pathMatch: 'full' },
+    { path: 'smtp', component: SmtpComponent, pathMatch: 'full' },
+    { path: 'localization', component: LocalizationComponent, pathMatch: 'full' },
     { path: 'account', component: AccountComponent, pathMatch: 'full' },
     { path: 'myinfo', component: MyInfoComponent, pathMatch: 'full' },
     { path: 'store', component: StoreComponent, pathMatch: 'full' },

@@ -127,8 +127,8 @@ export class ImportComponent implements OnInit  {
         });
 
         // Medias
-        const base = 'http://www.tessilnova.com/';
-        const medias = product.medias.map(p => new Media(p.filename, base + p.url, p.number));
+        const base = 'http://www.tessilnova.com/Media/';
+        const medias = product.medias.map(p => new Media(base + p.filename, 'image/png'));
 
         // Translations
         const translations = product

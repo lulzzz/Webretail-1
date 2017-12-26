@@ -14,13 +14,13 @@ export class ImportService {
     }
 
     getProducts(): Observable<Translate[]> {
-        let apiURL = `${this.apiRoot}/api/codart/products`;
+        const apiURL = `${this.apiRoot}/api/codart/products`;
         return this.http.get(apiURL, { headers: Helpers.getHeaders() })
             .map(result => <Translate[]>result.json());
     }
 
     getProductById(id: String): Observable<CodartInfo> {
-        let apiURL = `${this.apiRoot}/api/codart/${id}`;
+        const apiURL = `${this.apiRoot}/api/codart/${id}`;
         return this.http.get(apiURL, { headers: Helpers.getHeaders() })
             .map(result => <CodartInfo>result.json());
     }

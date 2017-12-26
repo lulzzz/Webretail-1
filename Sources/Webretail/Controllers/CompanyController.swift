@@ -12,12 +12,12 @@ import PerfectLib
 import PerfectLogger
 import PerfectSMTP
 import SwiftGD
-import SwiftRandom
 
 class CompanyController {
 	
     let uploadRoot = "./upload"
     let mediaDir = "/media"
+    let thumbDir = "/thumb"
     let csvDir = "/csv"
 
     private let repository: CompanyProtocol
@@ -37,31 +37,39 @@ class CompanyController {
         routes.add(method: .post, uri: "/api/email", handler: emailHandlerPOST)
 
         do {
-            var dir = Dir(uploadRoot)
+            let dir = Dir(uploadRoot)
             if !dir.exists {
                 try dir.create()
             }
-            dir = Dir(dir.path + mediaDir)
-            if !dir.exists {
-                try dir.create()
-                dir = Dir(dir.path + "/thumb")
-                try dir.create()
+            let dirMedia = Dir(dir.path + mediaDir)
+            if !dirMedia.exists {
+                try dirMedia.create()
             }
-            dir = Dir(dir.path + csvDir)
-            if !dir.exists {
-                try dir.create()
+            let dirThumb = Dir(dir.path + thumbDir)
+            if !dirThumb.exists {
+                try dirThumb.create()
+            }
+            let dirCsv = Dir(dir.path + csvDir)
+            if !dirCsv.exists {
+                try dirCsv.create()
             }
         } catch {
             Log.terminal(message: "The document root \(uploadRoot) could not be created.")
         }
         
-        routes.add(method: .get, uri: "/media/**", handler: {
+        routes.add(method: .get, uri: mediaDir + "/**", handler: {
             req, resp in
             StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
                 .handleRequest(request: req, response: resp)
         })
 
-        routes.add(method: .get, uri: "/csv/**", handler: {
+        routes.add(method: .get, uri: thumbDir + "/**", handler: {
+            req, resp in
+            StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
+                .handleRequest(request: req, response: resp)
+        })
+
+        routes.add(method: .get, uri: csvDir + "/**", handler: {
             req, resp in
             StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
                 .handleRequest(request: req, response: resp)
@@ -103,32 +111,27 @@ class CompanyController {
 	}
     
     func uploadMediaHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
-        let dir = uploadRoot + mediaDir
         do {
             if let uploads = request.postFileUploads {
                 var medias = [Media]()
-                let rand = URandom()
-                
                 for upload in uploads {
-                    
+
                     let media = Media()
-                    media.name = rand.secureToken + upload.fileName.stripExtension()
-                    media.url = "\(mediaDir)/\(media.name)"
+                    media.name = upload.fileName.uniqueName()
                     media.contentType = upload.contentType
                     medias.append(media)
-
-                    let atPath = URL(fileURLWithPath: upload.tmpFileName)
-                    let toPath = URL(fileURLWithPath: "\(dir)/\(media.name)")
-                    let toThumb = URL(fileURLWithPath: "\(dir)/thumb/\(media.name)")
+                                        
+                    let toMedia = "\(uploadRoot + mediaDir)/\(media.name)"
+                    let toThumb = URL(fileURLWithPath: "\(uploadRoot + thumbDir)/\(media.name)")
                     
-                    let image = Image(url: atPath)
-                    image?.write(to: toPath)
-                    let thumb = image?.resizedTo(height: 300)
-                    thumb?.write(to: toThumb)
+                    try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: toMedia)
+
+                    let image = Image(url: URL(fileURLWithPath: toMedia))
+                    let thumb = image!.resizedTo(width: 480)
+                    thumb!.write(to: toThumb)
                     
                     LogFile.info("Uploaded file \(upload.fileName) => \(media.name)")
                 }
-
                 try response.setJson(medias)
                 response.completed(status: .created)
             }

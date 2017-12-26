@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Company, PdfDocument } from '../shared/models';
+import { Company, PdfDocument, Media } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -26,8 +26,13 @@ export class CompanyService {
             .map(result => <Company>result.json());
     }
 
+    upload(formData: FormData): Observable<Media[]> {
+      return this.http.post('/api/media', formData)
+      .map(result => <Media[]>result.json());
+    }
+
     getHtml(model: PdfDocument): string {
-    return  `
+      return `
         <html>
         <head>
         <style>

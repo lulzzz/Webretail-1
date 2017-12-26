@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { ConfirmationService, Message } from 'primeng/primeng';
-import { MessageService } from 'primeng/components/common/messageservice';
+import { CompanyService } from '../services/company.service';
 import { Media } from './../shared/models';
 import { SessionService } from './../services/session.service';
 
@@ -14,9 +14,9 @@ export class MediaComponent implements OnInit {
     @Input() medias: Media[];
     selectedMedia: string;
 
-    constructor(private messageService: MessageService,
-                private confirmationService: ConfirmationService,
-                private sessionService: SessionService) {
+    constructor(private confirmationService: ConfirmationService,
+                private sessionService: SessionService,
+                private companyService: CompanyService) {
     }
 
     ngOnInit() {
@@ -27,30 +27,32 @@ export class MediaComponent implements OnInit {
             this.medias.push(this.media);
         }
         if (this.medias.length > 0) {
-            this.selectedMedia = this.medias[0].url;
+            this.selectMedia(this.medias[0].name);
         }
     }
 
-    selectMedia(url: string) {
-        this.selectedMedia = url;
+    selectMedia(name: string) {
+        this.selectedMedia = '/media/' + name;
     }
 
-    onBeforeUpload(event) {
-    }
-
-    onUpload(event) {
-        let index = this.medias.length;
+    myUploader(event, form) {
+        const formDate: FormData = new FormData();
         event.files.forEach(file => {
-            index++;
-            const media = new Media(file.name, 'Media/' + file.name, index);
-            this.medias.push(media);
-            this.media.number = media.number;
-            this.media.url = media.url;
-            this.media.name = media.name;
-            // this.media = media;
-            this.selectedMedia = media.url;
+            formDate.append('file[]', file, file.name);
         });
-        this.messageService.add({severity: 'info', summary: 'Files Uploaded', detail: this.media.name});
+        // formDate.append('yourInformation', JSON.stringify(yourInformation));
+        this.companyService.upload(formDate).subscribe(res => {
+            res.forEach(media => {
+                if (this.media) {
+                    this.media.contentType = media.contentType;
+                    this.media.name = media.name;
+                } else {
+                    this.medias.push(media);
+                }
+                this.selectMedia(media.name);
+            });
+            form.clear();
+        });
     }
 
     deleteMediaClick(item) {
