@@ -20,7 +20,6 @@ export class DiscountComponent implements OnInit {
 
     ngOnInit() {
         this.sessionService.checkCredentials(false);
-        this.sessionService.setTitle('Discount');
 
         this.dataform = this.fb.group({
             'percentage': new FormControl('', Validators.nullValidator),
