@@ -127,8 +127,8 @@ class CompanyController {
                     try FileManager.default.moveItem(atPath: upload.tmpFileName, toPath: toMedia)
 
                     let image = Image(url: URL(fileURLWithPath: toMedia))
-                    let thumb = image!.resizedTo(width: 480)
-                    thumb!.write(to: toThumb)
+                    let thumb = image!.resizedTo(width: 380)
+                    thumb!.write(to: toThumb, quality: 70)
                     
                     LogFile.info("Uploaded file \(upload.fileName) => \(media.name)")
                 }

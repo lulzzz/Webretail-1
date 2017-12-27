@@ -137,9 +137,9 @@ struct ProductRepository : ProductProtocol {
                 }
                 
                 let image = Image(url: URL(string: toMedia)!)
-                let thumb = image!.resizedTo(width: 480)
+                let thumb = image!.resizedTo(width: 380)
                 let toThumb = URL(fileURLWithPath: "./upload/thumb/\(m.name)")
-                thumb!.write(to: toThumb)
+                thumb!.write(to: toThumb, quality: 70)
             }
         }
 
@@ -297,9 +297,9 @@ struct ProductRepository : ProductProtocol {
                 }
                 
                 let image = Image(url: URL(string: toMedia)!)
-                let thumb = image!.resizedTo(width: 480)
+                let thumb = image!.resizedTo(width: 380)
                 let toThumb = URL(fileURLWithPath: "./upload/thumb/\(m.name)")
-                thumb!.write(to: toThumb)
+                thumb!.write(to: toThumb, quality: 70)
             }
         }
         current.productMedias = item.productMedias
@@ -463,7 +463,6 @@ struct ProductRepository : ProductProtocol {
             }
         }
         
-        
         /// Publication
         let publication = Publication()
         publication.productId = item.productId
@@ -510,7 +509,6 @@ struct ProductRepository : ProductProtocol {
             )
             """, params: [productId])
         try item.sql("DELETE FROM articles WHERE productId = $1", params: [productId])
-        try item.sql("DELETE FROM discountproducts WHERE productId = $1", params: [productId])
         try item.sql("DELETE FROM publications WHERE productId = $1", params: [productId])
     }
 

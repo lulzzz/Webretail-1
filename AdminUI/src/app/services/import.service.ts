@@ -8,7 +8,7 @@ import { Helpers } from '../shared/helpers';
 @Injectable()
 export class ImportService {
 
-    apiRoot: String = 'http://www.tessilnova.com';
+    apiRoot: String = 'https://www.tessilnova.com:443';
 
     constructor(private http: Http) {
     }

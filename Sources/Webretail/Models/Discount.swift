@@ -24,7 +24,7 @@ class Discount: Codable, JsonbProtocol {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case discountPercentage = "prcentage"
+        case discountPercentage = "percentage"
         case discountPrice = "price"
         case discountStartAt = "startAt"
         case discountFinishAt = "finishAt"
@@ -35,8 +35,8 @@ class Discount: Codable, JsonbProtocol {
  
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        discountPercentage = try container.decode(Int.self, forKey: .discountPercentage)
-        discountPrice = try container.decode(Double.self, forKey: .discountPrice)
+        discountPercentage = try container.decodeIfPresent(Int.self, forKey: .discountPercentage) ?? 0
+        discountPrice = try container.decodeIfPresent(Double.self, forKey: .discountPrice) ?? 0.0
         discountStartAt = try container.decodeIfPresent(String.self, forKey: .discountStartAt)?.DateToInt() ?? 0
         discountFinishAt = try container.decodeIfPresent(String.self, forKey: .discountFinishAt)?.DateToInt() ?? 0
     }
