@@ -20,8 +20,6 @@ export class DetailComponent implements OnInit {
 
     ngOnInit() {
         this.detailform = this.fb.group({
-            'um': new FormControl('', Validators.required),
-            'tax': new FormControl('', Validators.required),
             'selling': new FormControl('', Validators.required),
             'purchase': new FormControl('', Validators.required),
             'weight': new FormControl('', Validators.required),

@@ -50,8 +50,6 @@ func setupDatabase() throws {
 	try Invoice().setup()
 	try Movement().setup()
 	try MovementArticle().setup()
-	try Discount().setup()
-	try DiscountProduct().setup()
 	try Publication().setup()
     try Basket().setup()
 }
@@ -73,7 +71,6 @@ func addIoC() {
 	ioCContainer.register { RegistryRepository() as RegistryProtocol }
 	ioCContainer.register { MovementRepository() as MovementProtocol }
 	ioCContainer.register { MovementArticleRepository() as MovementArticleProtocol }
-	ioCContainer.register { DiscountRepository() as DiscountProtocol }
 	ioCContainer.register { InvoiceRepository() as InvoiceProtocol }
     ioCContainer.register { StatisticRepository() as StatisticProtocol }
 	ioCContainer.register { PublicationRepository() as PublicationProtocol }
@@ -102,7 +99,6 @@ func addRoutesAndHandlers() {
 	server.addRoutes(RegistryController().getRoutes())
 	server.addRoutes(MovementController().getRoutes())
 	server.addRoutes(MovementArticleController().getRoutes())
-	server.addRoutes(DiscountController().getRoutes())
 	server.addRoutes(InvoiceController().getRoutes())
     server.addRoutes(PdfController().getRoutes())
     server.addRoutes(StatisticController().getRoutes())

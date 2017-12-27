@@ -19,8 +19,6 @@
             <a [routerLink]="['/brand']" (click)="onMenuItemClick()"><i class="fa fa-registered"></i>&nbsp;&nbsp;Brands</a>
             <a [routerLink]="['/category']" (click)="onMenuItemClick()"><i class="fa fa-object-group"></i>&nbsp;&nbsp;Categories</a>
             <a [routerLink]="['/attribute']" (click)="onMenuItemClick()"><i class="fa fa-tag"></i>&nbsp;&nbsp;Attributes</a>
-            <a [routerLink]="['/discount']" (click)="onMenuItemClick()"><i class="fa fa-money"></i>&nbsp;&nbsp;Discounts</a>
-            <a [routerLink]="['/import']" (click)="onMenuItemClick()"><i class="fa fa-download"></i>&nbsp;&nbsp;Import</a>
         </div>
 
         <a id="movementmenu" #movementmenu [class.active-menuitem]="movementmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === movementmenu.id ? null : movementmenu.id)">
@@ -43,12 +41,19 @@
             <a [routerLink]="['/report/sales']" (click)="onMenuItemClick()"><i class="fa fa-tachometer"></i>&nbsp;&nbsp;Sales</a>
         </div>
 
-        <a id="channelmenu" #channelmenu [class.active-menuitem]="channelmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === channelmenu.id ? null : channelmenu.id)">
-            <span><i class="fa fa-sitemap"></i>&nbsp;&nbsp;Sales Channels</span>
+        <a id="sourcemenu" #sourcemenu [class.active-menuitem]="sourcemenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === sourcemenu.id ? null : sourcemenu.id)">
+            <span><i class="fa fa-download"></i>&nbsp;&nbsp;Source Channels</span>
         </a>
-        <div [ngClass]="{'submenushow': (channelmenu.id == activeMenuId), 'submenuhide': (channelmenu.id != activeMenuId)}">
-            <a [routerLink]="['/webapp']"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Webretail App</a>
-            <a [routerLink]="['/device']"><i class="fa fa-mobile"></i>&nbsp;&nbsp;Webretail POS</a>
+        <div [ngClass]="{'submenushow': (sourcemenu.id == activeMenuId), 'submenuhide': (sourcemenu.id != activeMenuId)}">
+            <a [routerLink]="['/import']" (click)="onMenuItemClick()"><i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Passpartout</a>
+        </div>
+
+        <a id="salesmenu" #salesmenu [class.active-menuitem]="salesmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === salesmenu.id ? null : salesmenu.id)">
+            <span><i class="fa fa-share-alt"></i>&nbsp;&nbsp;Sales Channels</span>
+        </a>
+        <div [ngClass]="{'submenushow': (salesmenu.id == activeMenuId), 'submenuhide': (salesmenu.id != activeMenuId)}">
+            <a [routerLink]="['/webapp']"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Web App</a>
+            <a [routerLink]="['/device']"><i class="fa fa-mobile"></i>&nbsp;&nbsp;POS App</a>
             <a [routerLink]="['/frame']"><i class="fa fa-wordpress"></i>&nbsp;&nbsp;Wordpress</a>
             <a [routerLink]="['/amazon']"><i class="fa fa-amazon"></i>&nbsp;&nbsp;Amazon</a>
             <a [routerLink]="['/facebook']"><i class="fa fa-facebook"></i>&nbsp;&nbsp;Facebook</a>

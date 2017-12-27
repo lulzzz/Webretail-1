@@ -278,7 +278,7 @@ class EcommerceController {
                 return
             }
             basket.basketProduct = product
-            basket.basketPrice = product.productDiscount.discountId > 0
+            basket.basketPrice = product.productDiscount.discountPrice > 0
                 ? product.productDiscount.discountPrice : product.productPrice.selling
 
             try self.repository.addBasket(item: basket)

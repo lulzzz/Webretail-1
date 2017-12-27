@@ -62,8 +62,7 @@ import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { BarcodeComponent } from './movement/barcode.component';
 import { DocumentComponent } from './movement/document.component';
-import { DiscountsComponent } from './discount/discounts.component';
-import { DiscountComponent } from './discount/discount.component';
+import { DiscountComponent } from './shared/discount.component';
 import { InvoicesComponent } from './invoice/invoices.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { InvoiceDocumentComponent } from './invoice/invoicedocument.component';
@@ -85,7 +84,6 @@ import { StoreService } from './services/store.service';
 import { DeviceService } from './services/device.service';
 import { ProductService } from './services/product.service';
 import { MovementService } from './services/movement.service';
-import { DiscountService } from './services/discount.service';
 import { InvoiceService } from './services/invoice.service';
 import { StatisticService } from './services/statistic.service';
 import { PublicationService } from './services/publication.service';
@@ -164,7 +162,6 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         MovementComponent,
         DocumentComponent,
         BarcodeComponent,
-        DiscountsComponent,
         DiscountComponent,
         InvoicesComponent,
         InvoiceComponent,
@@ -190,7 +187,6 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         DeviceService,
         ProductService,
         MovementService,
-        DiscountService,
         InvoiceService,
         ConfirmationService,
         StatisticService,
@@ -207,7 +203,8 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         MediaComponent,
         TranslationComponent,
         SeoComponent,
-        DetailComponent
+        DetailComponent,
+        DiscountComponent
     ],
     exports: [
         CategoryFilterPipe,

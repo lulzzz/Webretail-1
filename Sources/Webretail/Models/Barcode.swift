@@ -19,8 +19,7 @@ class Barcode: Codable, JsonbProtocol {
         case discount
     }
 
-    init() {
-    }
+    init() { }
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

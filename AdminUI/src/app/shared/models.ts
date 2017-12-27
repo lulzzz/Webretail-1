@@ -469,32 +469,19 @@ export class Invoice {
 }
 
 export class Discount {
-  public discountId: number;
-  public discountName: string;
-  public discountPercentage: number;
-  public discountPrice: number;
-  public discountStartAt: Date;
-  public discountFinishAt: Date;
-  public discountUpdated: Date;
+  public percentage: number;
+  public price: number;
+  public startAt: Date;
+  public FinishAt: Date;
 
   constructor() {
-    this.discountId = 0;
-    this.discountName = '';
-    this.discountPercentage = 0;
-    this.discountPrice = 0;
-    this.discountUpdated = new Date();
+    this.percentage = 0;
+    this.price = 0;
   }
-}
 
-export class DiscountProduct {
-  public discountProductId: number;
-  public discountId: number;
-  public discountProduct: Product;
-
-  constructor() {
-    this.discountProductId = 0;
-    this.discountId = 0;
-    this.discountProduct = new Product();
+  public get isValid(): boolean {
+    const date = new Date();
+    return this.startAt <= date && this.FinishAt >= date;
   }
 }
 

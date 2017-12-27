@@ -435,6 +435,7 @@ body .ui-toolbar-group-right i {
   color: #1f1f1f !important;
   background: white !important;
   border-radius: 5px;
+  padding: 10px 5px !important;
 }
 
 .ui-panel {

@@ -1,12 +1,16 @@
 ﻿<p-progressSpinner *ngIf="!company" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
 
 <form *ngIf="company" [formGroup]="dataform">
-    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid ui-widget-content" style="margin: 10px 0px">
         <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="cashOnDelivery">Cash On Delivery</label></div>
+            <div class="ui-grid-col-4"><h3>Cash On Delivery</h3></div>
             <div class="ui-grid-col-8">
+                <br/>
                 <p-inputSwitch onLabel="Yes" offLabel="No" formControlName="cashOnDelivery" [(ngModel)]="company.cashOnDelivery"></p-inputSwitch>
             </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-12"><hr></div>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-12"><h3>Bank Transfer</h3></div>
@@ -22,6 +26,9 @@
             <div class="ui-grid-col-8">
                 <input pInputText formControlName="bankIban" [(ngModel)]="company.bankIban"/>
             </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-12"><hr></div>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-12"><h3>PayPal</h3></div>
@@ -44,6 +51,7 @@
                 <input pInputText formControlName="paypalProduction" [(ngModel)]="company.paypalProduction"/>
             </div>
         </div>
+        <br/>
         <div class="ui-grid-row">
             <div class="ui-grid-col-12">
                 <button type="button" pButton icon="fa-save" (click)="saveClick()" class="ui-button-primary" label="Save" [disabled]="!dataform.valid"></button>

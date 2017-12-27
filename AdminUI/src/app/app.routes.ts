@@ -25,8 +25,6 @@ import { MovementsComponent } from './movement/movements.component';
 import { MovementComponent } from './movement/movement.component';
 import { DocumentComponent } from './movement/document.component';
 import { BarcodeComponent } from './movement/barcode.component';
-import { DiscountsComponent } from './discount/discounts.component';
-import { DiscountComponent } from './discount/discount.component';
 import { InvoicesComponent } from './invoice/invoices.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { InvoiceDocumentComponent } from './invoice/invoicedocument.component';
@@ -61,8 +59,6 @@ export const routes: Routes = [
     { path: 'movement/:id', component: MovementComponent, pathMatch: 'full' },
     { path: 'movement/document/:id', component: DocumentComponent, pathMatch: 'full' },
     { path: 'movement/barcode/:id', component: BarcodeComponent, pathMatch: 'full' },
-    { path: 'discount', component: DiscountsComponent, pathMatch: 'full' },
-    { path: 'discount/:id', component: DiscountComponent, pathMatch: 'full' },
     { path: 'invoice', component: InvoicesComponent, pathMatch: 'full' },
     { path: 'invoice/:id', component: InvoiceComponent, pathMatch: 'full' },
     { path: 'invoice/document/:id', component: InvoiceDocumentComponent, pathMatch: 'full' },

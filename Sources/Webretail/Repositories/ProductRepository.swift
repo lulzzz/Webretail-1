@@ -149,6 +149,9 @@ struct ProductRepository : ProductProtocol {
         }
         item.productSeo.description = item.productSeo.description.filter({ !$0.value.isEmpty })
 
+        /// Discount
+        item.productDiscount.makeDiscount(sellingPrice: item.productPrice.selling)
+
         /// Product
         item.productDescription = item.productDescription.filter({ !$0.value.isEmpty })
         item.productCreated = Int.now()
@@ -307,6 +310,10 @@ struct ProductRepository : ProductProtocol {
         }
         item.productSeo.description = item.productSeo.description.filter({ !$0.value.isEmpty })
         current.productSeo = item.productSeo
+        
+        /// Discount
+        item.productDiscount.makeDiscount(sellingPrice: item.productPrice.selling)
+        current.productDiscount = item.productDiscount;
         
         /// Product
         current.productDescription = item.productDescription.filter({ !$0.value.isEmpty })
