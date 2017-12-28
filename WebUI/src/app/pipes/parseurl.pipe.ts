@@ -7,7 +7,7 @@ import { Media } from 'app/shared/models';
 })
 export class ParseUrlPipe implements PipeTransform {
   transform(value: Media[]): string {
-    const url = value.length > 0 ? value[0].url : 'Media/logo.jpg';
+    const url = value.length > 0 ? 'media/' + value[0].name : 'media/default.jpg';
     return environment.apiUrl + '/' + url;
   }
 }

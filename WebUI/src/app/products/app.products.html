@@ -13,9 +13,9 @@
         <span mat-line>{{product.brand.brandName}}</span>
         <div *ngIf="product.discount.dicountId>0;then discount_content else price_content"></div>
         <ng-template #discount_content>
-          <p><span class="percentage">-{{product.discount.discountPercentage}}%</span>
+          <p><span class="percentage">-{{product.discount.percentage}}%</span>
           <del>{{product.price.selling | currencyFormat}}</del>
-          <b>{{product.discount.discountPrice | currencyFormat}}</b>
+          <b>{{product.discount.price | currencyFormat}}</b>
           </p>
         </ng-template>
         <ng-template #price_content>

@@ -85,7 +85,7 @@ export class Brand {
     this.brandId = 0;
     this.brandName = '';
     this.translations = [];
-    this.media = new Media('', '', 0);
+    this.media = new Media('', '');
     this.seo = new Seo();
   }
 }
@@ -103,7 +103,7 @@ export class Category {
     this.categoryIsPrimary = false;
     this.categoryName = categoryName;
     this.translations = [];
-    this.media = new Media('', '', 0);
+    this.media = new Media('', '');
     this.seo = new Seo();
   }
 }
@@ -111,8 +111,7 @@ export class Category {
 export class Media {
   constructor(
     public name: string,
-    public url: string,
-    public number: number) { }
+    public contentType: string) { }
 }
 
 export class Translation {
@@ -371,20 +370,14 @@ export class Invoice {
 }
 
 export class Discount {
-  public discountId: number;
-  public discountName: string;
-  public discountPercentage: number;
-  public discountPrice: number;
-  public discountStartAt: Date;
-  public discountFinishAt: Date;
-  public discountUpdated: Date;
+  public percentage: number;
+  public price: number;
+  public startAt: Date;
+  public finishAt: Date;
 
   constructor() {
-    this.discountId = 0;
-    this.discountName = '';
-    this.discountPercentage = 0;
-    this.discountPrice = 0;
-    this.discountUpdated = new Date();
+    this.percentage = 0;
+    this.price = 0;
   }
 }
 
