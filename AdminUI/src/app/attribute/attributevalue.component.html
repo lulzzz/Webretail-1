@@ -19,7 +19,7 @@
         <p-column field="attributeValueName" header="Name" [sortable]="true"></p-column>
     </p-dataTable>
 
-    <p-panel *ngIf="selectedValue">
+    <p-panel *ngIf="selected&&selectedValue">
         <p-header>
             <div class="ui-helper-clearfix">
                 <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Attribute Value</b></span>

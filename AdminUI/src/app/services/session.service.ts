@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Login, Token } from '../shared/models';
+import { Login, Token, Company } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class SessionService {
     username: string;
     menuActive: boolean;
     titleSidebar: string;
- 
+
     constructor(private router: Router, private http: Http) {
         this.title = '';
         this.titleSidebar = '';
@@ -83,5 +83,10 @@ export class SessionService {
     getCredentials(): Observable<any>  {
         return this.http.get('/api/authenticated', { headers: Helpers.getHeaders() })
             .map(response => response.json());
+    }
+
+    getSetting(): Observable<Company> {
+        return this.http.get('/api/company', { headers: Helpers.getHeaders() })
+            .map(result => <Company>result.json());
     }
 }

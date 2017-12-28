@@ -1,6 +1,7 @@
 import { Component, OnInit  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SessionService } from './../services/session.service';
+import { Helpers } from '../shared/helpers';
 
 @Component({
     selector: 'home-component',
@@ -20,7 +21,6 @@ export class HomeComponent implements OnInit  {
 
         if (this.sessionService.isAuthenticated) {
             this.token = localStorage.getItem('token');
-            return;
         }
 
         // this.sessionService.getCredentials()

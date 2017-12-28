@@ -3,8 +3,8 @@
 <div class="container-fluid">
 
     <p-toolbar>
-        <div class="ui-toolbar-group-left" style="margin-left:60px">
-            <button pButton type="button" label="Products" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Back" (click)="cancelClick()" class="ui-button-secondary" icon="fa-reply"></button>
         </div>
         <div class="ui-toolbar-group-right">
             <p-multiSelect [options]="stores" defaultLabel="All stores" (onChange)="onStoreChanged($event)"></p-multiSelect>
@@ -12,8 +12,7 @@
     </p-toolbar>
 
     <ul *ngIf="product">
-        <li>Product <strong>{{product.productName}}</strong></li>
-        <li>Brand <strong>{{product.brand.brandName}}</strong></li>
+        <h3>{{product.productName}}</h3>
         <li><strong>Inventory</strong>
             <ul>
                 <li>Items: <strong>{{totalRecords}}</strong></li>

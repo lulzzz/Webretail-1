@@ -472,7 +472,7 @@ export class Discount {
   public percentage: number;
   public price: number;
   public startAt: Date;
-  public FinishAt: Date;
+  public finishAt: Date;
 
   constructor() {
     this.percentage = 0;
@@ -481,7 +481,7 @@ export class Discount {
 
   public get isValid(): boolean {
     const date = new Date();
-    return this.startAt <= date && this.FinishAt >= date;
+    return this.startAt <= date && this.finishAt >= date;
   }
 }
 

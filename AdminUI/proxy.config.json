@@ -1,6 +1,16 @@
 {
-    "/*/**": {
-        "target": "https://localhost:8181",
+    "/media/**": {
+        "target": "https://www.webretail.cloud:8181",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/thumb/**": {
+        "target": "https://www.webretail.cloud:8181",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/api/**": {
+        "target": "https://www.webretail.cloud:8181",
         "secure": false,
         "logLevel": "debug"
     }
