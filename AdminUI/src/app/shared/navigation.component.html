@@ -19,6 +19,7 @@
             <a [routerLink]="['/brand']" (click)="onMenuItemClick()"><i class="fa fa-registered"></i>&nbsp;&nbsp;Brands</a>
             <a [routerLink]="['/category']" (click)="onMenuItemClick()"><i class="fa fa-object-group"></i>&nbsp;&nbsp;Categories</a>
             <a [routerLink]="['/attribute']" (click)="onMenuItemClick()"><i class="fa fa-tag"></i>&nbsp;&nbsp;Attributes</a>
+            <a [routerLink]="['/import']" (click)="onMenuItemClick()"><i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Passpartout</a>
         </div>
 
         <a id="movementmenu" #movementmenu [class.active-menuitem]="movementmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === movementmenu.id ? null : movementmenu.id)">
@@ -41,25 +42,6 @@
             <a [routerLink]="['/report/sales']" (click)="onMenuItemClick()"><i class="fa fa-tachometer"></i>&nbsp;&nbsp;Sales</a>
         </div>
 
-        <a id="sourcemenu" #sourcemenu [class.active-menuitem]="sourcemenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === sourcemenu.id ? null : sourcemenu.id)">
-            <span><i class="fa fa-download"></i>&nbsp;&nbsp;Source Channels</span>
-        </a>
-        <div [ngClass]="{'submenushow': (sourcemenu.id == activeMenuId), 'submenuhide': (sourcemenu.id != activeMenuId)}">
-            <a [routerLink]="['/import']" (click)="onMenuItemClick()"><i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Passpartout</a>
-        </div>
-
-        <a id="salesmenu" #salesmenu [class.active-menuitem]="salesmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === salesmenu.id ? null : salesmenu.id)">
-            <span><i class="fa fa-share-alt"></i>&nbsp;&nbsp;Sales Channels</span>
-        </a>
-        <div [ngClass]="{'submenushow': (salesmenu.id == activeMenuId), 'submenuhide': (salesmenu.id != activeMenuId)}">
-            <a [routerLink]="['/webapp']"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Web App</a>
-            <a [routerLink]="['/device']"><i class="fa fa-mobile"></i>&nbsp;&nbsp;POS App</a>
-            <a [routerLink]="['/frame']"><i class="fa fa-wordpress"></i>&nbsp;&nbsp;Wordpress</a>
-            <a [routerLink]="['/amazon']"><i class="fa fa-amazon"></i>&nbsp;&nbsp;Amazon</a>
-            <a [routerLink]="['/facebook']"><i class="fa fa-facebook"></i>&nbsp;&nbsp;Facebook</a>
-            <a [routerLink]="['/ebay']"><i class="fa fa-shopping-bag"></i>&nbsp;&nbsp;eBay</a>
-        </div>
-
         <a id="settingmenu" #settingmenu [class.active-menuitem]="settingmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === settingmenu.id ? null : settingmenu.id)">
             <span><i class="fa fa-cog"></i>&nbsp;&nbsp;Setting</span>
         </a>
@@ -72,6 +54,7 @@
             <a [routerLink]="['/account']"><i class="fa fa-user"></i>&nbsp;&nbsp;Accounts</a>
             <a [routerLink]="['/company']"><i class="fa fa-home"></i>&nbsp;&nbsp;Company</a>
             <a [routerLink]="['/store']"><i class="fa fa-cube"></i>&nbsp;&nbsp;Stores</a>
+            <a [routerLink]="['/device']"><i class="fa fa-mobile"></i>&nbsp;&nbsp;POS App</a>
             <a [routerLink]="['/localization']"><i class="fa fa-globe"></i>&nbsp;&nbsp;Localization</a>
             <a [routerLink]="['/smtp']"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Smtp</a>
             <a [routerLink]="['/payment']"><i class="fa fa-money"></i>&nbsp;&nbsp;Payment</a>

@@ -1,5 +1,5 @@
 //
-//  Remote.swift
+//  AmazonAWS.swift
 //  Webretail
 //
 //  Created by Gerardo Grisolini on 13/01/18.

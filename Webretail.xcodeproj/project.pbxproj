@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56BCEE36200A71EE00F1D2D9 /* AmazonAWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BCEE35200A71EE00F1D2D9 /* AmazonAWS.swift */; };
 		OBJ_1000 /* Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_561 /* Realm.swift */; };
 		OBJ_1001 /* MemorySessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_563 /* MemorySessionManager.swift */; };
 		OBJ_1002 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_564 /* SessionManager.swift */; };
@@ -1171,6 +1172,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		56BCEE35200A71EE00F1D2D9 /* AmazonAWS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmazonAWS.swift; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* AuthFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFilter.swift; sourceTree = "<group>"; };
 		OBJ_100 /* MovementArticleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementArticleProtocol.swift; sourceTree = "<group>"; };
@@ -2653,7 +2655,7 @@
 			path = ".build/checkouts/Perfect-Thread.git-6541237758607105655/Sources";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -2662,7 +2664,6 @@
 				OBJ_138 /* Dependencies */,
 				OBJ_595 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_500 /* SwiftMoment 0.9.1 */ = {
@@ -2976,6 +2977,7 @@
 				OBJ_110 /* Repositories */,
 				OBJ_131 /* Setup.swift */,
 				OBJ_132 /* main.swift */,
+				56BCEE35200A71EE00F1D2D9 /* AmazonAWS.swift */,
 			);
 			name = Webretail;
 			path = Sources/Webretail;
@@ -3794,13 +3796,13 @@
 				LastUpgradeCheck = 9999;
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "Webretail" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_595 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -4522,6 +4524,7 @@
 				OBJ_759 /* AngularController.swift in Sources */,
 				OBJ_760 /* ArticleController.swift in Sources */,
 				OBJ_761 /* AttributeController.swift in Sources */,
+				56BCEE36200A71EE00F1D2D9 /* AmazonAWS.swift in Sources */,
 				OBJ_762 /* AttributeValueController.swift in Sources */,
 				OBJ_763 /* AuthenticationController.swift in Sources */,
 				OBJ_764 /* BrandController.swift in Sources */,
