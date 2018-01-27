@@ -19,7 +19,7 @@
       "styles": [
         "styles.css",
         "theme.scss",
-        "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css"
+         "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
