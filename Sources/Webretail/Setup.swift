@@ -20,7 +20,7 @@ func setupDatabase() throws {
 	PostgresConnector.port = 5432
     PostgresConnector.host = "localhost"
     PostgresConnector.username = "postgres"
-    PostgresConnector.password = "postgres"
+    PostgresConnector.password = "zBnwEe8QDR"
     PostgresConnector.database = "webretail"
     StORMdebug = false
 

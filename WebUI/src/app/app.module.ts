@@ -30,6 +30,7 @@ import { ImageSlider, SafeHtmlPipe } from 'app/shared/image.slider';
 
 import { AppComponent } from 'app/app.component';
 import { HomeComponent } from 'app/home/home.component';
+import { CarouselComponent } from 'app/home/carousel.component';
 import { AccountComponent } from 'app/account/app.account';
 import { LoginComponent } from 'app/account/app.login';
 import { RegisterComponent } from 'app/account/app.register';
@@ -58,6 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImageSlider,
     AppComponent,
     HomeComponent,
+    CarouselComponent,
     AccountComponent,
     LoginComponent,
     RegisterComponent,
