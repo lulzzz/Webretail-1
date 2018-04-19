@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-echo 'uuid-dev' > Aptfile
-heroku buildpacks:add --index 1 heroku-buildpack-apt

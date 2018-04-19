@@ -1311,7 +1311,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		56FA30D82089483000D6697E /* pre_compile */ = {isa = PBXFileReference; lastKnownFileType = text; name = pre_compile; path = bin/pre_compile; sourceTree = "<group>"; };
+		56FA30D920894F0C00D6697E /* Aptfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Aptfile; sourceTree = "<group>"; };
 		"COpenSSL::COpenSSL::Product" /* COpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = COpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_100 /* JsonbProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonbProtocol.swift; sourceTree = "<group>"; };
 		OBJ_101 /* MovementArticleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementArticleProtocol.swift; sourceTree = "<group>"; };
@@ -2940,7 +2940,7 @@
 		OBJ_5 /*  */ = {
 			isa = PBXGroup;
 			children = (
-				56FA30D82089483000D6697E /* pre_compile */,
+				56FA30D920894F0C00D6697E /* Aptfile */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_134 /* Tests */,
