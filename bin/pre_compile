@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-#apt-get install openssl libssl-dev uuid-dev
+echo 'uuid-dev' > Aptfile
+heroku buildpacks:add --index 1 heroku-buildpack-apt
