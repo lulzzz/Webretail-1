@@ -14,7 +14,7 @@ import { Helpers } from './../shared/helpers';
 
 export class RegistryComponent implements OnInit {
     totalRecords = 0;
-    registrys: Registry[];
+    registries: Registry[];
     selected: Registry;
     displayPanel: boolean;
     dataform: FormGroup;
@@ -46,15 +46,15 @@ export class RegistryComponent implements OnInit {
 
         this.registryService.getAll()
             .subscribe(result => {
-                this.registrys = result;
-                this.totalRecords = this.registrys.length;
+                this.registries = result;
+                this.totalRecords = this.registries.length;
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
 
     get isNew(): boolean { return this.selected == null || this.selected.registryId === 0; }
 
-    get selectedIndex(): number { return this.registrys.indexOf(this.selected); }
+    get selectedIndex(): number { return this.registries.indexOf(this.selected); }
 
     onRowSelect(event: any) {
         this.displayPanel = true;
@@ -75,7 +75,7 @@ export class RegistryComponent implements OnInit {
             this.registryService
                 .create(this.selected)
                 .subscribe(result => {
-                    this.registrys.push(result);
+                    this.registries.push(result);
                     this.totalRecords++;
                     this.closeClick();
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
@@ -83,7 +83,7 @@ export class RegistryComponent implements OnInit {
             this.registryService
                 .update(this.selected.registryId, this.selected)
                 .subscribe(result => {
-                    this.registrys[this.selectedIndex] = this.selected;
+                    this.registries[this.selectedIndex] = this.selected;
                     this.closeClick();
                 }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
         }
@@ -96,7 +96,7 @@ export class RegistryComponent implements OnInit {
                 this.registryService
                     .delete(this.selected.registryId)
                     .subscribe(result => {
-                        this.registrys.splice(this.selectedIndex, 1);
+                        this.registries.splice(this.selectedIndex, 1);
                         this.totalRecords--;
                         this.closeClick();
                     }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));

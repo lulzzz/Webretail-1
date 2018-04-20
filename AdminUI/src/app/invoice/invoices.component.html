@@ -28,7 +28,7 @@
         </p-column>
         <p-column field="invoiceRegistry.registryName" header="Registry" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}" filterMatchMode="equals">
             <ng-template pTemplate="filter" let-col>
-                <p-dropdown [options]="registrysFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+                <p-dropdown [options]="registriesFiltered" [style]="{'width':'100%'}" [filter]="true" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
             </ng-template>
         </p-column>
         <p-column header="Amount ({{amountValue||'No Filter'}})" [editable]="false" [sortable]="true" [filter]="true" [style]="{'overflow':'visible'}">
@@ -79,7 +79,7 @@
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-4"><label for="registry">Registry</label></div>
                     <div class="ui-grid-col-8">
-                        <p-dropdown [options]="registrys" formControlName="registry" [(ngModel)]="selected.invoiceRegistry" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+                        <p-dropdown [options]="registries" formControlName="registry" [(ngModel)]="selected.invoiceRegistry" [filter]="true" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
                     </div>
                 </div>
                 <div class="ui-grid-row">

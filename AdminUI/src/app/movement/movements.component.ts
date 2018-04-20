@@ -28,8 +28,8 @@ export class MovementsComponent implements OnInit {
     storesFiltered: SelectItem[];
     causals: SelectItem[];
     causalsFiltered: SelectItem[];
-    registrys: SelectItem[];
-    registrysFiltered: SelectItem[];
+    registries: SelectItem[];
+    registriesFiltered: SelectItem[];
     status: SelectItem[];
     statusFiltered: SelectItem[];
     tags: TagGroup[];
@@ -137,9 +137,9 @@ export class MovementsComponent implements OnInit {
         this.registryService
             .getAll()
             .subscribe(result => {
-                this.registrys = [];
-                this.registrys.push({label: '', value: null});
-                this.registrys = this.registrys.concat(result.map(p => Helpers.newSelectItem(p, p.registryName)));
+                this.registries = [];
+                this.registries.push({label: '', value: null});
+                this.registries = this.registries.concat(result.map(p => Helpers.newSelectItem(p, p.registryName)));
             }
         );
 
@@ -160,11 +160,11 @@ export class MovementsComponent implements OnInit {
             Helpers.newSelectItem(item.movementCausal.causalName)));
         this.causalsFiltered = this.causalsFiltered.concat(filterCusals);
 
-        this.registrysFiltered = [];
-        this.registrysFiltered.push({label: 'All', value: null});
+        this.registriesFiltered = [];
+        this.registriesFiltered.push({label: 'All', value: null});
         const filterRegistry = Helpers.distinct(this.items.map((item: Movement) =>
             Helpers.newSelectItem(item.movementRegistry.registryName)));
-        this.registrysFiltered = this.registrysFiltered.concat(filterRegistry);
+        this.registriesFiltered = this.registriesFiltered.concat(filterRegistry);
 
         this.statusFiltered = [];
         this.statusFiltered.push({label: 'All', value: null});
@@ -214,8 +214,8 @@ export class MovementsComponent implements OnInit {
             this.selected.movementCausal = this.device ? this.causals.find(p => p.value.causalIsPos).value : this.causals[0].value;
             this.onCausalChange(null);
         }
-        if (this.registrys.length > 0) {
-            this.selected.movementRegistry = this.registrys[0].value;
+        if (this.registries.length > 0) {
+            this.selected.movementRegistry = this.registries[0].value;
         }
         if (this.status.length > 0) {
             this.selected.movementStatus = this.status[0].value;

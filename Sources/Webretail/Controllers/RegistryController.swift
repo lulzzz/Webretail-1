@@ -20,8 +20,8 @@ class RegistryController {
 	public func getRoutes() -> Routes {
 		var routes = Routes()
 		
-		routes.add(method: .get, uri: "/api/registry", handler: registrysHandlerGET)
-		routes.add(method: .get, uri: "/api/registryfrom/{date}", handler: registrysHandlerGET)
+		routes.add(method: .get, uri: "/api/registry", handler: registriesHandlerGET)
+		routes.add(method: .get, uri: "/api/registryfrom/{date}", handler: registriesHandlerGET)
 		routes.add(method: .get, uri: "/api/registry/{id}", handler: registryHandlerGET)
 		routes.add(method: .post, uri: "/api/registry", handler: registryHandlerPOST)
 		routes.add(method: .put, uri: "/api/registry/{id}", handler: registryHandlerPUT)
@@ -30,7 +30,7 @@ class RegistryController {
 		return routes
 	}
 	
-	func registrysHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+	func registriesHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
 		let date = request.urlVariables["date"]
 		do {
 			let items = try self.repository.getAll(date: date == nil ? 0 : Int(date!)!)

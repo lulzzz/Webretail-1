@@ -18,8 +18,8 @@ export class InvoicesComponent implements OnInit {
     totalRecords = 0;
     items: Invoice[];
     selected: Invoice;
-    registrys: SelectItem[];
-    registrysFiltered: SelectItem[];
+    registries: SelectItem[];
+    registriesFiltered: SelectItem[];
     payments: SelectItem[];
     buttons: MenuItem[];
     displayPanel: boolean;
@@ -54,20 +54,20 @@ export class InvoicesComponent implements OnInit {
             .subscribe(result => {
                 this.items = result;
                 this.totalRecords = this.items.length;
-                this.registrysFiltered = [];
-                this.registrysFiltered.push({label: 'All', value: null});
+                this.registriesFiltered = [];
+                this.registriesFiltered.push({label: 'All', value: null});
                 const filterRegistry = Helpers.distinct(result.map((item: Invoice) =>
                     Helpers.newSelectItem(item.invoiceRegistry.registryName)));
-                this.registrysFiltered = this.registrysFiltered.concat(filterRegistry);
+                this.registriesFiltered = this.registriesFiltered.concat(filterRegistry);
              }
         );
 
         this.registryService
             .getAll()
             .subscribe(result => {
-                this.registrys = [];
-                this.registrys.push({label: '', value: null});
-                this.registrys = this.registrys.concat(result.map(p => Helpers.newSelectItem(p, p.registryName)));
+                this.registries = [];
+                this.registries.push({label: '', value: null});
+                this.registries = this.registries.concat(result.map(p => Helpers.newSelectItem(p, p.registryName)));
             }
         );
 

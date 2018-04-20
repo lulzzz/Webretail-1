@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.config.json",
-    "build": "ng build --target=production",
+    "build": "ng build --target=production --deploy-url /admin/",
     "deploy": "rm -rf ../webroot/admin/*; mv ./dist/* ../webroot/admin/;"
   },
   "private": true,

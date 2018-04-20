@@ -47,7 +47,7 @@ class Registry: PostgresSqlORM, Codable, Account {
         case registryUpdated = "updatedAt"
     }
     
-    open override func table() -> String { return "registrys" }
+    open override func table() -> String { return "registries" }
 	open override func tableIndexes() -> [String] { return ["registryName", "registryEmail"] }
 	
 	open override func to(_ this: StORMRow) {
