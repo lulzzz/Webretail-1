@@ -17,6 +17,7 @@
 //===----------------------------------------------------------------------===//
 //
 
+import Foundation
 import PerfectNet
 import PerfectHTTP
 import PerfectHTTPServer
@@ -44,10 +45,13 @@ LogFile.location = "./StORMlog.txt"
 // Create HTTP server.
 let server = HTTPServer()
 server.serverName = "webretail.herokuapp.com"
-server.serverPort = 8181
 server.documentRoot = "./webroot"
 //server.ssl = cert
 //server.alpnSupport = alpn
+server.serverPort = 8181
+if let portString = ProcessInfo.processInfo.environment["PORT"] {
+    server.serverPort = UInt16(portString)!
+}
 
 // Register dependency injection
 addIoC()
