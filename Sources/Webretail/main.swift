@@ -73,7 +73,6 @@ addRoutesAndHandlers()
 //    Route(method: .get, uri: "/orders", handler: HTTPHandler.angularHandler(webapi: false)),
 //    Route(method: .get, uri: "/document/{id}", handler: HTTPHandler.angularHandler(webapi: false))
 //]
-
 //// Launch the Web server.
 //Threading.dispatch {
 //    _ = try? HTTPServer.launch(
