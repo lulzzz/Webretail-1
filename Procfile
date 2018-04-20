@@ -1,1 +1,1 @@
-web: Webretail --workers 5 --bind 0.0.0.0:$PORT
+web: Webretail --workers 5 --bind 0.0.0.0:8181
