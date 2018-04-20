@@ -3348,17 +3348,17 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* AmazonMWS.swift */,
-				OBJ_10 /* Authentication */,
-				OBJ_19 /* Controllers */,
 				OBJ_43 /* Extensions.swift */,
 				OBJ_44 /* HTTPTurnstile.swift */,
 				OBJ_45 /* IoCContainer.swift */,
-				OBJ_46 /* Models */,
+				OBJ_133 /* main.swift */,
 				OBJ_88 /* PostgreSqlORM.swift */,
+				OBJ_132 /* Setup.swift */,
+				OBJ_10 /* Authentication */,
+				OBJ_19 /* Controllers */,
+				OBJ_46 /* Models */,
 				OBJ_89 /* Protocols */,
 				OBJ_111 /* Repositories */,
-				OBJ_132 /* Setup.swift */,
-				OBJ_133 /* main.swift */,
 			);
 			name = Webretail;
 			path = Sources/Webretail;

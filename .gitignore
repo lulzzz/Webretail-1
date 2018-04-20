@@ -48,6 +48,4 @@ StORMlog.txt
 *.log
 node_modules/
 dist
-#webroot
-Upload
 .DS_Store
