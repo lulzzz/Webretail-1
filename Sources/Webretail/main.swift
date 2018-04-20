@@ -38,16 +38,16 @@ SessionConfig.CORS.maxAge = 3000
 LogFile.location = "./StORMlog.txt"
 
 // Certs
-let cert = (sslCert: "certificate.crt", sslKey: "private.pem")
-let alpn: [HTTPServer.ALPNSupport] = [.http11, .http2]
+//let cert = (sslCert: "certificate.crt", sslKey: "private.pem")
+//let alpn: [HTTPServer.ALPNSupport] = [.http11, .http2]
 
 // Create HTTP server.
 let server = HTTPServer()
 server.serverName = "webretail.herokuapp.com"
-server.serverPort = 443
+server.serverPort = 8181
 server.documentRoot = "./webroot"
-server.ssl = cert
-server.alpnSupport = alpn
+//server.ssl = cert
+//server.alpnSupport = alpn
 
 // Register dependency injection
 addIoC()
