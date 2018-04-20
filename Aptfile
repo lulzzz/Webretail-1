@@ -1,14 +1,2 @@
 libssl-dev
-libcurl4-openssl-dev
-libpq-dev
 uuid-dev
-libxml2-dev
-pkg-config
-wget
-build-essential
-chrpath
-libxft-dev
-libfreetype6-dev
-libfreetype6
-libfontconfig1-dev
-libfontconfig1
