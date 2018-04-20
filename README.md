@@ -88,7 +88,7 @@ To run this project from Xcode, edit the Scheme, Under "Options" for "run", chec
 * Once the project has compiled, execute `sudo ../.build/x86_64-unknown-linux/release/Webretail`
 
 ```
-[INFO] Starting HTTP server on 0.0.0.0:80 with document root ./webroot
+[INFO] Starting HTTP server on 0.0.0.0:8181 with document root ./webroot
 ```
 
 ## Angular 5 - Terminal
@@ -123,4 +123,14 @@ docker run -p 5432:5432 --name db -e POSTGRES_DB=webretail -e POSTGRES_PASSWORD=
 ```
 docker build -t webretail .
 docker run -d -p 8181:8181 --link db -t webretail
+```
+
+## Heroku
+
+Buildpack:
+
+```
+https://github.com/heroku/heroku-buildpack-apt.git
+https://github.com/kylef/heroku-buildpack-swift.git
+https://github.com/stomita/heroku-buildpack-phantomjs.git
 ```
