@@ -43,8 +43,8 @@ let alpn: [HTTPServer.ALPNSupport] = [.http11, .http2]
 
 // Create HTTP server.
 let server = HTTPServer()
-server.serverName = "www.webretail.cloud"
-server.serverPort = 8181
+server.serverName = "webretail.herokuapp.com"
+server.serverPort = 443
 server.documentRoot = "./webroot"
 server.ssl = cert
 server.alpnSupport = alpn
