@@ -1347,8 +1347,7 @@
 		OBJ_131 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		OBJ_132 /* Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setup.swift; sourceTree = "<group>"; };
 		OBJ_133 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		OBJ_135 /* webroot */ = {isa = PBXFileReference; lastKnownFileType = folder; path = webroot; sourceTree = SOURCE_ROOT; };
-		OBJ_138 /* upload */ = {isa = PBXFileReference; lastKnownFileType = folder; path = upload; sourceTree = SOURCE_ROOT; };
+		OBJ_138 /* webroot */ = {isa = PBXFileReference; lastKnownFileType = folder; path = webroot; sourceTree = SOURCE_ROOT; };
 		OBJ_14 /* CustomRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRealm.swift; sourceTree = "<group>"; };
 		OBJ_143 /* ClassificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassificationData.swift; sourceTree = "<group>"; };
 		OBJ_144 /* Clothing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clothing.swift; sourceTree = "<group>"; };
@@ -2934,18 +2933,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_134 /* Tests */,
-				OBJ_135 /* webroot */,
-				OBJ_138 /* upload */,
+				OBJ_138 /* webroot */,
 				OBJ_139 /* Dependencies */,
 				OBJ_664 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_523 /* include */ = {
@@ -4241,7 +4238,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_664 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

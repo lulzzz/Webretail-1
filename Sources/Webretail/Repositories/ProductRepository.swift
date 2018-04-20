@@ -131,14 +131,14 @@ struct ProductRepository : ProductProtocol {
                 let data = try? Data(contentsOf: url!)
                 
                 m.name = m.name.uniqueName();
-                let toMedia = "./upload/media/\(m.name)"
+                let toMedia = "./webroot/media/\(m.name)"
                 if !FileManager.default.createFile(atPath: toMedia, contents: data, attributes: nil) {
                     throw StORMError.error("File \(m.name) not found")
                 }
                 
                 let image = Image(url: URL(string: toMedia)!)
                 let thumb = image!.resizedTo(width: 380)
-                let toThumb = URL(fileURLWithPath: "./upload/thumb/\(m.name)")
+                let toThumb = URL(fileURLWithPath: "./webroot/thumb/\(m.name)")
                 thumb!.write(to: toThumb, quality: 70)
             }
         }
@@ -291,14 +291,14 @@ struct ProductRepository : ProductProtocol {
                 let data = try? Data(contentsOf: url!)
 
                 m.name = m.name.uniqueName();
-                let toMedia = "./upload/media/\(m.name)"
+                let toMedia = "./webroot/media/\(m.name)"
                 if !FileManager.default.createFile(atPath: toMedia, contents: data, attributes: nil) {
                     throw StORMError.error("File \(m.name) not found")
                 }
                 
                 let image = Image(url: URL(string: toMedia)!)
                 let thumb = image!.resizedTo(width: 380)
-                let toThumb = URL(fileURLWithPath: "./upload/thumb/\(m.name)")
+                let toThumb = URL(fileURLWithPath: "./webroot/thumb/\(m.name)")
                 thumb!.write(to: toThumb, quality: 70)
             }
         }

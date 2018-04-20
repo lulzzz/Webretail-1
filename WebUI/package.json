@@ -1,13 +1,14 @@
 {
-  "name": "webretail",
-  "version": "0.0.0",
+  "name": "webretail-web",
+  "version": "1.0.0",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --target=production",
-    "build-dev": "ng build"
+    "build-dev": "ng build",
+    "deploy": "rm -rf ../webroot/web/*; mv ./dist/* ../webroot/web/;"
   },
   "private": true,
   "dependencies": {

@@ -17,11 +17,18 @@ let ioCContainer = IoCContainer()
 
 func setupDatabase() throws {
     
-	PostgresConnector.port = 5432
-    PostgresConnector.host = "ec2-79-125-117-53.eu-west-1.compute.amazonaws.com"
-    PostgresConnector.username = "irforapulegeue"
-    PostgresConnector.password = "85390b00dcc052ee4ffe5b362fa86901723d3c708ae33fa4a9a51c6cc2a78804"
-    PostgresConnector.database = "d142hqtitlk1lk"
+    #if os(Linux)
+        PostgresConnector.host = "ec2-79-125-117-53.eu-west-1.compute.amazonaws.com"
+        PostgresConnector.username = "irforapulegeue"
+        PostgresConnector.password = "85390b00dcc052ee4ffe5b362fa86901723d3c708ae33fa4a9a51c6cc2a78804"
+        PostgresConnector.database = "d142hqtitlk1lk"
+    #else
+        PostgresConnector.host = "localhost"
+        PostgresConnector.username = "postgres"
+        PostgresConnector.password = "postgres"
+        PostgresConnector.database = "webretail"
+    #endif
+    PostgresConnector.port = 5432
     StORMdebug = false
 
 	try Company().setup()
@@ -116,6 +123,8 @@ func addFilters() {
     authenticationConfig.exclude("/api/ecommerce/category/*")
     authenticationConfig.exclude("/api/ecommerce/brand/*")
     authenticationConfig.exclude("/api/ecommerce/product/*")
+    authenticationConfig.exclude("/admin/*")
+    authenticationConfig.exclude("/web/*")
 
 	let authFilter = AuthFilter(authenticationConfig)
 	

@@ -44,7 +44,7 @@ import { DocumentComponent } from 'app/order/app.document';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   // return new TranslateHttpLoader(http);
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './web/assets/i18n/', '.json');
 }
 
 @NgModule({

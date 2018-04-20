@@ -153,7 +153,7 @@ extension HTTPHandler {
             req, resp in
             resp.setHeader(.contentType, value: "text/html")
             
-            let data = FileManager.default.contents(atPath: webapi ? "./webroot/index.html" : "./WebUI/dist/index.html")
+            let data = FileManager.default.contents(atPath: webapi ? "./webroot/admin/index.html" : "./webroot/web/index.html")
             
             guard let content = data else {
                 resp.completed(status: .notFound)

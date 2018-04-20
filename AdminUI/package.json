@@ -1,13 +1,13 @@
 {
-  "name": "webretail",
-  "version": "0.0.0",
+  "name": "webretail-admin",
+  "version": "1.0.0",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.config.json",
     "build": "ng build --target=production",
-    "deploy": "rm -rf ../webroot/*; mv ./dist/* ../webroot/;"
+    "deploy": "rm -rf ../webroot/admin/*; mv ./dist/* ../webroot/admin/;"
   },
   "private": true,
   "dependencies": {

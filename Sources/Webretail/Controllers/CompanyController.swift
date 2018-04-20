@@ -15,7 +15,7 @@ import SwiftGD
 
 class CompanyController {
 	
-    let uploadRoot = "./upload"
+    let uploadRoot = "./webroot"
     let mediaDir = "/media"
     let thumbDir = "/thumb"
     let csvDir = "/csv"
@@ -57,23 +57,23 @@ class CompanyController {
             Log.terminal(message: "The document root \(uploadRoot) could not be created.")
         }
         
-        routes.add(method: .get, uri: mediaDir + "/**", handler: {
-            req, resp in
-            StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
-                .handleRequest(request: req, response: resp)
-        })
-
-        routes.add(method: .get, uri: thumbDir + "/**", handler: {
-            req, resp in
-            StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
-                .handleRequest(request: req, response: resp)
-        })
-
-        routes.add(method: .get, uri: csvDir + "/**", handler: {
-            req, resp in
-            StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
-                .handleRequest(request: req, response: resp)
-        })
+//        routes.add(method: .get, uri: mediaDir + "/**", handler: {
+//            req, resp in
+//            StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
+//                .handleRequest(request: req, response: resp)
+//        })
+//
+//        routes.add(method: .get, uri: thumbDir + "/**", handler: {
+//            req, resp in
+//            StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
+//                .handleRequest(request: req, response: resp)
+//        })
+//
+//        routes.add(method: .get, uri: csvDir + "/**", handler: {
+//            req, resp in
+//            StaticFileHandler(documentRoot: self.uploadRoot, allowResponseFilters: false)
+//                .handleRequest(request: req, response: resp)
+//        })
 
         return routes
 	}
