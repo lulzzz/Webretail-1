@@ -10,6 +10,7 @@ import Foundation
 import PerfectHTTP
 import PerfectHTTPServer
 import SwiftRandom
+import mwsWebretail
 //#if os(OSX)
 //    import Quartz
 //#endif
@@ -245,3 +246,234 @@ extension Array where Element:Translation {
 //    }
 //}
 //#endif
+
+// Amazon MWS
+
+import struct mwsWebretail.Product
+typealias MwsProduct = mwsWebretail.Product
+import struct mwsWebretail.Price
+typealias MwsPrice = mwsWebretail.Price
+
+extension Product {
+    
+    func productFeed() -> ProductFeed {
+        
+        var messages: [ProductMessage] = [ProductMessage]()
+        
+        let department = self._categories.first(where: { $0._category.categoryIsPrimary })?._category.categoryName
+        let material = self._attributes.first(where: { $0._attribute.attributeName == "Material" })?._attributeValues.first?._attributeValue.attributeValueName
+        let sizeId = self._attributes.first(where: { $0._attribute.attributeName == "Size" })?.attributeId ?? 0
+        let colorId = self._attributes.first(where: { $0._attribute.attributeName == "Color" })?.attributeId ?? 0
+        var variationTheme: VariationTheme = .sizeColor
+        if sizeId == 0 { variationTheme = .color }
+        if colorId == 0 { variationTheme = .size }
+        
+        messages.append(
+            ProductMessage(
+                operationType: .update,
+                product: MwsProduct(
+                    sku: "WEB\(self.productCode)",
+                    standardProductID: nil,
+                    condition: Condition(conditionType: .new),
+                    itemPackageQuantity: nil,
+                    numberOfItems: nil,
+                    descriptionData: DescriptionData(
+                        title: self.productName,
+                        brand: self._brand.brandName,
+                        description: self.productDescription.defaultValue(),
+                        bulletPoint: ""
+                    ),
+                    productData: ProductData(
+                        clothing: Clothing(
+                            variationData: VariationData(
+                                parentage: .parent,
+                                size: nil,
+                                color: nil,
+                                variationTheme: variationTheme
+                            ),
+                            classificationData: ClassificationData(
+                                clothingType: .outerwear,
+                                department: department ?? "",
+                                materialComposition: material ?? "",
+                                outerMaterial: material ?? ""
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        
+        self._articles.forEach { (article) in
+            
+            let barcode = article.articleBarcodes.first(where: { $0.tags.count == 0 })!.barcode
+            let attributeValues = article._attributeValues
+                .filter({ $0._attributeValue.attributeId == sizeId || $0._attributeValue.attributeId == colorId })
+                .compactMap({ $0._attributeValue })
+            let attibuteDesc = attributeValues.compactMap({ $0.attributeValueName }).joined(separator: ", ")
+            let size = attributeValues.first(where: { $0.attributeId == sizeId })?.attributeValueName
+            let color = attributeValues.first(where: { $0.attributeId == colorId })?.attributeValueName
+            
+            messages.append(
+                ProductMessage(
+                    operationType: .update,
+                    product: MwsProduct(
+                        sku: "WEB\(self.productCode)-\(article.articleId)",
+                        standardProductID: StandardProductID(type: .EAN, value: barcode),
+                        condition: Condition(conditionType: .new),
+                        itemPackageQuantity: 1,
+                        numberOfItems: 1,
+                        descriptionData: DescriptionData(
+                            title: "\(self.productName) (\(attibuteDesc))",
+                            brand: self._brand.brandName,
+                            description: self.productDescription.defaultValue(),
+                            bulletPoint: ""),
+                        productData: ProductData(
+                            clothing: Clothing(
+                                variationData: VariationData(
+                                    parentage: .parent,
+                                    size: size,
+                                    color: color,
+                                    variationTheme: variationTheme
+                                ),
+                                classificationData: ClassificationData(
+                                    clothingType: .outerwear,
+                                    department: department ?? "",
+                                    materialComposition: material ?? "",
+                                    outerMaterial: material ?? ""
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        }
+        
+        return ProductFeed(
+            purgeAndReplace: true,
+            messages: messages
+        )
+    }
+    
+    func relationshipFeed() -> RelationshipFeed {
+        
+        var relations: [Relation] = [Relation]()
+        self._articles.forEach { (article) in
+            relations.append(
+                Relation(
+                    sku: "WEB\(self.productCode)-\(article.articleId)",
+                    childDetailPageDisplay: .displayOnlyOnParent,
+                    type: .variation
+                )
+            )
+        }
+        
+        let messages = [
+            RelationshipMessage(
+                operationType: .update,
+                relationship: Relationship(
+                    parentSKU: "WEB\(self.productCode)",
+                    relation: relations
+                )
+            )
+        ]
+        
+        return RelationshipFeed(
+            purgeAndReplace: true,
+            messages: messages
+        )
+    }
+    
+    func imageFeed() -> ImageFeed {
+        
+        var messages = [ImageMessage]()
+        var imageType: ImageType = .main
+        self.productMedias.forEach { (media) in
+            messages.append(
+                ImageMessage(
+                    operationType: .update,
+                    productImage:
+                    ProductImage(
+                        sku: "WEB\(self.productCode)",
+                        imageType: imageType,
+                        imageLocation: "http://\(server.serverName):\(server.serverPort)/media/\(media.name)"
+                    )
+                )
+            )
+            switch imageType {
+            case .main:
+                imageType = .pt1
+            case .pt1:
+                imageType = .pt2
+            case .pt2:
+                imageType = .pt3
+            case .pt3:
+                imageType = .pt4
+            case .pt4:
+                imageType = .pt5
+            case .pt5:
+                imageType = .pt6
+            case .pt6:
+                imageType = .pt7
+            case .pt7:
+                imageType = .pt8
+            default:
+                return
+            }
+        }
+        
+        return ImageFeed(
+            purgeAndReplace: true,
+            messages: messages
+        )
+    }
+    
+    func priceFeed() -> PriceFeed {
+        
+        var messages = [PriceMessage]()
+        self._articles.forEach { (article) in
+            
+            var price = article.articleBarcodes.first(where: { $0.tags.count == 0 })?.price.selling ?? 0
+            if price == 0 {
+                price = self.productPrice.selling
+            }
+            messages.append(
+                PriceMessage(
+                    operationType: .update,
+                    price: MwsPrice(
+                        sku: "WEB\(self.productCode)-\(article.articleId)",
+                        standardPrice: StandardPrice(price: Float(price), currency: .eur)
+                    )
+                )
+            )
+        }
+        
+        return PriceFeed(
+            purgeAndReplace: true,
+            messages: messages
+        )
+    }
+    
+    func inventoryFeed() -> InventoryFeed {
+        
+        var messages = [InventoryMessage]()
+        self._articles.forEach { (article) in
+            
+            let quantity = article._quantity - article._booked
+            messages.append(
+                InventoryMessage(
+                    operationType: .update,
+                    inventory: Inventory(
+                        sku: "WEB\(self.productCode)-\(article.articleId)",
+                        quantity: Int(quantity)
+                    )
+                )
+            )
+        }
+        
+        return InventoryFeed(
+            purgeAndReplace: true,
+            messages: messages
+        )
+    }
+}
+
