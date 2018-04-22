@@ -112,7 +112,7 @@ func addRoutesAndHandlers() {
     server.addRoutes(StatisticController().getRoutes())
     server.addRoutes(PublicationController().getRoutes())
     server.addRoutes(EcommerceController().getRoutes())
-    //server.addRoutes(AmazonController().getRoutes())
+    server.addRoutes(AmazonController().getRoutes())
 }
 
 func addFilters() {
