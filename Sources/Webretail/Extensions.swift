@@ -249,9 +249,6 @@ extension Array where Element:Translation {
 
 // Amazon MWS
 
-//typealias MwsProduct = mwsWebretail.Product
-//typealias MwsPrice = mwsWebretail.Price
-
 extension Product {
     
     func productFeed() -> ProductFeed {
@@ -269,7 +266,7 @@ extension Product {
         messages.append(
             ProductMessage(
                 operationType: .update,
-                product: mwsWebretail.Product(
+                product: MwsProduct(
                     sku: "WEB\(self.productCode)",
                     standardProductID: nil,
                     condition: Condition(conditionType: .new),
@@ -314,7 +311,7 @@ extension Product {
             messages.append(
                 ProductMessage(
                     operationType: .update,
-                    product: mwsWebretail.Product(
+                    product: MwsProduct(
                         sku: "WEB\(self.productCode)-\(article.articleId)",
                         standardProductID: StandardProductID(type: .EAN, value: barcode),
                         condition: Condition(conditionType: .new),
@@ -437,7 +434,7 @@ extension Product {
             messages.append(
                 PriceMessage(
                     operationType: .update,
-                    price: mwsWebretail.Price(
+                    price: MwsPrice(
                         sku: "WEB\(self.productCode)-\(article.articleId)",
                         standardPrice: StandardPrice(price: Float(price), currency: .eur)
                     )
