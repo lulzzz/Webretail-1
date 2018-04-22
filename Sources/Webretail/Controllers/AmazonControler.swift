@@ -9,7 +9,7 @@ import Foundation
 import PerfectHTTP
 import mwsWebretail
 
-class AmazonController: NSObject {
+public class AmazonController: NSObject {
     
     lazy var config = Config(
         endpoint: "mws-eu.amazonservices.com",
