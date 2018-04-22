@@ -73,7 +73,7 @@ open class PostgresSqlORM: PostgresStORM {
                     } else if child.value is UInt || child.value is UInt8 || child.value is UInt16 || child.value is UInt32 || child.value is UInt64 {
                         verbage += "text" //"bytea"
                     } else {
-                        verbage += "jsonb"
+                        verbage += key.contains(string: "Xml") ? "xml" : "jsonb"
                     }
                     if opt.count == 0 {
                         verbage += " NOT NULL"

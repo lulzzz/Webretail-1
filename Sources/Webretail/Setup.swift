@@ -59,6 +59,7 @@ func setupDatabase() throws {
 	try MovementArticle().setup()
 	try Publication().setup()
     try Basket().setup()
+    try MwsRequest().setup()
 }
 
 func addIoC() {
@@ -111,6 +112,7 @@ func addRoutesAndHandlers() {
     server.addRoutes(StatisticController().getRoutes())
     server.addRoutes(PublicationController().getRoutes())
     server.addRoutes(EcommerceController().getRoutes())
+    server.addRoutes(AmazonMWS().getRoutes())
 }
 
 func addFilters() {
