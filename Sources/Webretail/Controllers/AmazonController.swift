@@ -27,6 +27,13 @@ public class AmazonController: NSObject {
         super.init()
         
         //TODO: init background service
+        
+//        let thread = Threading.getQueue(name: "mwsQueue", type: .concurrent)
+//        thread.dispatch {
+//            repeat {
+//                Threading.sleep(seconds: 60)
+//            } while thread != nil
+//        }
     }
     
     public func getRoutes() -> Routes {
