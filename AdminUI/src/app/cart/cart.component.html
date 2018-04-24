@@ -1,0 +1,28 @@
+﻿<p-progressSpinner *ngIf="!items" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+
+<div class="container-fluid">
+
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Refresh" (click)="refreshClick()" class="ui-button-primary" icon="fa-refresh"></button>
+            {{totalRecords}} pending baskets
+        </div>
+        <div class="ui-toolbar-group-right">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input #gb type="text" pInputText placeholder="Search" style="width: 180px">
+        </div>
+    </p-toolbar>
+  
+    <p-dataTable [responsive]="true" [value]="items"
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
+        [globalFilter]="gb" #dt>
+        <p-column field="basketId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+        <p-column field="customerId" header="Customer" [sortable]="true"></p-column>
+        <p-column field="basketBarcode" header="Barcode" [sortable]="true"></p-column>
+        <p-column field="basketProduct.productName" header="Product" [sortable]="true"></p-column>
+        <p-column field="basketQuantity" header="Quantity" [sortable]="true"></p-column>
+        <p-column field="basketPrice" header="Price" [sortable]="true"></p-column>
+        <p-column field="basketUpdated" header="UpdatedAt" [sortable]="true"></p-column>
+        </p-dataTable>
+  
+</div>

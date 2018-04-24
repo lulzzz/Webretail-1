@@ -69,9 +69,9 @@ export class DeviceComponent implements OnInit {
 
     onRowSelect(event: any) {
         this.dataform.controls.join.setValue(false);
-        let json = localStorage.getItem('webretailDevice');
+        const json = localStorage.getItem('webretailDevice');
         if (json != null) {
-            let device: Device = JSON.parse(json)
+            const device: Device = JSON.parse(json)
             if (device.deviceId === this.selected.deviceId) {
                 this.dataform.controls.join.setValue(true);
             }

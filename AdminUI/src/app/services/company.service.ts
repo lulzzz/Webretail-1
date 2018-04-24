@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Company, PdfDocument, Media } from '../shared/models';
+import { Company, PdfDocument, Media, Basket } from '../shared/models';
 import { Helpers } from '../shared/helpers';
 
 @Injectable()
@@ -203,5 +203,10 @@ export class CompanyService {
     downloadCsv(fileName: String): Observable<Blob> {
       return this.http.get('/csv/' + fileName, { headers: Helpers.getHeaders(), responseType: ResponseContentType.Blob })
           .map(result => <Blob>result.blob());
+    }
+
+    getBaskets(): Observable<Basket[]> {
+      return this.http.get('/api/ecommerce/baskets', { headers: Helpers.getHeaders() })
+          .map(result => <Basket[]>result.json());
     }
 }

@@ -203,27 +203,36 @@
         </p-tabPanel>
         <p-tabPanel header="Publication">
             <div *ngIf="publication">
-                <p>
-                    <strong>Start</strong>
-                    <br/>
-                    <p-calendar [(ngModel)]="publication.publicationStartAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
-                </p>
-                <p>
-                    <strong>Finish</strong>
-                    <br/>
-                    <p-calendar [(ngModel)]="publication.publicationFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
-                </p>
-                <br/>
-                <p>
-                    <strong>Featured</strong>
-                    <br/>
-                    <p-inputSwitch onLabel="YES" offLabel="NO" [(ngModel)]="publication.publicationFeatured"></p-inputSwitch>
-                </p>
-                <p>
-                    <strong>New</strong>
-                    <br/>
-                    <p-inputSwitch onLabel="YES" offLabel="NO" [(ngModel)]="publication.publicationNew"></p-inputSwitch>
-                </p>
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                        <p>
+                            <strong>Start</strong>
+                            <br/>
+                            <p-calendar [(ngModel)]="publication.publicationStartAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        </p>
+                        <p>
+                            <strong>Finish</strong>
+                            <br/>
+                            <p-calendar [(ngModel)]="publication.publicationFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                        </p>
+                        </td>
+                        <td>
+                            <p>
+                                <p-inputSwitch [(ngModel)]="publication.publicationFeatured"></p-inputSwitch>
+                                <strong>Featured</strong>
+                            </p>
+                            <p>
+                                <p-inputSwitch [(ngModel)]="publication.publicationNew"></p-inputSwitch>
+                                <strong>New</strong>
+                            </p>
+                            <p>
+                                <p-inputSwitch [(ngModel)]="publication.publicationAmazon"></p-inputSwitch>
+                                <strong>Amazon</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </p-tabPanel>
     </p-tabView>

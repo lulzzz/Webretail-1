@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://webretail.herokuapp.com'
+  apiUrl: 'https://www.webretail.cloud'
 };

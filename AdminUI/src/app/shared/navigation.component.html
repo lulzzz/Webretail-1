@@ -4,7 +4,7 @@
         <i class="fa fa-bars"></i>
     </a>
     <a href="#" class="logo" [routerLink]="['/']">
-        <img alt="logo" src="/admin/assets/logo.jpg" />
+        <img alt="logo" src="assets/logo.jpg" />
     </a>
     <span class="titlepage"><span class="appname">Webretail</span><br/>{{sessionService.title}}</span>
 </div>
@@ -33,6 +33,15 @@
             <a [routerLink]="['/invoice']" (click)="onMenuItemClick()"><i class="fa fa-file-text"></i>&nbsp;&nbsp;Invoices</a>
         </div>
 
+        <a id="retailmenu" #retailmenu [class.active-menuitem]="retailmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === retailmenu.id ? null : retailmenu.id)">
+            <span><i class="fa fa-shopping-basket"></i>&nbsp;&nbsp;Retail</span>
+        </a>
+        <div [ngClass]="{'submenushow': (retailmenu.id == activeMenuId), 'submenuhide': (retailmenu.id != activeMenuId)}">
+            <a [routerLink]="['/device']"><i class="fa fa-mobile"></i>&nbsp;&nbsp;POS devices</a>
+            <a [routerLink]="['/cart']"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Shopping Cart</a>
+            <a [routerLink]="['/amazon']"><i class="fa fa-amazon"></i>&nbsp;&nbsp;Amazon</a>
+        </div>
+
         <a id="reportmenu" #reportmenu [class.active-menuitem]="reportmenu.id == activeMenuId" (click)="activeMenuId = (activeMenuId === reportmenu.id ? null : reportmenu.id)">
             <span><i class="fa fa-line-chart"></i>&nbsp;&nbsp;Report</span>
         </a>
@@ -54,7 +63,6 @@
             <a [routerLink]="['/account']"><i class="fa fa-user"></i>&nbsp;&nbsp;Accounts</a>
             <a [routerLink]="['/company']"><i class="fa fa-home"></i>&nbsp;&nbsp;Company</a>
             <a [routerLink]="['/store']"><i class="fa fa-cube"></i>&nbsp;&nbsp;Stores</a>
-            <a [routerLink]="['/device']"><i class="fa fa-mobile"></i>&nbsp;&nbsp;POS App</a>
             <a [routerLink]="['/localization']"><i class="fa fa-globe"></i>&nbsp;&nbsp;Localization</a>
             <a [routerLink]="['/smtp']"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Smtp</a>
             <a [routerLink]="['/payment']"><i class="fa fa-money"></i>&nbsp;&nbsp;Payment</a>

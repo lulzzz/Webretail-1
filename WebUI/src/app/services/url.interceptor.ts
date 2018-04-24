@@ -8,7 +8,7 @@ export class UrlInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('i18n') < 0) {
       req = req.clone({
-        url: environment.apiUrl + req.url,
+        // url: environment.apiUrl + req.url,
         headers: req.headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
       });
     }

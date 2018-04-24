@@ -326,6 +326,7 @@ export class Publication {
   public productId: number;
   public publicationFeatured: boolean;
   public publicationNew: boolean;
+  public publicationAmazon: boolean;
   public publicationStartAt: Date;
   public publicationFinishAt: Date;
   public publicationUpdated: Date;
@@ -333,6 +334,7 @@ export class Publication {
   constructor(productId: number) {
     this.publicationId = 0;
     this.productId = productId;
+    this.publicationAmazon = false;
     this.publicationFeatured = false;
     this.publicationNew = false;
   }}
@@ -527,6 +529,45 @@ export class Period {
   }
 }
 
+export class MwsConfig {
+  public version: string;
+  public endpoint: string;
+  public marketplaceId: string;
+  public sellerId: string;
+  public accessKey: string;
+  public secretKey: string;
+  public authToken: string;
+
+  constructor() {
+    this.version = '';
+    this.endpoint = '';
+    this.marketplaceId = '';
+    this.sellerId = '';
+    this.accessKey = '';
+    this.secretKey = '';
+    this.authToken = '';
+  }
+}
+
+export class Basket {
+  public basketId: number;
+  public customerId: number;
+  public basketBarcode: string;
+  public basketProduct: Product;
+  public basketQuantity: number;
+  public basketPrice: number;
+  public basketUpdated: number;
+
+  constructor() {
+    this.basketId = 0;
+    this.customerId = 0;
+    this.basketBarcode = '';
+    this.basketQuantity = 1.0;
+    this.basketPrice = 0.0;
+    this.basketUpdated = 0;
+  }
+}
+
 // Interfaces
 
 export interface Token {
@@ -613,4 +654,22 @@ export interface AttributeForm {
   id: number;
   name: string;
   values: string[];
+}
+
+export interface MwsRequest {
+  id: number;
+  requestXml: string;
+  requestId: number;
+  requestParentId: number;
+
+  requestSubmissionId: string;
+  requestCreatedAt: number;
+  requestSubmittedAt: number;
+  requestCompletedAt: number;
+
+  messagesProcessed: number;
+  messagesSuccessful: number;
+  messagesWithError: number;
+  messagesWithWarning: number;
+  errorDescription: string;
 }

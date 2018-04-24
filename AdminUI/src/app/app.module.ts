@@ -70,6 +70,8 @@ import { DeviceComponent } from './device/device.component';
 import { ReportReceiptsComponent } from './report/receipts.component';
 import { ReportSalesComponent } from './report/sales.component';
 import { StatisticsComponent } from './report/statistics.component';
+import { AmazonComponent } from './amazon/amazon.component';
+import { CartComponent } from './cart/cart.component';
 
 import { SessionService } from './services/session.service';
 import { CompanyService } from './services/company.service';
@@ -89,6 +91,7 @@ import { StatisticService } from './services/statistic.service';
 import { PublicationService } from './services/publication.service';
 import { ImportService } from './services/import.service';
 import { CountryService } from './services/country.service';
+import { AmazonService } from './services/amazon.service';
 
 import { CategoryFilterPipe } from './pipes/category-filter.pipe';
 import { PriceFilterPipe } from './pipes/price-filter.pipe';
@@ -170,7 +173,9 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         ReportReceiptsComponent,
         ReportSalesComponent,
         StatisticsComponent,
-        ImportComponent
+        ImportComponent,
+        AmazonComponent,
+        CartComponent
     ],
     providers: [
         MessageService,
@@ -192,7 +197,8 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
         StatisticService,
         PublicationService,
         ImportService,
-        CountryService
+        CountryService,
+        AmazonService
     ],
     entryComponents: [
         AttributeComponent,

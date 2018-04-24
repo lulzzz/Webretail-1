@@ -1,0 +1,93 @@
+﻿<p-progressSpinner *ngIf="!items" class="loading" strokeWidth="6" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+
+<div class="container-fluid">
+
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Setup" (click)="editClick()" class="ui-button-primary" icon="fa-edit"></button>
+            <button pButton type="button" label="Refresh" (click)="refreshClick()" class="ui-button-primary" icon="fa-refresh"></button>
+            {{totalRecords}} pending requests
+        </div>
+        <div class="ui-toolbar-group-right">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input #gb type="text" pInputText placeholder="Search" style="width: 180px">
+        </div>
+    </p-toolbar>
+
+    <p-dataTable *ngIf="!displayPanel" [responsive]="true" [value]="items"
+        [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
+        [globalFilter]="gb" #dt>
+        <p-column field="requestId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
+        <p-column field="requestParentId" header="ParentId" [sortable]="true"></p-column>
+        <p-column field="requestSubmissionId" header="SubmissionId" [sortable]="true"></p-column>
+        <p-column field="requestXml" header="XML" [sortable]="true"></p-column>
+        <p-column field="requestCreatedAt" header="CreatedAt" [sortable]="true"></p-column>
+        <p-column field="requestSubmittedAt" header="SubmittedAt" [sortable]="true"></p-column>
+        <p-column field="requestCompletedAt" header="CompletedAt" [sortable]="true"></p-column>
+        <p-column field="messagesProcessed" header="Processed" [sortable]="true"></p-column>
+        <p-column field="messagesSuccessful" header="Successful" [sortable]="true"></p-column>
+        <p-column field="messagesWithError" header="Error" [sortable]="true"></p-column>
+        <p-column field="messagesWithWarning" header="Warning" [sortable]="true"></p-column>
+        <p-column field="errorDescription" header="Info" [sortable]="true"></p-column>
+    </p-dataTable>
+  
+    <p-panel *ngIf="displayPanel">
+        <p-header>
+            <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:20px;display:inline-block;margin-top:6px"><b>Amazon</b></span>
+                <button pButton type="button" label="Close" (click)="closeClick()" style="float: right" class="ui-button-warning" icon="fa-close"></button>
+            </div>
+        </p-header>
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>Endpoint</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText [(ngModel)]="config.endpoint"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>Version</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText [(ngModel)]="config.version"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>MarketplaceId</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText [(ngModel)]="config.marketplaceId"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>SellerId</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText [(ngModel)]="config.sellerId"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>AccessKey</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText [(ngModel)]="config.accessKey"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>SecretKey</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText [(ngModel)]="config.secretKey"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4"><label>AuthToken</label></div>
+                <div class="ui-grid-col-8">
+                    <input pInputText [(ngModel)]="config.authToken"/>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-8"></div>
+                <div class="ui-grid-col-4">
+                    <button type="button" pButton icon="fa-save" class="ui-button-success" (click)="saveClick()" label="Save"></button>
+                </div>
+            </div>
+        </div>
+    </p-panel>
+
+</div>

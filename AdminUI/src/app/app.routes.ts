@@ -32,6 +32,8 @@ import { DeviceComponent } from './device/device.component';
 import { ReportReceiptsComponent } from './report/receipts.component';
 import { ReportSalesComponent } from './report/sales.component';
 import { StatisticsComponent } from './report/statistics.component';
+import { AmazonComponent } from './amazon/amazon.component';
+import { CartComponent } from './cart/cart.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -66,7 +68,9 @@ export const routes: Routes = [
     { path: 'report/receipts', component: ReportReceiptsComponent, pathMatch: 'full' },
     { path: 'report/sales', component: ReportSalesComponent, pathMatch: 'full' },
     { path: 'report/statistics', component: StatisticsComponent, pathMatch: 'full' },
-    { path: 'import', component: ImportComponent, pathMatch: 'full' }
+    { path: 'import', component: ImportComponent, pathMatch: 'full' },
+    { path: 'amazon', component: AmazonComponent, pathMatch: 'full' },
+    { path: 'cart', component: CartComponent, pathMatch: 'full' }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);
