@@ -14,6 +14,8 @@ protocol ProductProtocol {
 
     func getAll(date: Int) throws -> [Product]
     
+    func getPublished(date: Int) throws -> [Product]
+    
     func get(id: Int) throws -> Product
 
     func get(barcode: String) throws -> Product

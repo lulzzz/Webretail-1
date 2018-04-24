@@ -81,4 +81,15 @@ class MwsRequest : PostgresSqlORM, Codable {
         }
         return self.rows()
     }
+
+    public func lastRequest() -> Int {
+        do {
+            let sql = "SELECT MAX(requestcreatedat) AS counter FROM \(table())";
+            let getCount = try self.sqlRows(sql, params: [])
+            return getCount.first?.data["counter"] as? Int ?? 0
+        } catch {
+            LogFile.info("\(error)")
+        }
+        return 0
+    }
 }

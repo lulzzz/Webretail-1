@@ -58,12 +58,12 @@ addIoC()
 // Register filters
 addFilters()
 
-// Register routes and handlers
-addRoutesAndHandlers()
-
 do {
     // Setup database
     try setupDatabase()
+
+    // Register routes and handlers
+    addRoutesAndHandlers()
 
     // Launch the WebApi server.
     try server.start()

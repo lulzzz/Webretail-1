@@ -7,7 +7,9 @@
 
 import Foundation
 import PerfectHTTP
+import PerfectThread
 import mwsWebretail
+import StORM
 
 public class AmazonController: NSObject {
     
@@ -22,18 +24,56 @@ public class AmazonController: NSObject {
     )
     
     lazy var mws = mwsService(config: config, notify: callBack)
+    private let repository: ProductProtocol
     
     override init() {
+        self.repository = ioCContainer.resolve() as ProductProtocol
         super.init()
         
         //TODO: init background service
         
-//        let thread = Threading.getQueue(name: "mwsQueue", type: .concurrent)
-//        thread.dispatch {
-//            repeat {
-//                Threading.sleep(seconds: 60)
-//            } while thread != nil
-//        }
+        let thread = Threading.getQueue(name: "mwsRequest", type: .concurrent)
+        thread.dispatch {
+            
+            repeat {
+                
+                let mwsRequest = MwsRequest()
+                do {
+                    let products = try self.repository.getPublished(date: mwsRequest.lastRequest())
+                    if products.count == 0 { return }
+                    
+                    var requests = [RequestFeed]()
+                    var index = 0
+                    products.forEach({ (product) in
+                        index += 1
+                        requests.append(RequestFeed(feed : product.productFeed(), id: index, parentId: 0))
+                        index += 1
+                        requests.append(RequestFeed(feed : product.relationshipFeed(), id: index, parentId: index - 1))
+                        index += 1
+                        requests.append(RequestFeed(feed : product.priceFeed(), id: index, parentId: index - 2))
+                        index += 1
+                        requests.append(RequestFeed(feed : product.inventoryFeed(), id: index, parentId: index - 3))
+                        index += 1
+                        requests.append(RequestFeed(feed : product.imageFeed(), id: index, parentId: index - 4))
+                    })
+                    self.mws.start(requests: requests)
+                } catch {
+                    print("mwsRequest: \(error)")
+                }
+                
+                Threading.sleep(seconds: 300)
+            } while true
+        }
+        
+//        let product = try? self.repository.get(id: 1)
+//        var requests = [RequestFeed]()
+//        requests.append(RequestFeed(feed : product!.productFeed(), id: 1, parentId: 0))
+//        requests.append(RequestFeed(feed : product!.relationshipFeed(), id: 2, parentId: 1))
+//        requests.append(RequestFeed(feed : product!.priceFeed(), id: 3, parentId: 2))
+//        requests.append(RequestFeed(feed : product!.inventoryFeed(), id: 4, parentId: 3))
+//        requests.append(RequestFeed(feed : product!.imageFeed(), id: 5, parentId: 4))
+//
+//        self.mws.start(requests: requests)
     }
     
     public func getRoutes() -> Routes {
@@ -64,6 +104,32 @@ public class AmazonController: NSObject {
     }
     
     func callBack(request: RequestFeed) {
-        print(request.requestSubmissionId)
+        
+        do {
+            let mwsRequest = MwsRequest()
+            try mwsRequest.query(whereclause: "requestSubmissionId = $1",
+                            params: [request.requestSubmissionId],
+                            cursor: StORMCursor(limit: 1, offset: 0))
+            mwsRequest.requestId = request.requestId
+            mwsRequest.requestParentId = request.requestParentId
+            mwsRequest.requestSubmissionId = request.requestSubmissionId
+            mwsRequest.requestXml = request.requestFeed.xml()
+            mwsRequest.requestCreatedAt = request.requestCreatedAt
+            mwsRequest.requestSubmittedAt = request.requestSubmittedAt
+            mwsRequest.requestCompletedAt = request.requestCompletedAt
+            mwsRequest.messagesProcessed = request.messagesProcessed
+            mwsRequest.messagesSuccessful = request.messagesSuccessful
+            mwsRequest.messagesWithError = request.messagesWithError
+            mwsRequest.messagesWithWarning = request.messagesWithWarning
+            mwsRequest.errorDescription = request.errorDescription
+            try mwsRequest.save()
+        } catch {
+            print(error)
+        }
+
+//        print("\(request.requestSubmissionId): \(request.requestSubmittedAt) => \(request.requestCompletedAt)")
+//        if request.requestCompletedAt == 0 {
+//            print(request.requestFeed.xml())
+//        }
     }
 }
