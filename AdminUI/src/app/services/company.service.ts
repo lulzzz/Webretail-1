@@ -206,7 +206,7 @@ export class CompanyService {
     }
 
     getBaskets(): Observable<Basket[]> {
-      return this.http.get('/api/ecommerce/baskets', { headers: Helpers.getHeaders() })
+      return this.http.get('/api/baskets', { headers: Helpers.getHeaders() })
           .map(result => <Basket[]>result.json());
     }
 }

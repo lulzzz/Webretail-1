@@ -31,7 +31,7 @@ public class AmazonController: NSObject {
         super.init()
         
         //TODO: init background service
-	/*        
+        /*        
         let thread = Threading.getQueue(name: "mwsRequest", type: .concurrent)
         thread.dispatch {
             
@@ -63,8 +63,8 @@ public class AmazonController: NSObject {
                 
                 Threading.sleep(seconds: 300)
             } while true
-	}
-        */
+         }
+         */
 //        let product = try? self.repository.get(id: 1)
 //        var requests = [RequestFeed]()
 //        requests.append(RequestFeed(feed : product!.productFeed(), id: 1, parentId: 0))
@@ -79,6 +79,8 @@ public class AmazonController: NSObject {
     public func getRoutes() -> Routes {
         var routes = Routes()
         
+        routes.add(method: .get, uri: "/api/mws/config", handler: mwsConfigHandlerGET)
+        routes.add(method: .put, uri: "/api/mws/config", handler: mwsConfigHandlerPUT)
         routes.add(method: .get, uri: "/api/mws", handler: mwsHandlerGET)
         routes.add(method: .get, uri: "/api/mws/{start}/{finish}", handler: mwsHandlerGET)
         
@@ -86,6 +88,26 @@ public class AmazonController: NSObject {
     }
     
     
+    func mwsConfigHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        let config: Config
+        do {
+//            try response.setJson(config)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func mwsConfigHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
+        let config: Config
+        do {
+//            try response.setJson(config)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
     func mwsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         let data: [MwsRequest]
         do {

@@ -40,6 +40,9 @@ class EcommerceController {
         routes.add(method: .put, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerPUT)
         routes.add(method: .delete, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerDELETE)
 
+        //TODO:
+        routes.add(method: .get, uri: "/api/baskets", handler: ecommerceBasketHandlerGET)
+        
         routes.add(method: .get, uri: "/api/ecommerce/basket", handler: ecommerceBasketHandlerGET)
         routes.add(method: .post, uri: "/api/ecommerce/basket", handler: ecommerceBasketHandlerPOST)
         routes.add(method: .put, uri: "/api/ecommerce/basket/{id}", handler: ecommerceBasketHandlerPUT)
@@ -239,7 +242,6 @@ class EcommerceController {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
-
     
     /// Basket
 

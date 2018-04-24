@@ -63,8 +63,8 @@ struct ProductRepository : ProductProtocol {
         
         let items = Product()
         try items.query(
-            whereclause: "products.productUpdated > $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2",
-            params: [date, Int.now()],
+            whereclause: "products.productUpdated > $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND publications.publicationAmazon = $3",
+            params: [date, Int.now(), true],
             orderby: ["products.productUpdated"],
             joins: [publication, brand]
         )

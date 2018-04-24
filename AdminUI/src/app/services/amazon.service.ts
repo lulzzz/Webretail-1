@@ -12,12 +12,12 @@ export class AmazonService {
     }
 
     getConfig(): Observable<MwsConfig> {
-        return this.http.get('/api/mws', { headers: Helpers.getHeaders() })
+        return this.http.get('/api/mws/config', { headers: Helpers.getHeaders() })
             .map(result => <MwsConfig>result.json());
     }
 
     updateConfig(config: MwsConfig): Observable<MwsConfig> {
-        return this.http.put('/api/mws', config, { headers: Helpers.getHeaders() })
+        return this.http.put('/api/mws/config', config, { headers: Helpers.getHeaders() })
             .map(result => <MwsConfig>result.json());
     }
 
