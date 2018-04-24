@@ -17,17 +17,10 @@ let ioCContainer = IoCContainer()
 
 func setupDatabase() throws {
     
-    #if os(Linux)
-        PostgresConnector.host = "ec2-54-247-125-137.eu-west-1.compute.amazonaws.com"
-        PostgresConnector.username = "cnwrdxrjzubjfy"
-        PostgresConnector.password = "3712d4186d950da4c03b952838a6a82cc65b1aad8a3af38e6d9b9d046c979b0a"
-        PostgresConnector.database = "d8j0m5skkvu1ua"
-    #else
-        PostgresConnector.host = "localhost"
-        PostgresConnector.username = "postgres"
-        PostgresConnector.password = "postgres"
-        PostgresConnector.database = "webretail"
-    #endif
+    PostgresConnector.host = "localhost"
+    PostgresConnector.username = "postgres"
+    PostgresConnector.password = "zBnwEe8QDR"
+    PostgresConnector.database = "webretail"
     PostgresConnector.port = 5432
     StORMdebug = false
 

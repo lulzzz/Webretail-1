@@ -38,15 +38,15 @@ SessionConfig.CORS.maxAge = 3000
 LogFile.location = "./StORMlog.txt"
 
 // Certs
-//let cert = (sslCert: "certificate.crt", sslKey: "private.pem")
-//let alpn: [HTTPServer.ALPNSupport] = [.http11, .http2]
+let cert = (sslCert: "certificate.crt", sslKey: "private.pem")
+let alpn: [HTTPServer.ALPNSupport] = [.http11, .http2]
 
 // Create HTTP server.
 let server = HTTPServer()
-server.serverName = "webretail.herokuapp.com"
+server.serverName = "www.webretail.cloud"
 server.documentRoot = "./webroot"
-//server.ssl = cert
-//server.alpnSupport = alpn
+server.ssl = cert
+server.alpnSupport = alpn
 server.serverPort = 8181
 if let portString = ProcessInfo.processInfo.environment["PORT"] {
     server.serverPort = UInt16(portString)!

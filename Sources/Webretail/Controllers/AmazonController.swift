@@ -31,7 +31,7 @@ public class AmazonController: NSObject {
         super.init()
         
         //TODO: init background service
-        
+	/*        
         let thread = Threading.getQueue(name: "mwsRequest", type: .concurrent)
         thread.dispatch {
             
@@ -63,8 +63,8 @@ public class AmazonController: NSObject {
                 
                 Threading.sleep(seconds: 300)
             } while true
-        }
-        
+	}
+        */
 //        let product = try? self.repository.get(id: 1)
 //        var requests = [RequestFeed]()
 //        requests.append(RequestFeed(feed : product!.productFeed(), id: 1, parentId: 0))
