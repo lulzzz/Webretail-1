@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://www.webretail.cloud'
+  apiUrl: 'https://localhost:8181'
 };

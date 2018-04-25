@@ -551,20 +551,20 @@ export class MwsConfig {
 
 export class Basket {
   public basketId: number;
-  public customerId: number;
+  public registry: Registry;
   public basketBarcode: string;
   public basketProduct: Product;
   public basketQuantity: number;
   public basketPrice: number;
-  public basketUpdated: number;
+  public basketUpdated: Date;
 
   constructor() {
     this.basketId = 0;
-    this.customerId = 0;
+    this.registry = new Registry();
     this.basketBarcode = '';
     this.basketQuantity = 1.0;
     this.basketPrice = 0.0;
-    this.basketUpdated = 0;
+    this.basketUpdated = new Date();
   }
 }
 

@@ -84,6 +84,11 @@ export class ProductService {
             .map(result => <Product>result.json());
     }
 
+    resetAmazon(id: number): Observable<any> {
+        return this.http.get('/api/product/' + id + '/reset', { headers: Helpers.getHeaders() })
+            .map(result => result.json());
+    }
+
     delete(id: number): Observable<any> {
         return this.http.delete('/api/product/' + id, { headers: Helpers.getHeaders() })
             .map(result => result.json());

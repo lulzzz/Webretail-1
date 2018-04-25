@@ -106,6 +106,11 @@ struct ProductRepository : ProductProtocol {
         return item
     }
     
+    func reset(id: Int) throws {
+        let item = Product()
+        try item.update(data: [("productAmazonUpdated", 0)], idName:"productId", idValue: id)
+    }
+    
     func add(item: Product) throws {
 
         /// Brand

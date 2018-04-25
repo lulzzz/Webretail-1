@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService, OverlayPanel } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { SessionService } from './../services/session.service';
 import { MwsRequest, MwsConfig } from './../shared/models';
@@ -14,6 +14,7 @@ export class AmazonComponent implements OnInit {
     totalRecords = 0;
     items: MwsRequest[];
     config: MwsConfig;
+    xml: string;
     displayPanel: boolean;
 
     constructor(private messageService: MessageService,
@@ -36,6 +37,11 @@ export class AmazonComponent implements OnInit {
                 this.totalRecords = this.items.length;
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
+    }
+
+    selectXml(event, xml: string, overlaypanel: OverlayPanel) {
+        this.xml = xml;
+        overlaypanel.toggle(event);
     }
 
     editClick() {

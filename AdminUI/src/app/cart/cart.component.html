@@ -17,12 +17,24 @@
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
         [globalFilter]="gb" #dt>
         <p-column field="basketId" header="Id" [style]="{'width':'100px'}" [sortable]="true"></p-column>
-        <p-column field="customerId" header="Customer" [sortable]="true"></p-column>
+        <p-column field="registry.registryName" header="Customer" [sortable]="true"></p-column>
         <p-column field="basketBarcode" header="Barcode" [sortable]="true"></p-column>
-        <p-column field="basketProduct.productName" header="Product" [sortable]="true"></p-column>
+        <p-column header="Product" [sortable]="true">
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                {{data.basketProduct | articleInfo:data.basketBarcode}}
+            </ng-template>
+        </p-column>
         <p-column field="basketQuantity" header="Quantity" [sortable]="true"></p-column>
-        <p-column field="basketPrice" header="Price" [sortable]="true"></p-column>
-        <p-column field="basketUpdated" header="UpdatedAt" [sortable]="true"></p-column>
-        </p-dataTable>
+        <p-column header="Price" [sortable]="true">
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                {{data.basketPrice | currencyFormat}}
+            </ng-template>
+        </p-column>
+        <p-column header="UpdatedAt" [sortable]="true">
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                {{data.basketUpdated | dateFormat}}
+            </ng-template>
+        </p-column>
+    </p-dataTable>
   
 </div>

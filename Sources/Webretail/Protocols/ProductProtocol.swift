@@ -30,6 +30,8 @@ protocol ProductProtocol {
     
     func delete(id: Int) throws
 
+    func reset(id: Int) throws
+    
     /*
 	func addAttribute(item: ProductAttribute) throws
     

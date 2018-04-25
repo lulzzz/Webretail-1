@@ -15,7 +15,7 @@ import {
     ContextMenuModule, TooltipModule, CalendarModule,
     FileUploadModule, ChartModule, CarouselModule, SidebarModule,
     SpinnerModule, StepsModule, AutoCompleteModule, TabViewModule,
-    AccordionModule, ProgressSpinnerModule, OrderListModule
+    AccordionModule, ProgressSpinnerModule, OrderListModule, OverlayPanelModule
 } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { NgxBarcodeModule } from 'ngx-barcode';
@@ -105,7 +105,7 @@ import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
 @NgModule({
     imports: [
         CommonModule, RouterModule, HttpModule, BrowserModule, BrowserAnimationsModule,
-        FormsModule, ReactiveFormsModule, NgxBarcodeModule,
+        FormsModule, ReactiveFormsModule, NgxBarcodeModule, OverlayPanelModule,
         DataTableModule, SharedModule, PaginatorModule, SidebarModule,
         MultiSelectModule, DropdownModule, SliderModule, TreeModule,
         ButtonModule, InputTextModule, InputSwitchModule, ProgressSpinnerModule,

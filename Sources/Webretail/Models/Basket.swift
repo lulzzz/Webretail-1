@@ -40,6 +40,7 @@ class Basket: PostgresSqlORM, Codable {
         case basketPrice
         case _registry = "registry"
         case _basketAmount = "basketAmount"
+        case basketUpdated
     }
     
     open override func table() -> String { return "baskets" }
@@ -84,6 +85,7 @@ class Basket: PostgresSqlORM, Codable {
             ?? self.getProduct(barcode: basketBarcode)
         basketQuantity = try container.decode(Double.self, forKey: .basketQuantity)
         basketPrice = try container.decodeIfPresent(Double.self, forKey: .basketPrice) ?? 0
+        basketUpdated = try container.decodeIfPresent(Int.self, forKey: .basketUpdated) ?? 0
     }
 
     func encode(to encoder: Encoder) throws {
@@ -96,6 +98,7 @@ class Basket: PostgresSqlORM, Codable {
         try container.encode(basketQuantity, forKey: .basketQuantity)
         try container.encode(basketPrice, forKey: .basketPrice)
         try container.encode(_basketAmount, forKey: ._basketAmount)
+        try container.encode(basketUpdated, forKey: .basketUpdated)
     }
 
     func getProduct(barcode: String) throws -> Product {

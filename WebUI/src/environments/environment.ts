@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://www.webretail.cloud'
+  apiUrl: 'https://www.webretail.cloud:8181'
 };

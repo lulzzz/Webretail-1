@@ -30,6 +30,7 @@ class ProductController {
         routes.add(method: .post, uri: "/api/product/import", handler: productImportHandlerPOST)
         routes.add(method: .put, uri: "/api/product/{id}", handler: productHandlerPUT)
         routes.add(method: .delete, uri: "/api/product/{id}", handler: productHandlerDELETE)
+        routes.add(method: .get, uri: "/api/product/{id}/reset", handler: productResetHandlerGET)
 //        routes.add(method: .get, uri: "/api/product/{id}/publication", handler: publicationProductHandlerGET)
 //        routes.add(method: .put, uri: "/api/product/{id}/publication", handler: productPublicationHandlerPUT)
 //        routes.add(method: .post, uri: "/api/productattribute", handler: productAttributeHandlerPOST)
@@ -79,6 +80,16 @@ class ProductController {
             response.completed(status: .ok)
         } catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
+
+    func productResetHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let id = request.urlVariables["id"]!
+            try self.repository.reset(id: Int(id)!)
+            response.completed(status: .noContent)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
         }
     }
 

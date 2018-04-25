@@ -206,30 +206,34 @@
                 <table style="width: 100%;">
                     <tr>
                         <td>
-                        <p>
-                            <strong>Start</strong>
-                            <br/>
-                            <p-calendar [(ngModel)]="publication.publicationStartAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
-                        </p>
-                        <p>
-                            <strong>Finish</strong>
-                            <br/>
-                            <p-calendar [(ngModel)]="publication.publicationFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
-                        </p>
+                            <p>
+                                <strong>Featured</strong>
+                                <br/>
+                                <p-inputSwitch [(ngModel)]="publication.publicationFeatured"></p-inputSwitch>
+                            </p>
+                            <p>
+                                <strong>New</strong>
+                                <br/>
+                                <p-inputSwitch [(ngModel)]="publication.publicationNew"></p-inputSwitch>
+                            </p>
+                            <p>
+                                <strong>Amazon</strong>
+                                <br/>
+                                <p-inputSwitch [(ngModel)]="publication.publicationAmazon"></p-inputSwitch>
+                            </p>
                         </td>
                         <td>
                             <p>
-                                <p-inputSwitch [(ngModel)]="publication.publicationFeatured"></p-inputSwitch>
-                                <strong>Featured</strong>
+                                <strong>Start</strong>
+                                <br/>
+                                <p-calendar [(ngModel)]="publication.publicationStartAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                             </p>
                             <p>
-                                <p-inputSwitch [(ngModel)]="publication.publicationNew"></p-inputSwitch>
-                                <strong>New</strong>
+                                <strong>Finish</strong>
+                                <br/>
+                                <p-calendar [(ngModel)]="publication.publicationFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                             </p>
-                            <p>
-                                <p-inputSwitch [(ngModel)]="publication.publicationAmazon"></p-inputSwitch>
-                                <strong>Amazon</strong>
-                            </p>
+                            <button type="button" pButton icon="fa-refresh" class="ui-button-warning" (click)="resetClick()" label="Reset data on Amazon"></button>
                         </td>
                     </tr>
                 </table>

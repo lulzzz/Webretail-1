@@ -263,6 +263,19 @@ export class ProductComponent implements OnInit, OnDestroy {
         });
     }
 
+    resetClick() {
+        this.confirmationService.confirm({
+            header: 'All information related to this product will be send to Amazon',
+            message: 'Are you sure that you want to reset this product?',
+            accept: () => {
+                this.productService.resetAmazon(this.selected.productId)
+                    .subscribe(result => {
+                        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Reset successfully registered!'})
+                    }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body}));
+            }
+        });
+    }
+
     deleteClick() {
         this.confirmationService.confirm({
             message: 'All information related to this product will be deleted. Are you sure that you want to delete this product?',
