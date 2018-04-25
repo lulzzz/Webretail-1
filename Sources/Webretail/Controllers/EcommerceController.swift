@@ -41,7 +41,7 @@ class EcommerceController {
         routes.add(method: .delete, uri: "/api/ecommerce/registry", handler: ecommerceRegistryHandlerDELETE)
 
         //TODO:
-        routes.add(method: .get, uri: "/api/baskets", handler: ecommerceBasketHandlerGET)
+        routes.add(method: .get, uri: "/api/baskets", handler: ecommerceBasketsHandlerGET)
         
         routes.add(method: .get, uri: "/api/ecommerce/basket", handler: ecommerceBasketHandlerGET)
         routes.add(method: .post, uri: "/api/ecommerce/basket", handler: ecommerceBasketHandlerPOST)
@@ -244,6 +244,16 @@ class EcommerceController {
     }
     
     /// Basket
+
+    func ecommerceBasketsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
+        do {
+            let items = try self.repository.getBaskets()
+            try response.setJson(items)
+            response.completed(status: .ok)
+        } catch {
+            response.badRequest(error: "\(request.uri) \(request.method): \(error)")
+        }
+    }
 
     func ecommerceBasketHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         let uniqueID = request.user.authDetails?.account.uniqueID ?? ""

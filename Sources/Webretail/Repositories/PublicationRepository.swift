@@ -10,9 +10,11 @@ import StORM
 
 struct PublicationRepository : PublicationProtocol {
 
-    func getAll() throws -> [Publication] {
+    func get() throws -> [Publication] {
         let items = Publication()
-        try items.query()
+        try items.query(
+            whereclause: "publicationStartAt <= $1 AND publicationFinishAt >= $1",
+            params: [Int.now()])
         
         return items.rows()
     }

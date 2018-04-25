@@ -26,6 +26,7 @@ class Basket: PostgresSqlORM, Codable {
     public var basketPrice : Double = 0
     public var basketUpdated : Int = Int.now()
     
+    public var _registry: Registry = Registry()
     public var _basketAmount: Double {
         return (basketQuantity * basketPrice).roundCurrency()
     }
@@ -37,6 +38,7 @@ class Basket: PostgresSqlORM, Codable {
         case basketProduct
         case basketQuantity
         case basketPrice
+        case _registry = "registry"
         case _basketAmount = "basketAmount"
     }
     
@@ -53,6 +55,7 @@ class Basket: PostgresSqlORM, Codable {
             let jsonData = try! JSONSerialization.data(withJSONObject: product, options: [])
             basketProduct = try! JSONDecoder().decode(Product.self, from: jsonData)
         }
+        _registry.to(this)
     }
     
     func rows() -> [Basket] {
@@ -75,6 +78,7 @@ class Basket: PostgresSqlORM, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         basketId = try container.decodeIfPresent(Int.self, forKey: .basketId) ?? 0
         registryId = try container.decodeIfPresent(Int.self, forKey: .registryId) ?? 0
+        _registry = try container.decodeIfPresent(Registry.self, forKey: ._registry) ?? Registry()
         basketBarcode = try container.decode(String.self, forKey: .basketBarcode)
         basketProduct = try container.decodeIfPresent(Product.self, forKey: .basketProduct)
             ?? self.getProduct(barcode: basketBarcode)
@@ -86,6 +90,7 @@ class Basket: PostgresSqlORM, Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(basketId, forKey: .basketId)
         try container.encode(registryId, forKey: .registryId)
+        try container.encode(_registry, forKey: ._registry)
         try container.encode(basketBarcode, forKey: .basketBarcode)
         try container.encode(basketProduct, forKey: .basketProduct)
         try container.encode(basketQuantity, forKey: .basketQuantity)

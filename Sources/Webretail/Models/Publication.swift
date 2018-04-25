@@ -14,11 +14,10 @@ class Publication: PostgresSqlORM, Codable {
     public var productId : Int = 0
     public var publicationFeatured : Bool = false
     public var publicationNew : Bool = false
+    public var publicationAmazon : Bool = false
     public var publicationStartAt : Int = 0
     public var publicationFinishAt : Int = 0
 	public var publicationUpdated : Int = Int.now()
-    public var publicationAmazon : Bool = false
-    public var publicationAmazonUpdated : Int = 0
 
     public var _publicationStartAt: String {
         return publicationStartAt.formatDateShort()
@@ -36,7 +35,6 @@ class Publication: PostgresSqlORM, Codable {
         case publicationStartAt
         case publicationFinishAt
         case publicationAmazon
-        case publicationAmazonUpdated
     }
     
     open override func table() -> String { return "publications" }
@@ -50,7 +48,6 @@ class Publication: PostgresSqlORM, Codable {
         publicationFinishAt = this.data["publicationfinishat"] as? Int ?? 0
 		publicationUpdated = this.data["publicationupdated"] as? Int ?? 0
         publicationAmazon = this.data["publicationamazon"] as? Bool ?? false
-        publicationAmazonUpdated = this.data["publicationamazonupdated"] as? Int ?? 0
     }
     
     func rows() -> [Publication] {
@@ -78,7 +75,6 @@ class Publication: PostgresSqlORM, Codable {
         publicationStartAt = try container.decode(String.self, forKey: .publicationStartAt).DateToInt()
         publicationFinishAt = try container.decode(String.self, forKey: .publicationFinishAt).DateToInt()
         publicationAmazon = try container.decode(Bool.self, forKey: .publicationAmazon)
-        publicationAmazonUpdated = try container.decode(String.self, forKey: .publicationAmazonUpdated).DateToInt()
     }
     
     func encode(to encoder: Encoder) throws {
@@ -91,6 +87,5 @@ class Publication: PostgresSqlORM, Codable {
         try container.encode(_publicationStartAt, forKey: .publicationStartAt)
         try container.encode(_publicationFinishAt, forKey: .publicationFinishAt)
         try container.encode(publicationAmazon, forKey: .publicationAmazon)
-        try container.encode(publicationAmazonUpdated, forKey: .publicationAmazonUpdated)
     }
 }

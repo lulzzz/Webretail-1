@@ -28,7 +28,8 @@ class Product: PostgresSqlORM, Codable {
     public var productIsValid : Bool = false
     public var productCreated : Int = Int.now()
     public var productUpdated : Int = Int.now()
-    
+    public var productAmazonUpdated : Int = 0
+
 	public var _brand: Brand = Brand()
     public var _categories: [ProductCategory] = [ProductCategory]()
     public var _attributes: [ProductAttribute] = [ProductAttribute]()
@@ -100,6 +101,7 @@ class Product: PostgresSqlORM, Codable {
         productIsValid = this.data["productisvalid"] as? Bool ?? false
         productCreated = this.data["productcreated"] as? Int ?? 0
         productUpdated = this.data["productupdated"] as? Int ?? 0
+        productAmazonUpdated = this.data["productamazonupdated"] as? Int ?? 0
 		_brand.to(this)
     }
     

@@ -49,7 +49,7 @@ struct ProductRepository : ProductProtocol {
         return try items.rows(barcodes: date > 0)
     }
 	
-    func getPublished(date: Int) throws -> [Product] {
+    func getPublished() throws -> [Product] {
         let publication = StORMDataSourceJoin(
             table: "publications",
             onCondition: "products.productId = publications.productId",
@@ -63,8 +63,11 @@ struct ProductRepository : ProductProtocol {
         
         let items = Product()
         try items.query(
-            whereclause: "products.productUpdated > $1 AND publications.publicationStartAt <= $2 AND publications.publicationFinishAt >= $2 AND publications.publicationAmazon = $3",
-            params: [date, Int.now(), true],
+            whereclause: "products.productUpdated > products.productAmazonUpdated " +
+            "AND publications.publicationAmazon = $1" +
+            "AND publications.publicationStartAt <= $2 " +
+            "AND publications.publicationFinishAt >= $2",
+            params: [true, Int.now()],
             orderby: ["products.productUpdated"],
             joins: [publication, brand]
         )

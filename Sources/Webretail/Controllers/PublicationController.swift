@@ -32,7 +32,7 @@ class PublicationController {
 
     func publicationsHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
         do {
-            let items = try self.repository.getAll()
+            let items = try self.repository.get()
             try response.setJson(items)
             response.completed(status: .ok)
         } catch {

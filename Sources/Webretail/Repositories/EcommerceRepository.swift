@@ -231,6 +231,20 @@ struct EcommerceRepository : EcommerceProtocol {
         return item
     }
 
+    func getBaskets() throws -> [Basket] {
+
+        let registry = StORMDataSourceJoin(
+            table: "registries",
+            onCondition: "baskets.registryId = registries.registryId",
+            direction: StORMJoinType.LEFT
+        )
+        
+        let items = Basket()
+        try items.query(joins: [registry])
+        
+        return items.rows()
+    }
+
     func getBasket(registryId: Int) throws -> [Basket] {
         let items = Basket()
         try items.query(whereclause: "registryId = $1", params: [registryId])

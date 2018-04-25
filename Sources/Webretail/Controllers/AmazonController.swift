@@ -30,31 +30,40 @@ public class AmazonController: NSObject {
         self.repository = ioCContainer.resolve() as ProductProtocol
         super.init()
         
-        //TODO: init background service
-        /*        
         let thread = Threading.getQueue(name: "mwsRequest", type: .concurrent)
         thread.dispatch {
             
             repeat {
                 
-                let mwsRequest = MwsRequest()
                 do {
-                    let products = try self.repository.getPublished(date: mwsRequest.lastRequest())
+                    let products = try self.repository.getPublished()
                     if products.count == 0 { return }
                     
                     var requests = [RequestFeed]()
-                    var index = 0
                     products.forEach({ (product) in
-                        index += 1
-                        requests.append(RequestFeed(feed : product.productFeed(), id: index, parentId: 0))
-                        index += 1
-                        requests.append(RequestFeed(feed : product.relationshipFeed(), id: index, parentId: index - 1))
-                        index += 1
-                        requests.append(RequestFeed(feed : product.priceFeed(), id: index, parentId: index - 2))
-                        index += 1
-                        requests.append(RequestFeed(feed : product.inventoryFeed(), id: index, parentId: index - 3))
-                        index += 1
-                        requests.append(RequestFeed(feed : product.imageFeed(), id: index, parentId: index - 4))
+                        
+                        var index = Int.now()
+
+                        if product.productAmazonUpdated == 0 {
+                            let parent = index
+                            requests.append(RequestFeed(feed : product.productFeed(), id: index, parentId: 0))
+                            index += 1
+                            requests.append(RequestFeed(feed : product.relationshipFeed(), id: index, parentId: parent))
+                            index += 1
+                            requests.append(RequestFeed(feed : product.priceFeed(), id: index, parentId: parent))
+                            index += 1
+                            requests.append(RequestFeed(feed : product.inventoryFeed(), id: index, parentId: parent))
+                            index += 1
+                            requests.append(RequestFeed(feed : product.imageFeed(), id: index, parentId: parent))
+                        } else {
+                            requests.append(RequestFeed(feed : product.inventoryFeed(), id: index, parentId: 0))
+                        }
+ 
+                        do {
+                            try product.update(data: [("productAmazonUpdated", Int.now())], idName:"productId", idValue: product.productId)
+                        } catch {
+                            print("productAmazonUpdated: \(error)")
+                        }
                     })
                     self.mws.start(requests: requests)
                 } catch {
@@ -64,16 +73,6 @@ public class AmazonController: NSObject {
                 Threading.sleep(seconds: 300)
             } while true
          }
-         */
-//        let product = try? self.repository.get(id: 1)
-//        var requests = [RequestFeed]()
-//        requests.append(RequestFeed(feed : product!.productFeed(), id: 1, parentId: 0))
-//        requests.append(RequestFeed(feed : product!.relationshipFeed(), id: 2, parentId: 1))
-//        requests.append(RequestFeed(feed : product!.priceFeed(), id: 3, parentId: 2))
-//        requests.append(RequestFeed(feed : product!.inventoryFeed(), id: 4, parentId: 3))
-//        requests.append(RequestFeed(feed : product!.imageFeed(), id: 5, parentId: 4))
-//
-//        self.mws.start(requests: requests)
     }
     
     public func getRoutes() -> Routes {
@@ -89,9 +88,8 @@ public class AmazonController: NSObject {
     
     
     func mwsConfigHandlerGET(request: HTTPRequest, _ response: HTTPResponse) {
-        let config: Config
         do {
-//            try response.setJson(config)
+            try response.setJson(config)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -99,9 +97,9 @@ public class AmazonController: NSObject {
     }
 
     func mwsConfigHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-        let config: Config
         do {
-//            try response.setJson(config)
+            config = request.getJson()!
+            try response.setJson(config)
             response.completed(status: .ok)
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")
@@ -149,9 +147,9 @@ public class AmazonController: NSObject {
             print(error)
         }
 
-//        print("\(request.requestSubmissionId): \(request.requestSubmittedAt) => \(request.requestCompletedAt)")
-//        if request.requestCompletedAt == 0 {
-//            print(request.requestFeed.xml())
-//        }
+        print("\(request.requestSubmissionId): \(request.requestSubmittedAt) => \(request.requestCompletedAt)")
+        if request.requestCompletedAt == 0 {
+            print(request.requestFeed.xml())
+        }
     }
 }

@@ -12,7 +12,7 @@ let package = Package(
 		.package(url: "https://github.com/PerfectlySoft/Perfect-HTTPServer.git", .exact("3.0.14")),
 		.package(url: "https://github.com/PerfectlySoft/Perfect-SMTP.git", .exact("3.2.1")),
 		.package(url: "https://github.com/twostraws/SwiftGD.git", .exact("2.1.1")),
-	        .package(url: "https://github.com/gerardogrisolini/mwsWebretail.git", .exact("1.1.3"))
+	        .package(url: "https://github.com/gerardogrisolini/mwsWebretail.git", .exact("1.1.4"))
 	],
 	targets: [
 		.target(

@@ -8,7 +8,7 @@
 
 protocol PublicationProtocol {
     
-    func getAll() throws -> [Publication]
+    func get() throws -> [Publication]
     
     func get(id: Int) throws -> Publication?
     
