@@ -6,7 +6,6 @@ import { Helpers } from './shared/helpers';
 @Component({
     selector: 'app-component',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
     animations: [
         trigger('overlayState', [
             state('hidden', style({

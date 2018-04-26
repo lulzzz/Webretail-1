@@ -5,6 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
+    "update": "npm rebuild node-sass",
     "start": "ng serve",
     "build": "ng build --target=production --deploy-url /web/",
     "deploy": "rm -rf ../webroot/web/*; mv ./dist/* ../webroot/web/;"
