@@ -57,7 +57,9 @@ public class AngularController {
         routes.add(method: .get, uri: "/admin/report/sales", handler: HTTPHandler.angularHandler())
         routes.add(method: .get, uri: "/admin/report/statistics", handler: HTTPHandler.angularHandler())
         routes.add(method: .get, uri: "/admin/import", handler: HTTPHandler.angularHandler())
-        
+        routes.add(method: .get, uri: "/admin/amazon", handler: HTTPHandler.angularHandler())
+        routes.add(method: .get, uri: "/admin/cart", handler: HTTPHandler.angularHandler())
+
         return routes
     }
 }
