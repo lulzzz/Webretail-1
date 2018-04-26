@@ -61,35 +61,23 @@ class MwsRequest : PostgresSqlORM, Codable {
         return rows
     }
     
-    public func currentRequests() -> [MwsRequest] {
-        do {
-            try self.query(whereclause: "requestcompletedat = $1", params: [0])
-        } catch {
-            LogFile.info("\(error)")
-        }
+    public func currentRequests() throws -> [MwsRequest] {
+//        try self.query(whereclause: "requestcompletedat = $1", params: [0])
+        try self.query()
         return self.rows()
     }
     
-    public func rangeRequests(startDate: Int, finishDate: Int) -> [MwsRequest] {
-        do {
-            try self.query(
-                whereclause: "requestcreatedat >= $1 && requestcreatedat <= $2 ",
-                params: [startDate, finishDate]
-            )
-        } catch {
-            LogFile.info("\(error)")
-        }
+    public func rangeRequests(startDate: Int, finishDate: Int) throws -> [MwsRequest] {
+        try self.query(
+            whereclause: "requestcreatedat >= $1 && requestcreatedat <= $2 ",
+            params: [startDate, finishDate]
+        )
         return self.rows()
     }
 
-    public func lastRequest() -> Int {
-        do {
-            let sql = "SELECT MAX(requestcreatedat) AS counter FROM \(table())";
-            let getCount = try self.sqlRows(sql, params: [])
-            return getCount.first?.data["counter"] as? Int ?? 0
-        } catch {
-            LogFile.info("\(error)")
-        }
-        return 0
+    public func lastRequest() throws -> Int {
+        let sql = "SELECT MAX(requestcreatedat) AS counter FROM \(table())";
+        let getCount = try self.sqlRows(sql, params: [])
+        return getCount.first?.data["counter"] as? Int ?? 0
     }
 }

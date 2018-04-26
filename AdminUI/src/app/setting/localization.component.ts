@@ -51,8 +51,6 @@ export class LocalizationComponent implements OnInit {
         );
     }
 
-    get isNew(): boolean { return this.company == null || this.company.companyId === 0; }
-
     loadCountries(countries: Country[]) {
         this.countries = countries.map(p => Helpers.newSelectItem(p.alpha3Code, p.alpha3Code + ' - ' + p.name));
 
@@ -115,20 +113,12 @@ export class LocalizationComponent implements OnInit {
     }
 
     saveClick() {
-        if (this.isNew) {
-            this.companyService
-                .create(this.company)
-                .subscribe(result => {
-                    Helpers.setInfos(result);
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Localization created'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Create localization', detail: onerror._body}));
-        } else {
-            this.companyService
-                .update(this.company)
-                .subscribe(result => {
-                    Helpers.setInfos(result);
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Localization updated'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Update localization', detail: onerror._body}));
-        }
+        this.companyService
+            .create(this.company)
+            .subscribe(result => {
+                this.company = result;
+                Helpers.setInfos(result);
+                this.messageService.add({severity: 'success', summary: 'Success', detail: 'Localization saved'});
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Save localization', detail: onerror._body}));
     }
 }

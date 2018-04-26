@@ -12,21 +12,18 @@ struct CompanyRepository : CompanyProtocol {
 		
 	func get() throws -> Company? {
 		let item = Company()
-		try item.query()
+		try item.query(id: 1)
 		
 		return item
 	}
 	
-	func add(item: Company) throws {
-		try item.save {
-			id in item.companyId = id as! Int
-		}
-	}
-
-	func update(item: Company) throws {
+	func save(item: Company) throws {
 		
 		guard let current = try get() else {
-			throw StORMError.noRecordFound
+            try item.save {
+                id in item.companyId = id as! Int
+            }
+            return
 		}
 		
 		current.companyName = item.companyName

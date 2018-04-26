@@ -47,21 +47,12 @@ export class PaymentComponent implements OnInit {
         );
     }
 
-    get isNew(): boolean { return this.company == null || this.company.companyId === 0; }
-
     saveClick() {
-        if (this.isNew) {
-            this.companyService
-                .create(this.company)
-                .subscribe(result => {
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Payment created'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Create payment', detail: onerror._body}));
-        } else {
-            this.companyService
-                .update(this.company)
-                .subscribe(result => {
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Payment updated'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Update payment', detail: onerror._body}));
-        }
+        this.companyService
+            .create(this.company)
+            .subscribe(result => {
+                this.company = result;
+                this.messageService.add({severity: 'success', summary: 'Success', detail: 'Payment saved'});
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Save payment', detail: onerror._body}));
     }
 }

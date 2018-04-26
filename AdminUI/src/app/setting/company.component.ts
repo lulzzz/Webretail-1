@@ -64,8 +64,6 @@ export class CompanyComponent implements OnInit {
         );
     }
 
-    get isNew(): boolean { return this.company == null || this.company.companyId === 0; }
-
     loadCountries(countries: Country[]) {
         this.countries = countries.map(p => Helpers.newSelectItem(p.alpha3Code, p.alpha3Code + ' - ' + p.name));
 
@@ -78,21 +76,13 @@ export class CompanyComponent implements OnInit {
     }
 
     saveClick() {
-        if (this.isNew) {
-            this.companyService
-                .create(this.company)
-                .subscribe(result => {
-                    Helpers.setInfos(result);
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Company created'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Create company', detail: onerror._body}));
-        } else {
-            this.companyService
-                .update(this.company)
-                .subscribe(result => {
-                    Helpers.setInfos(result);
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Company updated'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Update company', detail: onerror._body}));
-        }
+        this.companyService
+        .create(this.company)
+        .subscribe(result => {
+            this.company = result;
+            Helpers.setInfos(result);
+            this.messageService.add({severity: 'success', summary: 'Success', detail: 'Company saved'});
+        }, onerror => this.messageService.add({severity: 'error', summary: 'Save company', detail: onerror._body}));
     }
 
     onBasicUpload(event) {

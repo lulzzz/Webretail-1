@@ -30,6 +30,11 @@ public class AmazonController: NSObject {
         self.repository = ioCContainer.resolve() as ProductProtocol
         super.init()
         
+//        let p = try? self.repository.get(id: 1)
+//        if let p = p {
+//            print(p.productFeed())
+//        }
+        /*
         let thread = Threading.getQueue(name: "mwsRequest", type: .concurrent)
         thread.dispatch {
             
@@ -72,7 +77,8 @@ public class AmazonController: NSObject {
                 
                 Threading.sleep(seconds: 300)
             } while true
-         }
+        }
+    */
     }
     
     public func getRoutes() -> Routes {
@@ -111,9 +117,9 @@ public class AmazonController: NSObject {
         do {
             let mwsRequest = MwsRequest()
             if let start = request.urlVariables["start"], let finish = request.urlVariables["finish"] {
-                data = mwsRequest.rangeRequests(startDate: Int(start) ?? 0, finishDate: Int(finish) ?? 0)
+                data = try mwsRequest.rangeRequests(startDate: Int(start) ?? 0, finishDate: Int(finish) ?? 0)
             } else {
-                data = mwsRequest.currentRequests()
+                data = try mwsRequest.currentRequests()
             }
             
             try response.setJson(data)
@@ -147,9 +153,9 @@ public class AmazonController: NSObject {
             print(error)
         }
 
-        print("\(request.requestSubmissionId): \(request.requestSubmittedAt) => \(request.requestCompletedAt)")
-        if request.requestCompletedAt == 0 {
-            print(request.requestFeed.xml())
-        }
+//        print("\(request.requestSubmissionId): \(request.requestSubmittedAt) => \(request.requestCompletedAt)")
+//        if request.requestCompletedAt == 0 {
+//            print(request.requestFeed.xml())
+//        }
     }
 }

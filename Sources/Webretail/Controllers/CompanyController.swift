@@ -31,7 +31,6 @@ class CompanyController {
 		
 		routes.add(method: .get, uri: "/api/company", handler: companyHandlerGET)
 		routes.add(method: .post, uri: "/api/company", handler: companyHandlerPOST)
-		routes.add(method: .put, uri: "/api/company", handler: companyHandlerPUT)
 		routes.add(method: .post, uri: "/api/media", handler: uploadMediaHandlerPOST)
         routes.add(method: .post, uri: "/api/csv", handler: uploadCsvHandlerPOST)
         routes.add(method: .post, uri: "/api/email", handler: emailHandlerPOST)
@@ -91,20 +90,9 @@ class CompanyController {
 	func companyHandlerPOST(request: HTTPRequest, _ response: HTTPResponse) {
 		do {
 			let item: Company = request.getJson()!
-			try self.repository.add(item: item)
+			try self.repository.save(item: item)
 			try response.setJson(item)
-			response.completed(status: .accepted)
-		} catch {
-			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
-		}
-	}
-	
-	func companyHandlerPUT(request: HTTPRequest, _ response: HTTPResponse) {
-		do {
-            let item: Company = request.getJson()!
-            try self.repository.update(item: item)
-			try response.setJson(item)
-			response.completed(status: .accepted)
+			response.completed(status: .created)
 		} catch {
 			response.badRequest(error: "\(request.uri) \(request.method): \(error)")
 		}
@@ -182,18 +170,12 @@ class CompanyController {
             
             try email.send() { code, header, body in
                 
-                if code != 0 {
-                    response.badRequest(error: "\(request.uri) \(request.method): \(header)")
-                    return
-                }
+//                if code != 0 {
+//                    response.badRequest(error: "\(request.uri) \(request.method): \(header)")
+//                    return
+//                }
                 
-                do {
-                    item.content = "Email successfully sent"
-                    try response.setJson(item)
-                    response.completed(status: .accepted)
-                } catch {
-                    print(error)
-                }
+                response.completed(status: .noContent)
             }
         } catch {
             response.badRequest(error: "\(request.uri) \(request.method): \(error)")

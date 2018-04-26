@@ -21,8 +21,6 @@ export class ShippingComponent implements OnInit {
                 private fb: FormBuilder) {
     }
 
-    get isNew(): boolean { return this.company == null || this.company.companyId === 0; }
-
     ngOnInit() {
         this.sessionService.checkCredentials(false);
         this.sessionService.setTitle('Shipping');
@@ -40,19 +38,12 @@ export class ShippingComponent implements OnInit {
     }
 
     saveClick() {
-        if (this.isNew) {
-            this.companyService
-                .create(this.company)
-                .subscribe(result => {
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Shipping created'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Create shipping', detail: onerror._body}));
-        } else {
-            this.companyService
-                .update(this.company)
-                .subscribe(result => {
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Shipping updated'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Update shipping', detail: onerror._body}));
-        }
+        this.companyService
+            .create(this.company)
+            .subscribe(result => {
+                this.company = result;
+                this.messageService.add({severity: 'success', summary: 'Success', detail: 'Shipping saved'});
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Save shipping', detail: onerror._body}));
     }
 
     download(fileName: string) {

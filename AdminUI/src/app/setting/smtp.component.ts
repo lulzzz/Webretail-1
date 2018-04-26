@@ -40,22 +40,13 @@ export class SmtpComponent implements OnInit {
         );
     }
 
-    get isNew(): boolean { return this.company == null || this.company.companyId === 0; }
-
     saveClick() {
-        if (this.isNew) {
-            this.companyService
-                .create(this.company)
-                .subscribe(result => {
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'SMTP created'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Create SMTP', detail: onerror._body}));
-        } else {
-            this.companyService
-                .update(this.company)
-                .subscribe(result => {
-                    this.messageService.add({severity: 'success', summary: 'Success', detail: 'SMTP updated'});
-                }, onerror => this.messageService.add({severity: 'error', summary: 'Update SMTP', detail: onerror._body}));
-        }
+        this.companyService
+            .create(this.company)
+            .subscribe(result => {
+                this.company = result;
+                this.messageService.add({severity: 'success', summary: 'Success', detail: 'SMTP saved'});
+            }, onerror => this.messageService.add({severity: 'error', summary: 'Save SMTP', detail: onerror._body}));
     }
 
     sendMailClick() {
@@ -71,7 +62,7 @@ export class SmtpComponent implements OnInit {
 
         this.companyService.sendHtmlMail(model)
             .subscribe(
-                result => this.messageService.add({severity: 'success', summary: 'Success', detail: result.content}),
+                result => this.messageService.add({severity: 'success', summary: 'Success', detail: 'Email successfully sent'}),
                 onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
             );
     }

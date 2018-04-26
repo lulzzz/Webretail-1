@@ -85,7 +85,7 @@ struct ArticleRepository : ArticleProtocol {
             params.append(String(lastIndex + 1))
             
             let current = try newArticle.sqlRows(sql, params: params)
-            if current.count > 0 {
+            if lastIndex > 0 && current.count > 0 {
                 newArticle.to(current[0])
                 newArticle.articleIsValid = true;
                 try newArticle.save()
@@ -149,7 +149,7 @@ struct ArticleRepository : ArticleProtocol {
             count *= attribute._attributeValues.count
         }
         if articles.count - 1 != count {
-            throw StORMError.error("Integrity error: \(count) budgeted items and \(articles.count) items found")
+            throw StORMError.error("Integrity error: \(count) budgeted items and \(articles.count - 1) items found")
         }
 
         // Commit update product
