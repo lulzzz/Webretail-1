@@ -30,11 +30,11 @@ public class AmazonController: NSObject {
         self.repository = ioCContainer.resolve() as ProductProtocol
         super.init()
         
-        let p = try? self.repository.get(id: 1)
-        if let p = p {
-            print(p.productFeed().xml())
-        }
-        /*
+//        let p = try? self.repository.get(id: 1)
+//        if let p = p {
+//            print(p.productFeed().xml())
+//        }
+
         let thread = Threading.getQueue(name: "mwsRequest", type: .concurrent)
         thread.dispatch {
             
@@ -78,7 +78,6 @@ public class AmazonController: NSObject {
                 Threading.sleep(seconds: 300)
             } while true
         }
-    */
     }
     
     public func getRoutes() -> Routes {
