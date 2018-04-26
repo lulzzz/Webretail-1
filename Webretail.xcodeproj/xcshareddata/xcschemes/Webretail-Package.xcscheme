@@ -14,93 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftGD::SwiftGD"
-               BuildableName = "SwiftGD.framework"
-               BlueprintName = "SwiftGD"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PostgresStORM::PostgresStORM"
-               BuildableName = "PostgresStORM.framework"
-               BlueprintName = "PostgresStORM"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectSMTP::PerfectSMTP"
-               BuildableName = "PerfectSMTP.framework"
-               BlueprintName = "PerfectSMTP"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftRandom::SwiftRandom"
-               BuildableName = "SwiftRandom.framework"
-               BlueprintName = "SwiftRandom"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectNet::PerfectNet"
-               BuildableName = "PerfectNet.framework"
-               BlueprintName = "PerfectNet"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "StORM::StORM"
-               BuildableName = "StORM.framework"
-               BlueprintName = "StORM"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectCrypto::PerfectCrypto"
-               BuildableName = "PerfectCrypto.framework"
-               BlueprintName = "PerfectCrypto"
+               BlueprintIdentifier = "SwiftString::SwiftString"
+               BuildableName = "SwiftString.framework"
+               BlueprintName = "SwiftString"
                ReferencedContainer = "container:Webretail.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -126,9 +42,219 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "StORM::StORM"
+               BuildableName = "StORM.framework"
+               BlueprintName = "StORM"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "PerfectCURL::PerfectCURL"
                BuildableName = "PerfectCURL.framework"
                BlueprintName = "PerfectCURL"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftMoment::SwiftMoment"
+               BuildableName = "SwiftMoment.framework"
+               BlueprintName = "SwiftMoment"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Webretail::Webretail"
+               BuildableName = "Webretail"
+               BlueprintName = "Webretail"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "mwsWebretail::mwsWebretail"
+               BuildableName = "mwsWebretail.framework"
+               BlueprintName = "mwsWebretail"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectCZlib::PerfectCZlib"
+               BuildableName = "PerfectCZlib.framework"
+               BlueprintName = "PerfectCZlib"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftGD::SwiftGD"
+               BuildableName = "SwiftGD.framework"
+               BlueprintName = "SwiftGD"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Turnstile::Turnstile"
+               BuildableName = "Turnstile.framework"
+               BlueprintName = "Turnstile"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "COpenSSL::COpenSSL"
+               BuildableName = "COpenSSL.framework"
+               BlueprintName = "COpenSSL"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PostgresStORM::PostgresStORM"
+               BuildableName = "PostgresStORM.framework"
+               BlueprintName = "PostgresStORM"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Turnstile::TurnstileWeb"
+               BuildableName = "TurnstileWeb.framework"
+               BlueprintName = "TurnstileWeb"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectCRUD::PerfectCRUD"
+               BuildableName = "PerfectCRUD.framework"
+               BlueprintName = "PerfectCRUD"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectHTTPServer::PerfectCHTTPParser"
+               BuildableName = "PerfectCHTTPParser.framework"
+               BlueprintName = "PerfectCHTTPParser"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftRandom::SwiftRandom"
+               BuildableName = "SwiftRandom.framework"
+               BlueprintName = "SwiftRandom"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectPostgreSQL::PerfectPostgreSQL"
+               BuildableName = "PerfectPostgreSQL.framework"
+               BlueprintName = "PerfectPostgreSQL"
+               ReferencedContainer = "container:Webretail.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PerfectLogger::PerfectLogger"
+               BuildableName = "PerfectLogger.framework"
+               BlueprintName = "PerfectLogger"
                ReferencedContainer = "container:Webretail.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -168,62 +294,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftString::SwiftString"
-               BuildableName = "SwiftString.framework"
-               BlueprintName = "SwiftString"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectCZlib::PerfectCZlib"
-               BuildableName = "PerfectCZlib.framework"
-               BlueprintName = "PerfectCZlib"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectHTTPServer::PerfectCHTTPParser"
-               BuildableName = "PerfectCHTTPParser.framework"
-               BlueprintName = "PerfectCHTTPParser"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Turnstile::Turnstile"
-               BuildableName = "Turnstile.framework"
-               BlueprintName = "Turnstile"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "PerfectHTTPServer::PerfectHTTPServer"
                BuildableName = "PerfectHTTPServer.framework"
                BlueprintName = "PerfectHTTPServer"
@@ -238,9 +308,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Webretail::Webretail"
-               BuildableName = "Webretail"
-               BlueprintName = "Webretail"
+               BlueprintIdentifier = "PerfectSMTP::PerfectSMTP"
+               BuildableName = "PerfectSMTP.framework"
+               BlueprintName = "PerfectSMTP"
                ReferencedContainer = "container:Webretail.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -252,9 +322,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectCRUD::PerfectCRUD"
-               BuildableName = "PerfectCRUD.framework"
-               BlueprintName = "PerfectCRUD"
+               BlueprintIdentifier = "PerfectCrypto::PerfectCrypto"
+               BuildableName = "PerfectCrypto.framework"
+               BlueprintName = "PerfectCrypto"
                ReferencedContainer = "container:Webretail.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -266,37 +336,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectLogger::PerfectLogger"
-               BuildableName = "PerfectLogger.framework"
-               BlueprintName = "PerfectLogger"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "COpenSSL::COpenSSL"
-               BuildableName = "COpenSSL.framework"
-               BlueprintName = "COpenSSL"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PerfectPostgreSQL::PerfectPostgreSQL"
-               BuildableName = "PerfectPostgreSQL.framework"
-               BlueprintName = "PerfectPostgreSQL"
+               BlueprintIdentifier = "PerfectNet::PerfectNet"
+               BuildableName = "PerfectNet.framework"
+               BlueprintName = "PerfectNet"
                ReferencedContainer = "container:Webretail.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -311,48 +353,6 @@
                BlueprintIdentifier = "PerfectThread::PerfectThread"
                BuildableName = "PerfectThread.framework"
                BlueprintName = "PerfectThread"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Turnstile::TurnstileWeb"
-               BuildableName = "TurnstileWeb.framework"
-               BlueprintName = "TurnstileWeb"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftMoment::SwiftMoment"
-               BuildableName = "SwiftMoment.framework"
-               BlueprintName = "SwiftMoment"
-               ReferencedContainer = "container:Webretail.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "mwsWebretail::mwsWebretail"
-               BuildableName = "mwsWebretail.framework"
-               BlueprintName = "mwsWebretail"
                ReferencedContainer = "container:Webretail.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -381,9 +381,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "SwiftGD::SwiftGD"
-            BuildableName = "SwiftGD.framework"
-            BlueprintName = "SwiftGD"
+            BlueprintIdentifier = "SwiftString::SwiftString"
+            BuildableName = "SwiftString.framework"
+            BlueprintName = "SwiftString"
             ReferencedContainer = "container:Webretail.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

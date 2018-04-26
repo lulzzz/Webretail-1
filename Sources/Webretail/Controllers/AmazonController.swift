@@ -30,48 +30,36 @@ public class AmazonController: NSObject {
         self.repository = ioCContainer.resolve() as ProductProtocol
         super.init()
         
-//        let p = try? self.repository.get(id: 1)
-//        if let p = p {
-//            print(p.productFeed().xml())
-//        }
-
         let thread = Threading.getQueue(name: "mwsRequest", type: .concurrent)
         thread.dispatch {
             
             while(true) {
                 
-                do {
-                    let products = try self.repository.getPublished()
-                    
-                    var requests = [RequestFeed]()
-                    products.forEach({ (product) in
-                        
-                        var index = Int.now()
-
-                        if product.productAmazonUpdated == 0 {
-                            let parent = index
-                            requests.append(RequestFeed(feed : product.productFeed(), id: index, parentId: 0))
-                            index += 1
-                            requests.append(RequestFeed(feed : product.relationshipFeed(), id: index, parentId: parent))
-                            index += 1
-                            requests.append(RequestFeed(feed : product.priceFeed(), id: index, parentId: parent))
-                            index += 1
-                            requests.append(RequestFeed(feed : product.inventoryFeed(), id: index, parentId: parent))
-                            index += 1
-                            requests.append(RequestFeed(feed : product.imageFeed(), id: index, parentId: parent))
-                        } else {
-                            requests.append(RequestFeed(feed : product.inventoryFeed(), id: index, parentId: 0))
-                        }
- 
-                        do {
-                            try product.update(data: [("productAmazonUpdated", Int.now())], idName:"productId", idValue: product.productId)
-                        } catch {
-                            print("productAmazonUpdated: \(error)")
-                        }
-                    })
-                    self.mws.start(requests: requests)
-                } catch {
-                    print("mwsRequest: \(error)")
+                if self.mws.isSubmitted() {
+                    do {
+                        var requests = [RequestFeed]()
+                        let products = try self.repository.getPublished()
+                        products.forEach({ (p) in
+                            var index = Int.now()
+                            if p.productAmazonUpdated == 0 {
+                                let parent = index
+                                requests.append(RequestFeed(sku: p.productCode, feed : p.productFeed(), id: index, parentId: 0))
+                                index += 1
+                                requests.append(RequestFeed(sku: p.productCode, feed : p.relationshipFeed(), id: index, parentId: parent))
+                                index += 1
+                                requests.append(RequestFeed(sku: p.productCode, feed : p.priceFeed(), id: index, parentId: parent))
+                                index += 1
+                                requests.append(RequestFeed(sku: p.productCode, feed : p.inventoryFeed(), id: index, parentId: parent))
+                                index += 1
+                                requests.append(RequestFeed(sku: p.productCode, feed : p.imageFeed(), id: index, parentId: parent))
+                            } else {
+                                requests.append(RequestFeed(sku: p.productCode, feed : p.inventoryFeed(), id: index, parentId: 0))
+                            }
+                        })
+                        self.mws.start(requests: requests)
+                    } catch {
+                        print("mwsRequest: \(error)")
+                    }
                 }
                 
                 Threading.sleep(seconds: 300)
@@ -137,6 +125,7 @@ public class AmazonController: NSObject {
             mwsRequest.requestId = request.requestId
             mwsRequest.requestParentId = request.requestParentId
             mwsRequest.requestSubmissionId = request.requestSubmissionId
+            mwsRequest.requestSku = request.requestSku
             mwsRequest.requestXml = request.requestFeed.xml()
             mwsRequest.requestCreatedAt = request.requestCreatedAt
             mwsRequest.requestSubmittedAt = request.requestSubmittedAt
@@ -147,8 +136,9 @@ public class AmazonController: NSObject {
             mwsRequest.messagesWithWarning = request.messagesWithWarning
             mwsRequest.errorDescription = request.errorDescription
             try mwsRequest.save()
+            try Product().update(data: [("productAmazonUpdated", Int.now())], idName:"productCode", idValue: mwsRequest.requestSku)
         } catch {
-            print(error)
+            print("callBack: \(error)")
         }
 
 //        print("\(request.requestSubmissionId): \(request.requestSubmittedAt) => \(request.requestCompletedAt)")

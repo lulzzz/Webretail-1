@@ -12,6 +12,7 @@ import StORM
 class MwsRequest : PostgresSqlORM, Codable {
     
     public var id: Int = 0
+    public var requestSku : String = ""
     public var requestXml : String = ""
     public var requestId: Int = 0
     public var requestParentId: Int = 0
@@ -35,6 +36,7 @@ class MwsRequest : PostgresSqlORM, Codable {
     
     open override func to(_ this: StORMRow) {
         id = this.data["id"] as? Int ?? 0
+        requestSku = this.data["requestsku"] as? String ?? ""
         requestXml = this.data["requestxml"] as? String ?? ""
         requestId = this.data["requestid"] as? Int ?? 0
         requestParentId = this.data["requestparentid"] as? Int ?? 0

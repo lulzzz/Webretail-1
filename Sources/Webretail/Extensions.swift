@@ -305,7 +305,8 @@ extension Product {
                             title: title,
                             brand: self._brand.brandName,
                             description: self.productDescription.defaultValue(),
-                            bulletPoint: ""),
+                            bulletPoint: ""
+                        ),
                         productData: ProductData(
                             clothing: Clothing(
                                 variationData: VariationData(
@@ -339,7 +340,7 @@ extension Product {
         self._articles.forEach { (article) in
             relations.append(
                 Relation(
-                    sku: "WEB\(self.productCode)-\(article.articleId)",
+                    sku: "\(self.productCode)-\(article.articleId)",
                     childDetailPageDisplay: .displayOnlyOnParent,
                     type: .variation
                 )
@@ -350,7 +351,7 @@ extension Product {
             RelationshipMessage(
                 operationType: .update,
                 relationship: Relationship(
-                    parentSKU: "WEB\(self.productCode)",
+                    parentSKU: self.productCode,
                     relation: relations
                 )
             )
@@ -372,7 +373,7 @@ extension Product {
                     operationType: .update,
                     productImage:
                     ProductImage(
-                        sku: "WEB\(self.productCode)",
+                        sku: self.productCode,
                         imageType: imageType,
                         imageLocation: "http://\(server.serverName):\(server.serverPort)/media/\(media.name)"
                     )
