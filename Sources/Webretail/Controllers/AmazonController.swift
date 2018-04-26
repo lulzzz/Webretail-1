@@ -38,11 +38,10 @@ public class AmazonController: NSObject {
         let thread = Threading.getQueue(name: "mwsRequest", type: .concurrent)
         thread.dispatch {
             
-            repeat {
+            while(true) {
                 
                 do {
                     let products = try self.repository.getPublished()
-                    if products.count == 0 { return }
                     
                     var requests = [RequestFeed]()
                     products.forEach({ (product) in
@@ -76,7 +75,7 @@ public class AmazonController: NSObject {
                 }
                 
                 Threading.sleep(seconds: 300)
-            } while true
+            }
         }
     }
     
