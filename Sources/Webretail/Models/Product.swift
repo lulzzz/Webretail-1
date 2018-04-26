@@ -105,7 +105,7 @@ class Product: PostgresSqlORM, Codable {
 		_brand.to(this)
     }
     
-	func rows(barcodes: Bool) throws -> [Product] {
+    func rows(barcodes: Bool, storeIds: String = "0") throws -> [Product] {
         var rows = [Product]()
         for i in 0..<self.results.rows.count {
             let row = Product()
@@ -115,7 +115,7 @@ class Product: PostgresSqlORM, Codable {
 			
 			if barcodes {
 				try row.makeAttributes();
-				try row.makeArticles();
+				try row.makeArticles(storeIds);
 			}
 			
 			rows.append(row)
@@ -206,8 +206,9 @@ class Product: PostgresSqlORM, Codable {
 		self._attributes = try productAttribute.rows()
 	}
 
-	func makeArticles() throws {
+    func makeArticles(_ storeIds: String = "0") throws {
 		let article = Article()
+        article._storeIds = storeIds
 		try article.query(
 			whereclause: "productId = $1",
 			params: [self.productId],

@@ -30,10 +30,10 @@ public class AmazonController: NSObject {
         self.repository = ioCContainer.resolve() as ProductProtocol
         super.init()
         
-//        let p = try? self.repository.get(id: 1)
-//        if let p = p {
-//            print(p.productFeed())
-//        }
+        let p = try? self.repository.get(id: 1)
+        if let p = p {
+            print(p.productFeed().xml())
+        }
         /*
         let thread = Threading.getQueue(name: "mwsRequest", type: .concurrent)
         thread.dispatch {

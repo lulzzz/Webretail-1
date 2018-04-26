@@ -255,77 +255,61 @@ extension Product {
         
         var messages: [ProductMessage] = [ProductMessage]()
         
-        let department = self._categories.first(where: { $0._category.categoryIsPrimary })?._category.categoryName
+        let department = self._categories.first?._category.categoryName
         let material = self._attributes.first(where: { $0._attribute.attributeName == "Material" })?._attributeValues.first?._attributeValue.attributeValueName
-        let sizeId = self._attributes.first(where: { $0._attribute.attributeName == "Size" })?.attributeId ?? 0
-        let colorId = self._attributes.first(where: { $0._attribute.attributeName == "Color" })?.attributeId ?? 0
+        let colors = self._attributes.first(where: { $0._attribute.attributeName == "Color" })!._attributeValues
+        let sizes = self._attributes.first(where: { $0._attribute.attributeName == "Size" })!._attributeValues
         var variationTheme: VariationTheme = .sizeColor
-        if sizeId == 0 { variationTheme = .color }
-        if colorId == 0 { variationTheme = .size }
-        
-        messages.append(
-            ProductMessage(
-                operationType: .update,
-                product: MwsProduct(
-                    sku: "WEB\(self.productCode)",
-                    standardProductID: nil,
-                    condition: Condition(conditionType: .new),
-                    itemPackageQuantity: nil,
-                    numberOfItems: nil,
-                    descriptionData: DescriptionData(
-                        title: self.productName,
-                        brand: self._brand.brandName,
-                        description: self.productDescription.defaultValue(),
-                        bulletPoint: ""
-                    ),
-                    productData: ProductData(
-                        clothing: Clothing(
-                            variationData: VariationData(
-                                parentage: .parent,
-                                size: nil,
-                                color: nil,
-                                variationTheme: variationTheme
-                            ),
-                            classificationData: ClassificationData(
-                                clothingType: .outerwear,
-                                department: department ?? "",
-                                materialComposition: material ?? "",
-                                outerMaterial: material ?? ""
-                            )
-                        )
-                    )
-                )
-            )
-        )
-        
+        if sizes.count == 0 { variationTheme = .color }
+        if colors.count == 0 { variationTheme = .size }
+
         self._articles.forEach { (article) in
             
-            let barcode = article.articleBarcodes.first(where: { $0.tags.count == 0 })!.barcode
-            let attributeValues = article._attributeValues
-                .filter({ $0._attributeValue.attributeId == sizeId || $0._attributeValue.attributeId == colorId })
-                .compactMap({ $0._attributeValue })
-            let attibuteDesc = attributeValues.compactMap({ $0.attributeValueName }).joined(separator: ", ")
-            let size = attributeValues.first(where: { $0.attributeId == sizeId })?.attributeValueName
-            let color = attributeValues.first(where: { $0.attributeId == colorId })?.attributeValueName
+            var sku = ""
+            var title = ""
+            var color: String?
+            var size: String?
+            var parentage: Parentage
+            var standardProductID: StandardProductID?
+            
+            if article._attributeValues.count == 0 {
+                parentage = .parent
+                sku = self.productCode
+                title = self.productName
+            } else {
+                parentage = .child
+                sku = "\(self.productCode)-\(article.articleId)"
+                let barcode = article.articleBarcodes.first(where: { $0.tags.count == 0 })!.barcode
+                standardProductID = StandardProductID(type: .EAN, value: barcode)
+                article._attributeValues.forEach({ (value) in
+                    if let c = colors.first(where: { $0.attributeValueId == value.attributeValueId })?._attributeValue.attributeValueName {
+                        color = c
+                    }
+                    if let s = sizes.first(where: { $0.attributeValueId == value.attributeValueId })?._attributeValue.attributeValueName {
+                        size = s
+                    }
+                })
+                title = "\(self.productName) (\(size!), \(color!))"
+            }
             
             messages.append(
                 ProductMessage(
                     operationType: .update,
                     product: MwsProduct(
-                        sku: "WEB\(self.productCode)-\(article.articleId)",
-                        standardProductID: StandardProductID(type: .EAN, value: barcode),
+                        sku: sku,
+                        standardProductID: standardProductID ?? nil,
                         condition: Condition(conditionType: .new),
                         itemPackageQuantity: 1,
                         numberOfItems: 1,
                         descriptionData: DescriptionData(
-                            title: "\(self.productName) (\(attibuteDesc))",
+                            title: title,
                             brand: self._brand.brandName,
                             description: self.productDescription.defaultValue(),
                             bulletPoint: ""),
                         productData: ProductData(
                             clothing: Clothing(
                                 variationData: VariationData(
-                                    parentage: .parent,
+                                    parentage: parentage,
                                     size: size,
                                     color: color,
                                     variationTheme: variationTheme

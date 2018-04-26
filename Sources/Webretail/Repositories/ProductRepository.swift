@@ -64,15 +64,15 @@ struct ProductRepository : ProductProtocol {
         let items = Product()
         try items.query(
             whereclause: "products.productUpdated > products.productAmazonUpdated " +
-            "AND publications.publicationAmazon = $1" +
-            "AND publications.publicationStartAt <= $2 " +
-            "AND publications.publicationFinishAt >= $2",
+                "AND publications.publicationAmazon = $1" +
+                "AND publications.publicationStartAt <= $2 " +
+                "AND publications.publicationFinishAt >= $2",
             params: [true, Int.now()],
             orderby: ["products.productUpdated"],
             joins: [publication, brand]
         )
         
-        return try items.rows(barcodes: true)
+        return try items.rows(barcodes: true, storeIds: "")
     }
 
     func getProduct(id: Int) throws -> Product {
