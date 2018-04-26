@@ -43,7 +43,9 @@ export class MediaComponent implements OnInit {
         // formDate.append('yourInformation', JSON.stringify(yourInformation));
         this.companyService.upload(formDate).subscribe(res => {
             res.forEach(media => {
-                this.media = media;
+                if (this.media) {
+                    this.media = media;
+                }
                 this.medias.push(media);
                 this.selectMedia(media.name);
             });

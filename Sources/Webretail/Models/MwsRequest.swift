@@ -65,14 +65,15 @@ class MwsRequest : PostgresSqlORM, Codable {
     
     public func currentRequests() throws -> [MwsRequest] {
 //        try self.query(whereclause: "requestcompletedat = $1", params: [0])
-        try self.query()
+        try self.query(orderby: ["requestcreatedat DESC", "requestid"])
         return self.rows()
     }
     
     public func rangeRequests(startDate: Int, finishDate: Int) throws -> [MwsRequest] {
         try self.query(
             whereclause: "requestcreatedat >= $1 && requestcreatedat <= $2 ",
-            params: [startDate, finishDate]
+            params: [startDate, finishDate],
+            orderby: ["requestcreatedat DESC", "requestid"]
         )
         return self.rows()
     }

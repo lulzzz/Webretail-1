@@ -14,6 +14,10 @@
         </div>
     </p-toolbar>
 
+    <p-overlayPanel #xmlContent [style]="{'margin-top':'100px'}">
+        <textarea [rows]="30" [cols]="120" pInputTextarea [(ngModel)]="xml"></textarea>
+    </p-overlayPanel>
+
     <p-dataTable *ngIf="!displayPanel" [value]="items"
         [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [pageLinks]="5"
         [globalFilter]="gb" #dt>
@@ -22,9 +26,10 @@
                 <button type="button" pButton icon="fa-search" (click)="selectXml($event,data.requestXml,xmlContent);"></button>
             </ng-template>
         </p-column>
-        <p-column field="requestSubmissionId" header="SubmissionId" [sortable]="true" [style]="{'width':'200px', 'text-align':'center'}"></p-column>
-        <p-column field="requestId" header="Id" [sortable]="true" [style]="{'text-align':'center'}"></p-column>
-        <p-column field="requestParentId" header="ParentId" [sortable]="true" [style]="{'text-align':'center'}"></p-column>
+        <p-column field="requestSku" header="Sku" [sortable]="true" [style]="{'width':'120px', 'text-align':'center'}"></p-column>
+        <p-column field="requestId" header="Id" [sortable]="true" [style]="{'width':'100px', 'text-align':'center'}"></p-column>
+        <p-column field="requestParentId" header="ParentId" [sortable]="true" [style]="{'width':'100px', 'text-align':'center'}"></p-column>
+        <p-column field="requestSubmissionId" header="SubmissionId" [sortable]="true" [style]="{'width':'180px', 'text-align':'center'}"></p-column>
         <p-column header="CreatedAt" [sortable]="true" [style]="{'text-align':'center'}">
             <ng-template let-col let-data="rowData" pTemplate="body">
                 {{data.requestCreatedAt | dateFormat}}
@@ -47,10 +52,6 @@
         <p-column field="errorDescription" header="Info" [sortable]="true" [style]="{'text-align':'center'}"></p-column>
     </p-dataTable>
   
-    <p-overlayPanel #xmlContent>
-        <textarea [rows]="30" [cols]="100" pInputTextarea [(ngModel)]="xml"></textarea>
-    </p-overlayPanel>
-
     <p-panel *ngIf="displayPanel">
         <p-header>
             <div class="ui-helper-clearfix">

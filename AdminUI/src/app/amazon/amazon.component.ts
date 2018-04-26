@@ -34,7 +34,7 @@ export class AmazonComponent implements OnInit {
             .get()
             .subscribe(result => {
                 this.items = result;
-                this.totalRecords = this.items.length;
+                this.totalRecords = this.items.filter(p => p.requestCompletedAt === 0).length;
             }, onerror => this.messageService.add({severity: 'error', summary: 'Error', detail: onerror._body})
         );
     }
