@@ -49,7 +49,11 @@
         <p-column field="messagesSuccessful" header="Successful" [sortable]="true" [style]="{'text-align':'center'}"></p-column>
         <p-column field="messagesWithWarning" header="Warning" [sortable]="true" [style]="{'text-align':'center'}"></p-column>
         <p-column field="messagesWithError" header="Error" [sortable]="true" [style]="{'text-align':'center'}"></p-column>
-        <p-column field="errorDescription" header="Info" [sortable]="true" [style]="{'text-align':'center'}"></p-column>
+        <p-column header="Info" [sortable]="false" [style]="{'text-align':'center'}">
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                <button type="button" pButton icon="fa-question-circle" (click)="selectXml($event,data.errorDescription,xmlContent);"></button>
+            </ng-template>
+        </p-column>
     </p-dataTable>
   
     <p-panel *ngIf="displayPanel">

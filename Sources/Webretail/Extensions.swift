@@ -304,8 +304,7 @@ extension Product {
                         descriptionData: DescriptionData(
                             title: title,
                             brand: self._brand.brandName,
-                            description: self.productDescription.defaultValue(),
-                            bulletPoint: ""
+                            description: self.productDescription.defaultValue()
                         ),
                         productData: ProductData(
                             clothing: Clothing(
@@ -341,7 +340,6 @@ extension Product {
             relations.append(
                 Relation(
                     sku: "\(self.productCode)-\(article.articleId)",
-                    childDetailPageDisplay: .displayOnlyOnParent,
                     type: .variation
                 )
             )
@@ -420,7 +418,7 @@ extension Product {
                 PriceMessage(
                     operationType: .update,
                     price: MwsPrice(
-                        sku: "WEB\(self.productCode)-\(article.articleId)",
+                        sku: "\(self.productCode)-\(article.articleId)",
                         standardPrice: StandardPrice(price: Float(price), currency: .eur)
                     )
                 )
@@ -443,7 +441,7 @@ extension Product {
                 InventoryMessage(
                     operationType: .update,
                     inventory: Inventory(
-                        sku: "WEB\(self.productCode)-\(article.articleId)",
+                        sku: "\(self.productCode)-\(article.articleId)",
                         quantity: Int(quantity)
                     )
                 )

@@ -238,9 +238,9 @@ struct MovementRepository : MovementProtocol {
                     }
                 default:
                     if quantity > 0 {
-                        stock.stockQuantity += item.movementArticleDelivered
+                        stock.stockQuantity += item.movementArticleQuantity
                     } else if quantity < 0 {
-                        stock.stockQuantity -= item.movementArticleDelivered
+                        stock.stockQuantity -= item.movementArticleQuantity
                     }
                     
                     /// make barcodes for tags if necessary

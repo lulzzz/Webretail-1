@@ -46,11 +46,11 @@ class MwsRequest : PostgresSqlORM, Codable {
         requestSubmittedAt = this.data["requestsubmittedat"] as? Int ?? 0
         requestCompletedAt = this.data["requestcompletedat"] as? Int ?? 0
         
-        messagesProcessed = this.data["messagesProcessed"] as? Int ?? 0
-        messagesSuccessful = this.data["messagesSuccessful"] as? Int ?? 0
-        messagesWithError = this.data["messagesWithError"] as? Int ?? 0
-        messagesWithWarning = this.data["messagesWithWarning"] as? Int ?? 0
-        errorDescription = this.data["errorDescription"] as? String ?? ""
+        messagesProcessed = this.data["messagesprocessed"] as? Int ?? 0
+        messagesSuccessful = this.data["messagessuccessful"] as? Int ?? 0
+        messagesWithError = this.data["messageswitherror"] as? Int ?? 0
+        messagesWithWarning = this.data["messageswithwarning"] as? Int ?? 0
+        errorDescription = this.data["errordescription"] as? String ?? ""
     }
     
     func rows() -> [MwsRequest] {
