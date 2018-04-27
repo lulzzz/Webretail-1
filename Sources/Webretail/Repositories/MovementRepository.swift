@@ -252,7 +252,7 @@ struct MovementRepository : MovementProtocol {
                         } else {
                             company.barcodeCounter += 1
                             let newBarcode = Barcode()
-                            newBarcode.barcode = String(company.barcodeCounter)
+                            newBarcode.barcode = String(company.barcodeCounter).checkdigit()
                             newBarcode.tags = movement.movementTags
                             article.articleIsValid = true;
                             article.productId = item.movementArticleProduct.productId

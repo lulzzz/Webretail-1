@@ -32,7 +32,7 @@ class Company: PostgresSqlORM, Codable {
     public var companyUtc : String = ""
     public var companyLocales : [Translation] = [Translation]()
     
-    public var barcodeCounter : UInt64 = 6800000000001
+    public var barcodeCounter : UInt64 = 688986544001
     
     public var smtpHost : String = ""
     public var smtpSsl : Bool = false

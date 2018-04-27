@@ -98,7 +98,7 @@ struct ArticleRepository : ArticleProtocol {
                 //TODO: fix barcode generation
                 company.barcodeCounter += 1
                 let barcode = Barcode()
-                barcode.barcode = String(company.barcodeCounter)
+                barcode.barcode = String(company.barcodeCounter).checkdigit()
                 
                 newArticle.articleBarcodes = [barcode]
                 newArticle.articleIsValid = true;

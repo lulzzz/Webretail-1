@@ -87,6 +87,25 @@ extension String {
         let stripExtension = String(self[extensionPosition...])
         return URandom().secureToken + stripExtension
     }
+}
+
+extension String {
+    func checkdigit() -> String {
+        if self.length != 12 {
+            print("error the lenght must be 12 numbers")
+        }
+        
+        var array = [1,3,1,3,1,3,1,3,1,3,1,3]
+        var sum = 0
+        for i in 0...11 {
+            sum += Int(self[i].description)! * array[i]
+        }
+        var count = 0
+        while count >= sum {
+            count += 10
+        }
+        return "\(self)\(count - sum)"
+    }
 
 //    #if os(OSX)
 //    func toBarcode() -> NSImage? {
