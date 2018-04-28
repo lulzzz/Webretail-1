@@ -133,4 +133,8 @@ func addFilters() {
     server.setRequestFilters([pturnstile.requestFilter])
     server.setResponseFilters([pturnstile.responseFilter])
 	server.setRequestFilters([(authFilter, .high)])
+
+    serverSecure.setRequestFilters([pturnstile.requestFilter])
+    serverSecure.setResponseFilters([pturnstile.responseFilter])
+    serverSecure.setRequestFilters([(authFilter, .high)])
 }
