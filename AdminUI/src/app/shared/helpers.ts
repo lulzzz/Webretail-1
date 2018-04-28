@@ -4,7 +4,7 @@ import { Company, Translation } from './models';
 
 export class Helpers {
 
-    static currency = 'USD';
+    static currency = 'EUR';
     static utc = 'UTC';
     static locales: SelectItem[] = [];
 

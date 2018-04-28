@@ -216,11 +216,7 @@
                                 <br/>
                                 <p-inputSwitch [(ngModel)]="publication.publicationNew"></p-inputSwitch>
                             </p>
-                            <p>
-                                <strong>Amazon</strong>
-                                <br/>
-                                <p-inputSwitch [(ngModel)]="publication.publicationAmazon"></p-inputSwitch>
-                            </p>
+                            <button type="button" pButton icon="fa-refresh" class="ui-button-warning" (click)="resetClick()" label="Reset data on Amazon"></button>
                         </td>
                         <td>
                             <p>
@@ -233,7 +229,6 @@
                                 <br/>
                                 <p-calendar [(ngModel)]="publication.publicationFinishAt" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
                             </p>
-                            <button type="button" pButton icon="fa-refresh" class="ui-button-warning" (click)="resetClick()" label="Reset data on Amazon"></button>
                         </td>
                     </tr>
                 </table>

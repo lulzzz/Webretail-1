@@ -10,6 +10,7 @@ import Foundation
 import PostgresStORM
 import StORM
 import TurnstileWeb
+import PerfectHTTP
 
 let pturnstile = TurnstilePerfectRealm()
 let tokenStore = AccessTokenStore()
@@ -78,34 +79,39 @@ func addIoC() {
     ioCContainer.register { EcommerceRepository() as EcommerceProtocol }
 }
 
-func addRoutesAndHandlers() {
+func routesAndHandlers() -> [Routes] {
+    
+    var routes = [Routes]()
+    
 	// Register Angular routes and handlers
-	server.addRoutes(AngularController().getRoutes())
+	routes.append(AngularController().getRoutes())
 	
 	// Register api routes and handlers
-	server.addRoutes(CompanyController().getRoutes())
-	server.addRoutes(AuthenticationController().getRoutes())
-	server.addRoutes(UserController().getRoutes())
-	server.addRoutes(CausalController().getRoutes())
-	server.addRoutes(StoreController().getRoutes())
-	server.addRoutes(DeviceController().getRoutes())
-	server.addRoutes(BrandController().getRoutes())
-	server.addRoutes(CategoryController().getRoutes())
-	server.addRoutes(AttributeController().getRoutes())
-	server.addRoutes(AttributeValueController().getRoutes())
-    server.addRoutes(TagGroupController().getRoutes())
-    server.addRoutes(TagValueController().getRoutes())
-	server.addRoutes(ProductController().getRoutes())
-	server.addRoutes(ArticleController().getRoutes())
-	server.addRoutes(RegistryController().getRoutes())
-	server.addRoutes(MovementController().getRoutes())
-	server.addRoutes(MovementArticleController().getRoutes())
-	server.addRoutes(InvoiceController().getRoutes())
-    server.addRoutes(PdfController().getRoutes())
-    server.addRoutes(StatisticController().getRoutes())
-    server.addRoutes(PublicationController().getRoutes())
-    server.addRoutes(EcommerceController().getRoutes())
-    server.addRoutes(AmazonController().getRoutes())
+	routes.append(CompanyController().getRoutes())
+	routes.append(AuthenticationController().getRoutes())
+	routes.append(UserController().getRoutes())
+	routes.append(CausalController().getRoutes())
+	routes.append(StoreController().getRoutes())
+	routes.append(DeviceController().getRoutes())
+	routes.append(BrandController().getRoutes())
+	routes.append(CategoryController().getRoutes())
+	routes.append(AttributeController().getRoutes())
+	routes.append(AttributeValueController().getRoutes())
+    routes.append(TagGroupController().getRoutes())
+    routes.append(TagValueController().getRoutes())
+	routes.append(ProductController().getRoutes())
+	routes.append(ArticleController().getRoutes())
+	routes.append(RegistryController().getRoutes())
+	routes.append(MovementController().getRoutes())
+	routes.append(MovementArticleController().getRoutes())
+	routes.append(InvoiceController().getRoutes())
+    routes.append(PdfController().getRoutes())
+    routes.append(StatisticController().getRoutes())
+    routes.append(PublicationController().getRoutes())
+    routes.append(EcommerceController().getRoutes())
+    routes.append(AmazonController().getRoutes())
+    
+    return routes
 }
 
 func addFilters() {

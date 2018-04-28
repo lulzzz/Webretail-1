@@ -67,6 +67,7 @@ struct ArticleRepository : ArticleProtocol {
             
             // Check if exist article
             let newArticle = Article()
+            newArticle.productId = productId
             var params = [String]()
             params.append(String(productId))
             var sql =
@@ -93,8 +94,6 @@ struct ArticleRepository : ArticleProtocol {
             }
             else {
                 // Add article
-                newArticle.productId = productId
-                
                 company.barcodeCounterPrivate += 1
                 let barcode = Barcode()
                 barcode.barcode = String(company.barcodeCounterPrivate).checkdigit()
@@ -135,7 +134,7 @@ struct ArticleRepository : ArticleProtocol {
             if !item.articleIsValid {
                 if item._attributeValues.count == 0 {
                     item.articleIsValid = true
-                    try item.save()
+                    try item.update(data: [("articleIsValid", true)], idName:"articleId", idValue: item.articleId)
                     continue
                 }
                 try ArticleAttributeValue().delete(item.articleId, idName: "articleId")

@@ -197,7 +197,7 @@ struct MovementRepository : MovementProtocol {
         if movement.movementTags.count == 0 { return }
             
         let price = Price()
-        if movement.movementCausal.causalQuantity >= 0 {
+        if movement.movementCausal.causalQuantity < 0 {
             price.selling = item.movementArticlePrice
             if price.purchase == 0 {
                 price.purchase = item.movementArticleProduct.productPrice.purchase
@@ -224,7 +224,7 @@ struct MovementRepository : MovementProtocol {
                 company.barcodeCounterPublic += 1
                 barcode.barcode = String(company.barcodeCounterPublic).checkdigit()
                 
-                try item.update(data: [("productAmazonUpdated", 1)], idName:"productId", idValue: article.productId)
+                try Product().update(data: [("productAmazonUpdated", 1)], idName:"productId", idValue: article.productId)
            } else {
                 company.barcodeCounterPrivate += 1
                 barcode.barcode = String(company.barcodeCounterPrivate).checkdigit()
@@ -251,8 +251,9 @@ struct MovementRepository : MovementProtocol {
         let booked = movement.movementCausal.causalBooked
         let company = try (ioCContainer.resolve() as CompanyProtocol).get()!
         
+        let articles = article.rows()
         for actionType in actionTypes {
-            for item in article.rows() {
+            for item in articles {
             
                 if actionType == .Delivering {
                     item.movementArticleDelivered = item.movementArticleQuantity

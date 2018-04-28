@@ -136,7 +136,9 @@ public class AmazonController: NSObject {
             mwsRequest.messagesWithWarning = request.messagesWithWarning
             mwsRequest.errorDescription = request.errorDescription
             try mwsRequest.save()
-            try Product().update(data: [("productAmazonUpdated", Int.now())], idName:"productCode", idValue: mwsRequest.requestSku)
+            if mwsRequest.requestCompletedAt > 0 && mwsRequest.messagesWithError == 0 {
+                try Product().update(data: [("productAmazonUpdated", Int.now())], idName:"productCode", idValue: mwsRequest.requestSku)
+            }
         } catch {
             print("callBack: \(error)")
         }
