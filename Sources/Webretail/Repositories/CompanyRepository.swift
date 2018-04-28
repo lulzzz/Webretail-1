@@ -45,7 +45,8 @@ struct CompanyRepository : CompanyProtocol {
         current.companyUtc = item.companyUtc
         current.companyLocales = item.companyLocales
 
-        current.barcodeCounter = item.barcodeCounter
+        current.barcodeCounterPublic = item.barcodeCounterPublic
+        current.barcodeCounterPrivate = item.barcodeCounterPrivate
 
         current.smtpHost = item.smtpHost
 		current.smtpSsl = item.smtpSsl

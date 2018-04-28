@@ -14,7 +14,7 @@ protocol ProductProtocol {
 
     func getAll(date: Int) throws -> [Product]
     
-    func getPublished() throws -> [Product]
+    func getAmazonChanges() throws -> [Product]
     
     func get(id: Int) throws -> Product
 

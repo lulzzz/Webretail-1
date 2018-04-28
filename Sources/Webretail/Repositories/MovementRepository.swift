@@ -192,6 +192,55 @@ struct MovementRepository : MovementProtocol {
         try item.sql("DELETE FROM movementarticles WHERE movementId = $1", params: [String(id)])
     }
     
+    fileprivate func makeBarcodesForTags(_ movement: Movement, _ item: MovementArticle, _ article: Article, _ company: Company) throws {
+        
+        if movement.movementTags.count == 0 { return }
+            
+        let price = Price()
+        if movement.movementCausal.causalQuantity >= 0 {
+            price.selling = item.movementArticlePrice
+            if price.purchase == 0 {
+                price.purchase = item.movementArticleProduct.productPrice.purchase
+            }
+        } else {
+            price.purchase = item.movementArticlePrice
+            if price.selling == 0 {
+                price.selling = item.movementArticleProduct.productPrice.selling
+            }
+        }
+        
+        if let barcode = article.articleBarcodes
+                                .first(where: { $0.tags.containsSameElements(as: movement.movementTags) }) {
+            item.movementArticleBarcode = barcode.barcode;
+            barcode.price = price
+            barcode.discount = item.movementArticleProduct.productDiscount
+        } else {
+            let barcode = Barcode()
+            barcode.tags = movement.movementTags
+            barcode.price = price
+            barcode.discount = item.movementArticleProduct.productDiscount
+            
+            if barcode.tags.first(where: { $0.valueName == "Amazon" }) != nil {
+                company.barcodeCounterPublic += 1
+                barcode.barcode = String(company.barcodeCounterPublic).checkdigit()
+                
+                try item.update(data: [("productAmazonUpdated", 1)], idName:"productId", idValue: article.productId)
+           } else {
+                company.barcodeCounterPrivate += 1
+                barcode.barcode = String(company.barcodeCounterPrivate).checkdigit()
+            }
+            article.articleBarcodes.append(barcode)
+            item.movementArticleBarcode = barcode.barcode;
+        }
+        
+        article.articleIsValid = true;
+        //article.productId = item.movementArticleProduct.productId
+        article.articleUpdated = Int.now()
+        try article.save()
+        
+        try item.update(data: [("movementArticleBarcode", item.movementArticleBarcode)], idName:"movementArticleId", idValue: item.movementArticleId)
+   }
+    
     func process(movement: Movement, actionTypes: [ActionType]) throws {
         
         let article = MovementArticle()
@@ -207,7 +256,7 @@ struct MovementRepository : MovementProtocol {
             
                 if actionType == .Delivering {
                     item.movementArticleDelivered = item.movementArticleQuantity
-                    try item.save()
+                    try item.update(data: [("movementArticleDelivered", item.movementArticleQuantity)], idName:"movementArticleId", idValue: item.movementArticleId)
                     continue
                 }
                 
@@ -238,31 +287,12 @@ struct MovementRepository : MovementProtocol {
                     }
                 default:
                     if quantity > 0 {
-                        stock.stockQuantity += item.movementArticleQuantity
+                        stock.stockQuantity += item.movementArticleDelivered
                     } else if quantity < 0 {
-                        stock.stockQuantity -= item.movementArticleQuantity
+                        stock.stockQuantity -= item.movementArticleDelivered
                     }
                     
-                    /// make barcodes for tags if necessary
-                    if movement.movementTags.count > 0 {
-                        if let barcode = article.articleBarcodes.first(
-                            where: { $0.tags.containsSameElements(as: movement.movementTags) }
-                            ) {
-                            item.movementArticleBarcode = barcode.barcode;
-                        } else {
-                            company.barcodeCounter += 1
-                            let newBarcode = Barcode()
-                            newBarcode.barcode = String(company.barcodeCounter).checkdigit()
-                            newBarcode.tags = movement.movementTags
-                            article.articleIsValid = true;
-                            article.productId = item.movementArticleProduct.productId
-                            article.articleBarcodes.append(newBarcode)
-                            article.articleUpdated = Int.now()
-                            try article.save()
-                            item.movementArticleBarcode = newBarcode.barcode;
-                            try item.save()
-                        }
-                    }
+                    try makeBarcodesForTags(movement, item, article, company)
                 }
                 
                 try stock.update(data: stock.asData(), idName: "stockId", idValue: stock.stockId)

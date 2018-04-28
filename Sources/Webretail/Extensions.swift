@@ -87,9 +87,7 @@ extension String {
         let stripExtension = String(self[extensionPosition...])
         return URandom().secureToken + stripExtension
     }
-}
 
-extension String {
     func checkdigit() -> String {
         if self.length != 12 {
             print("error the lenght must be 12 numbers")
@@ -98,10 +96,10 @@ extension String {
         var array = [1,3,1,3,1,3,1,3,1,3,1,3]
         var sum = 0
         for i in 0...11 {
-            sum += Int(self[i].description)! * array[i]
+            sum += Int("\(self[i])")! * array[i]
         }
         var count = 0
-        while count >= sum {
+        while count < sum {
             count += 10
         }
         return "\(self)\(count - sum)"
@@ -282,7 +280,7 @@ extension Product {
         if sizes.count == 0 { variationTheme = .color }
         if colors.count == 0 { variationTheme = .size }
 
-        self._articles.forEach { (article) in
+        for article in self._articles {
             
             var sku = ""
             var title = ""
@@ -298,7 +296,13 @@ extension Product {
             } else {
                 parentage = .child
                 sku = "\(self.productCode)-\(article.articleId)"
-                let barcode = article.articleBarcodes.first(where: { $0.tags.count == 0 })!.barcode
+                
+                guard let barcode = article.articleBarcodes
+                    .first(where: { $0.tags.contains(where: { $0.valueName == "Amazon" }) })?
+                    .barcode else {
+                     continue
+                }
+                
                 standardProductID = StandardProductID(type: .EAN, value: barcode)
                 article._attributeValues.forEach({ (value) in
                     if let c = colors.first(where: { $0.attributeValueId == value.attributeValueId })?._attributeValue.attributeValueName {
@@ -355,7 +359,10 @@ extension Product {
     func relationshipFeed() -> RelationshipFeed {
         
         var relations: [Relation] = [Relation]()
-        self._articles.forEach { (article) in
+        for article in self._articles {
+            if article.articleBarcodes.first(where: { $0.tags.contains(where: { $0.valueName == "Amazon" }) }) == nil {
+                continue
+            }
             relations.append(
                 Relation(
                     sku: "\(self.productCode)-\(article.articleId)",
@@ -427,18 +434,29 @@ extension Product {
     func priceFeed() -> PriceFeed {
         
         var messages = [PriceMessage]()
-        self._articles.forEach { (article) in
-            
-            var price = article.articleBarcodes.first(where: { $0.tags.count == 0 })?.price.selling ?? 0
-            if price == 0 {
-                price = self.productPrice.selling
+        for article in self._articles {
+            guard let barcode = article.articleBarcodes
+                .first(where: { $0.tags.contains(where: { $0.valueName == "Amazon" }) }) else {
+                continue
             }
+
+            var salePrice: SalePrice?
+            if barcode.discount.discountStartAt > 0 {
+                salePrice = SalePrice(
+                    price: Float(barcode.discount.discountPrice),
+                    currency: .eur,
+                    startDate: Date(timeIntervalSinceReferenceDate: TimeInterval(barcode.discount.discountStartAt)),
+                    endDate: Date(timeIntervalSinceReferenceDate: TimeInterval(barcode.discount.discountFinishAt))
+                )
+            }
+            
             messages.append(
                 PriceMessage(
                     operationType: .update,
                     price: MwsPrice(
                         sku: "\(self.productCode)-\(article.articleId)",
-                        standardPrice: StandardPrice(price: Float(price), currency: .eur)
+                        standardPrice: StandardPrice(price: Float(barcode.price.selling), currency: .eur),
+                        salePrice: salePrice
                     )
                 )
             )
@@ -453,8 +471,13 @@ extension Product {
     func inventoryFeed() -> InventoryFeed {
         
         var messages = [InventoryMessage]()
-        self._articles.forEach { (article) in
+        for article in self._articles {
             
+            if article.articleUpdated < self.productAmazonUpdated ||
+                article.articleBarcodes.first(where: { $0.tags.contains(where: { $0.valueName == "Amazon" }) }) == nil {
+                continue
+            }
+
             let quantity = article._quantity - article._booked
             messages.append(
                 InventoryMessage(

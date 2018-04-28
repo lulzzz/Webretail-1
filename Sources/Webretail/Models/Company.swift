@@ -32,8 +32,9 @@ class Company: PostgresSqlORM, Codable {
     public var companyUtc : String = ""
     public var companyLocales : [Translation] = [Translation]()
     
-    public var barcodeCounter : UInt64 = 688986544001
-    
+    public var barcodeCounterPublic : Int = 688986544001
+    public var barcodeCounterPrivate : Int = 616161616161
+
     public var smtpHost : String = ""
     public var smtpSsl : Bool = false
     public var smtpUsername : String = ""
@@ -69,8 +70,9 @@ class Company: PostgresSqlORM, Codable {
             companyDescription = try! decoder.decode([Translation].self, from: jsonData)
         }
         
-        barcodeCounter = UInt64(this.data["barcodecounter"] as! String) ?? barcodeCounter
-        
+        barcodeCounterPublic = this.data["barcodecounterpublic"] as? Int ?? barcodeCounterPublic
+        barcodeCounterPrivate = this.data["barcodecounterprivate"] as? Int ?? barcodeCounterPrivate
+
         companyPhone = this.data["companyphone"] as? String ?? ""
         companyEmailInfo = this.data["companyemailinfo"] as? String ?? ""
         companyEmailSales = this.data["companyemailsales"] as? String ?? ""
@@ -107,10 +109,5 @@ class Company: PostgresSqlORM, Codable {
             rows.append(row)
         }
         return rows
-    }
-    
-    public func validate(ean: String) -> Bool {
-
-        return true;
     }
 }

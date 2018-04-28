@@ -52,7 +52,6 @@ struct PublicationRepository : PublicationProtocol {
             throw StORMError.noRecordFound
         }
         
-        current.publicationAmazon = item.publicationAmazon
         current.publicationFeatured = item.publicationFeatured
         current.publicationNew = item.publicationNew
         current.publicationStartAt = item.publicationStartAt

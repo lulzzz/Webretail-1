@@ -95,10 +95,9 @@ struct ArticleRepository : ArticleProtocol {
                 // Add article
                 newArticle.productId = productId
                 
-                //TODO: fix barcode generation
-                company.barcodeCounter += 1
+                company.barcodeCounterPrivate += 1
                 let barcode = Barcode()
-                barcode.barcode = String(company.barcodeCounter).checkdigit()
+                barcode.barcode = String(company.barcodeCounterPrivate).checkdigit()
                 
                 newArticle.articleBarcodes = [barcode]
                 newArticle.articleIsValid = true;

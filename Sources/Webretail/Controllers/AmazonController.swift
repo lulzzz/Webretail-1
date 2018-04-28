@@ -38,10 +38,10 @@ public class AmazonController: NSObject {
                 if self.mws.isSubmitted() {
                     do {
                         var requests = [RequestFeed]()
-                        let products = try self.repository.getPublished()
+                        let products = try self.repository.getAmazonChanges()
                         products.forEach({ (p) in
                             var index = Int.now()
-                            if p.productAmazonUpdated == 0 {
+                            if p.productAmazonUpdated == 1 {
                                 let parent = index
                                 requests.append(RequestFeed(sku: p.productCode, feed : p.productFeed(), id: index, parentId: 0))
                                 index += 1
