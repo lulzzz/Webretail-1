@@ -21,6 +21,12 @@ export class HomeComponent implements OnInit  {
 
         if (this.sessionService.isAuthenticated) {
             this.token = localStorage.getItem('token');
+
+            this.sessionService.getSetting()
+                .subscribe(result => {
+                    Helpers.setInfos(result);
+                }, onerror => console.log(onerror)
+            );
         }
 
         // this.sessionService.getCredentials()

@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SessionService } from './services/session.service';
 import { Helpers } from './shared/helpers';
@@ -20,8 +20,12 @@ import { Helpers } from './shared/helpers';
     ],
   })
 
-export class AppComponent {
-    constructor(public sessionService: SessionService) {
+export class AppComponent implements OnInit {
+    constructor(public sessionService: SessionService) { }
+
+    get menuActive(): boolean { return this.sessionService.menuActive; }
+
+    ngOnInit() {
         if (this.sessionService.isAuthenticated) {
             this.sessionService.getSetting()
                 .subscribe(result => {
@@ -30,6 +34,4 @@ export class AppComponent {
             );
         }
     }
-
-    get menuActive(): boolean { return this.sessionService.menuActive; }
 }
